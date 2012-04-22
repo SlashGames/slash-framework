@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Rainy.Math")]
+[assembly: AssemblyTitle("RainyGames.Math")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Rainy Games")]
-[assembly: AssemblyProduct("Rainy.Math")]
+[assembly: AssemblyProduct("RainyGames.Math")]
 [assembly: AssemblyCopyright("Copyright 2012 Rainy Games")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fbfd2902-d0e8-41f4-974e-77c68cecf18b")]
+[assembly: Guid("36e1a36d-577d-43fd-80db-12e2eefdfb5c")]
 
 // Version information for an assembly consists of the following four values:
 //
