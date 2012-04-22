@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.Math", "RainyGames.Math\RainyGames.Math.csproj", "{834E18DE-A529-4F17-A838-92B1EF259FE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.GameBase", "RainyGames.GameBase\RainyGames.GameBase.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{834E18DE-A529-4F17-A838-92B1EF259FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{834E18DE-A529-4F17-A838-92B1EF259FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{834E18DE-A529-4F17-A838-92B1EF259FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
