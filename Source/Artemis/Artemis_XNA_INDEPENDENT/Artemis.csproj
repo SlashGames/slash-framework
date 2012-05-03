@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Artemis</RootNamespace>
+    <AssemblyName>artemis</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Debug\artemis.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Release\artemis.XML</DocumentationFile>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="BlackBoard\BlackBoard.cs" />
+    <Compile Include="BlackBoard\SimpleTrigger.cs" />
+    <Compile Include="BlackBoard\Trigger.cs" />
+    <Compile Include="BlackBoard\TriggerMultiCondition.cs" />
+    <Compile Include="Component.cs" />
+    <Compile Include="ComponentMapper.cs" />
+    <Compile Include="ComponentType.cs" />
+    <Compile Include="ComponentTypeManager.cs" />
+    <Compile Include="HybridQueueSystemProcessing.cs" />
+    <Compile Include="QueueSystemProcessing.cs" />
+    <Compile Include="DelayedEntityProcessingSystem.cs" />
+    <Compile Include="DelayedEntitySystem.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="EntityManager.cs" />
+    <Compile Include="EntityProcessingSystem.cs" />
+    <Compile Include="EntitySystem.cs" />
+    <Compile Include="GroupManager.cs" />
+    <Compile Include="IntervalEntityProcessingSystem.cs" />
+    <Compile Include="IntervalEntitySystem.cs" />
+    <Compile Include="ParallelEntityProcessingSystem.cs" />
+    <Compile Include="Pool.cs" />
+    <Compile Include="QueueSystemProcessingThreadSafe.cs" />
+    <Compile Include="SystemBitManager.cs" />
+    <Compile Include="SystemManager.cs" />
+    <Compile Include="TagManager.cs" />
+    <Compile Include="TagSystem.cs" />
+    <Compile Include="EntityWorld.cs" />
+    <Compile Include="Utils\Utils.cs" />
+    <Compile Include="Utils\Bag.cs" />
+    <Compile Include="Utils\Timer.cs" />
+    <Compile Include="Utils\TrigLUT.cs" />
+    <Compile Include="Utils\FastMath.cs" />
+    <Compile Include="IntervalTagSystem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+</Project>
