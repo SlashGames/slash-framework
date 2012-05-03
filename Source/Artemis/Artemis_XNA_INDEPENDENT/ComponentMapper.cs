@@ -22,7 +22,6 @@ namespace Artemis
         /// <summary>
         /// Sets the entity manager for this component mapper
         /// </summary>
-        /// <param name="em">Entity Manager that manages the component</param>
         public EntityManager EntityManager 
         {
             set { em = value; }

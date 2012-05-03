@@ -24,16 +24,12 @@ namespace Artemis
 			return cos[(int) (deg * degToIndex) & SIN_MASK];
 		}
 	
-		private static float RAD, DEG;
 		private static int SIN_BITS, SIN_MASK, SIN_COUNT;
 		private static float radFull, radToIndex;
 		private static float degFull, degToIndex;
 		private static float[] sin, cos;
 	
-		static TrigLUT() {
-			RAD = (float) Math.PI / 180.0f;
-			DEG = 180.0f / (float) Math.PI;
-	
+		static TrigLUT() {	
 			SIN_BITS = 12;
 			SIN_MASK = ~(-1 << SIN_BITS);
 			SIN_COUNT = SIN_MASK + 1;

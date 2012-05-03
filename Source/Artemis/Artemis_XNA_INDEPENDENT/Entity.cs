@@ -142,13 +142,11 @@ namespace Artemis
 			return entityManager.GetComponent(this, type);
 		}
 		
-		/**
-		 * Slower retrieval of components from this entity. Minimize usage of this, but is fine to use e.g. when creating new entities
-		 * and setting data in components.
-		 * @param <T> the expected return component type.
-		 * @param type the expected return component type.
-		 * @return component that matches, or null if none is found.
-		 */
+		// Slower retrieval of components from this entity. Minimize usage of this, but is fine to use e.g. when creating new entities
+		// and setting data in components.
+		// @param <T> the expected return component type.
+		// @param type the expected return component type.
+		// @return component that matches, or null if none is found.
 		public T GetComponent<T>() where T : Component {
 			return (T)GetComponent(ComponentTypeManager.GetTypeFor<T>());
 		}

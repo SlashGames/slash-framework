@@ -16,11 +16,6 @@ namespace Artemis
             this.onFire = onFire;
         }
 
-        public void RemoveThisTrigger()
-        {
-            BlackBoard.RemoveTrigger(this);
-        }
-
         protected override bool CheckConditionToFire()
         {
             return Condition(BlackBoard, TriggerState);
