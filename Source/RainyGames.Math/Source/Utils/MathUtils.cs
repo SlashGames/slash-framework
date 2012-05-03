@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace RainyGames.Math
+namespace RainyGames.Math.Utils
 {
     using System;
 
@@ -31,68 +31,53 @@ namespace RainyGames.Math
         #region Public Methods
 
         /// <summary>
-        /// Clamps the passed value to the passed bounds (i.e. if value is smaller than min bound it's set to min bound,
-        /// if bigger than max bound it's set to max bound).
+        ///   Clamps the passed value to the passed bounds (i.e. if value is smaller than min bound it's set to min bound,
+        ///   if bigger than max bound it's set to max bound).
         /// </summary>
         /// <param name="value">Value to clamp.</param>
         /// <param name="min">Minimum bound.</param>
         /// <param name="max">Maximum bound (inclusive).</param>
         /// <returns>Clamped value.</returns>
-        public static float Clamp(float value, float min, float max)
+        public static T Clamp<T>(T value, T min, T max) where T : IComparable<T>
         {
-            return (value > max) ? max : (value < min) ? min : value;
+            if (value.CompareTo(min) < 0)
+            {
+                return min;
+            }
+            else if (value.CompareTo(max) > 0)
+            {
+                return max;
+            }
+            else
+            {
+                return value;
+            }
         }
-
-        /// <summary>
-        /// Clamps the passed value to the passed bounds (i.e. if value is smaller than min bound it's set to min bound,
-        /// if bigger than max bound it's set to max bound)
-        /// </summary>
-        /// <param name="value">Value to clamp</param>
-        /// <param name="min">Minimum bound</param>
-        /// <param name="max">Maximum bound (inclusive)</param>
-        /// <returns>Clamped value</returns>
-        public static int Clamp(int value, int min, int max)
-        {
-            return (value > max) ? max : (value < min) ? min : value;
-        }
-
-        /// <summary>
-        /// Clamps the passed value to the passed bounds (i.e. if value is smaller than min bound it's set to min bound,
-        /// if bigger than max bound it's set to max bound)
-        /// </summary>
-        /// <param name="value">Value to clamp</param>
-        /// <param name="min">Minimum bound</param>
-        /// <param name="max">Maximum bound (inclusive)</param>
-        /// <returns>Clamped value</returns>
-        public static long Clamp(long value, long min, long max)
-        {
-            return (value > max) ? max : (value < min) ? min : value;
-        }
-
+        
         /// <summary>
         ///   Checks if the passed value is within the passed bounds (i.e. bigger or equal minimum bound and 
         ///   smaller maximum bound).
         /// </summary>
         /// <param name = "value">Value to check.</param>
         /// <param name = "min">Minimum bound.</param>
-        /// <param name = "max">Maximum bound.</param>
+        /// <param name = "max">Maximum bound (exclusive).</param>
         /// <returns>True if value is within bounds; otherwise, false.</returns>
-        public static bool IsWithinBounds<T>(T value, T min, T max) where T : IComparable
+        public static bool IsWithinBounds<T>(T value, T min, T max) where T : IComparable<T>
         {
             return value.CompareTo(min) >= 0 && value.CompareTo(max) < 0;
         }
 
         /// <summary>
-        ///  Linear interpolation of a float
+        ///  Linear interpolation of a float.
         ///  TODO: generic
         /// </summary>
-        /// <param name="x">First value</param>
-        /// <param name="y">Second value</param>
-        /// <param name="s">Weight</param>
-        /// <returns>Interpolated value</returns>
-        public static float Lerp(float x, float y, float s)
+        /// <param name="x">First value.</param>
+        /// <param name="y">Second value.</param>
+        /// <param name="s">Weight.</param>
+        /// <returns>Interpolated value.</returns>
+        public static float Lerp(float x, float y, float step)
         {
-            return x + (s * (y - x));
+            return x + (step * (y - x));
         }
 
         /// <summary>
@@ -101,7 +86,7 @@ namespace RainyGames.Math
         /// <param name="a">First value.</param>
         /// <param name="b">Second value.</param>
         /// <returns>First value if it is bigger than the second; otherwise, the second value.</returns>
-        public static T Max<T>(T a, T b) where T : IComparable
+        public static T Max<T>(T a, T b) where T : IComparable<T>
         {
             return a.CompareTo(b) > 0 ? a : b;
         }
@@ -112,7 +97,7 @@ namespace RainyGames.Math
         /// <param name="a">First value.</param>
         /// <param name="b">Second value.</param>
         /// <returns>First value if it is smaller than the second; otherwise, the second value.</returns>
-        public static T Min<T>(T a, T b) where T : IComparable
+        public static T Min<T>(T a, T b) where T : IComparable<T>
         {
             return a.CompareTo(b) < 0 ? a : b;
         }

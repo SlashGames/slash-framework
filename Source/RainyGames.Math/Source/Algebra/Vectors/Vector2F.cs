@@ -4,10 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace RainyGames.Math
+namespace RainyGames.Math.Algebra.Vectors
 {
     using System;
     using System.Globalization;
+    using RainyGames.Math.Utils;
 
     /// <summary>
     ///   Struct which represents a 2 dimensional float vector.
@@ -30,7 +31,7 @@ namespace RainyGames.Math
         /// <summary>
         ///   Angle to transform forward to side vector.
         /// </summary>
-        public static float SideAngle = -Mathf.PiOver2;
+        public static float SideAngle = -MathF.PiOver2;
 
         /// <summary>
         ///   Both vector components are 1.
@@ -122,7 +123,7 @@ namespace RainyGames.Math
         {
             get
             {
-                return Mathf.Sqrt(this.SquareMagnitude);
+                return MathF.Sqrt(this.SquareMagnitude);
             }
         }
 
@@ -326,16 +327,16 @@ namespace RainyGames.Math
         /// </returns>
         public static float CalculateAngle(Vector2F vector1, Vector2F vector2)
         {
-            float theta1 = Mathf.Atan2(vector1.Y, vector1.X);
-            float theta2 = Mathf.Atan2(vector2.Y, vector2.X);
+            float theta1 = MathF.Atan2(vector1.Y, vector1.X);
+            float theta2 = MathF.Atan2(vector2.Y, vector2.X);
             float dtheta = theta2 - theta1;
-            while (dtheta > Mathf.Pi)
+            while (dtheta > MathF.Pi)
             {
-                dtheta -= (2 * Mathf.Pi);
+                dtheta -= (2 * MathF.Pi);
             }
-            while (dtheta < -Mathf.Pi)
+            while (dtheta < -MathF.Pi)
             {
-                dtheta += (2 * Mathf.Pi);
+                dtheta += (2 * MathF.Pi);
             }
 
             return (dtheta);
@@ -431,7 +432,7 @@ namespace RainyGames.Math
         /// <returns>True if the three vectors are collinear; otherwise, false.</returns>
         public static bool Collinear(ref Vector2F a, ref Vector2F b, ref Vector2F c, float tolerance)
         {
-            return Mathf.FloatInRange(Area(ref a, ref b, ref c), -tolerance, tolerance);
+            return MathF.FloatInRange(Area(ref a, ref b, ref c), -tolerance, tolerance);
         }
 
         /// <summary>
@@ -458,19 +459,19 @@ namespace RainyGames.Math
                 return to;
             }
 
-            float theta = Mathf.ACos(Vector2F.Dot(from, to));
+            float theta = MathF.ACos(Vector2F.Dot(from, to));
             if (theta == 0)
             {
                 return to;
             }
 
-            float sinTheta = Mathf.Sin(theta);
+            float sinTheta = MathF.Sin(theta);
             if (sinTheta == 0.0f)
             {
                 return to;
             }
 
-            return Mathf.Sin((1 - step) * theta) / sinTheta * from + Mathf.Sin(step * theta) / sinTheta * to;
+            return MathF.Sin((1 - step) * theta) / sinTheta * from + MathF.Sin(step * theta) / sinTheta * to;
         }
 
         public override bool Equals(object obj)
@@ -495,7 +496,7 @@ namespace RainyGames.Math
         /// <returns>Distance between this and the passed vector.</returns>
         public float GetDistance(Vector2F vector)
         {
-            return Mathf.Sqrt(this.GetSquareDistance(vector));
+            return MathF.Sqrt(this.GetSquareDistance(vector));
         }
 
         /// <summary>
@@ -521,7 +522,7 @@ namespace RainyGames.Math
         /// <returns>Square distance between this and the passed vector.</returns>
         public float GetSquareDistance(Vector2F vector)
         {
-            return Mathf.Pow(vector.X - this.X, 2) + Mathf.Pow(vector.Y - this.Y, 2);
+            return MathF.Pow(vector.X - this.X, 2) + MathF.Pow(vector.Y - this.Y, 2);
         }
 
         /// <summary>
@@ -597,8 +598,8 @@ namespace RainyGames.Math
         /// <param name="angle">Angle (in radians).</param>
         public void Rotate(float angle)
         {
-            float cos = Mathf.Cos(angle);
-            float sin = Mathf.Sin(angle);
+            float cos = MathF.Cos(angle);
+            float sin = MathF.Sin(angle);
             float newX = this.X * cos - this.Y * sin;
             float newY = this.Y * cos + this.X * sin;
             this.X = newX;

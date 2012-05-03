@@ -4,10 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace RainyGames.Math
+namespace RainyGames.Math.Algebra.Vectors
 {
     using System;
     using System.Globalization;
+    using RainyGames.Math.Utils;
 
     [Serializable]
     public struct Vector3F
@@ -120,7 +121,7 @@ namespace RainyGames.Math
         {
             get
             {
-                return Mathf.Sqrt(this.SquareMagnitude);
+                return MathF.Sqrt(this.SquareMagnitude);
             }
         }
 
@@ -321,7 +322,7 @@ namespace RainyGames.Math
         /// <returns>Distance between this and the passed vector.</returns>
         public float GetDistance(Vector3F vector)
         {
-            return Mathf.Sqrt(this.GetSquareDistance(vector));
+            return MathF.Sqrt(this.GetSquareDistance(vector));
         }
 
         /// <summary>
@@ -364,8 +365,8 @@ namespace RainyGames.Math
         /// <returns>Square distance between this and the passed vector.</returns>
         public float GetSquareDistance(Vector3F vector)
         {
-            return Mathf.Pow2(vector.X - this.X) + Mathf.Pow2(vector.Y - this.Y) +
-                   Mathf.Pow2(vector.Z - this.Z);
+            return MathF.Pow2(vector.X - this.X) + MathF.Pow2(vector.Y - this.Y) +
+                   MathF.Pow2(vector.Z - this.Z);
         }
 
         /// <summary>

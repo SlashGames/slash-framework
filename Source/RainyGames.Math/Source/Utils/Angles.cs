@@ -4,7 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace RainyGames.Math
+using RainyGames.Math.Algebra.Vectors;
+namespace RainyGames.Math.Utils
 {
     /// <summary>
     ///   Contains utility methods to work with angles. All parameter values use the unit radian for angles.
@@ -14,12 +15,12 @@ namespace RainyGames.Math
         /// <summary>
         ///   Factor to convert a degree angle to a radian angle.
         /// </summary>
-        public const float Deg2RadFactor = Mathf.Pi / 180.0f;
+        public const float Deg2RadFactor = MathF.Pi / 180.0f;
 
         /// <summary>
         ///   Factor to convert a radian angle to a degree angle.
         /// </summary>
-        public const float Rad2DegFactor = 180.0f / Mathf.Pi;
+        public const float Rad2DegFactor = 180.0f / MathF.Pi;
 
         /// <summary>
         /// Computes the smallest difference from first to second angle.
@@ -33,7 +34,7 @@ namespace RainyGames.Math
             angleA = ClampAngle(angleA);
             angleB = ClampAngle(angleB);
             float diff = angleB - angleA;
-            float diff2 = diff < 0 ? diff + Mathf.TwoPi : diff - Mathf.TwoPi;
+            float diff2 = diff < 0 ? diff + MathF.TwoPi : diff - MathF.TwoPi;
             return ClampAngle(System.Math.Min(diff2, diff));
         }
 
@@ -60,12 +61,12 @@ namespace RainyGames.Math
                 return to;
             }
 
-            var fromVector = new Vector2F(Mathf.Cos(from), Mathf.Sin(from));
-            var toVector = new Vector2F(Mathf.Cos(to), Mathf.Sin(to));
+            var fromVector = new Vector2F(MathF.Cos(from), MathF.Sin(from));
+            var toVector = new Vector2F(MathF.Cos(to), MathF.Sin(to));
 
             var currentVector = Vector2F.Slerp(fromVector, toVector, step);
 
-            return Mathf.Atan2(currentVector.Y, currentVector.X);
+            return MathF.Atan2(currentVector.Y, currentVector.X);
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace RainyGames.Math
         /// <returns>Converted angle (in radians).</returns>
         public static float Deg2Rad(float deg)
         {
-            return (deg * Mathf.Pi) / 180.0f;
+            return (deg * MathF.Pi) / 180.0f;
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace RainyGames.Math
         /// <returns>Converted angle (in degree).</returns>
         public static float Rad2Deg(float rad)
         {
-            return (rad * 180.0f) / Mathf.Pi;
+            return (rad * 180.0f) / MathF.Pi;
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace RainyGames.Math
             angleA = ClampAngle(angleA);
             angleB = ClampAngle(angleB);
             float diff = angleB - angleA;
-            float diff2 = diff < 0 ? diff + Mathf.TwoPi : diff - Mathf.TwoPi;
+            float diff2 = diff < 0 ? diff + MathF.TwoPi : diff - MathF.TwoPi;
             return ClampAnglePositive(System.Math.Min(diff2, diff));
         }
 
@@ -133,8 +134,8 @@ namespace RainyGames.Math
                 return to;
             }
 
-            float sinTheta = Mathf.Sin(angleDiff);
-            return Mathf.Sin((1 - step) * angleDiff) / sinTheta * from + Mathf.Sin(step * angleDiff) / sinTheta * to;
+            float sinTheta = MathF.Sin(angleDiff);
+            return MathF.Sin((1 - step) * angleDiff) / sinTheta * from + MathF.Sin(step * angleDiff) / sinTheta * to;
         }
 
         /// <summary>
@@ -144,14 +145,14 @@ namespace RainyGames.Math
         /// <returns>Clamped angle (in radians).</returns>
         public static float ClampAngle(float angle)
         {
-            angle = angle % Mathf.TwoPi;
-            while (angle < -Mathf.Pi)
+            angle = angle % MathF.TwoPi;
+            while (angle < -MathF.Pi)
             {
-                angle += Mathf.TwoPi;
+                angle += MathF.TwoPi;
             }
-            while (angle > Mathf.Pi)
+            while (angle > MathF.Pi)
             {
-                angle -= Mathf.TwoPi;
+                angle -= MathF.TwoPi;
             }
             return angle;
         }
@@ -163,14 +164,14 @@ namespace RainyGames.Math
         /// <returns>Clamped angle (in radians).</returns>
         public static float ClampAnglePositive(float angle)
         {
-            angle = angle % Mathf.TwoPi;
+            angle = angle % MathF.TwoPi;
             while (angle < 0)
             {
-                angle += Mathf.TwoPi;
+                angle += MathF.TwoPi;
             }
-            while (angle > Mathf.TwoPi)
+            while (angle > MathF.TwoPi)
             {
-                angle -= Mathf.TwoPi;
+                angle -= MathF.TwoPi;
             }
             return angle;
         }

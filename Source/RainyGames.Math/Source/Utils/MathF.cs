@@ -4,14 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace RainyGames.Math
+namespace RainyGames.Math.Utils
 {
     using System;
+    using RainyGames.Math.Algebra.Vectors;
 
     /// <summary>
     ///   Mathematical functions which use float instead of double.
     /// </summary>
-    public static class Mathf
+    public static class MathF
     {
         public const float Pi = (float)Math.PI;
 
@@ -219,7 +220,7 @@ namespace RainyGames.Math
 
         public static float RSqrt(float x)
         {
-            return 1.0f / Mathf.Sqrt(x);
+            return 1.0f / MathF.Sqrt(x);
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace RainyGames.Math
         /// <returns>Wraped value.</returns>
         public static float Wrap(float value)
         {
-            return value - Mathf.Floor(value);
+            return value - MathF.Floor(value);
         }
 
         /// <summary>
