@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 namespace Artemis
 {
 	public enum ExecutionType
@@ -116,44 +116,5 @@ namespace Artemis
                 } 
 			}	
         }
-
-        TaskFactory factory = new TaskFactory(TaskScheduler.Default);
-        List<Task> tasks = new List<Task>();
-
-        void UpdatebagASSync(Bag<EntitySystem> temp)
-        {
-            tasks.Clear();
-            for (int i = 0, j = temp.Size(); i < j; i++)
-            {
-                EntitySystem es = temp.Get(i);
-                tasks.Add(factory.StartNew(
-                    () =>
-                    {
-                        es.Process();
-                    }
-                ));
-
-            }
-            Task.WaitAll(tasks.ToArray());
-        }
-        public void UpdateAsynchronous(ExecutionType execType )
-        {
-            if (execType == ExecutionType.Draw)
-            {
-                foreach (int item in Drawlayers.Keys)
-                {
-                    UpdatebagASSync(Drawlayers[item]);
-                }
-            }
-            else if (execType == ExecutionType.Update)
-            {
-                foreach (int item in Updatelayers.Keys)
-                {
-                    UpdatebagASSync(Updatelayers[item]);
-                }
-            }	
-            
-        }
-		
 	}
 }

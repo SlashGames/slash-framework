@@ -28,6 +28,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,7 +74,6 @@
     <Compile Include="GroupManager.cs" />
     <Compile Include="IntervalEntityProcessingSystem.cs" />
     <Compile Include="IntervalEntitySystem.cs" />
-    <Compile Include="ParallelEntityProcessingSystem.cs" />
     <Compile Include="Pool.cs" />
     <Compile Include="QueueSystemProcessingThreadSafe.cs" />
     <Compile Include="SystemBitManager.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="TagManager.cs" />
     <Compile Include="TagSystem.cs" />
     <Compile Include="EntityWorld.cs" />
+    <Compile Include="Utils\BigInteger.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\Bag.cs" />
     <Compile Include="Utils\Timer.cs" />
@@ -111,6 +113,5 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Numerics" />
   </ItemGroup>
 </Project>
