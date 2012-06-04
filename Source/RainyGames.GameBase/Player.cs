@@ -32,6 +32,9 @@ namespace RainyGames.GameBase
         /// <param name="game">
         /// Game the new player will participate in.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// The passed game is null.
+        /// </exception>
         public Player(Game game)
             : this(game, 0)
         {
@@ -47,6 +50,9 @@ namespace RainyGames.GameBase
         /// <param name="index">
         /// Index of the player in the game.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// The passed game is null.
+        /// </exception>
         public Player(Game game, int index)
             : this(game, index, "Player " + index)
         {
@@ -65,6 +71,9 @@ namespace RainyGames.GameBase
         /// <param name="name">
         /// Name of the new player.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// The passed game is null.
+        /// </exception>
         public Player(Game game, int index, string name)
         {
             if (game == null)

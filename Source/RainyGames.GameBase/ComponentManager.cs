@@ -10,7 +10,7 @@ namespace RainyGames.GameBase
     using System.Collections.Generic;
 
     /// <summary>
-    /// Maps entitiy ids to specific game components. By contract this manager
+    /// Maps entity ids to specific game components. By contract this manager
     /// should be responsible for mapping components of a single type, only.
     /// This way, entity ids can be mapped to different components, one of each
     /// type.
