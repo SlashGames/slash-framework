@@ -10,8 +10,8 @@ namespace RainyGames.GameBase
 
     /// <summary>
     /// Base class of most Rainy Games games. Provides default functionality
-    /// that is common across many games, such as actors that are ticked or
-    /// players that are participating in the game.
+    /// that is common across many games, such as components that are attached
+    /// to entities, or systems working on these components.
     /// </summary>
     public class Game
     {
@@ -20,28 +20,45 @@ namespace RainyGames.GameBase
         // TODO use faster data structures here
 
         /// <summary>
-        /// Actors that are part of this game.
-        /// </summary>
-        private List<Actor> actors;
-
-        /// <summary>
         /// Players participating in this game.
         /// </summary>
         private List<Player> players;
 
+        /// <summary>
+        /// Whether this game is running, or not (e.g. not yet started,
+        /// paused, or already over).
+        /// </summary>
+        private bool running;
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        /// Constructs a new game without actors or players.
+        /// Constructs a new game without players.
         /// </summary>
         public Game()
         {
-            this.actors = new List<Actor>();
             this.players = new List<Player>();
+            this.running = false;
         }
 
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Name of this game.
+        /// </summary>
+        public string GameName { get; set; }
+
+        /// <summary>
+        /// Whether this game is running, or not (e.g. not yet started,
+        /// paused, or already over).
+        /// </summary>
+        public bool Running
+        {
+            get { return this.running; }
+        }
         #endregion
 
         #region Public Methods
@@ -54,53 +71,14 @@ namespace RainyGames.GameBase
         /// </param>
         public void Update(float dt)
         {
-            foreach (Actor actor in this.actors)
+            // TODO change to systems
+            if (this.running)
             {
-                actor.Update(dt);
             }
-        }
-
-        /// <summary>
-        /// Adds the passed actor to this game. The actor will be updated
-        /// during each tick.
-        /// </summary>
-        /// <param name="actor">
-        /// Actor to add to this game.
-        /// </param>
-        public void AddActor(Actor actor)
-        {
-            this.actors.Add(actor);
-        }
-
-        /// <summary>
-        /// Gets the actor with the specified id, if it's part of this game.
-        /// </summary>
-        /// <param name="actorId">
-        /// Id of the actor to get.
-        /// </param>
-        /// <returns>
-        /// Actor with the specified id, if it's part of this game, and
-        /// <c>null</c> otherwise.
-        /// </returns>
-        public Actor GetActor(int actorId)
-        {
-            return this.actors.Find(a => a.Id == actorId);
-        }
-
-        /// <summary>
-        /// Removes the specified actor from this game. The actor won't be
-        /// updated any longer by this game.
-        /// </summary>
-        /// <param name="actor">
-        /// Actor to remove.
-        /// </param>
-        /// <returns>
-        /// <c>true</c>, if the actor has been removed, and <c>false</c>
-        /// otherwise.
-        /// </returns>
-        public bool RemoveActor(Actor actor)
-        {
-            return this.actors.Remove(actor);
+            ////foreach (Actor actor in this.actors)
+            ////{
+            ////    actor.Update(dt);
+            ////}
         }
 
         /// <summary>
@@ -145,6 +123,29 @@ namespace RainyGames.GameBase
             return this.players.Remove(player);
         }
 
+        /// <summary>
+        /// Starts this game, beginning to tick all systems.
+        /// </summary>
+        public void StartGame()
+        {
+            this.running = true;
+        }
+
+        /// <summary>
+        /// Pauses this game, stopping ticking all systems.
+        /// </summary>
+        public void PauseGame()
+        {
+            this.running = false;
+        }
+
+        /// <summary>
+        /// Resumes this game, continuing to tick all systems.
+        /// </summary>
+        public void ResumeGame()
+        {
+            this.running = true;
+        }
         #endregion
     }
 }

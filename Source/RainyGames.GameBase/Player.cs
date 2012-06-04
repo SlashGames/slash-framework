@@ -9,8 +9,8 @@ namespace RainyGames.GameBase
     using System;
 
     /// <summary>
-    /// Player participating in a specific game. Players can be the owners of
-    /// actors, i.e. the units they build or the projectiles they fired.
+    /// Player participating in a specific game. Players have their own indices
+    /// and names.
     /// </summary>
     public class Player
     {
