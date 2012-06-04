@@ -17,7 +17,10 @@ namespace RainyGames.GameBase
     {
         #region Constants and Fields
 
-        // TODO use faster data structures here
+        /// <summary>
+        /// Manager responsible for creating and removing entities in this game.
+        /// </summary>
+        private EntityManager entityManager;
 
         /// <summary>
         /// Players participating in this game.
@@ -38,6 +41,7 @@ namespace RainyGames.GameBase
         /// </summary>
         public Game()
         {
+            this.entityManager = new EntityManager();
             this.players = new List<Player>();
             this.running = false;
         }
@@ -58,6 +62,14 @@ namespace RainyGames.GameBase
         public bool Running
         {
             get { return this.running; }
+        }
+
+        /// <summary>
+        /// Manager responsible for creating and removing entities in this game.
+        /// </summary>
+        public EntityManager EntityManager
+        {
+            get { return this.entityManager; }
         }
         #endregion
 
