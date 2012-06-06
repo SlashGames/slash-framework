@@ -23,6 +23,11 @@ namespace RainyGames.GameBase
         private EntityManager entityManager;
 
         /// <summary>
+        /// Manager responsible for updating all game systems in each tick.
+        /// </summary>
+        private SystemManager systemManager;
+
+        /// <summary>
         /// Players participating in this game.
         /// </summary>
         private List<Player> players;
@@ -42,6 +47,7 @@ namespace RainyGames.GameBase
         public Game()
         {
             this.entityManager = new EntityManager();
+            this.systemManager = new SystemManager();
             this.players = new List<Player>();
             this.running = false;
         }
@@ -71,26 +77,31 @@ namespace RainyGames.GameBase
         {
             get { return this.entityManager; }
         }
+
+        /// <summary>
+        /// Manager responsible for updating all game systems in each tick.
+        /// </summary>
+        public SystemManager SystemManager
+        {
+            get { return this.systemManager; }
+        }
+
         #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// Ticks this game, allowing all actors to update themselves.
+        /// Ticks this game, allowing all systems to update themselves.
         /// </summary>
         /// <param name="dt">
         /// Time passed since the last tick.
         /// </param>
         public void Update(float dt)
         {
-            // TODO change to systems
             if (this.running)
             {
+                this.systemManager.Update(dt);
             }
-            ////foreach (Actor actor in this.actors)
-            ////{
-            ////    actor.Update(dt);
-            ////}
         }
 
         /// <summary>

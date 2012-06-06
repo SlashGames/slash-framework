@@ -38,6 +38,8 @@
     <Compile Include="Game.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EntitySystem.cs" />
+    <Compile Include="SystemManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
