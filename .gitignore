@@ -22,3 +22,6 @@
 /Source/Artemis/Artemis_XNA_INDEPENDENT/obj
 /Source/RainyGames.Unity.Common/bin
 /Source/RainyGames.Unity.Common/obj
+/Source/RainyGames.GameBase.Tests/StyleCop.Cache
+/Source/RainyGames.GameBase.Tests/obj
+/Source/RainyGames.GameBase.Tests/bin
