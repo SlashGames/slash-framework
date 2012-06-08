@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.AI.BehaviorTrees
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis", "Artemis\Artemis_XNA_INDEPENDENT\Artemis.csproj", "{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.GameBase.Tests", "RainyGames.GameBase.Tests\RainyGames.GameBase.Tests.csproj", "{C329C9AD-95E9-4A10-8A6A-61B5944FC676}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,16 @@ Global
 		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Release|Mixed Platforms.Build.0 = Release|x86
 		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Release|x86.ActiveCfg = Release|x86
 		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Release|x86.Build.0 = Release|x86
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C329C9AD-95E9-4A10-8A6A-61B5944FC676}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
