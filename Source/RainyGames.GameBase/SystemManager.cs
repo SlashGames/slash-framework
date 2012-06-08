@@ -17,6 +17,11 @@ namespace RainyGames.GameBase
         #region Constants and Fields
 
         /// <summary>
+        /// Game this manager controls the systems of.
+        /// </summary>
+        private Game game;
+
+        /// <summary>
         /// Systems to be updated in each tick.
         /// </summary>
         private List<EntitySystem> systems;
@@ -33,8 +38,12 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Constructs a new system manager without any systems.
         /// </summary>
-        public SystemManager()
+        /// <param name="game">
+        /// Game to manage the systems for.
+        /// </param>
+        public SystemManager(Game game)
         {
+            this.game = game;
             this.systems = new List<EntitySystem>();
             this.systemsByType = new Dictionary<Type, EntitySystem>();
         }
@@ -69,6 +78,8 @@ namespace RainyGames.GameBase
             {
                 this.systems.Add(system);
                 this.systemsByType.Add(system.GetType(), system);
+
+                this.game.EventManager.InvokeSystemAdded(system);
             }
             else
             {

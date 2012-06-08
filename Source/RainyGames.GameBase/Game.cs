@@ -28,6 +28,11 @@ namespace RainyGames.GameBase
         private SystemManager systemManager;
 
         /// <summary>
+        /// Manager allowing listeners to register for game-related events.
+        /// </summary>
+        private EventManager eventManager;
+
+        /// <summary>
         /// Players participating in this game.
         /// </summary>
         private List<Player> players;
@@ -46,8 +51,9 @@ namespace RainyGames.GameBase
         /// </summary>
         public Game()
         {
-            this.entityManager = new EntityManager();
-            this.systemManager = new SystemManager();
+            this.entityManager = new EntityManager(this);
+            this.systemManager = new SystemManager(this);
+            this.eventManager = new EventManager();
             this.players = new List<Player>();
             this.running = false;
         }
@@ -86,6 +92,13 @@ namespace RainyGames.GameBase
             get { return this.systemManager; }
         }
 
+        /// <summary>
+        /// Manager allowing listeners to register for game-related events.
+        /// </summary>
+        public EventManager EventManager
+        {
+            get { return this.eventManager; }
+        }
         #endregion
 
         #region Public Methods
@@ -113,6 +126,7 @@ namespace RainyGames.GameBase
         public void AddPlayer(Player player)
         {
             this.players.Add(player);
+            this.eventManager.InvokePlayerAdded(player);
         }
 
         /// <summary>
@@ -143,7 +157,14 @@ namespace RainyGames.GameBase
         /// </returns>
         public bool RemovePlayer(Player player)
         {
-            return this.players.Remove(player);
+            bool removed = this.players.Remove(player);
+
+            if (removed)
+            {
+                this.eventManager.InvokePlayerRemoved(player);
+            }
+
+            return removed;
         }
 
         /// <summary>
@@ -152,6 +173,7 @@ namespace RainyGames.GameBase
         public void StartGame()
         {
             this.running = true;
+            this.eventManager.InvokeGameStarted();
         }
 
         /// <summary>
@@ -160,6 +182,7 @@ namespace RainyGames.GameBase
         public void PauseGame()
         {
             this.running = false;
+            this.eventManager.InvokeGamePaused();
         }
 
         /// <summary>
@@ -168,6 +191,7 @@ namespace RainyGames.GameBase
         public void ResumeGame()
         {
             this.running = true;
+            this.eventManager.InvokeGameResumed();
         }
         #endregion
     }

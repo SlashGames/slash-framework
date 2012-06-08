@@ -20,6 +20,11 @@ namespace RainyGames.GameBase
         #region Constants and Fields
 
         /// <summary>
+        /// Game this manager maps the entity ids of.
+        /// </summary>
+        private Game game;
+
+        /// <summary>
         /// Components attached to game entities.
         /// </summary>
         private Dictionary<long, IComponent> components;
@@ -31,8 +36,12 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Constructs a new component manager without any initial components.
         /// </summary>
-        public ComponentManager()
+        /// <param name="game">
+        /// Game to map the entity ids of.
+        /// </param>
+        public ComponentManager(Game game)
         {
+            this.game = game;
             this.components = new Dictionary<long, IComponent>();
         }
 
@@ -66,6 +75,7 @@ namespace RainyGames.GameBase
             if (!this.components.ContainsKey(entityId))
             {
                 this.components.Add(entityId, component);
+                this.game.EventManager.InvokeComponentAdded(entityId, component);
             }
             else
             {
@@ -86,7 +96,17 @@ namespace RainyGames.GameBase
         /// </returns>
         public bool RemoveComponent(long entityId)
         {
-            return this.components.Remove(entityId);
+            if (this.components.ContainsKey(entityId))
+            {
+                IComponent component = this.components[entityId];
+                this.components.Remove(entityId);
+                this.game.EventManager.InvokeComponentRemoved(entityId, component);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>

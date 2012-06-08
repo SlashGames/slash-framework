@@ -18,6 +18,11 @@ namespace RainyGames.GameBase
         #region Constants and Fields
 
         /// <summary>
+        /// Game this manager controls the entities of.
+        /// </summary>
+        private Game game;
+
+        /// <summary>
         /// Id that will be assigned to the next entitiy created.
         /// </summary>
         private long nextEntityId;
@@ -39,8 +44,12 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Constructs a new entity manager without any initial entities.
         /// </summary>
-        public EntityManager()
+        /// <param name="game">
+        /// Game to manage the entities for.
+        /// </param>
+        public EntityManager(Game game)
         {
+            this.game = game;
             this.nextEntityId = 0;
             this.entities = new HashSet<long>();
             this.componentManagers = new Dictionary<Type, ComponentManager>();
@@ -72,6 +81,7 @@ namespace RainyGames.GameBase
         {
             long id = this.nextEntityId++;
             this.entities.Add(id);
+            this.game.EventManager.InvokeEntityCreated(id);
             return id;
         }
 
@@ -100,6 +110,8 @@ namespace RainyGames.GameBase
             }
 
             this.entities.Remove(id);
+
+            this.game.EventManager.InvokeEntityRemoved(id);
         }
 
         /// <summary>
@@ -134,7 +146,7 @@ namespace RainyGames.GameBase
 
             if (!this.componentManagers.ContainsKey(componentType))
             {
-                this.componentManagers.Add(componentType, new ComponentManager());
+                this.componentManagers.Add(componentType, new ComponentManager(this.game));
             }
 
             this.componentManagers[component.GetType()].AddComponent(entityId, component);
