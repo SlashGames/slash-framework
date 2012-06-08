@@ -41,7 +41,7 @@ namespace RainyGames.GameBase
         /// <param name="system">
         /// System that caused an event.
         /// </param>
-        public delegate void SystemDelegate(EntitySystem system);
+        public delegate void SystemDelegate(ISystem system);
 
         /// <summary>
         /// Delegate for component-related events.
@@ -221,7 +221,7 @@ namespace RainyGames.GameBase
         /// <param name="system">
         /// System that has been added.
         /// </param>
-        internal void InvokeSystemAdded(EntitySystem system)
+        internal void InvokeSystemAdded(ISystem system)
         {
             SystemDelegate handler = this.SystemAdded;
 

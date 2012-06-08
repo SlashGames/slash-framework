@@ -24,12 +24,12 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Systems to be updated in each tick.
         /// </summary>
-        private List<EntitySystem> systems;
+        private List<ISystem> systems;
 
         /// <summary>
         /// Maps system types to actual game systems.
         /// </summary>
-        private Dictionary<Type, EntitySystem> systemsByType;
+        private Dictionary<Type, ISystem> systemsByType;
 
         #endregion
 
@@ -44,8 +44,8 @@ namespace RainyGames.GameBase
         public SystemManager(Game game)
         {
             this.game = game;
-            this.systems = new List<EntitySystem>();
-            this.systemsByType = new Dictionary<Type, EntitySystem>();
+            this.systems = new List<ISystem>();
+            this.systemsByType = new Dictionary<Type, ISystem>();
         }
 
         #endregion
@@ -65,7 +65,7 @@ namespace RainyGames.GameBase
         /// <exception cref="ArgumentException">
         /// A system of the same type has already been added.
         /// </exception>
-        public void AddSystem(EntitySystem system)
+        public void AddSystem(ISystem system)
         {
             if (system == null)
             {
@@ -102,7 +102,7 @@ namespace RainyGames.GameBase
         /// <exception cref="ArgumentException">
         /// A system of the specified type has never been added.
         /// </exception>
-        public EntitySystem GetSystem(Type systemType)
+        public ISystem GetSystem(Type systemType)
         {
             if (systemType == null)
             {
@@ -127,7 +127,7 @@ namespace RainyGames.GameBase
         /// </param>
         public void Update(float dt)
         {
-            foreach (EntitySystem system in this.systems)
+            foreach (ISystem system in this.systems)
             {
                 system.Update(dt);
             }
