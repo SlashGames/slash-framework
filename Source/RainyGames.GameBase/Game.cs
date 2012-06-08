@@ -42,6 +42,11 @@ namespace RainyGames.GameBase
         /// paused, or already over).
         /// </summary>
         private bool running;
+
+        /// <summary>
+        /// Total time since this game has started, in seconds.
+        /// </summary>
+        private float timeElapsed;
         #endregion
 
         #region Constructors and Destructors
@@ -56,6 +61,7 @@ namespace RainyGames.GameBase
             this.eventManager = new EventManager();
             this.players = new List<Player>();
             this.running = false;
+            this.timeElapsed = 0.0f;
         }
 
         #endregion
@@ -74,6 +80,14 @@ namespace RainyGames.GameBase
         public bool Running
         {
             get { return this.running; }
+        }
+
+        /// <summary>
+        /// Total time since this game has started, in seconds.
+        /// </summary>
+        public float TimeElapsed
+        {
+            get { return this.timeElapsed; }
         }
 
         /// <summary>
@@ -107,13 +121,15 @@ namespace RainyGames.GameBase
         /// Ticks this game, allowing all systems to update themselves.
         /// </summary>
         /// <param name="dt">
-        /// Time passed since the last tick.
+        /// Time passed since the last tick, in seconds.
         /// </param>
         public void Update(float dt)
         {
             if (this.running)
             {
                 this.systemManager.Update(dt);
+
+                this.timeElapsed += dt;
             }
         }
 

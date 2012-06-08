@@ -18,7 +18,7 @@ namespace RainyGames.GameBase
         /// Ticks this system.
         /// </summary>
         /// <param name="dt">
-        /// Time passed since the last tick.
+        /// Time passed since the last tick, in seconds.
         /// </param>
         void Update(float dt);
 
