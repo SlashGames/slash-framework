@@ -123,7 +123,7 @@ namespace RainyGames.GameBase
         /// <param name="dt">
         /// Time passed since the last tick, in seconds.
         /// </param>
-        public void Update(float dt)
+        public virtual void Update(float dt)
         {
             if (this.running)
             {
@@ -139,7 +139,7 @@ namespace RainyGames.GameBase
         /// <param name="player">
         /// Player to add to this game.
         /// </param>
-        public void AddPlayer(Player player)
+        public virtual void AddPlayer(Player player)
         {
             this.players.Add(player);
             this.eventManager.InvokePlayerAdded(player);
@@ -186,7 +186,7 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Starts this game, beginning to tick all systems.
         /// </summary>
-        public void StartGame()
+        public virtual void StartGame()
         {
             this.running = true;
             this.eventManager.InvokeGameStarted();
@@ -195,7 +195,7 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Pauses this game, stopping ticking all systems.
         /// </summary>
-        public void PauseGame()
+        public virtual void PauseGame()
         {
             this.running = false;
             this.eventManager.InvokeGamePaused();
@@ -204,7 +204,7 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Resumes this game, continuing to tick all systems.
         /// </summary>
-        public void ResumeGame()
+        public virtual void ResumeGame()
         {
             this.running = true;
             this.eventManager.InvokeGameResumed();
