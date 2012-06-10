@@ -104,14 +104,14 @@ namespace RainyGames.GameBase
         {
             this.CheckEntityId(id);
 
+            this.game.EventManager.InvokeEntityRemoved(id);
+
             foreach (ComponentManager manager in this.componentManagers.Values)
             {
                 manager.RemoveComponent(id);
             }
 
             this.entities.Remove(id);
-
-            this.game.EventManager.InvokeEntityRemoved(id);
         }
 
         /// <summary>
