@@ -113,12 +113,21 @@ namespace RainyGames.GameBase
         {
             get { return this.eventManager; }
         }
+
+        /// <summary>
+        /// Total number of current players in this game.
+        /// </summary>
+        public int PlayerCount
+        {
+            get { return this.players.Count; }
+        }
         #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// Ticks this game, allowing all systems to update themselves.
+        /// Ticks this game, allowing all systems to update themselves and
+        /// processing all game events.
         /// </summary>
         /// <param name="dt">
         /// Time passed since the last tick, in seconds.
@@ -128,6 +137,7 @@ namespace RainyGames.GameBase
             if (this.running)
             {
                 this.systemManager.Update(dt);
+                this.eventManager.ProcessEvents();
 
                 this.timeElapsed += dt;
             }
@@ -142,7 +152,7 @@ namespace RainyGames.GameBase
         public virtual void AddPlayer(Player player)
         {
             this.players.Add(player);
-            this.eventManager.InvokePlayerAdded(player);
+            this.eventManager.QueueEvent(FrameworkEventType.PlayerAdded, player);
         }
 
         /// <summary>
@@ -177,7 +187,7 @@ namespace RainyGames.GameBase
 
             if (removed)
             {
-                this.eventManager.InvokePlayerRemoved(player);
+                this.eventManager.QueueEvent(FrameworkEventType.PlayerRemoved, player);
             }
 
             return removed;
@@ -189,7 +199,7 @@ namespace RainyGames.GameBase
         public virtual void StartGame()
         {
             this.running = true;
-            this.eventManager.InvokeGameStarted();
+            this.eventManager.QueueEvent(FrameworkEventType.GameStarted);
         }
 
         /// <summary>
@@ -198,7 +208,7 @@ namespace RainyGames.GameBase
         public virtual void PauseGame()
         {
             this.running = false;
-            this.eventManager.InvokeGamePaused();
+            this.eventManager.QueueEvent(FrameworkEventType.GamePaused);
         }
 
         /// <summary>
@@ -207,7 +217,7 @@ namespace RainyGames.GameBase
         public virtual void ResumeGame()
         {
             this.running = true;
-            this.eventManager.InvokeGameResumed();
+            this.eventManager.QueueEvent(FrameworkEventType.GameResumed);
         }
         #endregion
     }

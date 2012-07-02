@@ -7,12 +7,13 @@
 namespace RainyGames.GameBase.Tests
 {
     using NUnit.Framework;
+    using RainyGames.GameBase.EventArgs;
 
     /// <summary>
     /// Unit tests for the EventManager class.
     /// </summary>
     [TestFixture]
-    public class EventManagerTests
+    public class EventManagerTests : IEventListener
     {
         #region Constants and Fields
 
@@ -65,9 +66,9 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestEntityCreatedEvent()
         {
-            this.game.EventManager.EntityCreated += new EventManager.EntityDelegate(this.OnEntityCreated);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.EntityCreated);
             this.game.EntityManager.CreateEntity();
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
         }
 
         /// <summary>
@@ -76,10 +77,10 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestEntityRemovedEvent()
         {
-            this.game.EventManager.EntityRemoved += new EventManager.EntityDelegate(this.OnEntityRemoved);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.EntityRemoved);
             this.game.EntityManager.CreateEntity();
             this.game.EntityManager.RemoveEntity(0L);
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
         }
 
         /// <summary>
@@ -88,9 +89,9 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestPlayerAddedEvent()
         {
-            this.game.EventManager.PlayerAdded += new EventManager.PlayerDelegate(this.OnPlayerAdded);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.PlayerAdded);
             this.game.AddPlayer(this.player);
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
         }
 
         /// <summary>
@@ -99,10 +100,10 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestPlayerRemovedEvent()
         {
-            this.game.EventManager.PlayerRemoved += new EventManager.PlayerDelegate(this.OnPlayerRemoved);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.PlayerRemoved);
             this.game.AddPlayer(this.player);
             this.game.RemovePlayer(this.player);
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
         }
 
         /// <summary>
@@ -111,9 +112,9 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestGameStartedEvent()
         {
-            this.game.EventManager.GameStarted += new EventManager.GameDelegate(this.OnGameStarted);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.GameStarted);
             this.game.StartGame();
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
         }
 
         /// <summary>
@@ -122,10 +123,10 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestGamePausedEvent()
         {
-            this.game.EventManager.GamePaused += new EventManager.GameDelegate(this.OnGamePaused);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.GamePaused);
             this.game.StartGame();
             this.game.PauseGame();
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
         }
 
         /// <summary>
@@ -134,11 +135,11 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestGameResumedEvent()
         {
-            this.game.EventManager.GameResumed += new EventManager.GameDelegate(this.OnGameResumed);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.GameResumed);
             this.game.StartGame();
             this.game.PauseGame();
             this.game.ResumeGame();
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
         }
 
         /// <summary>
@@ -147,9 +148,9 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestSystemAddedEvent()
         {
-            this.game.EventManager.SystemAdded += new EventManager.SystemDelegate(this.OnSystemAdded);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.SystemAdded);
             this.game.SystemManager.AddSystem(this.system);
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
         }
 
         /// <summary>
@@ -158,10 +159,10 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestComponentAddedEvent()
         {
-            this.game.EventManager.ComponentAdded += new EventManager.ComponentDelegate(this.OnComponentAdded);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.ComponentAdded);
             this.game.EntityManager.CreateEntity();
             this.game.EntityManager.AddComponent(0L, this.component);
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
         }
 
         /// <summary>
@@ -170,11 +171,75 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestComponentRemovedEvent()
         {
-            this.game.EventManager.ComponentRemoved += new EventManager.ComponentDelegate(this.OnComponentRemoved);
+            this.game.EventManager.RegisterListener(this, FrameworkEventType.ComponentRemoved);
             this.game.EntityManager.CreateEntity();
             this.game.EntityManager.AddComponent(0L, this.component);
             this.game.EntityManager.RemoveComponent(0L, typeof(TestComponent));
-            Assert.IsTrue(this.testPassed);
+            this.CheckTestPassed();
+        }
+
+        /// <summary>
+        /// Notifies this unit test fixture of an Rainy Games Framework event
+        /// that has occurred, checking the associated unit test.
+        /// </summary>
+        /// <param name="e">
+        /// Event that has occurred within the framework.
+        /// </param>
+        public void Notify(Event e)
+        {
+            if (e.EventType is FrameworkEventType)
+            {
+                FrameworkEventType eventType = (FrameworkEventType)e.EventType;
+                ComponentEventArgs eventArgs;
+
+                switch (eventType)
+                {
+                    case FrameworkEventType.ComponentAdded:
+                        eventArgs = (ComponentEventArgs)e.EventData;
+                        this.OnComponentAdded(eventArgs.EntityId, eventArgs.Component);
+                        break;
+
+                    case FrameworkEventType.ComponentRemoved:
+                        eventArgs = (ComponentEventArgs)e.EventData;
+                        this.OnComponentRemoved(eventArgs.EntityId, eventArgs.Component);
+                        break;
+
+                    case FrameworkEventType.EntityCreated:
+                        this.OnEntityCreated((long)e.EventData);
+                        break;
+
+                    case FrameworkEventType.EntityRemoved:
+                        this.OnEntityRemoved((long)e.EventData);
+                        break;
+
+                    case FrameworkEventType.GamePaused:
+                        this.OnGamePaused();
+                        break;
+
+                    case FrameworkEventType.GameResumed:
+                        this.OnGameResumed();
+                        break;
+
+                    case FrameworkEventType.GameStarted:
+                        this.OnGameStarted();
+                        break;
+
+                    case FrameworkEventType.PlayerAdded:
+                        this.OnPlayerAdded((Player)e.EventData);
+                        break;
+
+                    case FrameworkEventType.PlayerRemoved:
+                        this.OnPlayerRemoved((Player)e.EventData);
+                        break;
+
+                    case FrameworkEventType.SystemAdded:
+                        this.OnSystemAdded((ISystem)e.EventData);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         #endregion
@@ -286,6 +351,16 @@ namespace RainyGames.GameBase.Tests
         private void OnComponentRemoved(long entityId, IComponent component)
         {
             this.testPassed = entityId == 0 && this.component.Equals(component);
+        }
+
+        /// <summary>
+        /// Processes all occurred events and checks whether last unit test
+        /// has passed.
+        /// </summary>
+        private void CheckTestPassed()
+        {
+            this.game.EventManager.ProcessEvents();
+            Assert.IsTrue(this.testPassed);
         }
 
         #endregion

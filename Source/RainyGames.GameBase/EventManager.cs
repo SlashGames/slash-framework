@@ -6,267 +6,139 @@
 
 namespace RainyGames.GameBase
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Allows listeners to register for game-related events and notifies them
     /// whenever one of these events is fired.
     /// </summary>
     public class EventManager
     {
-        #region Delegates
+        #region Constants and Fields
 
         /// <summary>
-        /// Delegate for all entity-related events.
+        /// Queue of events to be processed.
         /// </summary>
-        /// <param name="entityId">
-        /// Id of the entity that caused an event.
-        /// </param>
-        public delegate void EntityDelegate(long entityId);
+        private List<Event> events;
 
         /// <summary>
-        /// Delegate for all player-related events.
+        /// Listeners that are interested in events of specific types.
         /// </summary>
-        /// <param name="player">
-        /// Player that caused an event.
-        /// </param>
-        public delegate void PlayerDelegate(Player player);
-
-        /// <summary>
-        /// Delegate for general game events.
-        /// </summary>
-        public delegate void GameDelegate();
-
-        /// <summary>
-        /// Delegate for system-related events.
-        /// </summary>
-        /// <param name="system">
-        /// System that caused an event.
-        /// </param>
-        public delegate void SystemDelegate(ISystem system);
-
-        /// <summary>
-        /// Delegate for component-related events.
-        /// </summary>
-        /// <param name="entityId">
-        /// Id of the entity whose component caused an event.
-        /// </param>
-        /// <param name="component">
-        /// Component that caused an event.
-        /// </param>
-        public delegate void ComponentDelegate(long entityId, IComponent component);
+        private Dictionary<object, List<IEventListener>> listeners;
 
         #endregion
 
-        #region Events
+        #region Constructors and Destructors
 
         /// <summary>
-        /// Called when a new entity has been created.
+        /// Constructs a new event manager with an empty event queue and
+        /// without any listeners.
         /// </summary>
-        public event EntityDelegate EntityCreated;
-
-        /// <summary>
-        /// Called when an entity has been removed.
-        /// </summary>
-        public event EntityDelegate EntityRemoved;
-
-        /// <summary>
-        /// Called when a new player has been added.
-        /// </summary>
-        public event PlayerDelegate PlayerAdded;
-
-        /// <summary>
-        /// Called when a player has been removed.
-        /// </summary>
-        public event PlayerDelegate PlayerRemoved;
-
-        /// <summary>
-        /// Called when the game starts.
-        /// </summary>
-        public event GameDelegate GameStarted;
-
-        /// <summary>
-        /// Called when the game has been paused.
-        /// </summary>
-        public event GameDelegate GamePaused;
-
-        /// <summary>
-        /// Called when the game has been resumed.
-        /// </summary>
-        public event GameDelegate GameResumed;
-
-        /// <summary>
-        /// Called when a new system has been added.
-        /// </summary>
-        public event SystemDelegate SystemAdded;
-
-        /// <summary>
-        /// Called when a new component has been added.
-        /// </summary>
-        public event ComponentDelegate ComponentAdded;
-
-        /// <summary>
-        /// Called when a component has been removed.
-        /// </summary>
-        public event ComponentDelegate ComponentRemoved;
+        public EventManager()
+        {
+            this.events = new List<Event>();
+            this.listeners = new Dictionary<object, List<IEventListener>>();
+        }
 
         #endregion
 
-        #region Methods
+        #region Public Methods
 
         /// <summary>
-        /// Called when a new entity has been created.
+        /// Makes the passed listener register interest for events of the
+        /// specified type.
         /// </summary>
-        /// <param name="entityId">
-        /// Id of the new entity.
+        /// <param name="listener">
+        /// Listener that is interested in events of the specified type.
         /// </param>
-        internal void InvokeEntityCreated(long entityId)
+        /// <param name="eventType">
+        /// Type of the event the passed listener is interested in.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Passed listener is null.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Specified event type is null.
+        /// </exception>
+        public void RegisterListener(IEventListener listener, object eventType)
         {
-            EntityDelegate handler = this.EntityCreated;
-
-            if (handler != null)
+            if (listener == null)
             {
-                handler(entityId);
+                throw new ArgumentNullException("listener");
             }
+
+            if (eventType == null)
+            {
+                throw new ArgumentNullException("eventType");
+            }
+
+            if (!this.listeners.ContainsKey(eventType))
+            {
+                this.listeners.Add(eventType, new List<IEventListener>());
+            }
+
+            this.listeners[eventType].Add(listener);
         }
 
         /// <summary>
-        /// Called when an entity has been removed.
+        /// Queues a new event of the specified type without any additional
+        /// data.
         /// </summary>
-        /// <param name="entityId">
-        /// Id of the removed entity.
+        /// <param name="eventType">
+        /// Type of the event to queue.
         /// </param>
-        internal void InvokeEntityRemoved(long entityId)
+        public void QueueEvent(object eventType)
         {
-            EntityDelegate handler = this.EntityRemoved;
-
-            if (handler != null)
-            {
-                handler(entityId);
-            }
+            this.QueueEvent(eventType, null);
         }
 
         /// <summary>
-        /// Called when a new player has been added.
+        /// Queues a new event of the specified type along with the passed
+        /// event data.
         /// </summary>
-        /// <param name="player">
-        /// Player that has been added.
+        /// <param name="eventType">
+        /// Type of the event to queue.
         /// </param>
-        internal void InvokePlayerAdded(Player player)
+        /// <param name="eventData">
+        /// Data any listeners might be interested in.
+        /// </param>
+        public void QueueEvent(object eventType, object eventData)
         {
-            PlayerDelegate handler = this.PlayerAdded;
-
-            if (handler != null)
-            {
-                handler(player);
-            }
+            this.QueueEvent(new Event(eventType, eventData));
         }
 
         /// <summary>
-        /// Called when a player has been removed.
+        /// Queues the passed event to be processed later.
         /// </summary>
-        /// <param name="player">
-        /// Player that has been removed.
+        /// <param name="e">
+        /// Event to queue.
         /// </param>
-        internal void InvokePlayerRemoved(Player player)
+        public void QueueEvent(Event e)
         {
-            PlayerDelegate handler = this.PlayerRemoved;
-
-            if (handler != null)
-            {
-                handler(player);
-            }
+            this.events.Add(e);
         }
 
         /// <summary>
-        /// Called when the game starts.
+        /// Passes all queued events on to interested listeners and clears the
+        /// event queue.
         /// </summary>
-        internal void InvokeGameStarted()
+        public void ProcessEvents()
         {
-            GameDelegate handler = this.GameStarted;
-
-            if (handler != null)
+            foreach (Event e in this.events)
             {
-                handler();
+                if (this.listeners.ContainsKey(e.EventType))
+                {
+                    List<IEventListener> eventListeners = this.listeners[e.EventType];
+
+                    foreach (IEventListener listener in eventListeners)
+                    {
+                        listener.Notify(e);
+                    }
+                }
             }
-        }
 
-        /// <summary>
-        /// Called when the game has been paused.
-        /// </summary>
-        internal void InvokeGamePaused()
-        {
-            GameDelegate handler = this.GamePaused;
-
-            if (handler != null)
-            {
-                handler();
-            }
-        }
-
-        /// <summary>
-        /// Called when the game has been resumed.
-        /// </summary>
-        internal void InvokeGameResumed()
-        {
-            GameDelegate handler = this.GameResumed;
-
-            if (handler != null)
-            {
-                handler();
-            }
-        }
-
-        /// <summary>
-        /// Called when a new system has been added.
-        /// </summary>
-        /// <param name="system">
-        /// System that has been added.
-        /// </param>
-        internal void InvokeSystemAdded(ISystem system)
-        {
-            SystemDelegate handler = this.SystemAdded;
-
-            if (handler != null)
-            {
-                handler(system);
-            }
-        }
-
-        /// <summary>
-        /// Called when a new component has been added.
-        /// </summary>
-        /// <param name="entityId">
-        /// Id of the entity the component has been added to.
-        /// </param>
-        /// <param name="component">
-        /// Component that has been added.
-        /// </param>
-        internal void InvokeComponentAdded(long entityId, IComponent component)
-        {
-            ComponentDelegate handler = this.ComponentAdded;
-
-            if (handler != null)
-            {
-                handler(entityId, component);
-            }
-        }
-
-        /// <summary>
-        /// Called when a component has been removed.
-        /// </summary>
-        /// <param name="entityId">
-        /// Id of the entity the component has been removed from.
-        /// </param>
-        /// <param name="component">
-        /// Component that has been removed.
-        /// </param>
-        internal void InvokeComponentRemoved(long entityId, IComponent component)
-        {
-            ComponentDelegate handler = this.ComponentRemoved;
-
-            if (handler != null)
-            {
-                handler(entityId, component);
-            }
+            this.events.Clear();
         }
 
         #endregion
