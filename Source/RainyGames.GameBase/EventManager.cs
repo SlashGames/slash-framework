@@ -20,7 +20,12 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Queue of events to be processed.
         /// </summary>
-        private List<Event> events;
+        private List<Event> newEvents;
+
+        /// <summary>
+        /// Queue of events that are currently being processed.
+        /// </summary>
+        private List<Event> currentEvents;
 
         /// <summary>
         /// Listeners that are interested in events of specific types.
@@ -37,7 +42,8 @@ namespace RainyGames.GameBase
         /// </summary>
         public EventManager()
         {
-            this.events = new List<Event>();
+            this.newEvents = new List<Event>();
+            this.currentEvents = new List<Event>();
             this.listeners = new Dictionary<object, List<IEventListener>>();
         }
 
@@ -116,7 +122,7 @@ namespace RainyGames.GameBase
         /// </param>
         public void QueueEvent(Event e)
         {
-            this.events.Add(e);
+            this.newEvents.Add(e);
         }
 
         /// <summary>
@@ -125,7 +131,10 @@ namespace RainyGames.GameBase
         /// </summary>
         public void ProcessEvents()
         {
-            foreach (Event e in this.events)
+            this.currentEvents.AddRange(this.newEvents);
+            this.newEvents.Clear();
+
+            foreach (Event e in this.currentEvents)
             {
                 if (this.listeners.ContainsKey(e.EventType))
                 {
@@ -138,7 +147,7 @@ namespace RainyGames.GameBase
                 }
             }
 
-            this.events.Clear();
+            this.currentEvents.Clear();
         }
 
         #endregion
