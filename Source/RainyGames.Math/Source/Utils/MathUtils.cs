@@ -9,16 +9,15 @@ namespace RainyGames.Math.Utils
     using System;
 
     /// <summary>
-    ///   Contains little math utils that are often used. If there are long methods or multiple methods of the same
+    ///   Contains little math utils that are often used. If there are long methods or multiple methods of the same 
     ///   type, think about moving them into a seperate class, so this file doesn't get too big.
     /// </summary>
     public static class MathUtils
     {
-        #region Constants and Fields
+        #region Constants
 
         /// <summary>
-        ///   Euler's number.
-        ///   See http://en.wikipedia.org/wiki/E_%28mathematical_constant%29 for more details.
+        ///   Euler's number. See http://en.wikipedia.org/wiki/E_%28mathematical_constant%29 for more details.
         /// </summary>
         public const float E = 2.7182818284590452f;
 
@@ -28,16 +27,16 @@ namespace RainyGames.Math.Utils
 
         #endregion
 
-        #region Public Methods
+        #region Public Methods and Operators
 
         /// <summary>
         ///   Clamps the passed value to the passed bounds (i.e. if value is smaller than min bound it's set to min bound,
         ///   if bigger than max bound it's set to max bound).
         /// </summary>
-        /// <param name="value">Value to clamp.</param>
-        /// <param name="min">Minimum bound.</param>
-        /// <param name="max">Maximum bound (inclusive).</param>
-        /// <returns>Clamped value.</returns>
+        /// <param name="value"> Value to clamp. </param>
+        /// <param name="min"> Minimum bound. </param>
+        /// <param name="max"> Maximum bound (inclusive). </param>
+        /// <returns> Clamped value. </returns>
         public static T Clamp<T>(T value, T min, T max) where T : IComparable<T>
         {
             if (value.CompareTo(min) < 0)
@@ -53,28 +52,27 @@ namespace RainyGames.Math.Utils
                 return value;
             }
         }
-        
+
         /// <summary>
         ///   Checks if the passed value is within the passed bounds (i.e. bigger or equal minimum bound and 
         ///   smaller maximum bound).
         /// </summary>
-        /// <param name = "value">Value to check.</param>
-        /// <param name = "min">Minimum bound.</param>
-        /// <param name = "max">Maximum bound (exclusive).</param>
-        /// <returns>True if value is within bounds; otherwise, false.</returns>
+        /// <param name="value"> Value to check. </param>
+        /// <param name="min"> Minimum bound. </param>
+        /// <param name="max"> Maximum bound (exclusive). </param>
+        /// <returns> True if value is within bounds; otherwise, false. </returns>
         public static bool IsWithinBounds<T>(T value, T min, T max) where T : IComparable<T>
         {
             return value.CompareTo(min) >= 0 && value.CompareTo(max) < 0;
         }
 
         /// <summary>
-        ///  Linear interpolation of a float.
-        ///  TODO: generic
+        ///   Linear interpolation of a float. TODO: generic
         /// </summary>
-        /// <param name="x">First value.</param>
-        /// <param name="y">Second value.</param>
-        /// <param name="s">Weight.</param>
-        /// <returns>Interpolated value.</returns>
+        /// <param name="x"> First value. </param>
+        /// <param name="y"> Second value. </param>
+        /// <param name="s"> Weight. </param>
+        /// <returns> Interpolated value. </returns>
         public static float Lerp(float x, float y, float step)
         {
             return x + (step * (y - x));
@@ -83,9 +81,9 @@ namespace RainyGames.Math.Utils
         /// <summary>
         ///   Returns the maximum value of the two passed values.
         /// </summary>
-        /// <param name="a">First value.</param>
-        /// <param name="b">Second value.</param>
-        /// <returns>First value if it is bigger than the second; otherwise, the second value.</returns>
+        /// <param name="a"> First value. </param>
+        /// <param name="b"> Second value. </param>
+        /// <returns> First value if it is bigger than the second; otherwise, the second value. </returns>
         public static T Max<T>(T a, T b) where T : IComparable<T>
         {
             return a.CompareTo(b) > 0 ? a : b;
@@ -94,9 +92,9 @@ namespace RainyGames.Math.Utils
         /// <summary>
         ///   Returns the minimum value of the two passed values.
         /// </summary>
-        /// <param name="a">First value.</param>
-        /// <param name="b">Second value.</param>
-        /// <returns>First value if it is smaller than the second; otherwise, the second value.</returns>
+        /// <param name="a"> First value. </param>
+        /// <param name="b"> Second value. </param>
+        /// <returns> First value if it is smaller than the second; otherwise, the second value. </returns>
         public static T Min<T>(T a, T b) where T : IComparable<T>
         {
             return a.CompareTo(b) < 0 ? a : b;
