@@ -138,6 +138,7 @@ namespace RainyGames.GameBase
             {
                 this.systemManager.Update(dt);
                 this.eventManager.ProcessEvents();
+                this.entityManager.CleanUpEntities();
 
                 this.timeElapsed += dt;
             }

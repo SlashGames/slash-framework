@@ -131,23 +131,26 @@ namespace RainyGames.GameBase
         /// </summary>
         public void ProcessEvents()
         {
-            this.currentEvents.AddRange(this.newEvents);
-            this.newEvents.Clear();
-
-            foreach (Event e in this.currentEvents)
+            while (newEvents.Count > 0)
             {
-                if (this.listeners.ContainsKey(e.EventType))
-                {
-                    List<IEventListener> eventListeners = this.listeners[e.EventType];
+                this.currentEvents.AddRange(this.newEvents);
+                this.newEvents.Clear();
 
-                    foreach (IEventListener listener in eventListeners)
+                foreach (Event e in this.currentEvents)
+                {
+                    if (this.listeners.ContainsKey(e.EventType))
                     {
-                        listener.Notify(e);
+                        List<IEventListener> eventListeners = this.listeners[e.EventType];
+
+                        foreach (IEventListener listener in eventListeners)
+                        {
+                            listener.Notify(e);
+                        }
                     }
                 }
-            }
 
-            this.currentEvents.Clear();
+                this.currentEvents.Clear();
+            }
         }
 
         #endregion

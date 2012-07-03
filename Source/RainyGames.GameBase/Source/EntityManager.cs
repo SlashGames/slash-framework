@@ -33,6 +33,11 @@ namespace RainyGames.GameBase
         private HashSet<long> entities;
 
         /// <summary>
+        /// Ids of all entities that have been removed in this tick.
+        /// </summary>
+        private HashSet<long> removedEntities;
+
+        /// <summary>
         /// Managers that are mapping entity ids to specific components.
         /// </summary>
         private Dictionary<Type, ComponentManager> componentManagers;
@@ -52,6 +57,7 @@ namespace RainyGames.GameBase
             this.game = game;
             this.nextEntityId = 0;
             this.entities = new HashSet<long>();
+            this.removedEntities = new HashSet<long>();
             this.componentManagers = new Dictionary<Type, ComponentManager>();
         }
 
@@ -86,7 +92,8 @@ namespace RainyGames.GameBase
         }
 
         /// <summary>
-        /// Removes the entity with the specified id, detaching all components.
+        /// Issues the entity with the specified id for removal at the end of
+        /// the current tick.
         /// </summary>
         /// <param name="id">
         /// Id of the entity to remove.
@@ -106,12 +113,26 @@ namespace RainyGames.GameBase
 
             this.game.EventManager.QueueEvent(FrameworkEventType.EntityRemoved, id);
 
-            foreach (ComponentManager manager in this.componentManagers.Values)
+            this.removedEntities.Add(id);
+        }
+
+        /// <summary>
+        /// Removes all entities that have been issued for removal during the
+        /// current tick, detaching all components.
+        /// </summary>
+        public void CleanUpEntities()
+        {
+            foreach (long id in removedEntities)
             {
-                manager.RemoveComponent(id);
+                foreach (ComponentManager manager in this.componentManagers.Values)
+                {
+                    manager.RemoveComponent(id);
+                }
+
+                this.entities.Remove(id);
             }
 
-            this.entities.Remove(id);
+            removedEntities.Clear();
         }
 
         /// <summary>
