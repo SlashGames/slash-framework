@@ -84,6 +84,7 @@ namespace RainyGames.GameBase
             this.game = game;
             this.PlayerIndex = index;
             this.PlayerName = name;
+            this.Alive = true;
         }
 
         #endregion
@@ -107,6 +108,11 @@ namespace RainyGames.GameBase
         /// Name of this player.
         /// </summary>
         public string PlayerName { get; set; }
+
+        /// <summary>
+        /// Whether this player is still alive or has been defeated.
+        /// </summary>
+        public bool Alive { get; set; }
 
         #endregion
     }
