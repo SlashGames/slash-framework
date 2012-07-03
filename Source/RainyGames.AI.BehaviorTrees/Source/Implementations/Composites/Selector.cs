@@ -1,34 +1,42 @@
-namespace RainyGames.AI.BehaviorTrees.Implementations
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Selector.cs" company="Rainy Games">
+//   Copyright (c) Rainy Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
 {
     using System;
     using System.Collections.Generic;
 
+    using RainyGames.AI.BehaviorTrees.Attributes;
     using RainyGames.AI.BehaviorTrees.Enums;
-    using RainyGames.AI.BehaviorTrees.Implementations.Composites;
     using RainyGames.AI.BehaviorTrees.Interfaces;
     using RainyGames.AI.BehaviorTrees.Tree;
     using RainyGames.Math.Utils;
 
     /// <summary>
-    ///   task which selects one of its children to be executed. If the chosen child finished execution, the task finishes.
+    ///   Task which selects one of its children to be executed. If the chosen child finished execution, the task finishes.
     /// </summary>
     [Serializable]
-    public class SelectorDecider : Composite<SelectorDecider.Data>
+    [Task(Name = "Selector", 
+        Description = "Task which selects one of its children to be executed. If the chosen child finished execution, the task finishes.")]
+    public class Selector : Composite<Selector.Data>
     {
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SelectorDecider" /> class. Constructor.
+        ///   Constructor.
         /// </summary>
-        public SelectorDecider()
+        public Selector()
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SelectorDecider" /> class. Constructor.
+        ///   Constructor.
         /// </summary>
-        /// <param name="children"> Child deciders. </param>
-        public SelectorDecider(List<ITask> children)
+        /// <param name="children"> Child tasks. </param>
+        public Selector(List<ITask> children)
             : base(children)
         {
         }

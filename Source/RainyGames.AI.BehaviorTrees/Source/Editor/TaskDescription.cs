@@ -1,3 +1,9 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TaskDescription.cs" company="Rainy Games">
+//   Copyright (c) Rainy Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace RainyGames.AI.BehaviorTrees.Editor
 {
     using System;
@@ -5,6 +11,7 @@ namespace RainyGames.AI.BehaviorTrees.Editor
     using System.Reflection;
 
     using RainyGames.AI.BehaviorTrees.Attributes;
+    using RainyGames.AI.BehaviorTrees.Implementations;
     using RainyGames.AI.BehaviorTrees.Interfaces;
     using RainyGames.Collections.Utils;
 
@@ -20,6 +27,11 @@ namespace RainyGames.AI.BehaviorTrees.Editor
         ///   Class name of the task.
         /// </summary>
         public string ClassName { get; set; }
+
+        /// <summary>
+        ///   Task description.
+        /// </summary>
+        public string Description { get; set; }
 
         /// <summary>
         ///   Indicates if the task is a decorator and thus can have a child task.
@@ -43,10 +55,25 @@ namespace RainyGames.AI.BehaviorTrees.Editor
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///   Task type. Returns null if the type can't be loaded because it's not available in the current loaded assemblies.
+        /// </summary>
+        protected Type Type
+        {
+            get
+            {
+                return Type.GetType(this.TypeName);
+            }
+        }
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Generates a task description for the passed task and its parameters type.
+        ///   Generates a task description for the specified task type.
         /// </summary>
         /// <typeparam name="T"> Task type. </typeparam>
         /// <returns> Task description. </returns>
@@ -56,15 +83,15 @@ namespace RainyGames.AI.BehaviorTrees.Editor
         }
 
         /// <summary>
-        ///   The generate.
+        ///   Generates a task description for the specified task type.
         /// </summary>
-        /// <param name="typeDecider"> The type decider. </param>
-        /// <returns> The RainyGames.AI.BehaviorTrees.Editor.TaskDescription. </returns>
-        public static TaskDescription Generate(Type typeDecider)
+        /// <param name="taskType"> Task type. </param>
+        /// <returns> Task description. </returns>
+        public static TaskDescription Generate(Type taskType)
         {
             // Check for task attribute.
             TaskAttribute[] taskAttributes =
-                typeDecider.GetCustomAttributes(typeof(TaskAttribute), true) as TaskAttribute[];
+                taskType.GetCustomAttributes(typeof(TaskAttribute), true) as TaskAttribute[];
             if (taskAttributes == null || taskAttributes.Length == 0)
             {
                 return null;
@@ -75,13 +102,14 @@ namespace RainyGames.AI.BehaviorTrees.Editor
             TaskDescription description = new TaskDescription
                 {
                     Name = taskAttribute.Name,
+                    Description = taskAttribute.Description,
                     IsDecorator = taskAttribute.IsDecorator,
-                    ClassName = typeDecider.Name,
-                    TypeName = typeDecider.AssemblyQualifiedName,
+                    ClassName = taskType.Name,
+                    TypeName = taskType.AssemblyQualifiedName,
                     ParameterDescriptions = new List<TaskParameterDescription>()
                 };
 
-            MemberInfo[] parameterMembers = typeDecider.GetMembers();
+            MemberInfo[] parameterMembers = taskType.GetMembers();
             foreach (MemberInfo parameterMember in parameterMembers)
             {
                 TaskParameterDescription parameterDescription = TaskParameterDescription.Generate(parameterMember);
@@ -97,10 +125,22 @@ namespace RainyGames.AI.BehaviorTrees.Editor
         }
 
         /// <summary>
-        ///   The equals.
+        ///   Creates a task instance from this description. If the task type can't be found, a ReferenceTask instance is created
+        ///   which capsules this task description.
         /// </summary>
-        /// <param name="other"> The other. </param>
-        /// <returns> The System.Boolean. </returns>
+        /// <returns> Task instance. </returns>
+        public ITask CreateInstance()
+        {
+            // Find task type.
+            Type taskType = this.Type ?? typeof(ReferenceTask);
+
+            // Create instance.
+            ITask task = (ITask)Activator.CreateInstance(taskType);
+            task.Name = this.Name;
+
+            return task;
+        }
+
         public bool Equals(TaskDescription other)
         {
             if (ReferenceEquals(null, other))
@@ -119,11 +159,6 @@ namespace RainyGames.AI.BehaviorTrees.Editor
                    && Equals(other.ClassName, this.ClassName);
         }
 
-        /// <summary>
-        ///   The equals.
-        /// </summary>
-        /// <param name="obj"> The obj. </param>
-        /// <returns> The System.Boolean. </returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -144,10 +179,6 @@ namespace RainyGames.AI.BehaviorTrees.Editor
             return this.Equals((TaskDescription)obj);
         }
 
-        /// <summary>
-        ///   The get hash code.
-        /// </summary>
-        /// <returns> The System.Int32. </returns>
         public override int GetHashCode()
         {
             unchecked
