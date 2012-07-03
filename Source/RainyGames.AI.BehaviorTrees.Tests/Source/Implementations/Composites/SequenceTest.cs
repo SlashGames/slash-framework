@@ -8,6 +8,9 @@ namespace RainyGames.AI.BehaviorTrees.Tests.Implementations.Composites
 {
     using NUnit.Framework;
 
+    using RainyGames.AI.BehaviorTrees.Editor;
+    using RainyGames.AI.BehaviorTrees.Implementations.Composites;
+
     public class SequenceTest
     {
         #region Public Methods and Operators
@@ -23,8 +26,10 @@ namespace RainyGames.AI.BehaviorTrees.Tests.Implementations.Composites
         }
 
         [Test]
-        public void Test()
+        public void TestGenerateTaskDescription()
         {
+            TaskDescription taskDescription = TaskDescription.Generate<Sequence>();
+            Assert.IsNotNull(taskDescription);
         }
 
         #endregion
