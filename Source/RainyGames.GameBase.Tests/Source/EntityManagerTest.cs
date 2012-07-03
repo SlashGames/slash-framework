@@ -68,6 +68,7 @@ namespace RainyGames.GameBase.Tests
         {
             this.entityManager.CreateEntity();
             this.entityManager.RemoveEntity(0L);
+            this.entityManager.CleanUpEntities();
 
             Assert.AreEqual(this.entityManager.EntityCount, 0L);
         }
