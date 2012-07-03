@@ -1,3 +1,9 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Decorator.cs" company="Rainy Games">
+//   Copyright (c) Rainy Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace RainyGames.AI.BehaviorTrees.Implementations.Decorators
 {
     using System;
@@ -15,6 +21,20 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Decorators
     [Serializable]
     public class Decorator : Task, IComposite
     {
+        #region Public Events
+
+        /// <summary>
+        ///   Called when a child was added to the composite.
+        /// </summary>
+        public event CompositeChildAddedDelegate ChildAdded;
+
+        /// <summary>
+        ///   Called when a child was removed from the composite.
+        /// </summary>
+        public event CompositeChildRemovedDelegate ChildRemoved;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -42,12 +62,6 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Decorators
         }
 
         /// <summary>
-        ///   Decorated task.
-        /// </summary>
-        [XmlIgnore]
-        public ITask Task { get; set; }
-
-        /// <summary>
         ///   Xml serialization for decorated task.
         /// </summary>
         [XmlElement("Child")]
@@ -63,6 +77,12 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Decorators
                 this.Task = value.Task;
             }
         }
+
+        /// <summary>
+        ///   Decorated task.
+        /// </summary>
+        [XmlIgnore]
+        public ITask Task { get; set; }
 
         #endregion
 
@@ -92,6 +112,8 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Decorators
             }
 
             this.Task = child;
+
+            this.InvokeChildAdded(child);
         }
 
         /// <summary>
@@ -160,8 +182,7 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Decorators
         /// <param name="taskNode"> Task node of this task. </param>
         /// <param name="predicate"> Predicate to forfill. </param>
         /// <param name="tasks"> List of tasks which forfill the passed predicate. </param>
-        public override void FindTasks(
-            TaskNode taskNode, Func<ITask, bool> predicate, ref ICollection<TaskNode> tasks)
+        public override void FindTasks(TaskNode taskNode, Func<ITask, bool> predicate, ref ICollection<TaskNode> tasks)
         {
             if (this.Task == null)
             {
@@ -212,6 +233,8 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Decorators
             }
 
             this.Task = child;
+
+            this.InvokeChildAdded(child);
         }
 
         /// <summary>
@@ -242,6 +265,9 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Decorators
             }
 
             this.Task = null;
+
+            this.InvokeChildRemoved(child);
+
             return true;
         }
 
@@ -309,6 +335,24 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Decorators
             ExecutionStatus result = this.Task.Update(agentData);
             --agentData.CurrentDeciderLevel;
             return result;
+        }
+
+        private void InvokeChildAdded(ITask childTask)
+        {
+            CompositeChildAddedDelegate handler = this.ChildAdded;
+            if (handler != null)
+            {
+                handler(this, childTask);
+            }
+        }
+
+        private void InvokeChildRemoved(ITask childTask)
+        {
+            CompositeChildRemovedDelegate handler = this.ChildRemoved;
+            if (handler != null)
+            {
+                handler(this, childTask);
+            }
         }
 
         #endregion

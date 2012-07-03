@@ -19,10 +19,10 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
     /// <summary>
     ///   task which contains array of references to other deciders.
     /// </summary>
-    /// <typeparam name="TDeciderData"> </typeparam>
+    /// <typeparam name="TTaskData"> Task data. </typeparam>
     [Serializable]
-    public abstract class Composite<TDeciderData> : BaseTask<TDeciderData>, IComposite
-        where TDeciderData : ITaskData, new()
+    public abstract class Composite<TTaskData> : BaseTask<TTaskData>, IComposite
+        where TTaskData : ITaskData, new()
     {
         #region Fields
 
@@ -51,6 +51,20 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
         {
             this.children = deciders;
         }
+
+        #endregion
+
+        #region Public Events
+
+        /// <summary>
+        ///   Called when a child was added to the composite.
+        /// </summary>
+        public event CompositeChildAddedDelegate ChildAdded;
+
+        /// <summary>
+        ///   Called when a child was removed from the composite.
+        /// </summary>
+        public event CompositeChildRemovedDelegate ChildRemoved;
 
         #endregion
 
@@ -108,9 +122,11 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
         public void AddChild(ITask child)
         {
             this.children.Add(child);
+
+            this.InvokeChildAdded(child);
         }
 
-        public bool Equals(Composite<TDeciderData> other)
+        public bool Equals(Composite<TTaskData> other)
         {
             if (ReferenceEquals(null, other))
             {
@@ -137,12 +153,12 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
                 return true;
             }
 
-            if (!obj.GetType().IsSubclassOf(typeof(Composite<TDeciderData>)))
+            if (!obj.GetType().IsSubclassOf(typeof(Composite<TTaskData>)))
             {
                 return false;
             }
 
-            return this.Equals((Composite<TDeciderData>)obj);
+            return this.Equals((Composite<TTaskData>)obj);
         }
 
         /// <summary>
@@ -151,8 +167,7 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
         /// <param name="taskNode"> Task node of this task. </param>
         /// <param name="predicate"> Predicate to forfill. </param>
         /// <param name="tasks"> List of tasks which forfill the passed predicate. </param>
-        public override void FindTasks(
-            TaskNode taskNode, Func<ITask, bool> predicate, ref ICollection<TaskNode> tasks)
+        public override void FindTasks(TaskNode taskNode, Func<ITask, bool> predicate, ref ICollection<TaskNode> tasks)
         {
             // Check children.
             for (int index = 0; index < this.children.Count; index++)
@@ -184,6 +199,8 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
         public void InsertChild(int index, ITask child)
         {
             this.children.Insert(index, child);
+
+            this.InvokeChildAdded(child);
         }
 
         /// <summary>
@@ -205,7 +222,14 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
         /// <returns> Indicates if the child was removed. </returns>
         public bool RemoveChild(ITask child)
         {
-            return this.children.Remove(child);
+            if (!this.children.Remove(child))
+            {
+                return false;
+            }
+
+            this.InvokeChildRemoved(child);
+
+            return true;
         }
 
         #endregion
@@ -363,6 +387,24 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
             ExecutionStatus executionStatus = this.children[childIdx].Update(agentData);
             --agentData.CurrentDeciderLevel;
             return executionStatus;
+        }
+
+        private void InvokeChildAdded(ITask childTask)
+        {
+            CompositeChildAddedDelegate handler = this.ChildAdded;
+            if (handler != null)
+            {
+                handler(this, childTask);
+            }
+        }
+
+        private void InvokeChildRemoved(ITask childTask)
+        {
+            CompositeChildRemovedDelegate handler = this.ChildRemoved;
+            if (handler != null)
+            {
+                handler(this, childTask);
+            }
         }
 
         #endregion

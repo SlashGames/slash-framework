@@ -1,13 +1,37 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IComposite.cs" company="Rainy Games">
+//   Copyright (c) Rainy Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace RainyGames.AI.BehaviorTrees.Interfaces
 {
     using System;
     using System.Collections.Generic;
+
+    public delegate void CompositeChildAddedDelegate(IComposite composite, ITask childTask);
+
+    public delegate void CompositeChildRemovedDelegate(IComposite composite, ITask childTask);
 
     /// <summary>
     ///   task which contains array of references to other deciders.
     /// </summary>
     public interface IComposite : ITask
     {
+        #region Public Events
+
+        /// <summary>
+        ///   Called when a child was added to the composite.
+        /// </summary>
+        event CompositeChildAddedDelegate ChildAdded;
+
+        /// <summary>
+        ///   Called when a child was removed from the composite.
+        /// </summary>
+        event CompositeChildRemovedDelegate ChildRemoved;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
