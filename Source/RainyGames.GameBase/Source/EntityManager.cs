@@ -122,7 +122,7 @@ namespace RainyGames.GameBase
         /// </summary>
         public void CleanUpEntities()
         {
-            foreach (long id in removedEntities)
+            foreach (long id in this.removedEntities)
             {
                 foreach (ComponentManager manager in this.componentManagers.Values)
                 {
@@ -132,7 +132,7 @@ namespace RainyGames.GameBase
                 this.entities.Remove(id);
             }
 
-            removedEntities.Clear();
+            this.removedEntities.Clear();
         }
 
         /// <summary>

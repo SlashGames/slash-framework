@@ -131,7 +131,7 @@ namespace RainyGames.GameBase
         /// </summary>
         public void ProcessEvents()
         {
-            while (newEvents.Count > 0)
+            while (this.newEvents.Count > 0)
             {
                 this.currentEvents.AddRange(this.newEvents);
                 this.newEvents.Clear();
