@@ -81,7 +81,7 @@ namespace RainyGames.GameBase
         {
             long id = this.nextEntityId++;
             this.entities.Add(id);
-            this.game.EventManager.InvokeEntityCreated(id);
+            this.game.EventManager.QueueEvent(FrameworkEventType.EntityCreated, id);
             return id;
         }
 
@@ -104,7 +104,7 @@ namespace RainyGames.GameBase
         {
             this.CheckEntityId(id);
 
-            this.game.EventManager.InvokeEntityRemoved(id);
+            this.game.EventManager.QueueEvent(FrameworkEventType.EntityRemoved, id);
 
             foreach (ComponentManager manager in this.componentManagers.Values)
             {

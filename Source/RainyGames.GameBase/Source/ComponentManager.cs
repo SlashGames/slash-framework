@@ -8,6 +8,7 @@ namespace RainyGames.GameBase
 {
     using System;
     using System.Collections.Generic;
+    using RainyGames.GameBase.EventArgs;
 
     /// <summary>
     /// Maps entity ids to specific game components. By contract this manager
@@ -75,7 +76,7 @@ namespace RainyGames.GameBase
             if (!this.components.ContainsKey(entityId))
             {
                 this.components.Add(entityId, component);
-                this.game.EventManager.InvokeComponentAdded(entityId, component);
+                this.game.EventManager.QueueEvent(FrameworkEventType.ComponentAdded, new ComponentEventArgs(entityId, component));
             }
             else
             {
@@ -100,7 +101,7 @@ namespace RainyGames.GameBase
             {
                 IComponent component = this.components[entityId];
                 this.components.Remove(entityId);
-                this.game.EventManager.InvokeComponentRemoved(entityId, component);
+                this.game.EventManager.QueueEvent(FrameworkEventType.ComponentRemoved, new ComponentEventArgs(entityId, component));
                 return true;
             }
             else

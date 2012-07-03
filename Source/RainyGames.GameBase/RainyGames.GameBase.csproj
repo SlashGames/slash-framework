@@ -32,15 +32,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="EventManager.cs" />
-    <Compile Include="IComponent.cs" />
-    <Compile Include="ComponentManager.cs" />
-    <Compile Include="EntityManager.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Source\Event.cs" />
+    <Compile Include="Source\EventArgs\ComponentEventArgs.cs" />
+    <Compile Include="Source\EventManager.cs" />
+    <Compile Include="Source\FrameworkEventType.cs" />
+    <Compile Include="Source\IComponent.cs" />
+    <Compile Include="Source\ComponentManager.cs" />
+    <Compile Include="Source\EntityManager.cs" />
+    <Compile Include="Source\Game.cs" />
+    <Compile Include="Source\IEventListener.cs" />
+    <Compile Include="Source\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ISystem.cs" />
-    <Compile Include="SystemManager.cs" />
+    <Compile Include="Source\ISystem.cs" />
+    <Compile Include="Source\SystemManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -34,3 +34,7 @@
 /Source/RainyGames.Serialization/bin
 /Source/RainyGames.Serialization/obj
 /Source/RainyGamesFramework.sln.DotSettings.user
+/Source/Artemis/Artemis_XNA_INDEPENDENT/StyleCop.Cache
+/Source/RainyGames.GameBase/RainyGames.GameBase.csproj.user
+/Source/RainyGames.Math/StyleCop.Cache
+/Source/RainyGames.Unity.Common/StyleCop.Cache

@@ -79,7 +79,7 @@ namespace RainyGames.GameBase
                 this.systems.Add(system);
                 this.systemsByType.Add(system.GetType(), system);
 
-                this.game.EventManager.InvokeSystemAdded(system);
+                this.game.EventManager.QueueEvent(FrameworkEventType.SystemAdded, system);
             }
             else
             {
