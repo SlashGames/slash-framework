@@ -1,34 +1,42 @@
-namespace RainyGames.AI.BehaviorTrees.Implementations
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Sequence.cs" company="Rainy Games">
+//   Copyright (c) Rainy Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
 {
     using System;
     using System.Collections.Generic;
 
+    using RainyGames.AI.BehaviorTrees.Attributes;
     using RainyGames.AI.BehaviorTrees.Enums;
-    using RainyGames.AI.BehaviorTrees.Implementations.Composites;
     using RainyGames.AI.BehaviorTrees.Interfaces;
     using RainyGames.AI.BehaviorTrees.Tree;
     using RainyGames.Math.Utils;
 
     /// <summary>
-    ///   task which executes its children one after another. The task finishes when all children finished.
+    ///   Task which executes its children one after another. The task finishes when all children finished.
     /// </summary>
     [Serializable]
-    public class SequenceDecider : Composite<SequenceDecider.Data>
+    [Task(Name = "Sequence", 
+        Description = "Task which executes its children one after another. The task finishes when all children finished.")]
+    public class Sequence : Composite<Sequence.Data>
     {
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SequenceDecider" /> class. Constructor.
+        ///   Constructor.
         /// </summary>
-        public SequenceDecider()
+        public Sequence()
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SequenceDecider" /> class. Constructor.
+        ///   Constructor.
         /// </summary>
-        /// <param name="children"> Child deciders. </param>
-        public SequenceDecider(List<ITask> children)
+        /// <param name="children"> Child tasks. </param>
+        public Sequence(List<ITask> children)
             : base(children)
         {
         }
