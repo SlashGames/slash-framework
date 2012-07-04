@@ -17,7 +17,7 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
     using RainyGames.Collections.Utils;
 
     /// <summary>
-    ///   task which contains array of references to other deciders.
+    ///   Task which contains array of references to other tasks.
     /// </summary>
     /// <typeparam name="TTaskData"> Task data. </typeparam>
     [Serializable]
