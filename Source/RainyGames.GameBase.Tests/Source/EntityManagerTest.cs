@@ -74,6 +74,21 @@ namespace RainyGames.GameBase.Tests
         }
 
         /// <summary>
+        /// Tests adding and removing an entity and checking whether the
+        /// entity is alive before and after.
+        /// </summary>
+        [Test]
+        public void TestEntityIsAlive()
+        {
+            this.entityManager.CreateEntity();
+            Assert.AreEqual(true, this.entityManager.EntityIsAlive(0L));
+
+            this.entityManager.RemoveEntity(0L);
+            this.entityManager.CleanUpEntities();
+            Assert.AreEqual(false, this.entityManager.EntityIsAlive(0L));
+        }
+
+        /// <summary>
         /// Tests adding a component to an entity controlled by the entity
         /// manager.
         /// </summary>
