@@ -136,6 +136,58 @@ namespace RainyGames.GameBase
         }
 
         /// <summary>
+        /// Retrieves an array containing the ids of all living entities in
+        /// O(n).
+        /// </summary>
+        /// <returns>
+        /// Array containing the ids of all entities that haven't been removed
+        /// yet.
+        /// </returns>
+        public long[] GetEntities()
+        {
+            if (this.entities.Count == 0)
+            {
+                return null;
+            }
+
+            long[] entityArray = new long[this.entities.Count];
+            this.entities.CopyTo(entityArray);
+            return entityArray;
+        }
+
+        /// <summary>
+        /// Checks whether the entity with the passed id has been removed or
+        /// not.
+        /// </summary>
+        /// <param name="entityId">
+        /// Id of the entity to check.
+        /// </param>
+        /// <returns>
+        /// <c>false</c>, if the entity has been removed, and <c>true</c>
+        /// otherwise.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Entity id is negative.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Entity id has not yet been assigned.
+        /// </exception>
+        public bool EntityIsAlive(long entityId)
+        {
+            if (entityId < 0)
+            {
+                throw new ArgumentOutOfRangeException("id", "Entity ids are always non-negative.");
+            }
+
+            if (entityId >= this.nextEntityId)
+            {
+                throw new ArgumentOutOfRangeException("id", "Entity id " + entityId + " has not yet been assigned.");
+            }
+
+            return this.entities.Contains(entityId);
+        }
+
+        /// <summary>
         /// Attaches the passed component to the entity with the specified id.
         /// </summary>
         /// <param name="entityId">
@@ -287,17 +339,7 @@ namespace RainyGames.GameBase
         /// </exception>
         private void CheckEntityId(long id)
         {
-            if (id < 0)
-            {
-                throw new ArgumentOutOfRangeException("id", "Entity ids are always non-negative.");
-            }
-
-            if (id >= this.nextEntityId)
-            {
-                throw new ArgumentOutOfRangeException("id", "Entity id " + id + " has not yet been assigned.");
-            }
-
-            if (!this.entities.Contains(id))
+            if (!this.EntityIsAlive(id))
             {
                 throw new ArgumentException("id", "The entity with id " + id + " has already been removed.");
             }
