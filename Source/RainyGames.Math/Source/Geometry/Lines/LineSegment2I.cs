@@ -67,6 +67,17 @@ namespace RainyGames.Math.Geometry.Lines
             }
         }
 
+        /// <summary>
+        ///   Center point on the line segment.
+        /// </summary>
+        public Vector2F Center
+        {
+            get
+            {
+                return new Vector2F((this.PointA.X + this.PointB.X) * 0.5f, (this.PointA.Y + this.PointB.Y) * 0.5f);
+            }
+        }
+
         #endregion
 
         #region Public Methods and Operators
