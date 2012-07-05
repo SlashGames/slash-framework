@@ -97,9 +97,9 @@ namespace RainyGames.GameBase
         /// </returns>
         public bool RemoveComponent(long entityId)
         {
-            if (this.components.ContainsKey(entityId))
+            IComponent component;
+            if (this.components.TryGetValue(entityId, out component))
             {
-                IComponent component = this.components[entityId];
                 this.components.Remove(entityId);
                 this.game.EventManager.QueueEvent(FrameworkEventType.ComponentRemoved, new ComponentEventArgs(entityId, component));
                 return true;
@@ -122,14 +122,9 @@ namespace RainyGames.GameBase
         /// </returns>
         public IComponent GetComponent(long entityId)
         {
-            if (this.components.ContainsKey(entityId))
-            {
-                return this.components[entityId];
-            }
-            else
-            {
-                return null;
-            }
+            IComponent component;
+            this.components.TryGetValue(entityId, out component);
+            return component;
         }
 
         #endregion

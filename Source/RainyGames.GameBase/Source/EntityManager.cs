@@ -261,14 +261,18 @@ namespace RainyGames.GameBase
                 throw new ArgumentNullException("componentType");
             }
 
-            if (!this.componentManagers.ContainsKey(componentType))
+            ComponentManager componentManager;
+
+            if (this.componentManagers.TryGetValue(componentType, out componentManager))
+            {
+                return componentManager.RemoveComponent(entityId);
+            }
+            else
             {
                 throw new ArgumentException(
                     "A component of type " + componentType + " has never been added before.",
                     "componentType");
             }
-
-            return this.componentManagers[componentType].RemoveComponent(entityId);
         }
 
         /// <summary>
@@ -308,14 +312,18 @@ namespace RainyGames.GameBase
                 throw new ArgumentNullException("componentType");
             }
 
-            if (!this.componentManagers.ContainsKey(componentType))
+            ComponentManager componentManager;
+
+            if (this.componentManagers.TryGetValue(componentType, out componentManager))
+            {
+                return componentManager.GetComponent(entityId);
+            }
+            else
             {
                 throw new ArgumentException(
                     "A component of type " + componentType + " has never been added before.",
                     "componentType");
             }
-
-            return this.componentManagers[componentType].GetComponent(entityId);
         }
 
         #endregion
