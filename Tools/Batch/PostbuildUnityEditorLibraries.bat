@@ -19,17 +19,34 @@ REM    target directory into the plugins folder of your unity project except for
 
 REM Read arguments.
 set PATH_TO_UNITY_PROJECT=%1
-set DLL_TARGET_DIR=%PATH_TO_UNITY_PROJECT%Assets\Plugins\
+set DLL_TARGET_DIR=%PATH_TO_UNITY_PROJECT%Assets\Editor\Plugins\
 set DLL_SOURCE_DIR=%2
 
 REM Don't copy Unity dlls, so hide them.
 attrib +h UnityEngine.dll > NUL
 attrib +h UnityEditor.dll > NUL
+attrib +h nunit.framework.dll > NUL
+
+REM Hide all dlls which are found in Unity main plugins folder (Unity gets confused if it founds a dll twice)
+set UNITY_PLUGIN_DIR=%PATH_TO_UNITY_PROJECT%Assets\Plugins\
+echo Searching in %UNITY_PLUGIN_DIR% for DLls.
+for %%a in (%UNITY_PLUGIN_DIR%*.dll) do (
+  echo Hiding dll %%~nxa
+  attrib +h %%~nxa > NUL
+)
 
 REM Copy all dlls to Unity plugins folder.
 echo Copying "%DLL_SOURCE_DIR%*.dll" to "%DLL_TARGET_DIR%"
 xcopy "%DLL_SOURCE_DIR%*.dll" "%DLL_TARGET_DIR%" /d /y
 
 REM Show hidden files again.
+for %%a in (%UNITY_PLUGIN_DIR%*.dll) do (
+
+  set FILENAME=%%~nxa
+  echo Showing dll %%~nxa
+  attrib -h %%~nxa > NUL
+)
+
 attrib -h UnityEngine.dll > NUL
 attrib -h UnityEditor.dll > NUL
+attrib -h nunit.framework.dll > NUL

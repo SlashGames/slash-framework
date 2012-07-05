@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.Math", "RainyGames.Math\RainyGames.Math.csproj", "{834E18DE-A529-4F17-A838-92B1EF259FE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.GameBase", "RainyGames.GameBase\RainyGames.GameBase.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.Serialization", "RainyGames.Serialization\RainyGames.Serialization.csproj", "{C92C88B0-5268-443B-B32F-CC2A6D686C51}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.AI.BehaviorTrees.Tests", "RainyGames.AI.BehaviorTrees.Tests\RainyGames.AI.BehaviorTrees.Tests.csproj", "{0E1AEE12-E607-4776-8492-6B7EC254FCB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.Unity.Editor.Common", "RainyGames.Unity.Editor.Common\RainyGames.Unity.Editor.Common.csproj", "{1A55D911-697C-4E3B-8FBC-55388C32F20F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,16 @@ Global
 		{0E1AEE12-E607-4776-8492-6B7EC254FCB8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0E1AEE12-E607-4776-8492-6B7EC254FCB8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0E1AEE12-E607-4776-8492-6B7EC254FCB8}.Release|x86.ActiveCfg = Release|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Release|x86.ActiveCfg = Release|Any CPU
 		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Debug|Mixed Platforms.Build.0 = Debug|x86

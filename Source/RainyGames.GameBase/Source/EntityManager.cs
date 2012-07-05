@@ -345,18 +345,45 @@ namespace RainyGames.GameBase
                 throw new ArgumentNullException("componentType");
             }
 
+            // Get component manager.
             ComponentManager componentManager;
-
-            if (this.componentManagers.TryGetValue(componentType, out componentManager))
-            {
-                return componentManager.GetComponent(entityId);
-            }
-            else
+            if (!this.componentManagers.TryGetValue(componentType, out componentManager))
             {
                 throw new ArgumentException(
-                    "A component of type " + componentType + " has never been added before.",
-                    "componentType");
+                    "A component of type " + componentType + " has never been added before.", "componentType");
             }
+            
+            return componentManager.GetComponent(entityId);
+        }
+
+        /// <summary>
+        /// Gets a component of the passed type attached to the entity with the specified id.
+        /// </summary>
+        /// <param name="entityId">
+        /// Id of the entity to get the component of.
+        /// </param>
+        /// <returns>
+        /// The component, if there is one of the specified type attached to the entity, and
+        /// null otherwise.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Entity id is negative.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Entity id has not yet been assigned.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Entity with the specified id has already been removed.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Passed component type is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// A component of the passed type has never been added before.
+        /// </exception>
+        public T GetComponent<T>(int entityId) where T : IComponent
+        {
+            return (T)this.GetComponent(entityId, typeof(T));
         }
 
         #endregion
