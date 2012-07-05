@@ -40,7 +40,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
-      <HintPath>%UNITY_PATH%Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(UNITY_PATH)Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

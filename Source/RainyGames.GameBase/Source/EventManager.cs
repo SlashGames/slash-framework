@@ -1,8 +1,8 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EventManager.cs" company="Rainy Games">
-// Copyright (c) Rainy Games. All rights reserved.
+//   Copyright (c) Rainy Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace RainyGames.GameBase
 {
@@ -10,124 +10,65 @@ namespace RainyGames.GameBase
     using System.Collections.Generic;
 
     /// <summary>
-    /// Allows listeners to register for game-related events and notifies them
-    /// whenever one of these events is fired.
+    ///   Allows listeners to register for game-related events and notifies them
+    ///   whenever one of these events is fired.
     /// </summary>
     public class EventManager
     {
-        #region Constants and Fields
+        #region Fields
 
         /// <summary>
-        /// Queue of events to be processed.
+        ///   Queue of events that are currently being processed.
         /// </summary>
-        private List<Event> newEvents;
+        private readonly List<Event> currentEvents;
 
         /// <summary>
-        /// Queue of events that are currently being processed.
+        ///   Listeners that are interested in events of specific types.
         /// </summary>
-        private List<Event> currentEvents;
+        private readonly Dictionary<object, EventDelegate> listeners;
 
         /// <summary>
-        /// Listeners that are interested in events of specific types.
+        ///   Queue of events to be processed.
         /// </summary>
-        private Dictionary<object, List<IEventListener>> listeners;
+        private readonly List<Event> newEvents;
+
+        /// <summary>
+        ///   Listeners which are interested in all events.
+        /// </summary>
+        private EventDelegate allEventListeners;
 
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        /// Constructs a new event manager with an empty event queue and
-        /// without any listeners.
+        ///   Constructs a new event manager with an empty event queue and
+        ///   without any listeners.
         /// </summary>
         public EventManager()
         {
             this.newEvents = new List<Event>();
             this.currentEvents = new List<Event>();
-            this.listeners = new Dictionary<object, List<IEventListener>>();
+            this.listeners = new Dictionary<object, EventDelegate>();
         }
 
         #endregion
 
-        #region Public Methods
+        #region Delegates
 
         /// <summary>
-        /// Makes the passed listener register interest for events of the
-        /// specified type.
+        ///   Signature of the event callbacks.
         /// </summary>
-        /// <param name="listener">
-        /// Listener that is interested in events of the specified type.
-        /// </param>
-        /// <param name="eventType">
-        /// Type of the event the passed listener is interested in.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// Passed listener is null.
-        /// </exception>
-        /// <exception cref="ArgumentNullException">
-        /// Specified event type is null.
-        /// </exception>
-        public void RegisterListener(IEventListener listener, object eventType)
-        {
-            if (listener == null)
-            {
-                throw new ArgumentNullException("listener");
-            }
+        /// <param name="e"> Event which occured. </param>
+        public delegate void EventDelegate(Event e);
 
-            if (eventType == null)
-            {
-                throw new ArgumentNullException("eventType");
-            }
+        #endregion
 
-            if (!this.listeners.ContainsKey(eventType))
-            {
-                this.listeners.Add(eventType, new List<IEventListener>());
-            }
-
-            this.listeners[eventType].Add(listener);
-        }
+        #region Public Methods and Operators
 
         /// <summary>
-        /// Queues a new event of the specified type without any additional
-        /// data.
-        /// </summary>
-        /// <param name="eventType">
-        /// Type of the event to queue.
-        /// </param>
-        public void QueueEvent(object eventType)
-        {
-            this.QueueEvent(eventType, null);
-        }
-
-        /// <summary>
-        /// Queues a new event of the specified type along with the passed
-        /// event data.
-        /// </summary>
-        /// <param name="eventType">
-        /// Type of the event to queue.
-        /// </param>
-        /// <param name="eventData">
-        /// Data any listeners might be interested in.
-        /// </param>
-        public void QueueEvent(object eventType, object eventData)
-        {
-            this.QueueEvent(new Event(eventType, eventData));
-        }
-
-        /// <summary>
-        /// Queues the passed event to be processed later.
-        /// </summary>
-        /// <param name="e">
-        /// Event to queue.
-        /// </param>
-        public void QueueEvent(Event e)
-        {
-            this.newEvents.Add(e);
-        }
-
-        /// <summary>
-        /// Passes all queued events on to interested listeners and clears the
-        /// event queue.
+        ///   Passes all queued events on to interested listeners and clears the
+        ///   event queue.
         /// </summary>
         public void ProcessEvents()
         {
@@ -138,19 +79,88 @@ namespace RainyGames.GameBase
 
                 foreach (Event e in this.currentEvents)
                 {
-                    if (this.listeners.ContainsKey(e.EventType))
+                    EventDelegate eventListeners;
+                    if (this.listeners.TryGetValue(e.EventType, out eventListeners))
                     {
-                        List<IEventListener> eventListeners = this.listeners[e.EventType];
-
-                        foreach (IEventListener listener in eventListeners)
+                        if (eventListeners != null)
                         {
-                            listener.Notify(e);
+                            eventListeners(e);
                         }
+                    }
+
+                    if (this.allEventListeners != null)
+                    {
+                        this.allEventListeners(e);
                     }
                 }
 
                 this.currentEvents.Clear();
             }
+        }
+
+        /// <summary>
+        ///   Queues a new event of the specified type along with the passed
+        ///   event data.
+        /// </summary>
+        /// <param name="eventType"> Type of the event to queue. </param>
+        /// <param name="eventData"> Data any listeners might be interested in. </param>
+        public void QueueEvent(object eventType, object eventData = null)
+        {
+            this.QueueEvent(new Event(eventType, eventData));
+        }
+
+        /// <summary>
+        ///   Queues the passed event to be processed later.
+        /// </summary>
+        /// <param name="e"> Event to queue. </param>
+        public void QueueEvent(Event e)
+        {
+            this.newEvents.Add(e);
+        }
+
+        /// <summary>
+        ///   Registers the specified delegate for events of the specified type.
+        /// </summary>
+        /// <param name="eventType"> Type of the event the caller is interested in. </param>
+        /// <param name="callback"> Delegate to invoke when specified type occured. </param>
+        /// <exception cref="ArgumentNullException">Specified delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">Specified event type is null.</exception>
+        public void RegisterListener(object eventType, EventDelegate callback)
+        {
+            if (eventType == null)
+            {
+                throw new ArgumentNullException("eventType");
+            }
+
+            if (callback == null)
+            {
+                throw new ArgumentNullException("callback");
+            }
+
+            if (this.listeners.ContainsKey(eventType))
+            {
+                this.listeners[eventType] += callback;
+            }
+            else
+            {
+                this.listeners[eventType] = callback;
+            }
+        }
+
+        /// <summary>
+        ///   Registers the specified delegate for all events.
+        /// </summary>
+        /// <param name="callback"> Delegate to invoke when specified type occured. </param>
+        /// <exception cref="ArgumentNullException">Specified delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">Specified event type is null.</exception>
+        public void RegisterListener(EventDelegate callback)
+        {
+            if (callback == null)
+            {
+                throw new ArgumentNullException("callback");
+            }
+
+            this.allEventListeners += callback;
         }
 
         #endregion
