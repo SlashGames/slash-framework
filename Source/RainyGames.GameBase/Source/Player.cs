@@ -115,5 +115,18 @@ namespace RainyGames.GameBase
         public bool Alive { get; set; }
 
         #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Returns the name of this player.
+        /// </summary>
+        /// <returns>Name of this player.</returns>
+        public override string ToString()
+        {
+            return this.PlayerName;
+        }
+
+        #endregion
     }
 }

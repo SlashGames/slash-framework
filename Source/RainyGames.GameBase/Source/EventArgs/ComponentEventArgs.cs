@@ -55,5 +55,18 @@ namespace RainyGames.GameBase.EventArgs
         public IComponent Component { get; private set; }
 
         #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Returns the id of the entity and the component for which this event has occurred.
+        /// </summary>
+        /// <returns>Entity id and component.</returns>
+        public override string ToString()
+        {
+            return string.Format("Entity id: {0}, component: {1}", this.EntityId, this.Component.ToString());
+        }
+
+        #endregion
     }
 }
