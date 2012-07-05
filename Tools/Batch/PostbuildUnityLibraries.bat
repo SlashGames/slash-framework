@@ -19,7 +19,7 @@ REM    target directory into the plugins folder of your unity project except for
 
 REM Read arguments.
 set PATH_TO_UNITY_PROJECT=%1
-set DLL_TARGET_DIR=%PATH_TO_UNITY_PROJECT%\Assets\Plugins\
+set DLL_TARGET_DIR=%PATH_TO_UNITY_PROJECT%Assets\Plugins\
 set DLL_SOURCE_DIR=%2
 
 REM Don't copy Unity dlls, so hide them.
