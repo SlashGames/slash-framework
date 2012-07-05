@@ -109,9 +109,10 @@ namespace RainyGames.GameBase
                 throw new ArgumentNullException("systemType");
             }
 
-            if (this.systemsByType.ContainsKey(systemType))
+            ISystem system;
+            if (this.systemsByType.TryGetValue(systemType, out system))
             {
-                return this.systemsByType[systemType];
+                return system;
             }
             else
             {

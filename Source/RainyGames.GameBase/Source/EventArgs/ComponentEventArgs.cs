@@ -29,7 +29,7 @@ namespace RainyGames.GameBase.EventArgs
         /// <exception cref="ArgumentNullException">
         /// Passed component is null.
         /// </exception>
-        public ComponentEventArgs(long entityId, IComponent component)
+        public ComponentEventArgs(int entityId, IComponent component)
         {
             if (component == null)
             {
@@ -47,12 +47,25 @@ namespace RainyGames.GameBase.EventArgs
         /// <summary>
         /// Id of the entity the component event has been fired for.
         /// </summary>
-        public long EntityId { get; private set; }
+        public int EntityId { get; private set; }
 
         /// <summary>
         /// Component that has been interacted with.
         /// </summary>
         public IComponent Component { get; private set; }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Returns the id of the entity and the component for which this event has occurred.
+        /// </summary>
+        /// <returns>Entity id and component.</returns>
+        public override string ToString()
+        {
+            return string.Format("Entity id: {0}, component: {1}", this.EntityId, this.Component.ToString());
+        }
 
         #endregion
     }
