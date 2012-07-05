@@ -166,6 +166,19 @@ namespace RainyGames.GameBase.Tests
         }
 
         /// <summary>
+        /// Tests removing a listener for a specific event.
+        /// </summary>
+        [Test]
+        public void TestRemoveListener()
+        {
+            this.game.EventManager.RegisterListener(FrameworkEventType.EntityCreated, this.OnEntityCreated);
+            this.game.EventManager.RemoveListener(FrameworkEventType.EntityCreated, this.OnEntityCreated);
+            this.game.EntityManager.CreateEntity();
+            this.game.EventManager.ProcessEvents();
+            Assert.IsFalse(this.testPassed);
+        }
+
+        /// <summary>
         /// Tests whether the appropriate event is fired on adding a new component to an entity.
         /// </summary>
         [Test]
@@ -283,7 +296,7 @@ namespace RainyGames.GameBase.Tests
         /// </param>
         private void OnSystemAdded(Event e)
         {
-            this.testPassed = this.system.Equals(system);
+            this.testPassed = this.system.Equals(e.EventData);
         }
 
         /// <summary>
@@ -295,7 +308,7 @@ namespace RainyGames.GameBase.Tests
         private void OnComponentAdded(Event e)
         {
             ComponentEventArgs eventArgs = (ComponentEventArgs)e.EventData;
-            this.testPassed = eventArgs.EntityId == 0 && this.component.Equals(component);
+            this.testPassed = eventArgs.EntityId == 0 && this.component.Equals(eventArgs.Component);
         }
 
         /// <summary>
@@ -307,7 +320,7 @@ namespace RainyGames.GameBase.Tests
         private void OnComponentRemoved(Event e)
         {
             ComponentEventArgs eventArgs = (ComponentEventArgs)e.EventData;
-            this.testPassed = eventArgs.EntityId == 0 && this.component.Equals(component);
+            this.testPassed = eventArgs.EntityId == 0 && this.component.Equals(eventArgs.Component);
         }
 
         /// <summary>

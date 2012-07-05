@@ -148,7 +148,9 @@ namespace RainyGames.GameBase
         }
 
         /// <summary>
-        ///   Registers the specified delegate for all events.
+        ///   Registers the specified delegate for all events. Note that the
+        ///   delegate will be called twice if it is registered for a specific
+        ///   event type as well.
         /// </summary>
         /// <param name="callback"> Delegate to invoke when specified type occured. </param>
         /// <exception cref="ArgumentNullException">Specified delegate is null.</exception>
@@ -161,6 +163,50 @@ namespace RainyGames.GameBase
             }
 
             this.allEventListeners += callback;
+        }
+
+        /// <summary>
+        ///   Unregisters the specified delegate for events of the specified type.
+        /// </summary>
+        /// <param name="eventType"> Type of the event the caller is no longer interested in. </param>
+        /// <param name="callback"> Delegate to remove. </param>
+        /// <exception cref="ArgumentNullException">Specified delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">Specified event type is null.</exception>
+        public void RemoveListener(object eventType, EventDelegate callback)
+        {
+            if (eventType == null)
+            {
+                throw new ArgumentNullException("eventType");
+            }
+
+            if (callback == null)
+            {
+                throw new ArgumentNullException("callback");
+            }
+
+            if (this.listeners.ContainsKey(eventType))
+            {
+                this.listeners[eventType] -= callback;
+            }
+        }
+
+        /// <summary>
+        ///   Unregisters the specified delegate for all events. Note that this
+        ///   will remove the delegate from the list of listeners interested in
+        ///   all events, only: Calling this function will not remove the delegate
+        ///   from specific events.
+        /// </summary>
+        /// <param name="callback"> Delegate to remove. </param>
+        /// <exception cref="ArgumentNullException">Specified delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">Specified event type is null.</exception>
+        public void RemoveListener(EventDelegate callback)
+        {
+            if (callback == null)
+            {
+                throw new ArgumentNullException("callback");
+            }
+
+            this.allEventListeners -= callback;
         }
 
         #endregion
