@@ -23,6 +23,16 @@ namespace RainyGames.Unity.Common.Math
             return new Rect(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
 
+        public static RectangleI ToRectangleI(this Rect rectangle)
+        {
+            return new RectangleI((int)rectangle.x, (int)rectangle.y, (int)rectangle.width, (int)rectangle.height);
+        }
+
+        public static RectangleF ToRectangleF(this Rect rectangle)
+        {
+            return new RectangleF(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+        }
+
         public static Vector2 ToVector2(this Vector2I vector)
         {
             return new Vector2(vector.X, vector.Y);
