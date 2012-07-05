@@ -28,7 +28,7 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Components attached to game entities.
         /// </summary>
-        private Dictionary<long, IComponent> components;
+        private Dictionary<int, IComponent> components;
 
         #endregion
 
@@ -43,7 +43,7 @@ namespace RainyGames.GameBase
         public ComponentManager(Game game)
         {
             this.game = game;
-            this.components = new Dictionary<long, IComponent>();
+            this.components = new Dictionary<int, IComponent>();
         }
 
         #endregion
@@ -66,7 +66,7 @@ namespace RainyGames.GameBase
         /// <exception cref="InvalidOperationException">
         /// There is already a component of the same type attached.
         /// </exception>
-        public void AddComponent(long entityId, IComponent component)
+        public void AddComponent(int entityId, IComponent component)
         {
             if (component == null)
             {
@@ -95,7 +95,7 @@ namespace RainyGames.GameBase
         /// <returns>
         /// Whether a component has been removed, or not.
         /// </returns>
-        public bool RemoveComponent(long entityId)
+        public bool RemoveComponent(int entityId)
         {
             IComponent component;
             if (this.components.TryGetValue(entityId, out component))
@@ -120,7 +120,7 @@ namespace RainyGames.GameBase
         /// <returns>
         /// The component, if there is one attached to the entity, and null otherwise.
         /// </returns>
-        public IComponent GetComponent(long entityId)
+        public IComponent GetComponent(int entityId)
         {
             IComponent component;
             this.components.TryGetValue(entityId, out component);

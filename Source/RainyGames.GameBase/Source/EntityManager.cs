@@ -25,17 +25,17 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Id that will be assigned to the next entitiy created.
         /// </summary>
-        private long nextEntityId;
+        private int nextEntityId;
 
         /// <summary>
         /// All active entity ids.
         /// </summary>
-        private HashSet<long> entities;
+        private HashSet<int> entities;
 
         /// <summary>
         /// Ids of all entities that have been removed in this tick.
         /// </summary>
-        private HashSet<long> removedEntities;
+        private HashSet<int> removedEntities;
 
         /// <summary>
         /// Managers that are mapping entity ids to specific components.
@@ -56,8 +56,8 @@ namespace RainyGames.GameBase
         {
             this.game = game;
             this.nextEntityId = 0;
-            this.entities = new HashSet<long>();
-            this.removedEntities = new HashSet<long>();
+            this.entities = new HashSet<int>();
+            this.removedEntities = new HashSet<int>();
             this.componentManagers = new Dictionary<Type, ComponentManager>();
         }
 
@@ -68,7 +68,7 @@ namespace RainyGames.GameBase
         /// <summary>
         /// Total number of entities managed by this EntityManager instance.
         /// </summary>
-        public long EntityCount
+        public int EntityCount
         {
             get { return this.entities.Count; }
         }
@@ -83,9 +83,9 @@ namespace RainyGames.GameBase
         /// <returns>
         /// Unique id of the new entity.
         /// </returns>
-        public long CreateEntity()
+        public int CreateEntity()
         {
-            long id = this.nextEntityId++;
+            int id = this.nextEntityId++;
             this.entities.Add(id);
             this.game.EventManager.QueueEvent(FrameworkEventType.EntityCreated, id);
             return id;
@@ -107,7 +107,7 @@ namespace RainyGames.GameBase
         /// <exception cref="ArgumentException">
         /// Entity with the specified id has already been removed.
         /// </exception>
-        public void RemoveEntity(long id)
+        public void RemoveEntity(int id)
         {
             this.CheckEntityId(id);
 
@@ -122,7 +122,7 @@ namespace RainyGames.GameBase
         /// </summary>
         public void CleanUpEntities()
         {
-            foreach (long id in this.removedEntities)
+            foreach (int id in this.removedEntities)
             {
                 foreach (ComponentManager manager in this.componentManagers.Values)
                 {
@@ -143,14 +143,14 @@ namespace RainyGames.GameBase
         /// Array containing the ids of all entities that haven't been removed
         /// yet.
         /// </returns>
-        public long[] GetEntities()
+        public int[] GetEntities()
         {
             if (this.entities.Count == 0)
             {
                 return null;
             }
 
-            long[] entityArray = new long[this.entities.Count];
+            int[] entityArray = new int[this.entities.Count];
             this.entities.CopyTo(entityArray);
             return entityArray;
         }
@@ -172,7 +172,7 @@ namespace RainyGames.GameBase
         /// <exception cref="ArgumentOutOfRangeException">
         /// Entity id has not yet been assigned.
         /// </exception>
-        public bool EntityIsAlive(long entityId)
+        public bool EntityIsAlive(int entityId)
         {
             if (entityId < 0)
             {
@@ -211,7 +211,7 @@ namespace RainyGames.GameBase
         /// <exception cref="InvalidOperationException">
         /// There is already a component of the same type attached.
         /// </exception>
-        public void AddComponent(long entityId, IComponent component)
+        public void AddComponent(int entityId, IComponent component)
         {
             this.CheckEntityId(entityId);
 
@@ -252,7 +252,7 @@ namespace RainyGames.GameBase
         /// <exception cref="ArgumentException">
         /// A component of the passed type has never been added before.
         /// </exception>
-        public bool RemoveComponent(long entityId, Type componentType)
+        public bool RemoveComponent(int entityId, Type componentType)
         {
             this.CheckEntityId(entityId);
 
@@ -303,7 +303,7 @@ namespace RainyGames.GameBase
         /// <exception cref="ArgumentException">
         /// A component of the passed type has never been added before.
         /// </exception>
-        public IComponent GetComponent(long entityId, Type componentType)
+        public IComponent GetComponent(int entityId, Type componentType)
         {
             this.CheckEntityId(entityId);
 
@@ -345,7 +345,7 @@ namespace RainyGames.GameBase
         /// <exception cref="ArgumentException">
         /// Entity with the specified id has already been removed.
         /// </exception>
-        private void CheckEntityId(long id)
+        private void CheckEntityId(int id)
         {
             if (!this.EntityIsAlive(id))
             {
