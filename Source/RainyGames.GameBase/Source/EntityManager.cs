@@ -8,6 +8,7 @@ namespace RainyGames.GameBase
 {
     using System;
     using System.Collections.Generic;
+    using RainyGames.Collections.AttributeTables;
 
     /// <summary>
     /// Creates and removes game entities. Holds references to all component
@@ -88,6 +89,38 @@ namespace RainyGames.GameBase
             int id = this.nextEntityId++;
             this.entities.Add(id);
             this.game.EventManager.QueueEvent(FrameworkEventType.EntityCreated, id);
+            return id;
+        }
+
+        /// <summary>
+        /// Creates a new entity, adding components matching the passed
+        /// blueprint and initializing these with the data stored in the 
+        /// blueprint and the speicified configuration. Configuration data
+        /// is preferred over blueprint data.
+        /// </summary>
+        /// <param name="blueprint">Blueprint describing the entity to create.</param>
+        /// <param name="configuration">Data for initializing the entity.</param>
+        /// <returns>
+        /// Unique id of the new entity.
+        /// </returns>
+        public int CreateEntity(Blueprint blueprint, IAttributeTable configuration)
+        {
+            int id = this.CreateEntity();
+
+            foreach (Type type in blueprint.ComponentTypes)
+            {
+                // Create component.
+                IComponent component = (IComponent)Activator.CreateInstance(type);
+                this.AddComponent(id, component);
+
+                // Initialize component with the attribute table data.
+                HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
+                attributeTable.AddParent(configuration);
+                attributeTable.AddParent(blueprint.AttributeTable);
+
+                component.InitComponent(configuration);
+            }
+
             return id;
         }
 

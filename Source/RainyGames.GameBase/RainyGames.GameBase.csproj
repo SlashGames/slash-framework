@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\Blueprint.cs" />
     <Compile Include="Source\Event.cs" />
     <Compile Include="Source\EventArgs\ComponentEventArgs.cs" />
     <Compile Include="Source\EventManager.cs" />
@@ -47,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RainyGames.Collections\RainyGames.Collections.csproj">
+      <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
+      <Name>RainyGames.Collections</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

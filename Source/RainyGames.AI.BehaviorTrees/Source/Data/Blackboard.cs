@@ -143,7 +143,7 @@ namespace RainyGames.AI.BehaviorTrees.Data
         /// <param name="id"> Id of attribute. </param>
         /// <param name="value">Contains value if id was found.</param>
         /// <returns> True if the attribute was found, else false. </returns>
-        public bool TryGetValue<T>(object id, out T value)
+        public override bool TryGetValue<T>(object id, out T value)
         {
             object objectValue;
             if (base.TryGetValue(id, out objectValue) &&
