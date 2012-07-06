@@ -417,11 +417,11 @@ namespace RainyGames.AI.BehaviorTrees.Implementations
         }
 
         /// <summary>
-        ///   Sets the value for the parameter with the passed description.
+        ///   Sets the value for the parameter with the specified description.
         /// </summary>
         /// <param name="parameterDescription"> Description of parameter to set value for. </param>
         /// <param name="value"> New parameter value. </param>
-        public void SetParameterValue(TaskParameterDescription parameterDescription, object value)
+        public void SetValue(TaskParameterDescription parameterDescription, object value)
         {
             // Check if task description contains parameter.
             if (this.taskDescription == null)
