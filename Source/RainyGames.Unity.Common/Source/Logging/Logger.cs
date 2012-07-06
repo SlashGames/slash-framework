@@ -69,10 +69,10 @@ namespace RainyGames.Unity.Common.Logging
                 return;
             }
 
-            string configFile = Application.dataPath + "/Configuration/log4net.xml";
+            string configFile = Application.dataPath + "/Configurations/log4net.xml";
             if (Application.platform == RuntimePlatform.WindowsPlayer)
             {
-                configFile = Application.dataPath + "\\Configuration\\log4net.xml";
+                configFile = Application.dataPath + "\\Configurations\\log4net.xml";
             }
             Configure(configFile);
         }
