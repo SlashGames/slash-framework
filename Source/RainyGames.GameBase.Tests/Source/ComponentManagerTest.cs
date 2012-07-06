@@ -8,6 +8,7 @@ namespace RainyGames.GameBase.Tests
 {
     using System;
     using NUnit.Framework;
+    using RainyGames.Collections.AttributeTables;
 
     /// <summary>
     /// Unit tests for the ComponentManagerTest class.
@@ -53,8 +54,8 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestAddComponent()
         {
-            this.componentManager.AddComponent(0L, this.testComponent);
-            Assert.AreEqual(this.testComponent, this.componentManager.GetComponent(0L));
+            this.componentManager.AddComponent(0, this.testComponent);
+            Assert.AreEqual(this.testComponent, this.componentManager.GetComponent(0));
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace RainyGames.GameBase.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestAddNullComponent()
         {
-            this.componentManager.AddComponent(0L, null);
+            this.componentManager.AddComponent(0, null);
         }
 
         /// <summary>
@@ -74,8 +75,8 @@ namespace RainyGames.GameBase.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestAddComponentTwice()
         {
-            this.componentManager.AddComponent(0L, this.testComponent);
-            this.componentManager.AddComponent(0L, this.testComponent);
+            this.componentManager.AddComponent(0, this.testComponent);
+            this.componentManager.AddComponent(0, this.testComponent);
         }
 
         /// <summary>
@@ -84,10 +85,10 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestRemoveComponent()
         {
-            this.componentManager.AddComponent(0L, this.testComponent);
-            Assert.IsTrue(this.componentManager.RemoveComponent(0L));
-            Assert.IsFalse(this.componentManager.RemoveComponent(0L));
-            Assert.IsNull(this.componentManager.GetComponent(0L));
+            this.componentManager.AddComponent(0, this.testComponent);
+            Assert.IsTrue(this.componentManager.RemoveComponent(0));
+            Assert.IsFalse(this.componentManager.RemoveComponent(0));
+            Assert.IsNull(this.componentManager.GetComponent(0));
         }
 
         #endregion
@@ -97,6 +98,13 @@ namespace RainyGames.GameBase.Tests
         /// </summary>
         private class TestComponent : IComponent
         {
+            /// <summary>
+            /// Initializes this component.
+            /// </summary>
+            /// <param name="attributeTable">This parameter is ignored.</param>
+            public void InitComponent(IAttributeTable attributeTable)
+            {
+            }
         }
     }
 }

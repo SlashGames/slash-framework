@@ -8,6 +8,7 @@ namespace RainyGames.GameBase.Tests
 {
     using System;
     using NUnit.Framework;
+    using RainyGames.Collections.AttributeTables;
 
     /// <summary>
     /// Unit tests for the EntityManager class.
@@ -54,9 +55,9 @@ namespace RainyGames.GameBase.Tests
         [Test]
         public void TestCreateEntity()
         {
-            Assert.AreEqual(this.entityManager.CreateEntity(), 0L);
-            Assert.AreEqual(this.entityManager.CreateEntity(), 1L);
-            Assert.AreEqual(this.entityManager.EntityCount, 2L);
+            Assert.AreEqual(this.entityManager.CreateEntity(), 0);
+            Assert.AreEqual(this.entityManager.CreateEntity(), 1);
+            Assert.AreEqual(this.entityManager.EntityCount, 2);
         }
 
         /// <summary>
@@ -67,10 +68,10 @@ namespace RainyGames.GameBase.Tests
         public void TestRemoveEntity()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.RemoveEntity(0L);
+            this.entityManager.RemoveEntity(0);
             this.entityManager.CleanUpEntities();
 
-            Assert.AreEqual(this.entityManager.EntityCount, 0L);
+            Assert.AreEqual(this.entityManager.EntityCount, 0);
         }
 
         /// <summary>
@@ -81,11 +82,11 @@ namespace RainyGames.GameBase.Tests
         public void TestEntityIsAlive()
         {
             this.entityManager.CreateEntity();
-            Assert.AreEqual(true, this.entityManager.EntityIsAlive(0L));
+            Assert.AreEqual(true, this.entityManager.EntityIsAlive(0));
 
-            this.entityManager.RemoveEntity(0L);
+            this.entityManager.RemoveEntity(0);
             this.entityManager.CleanUpEntities();
-            Assert.AreEqual(false, this.entityManager.EntityIsAlive(0L));
+            Assert.AreEqual(false, this.entityManager.EntityIsAlive(0));
         }
 
         /// <summary>
@@ -96,8 +97,8 @@ namespace RainyGames.GameBase.Tests
         public void TestAddComponent()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.AddComponent(0L, this.testComponent);
-            Assert.AreEqual(this.testComponent, this.entityManager.GetComponent(0L, typeof(TestComponent)));
+            this.entityManager.AddComponent(0, this.testComponent);
+            Assert.AreEqual(this.testComponent, this.entityManager.GetComponent(0, typeof(TestComponent)));
         }
 
         /// <summary>
@@ -108,10 +109,10 @@ namespace RainyGames.GameBase.Tests
         public void TestRemoveComponent()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.AddComponent(0L, this.testComponent);
-            Assert.IsTrue(this.entityManager.RemoveComponent(0L, typeof(TestComponent)));
-            Assert.IsFalse(this.entityManager.RemoveComponent(0L, typeof(TestComponent)));
-            Assert.IsNull(this.entityManager.GetComponent(0L, typeof(TestComponent)));
+            this.entityManager.AddComponent(0, this.testComponent);
+            Assert.IsTrue(this.entityManager.RemoveComponent(0, typeof(TestComponent)));
+            Assert.IsFalse(this.entityManager.RemoveComponent(0, typeof(TestComponent)));
+            Assert.IsNull(this.entityManager.GetComponent(0, typeof(TestComponent)));
         }
 
         /// <summary>
@@ -123,8 +124,8 @@ namespace RainyGames.GameBase.Tests
         public void TestRemoveComponentWithoutType()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.AddComponent(0L, this.testComponent);
-            this.entityManager.RemoveComponent(0L, null);
+            this.entityManager.AddComponent(0, this.testComponent);
+            this.entityManager.RemoveComponent(0, null);
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace RainyGames.GameBase.Tests
         public void TestRemoveComponentBeforeAdding()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.RemoveComponent(0L, typeof(TestComponent));
+            this.entityManager.RemoveComponent(0, typeof(TestComponent));
         }
 
         /// <summary>
@@ -148,8 +149,8 @@ namespace RainyGames.GameBase.Tests
         public void TestGetComponentWithoutType()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.AddComponent(0L, this.testComponent);
-            this.entityManager.GetComponent(0L, null);
+            this.entityManager.AddComponent(0, this.testComponent);
+            this.entityManager.GetComponent(0, null);
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace RainyGames.GameBase.Tests
         public void TestGetComponentBeforeAdding()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.GetComponent(0L, typeof(TestComponent));
+            this.entityManager.GetComponent(0, typeof(TestComponent));
         }
 
         /// <summary>
@@ -171,7 +172,7 @@ namespace RainyGames.GameBase.Tests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAccessEntityWithNegativeId()
         {
-            this.entityManager.GetComponent(-1L, typeof(TestComponent));
+            this.entityManager.GetComponent(-1, typeof(TestComponent));
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace RainyGames.GameBase.Tests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAccessEntityWithExceedingId()
         {
-            this.entityManager.GetComponent(42L, typeof(TestComponent));
+            this.entityManager.GetComponent(42, typeof(TestComponent));
         }
 
         /// <summary>
@@ -194,8 +195,8 @@ namespace RainyGames.GameBase.Tests
         public void TestAccessRemovedEntity()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.RemoveEntity(0L);
-            this.entityManager.GetComponent(0L, typeof(TestComponent));
+            this.entityManager.RemoveEntity(0);
+            this.entityManager.GetComponent(0, typeof(TestComponent));
         }
 
         #endregion
@@ -205,6 +206,13 @@ namespace RainyGames.GameBase.Tests
         /// </summary>
         private class TestComponent : IComponent
         {
+            /// <summary>
+            /// Initializes this component.
+            /// </summary>
+            /// <param name="attributeTable">This parameter is ignored.</param>
+            public void InitComponent(IAttributeTable attributeTable)
+            {
+            }
         }
     }
 }

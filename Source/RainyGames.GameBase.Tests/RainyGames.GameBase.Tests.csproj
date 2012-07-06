@@ -51,6 +51,10 @@
     <Compile Include="Source\SystemManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RainyGames.Collections\RainyGames.Collections.csproj">
+      <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
+      <Name>RainyGames.Collections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RainyGames.GameBase\RainyGames.GameBase.csproj">
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
       <Name>RainyGames.GameBase</Name>

@@ -7,6 +7,7 @@
 namespace RainyGames.GameBase.Tests
 {
     using NUnit.Framework;
+    using RainyGames.Collections.AttributeTables;
     using RainyGames.GameBase.EventArgs;
 
     /// <summary>
@@ -79,7 +80,7 @@ namespace RainyGames.GameBase.Tests
         {
             this.game.EventManager.RegisterListener(FrameworkEventType.EntityRemoved, this.OnEntityRemoved);
             this.game.EntityManager.CreateEntity();
-            this.game.EntityManager.RemoveEntity(0L);
+            this.game.EntityManager.RemoveEntity(0);
             this.CheckTestPassed();
         }
 
@@ -186,7 +187,7 @@ namespace RainyGames.GameBase.Tests
         {
             this.game.EventManager.RegisterListener(FrameworkEventType.ComponentAdded, this.OnComponentAdded);
             this.game.EntityManager.CreateEntity();
-            this.game.EntityManager.AddComponent(0L, this.component);
+            this.game.EntityManager.AddComponent(0, this.component);
             this.CheckTestPassed();
         }
 
@@ -198,11 +199,11 @@ namespace RainyGames.GameBase.Tests
         {
             this.game.EventManager.RegisterListener(FrameworkEventType.ComponentRemoved, this.OnComponentRemoved);
             this.game.EntityManager.CreateEntity();
-            this.game.EntityManager.AddComponent(0L, this.component);
-            this.game.EntityManager.RemoveComponent(0L, typeof(TestComponent));
+            this.game.EntityManager.AddComponent(0, this.component);
+            this.game.EntityManager.RemoveComponent(0, typeof(TestComponent));
             this.CheckTestPassed();
         }
-        
+
         #endregion
 
         #region Methods
@@ -215,7 +216,7 @@ namespace RainyGames.GameBase.Tests
         /// </param>
         private void OnEntityCreated(Event e)
         {
-            long entityId = (long)e.EventData;
+            int entityId = (int)e.EventData;
             this.testPassed = entityId == 0;
         }
 
@@ -227,7 +228,7 @@ namespace RainyGames.GameBase.Tests
         /// </param>
         private void OnEntityRemoved(Event e)
         {
-            long entityId = (long)e.EventData;
+            int entityId = (int)e.EventData;
             this.testPassed = entityId == 0;
         }
 
@@ -356,6 +357,13 @@ namespace RainyGames.GameBase.Tests
         /// </summary>
         private class TestComponent : IComponent
         {
+            /// <summary>
+            /// Initializes this component.
+            /// </summary>
+            /// <param name="attributeTable">This parameter is ignored.</param>
+            public void InitComponent(IAttributeTable attributeTable)
+            {
+            }
         }
     }
 }
