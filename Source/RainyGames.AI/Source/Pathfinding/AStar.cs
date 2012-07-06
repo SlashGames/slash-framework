@@ -28,11 +28,12 @@ namespace RainyGames.AI.Pathfinding
         /// List of pathfinding nodes representing the shortest path, if there is one,
         /// and null otherwise.
         /// </returns>
+        /// <typeparam name="T">Type of the pathfinding nodes.</typeparam>
         /// <exception cref="ArgumentNullException">
         /// Passed graph or start or finish node is <c>null</c>.
         /// </exception>
-        public static List<IAStarNode> FindPath(
-            IWeightedGraph<IAStarNode> graph, IAStarNode start, IAStarNode finish)
+        public static List<T> FindPath<T>(IWeightedGraph<T> graph, T start, T finish)
+            where T : IAStarNode
         {
             if (graph == null)
             {
@@ -55,21 +56,22 @@ namespace RainyGames.AI.Pathfinding
             bool algorithmAborted = false;
 
             // Initialize list to choose the next node of the path from.
-            IPriorityQueue<IAStarNode> openList = new FibonacciHeap<IAStarNode>();
-            IPriorityQueueItem<IAStarNode>[] fibHeapItems =
-                new FibonacciHeapItem<IAStarNode>[graph.VertexCount];
+            IPriorityQueue<T> openList = new FibonacciHeap<T>();
+            IPriorityQueueItem<T>[] fibHeapItems = new FibonacciHeapItem<T>[graph.VertexCount];
+            HashSet<T> dirtyNodes = new HashSet<T>();
 
             // Initialize queue to hold the nodes along the path to the finish.
-            Queue<IAStarNode> closedList = new Queue<IAStarNode>();
+            Queue<T> closedList = new Queue<T>();
 
             // Declare current node to work on in order to calculate the path.
-            IAStarNode currentNode;
+            T currentNode;
 
             // Declare list to hold the neighbors of the current node.
-            List<IAStarNode> neighbors;
+            List<T> neighbors;
 
             // Add starting node to open list.
             fibHeapItems[start.Index] = openList.Insert(start, 0);
+            dirtyNodes.Add(start);
             start.Discovered = true;
 
             // --- A* Pathfinding Algorithm ---
@@ -83,7 +85,7 @@ namespace RainyGames.AI.Pathfinding
                 currentNode.Visited = true;
 
                 // We're done if the target node is added to the closed list.
-                if (currentNode == finish)
+                if (currentNode.Equals(finish))
                 {
                     algorithmComplete = true;
                     break;
@@ -93,8 +95,9 @@ namespace RainyGames.AI.Pathfinding
                 neighbors = graph.ListOfAdjacentVertices(currentNode);
 
                 // Add all nodes that aren't already on the open or closed list to the open list.
-                foreach (IAStarNode node in neighbors)
+                foreach (T node in neighbors)
                 {
+                    // Ignore nodes in the closed list.
                     if (!node.Visited)
                     {
                         if (!node.Discovered)
@@ -107,7 +110,7 @@ namespace RainyGames.AI.Pathfinding
                             // the node and the current node.
                             // In other words: The G score of the node is the total cost of the
                             // path between the starting node and this one.
-                            node.G = node.ParentNode.G + graph.GetEdgeWeight(node, node.ParentNode);
+                            node.G = node.ParentNode.G + graph.GetEdgeWeight(node, (T)node.ParentNode);
 
                             // The H score of the node is calculated by heuristically
                             // estimating the movement cost from the node to the finish.
@@ -122,6 +125,7 @@ namespace RainyGames.AI.Pathfinding
 
                             // Add to open list.
                             fibHeapItems[node.Index] = openList.Insert(node, node.F);
+                            dirtyNodes.Add(node);
                             node.Discovered = true;
                         }
                         else
@@ -135,15 +139,13 @@ namespace RainyGames.AI.Pathfinding
                                 node.ParentNode = currentNode;
 
                                 // Recalculate F and G costs.
-                                node.G = node.ParentNode.G + graph.GetEdgeWeight(node, node.ParentNode);
+                                node.G = node.ParentNode.G + graph.GetEdgeWeight(node, (T)node.ParentNode);
                                 node.F = node.G + node.H;
 
                                 openList.DecreaseKeyTo(fibHeapItems[node.Index], node.F);
                             }
                         }
                     }
-
-                    // Ignore nodes in the closed list.
                 }
 
                 // We've failed to find a path if the open list is empty.
@@ -157,28 +159,40 @@ namespace RainyGames.AI.Pathfinding
             if (algorithmComplete)
             {
                 // Generate path through parent pointers using a stack.
-                Stack<IAStarNode> s = new Stack<IAStarNode>();
-                IAStarNode node = finish;
-                while (node != start)
+                Stack<T> s = new Stack<T>();
+                T node = finish;
+                while (!node.Equals(start))
                 {
                     s.Push(node);
-                    node = node.ParentNode;
+                    node = (T)node.ParentNode;
                 }
 
                 // Push start manually.
                 s.Push(node);
 
                 // Generate path in right order.
-                List<IAStarNode> path = new List<IAStarNode>();
+                List<T> path = new List<T>();
                 while (s.Count > 0)
                 {
                     path.Add(s.Pop());
+                }
+
+                // Cleanup pathing.
+                foreach (T dirtyNode in dirtyNodes)
+                {
+                    dirtyNode.Reset();
                 }
 
                 return path;
             }
             else
             {
+                // Cleanup pathing.
+                foreach (T dirtyNode in dirtyNodes)
+                {
+                    dirtyNode.Reset();
+                }
+
                 return null;
             }
         }
