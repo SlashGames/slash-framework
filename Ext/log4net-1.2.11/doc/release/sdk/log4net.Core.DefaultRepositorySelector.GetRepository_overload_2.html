@@ -1,0 +1,52 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>DefaultRepositorySelector.GetRepository Method (String)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">DefaultRepositorySelector.GetRepository Method (String)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets the <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> for the specified repository. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />NotOverridable Overloads Public Function GetRepository( _<br />   ByVal <i>repositoryName</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a> _<br />) As <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> _<div>    Implements <a href="log4net.Core.IRepositorySelector.GetRepository_overload_2.html">IRepositorySelector.GetRepository</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> GetRepository(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>repositoryName</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>repositoryName</i>
+        </dt>
+        <dd>The repository to use to lookup the <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a>.</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p>The <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> for the specified repository.</p>
+      <h4 class="dtH4">Implements</h4>
+      <p>
+        <a href="log4net.Core.IRepositorySelector.GetRepository_overload_2.html">IRepositorySelector.GetRepository</a>
+      </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Returns the named repository. If <i>repositoryName</i> is <code>null</code> a <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemArgumentNullExceptionClassTopic.htm">ArgumentNullException</a> is thrown. If the repository does not exist a <a href="log4net.Core.LogException.html">LogException</a> is thrown. </p>
+            <p> Use <a href="log4net.Core.DefaultRepositorySelector.CreateRepository_overload_3.html">CreateRepository</a> to create a repository. </p>
+            <h4 class="dtH4">Exceptions</h4><div class="tablediv"><table class="dtTABLE" cellspacing="0"><tr valign="top"><th width="50%">Exception Type</th><th width="50%">Condition</th></tr><tr valign="top"><td width="50%"><a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemArgumentNullExceptionClassTopic.htm">ArgumentNullException</a></td><td width="50%"><i>repositoryName</i> is a null reference
+				  (<b>Nothing</b> in Visual Basic).</td></tr><tr valign="top"><td width="50%"><a href="log4net.Core.LogException.html">LogException</a></td><td width="50%"><i>repositoryName</i> does not exist.</td></tr></table></div><h4 class="dtH4">See Also</h4><p><a href="log4net.Core.DefaultRepositorySelector.html">DefaultRepositorySelector Class</a> | <a href="log4net.Core.html">log4net.Core Namespace</a> | <a href="log4net.Core.DefaultRepositorySelector.GetRepository_overloads.html">DefaultRepositorySelector.GetRepository Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="GetRepository method"></param><param name="Keyword" value="GetRepository method, DefaultRepositorySelector class"></param><param name="Keyword" value="DefaultRepositorySelector.GetRepository method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

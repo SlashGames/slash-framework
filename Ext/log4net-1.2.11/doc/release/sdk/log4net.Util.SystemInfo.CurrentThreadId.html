@@ -1,0 +1,43 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>CurrentThreadId Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">SystemInfo.CurrentThreadId Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets the ID of the current thread. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Shared ReadOnly Property CurrentThreadId As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">Integer</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">int</a> CurrentThreadId {get;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p>The ID of the current thread.</p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> On the .NET framework, the <code>AppDomain.GetCurrentThreadId</code> method is used to obtain the thread ID for the current thread. This is the operating system ID for the thread. </p>
+            <p> On the .NET Compact Framework 1.0 it is not possible to get the operating system thread ID for the current thread. The native method <code>GetCurrentThreadId</code> is implemented inline in a header file and cannot be called. </p>
+            <p> On the .NET Framework 2.0 the <code>Thread.ManagedThreadId</code> is used as this gives a stable id unrelated to the operating system thread ID which may change if the runtime is using fibers. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Util.SystemInfo.html">SystemInfo Class</a> | <a href="log4net.Util.html">log4net.Util Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="CurrentThreadId property"></param><param name="Keyword" value="CurrentThreadId property, SystemInfo class"></param><param name="Keyword" value="SystemInfo.CurrentThreadId property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

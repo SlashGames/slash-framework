@@ -1,0 +1,54 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>OptionConverter.InstantiateByClassName Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">OptionConverter.InstantiateByClassName Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Instantiates an object given a class name. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Shared Function InstantiateByClassName( _<br />   ByVal <i>className</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>superClass</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTypeClassTopic.htm">Type</a>, _<br />   ByVal <i>defaultValue</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a> _<br />) As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">object</a> InstantiateByClassName(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>className</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTypeClassTopic.htm">Type</a> <i>superClass</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">object</a> <i>defaultValue</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>className</i>
+        </dt>
+        <dd>The fully qualified class name of the object to instantiate.</dd>
+        <dt>
+          <i>superClass</i>
+        </dt>
+        <dd>The class to which the new object should belong.</dd>
+        <dt>
+          <i>defaultValue</i>
+        </dt>
+        <dd>The object to return in case of non-fulfillment.</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p> An instance of the <i>className</i> or <i>defaultValue</i> if the object could not be instantiated. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Checks that the <i>className</i> is a subclass of <i>superClass</i>. If that test fails or the object could not be instantiated, then <i>defaultValue</i> is returned. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Util.OptionConverter.html">OptionConverter Class</a> | <a href="log4net.Util.html">log4net.Util Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="InstantiateByClassName method"></param><param name="Keyword" value="InstantiateByClassName method, OptionConverter class"></param><param name="Keyword" value="OptionConverter.InstantiateByClassName method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

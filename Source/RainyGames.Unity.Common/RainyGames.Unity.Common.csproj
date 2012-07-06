@@ -34,11 +34,25 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Attributes\ExposePropertyAttribute.cs" />
+    <Compile Include="Source\GUI\GuiExt.cs" />
+    <Compile Include="Source\GUI\GUILayoutExt.cs" />
+    <Compile Include="Source\GUI\ValueEditors\EnumValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\FloatValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\IntegerValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\IValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\IValueEditorContext.cs" />
     <Compile Include="Source\GUI\GUIHelper.cs" />
+    <Compile Include="Source\GUI\ValueEditors\SimpleValueEditorContext.cs" />
+    <Compile Include="Source\GUI\ValueEditors\TextValueEditor.cs" />
+    <Compile Include="Source\Logging\ConsoleAppender.cs" />
+    <Compile Include="Source\Logging\Logger.cs" />
     <Compile Include="Source\Math\MathConversionExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\Ext\log4net-1.2.11\bin\net\3.5\release\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
       <HintPath>$(UNITY_PATH)Data\Managed\UnityEngine.dll</HintPath>

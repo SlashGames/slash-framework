@@ -1,0 +1,42 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>AppenderSkeleton.PreAppendCheck Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">AppenderSkeleton.PreAppendCheck Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Called before <a href="log4net.Appender.AppenderSkeleton.Append_overload_1.html">Append</a> as a precondition. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overridable Protected Function PreAppendCheck() As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">Boolean</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />protected virtual <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">bool</a> PreAppendCheck();</div>
+      <h4 class="dtH4">Return Value</h4>
+      <p>
+        <code>true</code> if the call to <a href="log4net.Appender.AppenderSkeleton.Append_overload_1.html">Append</a> should proceed.</p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This method is called by <a href="log4net.Appender.AppenderSkeleton.DoAppend_overload_1.html">DoAppend</a> before the call to the abstract <a href="log4net.Appender.AppenderSkeleton.Append_overload_1.html">Append</a> method. </p>
+            <p> This method can be overridden in a subclass to extend the checks made before the event is passed to the <b>Append</b> method. </p>
+            <p> A subclass should ensure that they delegate this call to this base class if it is overridden. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="PreAppendCheck method"></param><param name="Keyword" value="PreAppendCheck method, AppenderSkeleton class"></param><param name="Keyword" value="AppenderSkeleton.PreAppendCheck method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

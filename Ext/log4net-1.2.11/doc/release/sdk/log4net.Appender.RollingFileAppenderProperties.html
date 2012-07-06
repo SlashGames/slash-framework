@@ -1,0 +1,75 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>RollingFileAppender Properties</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">RollingFileAppender Properties</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p>The properties of the <b>RollingFileAppender</b> class are listed below. For a complete list of <b>RollingFileAppender</b> class members, see the <a href="log4net.Appender.RollingFileAppenderMembers.html">RollingFileAppender Members</a> topic.</p>
+      <h4 class="dtH4">Public Instance Properties</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.FileAppender.AppendToFile.html">AppendToFile</a> (inherited from <b>FileAppender</b>)</td><td width="50%"> Gets or sets a flag that indicates whether the file should be appended to or overwritten. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.RollingFileAppender.CountDirection.html">CountDirection</a></td><td width="50%"> Gets or sets the rolling file count direction. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.RollingFileAppender.DatePattern.html">DatePattern</a></td><td width="50%"> Gets or sets the date pattern to be used for generating file names when rolling over on date. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.RollingFileAppender.DateTimeStrategy.html">DateTimeStrategy</a></td><td width="50%"> Gets or sets the strategy for determining the current date and time. The default implementation is to use LocalDateTime which internally calls through to DateTime.Now. DateTime.UtcNow may be used on frameworks newer than .NET 1.0 by specifying <b>UniversalDateTime</b>. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.FileAppender.Encoding.html">Encoding</a> (inherited from <b>FileAppender</b>)</td><td width="50%"> Gets or sets <b>Encoding</b> used to write to the file. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.TextWriterAppender.ErrorHandler.html">ErrorHandler</a> (inherited from <b>TextWriterAppender</b>)</td><td width="50%"> Gets or set the <a href="log4net.Core.IErrorHandler.html">IErrorHandler</a> and the underlying <a href="log4net.Util.QuietTextWriter.html">QuietTextWriter</a>, if any, for this appender. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.FileAppender.File.html">File</a> (inherited from <b>FileAppender</b>)</td><td width="50%"> Gets or sets the path to the file that logging will be written to. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.AppenderSkeleton.FilterHead.html">FilterHead</a> (inherited from <b>AppenderSkeleton</b>)</td><td width="50%"> The filter chain. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.TextWriterAppender.ImmediateFlush.html">ImmediateFlush</a> (inherited from <b>TextWriterAppender</b>)</td><td width="50%"> Gets or set whether the appender will flush at the end of each append operation. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.AppenderSkeleton.Layout.html">Layout</a> (inherited from <b>AppenderSkeleton</b>)</td><td width="50%"> Gets or sets the <a href="log4net.Layout.ILayout.html">ILayout</a> for this appender. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.FileAppender.LockingModel.html">LockingModel</a> (inherited from <b>FileAppender</b>)</td><td width="50%"> Gets or sets the <b>LockingModel</b> used to handle locking of the file. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.RollingFileAppender.MaxFileSize.html">MaxFileSize</a></td><td width="50%"> Gets or sets the maximum size that the output file is allowed to reach before being rolled over to backup files. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.RollingFileAppender.MaximumFileSize.html">MaximumFileSize</a></td><td width="50%"> Gets or sets the maximum size that the output file is allowed to reach before being rolled over to backup files. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.RollingFileAppender.MaxSizeRollBackups.html">MaxSizeRollBackups</a></td><td width="50%"> Gets or sets the maximum number of backup files that are kept before the oldest is erased. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.AppenderSkeleton.Name.html">Name</a> (inherited from <b>AppenderSkeleton</b>)</td><td width="50%"> Gets or sets the name of this appender. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.RollingFileAppender.PreserveLogFileNameExtension.html">PreserveLogFileNameExtension</a></td><td width="50%"> Gets or sets a value indicating whether to preserve the file name extension when rolling. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.RollingFileAppender.RollingStyle.html">RollingStyle</a></td><td width="50%"> Gets or sets the rolling style. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.FileAppender.SecurityContext.html">SecurityContext</a> (inherited from <b>FileAppender</b>)</td><td width="50%"> Gets or sets the <b>SecurityContext</b> used to write to the file. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.RollingFileAppender.StaticLogFileName.html">StaticLogFileName</a></td><td width="50%"> Gets or sets a value indicating whether to always log to the same file. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.AppenderSkeleton.Threshold.html">Threshold</a> (inherited from <b>AppenderSkeleton</b>)</td><td width="50%"> Gets or sets the threshold <a href="log4net.Core.Level.html">Level</a> of this appender. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="log4net.Appender.TextWriterAppender.Writer.html">Writer</a> (inherited from <b>TextWriterAppender</b>)</td><td width="50%"> Sets the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIOTextWriterClassTopic.htm">TextWriter</a> where the log output will go. </td></tr></table>
+      </div>
+      <h4 class="dtH4">Protected Instance Properties</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="protproperty.gif"></img><a href="log4net.Appender.TextWriterAppender.QuietWriter.html">QuietWriter</a> (inherited from <b>TextWriterAppender</b>)</td><td width="50%"> Gets or sets the <a href="log4net.Util.QuietTextWriter.html">QuietTextWriter</a> where logging events will be written to. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="protproperty.gif"></img><a href="log4net.Appender.TextWriterAppender.RequiresLayout.html">RequiresLayout</a> (inherited from <b>TextWriterAppender</b>)</td><td width="50%"> This appender requires a <a href="log4net.Layout.html">log4net.Layout</a> to be set. </td></tr></table>
+      </div>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="log4net.Appender.RollingFileAppender.html">RollingFileAppender Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="RollingFileAppender class, properties">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a>
+        </p>
+        <p>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

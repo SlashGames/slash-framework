@@ -1,0 +1,50 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>XmlConfigurator.ConfigureAndWatch Method (ILoggerRepository, FileInfo)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">XmlConfigurator.ConfigureAndWatch Method (ILoggerRepository, FileInfo)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Configures the <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> using the file specified, monitors the file for changes and reloads the configuration if a change is detected. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overloads Public Shared Function ConfigureAndWatch( _<br />   ByVal <i>repository</i> As <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a>, _<br />   ByVal <i>configFile</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIOFileInfoClassTopic.htm">FileInfo</a> _<br />) As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemCollectionsICollectionClassTopic.htm">ICollection</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemCollectionsICollectionClassTopic.htm">ICollection</a> ConfigureAndWatch(<br />   <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> <i>repository</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIOFileInfoClassTopic.htm">FileInfo</a> <i>configFile</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>repository</i>
+        </dt>
+        <dd>The repository to configure.</dd>
+        <dt>
+          <i>configFile</i>
+        </dt>
+        <dd>The XML file to load the configuration from.</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The configuration file must be valid XML. It must contain at least one element called <code>log4net</code> that holds the configuration data. </p>
+            <p> The configuration file will be monitored using a <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIOFileSystemWatcherClassTopic.htm">FileSystemWatcher</a> and depends on the behavior of that class. </p>
+            <p> For more information on how to configure log4net using a separate configuration file, see <a href="log4net.Config.XmlConfigurator.Configure_overload_5.html">Configure</a>. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Config.XmlConfigurator.html">XmlConfigurator Class</a> | <a href="log4net.Config.html">log4net.Config Namespace</a> | <a href="log4net.Config.XmlConfigurator.ConfigureAndWatch_overloads.html">XmlConfigurator.ConfigureAndWatch Overload List</a> | <a href="log4net.Config.XmlConfigurator.Configure_overload_5.html">Configure</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="ConfigureAndWatch method"></param><param name="Keyword" value="ConfigureAndWatch method, XmlConfigurator class"></param><param name="Keyword" value="XmlConfigurator.ConfigureAndWatch method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>AppenderSkeleton.Append Method (LoggingEvent)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">AppenderSkeleton.Append Method (LoggingEvent)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Subclasses of <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a> should implement this method to perform actual logging. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />MustOverride Overloads Protected Sub Append( _<br />   ByVal <i>loggingEvent</i> As <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> _<br />)</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />protected abstract <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemVoidClassTopic.htm">void</a> Append(<br />   <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> <i>loggingEvent</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>loggingEvent</i>
+        </dt>
+        <dd>The event to append.</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+            <p> A subclass must implement this method to perform logging of the <i>loggingEvent</i>. </p>
+            <p>This method will be called by <a href="log4net.Appender.AppenderSkeleton.DoAppend_overload_1.html">DoAppend</a> if all the conditions listed for that method are met. </p>
+            <p> To restrict the logging of events in the appender override the <a href="log4net.Appender.AppenderSkeleton.PreAppendCheck.html">PreAppendCheck</a> method. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a> | <a href="log4net.Appender.AppenderSkeleton.Append_overloads.html">AppenderSkeleton.Append Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Append method"></param><param name="Keyword" value="Append method, AppenderSkeleton class"></param><param name="Keyword" value="AppenderSkeleton.Append method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

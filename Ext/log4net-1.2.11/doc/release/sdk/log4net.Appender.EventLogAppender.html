@@ -1,0 +1,63 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>EventLogAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">EventLogAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Writes events to the system event log. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.EventLogAppenderMembers.html">EventLogAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <b>log4net.Appender.EventLogAppender</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class EventLogAppender<div>    Inherits <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class EventLogAppender<b> : <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The appender will fail if you try to write using an event source that doesn't exist unless it is running with local administrator privileges. See also http://logging.apache.org/log4net/release/faq.html#trouble-EventLog </p>
+            <p> The <code>EventID</code> of the event log entry can be set using the <code>EventID</code> property (<a href="log4net.Core.LoggingEvent.Properties.html">Properties</a>) on the <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a>. </p>
+            <p> The <code>Category</code> of the event log entry can be set using the <code>Category</code> property (<b>Properties</b>) on the <b>LoggingEvent</b>. </p>
+            <p> There is a limit of 32K characters for an event log message </p>
+            <p> When configuring the EventLogAppender a mapping can be specified to map a logging level to an event log entry type. For example: </p>
+            <pre class="code"><span class="lang">[XML]
+</span>&lt;mapping&gt;
+    &lt;level value="ERROR" /&gt;
+    &lt;eventLogEntryType value="Error" /&gt;
+&lt;/mapping&gt;
+&lt;mapping&gt;
+    &lt;level value="DEBUG" /&gt;
+    &lt;eventLogEntryType value="Information" /&gt;
+&lt;/mapping&gt;
+</pre>
+            <p> The Level is the standard log4net logging level and eventLogEntryType can be any value from the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDiagnosticsEventLogEntryTypeClassTopic.htm">EventLogEntryType</a> enum, i.e.: <ul type="disc"><li><b>Error - </b>an error event</li><li><b>Warning - </b>a warning event</li><li><b>Information - </b>an informational event</li></ul>
+            </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.EventLogAppenderMembers.html">EventLogAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="EventLogAppender class, about EventLogAppender class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

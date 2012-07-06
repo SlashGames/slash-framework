@@ -1,0 +1,51 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LocationInfo Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LocationInfo Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> The internal representation of caller location information. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Core.LocationInfoMembers.html">LocationInfo Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <b>log4net.Core.LocationInfo</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class LocationInfo</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class LocationInfo</div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This class uses the <code>System.Diagnostics.StackTrace</code> class to generate a call stack. The caller's information is then extracted from this stack. </p>
+            <p> The <code>System.Diagnostics.StackTrace</code> class is not supported on the .NET Compact Framework 1.0 therefore caller location information is not available on that framework. </p>
+            <p> The <code>System.Diagnostics.StackTrace</code> class has this to say about Release builds: </p>
+            <p> "StackTrace information will be most informative with Debug build configurations. By default, Debug builds include debug symbols, while Release builds do not. The debug symbols contain most of the file, method name, line number, and column information used in constructing StackFrame and StackTrace objects. StackTrace might not report as many method calls as expected, due to code transformations that occur during optimization." </p>
+            <p> This means that in a Release build the caller information may be incomplete or may not exist at all! Therefore caller location information cannot be relied upon in a Release build. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Core.html">log4net.Core</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Core.LocationInfoMembers.html">LocationInfo Members</a> | <a href="log4net.Core.html">log4net.Core Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="LocationInfo class, about LocationInfo class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

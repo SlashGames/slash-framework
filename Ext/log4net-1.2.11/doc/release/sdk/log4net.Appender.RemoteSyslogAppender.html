@@ -1,0 +1,51 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>RemoteSyslogAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">RemoteSyslogAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Logs events to a remote syslog daemon. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.RemoteSyslogAppenderMembers.html">RemoteSyslogAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <a href="log4net.Appender.UdpAppender.html">log4net.Appender.UdpAppender</a><br />         <b>log4net.Appender.RemoteSyslogAppender</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class RemoteSyslogAppender<div>    Inherits <a href="log4net.Appender.UdpAppender.html">UdpAppender</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class RemoteSyslogAppender<b> : <a href="log4net.Appender.UdpAppender.html">UdpAppender</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The BSD syslog protocol is used to remotely log to a syslog daemon. The syslogd listens for for messages on UDP port 514. </p>
+            <p> The syslog UDP protocol is not authenticated. Most syslog daemons do not accept remote log messages because of the security implications. You may be able to use the LocalSyslogAppender to talk to a local syslog service. </p>
+            <p> There is an RFC 3164 that claims to document the BSD Syslog Protocol. This RFC can be seen here: http://www.faqs.org/rfcs/rfc3164.html. This appender generates what the RFC calls an "Original Device Message", i.e. does not include the TIMESTAMP or HOSTNAME fields. By observation this format of message will be accepted by all current syslog daemon implementations. The daemon will attach the current time and the source hostname or IP address to any messages received. </p>
+            <p> Syslog messages must have a facility and and a severity. The severity is derived from the Level of the logging event. The facility must be chosen from the set of defined syslog <a href="log4net.Appender.RemoteSyslogAppender.SyslogFacility.html">RemoteSyslogAppender.SyslogFacility</a> values. The facilities list is predefined and cannot be extended. </p>
+            <p> An identifier is specified with each log message. This can be specified by setting the <a href="log4net.Appender.RemoteSyslogAppender.Identity.html">Identity</a> property. The identity (also know as the tag) must not contain white space. The default value for the identity is the application name (from <a href="log4net.Core.LoggingEvent.Domain.html">Domain</a>). </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.RemoteSyslogAppenderMembers.html">RemoteSyslogAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="RemoteSyslogAppender class, about RemoteSyslogAppender class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

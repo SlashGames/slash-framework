@@ -1,0 +1,61 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>DOMConfigurator.Configure Method (ILoggerRepository, Stream)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">DOMConfigurator.Configure Method (ILoggerRepository, Stream)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <P>
+        <FONT color="red">
+          <B>NOTE: This method is now obsolete.</B>
+        </FONT>
+      </P>
+      <P>
+        <B>Use XmlConfigurator.Configure instead of DOMConfigurator.Configure</B>
+      </P>
+      <HR />
+      <p> Configures the <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> using the specified configuration file. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overloads Public Shared Sub Configure( _<br />   ByVal <i>repository</i> As <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a>, _<br />   ByVal <i>configStream</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIOStreamClassTopic.htm">Stream</a> _<br />)</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemVoidClassTopic.htm">void</a> Configure(<br />   <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> <i>repository</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIOStreamClassTopic.htm">Stream</a> <i>configStream</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>repository</i>
+        </dt>
+        <dd>The repository to configure.</dd>
+        <dt>
+          <i>configStream</i>
+        </dt>
+        <dd>The stream to load the XML configuration from.</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+            <p>
+            <b>DOMConfigurator is obsolete. Use XmlConfigurator instead of DOMConfigurator.</b>
+            </p>
+            <p> The configuration data must be valid XML. It must contain at least one element called <code>log4net</code> that holds the configuration data. </p>
+            <p> Note that this method will NOT close the stream parameter. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Config.DOMConfigurator.html">DOMConfigurator Class</a> | <a href="log4net.Config.html">log4net.Config Namespace</a> | <a href="log4net.Config.DOMConfigurator.Configure_overloads.html">DOMConfigurator.Configure Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Configure method"></param><param name="Keyword" value="Configure method, DOMConfigurator class"></param><param name="Keyword" value="DOMConfigurator.Configure method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

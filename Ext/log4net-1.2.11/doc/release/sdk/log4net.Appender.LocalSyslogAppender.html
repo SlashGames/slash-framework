@@ -1,0 +1,75 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LocalSyslogAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LocalSyslogAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Logs events to a local syslog service. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.LocalSyslogAppenderMembers.html">LocalSyslogAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <b>log4net.Appender.LocalSyslogAppender</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class LocalSyslogAppender<div>    Inherits <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class LocalSyslogAppender<b> : <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+      <p>
+            <blockquote class="dtBlock"><b>Note</b>    This appender uses the POSIX libc library functions <code>openlog</code>, <code>syslog</code>, and <code>closelog</code>. If these functions are not available on the local system then this appender will not work! </blockquote>
+            <p> The functions <code>openlog</code>, <code>syslog</code>, and <code>closelog</code> are specified in SUSv2 and POSIX 1003.1-2001 standards. These are used to log messages to the local syslog service. </p>
+            <p> This appender talks to a local syslog service. If you need to log to a remote syslog daemon and you cannot configure your local syslog service to do this you may be able to use the <a href="log4net.Appender.RemoteSyslogAppender.html">RemoteSyslogAppender</a> to log via UDP. </p>
+            <p> Syslog messages must have a facility and and a severity. The severity is derived from the Level of the logging event. The facility must be chosen from the set of defined syslog <a href="log4net.Appender.LocalSyslogAppender.SyslogFacility.html">LocalSyslogAppender.SyslogFacility</a> values. The facilities list is predefined and cannot be extended. </p>
+            <p> An identifier is specified with each log message. This can be specified by setting the <a href="log4net.Appender.LocalSyslogAppender.Identity.html">Identity</a> property. The identity (also know as the tag) must not contain white space. The default value for the identity is the application name (from <a href="log4net.Util.SystemInfo.ApplicationFriendlyName.html">ApplicationFriendlyName</a>). </p>
+            </p>
+      <h4 class="dtH4">Requirements</h4>
+      <p>
+        <b>Namespace: </b>
+        <a href="log4net.Appender.html">log4net.Appender</a>
+      </p>
+      <p>
+        <b>Assembly: </b>log4net (in log4net.dll)
+					</p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="log4net.Appender.LocalSyslogAppenderMembers.html">LocalSyslogAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="LocalSyslogAppender class, about LocalSyslogAppender class">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a>
+        </p>
+        <p>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

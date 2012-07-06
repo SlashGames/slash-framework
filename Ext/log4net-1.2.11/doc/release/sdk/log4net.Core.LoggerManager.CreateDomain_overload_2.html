@@ -1,0 +1,62 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LoggerManager.CreateDomain Method (String, Type)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LoggerManager.CreateDomain Method (String, Type)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <P>
+        <FONT color="red">
+          <B>NOTE: This method is now obsolete.</B>
+        </FONT>
+      </P>
+      <P>
+        <B>Use CreateRepository instead of CreateDomain</B>
+      </P>
+      <HR />
+      <p> Creates a repository with the specified name and repository type. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overloads Public Shared Function CreateDomain( _<br />   ByVal <i>repository</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>repositoryType</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTypeClassTopic.htm">Type</a> _<br />) As <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> CreateDomain(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>repository</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTypeClassTopic.htm">Type</a> <i>repositoryType</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>repository</i>
+        </dt>
+        <dd>The name of the repository, this must be unique to the repository.</dd>
+        <dt>
+          <i>repositoryType</i>
+        </dt>
+        <dd>A <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTypeClassTopic.htm">Type</a> that implements <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> and has a no arg constructor. An instance of this type will be created to act as the <b>ILoggerRepository</b> for the repository specified.</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p>The <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> created for the repository.</p>
+      <h4 class="dtH4">Remarks</h4>
+            <p>
+            <b>CreateDomain is obsolete. Use CreateRepository instead of CreateDomain.</b>
+            </p>
+            <p> The <i>repository</i> name must be unique. Repositories cannot be redefined. An Exception will be thrown if the repository already exists. </p>
+            <h4 class="dtH4">Exceptions</h4><div class="tablediv"><table class="dtTABLE" cellspacing="0"><tr valign="top"><th width="50%">Exception Type</th><th width="50%">Condition</th></tr><tr valign="top"><td width="50%"><a href="log4net.Core.LogException.html">LogException</a></td><td width="50%">The specified repository already exists.</td></tr></table></div><h4 class="dtH4">See Also</h4><p><a href="log4net.Core.LoggerManager.html">LoggerManager Class</a> | <a href="log4net.Core.html">log4net.Core Namespace</a> | <a href="log4net.Core.LoggerManager.CreateDomain_overloads.html">LoggerManager.CreateDomain Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="CreateDomain method"></param><param name="Keyword" value="CreateDomain method, LoggerManager class"></param><param name="Keyword" value="LoggerManager.CreateDomain method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

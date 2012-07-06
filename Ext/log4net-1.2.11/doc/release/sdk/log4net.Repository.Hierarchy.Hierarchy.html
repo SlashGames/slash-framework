@@ -1,0 +1,52 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Hierarchy Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">Hierarchy Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Hierarchical organization of loggers </p>
+      <p>For a list of all members of this type, see <a href="log4net.Repository.Hierarchy.HierarchyMembers.html">Hierarchy Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Repository.LoggerRepositorySkeleton.html">log4net.Repository.LoggerRepositorySkeleton</a><br />      <b>log4net.Repository.Hierarchy.Hierarchy</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class Hierarchy<div>    Inherits <a href="log4net.Repository.LoggerRepositorySkeleton.html">LoggerRepositorySkeleton</a></div><div>    Implements <a href="log4net.Repository.IBasicRepositoryConfigurator.html">IBasicRepositoryConfigurator</a>, <a href="log4net.Repository.IXmlRepositoryConfigurator.html">IXmlRepositoryConfigurator</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class Hierarchy<b> : <a href="log4net.Repository.LoggerRepositorySkeleton.html">LoggerRepositorySkeleton</a>, <a href="log4net.Repository.IBasicRepositoryConfigurator.html">IBasicRepositoryConfigurator</a>, <a href="log4net.Repository.IXmlRepositoryConfigurator.html">IXmlRepositoryConfigurator</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p>
+            <i>The casual user should not have to deal with this class directly.</i>
+            </p>
+            <p> This class is specialized in retrieving loggers by name and also maintaining the logger hierarchy. Implements the <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> interface. </p>
+            <p> The structure of the logger hierarchy is maintained by the <a href="log4net.Repository.Hierarchy.Hierarchy.GetLogger_overload_1.html">GetLogger</a> method. The hierarchy is such that children link to their parent but parents do not have any references to their children. Moreover, loggers can be instantiated in any order, in particular descendant before ancestor. </p>
+            <p> In case a descendant is created before a particular ancestor, then it creates a provision node for the ancestor and adds itself to the provision node. Other descendants of the same ancestor add themselves to the previously created provision node. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Repository.Hierarchy.html">log4net.Repository.Hierarchy</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Repository.Hierarchy.HierarchyMembers.html">Hierarchy Members</a> | <a href="log4net.Repository.Hierarchy.html">log4net.Repository.Hierarchy Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Hierarchy class, about Hierarchy class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

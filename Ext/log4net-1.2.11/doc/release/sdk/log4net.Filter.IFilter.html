@@ -1,0 +1,113 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>IFilter Interface</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">IFilter Interface</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Implement this interface to provide customized logging event filtering </p>
+      <p>For a list of all members of this type, see <a href="log4net.Filter.IFilterMembers.html">IFilter Members</a>.</p>
+      <p>
+      </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Interface IFilter<div>    Implements <a href="log4net.Core.IOptionHandler.html">IOptionHandler</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public interface IFilter<b> : <a href="log4net.Core.IOptionHandler.html">IOptionHandler</a></b></div>
+      </div>
+      <h4 class="dtH4">Types that implement IFilter</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Type</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.DenyAllFilter.html">DenyAllFilter</a>
+            </td>
+            <td width="50%"> This filter drops all <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a>. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.FilterSkeleton.html">FilterSkeleton</a>
+            </td>
+            <td width="50%"> Subclass this type to implement customized logging event filtering </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.LevelMatchFilter.html">LevelMatchFilter</a>
+            </td>
+            <td width="50%"> This is a very simple filter based on <a href="log4net.Core.Level.html">Level</a> matching. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.LevelRangeFilter.html">LevelRangeFilter</a>
+            </td>
+            <td width="50%"> This is a simple filter based on <a href="log4net.Core.Level.html">Level</a> matching. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.LoggerMatchFilter.html">LoggerMatchFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a string in the event's logger name. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.MdcFilter.html">MdcFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a keyed string in the <a href="log4net.MDC.html">MDC</a>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.NdcFilter.html">NdcFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a string in the <a href="log4net.NDC.html">NDC</a>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.PropertyFilter.html">PropertyFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a string an event property </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.StringMatchFilter.html">StringMatchFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a string in the rendered message </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Users should implement this interface to implement customized logging event filtering. Note that <a href="log4net.Repository.Hierarchy.Logger.html">Logger</a> and <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a>, the parent class of all standard appenders, have built-in filtering rules. It is suggested that you first use and understand the built-in rules before rushing to write your own custom filters. </p>
+            <p> This abstract class assumes and also imposes that filters be organized in a linear chain. The <a href="log4net.Filter.IFilter.Decide.html">Decide</a> method of each filter is called sequentially, in the order of their addition to the chain. </p>
+            <p> The <b>Decide</b> method must return one of the integer constants <a href="log4net.Filter.FilterDecision.html">Deny</a>, <a href="log4net.Filter.FilterDecision.html">Neutral</a> or <a href="log4net.Filter.FilterDecision.html">Accept</a>. </p>
+            <p> If the value <b>Deny</b> is returned, then the log event is dropped immediately without consulting with the remaining filters. </p>
+            <p> If the value <b>Neutral</b> is returned, then the next filter in the chain is consulted. If there are no more filters in the chain, then the log event is logged. Thus, in the presence of no filters, the default behavior is to log all logging events. </p>
+            <p> If the value <b>Accept</b> is returned, then the log event is logged without consulting the remaining filters. </p>
+            <p> The philosophy of log4net filters is largely inspired from the Linux ipchains. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Filter.html">log4net.Filter</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Filter.IFilterMembers.html">IFilter Members</a> | <a href="log4net.Filter.html">log4net.Filter Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="IFilter interface, about IFilter interface"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

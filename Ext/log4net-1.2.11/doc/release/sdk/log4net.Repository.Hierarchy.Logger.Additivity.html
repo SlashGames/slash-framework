@@ -1,0 +1,42 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Additivity Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">Logger.Additivity Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets or sets a value indicating if child loggers inherit their parent's appenders. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overridable Public Property Additivity As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">Boolean</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public virtual <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">bool</a> Additivity {get; set;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p>
+            <code>true</code> if child loggers inherit their parent's appenders. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Additivity is set to <code>true</code> by default, that is children inherit the appenders of their ancestors by default. If this variable is set to <code>false</code> then the appenders found in the ancestors of this logger are not used. However, the children of this logger will inherit its appenders, unless the children have their additivity flag set to <code>false</code> too. See the user manual for more details. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Repository.Hierarchy.Logger.html">Logger Class</a> | <a href="log4net.Repository.Hierarchy.html">log4net.Repository.Hierarchy Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Additivity property"></param><param name="Keyword" value="Additivity property, Logger class"></param><param name="Keyword" value="Logger.Additivity property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

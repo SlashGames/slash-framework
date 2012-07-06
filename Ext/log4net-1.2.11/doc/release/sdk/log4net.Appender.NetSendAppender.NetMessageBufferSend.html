@@ -1,0 +1,83 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>NetSendAppender.NetMessageBufferSend Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">NetSendAppender.NetMessageBufferSend Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Sends a buffer of information to a registered message alias. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Protected Shared Function NetMessageBufferSend( _<br />   ByVal <i>serverName</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>msgName</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>fromName</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>buffer</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>bufferSize</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">Integer</a> _<br />) As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">Integer</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />protected static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">int</a> NetMessageBufferSend(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>serverName</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>msgName</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>fromName</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>buffer</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">int</a> <i>bufferSize</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>serverName</i>
+        </dt>
+        <dd>The DNS or NetBIOS name of the server on which the function is to execute.</dd>
+        <dt>
+          <i>msgName</i>
+        </dt>
+        <dd>The message alias to which the message buffer should be sent</dd>
+        <dt>
+          <i>fromName</i>
+        </dt>
+        <dd>The originator of the message.</dd>
+        <dt>
+          <i>buffer</i>
+        </dt>
+        <dd>The message text.</dd>
+        <dt>
+          <i>bufferSize</i>
+        </dt>
+        <dd>The length, in bytes, of the message text.</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p>
+            <p> If the function succeeds, the return value is zero. </p>
+            </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The following restrictions apply for sending network messages: </p>
+            <p>
+            <div class="tablediv"><table class="dtTABLE" cellspacing="0"><tr valign="top">
+                    <th width="50%">Platform</th>
+                    <th width="50%">Requirements</th>
+                </tr><tr valign="top">
+                    <td>Windows NT</td>
+                    <td>
+                        <p> No special group membership is required to send a network message. </p>
+                        <p> Admin, Accounts, Print, or Server Operator group membership is required to successfully send a network message on a remote server. </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>Windows 2000 or later</td>
+                    <td>
+                        <p> If you send a message on a domain controller that is running Active Directory, access is allowed or denied based on the access control list (ACL) for the securable object. The default ACL permits only Domain Admins and Account Operators to send a network message. </p>
+                        <p> On a member server or workstation, only Administrators and Server Operators can send a network message. </p>
+                    </td>
+                </tr></table></div>
+            </p>
+            <p> For more information see <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/netmgmt/netmgmt/security_requirements_for_the_network_management_functions.asp">Security Requirements for the Network Management Functions</a>. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.NetSendAppender.html">NetSendAppender Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="NetMessageBufferSend method"></param><param name="Keyword" value="NetMessageBufferSend method, NetSendAppender class"></param><param name="Keyword" value="NetSendAppender.NetMessageBufferSend method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

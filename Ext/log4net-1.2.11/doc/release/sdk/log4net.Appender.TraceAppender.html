@@ -1,0 +1,50 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>TraceAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">TraceAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Appends log events to the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDiagnosticsTraceClassTopic.htm">Trace</a> system. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.TraceAppenderMembers.html">TraceAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <b>log4net.Appender.TraceAppender</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class TraceAppender<div>    Inherits <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class TraceAppender<b> : <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The application configuration file can be used to control what listeners are actually used. See the MSDN documentation for the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDiagnosticsTraceClassTopic.htm">Trace</a> class for details on configuring the trace system. </p>
+            <p> Events are written using the <code>System.Diagnostics.Trace.Write(string,string)</code> method. The event's logger name is the default value for the category parameter of the Write method. </p>
+            <p>
+            <b>Compact Framework</b><br /> The Compact Framework does not support the <b>Trace</b> class for any operation except <code>Assert</code>. When using the Compact Framework this appender will write to the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDiagnosticsDebugClassTopic.htm">Debug</a> system rather than the Trace system. This appender will therefore behave like the <a href="log4net.Appender.DebugAppender.html">DebugAppender</a>. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.TraceAppenderMembers.html">TraceAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="TraceAppender class, about TraceAppender class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

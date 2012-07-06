@@ -1,0 +1,78 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>NDC.Push Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">NDC.Push Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Pushes a new context message. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Shared Function Push( _<br />   ByVal <i>message</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a> _<br />) As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIDisposableClassTopic.htm">IDisposable</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIDisposableClassTopic.htm">IDisposable</a> Push(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>message</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>message</i>
+        </dt>
+        <dd>The new context message.</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p> An <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIDisposableClassTopic.htm">IDisposable</a> that can be used to clean up the context stack. </p>
+      <h4 class="dtH4">Remarks</h4>
+      <p>
+            <blockquote class="dtBlock"><b>Note</b>   
+            <p> The NDC is deprecated and has been replaced by the <a href="log4net.ThreadContext.Stacks.html">Stacks</a>. The current NDC implementation forwards to the <code>ThreadContext.Stacks["NDC"]</code>. </p>
+            </blockquote>
+            <p> Pushes a new context onto the context stack. An <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIDisposableClassTopic.htm">IDisposable</a> is returned that can be used to clean up the context stack. This can be easily combined with the <code>using</code> keyword to scope the context. </p>
+            </p>
+      <h4 class="dtH4">Example</h4>
+      <p>Simple example of using the <code>Push</code> method with the <code>using</code> keyword. <pre class="code"><span class="lang">[C#]
+</span>using(log4net.NDC.Push("NDC_Message"))
+{
+    log.Warn("This should have an NDC message");
+}
+</pre>
+            </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="log4net.NDC.html">NDC Class</a> | <a href="log4net.html">log4net Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="Push method">
+        </param>
+        <param name="Keyword" value="Push method, NDC class">
+        </param>
+        <param name="Keyword" value="NDC.Push method">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a>
+        </p>
+        <p>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

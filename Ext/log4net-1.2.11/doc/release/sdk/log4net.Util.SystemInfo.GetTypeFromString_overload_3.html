@@ -1,0 +1,60 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>SystemInfo.GetTypeFromString Method (Assembly, String, Boolean, Boolean)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">SystemInfo.GetTypeFromString Method (Assembly, String, Boolean, Boolean)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Loads the type specified in the type string. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overloads Public Shared Function GetTypeFromString( _<br />   ByVal <i>relativeAssembly</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemReflectionAssemblyClassTopic.htm">Assembly</a>, _<br />   ByVal <i>typeName</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>throwOnError</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">Boolean</a>, _<br />   ByVal <i>ignoreCase</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">Boolean</a> _<br />) As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTypeClassTopic.htm">Type</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTypeClassTopic.htm">Type</a> GetTypeFromString(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemReflectionAssemblyClassTopic.htm">Assembly</a> <i>relativeAssembly</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>typeName</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">bool</a> <i>throwOnError</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">bool</a> <i>ignoreCase</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>relativeAssembly</i>
+        </dt>
+        <dd>An assembly to load the type from.</dd>
+        <dt>
+          <i>typeName</i>
+        </dt>
+        <dd>The name of the type to load.</dd>
+        <dt>
+          <i>throwOnError</i>
+        </dt>
+        <dd>Flag set to <code>true</code> to throw an exception if the type cannot be loaded.</dd>
+        <dt>
+          <i>ignoreCase</i>
+        </dt>
+        <dd>
+          <code>true</code> to ignore the case of the type name; otherwise, <code>false</code></dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p>The type loaded or <code>null</code> if it could not be loaded.</p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> If the type name is fully qualified, i.e. if contains an assembly name in the type name, the type will be loaded from the system using <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTypeClassGetTypeTopic.htm">GetType</a>. </p>
+            <p> If the type name is not fully qualified it will be loaded from the specified assembly. If the type is not found in the assembly then all the loaded assemblies will be searched for the type. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Util.SystemInfo.html">SystemInfo Class</a> | <a href="log4net.Util.html">log4net.Util Namespace</a> | <a href="log4net.Util.SystemInfo.GetTypeFromString_overloads.html">SystemInfo.GetTypeFromString Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="GetTypeFromString method"></param><param name="Keyword" value="GetTypeFromString method, SystemInfo class"></param><param name="Keyword" value="SystemInfo.GetTypeFromString method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

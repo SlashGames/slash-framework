@@ -1,0 +1,73 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>XmlConfigurator.Configure Method (ILoggerRepository, FileInfo)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">XmlConfigurator.Configure Method (ILoggerRepository, FileInfo)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Configures the <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> using the specified configuration file. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overloads Public Shared Function Configure( _<br />   ByVal <i>repository</i> As <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a>, _<br />   ByVal <i>configFile</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIOFileInfoClassTopic.htm">FileInfo</a> _<br />) As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemCollectionsICollectionClassTopic.htm">ICollection</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemCollectionsICollectionClassTopic.htm">ICollection</a> Configure(<br />   <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> <i>repository</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIOFileInfoClassTopic.htm">FileInfo</a> <i>configFile</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>repository</i>
+        </dt>
+        <dd>The repository to configure.</dd>
+        <dt>
+          <i>configFile</i>
+        </dt>
+        <dd>The XML file to load the configuration from.</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The configuration file must be valid XML. It must contain at least one element called <code>log4net</code> that holds the configuration data. </p>
+            <p> The log4net configuration file can possible be specified in the application's configuration file (either <code>MyAppName.exe.config</code> for a normal application on <code>Web.config</code> for an ASP.NET application). </p>
+            <p> The first element matching <code>&lt;configuration&gt;</code> will be read as the configuration. If this file is also a .NET .config file then you must specify a configuration section for the <code>log4net</code> element otherwise .NET will complain. Set the type for the section handler to <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemConfigurationIgnoreSectionHandlerClassTopic.htm">IgnoreSectionHandler</a>, for example: <pre class="code" escaped="true"><span class="lang">[XML]
+</span>&lt;configSections&gt;
+    &lt;section name="log4net" type="System.Configuration.IgnoreSectionHandler" /&gt;
+&lt;/configSections&gt;
+</pre>
+            </p>
+            <example> The following example configures log4net using a configuration file, of which the location is stored in the application's configuration file : </example>
+            <pre class="code"><span class="lang">[C#]
+</span>using log4net.Config;
+using System.IO;
+using System.Configuration;
+
+...
+
+XmlConfigurator.Configure(new FileInfo(ConfigurationSettings.AppSettings["log4net-config-file"]));
+</pre>
+            <p> In the <code>.config</code> file, the path to the log4net can be specified like this : </p>
+            <pre class="code" escaped="true"><span class="lang">[XML]
+</span>&lt;configuration&gt;
+    &lt;appSettings&gt;
+        &lt;add key="log4net-config-file" value="log.config" /&gt;
+    &lt;/appSettings&gt;
+&lt;/configuration&gt;
+</pre>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Config.XmlConfigurator.html">XmlConfigurator Class</a> | <a href="log4net.Config.html">log4net.Config Namespace</a> | <a href="log4net.Config.XmlConfigurator.Configure_overloads.html">XmlConfigurator.Configure Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Configure method"></param><param name="Keyword" value="Configure method, XmlConfigurator class"></param><param name="Keyword" value="XmlConfigurator.Configure method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

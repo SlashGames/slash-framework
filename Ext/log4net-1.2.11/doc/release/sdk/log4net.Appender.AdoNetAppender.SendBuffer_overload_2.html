@@ -1,0 +1,48 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>AdoNetAppender.SendBuffer Method (IDbTransaction, LoggingEvent[])</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">AdoNetAppender.SendBuffer Method (IDbTransaction, LoggingEvent[])</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Writes the events to the database using the transaction specified. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overridable Overloads Protected Sub SendBuffer( _<br />   ByVal <i>dbTran</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDataIDbTransactionClassTopic.htm">IDbTransaction</a>, _<br />   ByVal <i>events</i> As <a href="log4net.Core.LoggingEvent.html">LoggingEvent()</a> _<br />)</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />protected virtual <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemVoidClassTopic.htm">void</a> SendBuffer(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDataIDbTransactionClassTopic.htm">IDbTransaction</a> <i>dbTran</i>,<br />   <a href="log4net.Core.LoggingEvent.html">LoggingEvent[]</a> <i>events</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>dbTran</i>
+        </dt>
+        <dd>The transaction that the events will be executed under.</dd>
+        <dt>
+          <i>events</i>
+        </dt>
+        <dd>The array of events to insert into the database.</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The transaction argument can be <code>null</code> if the appender has been configured not to use transactions. See <a href="log4net.Appender.AdoNetAppender.UseTransactions.html">UseTransactions</a> property for more information. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.AdoNetAppender.html">AdoNetAppender Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a> | <a href="log4net.Appender.AdoNetAppender.SendBuffer_overloads.html">AdoNetAppender.SendBuffer Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="SendBuffer method"></param><param name="Keyword" value="SendBuffer method, AdoNetAppender class"></param><param name="Keyword" value="AdoNetAppender.SendBuffer method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

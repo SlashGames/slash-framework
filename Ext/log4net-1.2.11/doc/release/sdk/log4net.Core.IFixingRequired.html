@@ -1,0 +1,61 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>IFixingRequired Interface</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">IFixingRequired Interface</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Interface for objects that require fixing. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Core.IFixingRequiredMembers.html">IFixingRequired Members</a>.</p>
+      <p>
+      </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Interface IFixingRequired</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public interface IFixingRequired</div>
+      </div>
+      <h4 class="dtH4">Types that implement IFixingRequired</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Type</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Util.ThreadContextStack.html">ThreadContextStack</a>
+            </td>
+            <td width="50%"> Implementation of Stack for the <a href="log4net.ThreadContext.html">ThreadContext</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Interface that indicates that the object requires fixing before it can be taken outside the context of the appender's <a href="log4net.Appender.IAppender.DoAppend.html">DoAppend</a> method. </p>
+            <p> When objects that implement this interface are stored in the context properties maps <a href="log4net.GlobalContext.html">GlobalContext</a>
+            <a href="log4net.GlobalContext.Properties.html">Properties</a> and <a href="log4net.ThreadContext.html">ThreadContext</a>
+            <a href="log4net.ThreadContext.Properties.html">Properties</a> are fixed (see <a href="log4net.Core.LoggingEvent.Fix.html">Fix</a>) the <a href="log4net.Core.IFixingRequired.GetFixedObject.html">GetFixedObject</a> method will be called. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Core.html">log4net.Core</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Core.IFixingRequiredMembers.html">IFixingRequired Members</a> | <a href="log4net.Core.html">log4net.Core Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="IFixingRequired interface, about IFixingRequired interface"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>ProcessStartTime Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">SystemInfo.ProcessStartTime Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Get the start time for the current process. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Shared ReadOnly Property ProcessStartTime As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDateTimeClassTopic.htm">Date</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDateTimeClassTopic.htm">System.DateTime</a> ProcessStartTime {get;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This is the time at which the log4net library was loaded into the AppDomain. Due to reports of a hang in the call to <code>System.Diagnostics.Process.StartTime</code> this is not the start time for the current process. </p>
+            <p> The log4net library should be loaded by an application early during its startup, therefore this start time should be a good approximation for the actual start time. </p>
+            <p> Note that AppDomains may be loaded and unloaded within the same process without the process terminating, however this start time will be set per AppDomain. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Util.SystemInfo.html">SystemInfo Class</a> | <a href="log4net.Util.html">log4net.Util Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="ProcessStartTime property"></param><param name="Keyword" value="ProcessStartTime property, SystemInfo class"></param><param name="Keyword" value="SystemInfo.ProcessStartTime property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

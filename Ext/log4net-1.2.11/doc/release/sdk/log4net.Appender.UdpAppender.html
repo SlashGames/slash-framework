@@ -1,0 +1,98 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>UdpAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">UdpAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Sends logging events as connectionless UDP datagrams to a remote host or a multicast group using an <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemNetSocketsUdpClientClassTopic.htm">UdpClient</a>. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.UdpAppenderMembers.html">UdpAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <b>log4net.Appender.UdpAppender</b><br />         <a href="log4net.Appender.RemoteSyslogAppender.html">log4net.Appender.RemoteSyslogAppender</a></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class UdpAppender<div>    Inherits <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class UdpAppender<b> : <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+             <p> UDP guarantees neither that messages arrive, nor that they arrive in the correct order. </p>
+             <p> To view the logging results, a custom application can be developed that listens for logging events. </p>
+             <p> When decoding events send via this appender remember to use the same encoding to decode the events as was used to send the events. See the <a href="log4net.Appender.UdpAppender.Encoding.html">Encoding</a> property to specify the encoding to use. </p>
+             <h4 class="dtH4">Example</h4><p> This example shows how to log receive logging events that are sent on IP address 244.0.0.1 and port 8080 to the console. The event is encoded in the packet as a unicode string and it is decoded as such. <pre class="code"><span class="lang">[C#]
+</span>IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
+UdpClient udpClient;
+byte[] buffer;
+string loggingEvent;
+
+try 
+{
+    udpClient = new UdpClient(8080);
+    
+    while(true) 
+    {
+        buffer = udpClient.Receive(ref remoteEndPoint);
+        loggingEvent = System.Text.Encoding.Unicode.GetString(buffer);
+        Console.WriteLine(loggingEvent);
+    }
+} 
+catch(Exception e) 
+{
+    Console.WriteLine(e.ToString());
+}
+</pre>
+             <pre class="code"><span class="lang">[Visual Basic]
+</span> Dim remoteEndPoint as IPEndPoint
+ Dim udpClient as UdpClient
+ Dim buffer as Byte()
+ Dim loggingEvent as String
+ 
+ Try 
+     remoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
+     udpClient = new UdpClient(8080)
+
+     While True
+         buffer = udpClient.Receive(ByRef remoteEndPoint)
+         loggingEvent = System.Text.Encoding.Unicode.GetString(buffer)
+         Console.WriteLine(loggingEvent)
+     Wend
+ Catch e As Exception
+     Console.WriteLine(e.ToString())
+ End Try
+ </pre>
+             <p> An example configuration section to log information using this appender to the IP 224.0.0.1 on port 8080: </p>
+             <pre class="code" escaped="true"><span class="lang">[XML]
+</span>&lt;appender name="UdpAppender" type="log4net.Appender.UdpAppender"&gt;
+    &lt;remoteAddress value="224.0.0.1" /&gt;
+    &lt;remotePort value="8080" /&gt;
+    &lt;layout type="log4net.Layout.PatternLayout" value="%-5level %logger [%ndc] - %message%newline" /&gt;
+&lt;/appender&gt;
+</pre>
+             </p><h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.UdpAppenderMembers.html">UdpAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="UdpAppender class, about UdpAppender class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

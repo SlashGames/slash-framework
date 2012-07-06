@@ -1,0 +1,57 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LogManager Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LogManager Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> This class is used by client applications to request logger instances. </p>
+      <p>For a list of all members of this type, see <a href="log4net.LogManagerMembers.html">LogManager Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <b>log4net.LogManager</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />NotInheritable Public Class LogManager</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public sealed class LogManager</div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>This type is safe for multithreaded operations.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This class has static methods that are used by a client to request a logger instance. The <a href="log4net.LogManager.GetLogger_overload_1.html">GetLogger</a> method is used to retrieve a logger. </p>
+            <p> See the <a href="log4net.ILog.html">ILog</a> interface for more details. </p>
+            <h4 class="dtH4">Example</h4><p>Simple example of logging messages <pre class="code"><span class="lang">[C#]
+</span>ILog log = LogManager.GetLogger("application-log");
+
+log.Info("Application Start");
+log.Debug("This is a debug message");
+
+if (log.IsDebugEnabled)
+{
+    log.Debug("This is another debug message");
+}
+</pre>
+            </p><h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.html">log4net</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.LogManagerMembers.html">LogManager Members</a> | <a href="log4net.html">log4net Namespace</a> | <a href="log4net.ILog.html">ILog</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="LogManager class, about LogManager class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

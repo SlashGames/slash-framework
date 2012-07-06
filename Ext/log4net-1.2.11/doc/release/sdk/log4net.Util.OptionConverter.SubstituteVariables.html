@@ -1,0 +1,66 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>OptionConverter.SubstituteVariables Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">OptionConverter.SubstituteVariables Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Performs variable substitution in string <i>value</i> from the values of keys found in <i>props</i>. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Shared Function SubstituteVariables( _<br />   ByVal <i>value</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>props</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemCollectionsIDictionaryClassTopic.htm">IDictionary</a> _<br />) As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> SubstituteVariables(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>value</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemCollectionsIDictionaryClassTopic.htm">IDictionary</a> <i>props</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>value</i>
+        </dt>
+        <dd>The string on which variable substitution is performed.</dd>
+        <dt>
+          <i>props</i>
+        </dt>
+        <dd>The dictionary to use to lookup variables.</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p>The result of the substitutions.</p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The variable substitution delimiters are <b>${</b> and <b>}</b>. </p>
+            <p> For example, if props contains <code>key=value</code>, then the call </p>
+            <p>
+            <pre class="code"><span class="lang">[C#]
+</span>string s = OptionConverter.SubstituteVariables("Value of key is ${key}.");
+</pre>
+            </p>
+            <p> will set the variable <code>s</code> to "Value of key is value.". </p>
+            <p> If no value could be found for the specified key, then substitution defaults to an empty string. </p>
+            <p> For example, if system properties contains no value for the key "nonExistentKey", then the call </p>
+            <p>
+            <pre class="code"><span class="lang">[C#]
+</span>string s = OptionConverter.SubstituteVariables("Value of nonExistentKey is [${nonExistentKey}]");
+</pre>
+            </p>
+            <p> will set <s>s</s> to "Value of nonExistentKey is []". </p>
+            <p> An Exception is thrown if <i>value</i> contains a start delimiter "${" which is not balanced by a stop delimiter "}". </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Util.OptionConverter.html">OptionConverter Class</a> | <a href="log4net.Util.html">log4net.Util Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="SubstituteVariables method"></param><param name="Keyword" value="SubstituteVariables method, OptionConverter class"></param><param name="Keyword" value="OptionConverter.SubstituteVariables method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

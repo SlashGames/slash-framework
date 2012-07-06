@@ -1,0 +1,55 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>UserName Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LoggingEvent.UserName Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets the name of the current user. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public ReadOnly Property UserName As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> UserName {get;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p> The name of the current user, or <code>NOT AVAILABLE</code> when the underlying runtime has no support for retrieving the name of the current user. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Calls <code>WindowsIdentity.GetCurrent().Name</code> to get the name of the current windows user. </p>
+            <p> To improve performance, we could cache the string representation of the name, and reuse that as long as the identity stayed constant. Once the identity changed, we would need to re-assign and re-render the string. </p>
+            <p> However, the <code>WindowsIdentity.GetCurrent()</code> call seems to return different objects every time, so the current implementation doesn't do this type of caching. </p>
+            <p> Timing for these operations: </p>
+            <div class="tablediv"><table class="dtTABLE" cellspacing="0"><tr valign="top">
+                <th width="50%">Method</th>
+                <th width="50%">Results</th>
+              </tr><tr valign="top">
+                <td><code>WindowsIdentity.GetCurrent()</code></td>
+                <td>10000 loops, 00:00:00.2031250 seconds</td>
+              </tr><tr valign="top">
+                <td><code>WindowsIdentity.GetCurrent().Name</code></td>
+                <td>10000 loops, 00:00:08.0468750 seconds</td>
+              </tr></table></div>
+            <p> This means we could speed things up almost 40 times by caching the value of the <code>WindowsIdentity.GetCurrent().Name</code> property, since this takes (8.04-0.20) = 7.84375 seconds. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Core.LoggingEvent.html">LoggingEvent Class</a> | <a href="log4net.Core.html">log4net.Core Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="UserName property"></param><param name="Keyword" value="UserName property, LoggingEvent class"></param><param name="Keyword" value="LoggingEvent.UserName property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

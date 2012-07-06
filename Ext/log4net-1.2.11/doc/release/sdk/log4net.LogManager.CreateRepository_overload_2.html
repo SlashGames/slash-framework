@@ -1,0 +1,47 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LogManager.CreateRepository Method (String)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LogManager.CreateRepository Method (String)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Creates a repository with the specified name. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overloads Public Shared Function CreateRepository( _<br />   ByVal <i>repository</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a> _<br />) As <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> CreateRepository(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>repository</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>repository</i>
+        </dt>
+        <dd>The name of the repository, this must be unique amongst repositories.</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p>The <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> created for the repository.</p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Creates the default type of <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> which is a <a href="log4net.Repository.Hierarchy.Hierarchy.html">Hierarchy</a> object. </p>
+            <p> The <i>repository</i> name must be unique. Repositories cannot be redefined. An <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemExceptionClassTopic.htm">Exception</a> will be thrown if the repository already exists. </p>
+            <h4 class="dtH4">Exceptions</h4><div class="tablediv"><table class="dtTABLE" cellspacing="0"><tr valign="top"><th width="50%">Exception Type</th><th width="50%">Condition</th></tr><tr valign="top"><td width="50%"><a href="log4net.Core.LogException.html">LogException</a></td><td width="50%">The specified repository already exists.</td></tr></table></div><h4 class="dtH4">See Also</h4><p><a href="log4net.LogManager.html">LogManager Class</a> | <a href="log4net.html">log4net Namespace</a> | <a href="log4net.LogManager.CreateRepository_overloads.html">LogManager.CreateRepository Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="CreateRepository method"></param><param name="Keyword" value="CreateRepository method, LogManager class"></param><param name="Keyword" value="LogManager.CreateRepository method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

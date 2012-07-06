@@ -1,0 +1,66 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Depth Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">NDC.Depth Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets the current context depth. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Shared ReadOnly Property Depth As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">Integer</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">int</a> Depth {get;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p>The current context depth.</p>
+      <h4 class="dtH4">Remarks</h4>
+      <p>
+            <blockquote class="dtBlock"><b>Note</b>   
+            <p> The NDC is deprecated and has been replaced by the <a href="log4net.ThreadContext.Stacks.html">Stacks</a>. The current NDC implementation forwards to the <code>ThreadContext.Stacks["NDC"]</code>. </p>
+            </blockquote>
+            <p> The number of context values pushed onto the context stack. </p>
+            <p> Used to record the current depth of the context. This can then be restored using the <a href="log4net.NDC.SetMaxDepth.html">SetMaxDepth</a> method. </p>
+            </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="log4net.NDC.html">NDC Class</a> | <a href="log4net.html">log4net Namespace</a> | <a href="log4net.NDC.SetMaxDepth.html">SetMaxDepth</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="Depth property">
+        </param>
+        <param name="Keyword" value="Depth property, NDC class">
+        </param>
+        <param name="Keyword" value="NDC.Depth property">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a>
+        </p>
+        <p>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

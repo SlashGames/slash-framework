@@ -1,0 +1,47 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LoggerMatchFilter Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LoggerMatchFilter Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Simple filter to match a string in the event's logger name. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Filter.LoggerMatchFilterMembers.html">LoggerMatchFilter Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Filter.FilterSkeleton.html">log4net.Filter.FilterSkeleton</a><br />      <b>log4net.Filter.LoggerMatchFilter</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class LoggerMatchFilter<div>    Inherits <a href="log4net.Filter.FilterSkeleton.html">FilterSkeleton</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class LoggerMatchFilter<b> : <a href="log4net.Filter.FilterSkeleton.html">FilterSkeleton</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The works very similar to the <a href="log4net.Filter.LevelMatchFilter.html">LevelMatchFilter</a>. It admits two options <a href="log4net.Filter.LoggerMatchFilter.LoggerToMatch.html">LoggerToMatch</a> and <a href="log4net.Filter.LoggerMatchFilter.AcceptOnMatch.html">AcceptOnMatch</a>. If the <a href="log4net.Core.LoggingEvent.LoggerName.html">LoggerName</a> of the <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> starts with the value of the <b>LoggerToMatch</b> option, then the <a href="log4net.Filter.LoggerMatchFilter.Decide.html">Decide</a> method returns <a href="log4net.Filter.FilterDecision.html">Accept</a> in case the <b>AcceptOnMatch</b> option value is set to <code>true</code>, if it is <code>false</code> then <a href="log4net.Filter.FilterDecision.html">Deny</a> is returned. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Filter.html">log4net.Filter</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Filter.LoggerMatchFilterMembers.html">LoggerMatchFilter Members</a> | <a href="log4net.Filter.html">log4net.Filter Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="LoggerMatchFilter class, about LoggerMatchFilter class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>
