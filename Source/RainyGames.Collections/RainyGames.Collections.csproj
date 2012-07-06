@@ -44,6 +44,14 @@
     <Compile Include="Source\AttributeTables\AttributeTable.cs" />
     <Compile Include="Source\AttributeTables\HierarchicalAttributeTable.cs" />
     <Compile Include="Source\AttributeTables\IAttributeTable.cs" />
+    <Compile Include="Source\Graphs\IGraphVertex.cs" />
+    <Compile Include="Source\Graphs\AdjacencyListWeightedDirectedGraph.cs" />
+    <Compile Include="Source\Graphs\IWeightedGraph.cs" />
+    <Compile Include="Source\PriorityQueues\FibonacciHeap.cs" />
+    <Compile Include="Source\PriorityQueues\FibonacciHeapItem.cs" />
+    <Compile Include="Source\PriorityQueues\FibonacciHeapNode.cs" />
+    <Compile Include="Source\PriorityQueues\IPriorityQueue.cs" />
+    <Compile Include="Source\PriorityQueues\IPriorityQueueItem.cs" />
     <Compile Include="Source\Utils\CollectionUtils.cs" />
     <Compile Include="Source\Utils\ListExtensionMethods.cs" />
   </ItemGroup>
