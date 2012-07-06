@@ -42,8 +42,11 @@
     <Compile Include="Source\GUI\ValueEditors\IValueEditor.cs" />
     <Compile Include="Source\GUI\ValueEditors\IValueEditorContext.cs" />
     <Compile Include="Source\GUI\GUIHelper.cs" />
+    <Compile Include="Source\GUI\ValueEditors\IValueEditorFactory.cs" />
+    <Compile Include="Source\GUI\ValueEditors\PropertyValueEditorContext.cs" />
     <Compile Include="Source\GUI\ValueEditors\SimpleValueEditorContext.cs" />
     <Compile Include="Source\GUI\ValueEditors\TextValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\ValueEditorContext.cs" />
     <Compile Include="Source\Logging\ConsoleAppender.cs" />
     <Compile Include="Source\Logging\Logger.cs" />
     <Compile Include="Source\Math\MathConversionExtensionMethods.cs" />

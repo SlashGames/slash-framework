@@ -25,8 +25,13 @@ namespace RainyGames.Unity.Common.GUI.ValueEditors
         /// <param name="context">Editor context to work with.</param>
         public void Edit(IValueEditorContext context)
         {
+            if (!context.Type.IsEnum)
+            {
+                throw new ArgumentException(string.Format("Type '{0}' is no enum type.", context.Type), "context");
+            }
+
             // Get enum value.
-           Array enumValues = Enum.GetValues(context.Type);
+            Array enumValues = Enum.GetValues(context.Type);
             int selectedItem;
             Enum value;
             if (context.Value != null)
@@ -44,10 +49,7 @@ namespace RainyGames.Unity.Common.GUI.ValueEditors
             GUILayout.BeginHorizontal();
             GUILayout.Label(context.Name);
             bool showList;
-            if (!this.showPopupList.TryGetValue(context.Key, out showList))
-            {
-                Debug.Log(string.Format("Entries: {0}", showPopupList.Count));
-            }
+            this.showPopupList.TryGetValue(context.Key, out showList);
             int newSelectedItem = GUILayoutExt.Popup(selectedItem, Enum.GetNames(context.Type), ref showList);
             this.showPopupList[context.Key] = showList;
             GUILayout.EndHorizontal();

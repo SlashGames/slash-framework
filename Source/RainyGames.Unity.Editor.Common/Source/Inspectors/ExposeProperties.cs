@@ -26,7 +26,7 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
     {
         #region Public Methods and Operators
 
-        public static void Expose(PropertyField[] properties)
+        public static void Expose(IEnumerable<PropertyField> properties)
         {
             GUILayoutOption[] emptyOptions = new GUILayoutOption[0];
 
