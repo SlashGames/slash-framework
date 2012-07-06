@@ -1,0 +1,51 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>BufferingAppenderSkeleton Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">BufferingAppenderSkeleton Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Abstract base class implementation of <a href="log4net.Appender.IAppender.html">IAppender</a> that buffers events in a fixed size buffer. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.BufferingAppenderSkeletonMembers.html">BufferingAppenderSkeleton Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <b>log4net.Appender.BufferingAppenderSkeleton</b><br />         <a href="log4net.Appender.AdoNetAppender.html">log4net.Appender.AdoNetAppender</a><br />         <a href="log4net.Appender.BufferingForwardingAppender.html">log4net.Appender.BufferingForwardingAppender</a><br />         <a href="log4net.Appender.RemotingAppender.html">log4net.Appender.RemotingAppender</a><br />         <a href="log4net.Appender.SmtpAppender.html">log4net.Appender.SmtpAppender</a><br />         <a href="log4net.Appender.SmtpPickupDirAppender.html">log4net.Appender.SmtpPickupDirAppender</a></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />MustInherit Public Class BufferingAppenderSkeleton<div>    Inherits <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public abstract class BufferingAppenderSkeleton<b> : <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This base class should be used by appenders that need to buffer a number of events before logging them. For example the <a href="log4net.Appender.AdoNetAppender.html">AdoNetAppender</a> buffers events and then submits the entire contents of the buffer to the underlying database in one go. </p>
+            <p> Subclasses should override the <a href="log4net.Appender.BufferingAppenderSkeleton.SendBuffer.html">SendBuffer</a> method to deliver the buffered events. </p>
+            <p>The BufferingAppenderSkeleton maintains a fixed size cyclic buffer of events. The size of the buffer is set using the <a href="log4net.Appender.BufferingAppenderSkeleton.BufferSize.html">BufferSize</a> property. </p>
+            <p>A <a href="log4net.Core.ITriggeringEventEvaluator.html">ITriggeringEventEvaluator</a> is used to inspect each event as it arrives in the appender. If the <a href="log4net.Appender.BufferingAppenderSkeleton.Evaluator.html">Evaluator</a> triggers, then the current buffer is sent immediately (see <b>SendBuffer</b>). Otherwise the event is stored in the buffer. For example, an evaluator can be used to deliver the events immediately when an ERROR event arrives. </p>
+            <p> The buffering appender can be configured in a <a href="log4net.Appender.BufferingAppenderSkeleton.Lossy.html">Lossy</a> mode. By default the appender is NOT lossy. When the buffer is full all the buffered events are sent with <b>SendBuffer</b>. If the <b>Lossy</b> property is set to <code>true</code> then the buffer will not be sent when it is full, and new events arriving in the appender will overwrite the oldest event in the buffer. In lossy mode the buffer will only be sent when the <b>Evaluator</b> triggers. This can be useful behavior when you need to know about ERROR events but not about events with a lower level, configure an evaluator that will trigger when an ERROR event arrives, the whole buffer will be sent which gives a history of events leading up to the ERROR event. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.BufferingAppenderSkeletonMembers.html">BufferingAppenderSkeleton Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="BufferingAppenderSkeleton class, about BufferingAppenderSkeleton class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

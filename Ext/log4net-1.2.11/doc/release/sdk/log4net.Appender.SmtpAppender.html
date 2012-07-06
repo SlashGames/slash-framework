@@ -1,0 +1,50 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>SmtpAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">SmtpAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Send an e-mail when a specific logging event occurs, typically on errors or fatal errors. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.SmtpAppenderMembers.html">SmtpAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <a href="log4net.Appender.BufferingAppenderSkeleton.html">log4net.Appender.BufferingAppenderSkeleton</a><br />         <b>log4net.Appender.SmtpAppender</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class SmtpAppender<div>    Inherits <a href="log4net.Appender.BufferingAppenderSkeleton.html">BufferingAppenderSkeleton</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class SmtpAppender<b> : <a href="log4net.Appender.BufferingAppenderSkeleton.html">BufferingAppenderSkeleton</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The number of logging events delivered in this e-mail depend on the value of <a href="log4net.Appender.BufferingAppenderSkeleton.BufferSize.html">BufferSize</a> option. The <b>SmtpAppender</b> keeps only the last <b>BufferSize</b> logging events in its cyclic buffer. This keeps memory requirements at a reasonable level while still delivering useful application context. </p>
+            <blockquote class="dtBlock"><b>CAUTION</b>    Authentication and setting the server Port are only available on the MS .NET 1.1 runtime. For these features to be enabled you need to ensure that you are using a version of the log4net assembly that is built against the MS .NET 1.1 framework and that you are running the your application on the MS .NET 1.1 runtime. On all other platforms only sending unauthenticated messages to a server listening on port 25 (the default) is supported. </blockquote>
+            <p> Authentication is supported by setting the <a href="log4net.Appender.SmtpAppender.Authentication.html">Authentication</a> property to either <a href="log4net.Appender.SmtpAppender.SmtpAuthentication.html">Basic</a> or <a href="log4net.Appender.SmtpAppender.SmtpAuthentication.html">Ntlm</a>. If using <b>Basic</b> authentication then the <a href="log4net.Appender.SmtpAppender.Username.html">Username</a> and <a href="log4net.Appender.SmtpAppender.Password.html">Password</a> properties must also be set. </p>
+            <p> To set the SMTP server port use the <a href="log4net.Appender.SmtpAppender.Port.html">Port</a> property. The default port is 25. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.SmtpAppenderMembers.html">SmtpAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="SmtpAppender class, about SmtpAppender class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

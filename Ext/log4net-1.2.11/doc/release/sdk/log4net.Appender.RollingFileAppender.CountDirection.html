@@ -1,0 +1,45 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>CountDirection Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">RollingFileAppender.CountDirection Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets or sets the rolling file count direction. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Property CountDirection As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">Integer</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemInt32ClassTopic.htm">int</a> CountDirection {get; set;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p> The rolling file count direction. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Indicates if the current file is the lowest numbered file or the highest numbered file. </p>
+            <p> By default newer files have lower numbers (<b>CountDirection</b> &lt; 0), i.e. log.1 is most recent, log.5 is the 5th backup, etc... </p>
+            <p>
+            <b>CountDirection</b> &gt;= 0 does the opposite i.e. log.1 is the first backup made, log.5 is the 5th backup made, etc. For infinite backups use <b>CountDirection</b> &gt;= 0 to reduce rollover costs. </p>
+            <p>The default file count direction is -1.</p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.RollingFileAppender.html">RollingFileAppender Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="CountDirection property"></param><param name="Keyword" value="CountDirection property, RollingFileAppender class"></param><param name="Keyword" value="RollingFileAppender.CountDirection property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

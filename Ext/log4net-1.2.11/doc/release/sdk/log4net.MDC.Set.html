@@ -1,0 +1,73 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>MDC.Set Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">MDC.Set Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Add an entry to the MDC </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Shared Sub Set( _<br />   ByVal <i>key</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>value</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a> _<br />)</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemVoidClassTopic.htm">void</a> Set(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>key</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>value</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>key</i>
+        </dt>
+        <dd>The key to store the value under.</dd>
+        <dt>
+          <i>value</i>
+        </dt>
+        <dd>The value to store.</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+      <p>
+            <blockquote class="dtBlock"><b>Note</b>   
+            <p> The MDC is deprecated and has been replaced by the <a href="log4net.ThreadContext.Properties.html">Properties</a>. The current MDC implementation forwards to the <code>ThreadContext.Properties</code>. </p>
+            </blockquote>
+            <p> Puts a context value (the <i>value</i> parameter) as identified with the <i>key</i> parameter into the current thread's context map. </p>
+            <p> If a value is already defined for the <i>key</i> specified then the value will be replaced. If the <i>value</i> is specified as <code>null</code> then the key value mapping will be removed. </p>
+            </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="log4net.MDC.html">MDC Class</a> | <a href="log4net.html">log4net Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="Set method">
+        </param>
+        <param name="Keyword" value="Set method, MDC class">
+        </param>
+        <param name="Keyword" value="MDC.Set method">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a>
+        </p>
+        <p>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

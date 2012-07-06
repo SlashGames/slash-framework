@@ -1,0 +1,44 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Watch Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">XmlConfiguratorAttribute.Watch Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets or sets a value indicating whether to watch the configuration file. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Property Watch As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">Boolean</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">bool</a> Watch {get; set;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p>
+            <code>true</code> if the configuration should be watched, <code>false</code> otherwise. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> If this flag is specified and set to <code>true</code> then the framework will watch the configuration file and will reload the config each time the file is modified. </p>
+            <p> The config file can only be watched if it is loaded from local disk. In a No-Touch (Smart Client) deployment where the application is downloaded from a web server the config file may not reside on the local disk and therefore it may not be able to watch it. </p>
+            <blockquote class="dtBlock"><b>Note</b>    Watching configuration is not supported on the SSCLI. </blockquote>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Config.XmlConfiguratorAttribute.html">XmlConfiguratorAttribute Class</a> | <a href="log4net.Config.html">log4net.Config Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Watch property"></param><param name="Keyword" value="Watch property, XmlConfiguratorAttribute class"></param><param name="Keyword" value="XmlConfiguratorAttribute.Watch property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

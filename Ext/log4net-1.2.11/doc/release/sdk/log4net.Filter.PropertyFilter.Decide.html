@@ -1,0 +1,50 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>PropertyFilter.Decide Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">PropertyFilter.Decide Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Check if this filter should allow the event to be logged </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overrides Public Function Decide( _<br />   ByVal <i>loggingEvent</i> As <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> _<br />) As <a href="log4net.Filter.FilterDecision.html">FilterDecision</a> _<div>    Implements <a href="log4net.Filter.IFilter.Decide.html">IFilter.Decide</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public override <a href="log4net.Filter.FilterDecision.html">FilterDecision</a> Decide(<br />   <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> <i>loggingEvent</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>loggingEvent</i>
+        </dt>
+        <dd>the event being logged</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p>see remarks</p>
+      <h4 class="dtH4">Implements</h4>
+      <p>
+        <a href="log4net.Filter.IFilter.Decide.html">IFilter.Decide</a>
+      </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The event property for the <a href="log4net.Filter.PropertyFilter.Key.html">Key</a> is matched against the <a href="log4net.Filter.StringMatchFilter.StringToMatch.html">StringToMatch</a>. If the <b>StringToMatch</b> occurs as a substring within the property value then a match will have occurred. If no match occurs this function will return <a href="log4net.Filter.FilterDecision.html">Neutral</a> allowing other filters to check the event. If a match occurs then the value of <a href="log4net.Filter.StringMatchFilter.AcceptOnMatch.html">AcceptOnMatch</a> is checked. If it is true then <a href="log4net.Filter.FilterDecision.html">Accept</a> is returned otherwise <a href="log4net.Filter.FilterDecision.html">Deny</a> is returned. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Filter.PropertyFilter.html">PropertyFilter Class</a> | <a href="log4net.Filter.html">log4net.Filter Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Decide method"></param><param name="Keyword" value="Decide method, PropertyFilter class"></param><param name="Keyword" value="PropertyFilter.Decide method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

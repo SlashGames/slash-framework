@@ -1,0 +1,104 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>NetSendAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">NetSendAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Logs entries by sending network messages using the <a href="log4net.Appender.NetSendAppender.NetMessageBufferSend.html">NetMessageBufferSend</a> native function. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.NetSendAppenderMembers.html">NetSendAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <b>log4net.Appender.NetSendAppender</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class NetSendAppender<div>    Inherits <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class NetSendAppender<b> : <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> You can send messages only to names that are active on the network. If you send the message to a user name, that user must be logged on and running the Messenger service to receive the message. </p>
+            <p> The receiver will get a top most window displaying the messages one at a time, therefore this appender should not be used to deliver a high volume of messages. </p>
+            <p> The following table lists some possible uses for this appender : </p>
+            <p>
+            <div class="tablediv"><table class="dtTABLE" cellspacing="0"><tr valign="top">
+                    <th width="50%">Action</th>
+                    <th width="50%">Property Value(s)</th>
+                </tr><tr valign="top">
+                    <td>Send a message to a user account on the local machine</td>
+                    <td>
+                        <p>
+                        <a href="log4net.Appender.NetSendAppender.Server.html">Server</a> = &lt;name of the local machine&gt; </p>
+                        <p>
+                        <a href="log4net.Appender.NetSendAppender.Recipient.html">Recipient</a> = &lt;user name&gt; </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>Send a message to a user account on a remote machine</td>
+                    <td>
+                        <p>
+                        <b>Server</b> = &lt;name of the remote machine&gt; </p>
+                        <p>
+                        <b>Recipient</b> = &lt;user name&gt; </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>Send a message to a domain user account</td>
+                    <td>
+                        <p>
+                        <b>Server</b> = &lt;name of a domain controller | uninitialized&gt; </p>
+                        <p>
+                        <b>Recipient</b> = &lt;user name&gt; </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>Send a message to all the names in a workgroup or domain</td>
+                    <td>
+                        <p>
+                        <b>Recipient</b> = &lt;workgroup name | domain name&gt;* </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>Send a message from the local machine to a remote machine</td>
+                    <td>
+                        <p>
+                        <b>Server</b> = &lt;name of the local machine | uninitialized&gt; </p>
+                        <p>
+                        <b>Recipient</b> = &lt;name of the remote machine&gt; </p>
+                    </td>
+                </tr></table></div>
+            </p>
+            <p>
+            <b>Note :</b> security restrictions apply for sending network messages, see <a href="log4net.Appender.NetSendAppender.NetMessageBufferSend.html">NetMessageBufferSend</a> for more information. </p>
+            <h4 class="dtH4">Example</h4><p>
+            <p> An example configuration section to log information using this appender from the local machine, named LOCAL_PC, to machine OPERATOR_PC : </p>
+            <pre class="code" escaped="true"><span class="lang">[XML]
+</span>&lt;appender name="NetSendAppender_Operator" type="log4net.Appender.NetSendAppender"&gt;
+    &lt;server value="LOCAL_PC" /&gt;
+    &lt;recipient value="OPERATOR_PC" /&gt;
+    &lt;layout type="log4net.Layout.PatternLayout" value="%-5p %c [%x] - %m%n" /&gt;
+&lt;/appender&gt;
+</pre>
+            </p><h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.NetSendAppenderMembers.html">NetSendAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="NetSendAppender class, about NetSendAppender class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

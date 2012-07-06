@@ -1,0 +1,46 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>WindowsSecurityContext.Impersonate Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">WindowsSecurityContext.Impersonate Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Impersonate the Windows account specified by the <a href="log4net.Util.WindowsSecurityContext.UserName.html">UserName</a> and <a href="log4net.Util.WindowsSecurityContext.DomainName.html">DomainName</a> properties. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overrides Public Function Impersonate( _<br />   ByVal <i>state</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a> _<br />) As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIDisposableClassTopic.htm">IDisposable</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public override <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIDisposableClassTopic.htm">IDisposable</a> Impersonate(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">object</a> <i>state</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>state</i>
+        </dt>
+        <dd>caller provided state</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p> An <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIDisposableClassTopic.htm">IDisposable</a> instance that will revoke the impersonation of this SecurityContext </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Depending on the <a href="log4net.Util.WindowsSecurityContext.Credentials.html">Credentials</a> property either impersonate a user using credentials supplied or revert to the process credentials. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Util.WindowsSecurityContext.html">WindowsSecurityContext Class</a> | <a href="log4net.Util.html">log4net.Util Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Impersonate method"></param><param name="Keyword" value="Impersonate method, WindowsSecurityContext class"></param><param name="Keyword" value="WindowsSecurityContext.Impersonate method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>BufferingAppenderSkeleton.Append Method (LoggingEvent)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">BufferingAppenderSkeleton.Append Method (LoggingEvent)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> This method is called by the <a href="log4net.Appender.AppenderSkeleton.DoAppend_overload_1.html">DoAppend</a> method. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overrides Overloads Protected Sub Append( _<br />   ByVal <i>loggingEvent</i> As <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> _<br />)</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />protected override <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemVoidClassTopic.htm">void</a> Append(<br />   <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> <i>loggingEvent</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>loggingEvent</i>
+        </dt>
+        <dd>the event to log</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Stores the <i>loggingEvent</i> in the cyclic buffer. </p>
+            <p> The buffer will be sent (i.e. passed to the <a href="log4net.Appender.BufferingAppenderSkeleton.SendBuffer.html">SendBuffer</a> method) if one of the following conditions is met: </p>
+            <ul type="disc"><li>
+            		The cyclic buffer is full and this appender is marked as not lossy (see <a href="log4net.Appender.BufferingAppenderSkeleton.Lossy.html">Lossy</a>)
+            	</li><li>
+            		An <a href="log4net.Appender.BufferingAppenderSkeleton.Evaluator.html">Evaluator</a> is set and it is triggered for the <i>loggingEvent</i> specified.
+            	</li></ul>
+            <p> Before the event is stored in the buffer it is fixed (see <a href="log4net.Core.LoggingEvent.FixVolatileData_overload_3.html">FixVolatileData</a>) to ensure that any data referenced by the event will be valid when the buffer is processed. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.BufferingAppenderSkeleton.html">BufferingAppenderSkeleton Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a> | <a href="log4net.Appender.BufferingAppenderSkeleton.Append_overloads.html">BufferingAppenderSkeleton.Append Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Append method"></param><param name="Keyword" value="Append method, BufferingAppenderSkeleton class"></param><param name="Keyword" value="BufferingAppenderSkeleton.Append method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

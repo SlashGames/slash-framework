@@ -1,0 +1,42 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LogName Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">EventLogAppender.LogName Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> The name of the log where messages will be stored. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Property LogName As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> LogName {get; set;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p> The string name of the log where messages will be stored. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p>This is the name of the log as it appears in the Event Viewer tree. The default value is to log into the <code>Application</code> log, this is where most applications write their events. However if you need a separate log for your application (or applications) then you should set the <b>LogName</b> appropriately.</p>
+            <p>This should not be used to distinguish your event log messages from those of other applications, the <a href="log4net.Appender.EventLogAppender.ApplicationName.html">ApplicationName</a> property should be used to distinguish events. This property should be used to group together events into a single log. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.EventLogAppender.html">EventLogAppender Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="LogName property"></param><param name="Keyword" value="LogName property, EventLogAppender class"></param><param name="Keyword" value="EventLogAppender.LogName property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

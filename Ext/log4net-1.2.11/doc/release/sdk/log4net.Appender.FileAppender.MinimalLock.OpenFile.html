@@ -1,0 +1,52 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>FileAppender.MinimalLock.OpenFile Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">FileAppender.MinimalLock.OpenFile Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Prepares to open the file when the first message is logged. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overrides Public Sub OpenFile( _<br />   ByVal <i>filename</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>append</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">Boolean</a>, _<br />   ByVal <i>encoding</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTextEncodingClassTopic.htm">Encoding</a> _<br />)</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public override <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemVoidClassTopic.htm">void</a> OpenFile(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>filename</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">bool</a> <i>append</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTextEncodingClassTopic.htm">Encoding</a> <i>encoding</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>filename</i>
+        </dt>
+        <dd>The filename to use</dd>
+        <dt>
+          <i>append</i>
+        </dt>
+        <dd>Whether to append to the file, or overwrite</dd>
+        <dt>
+          <i>encoding</i>
+        </dt>
+        <dd>The encoding to use</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Open the file specified and prepare for logging. No writes will be made until <a href="log4net.Appender.FileAppender.MinimalLock.AcquireLock.html">AcquireLock</a> is called. Must be called before any calls to <b>AcquireLock</b>, <a href="log4net.Appender.FileAppender.MinimalLock.ReleaseLock.html">ReleaseLock</a> and <a href="log4net.Appender.FileAppender.MinimalLock.CloseFile.html">CloseFile</a>. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.FileAppender.MinimalLock.html">FileAppender.MinimalLock Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="OpenFile method"></param><param name="Keyword" value="OpenFile method, FileAppender.MinimalLock class"></param><param name="Keyword" value="FileAppender.MinimalLock.OpenFile method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>CyclicBuffer.Append Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">CyclicBuffer.Append Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Appends a <i>loggingEvent</i> to the buffer. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Function Append( _<br />   ByVal <i>loggingEvent</i> As <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> _<br />) As <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> Append(<br />   <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> <i>loggingEvent</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>loggingEvent</i>
+        </dt>
+        <dd>The event to append to the buffer.</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p>The event discarded from the buffer, if the buffer is full, otherwise <code>null</code>.</p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Append an event to the buffer. If the buffer still contains free space then <code>null</code> is returned. If the buffer is full then an event will be dropped to make space for the new event, the event dropped is returned. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Util.CyclicBuffer.html">CyclicBuffer Class</a> | <a href="log4net.Util.html">log4net.Util Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Append method"></param><param name="Keyword" value="Append method, CyclicBuffer class"></param><param name="Keyword" value="CyclicBuffer.Append method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

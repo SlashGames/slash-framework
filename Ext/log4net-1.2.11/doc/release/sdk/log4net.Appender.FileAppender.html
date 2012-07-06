@@ -1,0 +1,52 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>FileAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">FileAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Appends logging events to a file. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.FileAppenderMembers.html">FileAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <a href="log4net.Appender.TextWriterAppender.html">log4net.Appender.TextWriterAppender</a><br />         <b>log4net.Appender.FileAppender</b><br />            <a href="log4net.Appender.RollingFileAppender.html">log4net.Appender.RollingFileAppender</a></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class FileAppender<div>    Inherits <a href="log4net.Appender.TextWriterAppender.html">TextWriterAppender</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class FileAppender<b> : <a href="log4net.Appender.TextWriterAppender.html">TextWriterAppender</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Logging events are sent to the file specified by the <a href="log4net.Appender.FileAppender.File.html">File</a> property. </p>
+            <p> The file can be opened in either append or overwrite mode by specifying the <a href="log4net.Appender.FileAppender.AppendToFile.html">AppendToFile</a> property. If the file path is relative it is taken as relative from the application base directory. The file encoding can be specified by setting the <a href="log4net.Appender.FileAppender.Encoding.html">Encoding</a> property. </p>
+            <p> The layout's <a href="log4net.Layout.ILayout.Header.html">Header</a> and <a href="log4net.Layout.ILayout.Footer.html">Footer</a> values will be written each time the file is opened and closed respectively. If the <b>AppendToFile</b> property is <b>true</b> then the file may contain multiple copies of the header and footer. </p>
+            <p> This appender will first try to open the file for writing when <a href="log4net.Appender.FileAppender.ActivateOptions.html">ActivateOptions</a> is called. This will typically be during configuration. If the file cannot be opened for writing the appender will attempt to open the file again each time a message is logged to the appender. If the file cannot be opened for writing when a message is logged then the message will be discarded by this appender. </p>
+            <p> The <b>FileAppender</b> supports pluggable file locking models via the <a href="log4net.Appender.FileAppender.LockingModel.html">LockingModel</a> property. The default behavior, implemented by <a href="log4net.Appender.FileAppender.ExclusiveLock.html">FileAppender.ExclusiveLock</a> is to obtain an exclusive write lock on the file until this appender is closed. The alternative models only hold a write lock while the appender is writing a logging event (<a href="log4net.Appender.FileAppender.MinimalLock.html">FileAppender.MinimalLock</a>) or synchronize by using a named system wide Mutex (<a href="log4net.Appender.FileAppender.InterProcessLock.html">FileAppender.InterProcessLock</a>). </p>
+            <p> All locking strategies have issues and you should seriously consider using a different strategy that avoids having multiple processes logging to the same file. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.FileAppenderMembers.html">FileAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="FileAppender class, about FileAppender class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>RemoteAddress Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">UdpAppender.RemoteAddress Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets or sets the IP address of the remote host or multicast group to which the underlying <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemNetSocketsUdpClientClassTopic.htm">UdpClient</a> should sent the logging event. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Property RemoteAddress As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemNetIPAddressClassTopic.htm">IPAddress</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemNetIPAddressClassTopic.htm">System.Net.IPAddress</a> RemoteAddress {get; set;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p> The IP address of the remote host or multicast group to which the logging event will be sent. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Multicast addresses are identified by IP class <b>D</b> addresses (in the range 224.0.0.0 to 239.255.255.255). Multicast packets can pass across different networks through routers, so it is possible to use multicasts in an Internet scenario as long as your network provider supports multicasting. </p>
+            <p> Hosts that want to receive particular multicast messages must register their interest by joining the multicast group. Multicast messages are not sent to networks where no host has joined the multicast group. Class <b>D</b> IP addresses are used for multicast groups, to differentiate them from normal host addresses, allowing nodes to easily detect if a message is of interest. </p>
+            <p> Static multicast addresses that are needed globally are assigned by IANA. A few examples are listed in the table below: </p>
+            <p>
+            <div class="tablediv"><table class="dtTABLE" cellspacing="0"><tr valign="top">
+                    <th width="50%">IP Address</th>
+                    <th width="50%">Description</th>
+                </tr><tr valign="top">
+                    <td>224.0.0.1</td>
+                    <td>
+                        <p> Sends a message to all system on the subnet. </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>224.0.0.2</td>
+                    <td>
+                        <p> Sends a message to all routers on the subnet. </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>224.0.0.12</td>
+                    <td>
+                        <p> The DHCP server answers messages on the IP address 224.0.0.12, but only on a subnet. </p>
+                    </td>
+                </tr></table></div>
+            </p>
+            <p> A complete list of actually reserved multicast addresses and their owners in the ranges defined by RFC 3171 can be found at the <A href="http://www.iana.org/assignments/multicast-addresses">IANA web site</A>. </p>
+            <p> The address range 239.0.0.0 to 239.255.255.255 is reserved for administrative scope-relative addresses. These addresses can be reused with other local groups. Routers are typically configured with filters to prevent multicast traffic in this range from flowing outside of the local network. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.UdpAppender.html">UdpAppender Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="RemoteAddress property"></param><param name="Keyword" value="RemoteAddress property, UdpAppender class"></param><param name="Keyword" value="UdpAppender.RemoteAddress property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>AbsoluteTimeDateFormatter.FormatDateWithoutMillis Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">AbsoluteTimeDateFormatter.FormatDateWithoutMillis Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Renders the date into a string. Format is <code>"HH:mm:ss"</code>. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overridable Protected Sub FormatDateWithoutMillis( _<br />   ByVal <i>dateToFormat</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDateTimeClassTopic.htm">Date</a>, _<br />   ByVal <i>buffer</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTextStringBuilderClassTopic.htm">StringBuilder</a> _<br />)</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />protected virtual <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemVoidClassTopic.htm">void</a> FormatDateWithoutMillis(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDateTimeClassTopic.htm">DateTime</a> <i>dateToFormat</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemTextStringBuilderClassTopic.htm">StringBuilder</a> <i>buffer</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>dateToFormat</i>
+        </dt>
+        <dd>The date to render into a string.</dd>
+        <dt>
+          <i>buffer</i>
+        </dt>
+        <dd>The string builder to write to.</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Subclasses should override this method to render the date into a string using a precision up to the second. This method will be called at most once per second and the result will be reused if it is needed again during the same second. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.DateFormatter.AbsoluteTimeDateFormatter.html">AbsoluteTimeDateFormatter Class</a> | <a href="log4net.DateFormatter.html">log4net.DateFormatter Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="FormatDateWithoutMillis method"></param><param name="Keyword" value="FormatDateWithoutMillis method, AbsoluteTimeDateFormatter class"></param><param name="Keyword" value="AbsoluteTimeDateFormatter.FormatDateWithoutMillis method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

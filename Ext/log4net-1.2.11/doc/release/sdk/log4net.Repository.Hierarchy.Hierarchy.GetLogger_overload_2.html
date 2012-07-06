@@ -1,0 +1,50 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Hierarchy.GetLogger Method (String, ILoggerFactory)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">Hierarchy.GetLogger Method (String, ILoggerFactory)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Return a new logger instance named as the first parameter using <i>factory</i>. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overloads Public Function GetLogger( _<br />   ByVal <i>name</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">String</a>, _<br />   ByVal <i>factory</i> As <a href="log4net.Repository.Hierarchy.ILoggerFactory.html">ILoggerFactory</a> _<br />) As <a href="log4net.Repository.Hierarchy.Logger.html">Logger</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="log4net.Repository.Hierarchy.Logger.html">Logger</a> GetLogger(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemStringClassTopic.htm">string</a> <i>name</i>,<br />   <a href="log4net.Repository.Hierarchy.ILoggerFactory.html">ILoggerFactory</a> <i>factory</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>name</i>
+        </dt>
+        <dd>The name of the logger to retrieve</dd>
+        <dt>
+          <i>factory</i>
+        </dt>
+        <dd>The factory that will make the new logger instance</dd>
+      </dl>
+      <h4 class="dtH4">Return Value</h4>
+      <p>The logger object with the name specified</p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> If a logger of that name already exists, then it will be returned. Otherwise, a new logger will be instantiated by the <i>factory</i> parameter and linked with its existing ancestors as well as children. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Repository.Hierarchy.Hierarchy.html">Hierarchy Class</a> | <a href="log4net.Repository.Hierarchy.html">log4net.Repository.Hierarchy Namespace</a> | <a href="log4net.Repository.Hierarchy.Hierarchy.GetLogger_overloads.html">Hierarchy.GetLogger Overload List</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="GetLogger method"></param><param name="Keyword" value="GetLogger method, Hierarchy class"></param><param name="Keyword" value="Hierarchy.GetLogger method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

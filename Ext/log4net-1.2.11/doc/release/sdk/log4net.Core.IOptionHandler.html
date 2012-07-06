@@ -1,0 +1,365 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>IOptionHandler Interface</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">IOptionHandler Interface</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Interface used to delay activate a configured object. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Core.IOptionHandlerMembers.html">IOptionHandler Members</a>.</p>
+      <p>
+        <b>log4net.Core.IOptionHandler</b>
+        <br />   <a href="log4net.Filter.IFilter.html">log4net.Filter.IFilter</a></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Interface IOptionHandler</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public interface IOptionHandler</div>
+      </div>
+      <h4 class="dtH4">Types that implement IOptionHandler</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Type</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.AdoNetAppender.html">AdoNetAppender</a>
+            </td>
+            <td width="50%"> Appender that logs to a database. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.AnsiColorTerminalAppender.html">AnsiColorTerminalAppender</a>
+            </td>
+            <td width="50%"> Appends logging events to the terminal using ANSI color escape sequences. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.AnsiColorTerminalAppender.LevelColors.html">AnsiColorTerminalAppender.LevelColors</a>
+            </td>
+            <td width="50%"> A class to act as a mapping between the level that a logging call is made at and the color it should be displayed as. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.AppenderSkeleton.html">AppenderSkeleton</a>
+            </td>
+            <td width="50%"> Abstract base class implementation of <a href="log4net.Appender.IAppender.html">IAppender</a>. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.AspNetTraceAppender.html">AspNetTraceAppender</a>
+            </td>
+            <td width="50%">
+            <p> Appends log events to the ASP.NET <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemWebTraceContextClassTopic.htm">TraceContext</a> system. </p>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.BufferingAppenderSkeleton.html">BufferingAppenderSkeleton</a>
+            </td>
+            <td width="50%"> Abstract base class implementation of <a href="log4net.Appender.IAppender.html">IAppender</a> that buffers events in a fixed size buffer. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.BufferingForwardingAppender.html">BufferingForwardingAppender</a>
+            </td>
+            <td width="50%"> Buffers events and then forwards them to attached appenders. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.ColoredConsoleAppender.html">ColoredConsoleAppender</a>
+            </td>
+            <td width="50%"> Appends logging events to the console. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.ColoredConsoleAppender.LevelColors.html">ColoredConsoleAppender.LevelColors</a>
+            </td>
+            <td width="50%"> A class to act as a mapping between the level that a logging call is made at and the color it should be displayed as. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.ConsoleAppender.html">ConsoleAppender</a>
+            </td>
+            <td width="50%"> Appends logging events to the console. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.DebugAppender.html">DebugAppender</a>
+            </td>
+            <td width="50%"> Appends log events to the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDiagnosticsDebugClassTopic.htm">Debug</a> system. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.EventLogAppender.html">EventLogAppender</a>
+            </td>
+            <td width="50%"> Writes events to the system event log. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.EventLogAppender.Level2EventLogEntryType.html">EventLogAppender.Level2EventLogEntryType</a>
+            </td>
+            <td width="50%"> A class to act as a mapping between the level that a logging call is made at and the color it should be displayed as. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.FileAppender.html">FileAppender</a>
+            </td>
+            <td width="50%"> Appends logging events to a file. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.ForwardingAppender.html">ForwardingAppender</a>
+            </td>
+            <td width="50%"> This appender forwards logging events to attached appenders. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.LocalSyslogAppender.html">LocalSyslogAppender</a>
+            </td>
+            <td width="50%"> Logs events to a local syslog service. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.LocalSyslogAppender.LevelSeverity.html">LocalSyslogAppender.LevelSeverity</a>
+            </td>
+            <td width="50%"> A class to act as a mapping between the level that a logging call is made at and the syslog severity that is should be logged at. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.MemoryAppender.html">MemoryAppender</a>
+            </td>
+            <td width="50%"> Stores logging events in an array. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.NetSendAppender.html">NetSendAppender</a>
+            </td>
+            <td width="50%"> Logs entries by sending network messages using the <a href="log4net.Appender.NetSendAppender.NetMessageBufferSend.html">NetMessageBufferSend</a> native function. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.OutputDebugStringAppender.html">OutputDebugStringAppender</a>
+            </td>
+            <td width="50%"> Appends log events to the OutputDebugString system. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.RemoteSyslogAppender.html">RemoteSyslogAppender</a>
+            </td>
+            <td width="50%"> Logs events to a remote syslog daemon. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.RemoteSyslogAppender.LevelSeverity.html">RemoteSyslogAppender.LevelSeverity</a>
+            </td>
+            <td width="50%"> A class to act as a mapping between the level that a logging call is made at and the syslog severity that is should be logged at. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.RemotingAppender.html">RemotingAppender</a>
+            </td>
+            <td width="50%"> Delivers logging events to a remote logging sink. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.RollingFileAppender.html">RollingFileAppender</a>
+            </td>
+            <td width="50%"> Appender that rolls log files based on size or date or both. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.SmtpAppender.html">SmtpAppender</a>
+            </td>
+            <td width="50%"> Send an e-mail when a specific logging event occurs, typically on errors or fatal errors. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.SmtpPickupDirAppender.html">SmtpPickupDirAppender</a>
+            </td>
+            <td width="50%"> Send an email when a specific logging event occurs, typically on errors or fatal errors. Rather than sending via smtp it writes a file into the directory specified by <a href="log4net.Appender.SmtpPickupDirAppender.PickupDir.html">PickupDir</a>. This allows services such as the IIS SMTP agent to manage sending the messages. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.TelnetAppender.html">TelnetAppender</a>
+            </td>
+            <td width="50%"> Appender that allows clients to connect via Telnet to receive log messages </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.TextWriterAppender.html">TextWriterAppender</a>
+            </td>
+            <td width="50%"> Sends logging events to a <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIOTextWriterClassTopic.htm">TextWriter</a>. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.TraceAppender.html">TraceAppender</a>
+            </td>
+            <td width="50%"> Appends log events to the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDiagnosticsTraceClassTopic.htm">Trace</a> system. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Appender.UdpAppender.html">UdpAppender</a>
+            </td>
+            <td width="50%"> Sends logging events as connectionless UDP datagrams to a remote host or a multicast group using an <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemNetSocketsUdpClientClassTopic.htm">UdpClient</a>. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.DenyAllFilter.html">DenyAllFilter</a>
+            </td>
+            <td width="50%"> This filter drops all <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a>. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.FilterSkeleton.html">FilterSkeleton</a>
+            </td>
+            <td width="50%"> Subclass this type to implement customized logging event filtering </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.LevelMatchFilter.html">LevelMatchFilter</a>
+            </td>
+            <td width="50%"> This is a very simple filter based on <a href="log4net.Core.Level.html">Level</a> matching. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.LevelRangeFilter.html">LevelRangeFilter</a>
+            </td>
+            <td width="50%"> This is a simple filter based on <a href="log4net.Core.Level.html">Level</a> matching. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.LoggerMatchFilter.html">LoggerMatchFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a string in the event's logger name. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.MdcFilter.html">MdcFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a keyed string in the <a href="log4net.MDC.html">MDC</a>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.NdcFilter.html">NdcFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a string in the <a href="log4net.NDC.html">NDC</a>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.PropertyFilter.html">PropertyFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a string an event property </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Filter.StringMatchFilter.html">StringMatchFilter</a>
+            </td>
+            <td width="50%"> Simple filter to match a string in the rendered message </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.ExceptionLayout.html">ExceptionLayout</a>
+            </td>
+            <td width="50%"> A Layout that renders only the Exception text from the logging event </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.LayoutSkeleton.html">LayoutSkeleton</a>
+            </td>
+            <td width="50%"> Extend this abstract class to create your own log layout format. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.Pattern.NamedPatternConverter.html">NamedPatternConverter</a>
+            </td>
+            <td width="50%"> Converter to output and truncate <code>'.'</code> separated strings </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.PatternLayout.html">PatternLayout</a>
+            </td>
+            <td width="50%"> A flexible layout configurable with pattern string. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.SimpleLayout.html">SimpleLayout</a>
+            </td>
+            <td width="50%"> A very simple layout </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.XmlLayout.html">XmlLayout</a>
+            </td>
+            <td width="50%"> Layout that formats the log events as XML elements. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.XmlLayoutBase.html">XmlLayoutBase</a>
+            </td>
+            <td width="50%"> Layout that formats the log events as XML elements. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.XmlLayoutSchemaLog4j.html">XmlLayoutSchemaLog4j</a>
+            </td>
+            <td width="50%"> Layout that formats the log events as XML elements compatible with the log4j schema </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Util.LevelMapping.html">LevelMapping</a>
+            </td>
+            <td width="50%"> Manages a mapping from levels to <a href="log4net.Util.LevelMappingEntry.html">LevelMappingEntry</a>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Util.LevelMappingEntry.html">LevelMappingEntry</a>
+            </td>
+            <td width="50%"> An entry in the <a href="log4net.Util.LevelMapping.html">LevelMapping</a>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Util.PatternString.html">PatternString</a>
+            </td>
+            <td width="50%"> This class implements a patterned string. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Util.WindowsSecurityContext.html">WindowsSecurityContext</a>
+            </td>
+            <td width="50%"> Impersonate a Windows Account </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This allows an object to defer activation of its options until all options have been set. This is required for components which have related options that remain ambiguous until all are set. </p>
+            <p> If a component implements this interface then the <a href="log4net.Core.IOptionHandler.ActivateOptions.html">ActivateOptions</a> method must be called by the container after its all the configured properties have been set and before the component can be used. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Core.html">log4net.Core</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Core.IOptionHandlerMembers.html">IOptionHandler Members</a> | <a href="log4net.Core.html">log4net.Core Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="IOptionHandler interface, about IOptionHandler interface"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

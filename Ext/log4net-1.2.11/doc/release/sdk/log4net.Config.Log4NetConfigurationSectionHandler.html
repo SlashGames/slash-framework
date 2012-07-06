@@ -1,0 +1,81 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Log4NetConfigurationSectionHandler Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">Log4NetConfigurationSectionHandler Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Class to register for the log4net section of the configuration file </p>
+      <p>For a list of all members of this type, see <a href="log4net.Config.Log4NetConfigurationSectionHandlerMembers.html">Log4NetConfigurationSectionHandler Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <b>log4net.Config.Log4NetConfigurationSectionHandler</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class Log4NetConfigurationSectionHandler<div>    Implements <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemConfigurationIConfigurationSectionHandlerClassTopic.htm">IConfigurationSectionHandler</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class Log4NetConfigurationSectionHandler<b> : <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemConfigurationIConfigurationSectionHandlerClassTopic.htm">IConfigurationSectionHandler</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+      <p> The log4net section of the configuration file needs to have a section handler registered. This is the section handler used. It simply returns the XML element that is the root of the section. </p>
+      <h4 class="dtH4">Example</h4>
+      <p> Example of registering the log4net section handler : <pre class="code" escaped="true"><span class="lang">[XML]
+</span>&lt;configuration&gt;
+    &lt;configSections&gt;
+        &lt;section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" /&gt;
+    &lt;/configSections&gt;
+    &lt;log4net&gt;
+        log4net configuration XML goes here
+    &lt;/log4net&gt;
+&lt;/configuration&gt;
+</pre>
+            </p>
+      <h4 class="dtH4">Requirements</h4>
+      <p>
+        <b>Namespace: </b>
+        <a href="log4net.Config.html">log4net.Config</a>
+      </p>
+      <p>
+        <b>Assembly: </b>log4net (in log4net.dll)
+					</p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="log4net.Config.Log4NetConfigurationSectionHandlerMembers.html">Log4NetConfigurationSectionHandler Members</a> | <a href="log4net.Config.html">log4net.Config Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="Log4NetConfigurationSectionHandler class, about Log4NetConfigurationSectionHandler class">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a>
+        </p>
+        <p>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

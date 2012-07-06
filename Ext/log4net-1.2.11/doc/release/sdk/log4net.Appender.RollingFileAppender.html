@@ -1,0 +1,67 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>RollingFileAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">RollingFileAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Appender that rolls log files based on size or date or both. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.RollingFileAppenderMembers.html">RollingFileAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <a href="log4net.Appender.TextWriterAppender.html">log4net.Appender.TextWriterAppender</a><br />         <a href="log4net.Appender.FileAppender.html">log4net.Appender.FileAppender</a><br />            <b>log4net.Appender.RollingFileAppender</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class RollingFileAppender<div>    Inherits <a href="log4net.Appender.FileAppender.html">FileAppender</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class RollingFileAppender<b> : <a href="log4net.Appender.FileAppender.html">FileAppender</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> RollingFileAppender can roll log files based on size or date or both depending on the setting of the <a href="log4net.Appender.RollingFileAppender.RollingStyle.html">RollingStyle</a> property. When set to <a href="log4net.Appender.RollingFileAppender.RollingMode.html">Size</a> the log file will be rolled once its size exceeds the <a href="log4net.Appender.RollingFileAppender.MaximumFileSize.html">MaximumFileSize</a>. When set to <a href="log4net.Appender.RollingFileAppender.RollingMode.html">Date</a> the log file will be rolled once the date boundary specified in the <a href="log4net.Appender.RollingFileAppender.DatePattern.html">DatePattern</a> property is crossed. When set to <a href="log4net.Appender.RollingFileAppender.RollingMode.html">Composite</a> the log file will be rolled once the date boundary specified in the <b>DatePattern</b> property is crossed, but within a date boundary the file will also be rolled once its size exceeds the <b>MaximumFileSize</b>. When set to <a href="log4net.Appender.RollingFileAppender.RollingMode.html">Once</a> the log file will be rolled when the appender is configured. This effectively means that the log file can be rolled once per program execution. </p>
+            <p> A of few additional optional features have been added: <ul type="disc"><li>Attach date pattern for current log file <a href="log4net.Appender.RollingFileAppender.StaticLogFileName.html">StaticLogFileName</a></li><li>Backup number increments for newer files <a href="log4net.Appender.RollingFileAppender.CountDirection.html">CountDirection</a></li><li>Infinite number of backups by file size <a href="log4net.Appender.RollingFileAppender.MaxSizeRollBackups.html">MaxSizeRollBackups</a></li></ul>
+            </p>
+            
+            <blockquote class="dtBlock"><b>Note</b>   
+            <p> For large or infinite numbers of backup files a <b>CountDirection</b> greater than zero is highly recommended, otherwise all the backup files need to be renamed each time a new backup is created. </p>
+            <p> When Date/Time based rolling is used setting <b>StaticLogFileName</b> to <b>true</b> will reduce the number of file renamings to few or none. </p>
+            </blockquote>
+            
+            <blockquote class="dtBlock"><b>CAUTION</b>   
+            <p> Changing <b>StaticLogFileName</b> or <b>CountDirection</b> without clearing the log file directory of backup files will cause unexpected and unwanted side effects. </p>
+            </blockquote>
+            
+            <p> If Date/Time based rolling is enabled this appender will attempt to roll existing files in the directory without a Date/Time tag based on the last write date of the base log file. The appender only rolls the log file when a message is logged. If Date/Time based rolling is enabled then the appender will not roll the log file at the Date/Time boundary but at the point when the next message is logged after the boundary has been crossed. </p>
+            
+            <p> The <b>RollingFileAppender</b> extends the <a href="log4net.Appender.FileAppender.html">FileAppender</a> and has the same behavior when opening the log file. The appender will first try to open the file for writing when <a href="log4net.Appender.RollingFileAppender.ActivateOptions.html">ActivateOptions</a> is called. This will typically be during configuration. If the file cannot be opened for writing the appender will attempt to open the file again each time a message is logged to the appender. If the file cannot be opened for writing when a message is logged then the message will be discarded by this appender. </p>
+            <p> When rolling a backup file necessitates deleting an older backup file the file to be deleted is moved to a temporary name before being deleted. </p>
+            
+            <blockquote class="dtBlock"><b>CAUTION</b>   
+            <p> A maximum number of backup files when rolling on date/time boundaries is not supported. </p>
+            </blockquote>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.RollingFileAppenderMembers.html">RollingFileAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="RollingFileAppender class, about RollingFileAppender class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

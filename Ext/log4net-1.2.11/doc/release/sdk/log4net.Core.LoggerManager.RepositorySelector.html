@@ -1,0 +1,44 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>RepositorySelector Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LoggerManager.RepositorySelector Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets or sets the repository selector used by the <a href="log4net.LogManager.html">LogManager</a>. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Shared Property RepositorySelector As <a href="log4net.Core.IRepositorySelector.html">IRepositorySelector</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public static <a href="log4net.Core.IRepositorySelector.html">IRepositorySelector</a> RepositorySelector {get; set;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p> The repository selector used by the <a href="log4net.LogManager.html">LogManager</a>. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The repository selector (<a href="log4net.Core.IRepositorySelector.html">IRepositorySelector</a>) is used by the <a href="log4net.LogManager.html">LogManager</a> to create and select repositories (<a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a>). </p>
+            <p> The caller to <b>LogManager</b> supplies either a string name or an assembly (if not supplied the assembly is inferred using <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemReflectionAssemblyClassGetCallingAssemblyTopic.htm">GetCallingAssembly</a>). </p>
+            <p> This context is used by the selector to lookup a specific repository. </p>
+            <p> For the full .NET Framework, the default repository is <code>DefaultRepositorySelector</code>; for the .NET Compact Framework <code>CompactRepositorySelector</code> is the default repository. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Core.LoggerManager.html">LoggerManager Class</a> | <a href="log4net.Core.html">log4net.Core Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="RepositorySelector property"></param><param name="Keyword" value="RepositorySelector property, LoggerManager class"></param><param name="Keyword" value="LoggerManager.RepositorySelector property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

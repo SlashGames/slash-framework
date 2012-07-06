@@ -1,0 +1,94 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>ILayout Interface</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">ILayout Interface</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Interface implemented by layout objects </p>
+      <p>For a list of all members of this type, see <a href="log4net.Layout.ILayoutMembers.html">ILayout Members</a>.</p>
+      <p>
+      </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Interface ILayout</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public interface ILayout</div>
+      </div>
+      <h4 class="dtH4">Types that implement ILayout</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr valign="top">
+            <th width="50%">Type</th>
+            <th width="50%">Description</th>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.ExceptionLayout.html">ExceptionLayout</a>
+            </td>
+            <td width="50%"> A Layout that renders only the Exception text from the logging event </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.LayoutSkeleton.html">LayoutSkeleton</a>
+            </td>
+            <td width="50%"> Extend this abstract class to create your own log layout format. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.PatternLayout.html">PatternLayout</a>
+            </td>
+            <td width="50%"> A flexible layout configurable with pattern string. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.SimpleLayout.html">SimpleLayout</a>
+            </td>
+            <td width="50%"> A very simple layout </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.XmlLayout.html">XmlLayout</a>
+            </td>
+            <td width="50%"> Layout that formats the log events as XML elements. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.XmlLayoutBase.html">XmlLayoutBase</a>
+            </td>
+            <td width="50%"> Layout that formats the log events as XML elements. </td>
+          </tr>
+          <tr valign="top">
+            <td width="50%">
+              <a href="log4net.Layout.XmlLayoutSchemaLog4j.html">XmlLayoutSchemaLog4j</a>
+            </td>
+            <td width="50%"> Layout that formats the log events as XML elements compatible with the log4j schema </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="dtH4">Remarks</h4>
+            <p> An <b>ILayout</b> object is used to format a <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> as text. The <a href="log4net.Layout.ILayout.Format.html">Format</a> method is called by an appender to transform the <b>LoggingEvent</b> into a string. </p>
+            <p> The layout can also supply <a href="log4net.Layout.ILayout.Header.html">Header</a> and <a href="log4net.Layout.ILayout.Footer.html">Footer</a> text that is appender before any events and after all the events respectively. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Layout.html">log4net.Layout</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Layout.ILayoutMembers.html">ILayout Members</a> | <a href="log4net.Layout.html">log4net.Layout Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="ILayout interface, about ILayout interface"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

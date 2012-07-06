@@ -1,0 +1,44 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>ReconnectOnError Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">AdoNetAppender.ReconnectOnError Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Should this appender try to reconnect to the database on error. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Property ReconnectOnError As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">Boolean</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">bool</a> ReconnectOnError {get; set;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p>
+            <code>true</code> if the appender should try to reconnect to the database after an error has occurred, otherwise <code>false</code>. The default value is <code>false</code>, i.e. not to try to reconnect. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> The default behaviour is for the appender not to try to reconnect to the database if an error occurs. Subsequent logging events are discarded. </p>
+            <p> To force the appender to attempt to reconnect to the database set this property to <code>true</code>. </p>
+            <blockquote class="dtBlock"><b>Note</b>    When the appender attempts to connect to the database there may be a delay of up to the connection timeout specified in the connection string. This delay will block the calling application's thread. Until the connection can be reestablished this potential delay may occur multiple times. </blockquote>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.AdoNetAppender.html">AdoNetAppender Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="ReconnectOnError property"></param><param name="Keyword" value="ReconnectOnError property, AdoNetAppender class"></param><param name="Keyword" value="AdoNetAppender.ReconnectOnError property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

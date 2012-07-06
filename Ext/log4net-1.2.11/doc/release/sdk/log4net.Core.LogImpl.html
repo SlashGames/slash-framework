@@ -1,0 +1,65 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LogImpl Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LogImpl Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Implementation of <a href="log4net.ILog.html">ILog</a> wrapper interface. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Core.LogImplMembers.html">LogImpl Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Core.LoggerWrapperImpl.html">log4net.Core.LoggerWrapperImpl</a><br />      <b>log4net.Core.LogImpl</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class LogImpl<div>    Inherits <a href="log4net.Core.LoggerWrapperImpl.html">LoggerWrapperImpl</a></div><div>    Implements <a href="log4net.ILog.html">ILog</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class LogImpl<b> : <a href="log4net.Core.LoggerWrapperImpl.html">LoggerWrapperImpl</a>, <a href="log4net.ILog.html">ILog</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This implementation of the <a href="log4net.ILog.html">ILog</a> interface forwards to the <a href="log4net.Core.ILogger.html">ILogger</a> held by the base class. </p>
+            <p> This logger has methods to allow the caller to log at the following levels: </p>
+            <dl><item>
+                <dt>DEBUG</dt>
+                <dd> The <a href="log4net.Core.LogImpl.Debug_overload_1.html">Debug</a> and <a href="log4net.Core.LogImpl.DebugFormat_overload_1.html">DebugFormat</a> methods log messages at the <code>DEBUG</code> level. That is the level with that name defined in the repositories <a href="log4net.Repository.ILoggerRepository.LevelMap.html">LevelMap</a>. The default value for this level is <a href="log4net.Core.Level.Debug.html">Debug</a>. The <a href="log4net.Core.LogImpl.IsDebugEnabled.html">IsDebugEnabled</a> property tests if this level is enabled for logging. </dd>
+              </item><item>
+                <dt>INFO</dt>
+                <dd> The <a href="log4net.Core.LogImpl.Info_overload_1.html">Info</a> and <a href="log4net.Core.LogImpl.InfoFormat_overload_1.html">InfoFormat</a> methods log messages at the <code>INFO</code> level. That is the level with that name defined in the repositories <b>LevelMap</b>. The default value for this level is <a href="log4net.Core.Level.Info.html">Info</a>. The <a href="log4net.Core.LogImpl.IsInfoEnabled.html">IsInfoEnabled</a> property tests if this level is enabled for logging. </dd>
+              </item><item>
+                <dt>WARN</dt>
+                <dd> The <a href="log4net.Core.LogImpl.Warn_overload_1.html">Warn</a> and <a href="log4net.Core.LogImpl.WarnFormat_overload_1.html">WarnFormat</a> methods log messages at the <code>WARN</code> level. That is the level with that name defined in the repositories <b>LevelMap</b>. The default value for this level is <a href="log4net.Core.Level.Warn.html">Warn</a>. The <a href="log4net.Core.LogImpl.IsWarnEnabled.html">IsWarnEnabled</a> property tests if this level is enabled for logging. </dd>
+              </item><item>
+                <dt>ERROR</dt>
+                <dd> The <a href="log4net.Core.LogImpl.Error_overload_1.html">Error</a> and <a href="log4net.Core.LogImpl.ErrorFormat_overload_1.html">ErrorFormat</a> methods log messages at the <code>ERROR</code> level. That is the level with that name defined in the repositories <b>LevelMap</b>. The default value for this level is <a href="log4net.Core.Level.Error.html">Error</a>. The <a href="log4net.Core.LogImpl.IsErrorEnabled.html">IsErrorEnabled</a> property tests if this level is enabled for logging. </dd>
+              </item><item>
+                <dt>FATAL</dt>
+                <dd> The <a href="log4net.Core.LogImpl.Fatal_overload_1.html">Fatal</a> and <a href="log4net.Core.LogImpl.FatalFormat_overload_1.html">FatalFormat</a> methods log messages at the <code>FATAL</code> level. That is the level with that name defined in the repositories <b>LevelMap</b>. The default value for this level is <a href="log4net.Core.Level.Fatal.html">Fatal</a>. The <a href="log4net.Core.LogImpl.IsFatalEnabled.html">IsFatalEnabled</a> property tests if this level is enabled for logging. </dd>
+              </item></dl>
+            <p> The values for these levels and their semantic meanings can be changed by configuring the <b>LevelMap</b> for the repository. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Core.html">log4net.Core</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Core.LogImplMembers.html">LogImpl Members</a> | <a href="log4net.Core.html">log4net.Core Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="LogImpl class, about LogImpl class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

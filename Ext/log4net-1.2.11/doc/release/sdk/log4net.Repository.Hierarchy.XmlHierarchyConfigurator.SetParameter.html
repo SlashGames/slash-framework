@@ -1,0 +1,67 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>XmlHierarchyConfigurator.SetParameter Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">XmlHierarchyConfigurator.SetParameter Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Sets a parameter on an object. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Protected Sub SetParameter( _<br />   ByVal <i>element</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemXmlXmlElementClassTopic.htm">XmlElement</a>, _<br />   ByVal <i>target</i> As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">Object</a> _<br />)</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />protected <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemVoidClassTopic.htm">void</a> SetParameter(<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemXmlXmlElementClassTopic.htm">XmlElement</a> <i>element</i>,<br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">object</a> <i>target</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>element</i>
+        </dt>
+        <dd>The parameter element.</dd>
+        <dt>
+          <i>target</i>
+        </dt>
+        <dd>The object to set the parameter on.</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+      <p> The parameter name must correspond to a writable property on the object. The value of the parameter is a string, therefore this function will attempt to set a string property first. If unable to set a string property it will inspect the property and its argument type. It will attempt to call a static method called <code>Parse</code> on the type of the property. This method will take a single string argument and return a value that can be used to set the property. </p>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="log4net.Repository.Hierarchy.XmlHierarchyConfigurator.html">XmlHierarchyConfigurator Class</a> | <a href="log4net.Repository.Hierarchy.html">log4net.Repository.Hierarchy Namespace</a></p>
+      <object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;">
+        <param name="Keyword" value="SetParameter method">
+        </param>
+        <param name="Keyword" value="SetParameter method, XmlHierarchyConfigurator class">
+        </param>
+        <param name="Keyword" value="XmlHierarchyConfigurator.SetParameter method">
+        </param>
+      </object>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a>
+        </p>
+        <p>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

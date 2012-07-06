@@ -1,0 +1,127 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>PatternString Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">PatternString Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> This class implements a patterned string. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Util.PatternStringMembers.html">PatternString Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <b>log4net.Util.PatternString</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class PatternString<div>    Implements <a href="log4net.Core.IOptionHandler.html">IOptionHandler</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class PatternString<b> : <a href="log4net.Core.IOptionHandler.html">IOptionHandler</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This string has embedded patterns that are resolved and expanded when the string is formatted. </p>
+            <p> This class functions similarly to the <a href="log4net.Layout.PatternLayout.html">PatternLayout</a> in that it accepts a pattern and renders it to a string. Unlike the <b>PatternLayout</b> however the <code>PatternString</code> does not render the properties of a specific <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> but of the process in general. </p>
+            <p> The recognized conversion pattern names are: </p>
+            <div class="tablediv"><table class="dtTABLE" cellspacing="0"><tr valign="top">
+                    <th width="50%">Conversion Pattern Name</th>
+                    <th width="50%">Effect</th>
+                </tr><tr valign="top">
+                    <td>appdomain</td>
+                    <td>
+                        <p> Used to output the friendly name of the current AppDomain. </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>date</td>
+                    <td>
+            			<p> Used to output the current date and time in the local time zone. To output the date in universal time use the <code>%utcdate</code> pattern. The date conversion specifier may be followed by a <i>date format specifier</i> enclosed between braces. For example, <b>%date{HH:mm:ss,fff}</b> or <b>%date{dd MMM yyyy HH:mm:ss,fff}</b>. If no date format specifier is given then ISO8601 format is assumed (<a href="log4net.DateFormatter.Iso8601DateFormatter.html">Iso8601DateFormatter</a>). </p>
+            			<p> The date format specifier admits the same syntax as the time pattern string of the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemDateTimeClassToStringTopic.htm">ToString</a>. </p>
+            			<p> For better results it is recommended to use the log4net date formatters. These can be specified using one of the strings "ABSOLUTE", "DATE" and "ISO8601" for specifying <a href="log4net.DateFormatter.AbsoluteTimeDateFormatter.html">AbsoluteTimeDateFormatter</a>, <a href="log4net.DateFormatter.DateTimeDateFormatter.html">DateTimeDateFormatter</a> and respectively <b>Iso8601DateFormatter</b>. For example, <b>%date{ISO8601}</b> or <b>%date{ABSOLUTE}</b>. </p>
+            			<p> These dedicated date formatters perform significantly better than <b>ToString</b>. </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>env</td>
+                    <td>
+                        <p> Used to output the a specific environment variable. The key to lookup must be specified within braces and directly following the pattern specifier, e.g. <b>%env{COMPUTERNAME}</b> would include the value of the <code>COMPUTERNAME</code> environment variable. </p>
+                        <p> The <code>env</code> pattern is not supported on the .NET Compact Framework. </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>identity</td>
+                    <td>
+            			<p> Used to output the user name for the currently active user (Principal.Identity.Name). </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>newline</td>
+                    <td>
+            			<p> Outputs the platform dependent line separator character or characters. </p>
+            			<p> This conversion pattern name offers the same performance as using non-portable line separator strings such as "\n", or "\r\n". Thus, it is the preferred way of specifying a line separator. </p> 
+                    </td>
+                </tr><tr valign="top">
+                    <td>processid</td>
+                    <td>
+                        <p> Used to output the system process ID for the current process. </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>property</td>
+                    <td>
+            			<p> Used to output a specific context property. The key to lookup must be specified within braces and directly following the pattern specifier, e.g. <b>%property{user}</b> would include the value from the property that is keyed by the string 'user'. Each property value that is to be included in the log must be specified separately. Properties are stored in logging contexts. By default the <code>log4net:HostName</code> property is set to the name of machine on which the event was originally logged. </p>
+            			<p> If no key is specified, e.g. <b>%property</b> then all the keys and their values are printed in a comma separated list. </p>
+            			<p> The properties of an event are combined from a number of different contexts. These are listed below in the order in which they are searched. </p>
+            			<dl><item>
+            					<dt>the thread properties</dt>
+            					<dd> The <a href="log4net.ThreadContext.Properties.html">Properties</a> that are set on the current thread. These properties are shared by all events logged on this thread. </dd>
+            				</item><item>
+            					<dt>the global properties</dt>
+            					<dd> The <a href="log4net.GlobalContext.Properties.html">Properties</a> that are set globally. These properties are shared by all the threads in the AppDomain. </dd>
+            				</item></dl>
+                    </td>
+                </tr><tr valign="top">
+                    <td>random</td>
+                    <td>
+                        <p> Used to output a random string of characters. The string is made up of uppercase letters and numbers. By default the string is 4 characters long. The length of the string can be specified within braces directly following the pattern specifier, e.g. <b>%random{8}</b> would output an 8 character string. </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>username</td>
+                    <td>
+            			<p> Used to output the WindowsIdentity for the currently active user. </p>
+                    </td>
+                </tr><tr valign="top">
+                    <td>utcdate</td>
+                    <td>
+            			<p> Used to output the date of the logging event in universal time. The date conversion specifier may be followed by a <i>date format specifier</i> enclosed between braces. For example, <b>%utcdate{HH:mm:ss,fff}</b> or <b>%utcdate{dd MMM yyyy HH:mm:ss,fff}</b>. If no date format specifier is given then ISO8601 format is assumed (<b>Iso8601DateFormatter</b>). </p>
+            			<p> The date format specifier admits the same syntax as the time pattern string of the <b>ToString</b>. </p>
+            			<p> For better results it is recommended to use the log4net date formatters. These can be specified using one of the strings "ABSOLUTE", "DATE" and "ISO8601" for specifying <b>AbsoluteTimeDateFormatter</b>, <b>DateTimeDateFormatter</b> and respectively <b>Iso8601DateFormatter</b>. For example, <b>%utcdate{ISO8601}</b> or <b>%utcdate{ABSOLUTE}</b>. </p>
+            			<p> These dedicated date formatters perform significantly better than <b>ToString</b>. </p>
+                    </td>
+                </tr><tr valign="top">
+            		<td>%</td>
+            		<td>
+            			<p> The sequence %% outputs a single percent sign. </p>
+            		</td>
+            	</tr></table></div>
+            <p> Additional pattern converters may be registered with a specific <b>PatternString</b> instance using <a href="log4net.Util.PatternString.AddConverter_overload_1.html">AddConverter</a> or <a href="log4net.Util.PatternString.AddConverter_overload_2.html">AddConverter</a>. </p>
+            <p> See the <b>PatternLayout</b> for details on the <i>format modifiers</i> supported by the patterns. </p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Util.html">log4net.Util</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Util.PatternStringMembers.html">PatternString Members</a> | <a href="log4net.Util.html">log4net.Util Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="PatternString class, about PatternString class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

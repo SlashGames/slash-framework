@@ -1,0 +1,67 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>Level Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">Level Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Defines the default set of levels recognized by the system. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Core.LevelMembers.html">Level Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <b>log4net.Core.Level</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />NotInheritable Public Class Level<div>    Implements <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIComparableClassTopic.htm">IComparable</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public sealed class Level<b> : <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemIComparableClassTopic.htm">IComparable</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Each <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> has an associated <b>Level</b>. </p>
+            <p> Levels have a numeric <a href="log4net.Core.Level.Value.html">Value</a> that defines the relative ordering between levels. Two Levels with the same <b>Value</b> are deemed to be equivalent. </p>
+            <p> The levels that are recognized by log4net are set for each <a href="log4net.Repository.ILoggerRepository.html">ILoggerRepository</a> and each repository can have different levels defined. The levels are stored in the <a href="log4net.Repository.ILoggerRepository.LevelMap.html">LevelMap</a> on the repository. Levels are looked up by name from the <b>LevelMap</b>. </p>
+            <p> When logging at level INFO the actual level used is not <a href="log4net.Core.Level.Info.html">Info</a> but the value of <code>LoggerRepository.LevelMap["INFO"]</code>. The default value for this is <b>Info</b>, but this can be changed by reconfiguring the level map. </p>
+            <p> Each level has a <a href="log4net.Core.Level.DisplayName.html">DisplayName</a> in addition to its <a href="log4net.Core.Level.Name.html">Name</a>. The <b>DisplayName</b> is the string that is written into the output log. By default the display name is the same as the level name, but this can be used to alias levels or to localize the log output. </p>
+            <p> Some of the predefined levels recognized by the system are: </p>
+            <ul type="disc"><li>
+            		<a href="log4net.Core.Level.Off.html">Off</a>.
+            	</li><li>
+            		<a href="log4net.Core.Level.Fatal.html">Fatal</a>.
+            	</li><li>
+            		<a href="log4net.Core.Level.Error.html">Error</a>.
+            	</li><li>
+            		<a href="log4net.Core.Level.Warn.html">Warn</a>.
+            	</li><li>
+            		<b>Info</b>.
+            	</li><li>
+            		<a href="log4net.Core.Level.Debug.html">Debug</a>.
+            	</li><li>
+            		<a href="log4net.Core.Level.All.html">All</a>.
+            	</li></ul>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Core.html">log4net.Core</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Core.LevelMembers.html">Level Members</a> | <a href="log4net.Core.html">log4net.Core Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="Level class, about Level class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

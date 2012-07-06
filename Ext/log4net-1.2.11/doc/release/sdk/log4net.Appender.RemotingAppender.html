@@ -1,0 +1,51 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>RemotingAppender Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">RemotingAppender Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Delivers logging events to a remote logging sink. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Appender.RemotingAppenderMembers.html">RemotingAppender Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="log4net.Appender.AppenderSkeleton.html">log4net.Appender.AppenderSkeleton</a><br />      <a href="log4net.Appender.BufferingAppenderSkeleton.html">log4net.Appender.BufferingAppenderSkeleton</a><br />         <b>log4net.Appender.RemotingAppender</b></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class RemotingAppender<div>    Inherits <a href="log4net.Appender.BufferingAppenderSkeleton.html">BufferingAppenderSkeleton</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class RemotingAppender<b> : <a href="log4net.Appender.BufferingAppenderSkeleton.html">BufferingAppenderSkeleton</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This Appender is designed to deliver events to a remote sink. That is any object that implements the <a href="log4net.Appender.RemotingAppender.IRemoteLoggingSink.html">RemotingAppender.IRemoteLoggingSink</a> interface. It delivers the events using .NET remoting. The object to deliver events to is specified by setting the appenders <a href="log4net.Appender.RemotingAppender.Sink.html">Sink</a> property.</p>
+            <p> The RemotingAppender buffers events before sending them. This allows it to make more efficient use of the remoting infrastructure.</p>
+            <p> Once the buffer is full the events are still not sent immediately. They are scheduled to be sent using a pool thread. The effect is that the send occurs asynchronously. This is very important for a number of non obvious reasons. The remoting infrastructure will flow thread local variables (stored in the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemRuntimeRemotingMessagingCallContextClassTopic.htm">CallContext</a>), if they are marked as <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemRuntimeRemotingMessagingILogicalThreadAffinativeClassTopic.htm">ILogicalThreadAffinative</a>, across the remoting boundary. If the server is not contactable then the remoting infrastructure will clear the <b>ILogicalThreadAffinative</b> objects from the <b>CallContext</b>. To prevent a logging failure from having side effects on the calling application the remoting call must be made from a separate thread to the one used by the application. A <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemThreadingThreadPoolClassTopic.htm">ThreadPool</a> thread is used for this. If no <b>ThreadPool</b> thread is available then the events will block in the thread pool manager until a thread is available.</p>
+            <p> Because the events are sent asynchronously using pool threads it is possible to close this appender before all the queued events have been sent. When closing the appender attempts to wait until all the queued events have been sent, but this will timeout after 30 seconds regardless.</p>
+            <p> If this appender is being closed because the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemAppDomainClassProcessExitTopic.htm">ProcessExit</a> event has fired it may not be possible to send all the queued events. During process exit the runtime limits the time that a <b>ProcessExit</b> event handler is allowed to run for. If the runtime terminates the threads before the queued events have been sent then they will be lost. To ensure that all events are sent the appender must be closed before the application exits. See <a href="log4net.Core.LoggerManager.Shutdown.html">Shutdown</a> for details on how to shutdown log4net programmatically.</p>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Appender.html">log4net.Appender</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.RemotingAppenderMembers.html">RemotingAppender Members</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a> | <a href="log4net.Appender.RemotingAppender.IRemoteLoggingSink.html">RemotingAppender.IRemoteLoggingSink</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="RemotingAppender class, about RemotingAppender class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

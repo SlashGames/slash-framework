@@ -1,0 +1,46 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>LoggingEvent Constructor (LoggingEventData)</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LoggingEvent Constructor (LoggingEventData)</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Initializes a new instance of the <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> class using specific data. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overloads Public Sub New( _<br />   ByVal <i>data</i> As <a href="log4net.Core.LoggingEventData.html">LoggingEventData</a> _<br />)</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public LoggingEvent(<br />   <a href="log4net.Core.LoggingEventData.html">LoggingEventData</a> <i>data</i><br />);</div>
+      <h4 class="dtH4">Parameters</h4>
+      <dl>
+        <dt>
+          <i>data</i>
+        </dt>
+        <dd>Data used to initialize the logging event.</dd>
+      </dl>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This constructor is provided to allow a <a href="log4net.Core.LoggingEvent.html">LoggingEvent</a> to be created independently of the log4net framework. This can be useful if you require a custom serialization scheme. </p>
+            <p> Use the <a href="log4net.Core.LoggingEvent.GetLoggingEventData_overload_2.html">GetLoggingEventData</a> method to obtain an instance of the <a href="log4net.Core.LoggingEventData.html">LoggingEventData</a> class. </p>
+            <p> This constructor sets this objects <a href="log4net.Core.LoggingEvent.Fix.html">Fix</a> flags to <a href="log4net.Core.FixFlags.html">All</a>, this assumes that all the data relating to this event is passed in via the <i>data</i> parameter and no other data should be captured from the environment. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Core.LoggingEvent.html">LoggingEvent Class</a> | <a href="log4net.Core.html">log4net.Core Namespace</a> | <a href="log4net.Core.LoggingEventConstructor.html">LoggingEvent Constructor Overload List</a></p><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>FixFlags Enumeration</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">FixFlags Enumeration</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Flags passed to the <a href="log4net.Core.LoggingEvent.Fix.html">Fix</a> property </p>
+      <p>This enumeration has a <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemFlagsAttributeClassTopic.htm">
+						FlagsAttribute</a>
+						attribute that allows a bitwise combination of its member values.</p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Enum FixFlags</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public enum FixFlags</div>
+      </div>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Flags passed to the <a href="log4net.Core.LoggingEvent.Fix.html">Fix</a> property </p>
+            <h4 class="dtH4">Members</h4><div class="tablediv"><table class="dtTABLE" cellspacing="0"><tr valign="top"><th width="40%">Member Name</th><th width="40%">Description</th><th width="20%">Value</th></tr>
+<tr valign="top"><td><b>Mdc</b></td><td><FONT color="red"><B>Obsolete.</B> 
+									</FONT><B>Replaced by composite Properties</B><br /> Fix the MDC </td><td>1</td></tr>
+<tr valign="top"><td><b>Ndc</b></td><td> Fix the NDC </td><td>2</td></tr>
+<tr valign="top"><td><b>Message</b></td><td> Fix the rendered message </td><td>4</td></tr>
+<tr valign="top"><td><b>ThreadName</b></td><td> Fix the thread name </td><td>8</td></tr>
+<tr valign="top"><td><b>LocationInfo</b></td><td> Fix the callers location information </td><td>16</td></tr>
+<tr valign="top"><td><b>UserName</b></td><td> Fix the callers windows user name </td><td>32</td></tr>
+<tr valign="top"><td><b>Domain</b></td><td> Fix the domain friendly name </td><td>64</td></tr>
+<tr valign="top"><td><b>Identity</b></td><td> Fix the callers principal name </td><td>128</td></tr>
+<tr valign="top"><td><b>Exception</b></td><td> Fix the exception text </td><td>256</td></tr>
+<tr valign="top"><td><b>Properties</b></td><td> Fix the event properties. Active properties must implement <a href="log4net.Core.IFixingRequired.html">IFixingRequired</a> in order to be eligible for fixing. </td><td>512</td></tr>
+<tr valign="top"><td><b>None</b></td><td> No fields fixed </td><td>0</td></tr>
+<tr valign="top"><td><b>All</b></td><td> All fields fixed </td><td>268435455</td></tr>
+<tr valign="top"><td><b>Partial</b></td><td> Partial fields fixed </td><td>844</td></tr></table></div><h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Core.html">log4net.Core</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Core.html">log4net.Core Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="FixFlags enumeration"></param><param name="Keyword" value="log4net.Core.FixFlags enumeration"></param><param name="Keyword" value="Mdc enumeration member"></param><param name="Keyword" value="FixFlags.Mdc enumeration member"></param><param name="Keyword" value="Ndc enumeration member"></param><param name="Keyword" value="FixFlags.Ndc enumeration member"></param><param name="Keyword" value="Message enumeration member"></param><param name="Keyword" value="FixFlags.Message enumeration member"></param><param name="Keyword" value="ThreadName enumeration member"></param><param name="Keyword" value="FixFlags.ThreadName enumeration member"></param><param name="Keyword" value="LocationInfo enumeration member"></param><param name="Keyword" value="FixFlags.LocationInfo enumeration member"></param><param name="Keyword" value="UserName enumeration member"></param><param name="Keyword" value="FixFlags.UserName enumeration member"></param><param name="Keyword" value="Domain enumeration member"></param><param name="Keyword" value="FixFlags.Domain enumeration member"></param><param name="Keyword" value="Identity enumeration member"></param><param name="Keyword" value="FixFlags.Identity enumeration member"></param><param name="Keyword" value="Exception enumeration member"></param><param name="Keyword" value="FixFlags.Exception enumeration member"></param><param name="Keyword" value="Properties enumeration member"></param><param name="Keyword" value="FixFlags.Properties enumeration member"></param><param name="Keyword" value="None enumeration member"></param><param name="Keyword" value="FixFlags.None enumeration member"></param><param name="Keyword" value="All enumeration member"></param><param name="Keyword" value="FixFlags.All enumeration member"></param><param name="Keyword" value="Partial enumeration member"></param><param name="Keyword" value="FixFlags.Partial enumeration member"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

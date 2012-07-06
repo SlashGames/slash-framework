@@ -1,0 +1,54 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>XmlConfiguratorAttribute Class</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">XmlConfiguratorAttribute Class</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Assembly level attribute to configure the <a href="log4net.Config.XmlConfigurator.html">XmlConfigurator</a>. </p>
+      <p>For a list of all members of this type, see <a href="log4net.Config.XmlConfiguratorAttributeMembers.html">XmlConfiguratorAttribute Members</a>.</p>
+      <p>
+        <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemObjectClassTopic.htm">System.Object</a>
+        <br />   <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemAttributeClassTopic.htm">System.Attribute</a><br />      <a href="log4net.Config.ConfiguratorAttribute.html">log4net.Config.ConfiguratorAttribute</a><br />         <b>log4net.Config.XmlConfiguratorAttribute</b><br />            <a href="log4net.Config.DOMConfiguratorAttribute.html">log4net.Config.DOMConfiguratorAttribute</a></p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Class XmlConfiguratorAttribute<div>    Inherits <a href="log4net.Config.ConfiguratorAttribute.html">ConfiguratorAttribute</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <div>public class XmlConfiguratorAttribute<b> : <a href="log4net.Config.ConfiguratorAttribute.html">ConfiguratorAttribute</a></b></div>
+      </div>
+      <H4 class="dtH4">Thread Safety</H4>
+      <P>Public static (<b>Shared</b> in Visual Basic) members of this type are 
+				safe for multithreaded operations. Instance members are <b>not</b> guaranteed to be 
+				thread-safe.</P>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This attribute may only be used at the assembly scope and can only be used once per assembly. </p>
+            <p> Use this attribute to configure the <a href="log4net.Config.XmlConfigurator.html">XmlConfigurator</a> without calling one of the <a href="log4net.Config.XmlConfigurator.Configure_overload_1.html">Configure</a> methods. </p>
+            <p> If neither of the <a href="log4net.Config.XmlConfiguratorAttribute.ConfigFile.html">ConfigFile</a> or <a href="log4net.Config.XmlConfiguratorAttribute.ConfigFileExtension.html">ConfigFileExtension</a> properties are set the configuration is loaded from the application's .config file. If set the <b>ConfigFile</b> property takes priority over the <b>ConfigFileExtension</b> property. The <b>ConfigFile</b> property specifies a path to a file to load the config from. The path is relative to the application's base directory; <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemAppDomainClassBaseDirectoryTopic.htm">BaseDirectory</a>. The <b>ConfigFileExtension</b> property is used as a postfix to the assembly file name. The config file must be located in the application's base directory; <b>BaseDirectory</b>. For example in a console application setting the <b>ConfigFileExtension</b> to <code>config</code> has the same effect as not specifying the <b>ConfigFile</b> or <b>ConfigFileExtension</b> properties. </p>
+            <p> The <a href="log4net.Config.XmlConfiguratorAttribute.Watch.html">Watch</a> property can be set to cause the <b>XmlConfigurator</b> to watch the configuration file for changes. </p>
+            <blockquote class="dtBlock"><b>Note</b>   
+            <p> Log4net will only look for assembly level configuration attributes once. When using the log4net assembly level attributes to control the configuration of log4net you must ensure that the first call to any of the <a href="log4net.Core.LoggerManager.html">LoggerManager</a> methods is made from the assembly with the configuration attributes. </p>
+            <p> If you cannot guarantee the order in which log4net calls will be made from different assemblies you must use programmatic configuration instead, i.e. call the <b>Configure</b> method directly. </p>
+            </blockquote>
+            <h4 class="dtH4">Requirements</h4><p><b>Namespace: </b><a href="log4net.Config.html">log4net.Config</a></p><p><b>Assembly: </b>log4net (in log4net.dll)
+					</p><h4 class="dtH4">See Also</h4><p><a href="log4net.Config.XmlConfiguratorAttributeMembers.html">XmlConfiguratorAttribute Members</a> | <a href="log4net.Config.html">log4net.Config Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="XmlConfiguratorAttribute class, about XmlConfiguratorAttribute class"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

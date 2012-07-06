@@ -1,0 +1,59 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>IsDebugEnabled Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">LogImpl.IsDebugEnabled Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Checks if this logger is enabled for the <code>DEBUG</code> level. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overridable Public ReadOnly Property IsDebugEnabled As <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">Boolean</a> _<div>    Implements <a href="log4net.ILog.IsDebugEnabled.html">ILog.IsDebugEnabled</a></div></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public virtual <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemBooleanClassTopic.htm">bool</a> IsDebugEnabled {get;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p>
+            <code>true</code> if this logger is enabled for <code>DEBUG</code> events, <code>false</code> otherwise. </p>
+      <h4 class="dtH4">Implements</h4>
+      <p>
+        <a href="log4net.ILog.IsDebugEnabled.html">ILog.IsDebugEnabled</a>
+      </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This function is intended to lessen the computational cost of disabled log debug statements. </p>
+            <p> For some <code>log</code> Logger object, when you write: </p>
+            <pre class="code"><span class="lang">[C#]
+</span>log.Debug("This is entry number: " + i );
+</pre>
+            <p> You incur the cost constructing the message, concatenation in this case, regardless of whether the message is logged or not. </p>
+            <p> If you are worried about speed, then you should write: </p>
+            <pre class="code"><span class="lang">[C#]
+</span>if (log.IsDebugEnabled())
+{ 
+ log.Debug("This is entry number: " + i );
+}
+</pre>
+            <p> This way you will not incur the cost of parameter construction if debugging is disabled for <code>log</code>. On the other hand, if the <code>log</code> is debug enabled, you will incur the cost of evaluating whether the logger is debug enabled twice. Once in <code>IsDebugEnabled</code> and once in the <code>Debug</code>. This is an insignificant overhead since evaluating a logger takes about 1% of the time it takes to actually log. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Core.LogImpl.html">LogImpl Class</a> | <a href="log4net.Core.html">log4net.Core Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="IsDebugEnabled property"></param><param name="Keyword" value="IsDebugEnabled property, LogImpl class"></param><param name="Keyword" value="LogImpl.IsDebugEnabled property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

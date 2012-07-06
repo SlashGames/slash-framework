@@ -1,0 +1,43 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>DateTimeStrategy Property</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">RollingFileAppender.DateTimeStrategy Property</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Gets or sets the strategy for determining the current date and time. The default implementation is to use LocalDateTime which internally calls through to DateTime.Now. DateTime.UtcNow may be used on frameworks newer than .NET 1.0 by specifying <b>UniversalDateTime</b>. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Public Property DateTimeStrategy As <a href="log4net.Appender.RollingFileAppender.IDateTime.html">IDateTime</a></div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />public <a href="log4net.Appender.RollingFileAppender.IDateTime.html">RollingFileAppender.IDateTime</a> DateTimeStrategy {get; set;}</div>
+      <p>
+      </p>
+      <h4 class="dtH4">Property Value</h4>
+      <p> An implementation of the <a href="log4net.Appender.RollingFileAppender.IDateTime.html">RollingFileAppender.IDateTime</a> interface which returns the current date and time. </p>
+      <h4 class="dtH4">Remarks</h4>
+            <p> Gets or sets the <a href="log4net.Appender.RollingFileAppender.IDateTime.html">RollingFileAppender.IDateTime</a> used to return the current date and time. </p>
+            <p> There are two built strategies for determining the current date and time, <b>LocalDateTime</b> and <b>UniversalDateTime</b>. </p>
+            <p> The default strategy is <b>LocalDateTime</b>. </p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.RollingFileAppender.html">RollingFileAppender Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="DateTimeStrategy property"></param><param name="Keyword" value="DateTimeStrategy property, RollingFileAppender class"></param><param name="Keyword" value="RollingFileAppender.DateTimeStrategy property"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>

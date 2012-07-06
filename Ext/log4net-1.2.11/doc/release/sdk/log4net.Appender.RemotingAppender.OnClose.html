@@ -1,0 +1,39 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>RemotingAppender.OnClose Method</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">log4net SDK Documentation - Microsoft .NET Framework 4.0</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">RemotingAppender.OnClose Method </h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p> Override base class close. </p>
+      <div class="syntax">
+        <span class="lang">[Visual Basic]</span>
+        <br />Overrides Protected Sub OnClose()</div>
+      <div class="syntax">
+        <span class="lang">[C#]</span>
+        <br />protected override <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemVoidClassTopic.htm">void</a> OnClose();</div>
+      <h4 class="dtH4">Remarks</h4>
+            <p> This method waits while there are queued work items. The events are sent asynchronously using <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemThreadingThreadPoolClassTopic.htm">ThreadPool</a> work items. These items will be sent once a thread pool thread is available to send them, therefore it is possible to close the appender before all the queued events have been sent.</p>
+            <p> This method attempts to wait until all the queued events have been sent, but this method will timeout after 30 seconds regardless.</p>
+            <p> If the appender is being closed because the <a href="ms-help://MS.NETFrameworkSDKv1.1/cpref/html/frlrfSystemAppDomainClassProcessExitTopic.htm">ProcessExit</a> event has fired it may not be possible to send all the queued events. During process exit the runtime limits the time that a <b>ProcessExit</b> event handler is allowed to run for.</p>
+            <h4 class="dtH4">See Also</h4><p><a href="log4net.Appender.RemotingAppender.html">RemotingAppender Class</a> | <a href="log4net.Appender.html">log4net.Appender Namespace</a></p><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e" viewastext="true" style="display: none;"><param name="Keyword" value="OnClose method"></param><param name="Keyword" value="OnClose method, RemotingAppender class"></param><param name="Keyword" value="RemotingAppender.OnClose method"></param></object><hr /><div id="footer"><p><a href="http://logging.apache.org/log4net">Copyright 2004-2011 The Apache Software Foundation.</a></p><p></p></div></div>
+  </body>
+</html>
