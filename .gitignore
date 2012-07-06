@@ -43,3 +43,6 @@
 /Source/RainyGames.Unity.Editor.Common/obj
 /Source/RainyGames.Unity.Editor.Common/bin
 /Source/RainyGames.Collections/StyleCop.Cache
+/Source/RainyGames.AI/StyleCop.Cache
+/Source/RainyGames.AI/obj
+/Source/RainyGames.AI/bin
