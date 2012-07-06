@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</ProjectGuid>
+    <ProjectGuid>{32F5CD1C-1889-4A37-B7E4-E3363488BE1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RainyGames.Collections</RootNamespace>
-    <AssemblyName>RainyGames.Collections</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RootNamespace>RainyGames.AI</RootNamespace>
+    <AssemblyName>RainyGames.AI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,26 +35,21 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\AttributeTables\AttributeTable.cs" />
-    <Compile Include="Source\AttributeTables\HierarchicalAttributeTable.cs" />
-    <Compile Include="Source\AttributeTables\IAttributeTable.cs" />
-    <Compile Include="Source\Graphs\IGraphVertex.cs" />
-    <Compile Include="Source\Graphs\AdjacencyListWeightedDirectedGraph.cs" />
-    <Compile Include="Source\Graphs\IWeightedGraph.cs" />
-    <Compile Include="Source\PriorityQueues\FibonacciHeap.cs" />
-    <Compile Include="Source\PriorityQueues\FibonacciHeapItem.cs" />
-    <Compile Include="Source\PriorityQueues\FibonacciHeapNode.cs" />
-    <Compile Include="Source\PriorityQueues\IPriorityQueue.cs" />
-    <Compile Include="Source\PriorityQueues\IPriorityQueueItem.cs" />
-    <Compile Include="Source\Utils\CollectionUtils.cs" />
-    <Compile Include="Source\Utils\ListExtensionMethods.cs" />
+    <Compile Include="Source\Pathfinding\AStar.cs" />
+    <Compile Include="Source\Pathfinding\IAStarNode.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\RainyGames.Collections\RainyGames.Collections.csproj">
+      <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
+      <Name>RainyGames.Collections</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
