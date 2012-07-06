@@ -38,6 +38,10 @@
     <Compile Include="Source\BehaviorTree.cs" />
     <Compile Include="Source\Data\Blackboard.cs" />
     <Compile Include="Source\Data\TaskParameter.cs" />
+    <Compile Include="Source\Data\TaskParameterDynamic.cs" />
+    <Compile Include="Source\Data\TaskParameterGeneric.cs" />
+    <Compile Include="Source\Data\TaskParameterLocation.cs" />
+    <Compile Include="Source\Data\TaskParameterTask.cs" />
     <Compile Include="Source\Editor\TaskDescription.cs" />
     <Compile Include="Source\Editor\TaskDescriptionSet.cs" />
     <Compile Include="Source\Editor\TaskParameterDescription.cs" />

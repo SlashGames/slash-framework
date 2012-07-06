@@ -46,3 +46,7 @@
 /Source/RainyGames.AI/StyleCop.Cache
 /Source/RainyGames.AI/obj
 /Source/RainyGames.AI/bin
+/Source/RainyGames.Reflection/bin
+/Source/RainyGames.Reflection/obj
+/Source/RainyGames.Reflection.Tests/bin
+/Source/RainyGames.Reflection.Tests/obj

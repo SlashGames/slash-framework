@@ -1,12 +1,15 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Blackboard.cs" company="Rainy Games">
+//   Copyright (c) Rainy Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace RainyGames.AI.BehaviorTrees.Data
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Xml;
 
-    using RainyGames.AI.BehaviorTrees.Editor;
-    using RainyGames.AI.BehaviorTrees.Interfaces;
     using RainyGames.Collections.AttributeTables;
     using RainyGames.Collections.Utils;
 
@@ -48,7 +51,17 @@ namespace RainyGames.AI.BehaviorTrees.Data
         #endregion
 
         #region Public Methods and Operators
-        
+
+        /// <summary>
+        ///   Checks if an attribute with the passed id exists.
+        /// </summary>
+        /// <param name="id"> Id of attribute to check. </param>
+        /// <returns> True if an attribute with the passed id exists, else false. </returns>
+        public bool ContainsKey<T>(T id)
+        {
+            return base.ContainsKey(id) || this.Parents != null && this.Parents.Any(parent => parent.ContainsKey(id));
+        }
+
         /// <summary>
         ///   The equals.
         /// </summary>
@@ -90,6 +103,18 @@ namespace RainyGames.AI.BehaviorTrees.Data
         }
 
         /// <summary>
+        ///   The get hash code.
+        /// </summary>
+        /// <returns> The System.Int32. </returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (base.GetHashCode() * 397) ^ (this.Parents != null ? this.Parents.GetHashCode() : 0);
+            }
+        }
+
+        /// <summary>
         ///   Returns the attribute with the passed id.
         /// </summary>
         /// <typeparam name="T"> Type of attribute. </typeparam>
@@ -115,39 +140,16 @@ namespace RainyGames.AI.BehaviorTrees.Data
         }
 
         /// <summary>
-        ///   The get hash code.
-        /// </summary>
-        /// <returns> The System.Int32. </returns>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (base.GetHashCode() * 397) ^ (this.Parents != null ? this.Parents.GetHashCode() : 0);
-            }
-        }
-
-        /// <summary>
-        ///   Checks if an attribute with the passed id exists.
-        /// </summary>
-        /// <param name="id"> Id of attribute to check. </param>
-        /// <returns> True if an attribute with the passed id exists, else false. </returns>
-        public bool ContainsKey<T>(T id)
-        {
-            return base.ContainsKey(id) || this.Parents != null && this.Parents.Any(parent => parent.ContainsKey(id));
-        }
-
-        /// <summary>
         ///   Tries to find the attribute with the passed id.
         /// </summary>
         /// <typeparam name="T"> Type of attribute. </typeparam>
         /// <param name="id"> Id of attribute. </param>
-        /// <param name="value">Contains value if id was found.</param>
+        /// <param name="value"> Contains value if id was found. </param>
         /// <returns> True if the attribute was found, else false. </returns>
         public override bool TryGetValue<T>(object id, out T value)
         {
             object objectValue;
-            if (base.TryGetValue(id, out objectValue) &&
-                objectValue is T)
+            if (base.TryGetValue(id, out objectValue) && objectValue is T)
             {
                 value = (T)objectValue;
                 return true;
@@ -169,8 +171,6 @@ namespace RainyGames.AI.BehaviorTrees.Data
         }
 
         #endregion
-
-        #region Methods
 
         /*
         /// <summary>
@@ -208,8 +208,5 @@ namespace RainyGames.AI.BehaviorTrees.Data
                 base.WriteXmlValue(writer, value, name);
             }
         }*/
-
-        #endregion
-
     }
 }
