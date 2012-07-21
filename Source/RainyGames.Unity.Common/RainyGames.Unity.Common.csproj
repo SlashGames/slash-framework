@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Attributes\ExposePropertyAttribute.cs" />
+    <Compile Include="Source\Diagnostics\DebugInput.cs" />
     <Compile Include="Source\GUI\GuiExt.cs" />
     <Compile Include="Source\GUI\GUILayoutExt.cs" />
     <Compile Include="Source\GUI\ValueEditors\EnumValueEditor.cs" />
@@ -47,9 +48,10 @@
     <Compile Include="Source\GUI\ValueEditors\SimpleValueEditorContext.cs" />
     <Compile Include="Source\GUI\ValueEditors\TextValueEditor.cs" />
     <Compile Include="Source\GUI\ValueEditors\ValueEditorContext.cs" />
+    <Compile Include="Source\Input\InputUtils.cs" />
     <Compile Include="Source\Logging\ConsoleAppender.cs" />
     <Compile Include="Source\Logging\Logger.cs" />
-    <Compile Include="Source\Math\MathConversionExtensionMethods.cs" />
+    <Compile Include="Source\Math\MathConversionExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

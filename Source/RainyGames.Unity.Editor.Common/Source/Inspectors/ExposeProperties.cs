@@ -10,7 +10,9 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
     using System.Collections.Generic;
     using System.Reflection;
 
+    using RainyGames.Math.Geometry.Rectangles;
     using RainyGames.Unity.Common.Attributes;
+    using RainyGames.Unity.Common.Math;
 
     using UnityEditor;
 
@@ -34,40 +36,68 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
 
             foreach (PropertyField field in properties)
             {
+                object value = field.GetValue();
+                if (value == null)
+                {
+                    continue;
+                }
+                
+                // Convert value if conversion function is provided.
+                if (field.GetConversionFunc != null)
+                {
+                    value = field.GetConversionFunc(value);
+                }
+
                 EditorGUILayout.BeginHorizontal(emptyOptions);
 
+                object newValue = null;
                 switch (field.Type)
                 {
                     case SerializedPropertyType.Integer:
-                        field.SetValue(EditorGUILayout.IntField(field.Name, (int)field.GetValue(), emptyOptions));
+                        newValue = EditorGUILayout.IntField(field.Name, (int)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.Float:
-                        field.SetValue(EditorGUILayout.FloatField(field.Name, (float)field.GetValue(), emptyOptions));
+                        newValue = EditorGUILayout.FloatField(field.Name, (float)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.Boolean:
-                        field.SetValue(EditorGUILayout.Toggle(field.Name, (bool)field.GetValue(), emptyOptions));
+                        newValue = EditorGUILayout.Toggle(field.Name, (bool)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.String:
-                        field.SetValue(EditorGUILayout.TextField(field.Name, (String)field.GetValue(), emptyOptions));
+                        newValue = EditorGUILayout.TextField(field.Name, (String)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.Vector2:
-                        field.SetValue(
-                            EditorGUILayout.Vector2Field(field.Name, (Vector2)field.GetValue(), emptyOptions));
+                        newValue = 
+                            EditorGUILayout.Vector2Field(field.Name, (Vector2)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.Vector3:
-                        field.SetValue(
-                            EditorGUILayout.Vector3Field(field.Name, (Vector3)field.GetValue(), emptyOptions));
+                        newValue = 
+                            EditorGUILayout.Vector3Field(field.Name, (Vector3)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.Enum:
-                        field.SetValue(EditorGUILayout.EnumPopup(field.Name, (Enum)field.GetValue(), emptyOptions));
+                        newValue = EditorGUILayout.EnumPopup(field.Name, (Enum)value, emptyOptions);
+                        break;
+                        
+                        case SerializedPropertyType.Rect:
+                        {
+                            newValue = EditorGUILayout.RectField(field.Name, (Rect)value, emptyOptions);
+                        }
                         break;
                 }
+
+                // Convert new value if conversion function is provided.
+                if (field.SetConversionFunc != null)
+                {
+                    newValue = field.SetConversionFunc(newValue);
+                }
+
+                // Set new value.
+                field.SetValue(newValue);
 
                 EditorGUILayout.EndHorizontal();
             }
@@ -83,8 +113,8 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
 
             foreach (PropertyInfo info in infos)
             {
-                // Make sure property has a public getter and setter.
-                if (!info.CanRead || !info.CanWrite)
+                // Make sure property has a public getter.
+                if (!info.CanRead)
                 {
                     continue;
                 }
@@ -98,12 +128,15 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
 
                 // Check that property has a supported type.
                 SerializedPropertyType type;
-                if (!PropertyField.GetPropertyType(info, out type))
+                Func<object, object> getConversionFunc;
+                Func<object, object> setConversionFunc;
+                if (!PropertyField.GetPropertyType(info, out type, out getConversionFunc, out setConversionFunc))
                 {
                     continue;
                 }
 
-                PropertyField field = new PropertyField(obj, info, type);
+                PropertyField field = new PropertyField(obj, info, type)
+                    { GetConversionFunc = getConversionFunc, SetConversionFunc = setConversionFunc };
                 fields.Add(field);
             }
 

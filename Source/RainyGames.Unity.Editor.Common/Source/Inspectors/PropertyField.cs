@@ -9,6 +9,9 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
     using System;
     using System.Reflection;
 
+    using RainyGames.Math.Geometry.Rectangles;
+    using RainyGames.Unity.Common.Math;
+
     using UnityEditor;
 
     using UnityEngine;
@@ -46,6 +49,11 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
         #endregion
 
         #region Public Properties
+        
+        /// <summary>
+        ///   Conversion function when getting the value to show in the inspector.
+        /// </summary>
+        public Func<object, object> GetConversionFunc { get; set; }
 
         public String Name
         {
@@ -54,6 +62,11 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
                 return ObjectNames.NicifyVariableName(this.info.Name);
             }
         }
+
+        /// <summary>
+        ///   Conversion function when writing the value from the inspector back to the property. 
+        /// </summary>
+        public Func<Object, Object> SetConversionFunc { get; set; }
 
         public SerializedPropertyType Type
         {
@@ -67,9 +80,24 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
 
         #region Public Methods and Operators
 
-        public static bool GetPropertyType(PropertyInfo info, out SerializedPropertyType propertyType)
+        /// <summary>
+        ///   Returns the property type and the conversion functions to use when showing the value in the inspector and when
+        ///   the value is written back to the property.
+        /// </summary>
+        /// <param name="info"> Property info. </param>
+        /// <param name="propertyType"> Defines which inspector control to use to show the value. </param>
+        /// <param name="getConversionFunc"> Conversion function when getting the value to show in the inspector. </param>
+        /// <param name="setConversionFunc"> Conversion function when writing the value from the inspector back to the property. </param>
+        /// <returns> True if the property contains a value which can be visualized in the inspector; otherwise, false. </returns>
+        public static bool GetPropertyType(
+            PropertyInfo info,
+            out SerializedPropertyType propertyType,
+            out Func<object, object> getConversionFunc,
+            out Func<object, object> setConversionFunc)
         {
             propertyType = SerializedPropertyType.Generic;
+            getConversionFunc = null;
+            setConversionFunc = null;
 
             Type type = info.PropertyType;
 
@@ -109,6 +137,28 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
                 return true;
             }
 
+            if (type == typeof(Rect))
+            {
+                propertyType = SerializedPropertyType.Rect;
+                return true;
+            }
+
+            if (type == typeof(RectangleI))
+            {
+                propertyType = SerializedPropertyType.Rect;
+                getConversionFunc = o => ((RectangleI)o).ToRect();
+                setConversionFunc = o => ((Rect)o).ToRectangleI();
+                return true;
+            }
+
+            if (type == typeof(RectangleF))
+            {
+                propertyType = SerializedPropertyType.Rect;
+                getConversionFunc = o => ((RectangleF)o).ToRect();
+                setConversionFunc = o => ((Rect)o).ToRectangleF();
+                return true;
+            }
+
             if (type.IsEnum)
             {
                 propertyType = SerializedPropertyType.Enum;
@@ -125,7 +175,10 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
 
         public void SetValue(Object value)
         {
-            this.setter.Invoke(this.instance, new[] { value });
+            if (this.setter != null)
+            {
+                this.setter.Invoke(this.instance, new[] { value });
+            }
         }
 
         #endregion

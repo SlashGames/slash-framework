@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RainyGames.Math, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\BrainArchitect\Source\RainyGames.BrainArchitect.Unity\Assets\Plugins\RainyGames.Math.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(UNITY_PATH)Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -40,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Inspectors\Diagnostics\DebugInputEditor.cs" />
     <Compile Include="Source\Inspectors\ExposeProperties.cs" />
     <Compile Include="Source\Inspectors\PropertyField.cs" />
   </ItemGroup>

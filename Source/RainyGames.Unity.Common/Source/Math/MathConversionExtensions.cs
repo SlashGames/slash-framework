@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MathConversionExtensionMethods.cs" company="Rainy Games">
+// <copyright file="MathConversionExtensions.cs" company="Rainy Games">
 //   Copyright (c) Rainy Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,11 +14,16 @@ namespace RainyGames.Unity.Common.Math
     /// <summary>
     ///   Contains extension methods to convert from/to unity/framework mathematical structures.
     /// </summary>
-    public static class MathConversionExtensionMethods
+    public static class MathConversionExtensions
     {
         #region Public Methods and Operators
 
         public static Rect ToRect(this RectangleI rectangle)
+        {
+            return new Rect(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+        }
+
+        public static Rect ToRect(this RectangleF rectangle)
         {
             return new Rect(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
