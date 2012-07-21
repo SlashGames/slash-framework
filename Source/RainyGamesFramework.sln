@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.Unity.Common", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.AI.BehaviorTrees", "RainyGames.AI.BehaviorTrees\RainyGames.AI.BehaviorTrees.csproj", "{F48C77D8-CE6B-4454-8781-DFE8BF48847D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artemis", "Artemis\Artemis_XNA_INDEPENDENT\Artemis.csproj", "{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.GameBase.Tests", "RainyGames.GameBase.Tests\RainyGames.GameBase.Tests.csproj", "{C329C9AD-95E9-4A10-8A6A-61B5944FC676}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.Collections", "RainyGames.Collections\RainyGames.Collections.csproj", "{03F9A6F7-F402-4581-B748-FA51BF3B1B82}"
@@ -28,6 +26,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.Reflection", "RainyGames.Reflection\RainyGames.Reflection.csproj", "{49A6D476-F045-42B3-8FFC-A67B3F9BB073}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.Reflection.Tests", "RainyGames.Reflection.Tests\RainyGames.Reflection.Tests.csproj", "{638AA873-495C-4DA2-BD59-E767E4E144E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainyGames.System", "RainyGames.System\RainyGames.System.csproj", "{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,16 +69,16 @@ Global
 		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1A55D911-697C-4E3B-8FBC-55388C32F20F}.Release|x86.ActiveCfg = Release|Any CPU
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Debug|x86.ActiveCfg = Debug|x86
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Debug|x86.Build.0 = Debug|x86
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Release|Any CPU.ActiveCfg = Release|x86
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Release|Mixed Platforms.Build.0 = Release|x86
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Release|x86.ActiveCfg = Release|x86
-		{22C89AF2-E1CF-4976-91B9-7D33773DC6E7}.Release|x86.Build.0 = Release|x86
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Release|x86.ActiveCfg = Release|Any CPU
 		{32F5CD1C-1889-4A37-B7E4-E3363488BE1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32F5CD1C-1889-4A37-B7E4-E3363488BE1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32F5CD1C-1889-4A37-B7E4-E3363488BE1B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
