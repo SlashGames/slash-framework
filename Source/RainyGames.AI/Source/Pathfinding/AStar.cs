@@ -167,9 +167,6 @@ namespace RainyGames.AI.Pathfinding
                     node = (T)node.ParentNode;
                 }
 
-                // Push start manually.
-                s.Push(node);
-
                 // Generate path in right order.
                 List<T> path = new List<T>();
                 while (s.Count > 0)
