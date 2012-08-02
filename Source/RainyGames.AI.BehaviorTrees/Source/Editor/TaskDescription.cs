@@ -94,7 +94,9 @@ namespace RainyGames.AI.BehaviorTrees.Editor
                 taskType.GetCustomAttributes(typeof(TaskAttribute), true) as TaskAttribute[];
             if (taskAttributes == null || taskAttributes.Length == 0)
             {
-                return null;
+                throw new ArgumentException(
+                    "Type {0} doesn't have a task attribute which specifies the class as a behavior tree task.",
+                    taskType.Name);
             }
 
             TaskAttribute taskAttribute = taskAttributes[0];
