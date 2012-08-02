@@ -48,6 +48,7 @@
     <Compile Include="Source\GUI\ValueEditors\SimpleValueEditorContext.cs" />
     <Compile Include="Source\GUI\ValueEditors\TextValueEditor.cs" />
     <Compile Include="Source\GUI\ValueEditors\ValueEditorContext.cs" />
+    <Compile Include="Source\GUI\ValueEditors\Vector2IValueEditor.cs" />
     <Compile Include="Source\Input\InputUtils.cs" />
     <Compile Include="Source\Logging\ConsoleAppender.cs" />
     <Compile Include="Source\Logging\Logger.cs" />

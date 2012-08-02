@@ -58,10 +58,6 @@ namespace RainyGames.Unity.Common.Input
 
         public static void SetMouseOver2dGUI(bool overGUI)
         {
-            if (overGUI)
-            {
-                Log.Debug("SetMouseOver2dGUI");
-            }
             mouseOver2dGUI = mouseOver2dGUI || overGUI;
         }
 
