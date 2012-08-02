@@ -60,7 +60,6 @@
     <Compile Include="Source\Implementations\Actions\CreateBlackboard.cs" />
     <Compile Include="Source\Implementations\Actions\DynamicTask.cs" />
     <Compile Include="Source\Implementations\AgentData.cs" />
-    <Compile Include="Source\Implementations\Behaviors\BehaviorAttribute.cs" />
     <Compile Include="Source\Implementations\Composites\Composite.cs" />
     <Compile Include="Source\Implementations\Composites\Parallel.cs" />
     <Compile Include="Source\Implementations\Conditions\BooleanCondition.cs" />

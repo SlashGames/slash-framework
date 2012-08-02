@@ -17,6 +17,18 @@ namespace RainyGames.AI.BehaviorTrees.Data
     [Serializable]
     public abstract class TaskParameter
     {
+        #region Constructors and Destructors
+
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
+        protected TaskParameter()
+        {
+            this.Location = TaskParameterLocation.UserValue;
+        }
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
