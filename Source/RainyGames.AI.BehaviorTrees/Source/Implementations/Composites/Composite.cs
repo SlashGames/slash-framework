@@ -14,6 +14,7 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Composites
     using RainyGames.AI.BehaviorTrees.Enums;
     using RainyGames.AI.BehaviorTrees.Interfaces;
     using RainyGames.AI.BehaviorTrees.Tree;
+    using RainyGames.Collections.Extensions;
     using RainyGames.Collections.Utils;
 
     /// <summary>

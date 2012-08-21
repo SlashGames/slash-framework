@@ -4,11 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace RainyGames.Collections.Utils
+namespace RainyGames.Collections.Extensions
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections;
 
+    /// <summary>
+    ///   Extension methods for IList and IList{T}.
+    /// </summary>
     public static class ListExtensionMethods
     {
         #region Public Methods and Operators
@@ -16,11 +19,10 @@ namespace RainyGames.Collections.Utils
         /// <summary>
         ///   Moves an item inside the list from an old to a new index.
         /// </summary>
-        /// <typeparam name="T">Type of the items in the list.</typeparam>
-        /// <param name="list">List to work on.</param>
-        /// <param name="oldIndex">Old index of the item.</param>
-        /// <param name="newIndex">New index of the item.</param>
-        public static void Move<T>(this List<T> list, int oldIndex, int newIndex)
+        /// <param name="list"> List to work on. </param>
+        /// <param name="oldIndex"> Old index of the item. </param>
+        /// <param name="newIndex"> New index of the item. </param>
+        public static void Move(this IList list, int oldIndex, int newIndex)
         {
             if (oldIndex < 0 || oldIndex >= list.Count)
             {
@@ -39,16 +41,10 @@ namespace RainyGames.Collections.Utils
                 return;
             }
 
-            T item = list[oldIndex];
+            object item = list[oldIndex];
 
             list.RemoveAt(oldIndex);
-
-            // The actual index could have shifted due to the removal.
-            if (newIndex > oldIndex)
-            {
-                --newIndex;
-            }
-
+            
             list.Insert(newIndex, item);
         }
 
