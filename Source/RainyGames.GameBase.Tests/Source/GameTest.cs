@@ -21,11 +21,6 @@ namespace RainyGames.GameBase.Tests
         /// </summary>
         private Game game;
 
-        /// <summary>
-        /// Test player to run unit tests on.
-        /// </summary>
-        private Player player;
-
         #endregion
 
         #region Public Methods
@@ -37,29 +32,6 @@ namespace RainyGames.GameBase.Tests
         public void SetUp()
         {
             this.game = new Game();
-            this.player = new Player(this.game, 0);
-        }
-
-        /// <summary>
-        /// Tests adding a player to the game.
-        /// </summary>
-        [Test]
-        public void TestAddPlayer()
-        {
-            this.game.AddPlayer(this.player);
-            Assert.AreEqual(this.player, this.game.GetPlayer(0));
-        }
-
-        /// <summary>
-        /// Tests removing a player from the game.
-        /// </summary>
-        [Test]
-        public void TestRemovePlayer()
-        {
-            this.game.AddPlayer(this.player);
-            Assert.IsTrue(this.game.RemovePlayer(this.player));
-            Assert.IsFalse(this.game.RemovePlayer(this.player));
-            Assert.IsNull(this.game.GetPlayer(0));
         }
 
         /// <summary>

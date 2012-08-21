@@ -127,6 +127,17 @@ namespace RainyGames.GameBase
             return component;
         }
 
+        /// <summary>
+        /// Returns an iterator over all components of this manager.
+        /// </summary>
+        /// <returns>Components of this manager.</returns>
+        public System.Collections.IEnumerable Components()
+        {
+            foreach (KeyValuePair<int, IComponent> component in this.components)
+            {
+                yield return component;
+            }
+        }
         #endregion
     }
 }

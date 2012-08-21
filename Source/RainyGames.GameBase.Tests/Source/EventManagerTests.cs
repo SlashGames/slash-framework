@@ -24,11 +24,6 @@ namespace RainyGames.GameBase.Tests
         private Game game;
 
         /// <summary>
-        /// Test player to run unit tests on.
-        /// </summary>
-        private Player player;
-
-        /// <summary>
         /// Test system to run unit tests on.
         /// </summary>
         private TestSystem system;
@@ -55,7 +50,6 @@ namespace RainyGames.GameBase.Tests
         public void SetUp()
         {
             this.game = new Game();
-            this.player = new Player(this.game);
             this.system = new TestSystem();
             this.component = new TestComponent();
             this.testPassed = false;
@@ -81,29 +75,6 @@ namespace RainyGames.GameBase.Tests
             this.game.EventManager.RegisterListener(FrameworkEventType.EntityRemoved, this.OnEntityRemoved);
             this.game.EntityManager.CreateEntity();
             this.game.EntityManager.RemoveEntity(0);
-            this.CheckTestPassed();
-        }
-
-        /// <summary>
-        /// Tests whether the appropriate event is fired on adding a new player.
-        /// </summary>
-        [Test]
-        public void TestPlayerAddedEvent()
-        {
-            this.game.EventManager.RegisterListener(FrameworkEventType.PlayerAdded, this.OnPlayerAdded);
-            this.game.AddPlayer(this.player);
-            this.CheckTestPassed();
-        }
-
-        /// <summary>
-        /// Tests whether the appropriate event is fired on removing a player.
-        /// </summary>
-        [Test]
-        public void TestPlayerRemovedEvent()
-        {
-            this.game.EventManager.RegisterListener(FrameworkEventType.PlayerRemoved, this.OnPlayerRemoved);
-            this.game.AddPlayer(this.player);
-            this.game.RemovePlayer(this.player);
             this.CheckTestPassed();
         }
 
@@ -230,30 +201,6 @@ namespace RainyGames.GameBase.Tests
         {
             int entityId = (int)e.EventData;
             this.testPassed = entityId == 0;
-        }
-
-        /// <summary>
-        /// Called when a new player has been added.
-        /// </summary>
-        /// <param name="e">
-        /// Event that has occurred within the framework.
-        /// </param>
-        private void OnPlayerAdded(Event e)
-        {
-            Player player = (Player)e.EventData;
-            this.testPassed = this.player.Equals(player);
-        }
-
-        /// <summary>
-        /// Called when a player has been removed.
-        /// </summary>
-        /// <param name="e">
-        /// Event that has occurred within the framework.
-        /// </param>
-        private void OnPlayerRemoved(Event e)
-        {
-            Player player = (Player)e.EventData;
-            this.testPassed = this.player.Equals(player);
         }
 
         /// <summary>

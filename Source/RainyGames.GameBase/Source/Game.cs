@@ -33,11 +33,6 @@ namespace RainyGames.GameBase
         private EventManager eventManager;
 
         /// <summary>
-        /// Players participating in this game.
-        /// </summary>
-        private List<Player> players;
-
-        /// <summary>
         /// Whether this game is running, or not (e.g. not yet started,
         /// paused, or already over).
         /// </summary>
@@ -59,7 +54,6 @@ namespace RainyGames.GameBase
             this.entityManager = new EntityManager(this);
             this.systemManager = new SystemManager(this);
             this.eventManager = new EventManager();
-            this.players = new List<Player>();
             this.running = false;
             this.timeElapsed = 0.0f;
         }
@@ -114,13 +108,6 @@ namespace RainyGames.GameBase
             get { return this.eventManager; }
         }
 
-        /// <summary>
-        /// Total number of current players in this game.
-        /// </summary>
-        public int PlayerCount
-        {
-            get { return this.players.Count; }
-        }
         #endregion
 
         #region Public Methods
@@ -142,56 +129,6 @@ namespace RainyGames.GameBase
 
                 this.timeElapsed += dt;
             }
-        }
-
-        /// <summary>
-        /// Adds the passed player to this game.
-        /// </summary>
-        /// <param name="player">
-        /// Player to add to this game.
-        /// </param>
-        public virtual void AddPlayer(Player player)
-        {
-            this.players.Add(player);
-            this.eventManager.QueueEvent(FrameworkEventType.PlayerAdded, player);
-        }
-
-        /// <summary>
-        /// Gets the player with the specified index, if there's one
-        /// participating in this game.
-        /// </summary>
-        /// <param name="playerIndex">
-        /// Index of the player to get.
-        /// </param>
-        /// <returns>
-        /// Player with the specified index, if there's one
-        /// participating in this game, and <c>null</c> otherwise.
-        /// </returns>
-        public Player GetPlayer(int playerIndex)
-        {
-            return this.players.Find(p => p.PlayerIndex == playerIndex);
-        }
-
-        /// <summary>
-        /// Removes the specified player from this game.
-        /// </summary>
-        /// <param name="player">
-        /// Player to remove.
-        /// </param>
-        /// <returns>
-        /// <c>true</c>, if the player has been removed, and <c>false</c>
-        /// otherwise.
-        /// </returns>
-        public bool RemovePlayer(Player player)
-        {
-            bool removed = this.players.Remove(player);
-
-            if (removed)
-            {
-                this.eventManager.QueueEvent(FrameworkEventType.PlayerRemoved, player);
-            }
-
-            return removed;
         }
 
         /// <summary>

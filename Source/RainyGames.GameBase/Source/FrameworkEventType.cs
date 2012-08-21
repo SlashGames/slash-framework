@@ -22,16 +22,6 @@ namespace RainyGames.GameBase
         EntityRemoved,
 
         /// <summary>
-        /// A new player has been added.
-        /// </summary>
-        PlayerAdded,
-
-        /// <summary>
-        /// A player has been removed.
-        /// </summary>
-        PlayerRemoved,
-
-        /// <summary>
         /// The game starts.
         /// </summary>
         GameStarted,

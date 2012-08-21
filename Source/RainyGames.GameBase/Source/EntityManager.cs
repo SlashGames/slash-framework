@@ -362,6 +362,9 @@ namespace RainyGames.GameBase
         /// <param name="entityId">
         /// Id of the entity to get the component of.
         /// </param>
+        /// <typeparam name="T">
+        /// Type of the component to get.
+        /// </typeparam>
         /// <returns>
         /// The component, if there is one of the specified type attached to the entity, and
         /// null otherwise.
@@ -384,6 +387,30 @@ namespace RainyGames.GameBase
         public T GetComponent<T>(int entityId) where T : IComponent
         {
             return (T)this.GetComponent(entityId, typeof(T));
+        }
+
+        /// <summary>
+        /// Returns an iterator over all components of the specified type.
+        /// </summary>
+        /// <param name="type">Type of the components to get.</param>
+        /// <returns>Components of the specified type.</returns>
+        /// <exception cref="ArgumentNullException">Specified type is null.</exception>
+        public System.Collections.IEnumerable ComponentsOfType(Type type)
+        {
+            ComponentManager componentManager;
+
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+
+            if (this.componentManagers.TryGetValue(type, out componentManager))
+            {
+                foreach (KeyValuePair<int, IComponent> component in componentManager.Components())
+                {
+                    yield return component;
+                }
+            }
         }
 
         #endregion
