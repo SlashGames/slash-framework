@@ -333,9 +333,6 @@ namespace RainyGames.GameBase
         /// <exception cref="ArgumentNullException">
         /// Passed component type is null.
         /// </exception>
-        /// <exception cref="ArgumentException">
-        /// A component of the passed type has never been added before.
-        /// </exception>
         public IComponent GetComponent(int entityId, Type componentType)
         {
             this.CheckEntityId(entityId);
@@ -347,13 +344,14 @@ namespace RainyGames.GameBase
 
             // Get component manager.
             ComponentManager componentManager;
-            if (!this.componentManagers.TryGetValue(componentType, out componentManager))
+            if (this.componentManagers.TryGetValue(componentType, out componentManager))
             {
-                throw new ArgumentException(
-                    "A component of type " + componentType + " has never been added before.", "componentType");
+                return componentManager.GetComponent(entityId);
             }
-            
-            return componentManager.GetComponent(entityId);
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
