@@ -141,7 +141,7 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Actions
             ITask task = null;
             if (this.Task != null)
             {
-                this.Task.TryGetValue(agentData, ref task);
+                this.Task.TryGetValue(agentData, out task);
             }
 
             return task;

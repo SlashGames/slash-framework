@@ -150,16 +150,18 @@ namespace RainyGames.AI.BehaviorTrees.Data
         /// <param name="agentData"> Agent data. </param>
         /// <param name="value"> Parameter value. </param>
         /// <returns> True if value was determined; otherwise, false. </returns>
-        public bool TryGetValue(IAgentData agentData, ref T value)
+        public bool TryGetValue(IAgentData agentData, out T value)
         {
-            object objectValue = null;
-            bool result = this.TryGetValue(agentData, ref objectValue);
+            object objectValue;
+            bool result = this.TryGetValue(agentData, out objectValue);
             if (result)
             {
                 value = (T)objectValue;
+                return true;
             }
 
-            return result;
+            value = default(T);
+            return false;
         }
 
         #endregion

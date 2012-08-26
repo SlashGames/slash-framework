@@ -125,7 +125,7 @@ namespace RainyGames.AI.BehaviorTrees.Data
         /// <param name="agentData"> Agent data. </param>
         /// <param name="value"> Parameter value. </param>
         /// <returns> True if value was determined; otherwise, false. </returns>
-        public bool TryGetValue(IAgentData agentData, ref object value)
+        public bool TryGetValue(IAgentData agentData, out object value)
         {
             switch (this.Location)
             {
@@ -157,6 +157,7 @@ namespace RainyGames.AI.BehaviorTrees.Data
             }
 
             // Not found.
+            value = null;
             return false;
         }
 
