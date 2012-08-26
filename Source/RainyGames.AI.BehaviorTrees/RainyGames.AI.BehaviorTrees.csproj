@@ -37,6 +37,7 @@
     <Compile Include="Source\Attributes\TaskParameterAttribute.cs" />
     <Compile Include="Source\BehaviorTree.cs" />
     <Compile Include="Source\Data\Blackboard.cs" />
+    <Compile Include="Source\Data\TaskOutParameter.cs" />
     <Compile Include="Source\Data\TaskParameter.cs" />
     <Compile Include="Source\Data\TaskParameterDynamic.cs" />
     <Compile Include="Source\Data\TaskParameterGeneric.cs" />
