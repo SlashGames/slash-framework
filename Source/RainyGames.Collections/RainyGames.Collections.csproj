@@ -47,6 +47,7 @@
     <Compile Include="Source\Graphs\IGraphVertex.cs" />
     <Compile Include="Source\Graphs\AdjacencyListWeightedDirectedGraph.cs" />
     <Compile Include="Source\Graphs\IWeightedGraph.cs" />
+    <Compile Include="Source\ObjectModel\ReadOnlyCollection.cs" />
     <Compile Include="Source\PriorityQueues\FibonacciHeap.cs" />
     <Compile Include="Source\PriorityQueues\FibonacciHeapItem.cs" />
     <Compile Include="Source\PriorityQueues\FibonacciHeapNode.cs" />
