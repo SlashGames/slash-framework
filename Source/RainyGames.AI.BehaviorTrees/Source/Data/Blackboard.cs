@@ -57,9 +57,9 @@ namespace RainyGames.AI.BehaviorTrees.Data
         /// </summary>
         /// <param name="id"> Id of attribute to check. </param>
         /// <returns> True if an attribute with the passed id exists, else false. </returns>
-        public bool ContainsKey<T>(T id)
+        public override bool Contains(object id)
         {
-            return base.ContainsKey(id) || this.Parents != null && this.Parents.Any(parent => parent.ContainsKey(id));
+            return base.Contains(id) || this.Parents != null && this.Parents.Any(parent => parent.Contains(id));
         }
 
         /// <summary>
@@ -113,19 +113,7 @@ namespace RainyGames.AI.BehaviorTrees.Data
                 return (base.GetHashCode() * 397) ^ (this.Parents != null ? this.Parents.GetHashCode() : 0);
             }
         }
-
-        /// <summary>
-        ///   Returns the attribute with the passed id.
-        /// </summary>
-        /// <typeparam name="T"> Type of attribute. </typeparam>
-        /// <param name="id"> Id of attribute. </param>
-        /// <returns> Value of attribute. Returns default value of type if no object with the passed id was found. </returns>
-        public T GetValue<T>(object id)
-        {
-            T attribute;
-            return this.TryGetValue(id, out attribute) ? attribute : default(T);
-        }
-
+        
         /// <summary>
         ///   Returns the attribute with the passed id. If not found the passed default value is returned.
         /// </summary>

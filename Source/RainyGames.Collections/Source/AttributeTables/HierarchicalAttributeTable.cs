@@ -30,7 +30,6 @@ namespace RainyGames.Collections.AttributeTables
         /// Constructs a new, empty attribute table without any parents.
         /// </summary>
         public HierarchicalAttributeTable()
-            : base()
         {
             this.parents = new List<IAttributeTable>();
         }

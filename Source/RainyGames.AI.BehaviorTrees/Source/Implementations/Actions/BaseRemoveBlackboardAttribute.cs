@@ -61,7 +61,7 @@ namespace RainyGames.AI.BehaviorTrees.Implementations.Actions
             if (key != null)
             {
                 // Remove attribute.
-                agentData.Blackboard.Remove(key);
+                agentData.Blackboard.RemoveValue(key);
             }
 
             return ExecutionStatus.Success;
