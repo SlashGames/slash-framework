@@ -121,6 +121,23 @@ namespace RainyGames.GameBase
         }
 
         /// <summary>
+        /// Gets the system of the specified type.
+        /// </summary>
+        /// <typeparam name="T">Type of the system to get.</typeparam>
+        /// <returns>System of the specified type.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// The passed type is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// A system of the specified type has never been added.
+        /// </exception>
+        public T GetSystem<T>()
+            where T : class, ISystem
+        {
+            return this.GetSystem(typeof(T)) as T;
+        }
+
+        /// <summary>
         /// Ticks all systems.
         /// </summary>
         /// <param name="dt">
