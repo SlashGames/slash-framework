@@ -6,6 +6,7 @@
 
 namespace RainyGames.Collections.AttributeTables
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -44,6 +45,11 @@ namespace RainyGames.Collections.AttributeTables
         /// <param name="parent">Parent to add.</param>
         public void AddParent(IAttributeTable parent)
         {
+            if (parent == null)
+            {
+                throw new ArgumentNullException("parent", "Parent is null.");
+            }
+
             this.parents.Add(parent);
         }
 
@@ -73,6 +79,11 @@ namespace RainyGames.Collections.AttributeTables
         /// <param name="parent">Parent to add.</param>
         public void InsertParent(int priority, IAttributeTable parent)
         {
+            if (parent == null)
+            {
+                throw new ArgumentNullException("parent", "Parent is null.");
+            }
+
             this.parents.Insert(priority, parent);
         }
 
@@ -109,14 +120,14 @@ namespace RainyGames.Collections.AttributeTables
         /// <returns>true if a value was found, and false otherwise.</returns>
         public override bool TryGetValue<T>(object key, out T value)
         {
-            if (base.TryGetValue<T>(key, out value))
+            if (base.TryGetValue(key, out value))
             {
                 return true;
             }
 
             foreach (IAttributeTable parent in this.parents)
             {
-                if (parent.TryGetValue<T>(key, out value))
+                if (parent.TryGetValue(key, out value))
                 {
                     return true;
                 }
