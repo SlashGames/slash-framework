@@ -185,12 +185,26 @@ namespace RainyGames.GameBase
         public int CreateEntity(Blueprint blueprint, IAttributeTable configuration)
         {
             int id = this.CreateEntity();
+            this.InitEntity(id, blueprint, configuration);
+            return id;
+        }
 
+        /// <summary>
+        ///   Initializes the specified entity, adding components matching the
+        ///   passed blueprint and initializing these with the data stored in
+        ///   the blueprint and the speicified configuration. Configuration
+        ///   data is preferred over blueprint data.
+        /// </summary>
+        /// <param name="entityId">Id of the entity to initialize.</param>
+        /// <param name="blueprint"> Blueprint describing the entity to create. </param>
+        /// <param name="configuration"> Data for initializing the entity. </param>
+        public void InitEntity(int entityId, Blueprint blueprint, IAttributeTable configuration)
+        {
             foreach (Type type in blueprint.ComponentTypes)
             {
                 // Create component.
                 IComponent component = (IComponent)Activator.CreateInstance(type);
-                this.AddComponent(id, component);
+                this.AddComponent(entityId, component);
 
                 // Initialize component with the attribute table data.
                 HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
@@ -207,7 +221,7 @@ namespace RainyGames.GameBase
                 component.InitComponent(attributeTable);
             }
 
-            return id;
+            this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
         }
 
         /// <summary>

@@ -22,6 +22,11 @@ namespace RainyGames.GameBase
         EntityRemoved,
 
         /// <summary>
+        /// Entity components have been initialized.
+        /// </summary>
+        EntityInitialized,
+
+        /// <summary>
         /// The game starts.
         /// </summary>
         GameStarted,
