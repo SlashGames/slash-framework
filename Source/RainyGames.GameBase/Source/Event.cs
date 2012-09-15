@@ -66,5 +66,18 @@ namespace RainyGames.GameBase
         public object EventData { get; private set; }
 
         #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Returns the type and data of this event, as string.
+        /// </summary>
+        /// <returns>Type and data of this event, as string.</returns>
+        public override string ToString()
+        {
+            return string.Format("Event: {0} - Event data: {1}", this.EventType, this.EventData);
+        }
+
+        #endregion
     }
 }
