@@ -58,7 +58,7 @@ namespace RainyGames.GameBase
         public EntityManager(Game game)
         {
             this.game = game;
-            this.nextEntityId = 0;
+            this.nextEntityId = 1;
             this.entities = new HashSet<int>();
             this.removedEntities = new HashSet<int>();
             this.componentManagers = new Dictionary<Type, ComponentManager>();
@@ -194,10 +194,17 @@ namespace RainyGames.GameBase
 
                 // Initialize component with the attribute table data.
                 HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
-                attributeTable.AddParent(configuration);
-                attributeTable.AddParent(blueprint.AttributeTable);
+                if (configuration != null)
+                {
+                    attributeTable.AddParent(configuration);
+                }
 
-                component.InitComponent(configuration);
+                if (blueprint.AttributeTable != null)
+                {
+                    attributeTable.AddParent(blueprint.AttributeTable);
+                }
+
+                component.InitComponent(attributeTable);
             }
 
             return id;
