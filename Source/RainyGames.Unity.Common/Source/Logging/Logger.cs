@@ -5,7 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
-#define LOG4NET
+//#define LOG4NET
 // log4net logging active?
 
 namespace RainyGames.Unity.Common.Logging
@@ -14,9 +14,11 @@ namespace RainyGames.Unity.Common.Logging
     using System.IO;
 
     using UnityEngine;
-
+    
+#if LOG4NET
     using log4net;
     using log4net.Config;
+#endif
 
     /// <summary>
     ///   This is a very simply class to abstract the use of log4net.

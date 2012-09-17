@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if LOG4NET
+
 namespace RainyGames.Unity.Common.Logging
 {
     using UnityEngine;
@@ -36,3 +38,5 @@ namespace RainyGames.Unity.Common.Logging
         #endregion
     }
 }
+
+#endif
