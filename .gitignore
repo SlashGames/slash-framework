@@ -58,3 +58,7 @@
 /Source/RainyGames.Configurations/bin
 /Source/RainyGames.Sandbox/obj
 /Source/RainyGames.Sandbox/bin
+/Source/RainyGames.Diagnostics/bin
+/Source/RainyGames.Diagnostics/obj
+/Source/RainyGamesFramework.ncrunchsolution.user
+/Source/_NCrunch_RainyGamesFramework/RainyGamesFramework.crunchsolution.cache

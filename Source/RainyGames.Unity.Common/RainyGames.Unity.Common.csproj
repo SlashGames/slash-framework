@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;LOG4NET</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -27,9 +27,28 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;LOG4NET</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release NoLog4Net|AnyCPU'">
+    <OutputPath>bin\Release NoLog4Net\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug NoLog4Net|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug NoLog4Net\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,10 +70,16 @@
     <Compile Include="Source\GUI\ValueEditors\Vector2IValueEditor.cs" />
     <Compile Include="Source\Input\InputUtils.cs" />
     <Compile Include="Source\Logging\ConsoleAppender.cs" />
-    <Compile Include="Source\Logging\Logger.cs" />
+    <Compile Include="Source\Logging\LoggerExtensions.cs" />
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup Condition="'$(Configuration)' != 'Debug NoLog4Net' And '$(Configuration)' != 'Release NoLog4Net'">
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Ext\log4net-1.2.11\bin\net\3.5\release\log4net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
@@ -62,6 +87,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RainyGames.Diagnostics\RainyGames.Diagnostics.csproj">
+      <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
+      <Name>RainyGames.Diagnostics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RainyGames.Math\RainyGames.Math.csproj">
       <Project>{834E18DE-A529-4F17-A838-92B1EF259FE3}</Project>
       <Name>RainyGames.Math</Name>

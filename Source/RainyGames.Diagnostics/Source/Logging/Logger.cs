@@ -4,18 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-
-//#define LOG4NET
-// log4net logging active?
-
-namespace RainyGames.Unity.Common.Logging
+namespace RainyGames.Diagnostics.Logging
 {
     using System;
+
+#if LOG4NET
     using System.IO;
 
-    using UnityEngine;
-    
-#if LOG4NET
     using log4net;
     using log4net.Config;
 #endif
@@ -35,7 +30,7 @@ namespace RainyGames.Unity.Common.Logging
     public class Logger
     {
         private const string StartMessage =
-            "\nlog4net configuration file:\n{0}\n\n" + "    =======================================\n"
+            "Logger configured\nlog4net configuration file:\n{0}\n\n" + "    =======================================\n"
             + "    === Logging configured successfully ===\n" + "    =======================================\n";
 
 #if LOG4NET
@@ -57,38 +52,11 @@ namespace RainyGames.Unity.Common.Logging
 #endif
         }
 
-        /// <summary>
-        ///   This is automatically called before the first instance of
-        ///   JCsLogger is created, and initializes logging. You can change
-        ///   this according to your needs.
-        /// </summary>
-        static Logger()
-        {
-            if (Application.platform == RuntimePlatform.OSXWebPlayer
-                || Application.platform == RuntimePlatform.WindowsWebPlayer)
-            {
-                // logging won't make a lot of sense in a Web player...
-                return;
-            }
-
-            string configFile = Application.dataPath + "/Configurations/log4net.xml";
-            if (Application.platform == RuntimePlatform.WindowsPlayer)
-            {
-                configFile = Application.dataPath + "\\Configurations\\log4net.xml";
-            }
-            Configure(configFile);
-        }
-
-        public static void ConfigureForServer()
-        {
-            Configure(Application.dataPath + "/Configuration/log4net_srv.xml");
-        }
-
-        private static void Configure(string configFile)
+        public static void Configure(string configFile)
         {
 #if LOG4NET
             FileInfo fileInfo = new FileInfo(configFile);
-            XmlConfigurator.ConfigureAndWatch(fileInfo);
+            XmlConfigurator.Configure(fileInfo);
             LogManager.GetLogger(typeof(Logger)).InfoFormat(StartMessage, configFile);
 #endif
         }
@@ -99,11 +67,13 @@ namespace RainyGames.Unity.Common.Logging
         {
             get
             {
-                bool result = false;
 #if LOG4NET
+                bool result = false;
                 result = this.log.IsDebugEnabled;
-#endif
                 return result;
+#else
+                return false;
+#endif
             }
         }
 
@@ -111,11 +81,13 @@ namespace RainyGames.Unity.Common.Logging
         {
             get
             {
-                bool result = false;
 #if LOG4NET
+                bool result = false;
                 result = this.log.IsInfoEnabled;
-#endif
                 return result;
+#else
+                return false;
+#endif
             }
         }
 
@@ -123,11 +95,13 @@ namespace RainyGames.Unity.Common.Logging
         {
             get
             {
-                bool result = false;
 #if LOG4NET
+                bool result = false;
                 result = this.log.IsWarnEnabled;
-#endif
                 return result;
+#else
+                return false;
+#endif
             }
         }
 
@@ -135,11 +109,13 @@ namespace RainyGames.Unity.Common.Logging
         {
             get
             {
-                bool result = false;
 #if LOG4NET
+                bool result = false;
                 result = this.log.IsErrorEnabled;
-#endif
                 return result;
+#else
+                return false;
+#endif
             }
         }
 
@@ -147,11 +123,13 @@ namespace RainyGames.Unity.Common.Logging
         {
             get
             {
-                bool result = false;
 #if LOG4NET
+                bool result = false;
                 result = this.log.IsFatalEnabled;
-#endif
                 return result;
+#else
+                return false;
+#endif
             }
         }
 

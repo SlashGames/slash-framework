@@ -8,7 +8,7 @@ namespace RainyGames.Unity.Common.Input
 {
     using System.Reflection;
 
-    using RainyGames.Unity.Common.Logging;
+    using RainyGames.Diagnostics.Logging;
 
     using UnityEngine;
 
