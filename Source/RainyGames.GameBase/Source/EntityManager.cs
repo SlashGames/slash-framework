@@ -239,6 +239,9 @@ namespace RainyGames.GameBase
                 throw new ArgumentOutOfRangeException("entityId", "Entity ids are always non-negative.");
             }
 
+            // Clean up removed entities.
+            this.CleanUpEntities();
+
             if (entityId >= this.nextEntityId)
             {
                 throw new ArgumentOutOfRangeException(
