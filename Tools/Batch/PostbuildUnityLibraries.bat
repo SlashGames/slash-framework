@@ -22,6 +22,10 @@ set PATH_TO_UNITY_PROJECT=%1
 set DLL_TARGET_DIR=%PATH_TO_UNITY_PROJECT%Assets\Plugins\
 set DLL_SOURCE_DIR=%2
 
+REM Cleanup plugins folder.
+echo Cleaning up target directory "%DLL_TARGET_DIR%"
+del %DLL_TARGET_DIR%*.dll 
+
 REM Don't copy Unity dlls, so hide them.
 attrib +h UnityEngine.dll > NUL
 attrib +h UnityEditor.dll > NUL
