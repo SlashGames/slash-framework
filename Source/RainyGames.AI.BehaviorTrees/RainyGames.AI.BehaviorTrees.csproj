@@ -89,9 +89,6 @@
     <Compile Include="Source\Tree\TaskNode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\RainyGames.Collections\RainyGames.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>RainyGames.Collections</Name>
@@ -108,6 +105,9 @@
       <Project>{E399FDE3-A0DD-4AEA-BBF5-2A16C5E6775B}</Project>
       <Name>RainyGames.Xml</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
