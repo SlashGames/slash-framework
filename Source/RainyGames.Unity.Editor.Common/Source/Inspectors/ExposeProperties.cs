@@ -10,9 +10,7 @@ namespace RainyGames.Unity.Editor.Common.Inspectors
     using System.Collections.Generic;
     using System.Reflection;
 
-    using RainyGames.Math.Geometry.Rectangles;
     using RainyGames.Unity.Common.Attributes;
-    using RainyGames.Unity.Common.Math;
 
     using UnityEditor;
 
