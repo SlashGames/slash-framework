@@ -20,7 +20,7 @@ namespace RainyGames.GameBase
         /// <param name="dt">
         /// Time passed since the last tick, in seconds.
         /// </param>
-        void Update(float dt);
+        void UpdateSystem(float dt);
 
         #endregion
     }

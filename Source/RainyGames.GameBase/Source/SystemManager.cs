@@ -147,7 +147,7 @@ namespace RainyGames.GameBase
         {
             foreach (ISystem system in this.systems)
             {
-                system.Update(dt);
+                system.UpdateSystem(dt);
             }
         }
 

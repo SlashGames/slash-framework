@@ -299,7 +299,7 @@ namespace RainyGames.GameBase.Tests
             ///   Ticks this system.
             /// </summary>
             /// <param name="dt"> Time passed since the last tick, in seconds. </param>
-            public void Update(float dt)
+            public void UpdateSystem(float dt)
             {
             }
 
