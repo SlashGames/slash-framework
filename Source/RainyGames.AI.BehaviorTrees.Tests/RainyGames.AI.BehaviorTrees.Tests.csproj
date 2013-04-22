@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\..\..\..\Programme\Unity\Editor\Data\Managed\nunit.framework.dll</HintPath>
+      <HintPath>$(UNITY_PATH)Data\Managed\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
