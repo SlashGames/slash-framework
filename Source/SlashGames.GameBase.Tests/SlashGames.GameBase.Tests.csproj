@@ -8,8 +8,8 @@
     <ProjectGuid>{C329C9AD-95E9-4A10-8A6A-61B5944FC676}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RainyGames.GameBase.Tests</RootNamespace>
-    <AssemblyName>RainyGames.GameBase.Tests</AssemblyName>
+    <RootNamespace>SlashGames.GameBase.Tests</RootNamespace>
+    <AssemblyName>SlashGames.GameBase.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

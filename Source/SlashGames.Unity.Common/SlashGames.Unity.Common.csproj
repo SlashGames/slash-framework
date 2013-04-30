@@ -8,8 +8,8 @@
     <ProjectGuid>{AA429D02-6020-44F3-8B62-6A5C1AD4FE7D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RainyGames.Unity.Common</RootNamespace>
-    <AssemblyName>RainyGames.Unity.Common</AssemblyName>
+    <RootNamespace>SlashGames.Unity.Common</RootNamespace>
+    <AssemblyName>SlashGames.Unity.Common</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

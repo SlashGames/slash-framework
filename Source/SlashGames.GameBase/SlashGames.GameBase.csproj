@@ -8,8 +8,8 @@
     <ProjectGuid>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RainyGames.GameBase</RootNamespace>
-    <AssemblyName>RainyGames.GameBase</AssemblyName>
+    <RootNamespace>SlashGames.GameBase</RootNamespace>
+    <AssemblyName>SlashGames.GameBase</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -53,6 +53,11 @@
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>SlashGames.Collections</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Source\Blueprints\" />
+    <Folder Include="Source\Components\" />
+    <Folder Include="Source\Systems\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

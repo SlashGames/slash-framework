@@ -8,8 +8,8 @@
     <ProjectGuid>{F48C77D8-CE6B-4454-8781-DFE8BF48847D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RainyGames.AI.BehaviorTrees</RootNamespace>
-    <AssemblyName>RainyGames.AI.BehaviorTrees</AssemblyName>
+    <RootNamespace>SlashGames.AI.BehaviorTrees</RootNamespace>
+    <AssemblyName>SlashGames.AI.BehaviorTrees</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

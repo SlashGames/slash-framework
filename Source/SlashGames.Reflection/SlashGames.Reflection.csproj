@@ -7,8 +7,8 @@
     <ProjectGuid>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RainyGames.Reflection</RootNamespace>
-    <AssemblyName>RainyGames.Reflection</AssemblyName>
+    <RootNamespace>SlashGames.Reflection</RootNamespace>
+    <AssemblyName>SlashGames.Reflection</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

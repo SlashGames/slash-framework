@@ -7,8 +7,8 @@
     <ProjectGuid>{DFD67F58-780B-4367-BDF9-241C5BA87BB8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RainyGames.Sandbox</RootNamespace>
-    <AssemblyName>RainyGames.Sandbox</AssemblyName>
+    <RootNamespace>SlashGames.Sandbox</RootNamespace>
+    <AssemblyName>SlashGames.Sandbox</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

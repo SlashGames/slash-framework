@@ -7,8 +7,8 @@
     <ProjectGuid>{7EA73F8E-AB74-4DDA-9C17-8BE953DD16F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RainyGames.Collections.Tests</RootNamespace>
-    <AssemblyName>RainyGames.Collections.Tests</AssemblyName>
+    <RootNamespace>SlashGames.Collections.Tests</RootNamespace>
+    <AssemblyName>SlashGames.Collections.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
