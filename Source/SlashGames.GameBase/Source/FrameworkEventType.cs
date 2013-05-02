@@ -7,52 +7,97 @@
 namespace SlashGames.GameBase
 {
     /// <summary>
-    /// Type of an event that occurred within the Slash Games Framework.
+    ///     Type of an event that occurred within the entity system.
     /// </summary>
     public enum FrameworkEventType
     {
         /// <summary>
-        /// A new entity has been created.
+        ///     <para>
+        ///         A new entity has been created.
+        ///     </para>
+        ///     <para>
+        ///         Event data: <see cref="int" />
+        ///     </para>
         /// </summary>
         EntityCreated,
 
         /// <summary>
-        /// An entity has been removed.
+        ///     <para>
+        ///         An entity has been removed.
+        ///     </para>
+        ///     <para>
+        ///         Event data: <see cref="int" />
+        ///     </para>
         /// </summary>
         EntityRemoved,
 
         /// <summary>
-        /// Entity components have been initialized.
+        ///     <para>
+        ///         Entity components have been initialized.
+        ///     </para>
+        ///     <para>
+        ///         Event data: <see cref="int" />
+        ///     </para>
         /// </summary>
         EntityInitialized,
 
         /// <summary>
-        /// The game starts.
+        ///     <para>
+        ///         The game starts.
+        ///     </para>
+        ///     <para>
+        ///         Event data: <c>null</c>
+        ///     </para>
         /// </summary>
         GameStarted,
 
         /// <summary>
-        /// The game has been paused.
+        ///     <para>
+        ///         The game has been paused.
+        ///     </para>
+        ///     <para>
+        ///         Event data: <c>null</c>
+        ///     </para>
         /// </summary>
         GamePaused,
 
         /// <summary>
-        /// The game has been resumed.
+        ///     <para>
+        ///         The game has been resumed.
+        ///     </para>
+        ///     <para>
+        ///         Event data: <c>null</c>
+        ///     </para>
         /// </summary>
         GameResumed,
 
         /// <summary>
-        /// A new system has been added.
+        ///     <para>
+        ///         A new system has been added.
+        ///     </para>
+        ///     <para>
+        ///         Event data: <see cref="ISystem" />
+        ///     </para>
         /// </summary>
         SystemAdded,
 
         /// <summary>
-        /// A new component has been added.
+        ///     <para>
+        ///         A new component has been added.
+        ///     </para>
+        ///     <para>
+        ///         Event data: <see cref="IEntityComponent" />
+        ///     </para>
         /// </summary>
         ComponentAdded,
 
         /// <summary>
-        /// A component has been removed.
+        ///     <para>
+        ///         A component has been removed.
+        ///     </para>
+        ///     <para>
+        ///         Event data: <see cref="IEntityComponent" />
+        ///     </para>
         /// </summary>
         ComponentRemoved
     }
