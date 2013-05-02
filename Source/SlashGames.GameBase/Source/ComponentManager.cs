@@ -9,7 +9,7 @@ namespace SlashGames.GameBase
     using System;
     using System.Collections.Generic;
 
-    using SlashGames.GameBase.EventArgs;
+    using SlashGames.GameBase.EventData;
 
     /// <summary>
     /// Maps entity ids to specific game components. By contract this manager
@@ -83,7 +83,7 @@ namespace SlashGames.GameBase
 
             this.components.Add(entityId, entityComponent);
             this.game.EventManager.QueueEvent(
-                FrameworkEventType.ComponentAdded, new ComponentEventArgs(entityId, entityComponent));
+                FrameworkEventType.ComponentAdded, new EntityComponentData(entityId, entityComponent));
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace SlashGames.GameBase
 
             this.components.Remove(entityId);
             this.game.EventManager.QueueEvent(
-                FrameworkEventType.ComponentRemoved, new ComponentEventArgs(entityId, entityComponent));
+                FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, entityComponent));
             return true;
         }
 

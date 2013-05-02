@@ -9,7 +9,7 @@ namespace SlashGames.GameBase.Tests
     using NUnit.Framework;
 
     using SlashGames.Collections.AttributeTables;
-    using SlashGames.GameBase.EventArgs;
+    using SlashGames.GameBase.EventData;
 
     /// <summary>
     ///   Unit tests for the EventManager class.
@@ -198,8 +198,8 @@ namespace SlashGames.GameBase.Tests
         /// <param name="e"> Event that has occurred within the framework. </param>
         private void OnComponentAdded(Event e)
         {
-            ComponentEventArgs eventArgs = (ComponentEventArgs)e.EventData;
-            this.testPassed = eventArgs.EntityId == this.testEntityId && this.entityComponent.Equals(eventArgs.EntityComponent);
+            EntityComponentData data = (EntityComponentData)e.EventData;
+            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.EntityComponent);
         }
 
         /// <summary>
@@ -208,8 +208,8 @@ namespace SlashGames.GameBase.Tests
         /// <param name="e"> Event that has occurred within the framework. </param>
         private void OnComponentRemoved(Event e)
         {
-            ComponentEventArgs eventArgs = (ComponentEventArgs)e.EventData;
-            this.testPassed = eventArgs.EntityId == this.testEntityId && this.entityComponent.Equals(eventArgs.EntityComponent);
+            EntityComponentData data = (EntityComponentData)e.EventData;
+            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.EntityComponent);
         }
 
         /// <summary>

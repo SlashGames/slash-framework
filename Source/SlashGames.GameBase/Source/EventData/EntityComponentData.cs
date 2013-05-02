@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ComponentEventArgs.cs" company="Slash Games">
+// <copyright file="EntityComponentData.cs" company="Slash Games">
 // Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.GameBase.EventArgs
+namespace SlashGames.GameBase.EventData
 {
     using System;
 
@@ -12,7 +12,7 @@ namespace SlashGames.GameBase.EventArgs
     /// Data container holding information on a component event, such as the
     /// entity and the component the event occurred for.
     /// </summary>
-    public class ComponentEventArgs
+    public class EntityComponentData
     {
         #region Constructors and Destructors
 
@@ -29,7 +29,7 @@ namespace SlashGames.GameBase.EventArgs
         /// <exception cref="ArgumentNullException">
         /// Passed component is null.
         /// </exception>
-        public ComponentEventArgs(int entityId, IEntityComponent entityComponent)
+        public EntityComponentData(int entityId, IEntityComponent entityComponent)
         {
             if (entityComponent == null)
             {

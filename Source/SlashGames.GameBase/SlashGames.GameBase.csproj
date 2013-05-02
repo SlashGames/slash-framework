@@ -34,7 +34,7 @@
   <ItemGroup>
     <Compile Include="Source\Blueprint.cs" />
     <Compile Include="Source\Event.cs" />
-    <Compile Include="Source\EventArgs\ComponentEventArgs.cs" />
+    <Compile Include="Source\EventData\EntityComponentData.cs" />
     <Compile Include="Source\EventManager.cs" />
     <Compile Include="Source\FrameworkEventType.cs" />
     <Compile Include="Source\IEntityComponent.cs" />
