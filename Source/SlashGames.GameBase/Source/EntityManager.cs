@@ -13,6 +13,7 @@ namespace SlashGames.GameBase
 
     using SlashGames.Collections.AttributeTables;
     using SlashGames.Collections.ObjectModel;
+    using SlashGames.GameBase.EventData;
 
     /// <summary>
     ///   Creates and removes game entities. Holds references to all component
@@ -320,6 +321,52 @@ namespace SlashGames.GameBase
         public IEnumerable<int> GetEntities(Func<int, bool> predicate)
         {
             return this.entities.Count == 0 ? null : this.entities.Where(predicate);
+        }
+
+        /// <summary>
+        ///     Convenience method for retrieving components from two entities
+        ///     in case the order of the entities is unknown.
+        /// </summary>
+        /// <typeparam name="TComponentTypeA">Type of the first component to get.</typeparam>
+        /// <typeparam name="TComponentTypeB">Type of the second component to get.</typeparam>
+        /// <param name="data">Data for the event that affected two entities.</param>
+        /// <param name="entityIdA">Id of the entity having the first component attached.</param>
+        /// <param name="entityIdB">Id of the entity having the second component attached.</param>
+        /// <param name="componentA">First component.</param>
+        /// <param name="componentB">Second component.</param>
+        /// <returns>
+        ///     <c>true</c>, if one of the entities has a <typeparamref name="TComponentTypeA" />
+        ///     and the other one a <typeparamref name="TComponentTypeB" /> attached,
+        ///     and <c>false</c> otherwise.
+        /// </returns>
+        public bool GetEntityComponents<TComponentTypeA, TComponentTypeB>(
+            Entity2Data data,
+            out int entityIdA,
+            out int entityIdB,
+            out TComponentTypeA componentA,
+            out TComponentTypeB componentB)
+            where TComponentTypeA : class, IEntityComponent
+            where TComponentTypeB : class, IEntityComponent
+        {
+            entityIdA = data.First;
+            entityIdB = data.Second;
+
+            componentA = this.GetComponent<TComponentTypeA>(entityIdA);
+            componentB = this.GetComponent<TComponentTypeB>(entityIdB);
+
+            if (componentA == null || componentB == null)
+            {
+                // Check other way round.
+                entityIdA = data.Second;
+                entityIdB = data.First;
+
+                componentA = this.GetComponent<TComponentTypeA>(entityIdA);
+                componentB = this.GetComponent<TComponentTypeB>(entityIdB);
+
+                return componentA != null && componentB != null;
+            }
+
+            return true;
         }
 
         /// <summary>
