@@ -12,7 +12,7 @@ namespace SlashGames.GameBase
     /// Contract that all game components have to fulfill if they are to be
     /// attached to entities.
     /// </summary>
-    public interface IComponent
+    public interface IEntityComponent
     {
         /// <summary>
         /// Initializes this component with the data stored in the passed

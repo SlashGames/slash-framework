@@ -23,21 +23,21 @@ namespace SlashGames.GameBase.EventArgs
         /// <param name="entityId">
         /// Id of the entity the component event has been fired for.
         /// </param>
-        /// <param name="component">
+        /// <param name="entityComponent">
         /// Component that has been interacted with.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// Passed component is null.
         /// </exception>
-        public ComponentEventArgs(int entityId, IComponent component)
+        public ComponentEventArgs(int entityId, IEntityComponent entityComponent)
         {
-            if (component == null)
+            if (entityComponent == null)
             {
-                throw new ArgumentNullException("component");
+                throw new ArgumentNullException("entityComponent");
             }
 
             this.EntityId = entityId;
-            this.Component = component;
+            this.EntityComponent = entityComponent;
         }
 
         #endregion
@@ -52,7 +52,7 @@ namespace SlashGames.GameBase.EventArgs
         /// <summary>
         /// Component that has been interacted with.
         /// </summary>
-        public IComponent Component { get; private set; }
+        public IEntityComponent EntityComponent { get; private set; }
 
         #endregion
 
@@ -64,7 +64,7 @@ namespace SlashGames.GameBase.EventArgs
         /// <returns>Entity id and component.</returns>
         public override string ToString()
         {
-            return string.Format("Entity id: {0}, component: {1}", this.EntityId, this.Component.ToString());
+            return string.Format("Entity id: {0}, component: {1}", this.EntityId, this.EntityComponent.ToString());
         }
 
         #endregion

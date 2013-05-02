@@ -37,7 +37,7 @@
     <Compile Include="Source\EventArgs\ComponentEventArgs.cs" />
     <Compile Include="Source\EventManager.cs" />
     <Compile Include="Source\FrameworkEventType.cs" />
-    <Compile Include="Source\IComponent.cs" />
+    <Compile Include="Source\IEntityComponent.cs" />
     <Compile Include="Source\ComponentManager.cs" />
     <Compile Include="Source\EntityManager.cs" />
     <Compile Include="Source\Game.cs" />
