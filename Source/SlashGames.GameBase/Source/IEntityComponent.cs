@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IComponent.cs" company="Slash Games">
+// <copyright file="IEntityComponent.cs" company="Slash Games">
 // Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------

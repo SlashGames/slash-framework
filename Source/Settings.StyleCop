@@ -32,8 +32,8 @@
         </Rule>
       </Rules>
       <AnalyzerSettings>
-        <StringProperty Name="CompanyName">Rainy Games</StringProperty>
-        <StringProperty Name="Copyright">Copyright (c) Rainy Games. All rights reserved.</StringProperty>
+        <StringProperty Name="CompanyName">Slash Games</StringProperty>
+        <StringProperty Name="Copyright">Copyright (c) Slash Games. All rights reserved.</StringProperty>
       </AnalyzerSettings>
     </Analyzer>
     <Analyzer AnalyzerId="StyleCop.CSharp.MaintainabilityRules">

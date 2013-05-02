@@ -43,7 +43,7 @@ namespace SlashGames.GameBase
         private readonly HashSet<int> removedEntities;
 
         /// <summary>
-        ///   Id that will be assigned to the next entitiy created.
+        ///   Id that will be assigned to the next entity created.
         /// </summary>
         private int nextEntityId;
 
@@ -152,12 +152,14 @@ namespace SlashGames.GameBase
                 throw new ArgumentNullException("type");
             }
 
-            if (this.componentManagers.TryGetValue(type, out componentManager))
+            if (!this.componentManagers.TryGetValue(type, out componentManager))
             {
-                foreach (KeyValuePair<int, IEntityComponent> component in componentManager.Components())
-                {
-                    yield return component;
-                }
+                yield break;
+            }
+
+            foreach (KeyValuePair<int, IEntityComponent> component in componentManager.Components())
+            {
+                yield return component;
             }
         }
 
@@ -176,7 +178,7 @@ namespace SlashGames.GameBase
         /// <summary>
         ///   Creates a new entity, adding components matching the passed
         ///   blueprint and initializing these with the data stored in the 
-        ///   blueprint and the speicified configuration. Configuration data
+        ///   blueprint and the specified configuration. Configuration data
         ///   is preferred over blueprint data.
         /// </summary>
         /// <param name="blueprint"> Blueprint describing the entity to create. </param>
@@ -192,7 +194,7 @@ namespace SlashGames.GameBase
         /// <summary>
         ///   Initializes the specified entity, adding components matching the
         ///   passed blueprint and initializing these with the data stored in
-        ///   the blueprint and the speicified configuration. Configuration
+        ///   the blueprint and the specified configuration. Configuration
         ///   data is preferred over blueprint data.
         /// </summary>
         /// <param name="entityId">Id of the entity to initialize.</param>
@@ -272,12 +274,9 @@ namespace SlashGames.GameBase
 
             // Get component manager.
             ComponentManager componentManager;
-            if (this.componentManagers.TryGetValue(componentType, out componentManager))
-            {
-                return componentManager.GetComponent(entityId);
-            }
-
-            return null;
+            return this.componentManagers.TryGetValue(componentType, out componentManager)
+                       ? componentManager.GetComponent(entityId)
+                       : null;
         }
 
         /// <summary>
@@ -320,12 +319,7 @@ namespace SlashGames.GameBase
         /// <returns> Collection of ids of all entities which fulfill the specified predicate. </returns>
         public IEnumerable<int> GetEntities(Func<int, bool> predicate)
         {
-            if (this.entities.Count == 0)
-            {
-                return null;
-            }
-
-            return this.entities.Where(predicate);
+            return this.entities.Count == 0 ? null : this.entities.Where(predicate);
         }
 
         /// <summary>

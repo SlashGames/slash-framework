@@ -19,17 +19,17 @@ namespace SlashGames.GameBase
         /// <summary>
         /// Game this manager controls the systems of.
         /// </summary>
-        private Game game;
+        private readonly Game game;
 
         /// <summary>
         /// Systems to be updated in each tick.
         /// </summary>
-        private List<ISystem> systems;
+        private readonly List<ISystem> systems;
 
         /// <summary>
         /// Maps system types to actual game systems.
         /// </summary>
-        private Dictionary<Type, ISystem> systemsByType;
+        private readonly Dictionary<Type, ISystem> systemsByType;
 
         #endregion
 
@@ -74,17 +74,15 @@ namespace SlashGames.GameBase
 
             Type systemType = system.GetType();
 
-            if (!this.systemsByType.ContainsKey(systemType))
-            {
-                this.systems.Add(system);
-                this.systemsByType.Add(system.GetType(), system);
-
-                this.game.EventManager.QueueEvent(FrameworkEventType.SystemAdded, system);
-            }
-            else
+            if (this.systemsByType.ContainsKey(systemType))
             {
                 throw new ArgumentException("A system of type " + systemType + " has already been added.", "system");
             }
+
+            this.systems.Add(system);
+            this.systemsByType.Add(system.GetType(), system);
+
+            this.game.EventManager.QueueEvent(FrameworkEventType.SystemAdded, system);
         }
 
         /// <summary>
@@ -114,10 +112,8 @@ namespace SlashGames.GameBase
             {
                 return system;
             }
-            else
-            {
-                throw new ArgumentException("A system of type " + systemType + " has never been added.", "systemType");
-            }
+
+            throw new ArgumentException("A system of type " + systemType + " has never been added.", "systemType");
         }
 
         /// <summary>

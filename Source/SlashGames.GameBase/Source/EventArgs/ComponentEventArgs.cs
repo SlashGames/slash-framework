@@ -64,7 +64,7 @@ namespace SlashGames.GameBase.EventArgs
         /// <returns>Entity id and component.</returns>
         public override string ToString()
         {
-            return string.Format("Entity id: {0}, component: {1}", this.EntityId, this.EntityComponent.ToString());
+            return string.Format("Entity id: {0}, component: {1}", this.EntityId, this.EntityComponent);
         }
 
         #endregion

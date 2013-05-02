@@ -24,12 +24,12 @@ namespace SlashGames.GameBase
         /// <summary>
         /// Game this manager maps the entity ids of.
         /// </summary>
-        private Game game;
+        private readonly Game game;
 
         /// <summary>
         /// Components attached to game entities.
         /// </summary>
-        private Dictionary<int, IEntityComponent> components;
+        private readonly Dictionary<int, IEntityComponent> components;
 
         #endregion
 
@@ -74,16 +74,16 @@ namespace SlashGames.GameBase
                 throw new ArgumentNullException("entityComponent");
             }
 
-            if (!this.components.ContainsKey(entityId))
+            if (this.components.ContainsKey(entityId))
             {
-                this.components.Add(entityId, entityComponent);
-                this.game.EventManager.QueueEvent(FrameworkEventType.ComponentAdded, new ComponentEventArgs(entityId, entityComponent));
+                throw new InvalidOperationException(
+                    "There is already a component of type " + entityComponent.GetType() + " attached to entity with id "
+                    + entityId + ".");
             }
-            else
-            {
-                throw new InvalidOperationException("There is already a component of type "
-                    + entityComponent.GetType() + " attached to entity with id " + entityId + ".");
-            }
+
+            this.components.Add(entityId, entityComponent);
+            this.game.EventManager.QueueEvent(
+                FrameworkEventType.ComponentAdded, new ComponentEventArgs(entityId, entityComponent));
         }
 
         /// <summary>
@@ -99,16 +99,16 @@ namespace SlashGames.GameBase
         public bool RemoveComponent(int entityId)
         {
             IEntityComponent entityComponent;
-            if (this.components.TryGetValue(entityId, out entityComponent))
-            {
-                this.components.Remove(entityId);
-                this.game.EventManager.QueueEvent(FrameworkEventType.ComponentRemoved, new ComponentEventArgs(entityId, entityComponent));
-                return true;
-            }
-            else
+
+            if (!this.components.TryGetValue(entityId, out entityComponent))
             {
                 return false;
             }
+
+            this.components.Remove(entityId);
+            this.game.EventManager.QueueEvent(
+                FrameworkEventType.ComponentRemoved, new ComponentEventArgs(entityId, entityComponent));
+            return true;
         }
 
         /// <summary>

@@ -59,7 +59,7 @@ namespace SlashGames.GameBase
         /// <summary>
         ///   Signature of the event callbacks.
         /// </summary>
-        /// <param name="e"> Event which occured. </param>
+        /// <param name="e"> Event which occurred. </param>
         public delegate void EventDelegate(Event e);
 
         #endregion
@@ -122,7 +122,7 @@ namespace SlashGames.GameBase
         ///   Registers the specified delegate for events of the specified type.
         /// </summary>
         /// <param name="eventType"> Type of the event the caller is interested in. </param>
-        /// <param name="callback"> Delegate to invoke when specified type occured. </param>
+        /// <param name="callback"> Delegate to invoke when specified type occurred. </param>
         /// <exception cref="ArgumentNullException">Specified delegate is null.</exception>
         /// <exception cref="ArgumentNullException">Specified event type is null.</exception>
         public void RegisterListener(object eventType, EventDelegate callback)
@@ -152,7 +152,7 @@ namespace SlashGames.GameBase
         ///   delegate will be called twice if it is registered for a specific
         ///   event type as well.
         /// </summary>
-        /// <param name="callback"> Delegate to invoke when specified type occured. </param>
+        /// <param name="callback"> Delegate to invoke when specified type occurred. </param>
         /// <exception cref="ArgumentNullException">Specified delegate is null.</exception>
         /// <exception cref="ArgumentNullException">Specified event type is null.</exception>
         public void RegisterListener(EventDelegate callback)
