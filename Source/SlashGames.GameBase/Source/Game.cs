@@ -109,7 +109,7 @@ namespace SlashGames.GameBase
             }
 
             this.systemManager.Update(dt);
-            this.eventManager.ProcessEvents();
+            this.eventManager.ProcessEvents(dt);
             this.entityManager.CleanUpEntities();
 
             this.TimeElapsed += dt;

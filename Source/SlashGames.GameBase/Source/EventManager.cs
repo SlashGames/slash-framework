@@ -37,6 +37,16 @@ namespace SlashGames.GameBase
         /// </summary>
         private readonly object eventTypeAll = new object();
 
+        /// <summary>
+        /// Events to be fired later.
+        /// </summary>
+        private readonly List<DelayedEvent> delayedEvents = new List<DelayedEvent>();
+
+        /// <summary>
+        /// Delayed events to be fired now.
+        /// </summary>
+        private readonly List<DelayedEvent> elapsedEvents = new List<DelayedEvent>();
+
         #endregion
 
         #region Constructors and Destructors
@@ -64,6 +74,23 @@ namespace SlashGames.GameBase
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Current number of events in the event queue.
+        /// </summary>
+        public int EventCount
+        {
+            get { return this.currentEvents.Count + this.newEvents.Count; }
+        }
+
+        /// <summary>
+        /// Current number of registered event listeners.
+        /// </summary>
+        public int RegisteredListeners { get; private set; }
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
@@ -72,6 +99,17 @@ namespace SlashGames.GameBase
         /// </summary>
         public void ProcessEvents()
         {
+            this.ProcessEvents(0.0f);
+        }
+
+        /// <summary>
+        ///   Passes all queued events on to interested listeners and clears the
+        ///   event queue.
+        /// </summary>
+        /// <param name="dt">Time passed since the last tick, in seconds.</param>
+        public void ProcessEvents(float dt)
+        {
+            // Process queues events.
             while (this.newEvents.Count > 0)
             {
                 this.currentEvents.AddRange(this.newEvents);
@@ -79,26 +117,34 @@ namespace SlashGames.GameBase
 
                 foreach (Event e in this.currentEvents)
                 {
-                    EventDelegate eventListeners;
-                    if (this.listeners.TryGetValue(e.EventType, out eventListeners))
-                    {
-                        if (eventListeners != null)
-                        {
-                            eventListeners(e);
-                        }
-                    }
-
-                    // Check for listeners to all events.
-                    if (this.listeners.TryGetValue(this.eventTypeAll, out eventListeners))
-                    {
-                        if (eventListeners != null)
-                        {
-                            eventListeners(e);
-                        }
-                    }
+                    this.ProcessEvent(e);
                 }
 
                 this.currentEvents.Clear();
+            }
+
+            // Process delayed events.
+            if (dt <= 0)
+            {
+                return;
+            }
+
+            this.elapsedEvents.Clear();
+
+            foreach (DelayedEvent e in this.delayedEvents)
+            {
+                e.TimeRemaining -= dt;
+
+                if (e.TimeRemaining <= 0)
+                {
+                    this.elapsedEvents.Add(e);
+                }
+            }
+
+            foreach (DelayedEvent e in this.elapsedEvents)
+            {
+                this.ProcessEvent(e.Event);
+                this.delayedEvents.Remove(e);
             }
         }
 
@@ -120,6 +166,53 @@ namespace SlashGames.GameBase
         public void QueueEvent(Event e)
         {
             this.newEvents.Add(e);
+        }
+
+        /// <summary>
+        ///   Fires the passed event immediately, notifying all listeners.
+        /// </summary>
+        /// <param name="eventType"> Type of the event to fire. </param>
+        /// <param name="eventData"> Data any listeners might be interested in. </param>
+        public void FireImmediately(object eventType, object eventData = null)
+        {
+            this.FireImmediately(new Event(eventType, eventData));
+        }
+
+        /// <summary>
+        ///   Fires the passed event immediately, notifying all listeners.
+        /// </summary>
+        /// <param name="e"> Event to fire. </param>
+        public void FireImmediately(Event e)
+        {
+            this.ProcessEvent(e);
+        }
+
+        /// <summary>
+        /// Fires the passed event after a short delay.
+        /// </summary>
+        /// <param name="delay">Time to wait before firing the event, in seconds.</param>
+        /// <param name="eventType"> Type of the event to fire. </param>
+        /// <param name="eventData"> Data any listeners might be interested in. </param>
+        public void FireDelayed(float delay, object eventType, object eventData = null)
+        {
+            this.FireDelayed(delay, new Event(eventType, eventData));
+        }
+
+        /// <summary>
+        /// Fires the passed event after a short delay.
+        /// </summary>
+        /// <param name="delay">Time to wait before firing the event, in seconds.</param>
+        /// <param name="e">Event to fire.</param>
+        public void FireDelayed(float delay, Event e)
+        {
+            if (delay > 0)
+            {
+                this.delayedEvents.Add(new DelayedEvent { TimeRemaining = delay, Event = e });
+            }
+            else
+            {
+                this.FireImmediately(e);
+            }
         }
 
         /// <summary>
@@ -149,6 +242,8 @@ namespace SlashGames.GameBase
             {
                 this.listeners[eventType] = callback;
             }
+
+            this.RegisteredListeners++;
         }
 
         /// <summary>
@@ -209,5 +304,50 @@ namespace SlashGames.GameBase
         }
 
         #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Notifies all interested listeners of the specified event.
+        /// </summary>
+        /// <param name="e">Event to pass to listeners.</param>
+        private void ProcessEvent(Event e)
+        {
+            EventDelegate eventListeners;
+            if (this.listeners.TryGetValue(e.EventType, out eventListeners))
+            {
+                if (eventListeners != null)
+                {
+                    eventListeners(e);
+                }
+            }
+
+            // Check for listeners to all events.
+            if (this.listeners.TryGetValue(this.eventTypeAll, out eventListeners))
+            {
+                if (eventListeners != null)
+                {
+                    eventListeners(e);
+                }
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Event to be fired later.
+        /// </summary>
+        private class DelayedEvent
+        {
+            /// <summary>
+            /// Time remaining before this event is to be fired, in seconds.
+            /// </summary>
+            public float TimeRemaining { get; set; }
+
+            /// <summary>
+            /// Event to be fired later.
+            /// </summary>
+            public Event Event { get; set; }
+        }
     }
 }
