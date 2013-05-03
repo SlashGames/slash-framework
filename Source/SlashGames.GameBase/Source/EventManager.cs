@@ -33,9 +33,9 @@ namespace SlashGames.GameBase
         private readonly List<Event> newEvents;
 
         /// <summary>
-        ///   Listeners which are interested in all events.
+        /// Event type for listening to all events.
         /// </summary>
-        private EventDelegate allEventListeners;
+        private readonly object eventTypeAll = new object();
 
         #endregion
 
@@ -88,9 +88,13 @@ namespace SlashGames.GameBase
                         }
                     }
 
-                    if (this.allEventListeners != null)
+                    // Check for listeners to all events.
+                    if (this.listeners.TryGetValue(this.eventTypeAll, out eventListeners))
                     {
-                        this.allEventListeners(e);
+                        if (eventListeners != null)
+                        {
+                            eventListeners(e);
+                        }
                     }
                 }
 
@@ -162,7 +166,7 @@ namespace SlashGames.GameBase
                 throw new ArgumentNullException("callback");
             }
 
-            this.allEventListeners += callback;
+            this.RegisterListener(this.eventTypeAll, callback);
         }
 
         /// <summary>
@@ -201,12 +205,7 @@ namespace SlashGames.GameBase
         /// <exception cref="ArgumentNullException">Specified event type is null.</exception>
         public void RemoveListener(EventDelegate callback)
         {
-            if (callback == null)
-            {
-                throw new ArgumentNullException("callback");
-            }
-
-            this.allEventListeners -= callback;
+            this.RemoveListener(this.eventTypeAll, callback);
         }
 
         #endregion
