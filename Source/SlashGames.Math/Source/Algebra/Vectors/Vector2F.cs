@@ -12,7 +12,7 @@ namespace SlashGames.Math.Algebra.Vectors
     using SlashGames.Math.Utils;
 
     /// <summary>
-    ///   Struct which represents a 2 dimensional float vector.
+    ///     Struct which represents a 2 dimensional float vector.
     /// </summary>
     [Serializable]
     public struct Vector2F
@@ -20,37 +20,37 @@ namespace SlashGames.Math.Algebra.Vectors
         #region Static Fields
 
         /// <summary>
-        ///   Unrotated forward vector.
+        ///     Unrotated forward vector.
         /// </summary>
         public static Vector2F Forward = new Vector2F(0, 1);
 
         /// <summary>
-        ///   Both vector components are 1.
+        ///     Both vector components are 1.
         /// </summary>
         public static Vector2F One = new Vector2F(1, 1);
 
         /// <summary>
-        ///   Unrotated side vector.
+        ///     Unrotated side vector.
         /// </summary>
         public static Vector2F Side = new Vector2F(1, 0);
 
         /// <summary>
-        ///   Angle to transform forward to side vector.
+        ///     Angle to transform forward to side vector.
         /// </summary>
         public static float SideAngle = -MathF.PiOver2;
 
         /// <summary>
-        ///   X component is 1, Y component is 0.
+        ///     X component is 1, Y component is 0.
         /// </summary>
         public static Vector2F UnitX = new Vector2F(1, 0);
 
         /// <summary>
-        ///   X component is 0, Y component is 1.
+        ///     X component is 0, Y component is 1.
         /// </summary>
         public static Vector2F UnitY = new Vector2F(0, 1);
 
         /// <summary>
-        ///   Both vector components are 0.
+        ///     Both vector components are 0.
         /// </summary>
         public static Vector2F Zero = new Vector2F(0, 0);
 
@@ -59,12 +59,12 @@ namespace SlashGames.Math.Algebra.Vectors
         #region Fields
 
         /// <summary>
-        ///   X component.
+        ///     X component.
         /// </summary>
         public float X;
 
         /// <summary>
-        ///   Y component.
+        ///     Y component.
         /// </summary>
         public float Y;
 
@@ -73,7 +73,7 @@ namespace SlashGames.Math.Algebra.Vectors
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Constructor.
+        ///     Constructor.
         /// </summary>
         /// <param name="vector"> Initial vector. </param>
         public Vector2F(Vector2F vector)
@@ -84,7 +84,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Constructor.
+        ///     Constructor.
         /// </summary>
         /// <param name="x"> Initial x value. </param>
         /// <param name="y"> Initial y value. </param>
@@ -96,11 +96,11 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Constructor.
+        ///     Constructor.
         /// </summary>
         /// <param name="values">
-        ///   Float array which contains the initial vector value. 
-        ///   Value at index 0 is taken as the initial x value, value at index 1 is taken as the initial y value.
+        ///     Float array which contains the initial vector value.
+        ///     Value at index 0 is taken as the initial x value, value at index 1 is taken as the initial y value.
         /// </param>
         public Vector2F(params float[] values)
             : this()
@@ -124,7 +124,7 @@ namespace SlashGames.Math.Algebra.Vectors
         #region Public Properties
 
         /// <summary>
-        ///   Indicates if at least one vector component is not zero.
+        ///     Indicates if at least one vector component is not zero.
         /// </summary>
         public bool IsNonZero
         {
@@ -135,7 +135,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Indicates if all vector components are zero.
+        ///     Indicates if all vector components are zero.
         /// </summary>
         public bool IsZero
         {
@@ -146,7 +146,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Magnitude of the vector.
+        ///     Magnitude of the vector.
         /// </summary>
         public float Magnitude
         {
@@ -157,7 +157,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Square magnitude of the vector.
+        ///     Square magnitude of the vector.
         /// </summary>
         public float SquareMagnitude
         {
@@ -177,7 +177,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Returns a positive number if c is to the left of the line going from a to b.
+        ///     Returns a positive number if c is to the left of the line going from a to b.
         /// </summary>
         /// <returns> Positive number if point is left, negative if point is right, and 0 if points are collinear. </returns>
         public static float Area(Vector2F a, Vector2F b, Vector2F c)
@@ -186,7 +186,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Returns a positive number if c is to the left of the line going from a to b.
+        ///     Returns a positive number if c is to the left of the line going from a to b.
         /// </summary>
         /// <returns> Positive number if point is left, negative if point is right, and 0 if points are collinear. </returns>
         public static float Area(ref Vector2F a, ref Vector2F b, ref Vector2F c)
@@ -195,7 +195,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the angle between two vectors on a plane.
+        ///     Calculates the angle between two vectors on a plane.
         /// </summary>
         /// <param name="vector1"> First vector. </param>
         /// <param name="vector2"> Second vector. </param>
@@ -218,7 +218,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Determines if three vectors are collinear (ie. on a straight line).
+        ///     Determines if three vectors are collinear (ie. on a straight line).
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -230,7 +230,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Determines if three vectors are collinear (ie. on a straight line).
+        ///     Determines if three vectors are collinear (ie. on a straight line).
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -243,7 +243,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the cross product of the two passed vectors. See http://en.wikipedia.org/wiki/Cross_product for more details.
+        ///     Calculates the cross product of the two passed vectors. See http://en.wikipedia.org/wiki/Cross_product for more details.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -254,7 +254,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Returns the distance between the two passed vectors.
+        ///     Returns the distance between the two passed vectors.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -265,7 +265,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the dot product of the two passed vectors. See http://en.wikipedia.org/wiki/Dot_product for more details.
+        ///     Calculates the dot product of the two passed vectors. See http://en.wikipedia.org/wiki/Dot_product for more details.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -276,7 +276,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Creates a new vector out of the two passed vectors and takes the maximum values from these for each component.
+        ///     Creates a new vector out of the two passed vectors and takes the maximum values from these for each component.
         /// </summary>
         /// <param name="value1"> First vector. </param>
         /// <param name="value2"> Second vector. </param>
@@ -287,7 +287,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Creates a new vector out of the two passed vectors and takes the minimum values from these for each component.
+        ///     Creates a new vector out of the two passed vectors and takes the minimum values from these for each component.
         /// </summary>
         /// <param name="value1"> First vector. </param>
         /// <param name="value2"> Second vector. </param>
@@ -325,7 +325,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Sums the components of the passed vectors and returns the resulting vector.
+        ///     Sums the components of the passed vectors and returns the resulting vector.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -336,7 +336,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Adds the passed float value to each component of the passed vector.
+        ///     Adds the passed float value to each component of the passed vector.
         /// </summary>
         /// <param name="a"> Vector to add the float value to. </param>
         /// <param name="b"> Float value to add. </param>
@@ -347,7 +347,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Divides each component of the passed vector by the passed value.
+        ///     Divides each component of the passed vector by the passed value.
         /// </summary>
         /// <param name="a"> Vector to divide by the float value. </param>
         /// <param name="b"> Float value to divide by. </param>
@@ -358,7 +358,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Indicates if the two passed vectors are equal.
+        ///     Indicates if the two passed vectors are equal.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -369,7 +369,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Indicates if the two passed vectors are not equal.
+        ///     Indicates if the two passed vectors are not equal.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -380,7 +380,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Multiplies each vector component of the two passed vectors.
+        ///     Multiplies each vector component of the two passed vectors.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -391,7 +391,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Multiplies each vector component with the passed float value.
+        ///     Multiplies each vector component with the passed float value.
         /// </summary>
         /// <param name="a"> Vector to multiply. </param>
         /// <param name="b"> Float value to multiply by. </param>
@@ -402,7 +402,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Multiplies each vector component with the passed float value.
+        ///     Multiplies each vector component with the passed float value.
         /// </summary>
         /// <param name="a"> Float value to multiply by. </param>
         /// <param name="b"> Vector to multiply. </param>
@@ -413,7 +413,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Subtracts the passed float value from each component of the passed vector.
+        ///     Subtracts the passed float value from each component of the passed vector.
         /// </summary>
         /// <param name="a"> Vector to subtract the float value from. </param>
         /// <param name="b"> Float value to subtract. </param>
@@ -424,7 +424,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Subtracts the components of the second passed vector from the first passed.
+        ///     Subtracts the components of the second passed vector from the first passed.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -435,7 +435,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Negates each component of the passed vector.
+        ///     Negates each component of the passed vector.
         /// </summary>
         /// <param name="a"> Vector to negate. </param>
         /// <returns> Vector which components have the negated value of the respective components of the passed vector. </returns>
@@ -445,7 +445,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Adds the passed values to the x and y value.
+        ///     Adds the passed values to the x and y value.
         /// </summary>
         /// <param name="addX"> Value to add to x. </param>
         /// <param name="addY"> Value to add to y. </param>
@@ -456,7 +456,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the dot product of this and the passed vector. See http://en.wikipedia.org/wiki/Dot_product for more details.
+        ///     Calculates the dot product of this and the passed vector. See http://en.wikipedia.org/wiki/Dot_product for more details.
         /// </summary>
         /// <param name="vector"> Vector to calculate dot product with. </param>
         /// <returns> Dot product of this and the passed vector. </returns>
@@ -481,7 +481,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the distance between this and the passed vector.
+        ///     Calculates the distance between this and the passed vector.
         /// </summary>
         /// <param name="vector"> Vector to compute distance to. </param>
         /// <returns> Distance between this and the passed vector. </returns>
@@ -496,7 +496,21 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Returns the normalized vector.
+        ///     Creates a new vector which is limited to the specified length.
+        ///     If the vector is longer it is truncated, otherwise it stays the same.
+        /// </summary>
+        /// <param name="limit"> Maximum magnitude. </param>
+        public Vector2F GetLimited(float limit)
+        {
+            if (this.SquareMagnitude > limit * limit)
+            {
+                return this.GetNormalized() * limit;
+            }
+            return this;
+        }
+
+        /// <summary>
+        ///     Returns the normalized vector.
         /// </summary>
         /// <returns> This vector normalized. </returns>
         public Vector2F GetNormalized()
@@ -513,7 +527,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Returns a vector which is perpendicular to this vector.
+        ///     Returns a vector which is perpendicular to this vector.
         /// </summary>
         /// <returns> Vector perpendicular to this one. </returns>
         public Vector2F GetPerpendicularVector()
@@ -522,7 +536,21 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the counter-clockwise rotated vector.
+        ///     Creates a new vector which is reflected by the specified vector.
+        /// </summary>
+        /// <param name="reflect">Vector to reflect with.</param>
+        /// <returns>This vector reflected with the specified vector.</returns>
+        public Vector2F GetReflected(Vector2F reflect)
+        {
+            Vector2F normalizedReflect = reflect.GetNormalized();
+            return
+                new Vector2F(
+                    this.X - 2 * normalizedReflect.X * (normalizedReflect.X * this.X + normalizedReflect.Y * this.Y),
+                    this.Y - 2 * normalizedReflect.Y * (normalizedReflect.X * this.X + normalizedReflect.Y * this.Y));
+        }
+
+        /// <summary>
+        ///     Calculates the counter-clockwise rotated vector.
         /// </summary>
         /// <param name="angle"> Angle (in radians). </param>
         /// <returns> Rotated vector. </returns>
@@ -534,7 +562,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the square distance between this and the passed vector.
+        ///     Calculates the square distance between this and the passed vector.
         /// </summary>
         /// <param name="vector"> Vector to compute square distance to. </param>
         /// <returns> Square distance between this and the passed vector. </returns>
@@ -544,7 +572,18 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Checks if this vector is parallel or anti-parallel to the passed one.
+        ///     Creates a new vector which is truncated to the specified length.
+        /// </summary>
+        /// <param name="length"> New magnitude. </param>
+        public Vector2F GetTruncated(float length)
+        {
+            Vector2F result = new Vector2F(this);
+            result.Truncate(length);
+            return result;
+        }
+
+        /// <summary>
+        ///     Checks if this vector is parallel or anti-parallel to the passed one.
         /// </summary>
         /// <param name="other"> Vector to check. </param>
         /// <returns> True if both vectors are parallel or anti-parallel, else false. </returns>
@@ -559,7 +598,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Normalizes this vector.
+        ///     Normalizes this vector.
         /// </summary>
         public void Normalize()
         {
@@ -572,7 +611,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Rotates the vector counter-clockwise.
+        ///     Rotates the vector counter-clockwise.
         /// </summary>
         /// <param name="angle"> Angle (in radians). </param>
         public void Rotate(float angle)
@@ -594,7 +633,7 @@ namespace SlashGames.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Changes the magnitude of this vector to the passed value.
+        ///     Changes the magnitude of this vector to the passed value.
         /// </summary>
         /// <param name="length"> New magnitude. </param>
         public void Truncate(float length)
