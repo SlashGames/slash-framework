@@ -13,6 +13,7 @@ namespace SlashGames.GameBase
 
     using SlashGames.Collections.AttributeTables;
     using SlashGames.Collections.ObjectModel;
+    using SlashGames.GameBase.EventData;
 
     /// <summary>
     ///   Creates and removes game entities. Holds references to all component
@@ -43,7 +44,7 @@ namespace SlashGames.GameBase
         private readonly HashSet<int> removedEntities;
 
         /// <summary>
-        ///   Id that will be assigned to the next entitiy created.
+        ///   Id that will be assigned to the next entity created.
         /// </summary>
         private int nextEntityId;
 
@@ -98,24 +99,24 @@ namespace SlashGames.GameBase
         ///   Attaches the passed component to the entity with the specified id.
         /// </summary>
         /// <param name="entityId"> Id of the entity to attach the component to. </param>
-        /// <param name="component"> Component to attach. </param>
+        /// <param name="entityComponent"> Component to attach. </param>
         /// <exception cref="ArgumentOutOfRangeException">Entity id is negative.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Entity id has not yet been assigned.</exception>
         /// <exception cref="ArgumentException">Entity with the specified id has already been removed.</exception>
         /// <exception cref="ArgumentNullException">Passed component is null.</exception>
         /// <exception cref="InvalidOperationException">There is already a component of the same type attached.</exception>
-        public void AddComponent(int entityId, IComponent component)
+        public void AddComponent(int entityId, IEntityComponent entityComponent)
         {
             this.CheckEntityId(entityId);
 
-            Type componentType = component.GetType();
+            Type componentType = entityComponent.GetType();
 
             if (!this.componentManagers.ContainsKey(componentType))
             {
                 this.componentManagers.Add(componentType, new ComponentManager(this.game));
             }
 
-            this.componentManagers[component.GetType()].AddComponent(entityId, component);
+            this.componentManagers[entityComponent.GetType()].AddComponent(entityId, entityComponent);
         }
 
         /// <summary>
@@ -152,12 +153,14 @@ namespace SlashGames.GameBase
                 throw new ArgumentNullException("type");
             }
 
-            if (this.componentManagers.TryGetValue(type, out componentManager))
+            if (!this.componentManagers.TryGetValue(type, out componentManager))
             {
-                foreach (KeyValuePair<int, IComponent> component in componentManager.Components())
-                {
-                    yield return component;
-                }
+                yield break;
+            }
+
+            foreach (KeyValuePair<int, IEntityComponent> component in componentManager.Components())
+            {
+                yield return component;
             }
         }
 
@@ -176,7 +179,7 @@ namespace SlashGames.GameBase
         /// <summary>
         ///   Creates a new entity, adding components matching the passed
         ///   blueprint and initializing these with the data stored in the 
-        ///   blueprint and the speicified configuration. Configuration data
+        ///   blueprint and the specified configuration. Configuration data
         ///   is preferred over blueprint data.
         /// </summary>
         /// <param name="blueprint"> Blueprint describing the entity to create. </param>
@@ -192,7 +195,7 @@ namespace SlashGames.GameBase
         /// <summary>
         ///   Initializes the specified entity, adding components matching the
         ///   passed blueprint and initializing these with the data stored in
-        ///   the blueprint and the speicified configuration. Configuration
+        ///   the blueprint and the specified configuration. Configuration
         ///   data is preferred over blueprint data.
         /// </summary>
         /// <param name="entityId">Id of the entity to initialize.</param>
@@ -203,8 +206,8 @@ namespace SlashGames.GameBase
             foreach (Type type in blueprint.ComponentTypes)
             {
                 // Create component.
-                IComponent component = (IComponent)Activator.CreateInstance(type);
-                this.AddComponent(entityId, component);
+                IEntityComponent entityComponent = (IEntityComponent)Activator.CreateInstance(type);
+                this.AddComponent(entityId, entityComponent);
 
                 // Initialize component with the attribute table data.
                 HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
@@ -218,7 +221,7 @@ namespace SlashGames.GameBase
                     attributeTable.AddParent(blueprint.AttributeTable);
                 }
 
-                component.InitComponent(attributeTable);
+                entityComponent.InitComponent(attributeTable);
             }
 
             this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
@@ -261,7 +264,7 @@ namespace SlashGames.GameBase
         /// <exception cref="ArgumentOutOfRangeException">Entity id has not yet been assigned.</exception>
         /// <exception cref="ArgumentException">Entity with the specified id has already been removed.</exception>
         /// <exception cref="ArgumentNullException">Passed component type is null.</exception>
-        public IComponent GetComponent(int entityId, Type componentType)
+        public IEntityComponent GetComponent(int entityId, Type componentType)
         {
             this.CheckEntityId(entityId);
 
@@ -272,12 +275,9 @@ namespace SlashGames.GameBase
 
             // Get component manager.
             ComponentManager componentManager;
-            if (this.componentManagers.TryGetValue(componentType, out componentManager))
-            {
-                return componentManager.GetComponent(entityId);
-            }
-
-            return null;
+            return this.componentManagers.TryGetValue(componentType, out componentManager)
+                       ? componentManager.GetComponent(entityId)
+                       : null;
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace SlashGames.GameBase
         /// <exception cref="ArgumentException">Entity with the specified id has already been removed.</exception>
         /// <exception cref="ArgumentNullException">Passed component type is null.</exception>
         /// <exception cref="ArgumentException">A component of the passed type has never been added before.</exception>
-        public T GetComponent<T>(int entityId) where T : IComponent
+        public T GetComponent<T>(int entityId) where T : IEntityComponent
         {
             return (T)this.GetComponent(entityId, typeof(T));
         }
@@ -320,12 +320,53 @@ namespace SlashGames.GameBase
         /// <returns> Collection of ids of all entities which fulfill the specified predicate. </returns>
         public IEnumerable<int> GetEntities(Func<int, bool> predicate)
         {
-            if (this.entities.Count == 0)
+            return this.entities.Count == 0 ? null : this.entities.Where(predicate);
+        }
+
+        /// <summary>
+        ///     Convenience method for retrieving components from two entities
+        ///     in case the order of the entities is unknown.
+        /// </summary>
+        /// <typeparam name="TComponentTypeA">Type of the first component to get.</typeparam>
+        /// <typeparam name="TComponentTypeB">Type of the second component to get.</typeparam>
+        /// <param name="data">Data for the event that affected two entities.</param>
+        /// <param name="entityIdA">Id of the entity having the first component attached.</param>
+        /// <param name="entityIdB">Id of the entity having the second component attached.</param>
+        /// <param name="componentA">First component.</param>
+        /// <param name="componentB">Second component.</param>
+        /// <returns>
+        ///     <c>true</c>, if one of the entities has a <typeparamref name="TComponentTypeA" />
+        ///     and the other one a <typeparamref name="TComponentTypeB" /> attached,
+        ///     and <c>false</c> otherwise.
+        /// </returns>
+        public bool GetEntityComponents<TComponentTypeA, TComponentTypeB>(
+            Entity2Data data,
+            out int entityIdA,
+            out int entityIdB,
+            out TComponentTypeA componentA,
+            out TComponentTypeB componentB)
+            where TComponentTypeA : class, IEntityComponent
+            where TComponentTypeB : class, IEntityComponent
+        {
+            entityIdA = data.First;
+            entityIdB = data.Second;
+
+            componentA = this.GetComponent<TComponentTypeA>(entityIdA);
+            componentB = this.GetComponent<TComponentTypeB>(entityIdB);
+
+            if (componentA == null || componentB == null)
             {
-                return null;
+                // Check other way round.
+                entityIdA = data.Second;
+                entityIdB = data.First;
+
+                componentA = this.GetComponent<TComponentTypeA>(entityIdA);
+                componentB = this.GetComponent<TComponentTypeB>(entityIdB);
+
+                return componentA != null && componentB != null;
             }
 
-            return this.entities.Where(predicate);
+            return true;
         }
 
         /// <summary>

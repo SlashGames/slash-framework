@@ -19,17 +19,12 @@ namespace SlashGames.GameBase
         /// <summary>
         /// Game this manager controls the systems of.
         /// </summary>
-        private Game game;
-
-        /// <summary>
-        /// Systems to be updated in each tick.
-        /// </summary>
-        private List<ISystem> systems;
+        private readonly Game game;
 
         /// <summary>
         /// Maps system types to actual game systems.
         /// </summary>
-        private Dictionary<Type, ISystem> systemsByType;
+        private readonly Dictionary<Type, ISystem> systems;
 
         #endregion
 
@@ -44,8 +39,7 @@ namespace SlashGames.GameBase
         public SystemManager(Game game)
         {
             this.game = game;
-            this.systems = new List<ISystem>();
-            this.systemsByType = new Dictionary<Type, ISystem>();
+            this.systems = new Dictionary<Type, ISystem>();
         }
 
         #endregion
@@ -74,17 +68,14 @@ namespace SlashGames.GameBase
 
             Type systemType = system.GetType();
 
-            if (!this.systemsByType.ContainsKey(systemType))
-            {
-                this.systems.Add(system);
-                this.systemsByType.Add(system.GetType(), system);
-
-                this.game.EventManager.QueueEvent(FrameworkEventType.SystemAdded, system);
-            }
-            else
+            if (this.systems.ContainsKey(systemType))
             {
                 throw new ArgumentException("A system of type " + systemType + " has already been added.", "system");
             }
+
+            this.systems.Add(system.GetType(), system);
+
+            this.game.EventManager.QueueEvent(FrameworkEventType.SystemAdded, system);
         }
 
         /// <summary>
@@ -110,14 +101,12 @@ namespace SlashGames.GameBase
             }
 
             ISystem system;
-            if (this.systemsByType.TryGetValue(systemType, out system))
+            if (this.systems.TryGetValue(systemType, out system))
             {
                 return system;
             }
-            else
-            {
-                throw new ArgumentException("A system of type " + systemType + " has never been added.", "systemType");
-            }
+
+            throw new ArgumentException("A system of type " + systemType + " has never been added.", "systemType");
         }
 
         /// <summary>
@@ -145,7 +134,7 @@ namespace SlashGames.GameBase
         /// </param>
         public void Update(float dt)
         {
-            foreach (ISystem system in this.systems)
+            foreach (ISystem system in this.systems.Values)
             {
                 system.UpdateSystem(dt);
             }

@@ -33,7 +33,7 @@ namespace SlashGames.GameBase.Tests
         /// <summary>
         ///   Test component to run unit tests on.
         /// </summary>
-        private TestComponent testComponent;
+        private TestEntityComponent testEntityComponent;
 
         private int testEntityId;
 
@@ -49,7 +49,7 @@ namespace SlashGames.GameBase.Tests
         {
             this.game = new Game();
             this.entityManager = new EntityManager(this.game);
-            this.testComponent = new TestComponent();
+            this.testEntityComponent = new TestEntityComponent();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace SlashGames.GameBase.Tests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAccessEntityWithExceedingId()
         {
-            this.entityManager.GetComponent(42, typeof(TestComponent));
+            this.entityManager.GetComponent(42, typeof(TestEntityComponent));
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace SlashGames.GameBase.Tests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAccessEntityWithNegativeId()
         {
-            this.entityManager.GetComponent(-1, typeof(TestComponent));
+            this.entityManager.GetComponent(-1, typeof(TestEntityComponent));
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace SlashGames.GameBase.Tests
         {
             this.testEntityId = this.entityManager.CreateEntity();
             this.entityManager.RemoveEntity(this.testEntityId);
-            this.entityManager.GetComponent(this.testEntityId, typeof(TestComponent));
+            this.entityManager.GetComponent(this.testEntityId, typeof(TestEntityComponent));
         }
 
         /// <summary>
@@ -94,8 +94,8 @@ namespace SlashGames.GameBase.Tests
         public void TestAddComponent()
         {
             int entityId = this.entityManager.CreateEntity();
-            this.entityManager.AddComponent(entityId, this.testComponent);
-            Assert.AreEqual(this.testComponent, this.entityManager.GetComponent(entityId, typeof(TestComponent)));
+            this.entityManager.AddComponent(entityId, this.testEntityComponent);
+            Assert.AreEqual(this.testEntityComponent, this.entityManager.GetComponent(entityId, typeof(TestEntityComponent)));
         }
 
         /// <summary>
@@ -133,8 +133,8 @@ namespace SlashGames.GameBase.Tests
         public void TestGetComponentBeforeAdding()
         {
             this.testEntityId = this.entityManager.CreateEntity();
-            IComponent component = this.entityManager.GetComponent(this.testEntityId, typeof(TestComponent));
-            Assert.IsNull(component);
+            IEntityComponent entityComponent = this.entityManager.GetComponent(this.testEntityId, typeof(TestEntityComponent));
+            Assert.IsNull(entityComponent);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace SlashGames.GameBase.Tests
         public void TestGetComponentWithoutType()
         {
             int entityId = this.entityManager.CreateEntity();
-            this.entityManager.AddComponent(entityId, this.testComponent);
+            this.entityManager.AddComponent(entityId, this.testEntityComponent);
             this.entityManager.GetComponent(entityId, null);
         }
 
@@ -158,10 +158,10 @@ namespace SlashGames.GameBase.Tests
         public void TestRemoveComponent()
         {
             int entityId = this.entityManager.CreateEntity();
-            this.entityManager.AddComponent(entityId, this.testComponent);
-            Assert.IsTrue(this.entityManager.RemoveComponent(entityId, typeof(TestComponent)));
-            Assert.IsFalse(this.entityManager.RemoveComponent(entityId, typeof(TestComponent)));
-            Assert.IsNull(this.entityManager.GetComponent(entityId, typeof(TestComponent)));
+            this.entityManager.AddComponent(entityId, this.testEntityComponent);
+            Assert.IsTrue(this.entityManager.RemoveComponent(entityId, typeof(TestEntityComponent)));
+            Assert.IsFalse(this.entityManager.RemoveComponent(entityId, typeof(TestEntityComponent)));
+            Assert.IsNull(this.entityManager.GetComponent(entityId, typeof(TestEntityComponent)));
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace SlashGames.GameBase.Tests
         public void TestRemoveComponentBeforeAdding()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.RemoveComponent(0, typeof(TestComponent));
+            this.entityManager.RemoveComponent(0, typeof(TestEntityComponent));
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace SlashGames.GameBase.Tests
         public void TestRemoveComponentWithoutType()
         {
             int entityId = this.entityManager.CreateEntity();
-            this.entityManager.AddComponent(entityId, this.testComponent);
+            this.entityManager.AddComponent(entityId, this.testEntityComponent);
             this.entityManager.RemoveComponent(entityId, null);
         }
 
@@ -208,7 +208,7 @@ namespace SlashGames.GameBase.Tests
         /// <summary>
         ///   Test implementation of a game component.
         /// </summary>
-        private class TestComponent : IComponent
+        private class TestEntityComponent : IEntityComponent
         {
             #region Public Methods and Operators
 

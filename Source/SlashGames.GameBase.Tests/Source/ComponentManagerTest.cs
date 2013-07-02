@@ -32,7 +32,7 @@ namespace SlashGames.GameBase.Tests
         /// <summary>
         /// Test component to run unit tests on.
         /// </summary>
-        private TestComponent testComponent;
+        private TestEntityComponent testEntityComponent;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace SlashGames.GameBase.Tests
         {
             this.game = new Game();
             this.componentManager = new ComponentManager(this.game);
-            this.testComponent = new TestComponent();
+            this.testEntityComponent = new TestEntityComponent();
         }
 
         /// <summary>
@@ -55,8 +55,8 @@ namespace SlashGames.GameBase.Tests
         [Test]
         public void TestAddComponent()
         {
-            this.componentManager.AddComponent(0, this.testComponent);
-            Assert.AreEqual(this.testComponent, this.componentManager.GetComponent(0));
+            this.componentManager.AddComponent(0, this.testEntityComponent);
+            Assert.AreEqual(this.testEntityComponent, this.componentManager.GetComponent(0));
         }
 
         /// <summary>
@@ -76,8 +76,8 @@ namespace SlashGames.GameBase.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestAddComponentTwice()
         {
-            this.componentManager.AddComponent(0, this.testComponent);
-            this.componentManager.AddComponent(0, this.testComponent);
+            this.componentManager.AddComponent(0, this.testEntityComponent);
+            this.componentManager.AddComponent(0, this.testEntityComponent);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace SlashGames.GameBase.Tests
         [Test]
         public void TestRemoveComponent()
         {
-            this.componentManager.AddComponent(0, this.testComponent);
+            this.componentManager.AddComponent(0, this.testEntityComponent);
             Assert.IsTrue(this.componentManager.RemoveComponent(0));
             Assert.IsFalse(this.componentManager.RemoveComponent(0));
             Assert.IsNull(this.componentManager.GetComponent(0));
@@ -97,7 +97,7 @@ namespace SlashGames.GameBase.Tests
         /// <summary>
         /// Test implementation of a game component.
         /// </summary>
-        private class TestComponent : IComponent
+        private class TestEntityComponent : IEntityComponent
         {
             /// <summary>
             /// Initializes this component.

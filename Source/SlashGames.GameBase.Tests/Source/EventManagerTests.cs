@@ -9,7 +9,7 @@ namespace SlashGames.GameBase.Tests
     using NUnit.Framework;
 
     using SlashGames.Collections.AttributeTables;
-    using SlashGames.GameBase.EventArgs;
+    using SlashGames.GameBase.EventData;
 
     /// <summary>
     ///   Unit tests for the EventManager class.
@@ -22,7 +22,7 @@ namespace SlashGames.GameBase.Tests
         /// <summary>
         ///   Test component to run unit tests on.
         /// </summary>
-        private TestComponent component;
+        private TestEntityComponent entityComponent;
 
         /// <summary>
         ///   Test game to run unit tests on.
@@ -54,7 +54,7 @@ namespace SlashGames.GameBase.Tests
         {
             this.game = new Game();
             this.system = new TestSystem();
-            this.component = new TestComponent();
+            this.entityComponent = new TestEntityComponent();
             this.testPassed = false;
         }
 
@@ -66,7 +66,7 @@ namespace SlashGames.GameBase.Tests
         {
             this.game.EventManager.RegisterListener(FrameworkEventType.ComponentAdded, this.OnComponentAdded);
             this.testEntityId = this.game.EntityManager.CreateEntity();
-            this.game.EntityManager.AddComponent(this.testEntityId, this.component);
+            this.game.EntityManager.AddComponent(this.testEntityId, this.entityComponent);
             this.CheckTestPassed();
         }
 
@@ -78,8 +78,8 @@ namespace SlashGames.GameBase.Tests
         {
             this.game.EventManager.RegisterListener(FrameworkEventType.ComponentRemoved, this.OnComponentRemoved);
             this.testEntityId = this.game.EntityManager.CreateEntity();
-            this.game.EntityManager.AddComponent(this.testEntityId, this.component);
-            this.game.EntityManager.RemoveComponent(this.testEntityId, typeof(TestComponent));
+            this.game.EntityManager.AddComponent(this.testEntityId, this.entityComponent);
+            this.game.EntityManager.RemoveComponent(this.testEntityId, typeof(TestEntityComponent));
             this.CheckTestPassed();
         }
 
@@ -198,8 +198,8 @@ namespace SlashGames.GameBase.Tests
         /// <param name="e"> Event that has occurred within the framework. </param>
         private void OnComponentAdded(Event e)
         {
-            ComponentEventArgs eventArgs = (ComponentEventArgs)e.EventData;
-            this.testPassed = eventArgs.EntityId == this.testEntityId && this.component.Equals(eventArgs.Component);
+            EntityComponentData data = (EntityComponentData)e.EventData;
+            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.EntityComponent);
         }
 
         /// <summary>
@@ -208,8 +208,8 @@ namespace SlashGames.GameBase.Tests
         /// <param name="e"> Event that has occurred within the framework. </param>
         private void OnComponentRemoved(Event e)
         {
-            ComponentEventArgs eventArgs = (ComponentEventArgs)e.EventData;
-            this.testPassed = eventArgs.EntityId == this.testEntityId && this.component.Equals(eventArgs.Component);
+            EntityComponentData data = (EntityComponentData)e.EventData;
+            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.EntityComponent);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace SlashGames.GameBase.Tests
         /// <summary>
         ///   Test implementation of a game component.
         /// </summary>
-        private class TestComponent : IComponent
+        private class TestEntityComponent : IEntityComponent
         {
             #region Public Methods and Operators
 
