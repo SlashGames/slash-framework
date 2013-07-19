@@ -87,11 +87,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SlashGames.Diagnostics\Slash.Diagnostics.csproj">
+    <ProjectReference Include="..\Slash.Diagnostics\Slash.Diagnostics.csproj">
       <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
       <Name>Slash.Diagnostics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlashGames.Math\Slash.Math.csproj">
+    <ProjectReference Include="..\Slash.Math\Slash.Math.csproj">
       <Project>{834E18DE-A529-4F17-A838-92B1EF259FE3}</Project>
       <Name>Slash.Math</Name>
     </ProjectReference>

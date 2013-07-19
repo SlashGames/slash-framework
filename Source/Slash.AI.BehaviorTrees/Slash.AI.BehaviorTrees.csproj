@@ -89,19 +89,19 @@
     <Compile Include="Source\Tree\TaskNode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SlashGames.Collections\Slash.Collections.csproj">
+    <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>Slash.Collections</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlashGames.Math\Slash.Math.csproj">
+    <ProjectReference Include="..\Slash.Math\Slash.Math.csproj">
       <Project>{834E18DE-A529-4F17-A838-92B1EF259FE3}</Project>
       <Name>Slash.Math</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlashGames.Serialization\Slash.Serialization.csproj">
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
       <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
       <Name>Slash.Serialization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlashGames.Xml\Slash.Xml.csproj">
+    <ProjectReference Include="..\Slash.Xml\Slash.Xml.csproj">
       <Project>{E399FDE3-A0DD-4AEA-BBF5-2A16C5E6775B}</Project>
       <Name>Slash.Xml</Name>
     </ProjectReference>

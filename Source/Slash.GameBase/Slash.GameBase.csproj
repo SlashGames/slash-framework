@@ -1,16 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0E1AEE12-E607-4776-8492-6B7EC254FCB8}</ProjectGuid>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.AI.BehaviorTrees.Tests</RootNamespace>
-    <AssemblyName>SlashGames.AI.BehaviorTrees.Tests</AssemblyName>
+    <RootNamespace>SlashGames.GameBase</RootNamespace>
+    <AssemblyName>SlashGames.GameBase</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,20 +32,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>$(UNITY_PATH)Data\Managed\nunit.framework.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="Source\Blueprint.cs" />
+    <Compile Include="Source\Event.cs" />
+    <Compile Include="Source\EventData\Entity2Data.cs" />
+    <Compile Include="Source\EventData\EntityComponentData.cs" />
+    <Compile Include="Source\EventManager.cs" />
+    <Compile Include="Source\FrameworkEventType.cs" />
+    <Compile Include="Source\IEntityComponent.cs" />
+    <Compile Include="Source\ComponentManager.cs" />
+    <Compile Include="Source\EntityManager.cs" />
+    <Compile Include="Source\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\Implementations\Composites\SelectorTest.cs" />
-    <Compile Include="Source\Implementations\Composites\SequenceTest.cs" />
+    <Compile Include="Source\ISystem.cs" />
+    <Compile Include="Source\SystemManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SlashGames.AI.BehaviorTrees\Slash.AI.BehaviorTrees.csproj">
-      <Project>{F48C77D8-CE6B-4454-8781-DFE8BF48847D}</Project>
-      <Name>Slash.AI.BehaviorTrees</Name>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
+      <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
+      <Name>Slash.Collections</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Source\Blueprints\" />
+    <Folder Include="Source\Components\" />
+    <Folder Include="Source\Systems\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
