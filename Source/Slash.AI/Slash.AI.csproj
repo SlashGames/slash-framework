@@ -8,8 +8,8 @@
     <ProjectGuid>{32F5CD1C-1889-4A37-B7E4-E3363488BE1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.AI</RootNamespace>
-    <AssemblyName>SlashGames.AI</AssemblyName>
+    <RootNamespace>Slash.AI</RootNamespace>
+    <AssemblyName>Slash.AI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

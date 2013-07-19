@@ -7,8 +7,8 @@
     <ProjectGuid>{638AA873-495C-4DA2-BD59-E767E4E144E2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.Reflection.Tests</RootNamespace>
-    <AssemblyName>SlashGames.Reflection.Tests</AssemblyName>
+    <RootNamespace>Slash.Reflection.Tests</RootNamespace>
+    <AssemblyName>Slash.Reflection.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -7,8 +7,8 @@
     <ProjectGuid>{E155097A-6A57-498E-A707-F852AA672111}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.Diagnostics</RootNamespace>
-    <AssemblyName>SlashGames.Diagnostics</AssemblyName>
+    <RootNamespace>Slash.Diagnostics</RootNamespace>
+    <AssemblyName>Slash.Diagnostics</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

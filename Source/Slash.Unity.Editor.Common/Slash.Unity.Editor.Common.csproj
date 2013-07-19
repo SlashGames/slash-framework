@@ -7,8 +7,8 @@
     <ProjectGuid>{1A55D911-697C-4E3B-8FBC-55388C32F20F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.Unity.Editor.Common</RootNamespace>
-    <AssemblyName>SlashGames.Unity.Editor.Common</AssemblyName>
+    <RootNamespace>Slash.Unity.Editor.Common</RootNamespace>
+    <AssemblyName>Slash.Unity.Editor.Common</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

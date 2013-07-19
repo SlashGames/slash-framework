@@ -8,8 +8,8 @@
     <ProjectGuid>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.Serialization</RootNamespace>
-    <AssemblyName>SlashGames.Serialization</AssemblyName>
+    <RootNamespace>Slash.Serialization</RootNamespace>
+    <AssemblyName>Slash.Serialization</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

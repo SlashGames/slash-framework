@@ -8,8 +8,8 @@
     <ProjectGuid>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.Collections</RootNamespace>
-    <AssemblyName>SlashGames.Collections</AssemblyName>
+    <RootNamespace>Slash.Collections</RootNamespace>
+    <AssemblyName>Slash.Collections</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

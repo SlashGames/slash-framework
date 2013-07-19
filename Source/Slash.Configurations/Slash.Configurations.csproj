@@ -7,8 +7,8 @@
     <ProjectGuid>{6E49ABEB-6A6A-4EDC-8DA0-4230FFA74903}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.Configurations</RootNamespace>
-    <AssemblyName>SlashGames.Configurations</AssemblyName>
+    <RootNamespace>Slash.Configurations</RootNamespace>
+    <AssemblyName>Slash.Configurations</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -8,8 +8,8 @@
     <ProjectGuid>{834E18DE-A529-4F17-A838-92B1EF259FE3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.Math</RootNamespace>
-    <AssemblyName>SlashGames.Math</AssemblyName>
+    <RootNamespace>Slash.Math</RootNamespace>
+    <AssemblyName>Slash.Math</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
