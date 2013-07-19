@@ -1,10 +1,10 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations
+namespace Slash.AI.BehaviorTrees.Implementations
 {
     using System;
 
-    using SlashGames.AI.BehaviorTrees.Data;
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Data;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   The agent data flags.

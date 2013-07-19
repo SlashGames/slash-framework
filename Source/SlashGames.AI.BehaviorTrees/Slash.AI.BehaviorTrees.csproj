@@ -89,21 +89,21 @@
     <Compile Include="Source\Tree\TaskNode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SlashGames.Collections\SlashGames.Collections.csproj">
+    <ProjectReference Include="..\SlashGames.Collections\Slash.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
-      <Name>SlashGames.Collections</Name>
+      <Name>Slash.Collections</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlashGames.Math\SlashGames.Math.csproj">
+    <ProjectReference Include="..\SlashGames.Math\Slash.Math.csproj">
       <Project>{834E18DE-A529-4F17-A838-92B1EF259FE3}</Project>
-      <Name>SlashGames.Math</Name>
+      <Name>Slash.Math</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlashGames.Serialization\SlashGames.Serialization.csproj">
+    <ProjectReference Include="..\SlashGames.Serialization\Slash.Serialization.csproj">
       <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
-      <Name>SlashGames.Serialization</Name>
+      <Name>Slash.Serialization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlashGames.Xml\SlashGames.Xml.csproj">
+    <ProjectReference Include="..\SlashGames.Xml\Slash.Xml.csproj">
       <Project>{E399FDE3-A0DD-4AEA-BBF5-2A16C5E6775B}</Project>
-      <Name>SlashGames.Xml</Name>
+      <Name>Slash.Xml</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

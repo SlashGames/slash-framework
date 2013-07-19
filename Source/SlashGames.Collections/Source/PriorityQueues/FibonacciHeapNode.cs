@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.Collections.PriorityQueues
+namespace Slash.Collections.PriorityQueues
 {
     /// <summary>
     /// Node of an heap-ordered tree. Contains an item with a key which allows

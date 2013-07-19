@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.GameBase
+namespace Slash.GameBase
 {
     /// <summary>
     /// Base class of most Slash Games games. Provides default functionality

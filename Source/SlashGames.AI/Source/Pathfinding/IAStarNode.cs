@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.AI.Pathfinding
+namespace Slash.AI.Pathfinding
 {
-    using SlashGames.Collections.Graphs;
+    using Slash.Collections.Graphs;
 
     /// <summary>
     /// Node used for the A* pathfinding algorithm.

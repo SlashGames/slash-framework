@@ -1,4 +1,4 @@
-namespace SlashGames.AI.BehaviorTrees.Interfaces
+namespace Slash.AI.BehaviorTrees.Interfaces
 {
     /// <summary>
     ///   Interface for task specific data.

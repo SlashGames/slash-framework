@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Xml
+namespace Slash.Xml
 {
     using System;
     using System.Xml;

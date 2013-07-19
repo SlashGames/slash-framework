@@ -1,8 +1,8 @@
-namespace SlashGames.AI.BehaviorTrees.Attributes
+namespace Slash.AI.BehaviorTrees.Attributes
 {
     using System;
 
-    using SlashGames.AI.BehaviorTrees.Editor;
+    using Slash.AI.BehaviorTrees.Editor;
 
     /// <summary>
     ///   Attribute to flag a property in a task to be a task parameter. Can take some meta data about the parameter like the name which is shown in the editor.

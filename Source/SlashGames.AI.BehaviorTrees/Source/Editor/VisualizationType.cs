@@ -1,4 +1,4 @@
-namespace SlashGames.AI.BehaviorTrees.Editor
+namespace Slash.AI.BehaviorTrees.Editor
 {
     /// <summary>
     ///   The visualization type.

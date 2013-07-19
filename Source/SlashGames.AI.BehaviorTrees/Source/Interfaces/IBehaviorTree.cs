@@ -1,8 +1,8 @@
-namespace SlashGames.AI.BehaviorTrees.Interfaces
+namespace Slash.AI.BehaviorTrees.Interfaces
 {
     using System.Collections.Generic;
 
-    using SlashGames.AI.BehaviorTrees.Tree;
+    using Slash.AI.BehaviorTrees.Tree;
 
     /// <summary>
     ///   Interface of a behavior tree. For more information about behavior trees, see https://wiki.ticking-bomb-games.de/display/SEA/Behavior+Tree.

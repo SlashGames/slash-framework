@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C329C9AD-95E9-4A10-8A6A-61B5944FC676}</ProjectGuid>
+    <ProjectGuid>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlashGames.GameBase.Tests</RootNamespace>
-    <AssemblyName>SlashGames.GameBase.Tests</AssemblyName>
+    <RootNamespace>SlashGames.GameBase</RootNamespace>
+    <AssemblyName>SlashGames.GameBase</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,33 +32,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\Ext\NUnit-2.6.0.12051\bin\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Source\ComponentManagerTest.cs" />
-    <Compile Include="Source\EntityManagerTest.cs" />
-    <Compile Include="Source\EventManagerTests.cs" />
-    <Compile Include="Source\GameTest.cs" />
+    <Compile Include="Source\Blueprint.cs" />
+    <Compile Include="Source\Event.cs" />
+    <Compile Include="Source\EventData\Entity2Data.cs" />
+    <Compile Include="Source\EventData\EntityComponentData.cs" />
+    <Compile Include="Source\EventManager.cs" />
+    <Compile Include="Source\FrameworkEventType.cs" />
+    <Compile Include="Source\IEntityComponent.cs" />
+    <Compile Include="Source\ComponentManager.cs" />
+    <Compile Include="Source\EntityManager.cs" />
+    <Compile Include="Source\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\SystemManagerTest.cs" />
+    <Compile Include="Source\ISystem.cs" />
+    <Compile Include="Source\SystemManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SlashGames.Collections\SlashGames.Collections.csproj">
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SlashGames.Collections\Slash.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
-      <Name>SlashGames.Collections</Name>
+      <Name>Slash.Collections</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlashGames.GameBase\SlashGames.GameBase.csproj">
-      <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
-      <Name>SlashGames.GameBase</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Source\Blueprints\" />
+    <Folder Include="Source\Components\" />
+    <Folder Include="Source\Systems\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

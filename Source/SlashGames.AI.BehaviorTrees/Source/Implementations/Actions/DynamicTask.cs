@@ -1,11 +1,11 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations.Actions
+namespace Slash.AI.BehaviorTrees.Implementations.Actions
 {
     using System;
 
-    using SlashGames.AI.BehaviorTrees.Attributes;
-    using SlashGames.AI.BehaviorTrees.Data;
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Attributes;
+    using Slash.AI.BehaviorTrees.Data;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   Fetches the task to execute from the blackboard or from a user value.

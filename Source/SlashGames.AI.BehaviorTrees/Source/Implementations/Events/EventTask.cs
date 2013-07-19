@@ -1,10 +1,10 @@
-﻿namespace SlashGames.AI.BehaviorTrees.Implementations.Events
+﻿namespace Slash.AI.BehaviorTrees.Implementations.Events
 {
     using System;
     using System.Collections.Generic;
 
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   Base class for event tasks.

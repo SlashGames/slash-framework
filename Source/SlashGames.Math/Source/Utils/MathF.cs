@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Math.Utils
+namespace Slash.Math.Utils
 {
     using System;
 
-    using SlashGames.Math.Algebra.Vectors;
+    using Slash.Math.Algebra.Vectors;
 
     /// <summary>
     ///   Mathematical functions which use float instead of double.

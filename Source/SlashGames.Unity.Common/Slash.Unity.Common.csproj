@@ -87,13 +87,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SlashGames.Diagnostics\SlashGames.Diagnostics.csproj">
+    <ProjectReference Include="..\SlashGames.Diagnostics\Slash.Diagnostics.csproj">
       <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
-      <Name>SlashGames.Diagnostics</Name>
+      <Name>Slash.Diagnostics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SlashGames.Math\SlashGames.Math.csproj">
+    <ProjectReference Include="..\SlashGames.Math\Slash.Math.csproj">
       <Project>{834E18DE-A529-4F17-A838-92B1EF259FE3}</Project>
-      <Name>SlashGames.Math</Name>
+      <Name>Slash.Math</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

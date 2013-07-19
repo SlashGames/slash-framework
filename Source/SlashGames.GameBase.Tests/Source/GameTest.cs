@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.GameBase.Tests
+namespace Slash.GameBase.Tests
 {
     using NUnit.Framework;
 

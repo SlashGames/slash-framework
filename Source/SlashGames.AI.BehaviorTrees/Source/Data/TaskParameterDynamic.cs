@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Data
+namespace Slash.AI.BehaviorTrees.Data
 {
     using System;
     using System.Xml.Serialization;
 
-    using SlashGames.Xml;
+    using Slash.Xml;
 
     /// <summary>
     ///   Task parameter for dynamic types (e.g. base class of derived types).

@@ -1,10 +1,10 @@
-namespace SlashGames.AI.BehaviorTrees.Editor
+namespace Slash.AI.BehaviorTrees.Editor
 {
     using System.Collections.Generic;
     using System.Xml;
 
-    using SlashGames.AI.BehaviorTrees.Implementations;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Implementations;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   Set of task descriptions.

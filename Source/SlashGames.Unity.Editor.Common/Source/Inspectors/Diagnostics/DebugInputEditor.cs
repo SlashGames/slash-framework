@@ -4,8 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using SlashGames.Unity.Common.Input;
-using SlashGames.Unity.Editor.Common.Inspectors;
+using Slash.Unity.Common.Input;
+using Slash.Unity.Editor.Common.Inspectors;
 
 using UnityEditor;
 

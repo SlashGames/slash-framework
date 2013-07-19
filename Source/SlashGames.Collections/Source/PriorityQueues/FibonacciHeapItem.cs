@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.Collections.PriorityQueues
+namespace Slash.Collections.PriorityQueues
 {
     /// <summary>
     /// Container for an item that can be inserted into a Fibonacci heap.

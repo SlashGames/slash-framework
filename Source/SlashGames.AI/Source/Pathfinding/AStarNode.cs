@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.AI.Pathfinding
+namespace Slash.AI.Pathfinding
 {
     /// <summary>
     /// Default implementation of an A* node.

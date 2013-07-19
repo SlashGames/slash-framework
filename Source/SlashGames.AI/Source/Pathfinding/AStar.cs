@@ -4,13 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.AI.Pathfinding
+namespace Slash.AI.Pathfinding
 {
     using System;
     using System.Collections.Generic;
 
-    using SlashGames.Collections.Graphs;
-    using SlashGames.Collections.PriorityQueues;
+    using Slash.Collections.Graphs;
+    using Slash.Collections.PriorityQueues;
 
     /// <summary>
     /// Implemenation of the A* algorithm for calculating the most efficient path

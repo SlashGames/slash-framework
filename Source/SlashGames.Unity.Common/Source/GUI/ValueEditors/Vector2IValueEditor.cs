@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Common.GUI.ValueEditors
+namespace Slash.Unity.Common.GUI.ValueEditors
 {
     using System.Globalization;
 
-    using SlashGames.Math.Algebra.Vectors;
+    using Slash.Math.Algebra.Vectors;
 
     using UnityEngine;
 

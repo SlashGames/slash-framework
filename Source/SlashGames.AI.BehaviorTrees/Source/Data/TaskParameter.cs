@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Data
+namespace Slash.AI.BehaviorTrees.Data
 {
     using System;
     using System.Xml.Serialization;
 
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   Base class for task parameter.

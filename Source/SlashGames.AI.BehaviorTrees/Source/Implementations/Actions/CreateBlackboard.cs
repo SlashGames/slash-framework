@@ -1,9 +1,9 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations.Actions
+namespace Slash.AI.BehaviorTrees.Implementations.Actions
 {
-    using SlashGames.AI.BehaviorTrees.Data;
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Implementations.Decorators;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Data;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Implementations.Decorators;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   Task to create a child blackboard of the current active blackboard and use that instead of the original one.

@@ -4,12 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.GameBase
+namespace Slash.GameBase
 {
     using System;
     using System.Collections.Generic;
 
-    using SlashGames.GameBase.EventData;
+    using Slash.GameBase.EventData;
 
     /// <summary>
     /// Maps entity ids to specific game components. By contract this manager

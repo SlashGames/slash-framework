@@ -1,41 +1,41 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Math", "SlashGames.Math\SlashGames.Math.csproj", "{834E18DE-A529-4F17-A838-92B1EF259FE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Math", "SlashGames.Math\Slash.Math.csproj", "{834E18DE-A529-4F17-A838-92B1EF259FE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.GameBase", "SlashGames.GameBase\SlashGames.GameBase.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.GameBase", "SlashGames.GameBase\Slash.GameBase.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Unity.Common", "SlashGames.Unity.Common\SlashGames.Unity.Common.csproj", "{AA429D02-6020-44F3-8B62-6A5C1AD4FE7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Unity.Common", "SlashGames.Unity.Common\Slash.Unity.Common.csproj", "{AA429D02-6020-44F3-8B62-6A5C1AD4FE7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.AI.BehaviorTrees", "SlashGames.AI.BehaviorTrees\SlashGames.AI.BehaviorTrees.csproj", "{F48C77D8-CE6B-4454-8781-DFE8BF48847D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.AI.BehaviorTrees", "SlashGames.AI.BehaviorTrees\Slash.AI.BehaviorTrees.csproj", "{F48C77D8-CE6B-4454-8781-DFE8BF48847D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.GameBase.Tests", "SlashGames.GameBase.Tests\SlashGames.GameBase.Tests.csproj", "{C329C9AD-95E9-4A10-8A6A-61B5944FC676}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.GameBase.Tests", "SlashGames.GameBase.Tests\Slash.GameBase.Tests.csproj", "{C329C9AD-95E9-4A10-8A6A-61B5944FC676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Collections", "SlashGames.Collections\SlashGames.Collections.csproj", "{03F9A6F7-F402-4581-B748-FA51BF3B1B82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Collections", "SlashGames.Collections\Slash.Collections.csproj", "{03F9A6F7-F402-4581-B748-FA51BF3B1B82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Xml", "SlashGames.Xml\SlashGames.Xml.csproj", "{E399FDE3-A0DD-4AEA-BBF5-2A16C5E6775B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Xml", "SlashGames.Xml\Slash.Xml.csproj", "{E399FDE3-A0DD-4AEA-BBF5-2A16C5E6775B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Serialization", "SlashGames.Serialization\SlashGames.Serialization.csproj", "{C92C88B0-5268-443B-B32F-CC2A6D686C51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Serialization", "SlashGames.Serialization\Slash.Serialization.csproj", "{C92C88B0-5268-443B-B32F-CC2A6D686C51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.AI.BehaviorTrees.Tests", "SlashGames.AI.BehaviorTrees.Tests\SlashGames.AI.BehaviorTrees.Tests.csproj", "{0E1AEE12-E607-4776-8492-6B7EC254FCB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.AI.BehaviorTrees.Tests", "SlashGames.AI.BehaviorTrees.Tests\Slash.AI.BehaviorTrees.Tests.csproj", "{0E1AEE12-E607-4776-8492-6B7EC254FCB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Unity.Editor.Common", "SlashGames.Unity.Editor.Common\SlashGames.Unity.Editor.Common.csproj", "{1A55D911-697C-4E3B-8FBC-55388C32F20F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Unity.Editor.Common", "SlashGames.Unity.Editor.Common\Slash.Unity.Editor.Common.csproj", "{1A55D911-697C-4E3B-8FBC-55388C32F20F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.AI", "SlashGames.AI\SlashGames.AI.csproj", "{32F5CD1C-1889-4A37-B7E4-E3363488BE1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.AI", "SlashGames.AI\Slash.AI.csproj", "{32F5CD1C-1889-4A37-B7E4-E3363488BE1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Reflection", "SlashGames.Reflection\SlashGames.Reflection.csproj", "{49A6D476-F045-42B3-8FFC-A67B3F9BB073}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Reflection", "SlashGames.Reflection\Slash.Reflection.csproj", "{49A6D476-F045-42B3-8FFC-A67B3F9BB073}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Reflection.Tests", "SlashGames.Reflection.Tests\SlashGames.Reflection.Tests.csproj", "{638AA873-495C-4DA2-BD59-E767E4E144E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Reflection.Tests", "SlashGames.Reflection.Tests\Slash.Reflection.Tests.csproj", "{638AA873-495C-4DA2-BD59-E767E4E144E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.System", "SlashGames.System\SlashGames.System.csproj", "{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.System", "SlashGames.System\Slash.System.csproj", "{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Collections.Tests", "SlashGames.Collections.Tests\SlashGames.Collections.Tests.csproj", "{7EA73F8E-AB74-4DDA-9C17-8BE953DD16F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Collections.Tests", "SlashGames.Collections.Tests\Slash.Collections.Tests.csproj", "{7EA73F8E-AB74-4DDA-9C17-8BE953DD16F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Configurations", "SlashGames.Configurations\SlashGames.Configurations.csproj", "{6E49ABEB-6A6A-4EDC-8DA0-4230FFA74903}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Configurations", "SlashGames.Configurations\Slash.Configurations.csproj", "{6E49ABEB-6A6A-4EDC-8DA0-4230FFA74903}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Sandbox", "SlashGames.Sandbox\SlashGames.Sandbox.csproj", "{DFD67F58-780B-4367-BDF9-241C5BA87BB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Sandbox", "SlashGames.Sandbox\Slash.Sandbox.csproj", "{DFD67F58-780B-4367-BDF9-241C5BA87BB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlashGames.Diagnostics", "SlashGames.Diagnostics\SlashGames.Diagnostics.csproj", "{E155097A-6A57-498E-A707-F852AA672111}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Diagnostics", "SlashGames.Diagnostics\Slash.Diagnostics.csproj", "{E155097A-6A57-498E-A707-F852AA672111}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,7 +6,7 @@
 
 #if LOG4NET
 
-namespace SlashGames.Unity.Common.Logging
+namespace Slash.Unity.Common.Logging
 {
     using UnityEngine;
 

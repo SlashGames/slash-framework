@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.System.Utils
+namespace Slash.System.Utils
 {
     using global::System;
 

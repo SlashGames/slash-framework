@@ -4,16 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Implementations.Decorators
+namespace Slash.AI.BehaviorTrees.Implementations.Decorators
 {
     using System;
     using System.Collections.Generic;
     using System.Xml.Serialization;
 
-    using SlashGames.AI.BehaviorTrees.Editor;
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
-    using SlashGames.AI.BehaviorTrees.Tree;
+    using Slash.AI.BehaviorTrees.Editor;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Tree;
 
     /// <summary>
     ///   Base class for a decorator.

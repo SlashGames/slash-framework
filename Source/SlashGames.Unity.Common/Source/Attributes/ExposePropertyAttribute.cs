@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Common.Attributes
+namespace Slash.Unity.Common.Attributes
 {
     using System;
 

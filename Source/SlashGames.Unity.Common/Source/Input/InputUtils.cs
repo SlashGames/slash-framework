@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Common.Input
+namespace Slash.Unity.Common.Input
 {
     using System.Reflection;
 
-    using SlashGames.Diagnostics.Logging;
+    using Slash.Diagnostics.Logging;
 
     using UnityEngine;
 

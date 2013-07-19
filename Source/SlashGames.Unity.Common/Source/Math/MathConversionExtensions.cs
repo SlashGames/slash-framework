@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Common.Math
+namespace Slash.Unity.Common.Math
 {
-    using SlashGames.Math.Algebra.Vectors;
-    using SlashGames.Math.Geometry.Rectangles;
+    using Slash.Math.Algebra.Vectors;
+    using Slash.Math.Geometry.Rectangles;
 
     using UnityEngine;
 

@@ -4,16 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Implementations.Composites
+namespace Slash.AI.BehaviorTrees.Implementations.Composites
 {
     using System;
     using System.Collections.Generic;
 
-    using SlashGames.AI.BehaviorTrees.Attributes;
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
-    using SlashGames.AI.BehaviorTrees.Tree;
-    using SlashGames.Math.Utils;
+    using Slash.AI.BehaviorTrees.Attributes;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Tree;
+    using Slash.Math.Utils;
 
     /// <summary>
     ///   Task which executes its children one after another. The task finishes when all children finished.

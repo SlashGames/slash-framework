@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Common.GUI
+namespace Slash.Unity.Common.GUI
 {
     using UnityEngine;
 

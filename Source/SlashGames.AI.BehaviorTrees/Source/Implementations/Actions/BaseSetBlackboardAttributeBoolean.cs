@@ -1,6 +1,6 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations.Actions
+namespace Slash.AI.BehaviorTrees.Implementations.Actions
 {
-    using SlashGames.AI.BehaviorTrees.Attributes;
+    using Slash.AI.BehaviorTrees.Attributes;
 
     /// <summary>
     ///   Sets a boolean blackboard attribute.

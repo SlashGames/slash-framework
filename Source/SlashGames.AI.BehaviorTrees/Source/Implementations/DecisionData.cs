@@ -1,4 +1,4 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations
+namespace Slash.AI.BehaviorTrees.Implementations
 {
     /// <summary>
     ///   TODO: This class performs an important function.

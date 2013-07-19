@@ -1,11 +1,11 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations
+namespace Slash.AI.BehaviorTrees.Implementations
 {
     using System;
     using System.Collections.Generic;
 
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
-    using SlashGames.AI.BehaviorTrees.Tree;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Tree;
 
     /// <summary>
     ///   Base class for tasks to have no need to implement empty methods in classes which implement the ITask interface.

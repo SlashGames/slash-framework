@@ -4,14 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Data
+namespace Slash.AI.BehaviorTrees.Data
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using SlashGames.Collections.AttributeTables;
-    using SlashGames.Collections.Utils;
+    using Slash.Collections.AttributeTables;
+    using Slash.Collections.Utils;
 
     /// <summary>
     ///   Class which can be used to exchange data between behaviors.

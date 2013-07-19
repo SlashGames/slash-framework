@@ -4,9 +4,9 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.GameBase
+namespace Slash.GameBase
 {
-    using SlashGames.Collections.AttributeTables;
+    using Slash.Collections.AttributeTables;
 
     /// <summary>
     /// Contract that all game components have to fulfill if they are to be

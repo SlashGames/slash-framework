@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.Collections.AttributeTables
+namespace Slash.Collections.AttributeTables
 {
     using System;
     using System.Collections.Generic;

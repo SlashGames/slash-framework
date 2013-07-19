@@ -4,9 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Math.Geometry.Rectangles
+namespace Slash.Math.Geometry.Rectangles
 {
-    using SlashGames.Math.Algebra.Vectors;
+    using Slash.Math.Algebra.Vectors;
 
     /// <summary>
     ///   In Euclidean plane geometry, a rectangle is any quadrilateral with four right angles.

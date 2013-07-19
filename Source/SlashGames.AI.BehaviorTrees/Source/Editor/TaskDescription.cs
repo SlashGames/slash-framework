@@ -4,16 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Editor
+namespace Slash.AI.BehaviorTrees.Editor
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
 
-    using SlashGames.AI.BehaviorTrees.Attributes;
-    using SlashGames.AI.BehaviorTrees.Implementations;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
-    using SlashGames.Collections.Utils;
+    using Slash.AI.BehaviorTrees.Attributes;
+    using Slash.AI.BehaviorTrees.Implementations;
+    using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.Collections.Utils;
 
     /// <summary>
     ///   Contains information about a decider which should be communicated to the level editor.

@@ -4,16 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.GameBase
+namespace Slash.GameBase
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    using SlashGames.Collections.AttributeTables;
-    using SlashGames.Collections.ObjectModel;
-    using SlashGames.GameBase.EventData;
+    using Slash.Collections.AttributeTables;
+    using Slash.Collections.ObjectModel;
+    using Slash.GameBase.EventData;
 
     /// <summary>
     ///   Creates and removes game entities. Holds references to all component

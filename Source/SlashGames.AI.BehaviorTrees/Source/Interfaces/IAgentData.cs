@@ -1,9 +1,9 @@
-namespace SlashGames.AI.BehaviorTrees.Interfaces
+namespace Slash.AI.BehaviorTrees.Interfaces
 {
     using System;
 
-    using SlashGames.AI.BehaviorTrees.Data;
-    using SlashGames.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Data;
+    using Slash.AI.BehaviorTrees.Enums;
 
     /// <summary>
     ///   Called when the active tasks of the agent changed.

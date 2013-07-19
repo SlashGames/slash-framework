@@ -1,7 +1,7 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations.Actions
+namespace Slash.AI.BehaviorTrees.Implementations.Actions
 {
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   Removes a blackboard attribute. Runtime: Instant. Fails: Never.

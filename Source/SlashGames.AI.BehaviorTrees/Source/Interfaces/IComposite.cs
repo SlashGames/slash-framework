@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Interfaces
+namespace Slash.AI.BehaviorTrees.Interfaces
 {
     using System;
     using System.Collections.Generic;

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Collections.ObjectModel
+namespace Slash.Collections.ObjectModel
 {
     using System;
     using System.Collections;

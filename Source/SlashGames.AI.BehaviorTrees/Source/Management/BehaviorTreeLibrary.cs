@@ -1,16 +1,16 @@
-namespace SlashGames.AI.BehaviorTrees.Management
+namespace Slash.AI.BehaviorTrees.Management
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Serialization;
 
-    using SlashGames.AI.BehaviorTrees.Editor;
-    using SlashGames.AI.BehaviorTrees.Implementations;
-    using SlashGames.AI.BehaviorTrees.Implementations.Actions;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
-    using SlashGames.AI.BehaviorTrees.Tree;
-    using SlashGames.Collections.Utils;
+    using Slash.AI.BehaviorTrees.Editor;
+    using Slash.AI.BehaviorTrees.Implementations;
+    using Slash.AI.BehaviorTrees.Implementations.Actions;
+    using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Tree;
+    using Slash.Collections.Utils;
 
     /// <summary>
     ///   Library which stores behavior trees by key.

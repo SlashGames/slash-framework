@@ -1,13 +1,13 @@
-namespace SlashGames.AI.BehaviorTrees.Editor
+namespace Slash.AI.BehaviorTrees.Editor
 {
     using System;
     using System.Xml;
     using System.Xml.Schema;
     using System.Xml.Serialization;
 
-    using SlashGames.AI.BehaviorTrees.Implementations;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
-    using SlashGames.Xml;
+    using Slash.AI.BehaviorTrees.Implementations;
+    using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.Xml;
 
     /// <summary>
     ///   Called when an unknown task should be read from a xml document.

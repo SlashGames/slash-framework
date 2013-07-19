@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Tests.Implementations.Composites
+namespace Slash.AI.BehaviorTrees.Tests.Implementations.Composites
 {
     using NUnit.Framework;
 
-    using SlashGames.AI.BehaviorTrees.Editor;
-    using SlashGames.AI.BehaviorTrees.Implementations.Composites;
+    using Slash.AI.BehaviorTrees.Editor;
+    using Slash.AI.BehaviorTrees.Implementations.Composites;
 
     public class SequenceTest
     {

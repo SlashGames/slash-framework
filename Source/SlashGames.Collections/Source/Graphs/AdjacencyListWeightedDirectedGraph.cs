@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.Collections.Graphs
+namespace Slash.Collections.Graphs
 {
     using System;
     using System.Collections.Generic;

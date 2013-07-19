@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.GameBase.EventData
+namespace Slash.GameBase.EventData
 {
     using System;
 

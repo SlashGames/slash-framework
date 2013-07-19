@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.Collections.PriorityQueues
+namespace Slash.Collections.PriorityQueues
 {
     using System;
     using System.Collections.Generic;

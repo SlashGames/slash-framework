@@ -1,6 +1,6 @@
-namespace SlashGames.AI.BehaviorTrees.Data
+namespace Slash.AI.BehaviorTrees.Data
 {
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     public class TaskOutParameter<T>
     {

@@ -1,12 +1,12 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations.Composites
+namespace Slash.AI.BehaviorTrees.Implementations.Composites
 {
     using System;
     using System.Collections.Generic;
     using System.Xml.Serialization;
 
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
-    using SlashGames.AI.BehaviorTrees.Tree;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Tree;
 
     /// <summary>
     ///   The Parallel composite acts in a similar way to the Sequence composite. It has a set of child tasks, and it runs them until one of them fails. At that point, the Parallel task as a whole fails. If all of the child tasks complete successfully, the Parallel task returns with success. In this way, it is identical to the Sequence task and its non-deterministic variations. The difference is the way it runs those tasks. Rather than running them one at a time, it runs them all simultaneously. We can think of it as creating a bunch of new threads, one per child, and setting the child tasks off together.

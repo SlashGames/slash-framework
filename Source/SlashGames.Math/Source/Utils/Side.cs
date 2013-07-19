@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Math.Utils
+namespace Slash.Math.Utils
 {
     public enum Side
     {

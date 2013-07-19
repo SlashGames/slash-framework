@@ -1,11 +1,11 @@
-namespace SlashGames.AI.BehaviorTrees.Editor
+namespace Slash.AI.BehaviorTrees.Editor
 {
     using System.Collections.Generic;
     using System.Xml;
     using System.Xml.Schema;
     using System.Xml.Serialization;
 
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   TODO: This class performs an important function.

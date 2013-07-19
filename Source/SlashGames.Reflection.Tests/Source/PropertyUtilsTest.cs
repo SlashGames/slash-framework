@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Reflection.Tests
+namespace Slash.Reflection.Tests
 {
     using System.Reflection;
 

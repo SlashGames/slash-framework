@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.GameBase.Tests
+namespace Slash.GameBase.Tests
 {
     using NUnit.Framework;
 
-    using SlashGames.Collections.AttributeTables;
-    using SlashGames.GameBase.EventData;
+    using Slash.Collections.AttributeTables;
+    using Slash.GameBase.EventData;
 
     /// <summary>
     ///   Unit tests for the EventManager class.

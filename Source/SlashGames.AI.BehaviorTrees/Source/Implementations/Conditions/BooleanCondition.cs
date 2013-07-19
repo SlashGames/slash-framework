@@ -1,6 +1,6 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations.Conditions
+namespace Slash.AI.BehaviorTrees.Implementations.Conditions
 {
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   Base class of a boolean condition.

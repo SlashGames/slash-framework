@@ -4,13 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Editor.Common.Inspectors
+namespace Slash.Unity.Editor.Common.Inspectors
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
 
-    using SlashGames.Unity.Common.Attributes;
+    using Slash.Unity.Common.Attributes;
 
     using UnityEditor;
 

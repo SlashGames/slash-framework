@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Collections.Tests.Source.Extensions
+namespace Slash.Collections.Tests.Source.Extensions
 {
     using System;
     using System.Collections;
@@ -13,8 +13,9 @@ namespace SlashGames.Collections.Tests.Source.Extensions
 
     using NUnit.Framework;
 
-    using SlashGames.Collections.Extensions;
-    using SlashGames.Collections.Utils;
+    using Slash.Collections.Utils;
+
+    using Slash.Collections.Extensions;
 
     public class EnumerableExtensionMethodsTest
     {

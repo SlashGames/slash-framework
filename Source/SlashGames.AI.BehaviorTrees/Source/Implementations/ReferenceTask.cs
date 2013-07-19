@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Implementations
+namespace Slash.AI.BehaviorTrees.Implementations
 {
     using System;
     using System.Collections.Generic;
@@ -12,11 +12,11 @@ namespace SlashGames.AI.BehaviorTrees.Implementations
     using System.Xml.Schema;
     using System.Xml.Serialization;
 
-    using SlashGames.AI.BehaviorTrees.Editor;
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
-    using SlashGames.AI.BehaviorTrees.Tree;
-    using SlashGames.Collections.Utils;
+    using Slash.AI.BehaviorTrees.Editor;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Tree;
+    using Slash.Collections.Utils;
 
     /// <summary>
     ///   Task which references another task. It's required to build a behavior tree in an editor where the concrete tasks are not known, but only their descriptions. Through this class it's possible to write a xml file for the application anyway.

@@ -1,10 +1,10 @@
-namespace SlashGames.AI.BehaviorTrees.Interfaces
+namespace Slash.AI.BehaviorTrees.Interfaces
 {
     using System;
     using System.Collections.Generic;
 
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Tree;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Tree;
 
     /// <summary>
     ///   The on success.

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Common.GUI.ValueEditors
+namespace Slash.Unity.Common.GUI.ValueEditors
 {
     /// <summary>
     ///   Implements the basic methods.

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Serialization.Utils
+namespace Slash.Serialization.Utils
 {
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;

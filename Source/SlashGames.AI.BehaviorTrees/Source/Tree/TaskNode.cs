@@ -1,6 +1,6 @@
-namespace SlashGames.AI.BehaviorTrees.Tree
+namespace Slash.AI.BehaviorTrees.Tree
 {
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   A tree node which provides a way to store a path through a behavior tree.

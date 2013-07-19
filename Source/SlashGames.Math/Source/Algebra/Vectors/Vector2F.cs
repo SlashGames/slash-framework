@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Math.Algebra.Vectors
+namespace Slash.Math.Algebra.Vectors
 {
     using System;
     using System.Globalization;
 
-    using SlashGames.Math.Utils;
+    using Slash.Math.Utils;
 
     /// <summary>
     ///   Struct which represents a 2 dimensional float vector.

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Common.GUI.ValueEditors
+namespace Slash.Unity.Common.GUI.ValueEditors
 {
     /// <summary>
     ///   Editor to change a value.

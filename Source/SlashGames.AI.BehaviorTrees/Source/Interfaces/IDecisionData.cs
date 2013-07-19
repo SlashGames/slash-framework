@@ -1,4 +1,4 @@
-namespace SlashGames.AI.BehaviorTrees.Interfaces
+namespace Slash.AI.BehaviorTrees.Interfaces
 {
     /// <summary>
     ///   Interface for decision data which is returned by the Decide() method of a task.

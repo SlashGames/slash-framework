@@ -4,12 +4,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.GameBase
+namespace Slash.GameBase
 {
     using System;
     using System.Collections.Generic;
 
-    using SlashGames.Collections.AttributeTables;
+    using Slash.Collections.AttributeTables;
 
     /// <summary>
     /// Blueprint for creating an entity with a specific set of components

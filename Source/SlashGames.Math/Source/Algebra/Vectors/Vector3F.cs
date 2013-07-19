@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Math.Algebra.Vectors
+namespace Slash.Math.Algebra.Vectors
 {
     using System;
     using System.Globalization;
 
-    using SlashGames.Math.Utils;
+    using Slash.Math.Utils;
 
     [Serializable]
     public struct Vector3F

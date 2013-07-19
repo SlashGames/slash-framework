@@ -4,9 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Common.Logging
+namespace Slash.Unity.Common.Logging
 {
-    using SlashGames.Diagnostics.Logging;
+    using Slash.Diagnostics.Logging;
 
     using UnityEngine;
 

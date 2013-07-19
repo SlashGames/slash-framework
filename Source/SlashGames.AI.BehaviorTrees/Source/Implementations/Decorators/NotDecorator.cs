@@ -1,9 +1,9 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations.Decorators
+namespace Slash.AI.BehaviorTrees.Implementations.Decorators
 {
     using System;
 
-    using SlashGames.AI.BehaviorTrees.Attributes;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Attributes;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   Inverts the result of the decorated task.

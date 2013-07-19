@@ -4,18 +4,19 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Implementations.Composites
+namespace Slash.AI.BehaviorTrees.Implementations.Composites
 {
     using System;
     using System.Collections.Generic;
     using System.Xml.Serialization;
 
-    using SlashGames.Collections.Extensions;
-    using SlashGames.AI.BehaviorTrees.Editor;
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
-    using SlashGames.AI.BehaviorTrees.Tree;
-    using SlashGames.Collections.Utils;
+    using Slash.AI.BehaviorTrees.Editor;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Tree;
+    using Slash.Collections.Utils;
+
+    using Slash.Collections.Extensions;
 
     /// <summary>
     ///   Task which contains array of references to other tasks.

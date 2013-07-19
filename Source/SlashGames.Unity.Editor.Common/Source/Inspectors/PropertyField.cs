@@ -4,14 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Unity.Editor.Common.Inspectors
+namespace Slash.Unity.Editor.Common.Inspectors
 {
     using System;
     using System.Reflection;
 
-    using SlashGames.Unity.Common.Math;
+    using Slash.Math.Geometry.Rectangles;
 
-    using SlashGames.Math.Geometry.Rectangles;
+    using Slash.Unity.Common.Math;
 
     using UnityEditor;
 

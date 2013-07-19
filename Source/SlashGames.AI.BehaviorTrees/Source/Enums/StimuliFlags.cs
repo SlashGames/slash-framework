@@ -1,4 +1,4 @@
-namespace SlashGames.AI.BehaviorTrees.Enums
+namespace Slash.AI.BehaviorTrees.Enums
 {
     /// <summary>
     ///   The stimuli flags.

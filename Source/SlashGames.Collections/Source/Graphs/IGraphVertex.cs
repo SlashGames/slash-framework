@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.Collections.Graphs
+namespace Slash.Collections.Graphs
 {
     /// <summary>
     /// Vertex of any graph with a unique index.

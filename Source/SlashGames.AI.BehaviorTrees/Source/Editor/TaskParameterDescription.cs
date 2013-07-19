@@ -1,12 +1,12 @@
-﻿namespace SlashGames.AI.BehaviorTrees.Editor
+﻿namespace Slash.AI.BehaviorTrees.Editor
 {
     using System;
     using System.Reflection;
     using System.Xml.Serialization;
 
-    using SlashGames.AI.BehaviorTrees.Attributes;
-    using SlashGames.AI.BehaviorTrees.Data;
-    using SlashGames.Xml;
+    using Slash.AI.BehaviorTrees.Attributes;
+    using Slash.AI.BehaviorTrees.Data;
+    using Slash.Xml;
 
     /// <summary>
     ///   Description of a task parameter.

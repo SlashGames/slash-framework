@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Reflection
+namespace Slash.Reflection
 {
     using System;
     using System.Collections.Generic;

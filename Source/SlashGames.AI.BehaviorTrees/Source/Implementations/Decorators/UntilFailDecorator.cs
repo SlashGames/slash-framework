@@ -1,10 +1,10 @@
-namespace SlashGames.AI.BehaviorTrees.Implementations.Decorators
+namespace Slash.AI.BehaviorTrees.Implementations.Decorators
 {
     using System;
 
-    using SlashGames.AI.BehaviorTrees.Attributes;
-    using SlashGames.AI.BehaviorTrees.Enums;
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Attributes;
+    using Slash.AI.BehaviorTrees.Enums;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   A decorator which executes the decorated decider until it fails. If the task succeeds, it is restarted.

@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.AI.BehaviorTrees.Data
+namespace Slash.AI.BehaviorTrees.Data
 {
     using System;
     using System.Xml.Serialization;
 
-    using SlashGames.AI.BehaviorTrees.Interfaces;
+    using Slash.AI.BehaviorTrees.Interfaces;
 
     /// <summary>
     ///   Generic task parameter which makes it possible to let the user decide where the parameter value is taken from. Possibilities are: - Set by the user. - Taken from blackboard.

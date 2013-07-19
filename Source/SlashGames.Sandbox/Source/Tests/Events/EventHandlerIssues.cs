@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Sandbox.Tests.Events
+namespace Slash.Sandbox.Tests.Events
 {
     using System;
 

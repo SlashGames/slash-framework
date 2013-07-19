@@ -1,4 +1,4 @@
-namespace SlashGames.AI.BehaviorTrees.Attributes
+namespace Slash.AI.BehaviorTrees.Attributes
 {
     using System;
 

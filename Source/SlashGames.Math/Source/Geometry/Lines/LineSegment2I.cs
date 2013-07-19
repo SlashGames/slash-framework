@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Math.Geometry.Lines
+namespace Slash.Math.Geometry.Lines
 {
-    using SlashGames.Math.Algebra.Vectors;
-    using SlashGames.Math.Utils;
+    using Slash.Math.Algebra.Vectors;
+    using Slash.Math.Utils;
 
     /// <summary>
     ///   The class encapsulates a 2D line segment and provides some tool methods related to line segments.

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Collections.Extensions
+namespace Slash.Collections.Extensions
 {
     using System;
     using System.Collections;

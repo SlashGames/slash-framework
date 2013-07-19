@@ -1,4 +1,4 @@
-﻿namespace SlashGames.Xml.Utils
+﻿namespace Slash.Xml.Utils
 {
     using System;
     using System.Xml;

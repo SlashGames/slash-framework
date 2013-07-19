@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace SlashGames.Collections.PriorityQueues
+namespace Slash.Collections.PriorityQueues
 {
     /// <summary>
     /// Ordered data structure that is optimized for finding the minimum item.
