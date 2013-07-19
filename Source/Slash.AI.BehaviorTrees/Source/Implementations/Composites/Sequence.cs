@@ -19,8 +19,9 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
     ///   Task which executes its children one after another. The task finishes when all children finished.
     /// </summary>
     [Serializable]
-    [Task(Name = "Sequence", 
-        Description = "Task which executes its children one after another. The task finishes when all children finished.")]
+    [Task(Name = "Sequence",
+        Description =
+            "Task which executes its children one after another. The task finishes when all children finished.")]
     public class Sequence : Composite<Sequence.Data>
     {
         #region Constructors and Destructors

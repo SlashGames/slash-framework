@@ -1,8 +1,8 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="AdjacencyListWeightedDirectedGraph.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.Collections.Graphs
 {
@@ -10,50 +10,50 @@ namespace Slash.Collections.Graphs
     using System.Collections.Generic;
 
     /// <summary>
-    /// An implementation of the abstract datatype weighted directed
-    /// graph using an adjacency list to encode the set of edges.
+    ///   An implementation of the abstract datatype weighted directed
+    ///   graph using an adjacency list to encode the set of edges.
     /// </summary>
     /// <typeparam name="T">Type of the vertices of this graph.</typeparam>
     public class AdjacencyListWeightedDirectedGraph<T> : IWeightedGraph<T>
         where T : IGraphVertex
     {
-        #region Constants and Fields
+        #region Fields
 
         /// <summary>
-        /// Vertices of this graph.
+        ///   Weights of the edges between the vertices of this graph.
         /// </summary>
-        private T[] vertices;
+        private readonly List<int>[] edgeWeights;
 
         /// <summary>
-        /// Edges between the vertices of this graph.
+        ///   Edges between the vertices of this graph.
         /// </summary>
-        private List<T>[] edges;
+        private readonly List<T>[] edges;
 
         /// <summary>
-        /// Weights of the edges between the vertices of this graph.
+        ///   Number of vertices of this graph.
         /// </summary>
-        private List<int>[] edgeWeights;
+        private readonly int vertexCount;
 
         /// <summary>
-        /// Number of vertices of this graph.
+        ///   Vertices of this graph.
         /// </summary>
-        private int vertexCount;
+        private readonly T[] vertices;
 
         /// <summary>
-        /// Number of edges between the vertices of this graph.
+        ///   Number of edges between the vertices of this graph.
         /// </summary>
         private int edgeCount;
 
         #endregion
 
-        #region Constructors
+        #region Constructors and Destructors
 
         /// <summary>
-        /// Default constructor for this implementation of
-        /// directed graphs. Takes an array of vertices
-        /// as parameter, which should be the set of vertices
-        /// of this graph.
-        /// Initially there are no edges.
+        ///   Default constructor for this implementation of
+        ///   directed graphs. Takes an array of vertices
+        ///   as parameter, which should be the set of vertices
+        ///   of this graph.
+        ///   Initially there are no edges.
         /// </summary>
         /// <param name="vertices">Vertices of the new graph.</param>
         public AdjacencyListWeightedDirectedGraph(T[] vertices)
@@ -86,55 +86,103 @@ namespace Slash.Collections.Graphs
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>
-        /// Vertices of this graph.
-        /// </summary>
-        public T[] Vertices
-        {
-            get { return this.vertices; }
-        }
-
-        /// <summary>
-        /// Edges between the vertices of this graph.
-        /// </summary>
-        public List<T>[] Edges
-        {
-            get { return this.edges; }
-        }
-
-        /// <summary>
-        /// Weights of the edges between the vertices of this graph.
-        /// </summary>
-        public List<int>[] EdgeWeights
-        {
-            get { return this.edgeWeights; }
-        }
-
-        /// <summary>
-        /// Number of vertices of this graph.
-        /// </summary>
-        public int VertexCount
-        {
-            get { return this.vertexCount; }
-        }
-
-        /// <summary>
-        /// Number of edges between the vertices of this graph.
+        ///   Number of edges between the vertices of this graph.
         /// </summary>
         public int EdgeCount
         {
-            get { return this.edgeCount; }
+            get
+            {
+                return this.edgeCount;
+            }
+        }
+
+        /// <summary>
+        ///   Weights of the edges between the vertices of this graph.
+        /// </summary>
+        public List<int>[] EdgeWeights
+        {
+            get
+            {
+                return this.edgeWeights;
+            }
+        }
+
+        /// <summary>
+        ///   Edges between the vertices of this graph.
+        /// </summary>
+        public List<T>[] Edges
+        {
+            get
+            {
+                return this.edges;
+            }
+        }
+
+        /// <summary>
+        ///   Number of vertices of this graph.
+        /// </summary>
+        public int VertexCount
+        {
+            get
+            {
+                return this.vertexCount;
+            }
+        }
+
+        /// <summary>
+        ///   Vertices of this graph.
+        /// </summary>
+        public T[] Vertices
+        {
+            get
+            {
+                return this.vertices;
+            }
         }
 
         #endregion
 
-        #region Public Methods
+        #region Public Methods and Operators
 
         /// <summary>
-        /// Returns the degree of the given vertex,
-        /// in other words the number of adjacent vertices, in O(1).
+        ///   Adds two edges between two vertices in this graph in O(1),
+        ///   weighted with the given value.
+        /// </summary>
+        /// <param name="firstNode">First vertex to add edges to.</param>
+        /// <param name="secondNode">Second vertex to add edges to.</param>
+        /// <param name="edgeWeight">Weight of the new edges.</param>
+        public void AddEdges(T firstNode, T secondNode, int edgeWeight)
+        {
+            this.edges[firstNode.Index].Add(secondNode);
+            this.edgeWeights[firstNode.Index].Add(edgeWeight);
+
+            this.edges[secondNode.Index].Add(firstNode);
+            this.edgeWeights[secondNode.Index].Add(edgeWeight);
+
+            this.edgeCount += 2;
+        }
+
+        /// <summary>
+        ///   Adds one edge between two vertices in this graph in O(1),
+        ///   weighted with the given value.
+        /// </summary>
+        /// <param name="firstNode">Source vertex of the edge.</param>
+        /// <param name="secondNode">Target vertex of the edge.</param>
+        /// <param name="edgeWeight">Weight of the new edge.</param>
+        public void AddSingleEdge(T firstNode, T secondNode, int edgeWeight)
+        {
+            this.edges[firstNode.Index].Add(secondNode);
+            this.edgeWeights[firstNode.Index].Add(edgeWeight);
+
+            this.edgeCount++;
+        }
+
+        /// <summary>
+        ///   Returns the degree of the given vertex,
+        ///   in other words the number of adjacent vertices, in O(1).
         /// </summary>
         /// <param name="node">Vertex to get the degree of.</param>
         /// <returns>Degree of the vertex.</returns>
@@ -144,27 +192,14 @@ namespace Slash.Collections.Graphs
         }
 
         /// <summary>
-        /// Checks if there is an edge between two vertices of this
-        /// graph in O(n), where n is the number of adjacent vertices
-        /// of the first one.
-        /// </summary>
-        /// <param name="firstNode">First vertex to check.</param>
-        /// <param name="secondNode">Second vertex to check.</param>
-        /// <returns>True if there is an edge, and false otherwise.</returns>
-        public bool HasEdge(T firstNode, T secondNode)
-        {
-            return this.edges[firstNode.Index].Contains(secondNode);
-        }
-
-        /// <summary>
-        /// Gets the weight of the edge between the specified vertices in O(n),
-        /// where n is the number of adjacent vertices of the first one.
+        ///   Gets the weight of the edge between the specified vertices in O(n),
+        ///   where n is the number of adjacent vertices of the first one.
         /// </summary>
         /// <param name="firstNode">First vertex to check.</param>
         /// <param name="secondNode">Second vertex to check.</param>
         /// <returns>
-        /// Edge weight of the edge between the two vertices, if there is one,
-        /// and -1 otherwise.
+        ///   Edge weight of the edge between the two vertices, if there is one,
+        ///   and -1 otherwise.
         /// </returns>
         public int GetEdgeWeight(T firstNode, T secondNode)
         {
@@ -183,41 +218,21 @@ namespace Slash.Collections.Graphs
         }
 
         /// <summary>
-        /// Adds two edges between two vertices in this graph in O(1),
-        /// weighted with the given value.
+        ///   Checks if there is an edge between two vertices of this
+        ///   graph in O(n), where n is the number of adjacent vertices
+        ///   of the first one.
         /// </summary>
-        /// <param name="firstNode">First vertex to add edges to.</param>
-        /// <param name="secondNode">Second vertex to add edges to.</param>
-        /// <param name="edgeWeight">Weight of the new edges.</param>
-        public void AddEdges(T firstNode, T secondNode, int edgeWeight)
+        /// <param name="firstNode">First vertex to check.</param>
+        /// <param name="secondNode">Second vertex to check.</param>
+        /// <returns>True if there is an edge, and false otherwise.</returns>
+        public bool HasEdge(T firstNode, T secondNode)
         {
-            this.edges[firstNode.Index].Add(secondNode);
-            this.edgeWeights[firstNode.Index].Add(edgeWeight);
-
-            this.edges[secondNode.Index].Add(firstNode);
-            this.edgeWeights[secondNode.Index].Add(edgeWeight);
-
-            this.edgeCount += 2;
+            return this.edges[firstNode.Index].Contains(secondNode);
         }
 
         /// <summary>
-        /// Adds one edge between two vertices in this graph in O(1),
-        /// weighted with the given value.
-        /// </summary>
-        /// <param name="firstNode">Source vertex of the edge.</param>
-        /// <param name="secondNode">Target vertex of the edge.</param>
-        /// <param name="edgeWeight">Weight of the new edge.</param>
-        public void AddSingleEdge(T firstNode, T secondNode, int edgeWeight)
-        {
-            this.edges[firstNode.Index].Add(secondNode);
-            this.edgeWeights[firstNode.Index].Add(edgeWeight);
-
-            this.edgeCount++;
-        }
-
-        /// <summary>
-        /// Returns a list containing the adjacent
-        /// vertices of a given vertex in this graph in O(1).
+        ///   Returns a list containing the adjacent
+        ///   vertices of a given vertex in this graph in O(1).
         /// </summary>
         /// <param name="node">Vertex to get the neighbors of.</param>
         /// <returns>List with the neighbors of the given vertex.</returns>

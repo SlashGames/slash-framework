@@ -1,3 +1,9 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ExecutionStatus.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.AI.BehaviorTrees.Enums
 {
     /// <summary>
@@ -6,8 +12,11 @@ namespace Slash.AI.BehaviorTrees.Enums
     public enum ExecutionStatus
     {
         None,
+
         Running,
+
         Success,
+
         Failed,
     }
 }

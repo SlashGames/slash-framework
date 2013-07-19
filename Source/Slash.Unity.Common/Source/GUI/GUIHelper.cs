@@ -51,7 +51,10 @@ namespace Slash.Unity.Common.GUI
                         "Shader \"Lines/Colored Blended\" {" + "SubShader { Pass {"
                         + "   BindChannels { Bind \"Color\",color }" + "   Blend SrcAlpha OneMinusSrcAlpha"
                         + "   ZWrite Off Cull Off Fog { Mode Off }" + "} } }")
-                        { hideFlags = HideFlags.HideAndDontSave, shader = { hideFlags = HideFlags.HideAndDontSave } };
+                        {
+                            hideFlags = HideFlags.HideAndDontSave,
+                            shader = { hideFlags = HideFlags.HideAndDontSave }
+                        };
             }
 
             lineMaterial.SetPass(0);

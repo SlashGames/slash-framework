@@ -1,3 +1,9 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Task.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.AI.BehaviorTrees.Implementations
 {
     using System;
@@ -126,8 +132,7 @@ namespace Slash.AI.BehaviorTrees.Implementations
         /// <param name="taskNode"> Task node of this task. </param>
         /// <param name="predicate"> Predicate to forfill. </param>
         /// <param name="tasks"> List of tasks which forfill the passed predicate. </param>
-        public virtual void FindTasks(
-            TaskNode taskNode, Func<ITask, bool> predicate, ref ICollection<TaskNode> tasks)
+        public virtual void FindTasks(TaskNode taskNode, Func<ITask, bool> predicate, ref ICollection<TaskNode> tasks)
         {
         }
 

@@ -28,9 +28,9 @@ namespace Slash.Unity.Common.Input
         #region Public Properties
 
         /// <summary>
-        ///   Returns the current mouse position on the GUI. 
+        ///   Returns the current mouse position on the GUI.
         ///   Considers that the coordinate system of the world starts in the top-left corner,
-        ///   but the coordinate system of the GUI starts in the bottom-left corner, 
+        ///   but the coordinate system of the GUI starts in the bottom-left corner,
         ///   so the y coordinate is inverted.
         /// </summary>
         public static Vector2 GUIMousePosition

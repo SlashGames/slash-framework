@@ -1,32 +1,32 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="GameTest.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.GameBase.Tests
 {
     using NUnit.Framework;
 
     /// <summary>
-    /// Unit tests for the Game class.
+    ///   Unit tests for the Game class.
     /// </summary>
     [TestFixture]
     public class GameTest
     {
-        #region Constants and Fields
+        #region Fields
 
         /// <summary>
-        /// Test game to run unit tests on.
+        ///   Test game to run unit tests on.
         /// </summary>
         private Game game;
 
         #endregion
 
-        #region Public Methods
+        #region Public Methods and Operators
 
         /// <summary>
-        /// Setup for the tests of the Game class.
+        ///   Setup for the tests of the Game class.
         /// </summary>
         [SetUp]
         public void SetUp()
@@ -35,7 +35,7 @@ namespace Slash.GameBase.Tests
         }
 
         /// <summary>
-        /// Tests starting, pausing and resuming the game.
+        ///   Tests starting, pausing and resuming the game.
         /// </summary>
         [Test]
         public void TestGameRunning()
@@ -50,8 +50,8 @@ namespace Slash.GameBase.Tests
         }
 
         /// <summary>
-        /// Tests tracking the elapsed time of the game while
-        /// ticking it after it has been started, paused and resumed.
+        ///   Tests tracking the elapsed time of the game while
+        ///   ticking it after it has been started, paused and resumed.
         /// </summary>
         [Test]
         public void TestTimeElapsed()

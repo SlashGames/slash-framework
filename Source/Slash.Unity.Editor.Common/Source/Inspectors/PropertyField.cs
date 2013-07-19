@@ -10,7 +10,6 @@ namespace Slash.Unity.Editor.Common.Inspectors
     using System.Reflection;
 
     using Slash.Math.Geometry.Rectangles;
-
     using Slash.Unity.Common.Math;
 
     using UnityEditor;
@@ -50,7 +49,7 @@ namespace Slash.Unity.Editor.Common.Inspectors
         #endregion
 
         #region Public Properties
-        
+
         /// <summary>
         ///   Conversion function when getting the value to show in the inspector.
         /// </summary>
@@ -65,7 +64,7 @@ namespace Slash.Unity.Editor.Common.Inspectors
         }
 
         /// <summary>
-        ///   Conversion function when writing the value from the inspector back to the property. 
+        ///   Conversion function when writing the value from the inspector back to the property.
         /// </summary>
         public Func<Object, Object> SetConversionFunc { get; set; }
 

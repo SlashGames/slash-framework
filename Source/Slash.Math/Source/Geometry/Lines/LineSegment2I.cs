@@ -46,6 +46,17 @@ namespace Slash.Math.Geometry.Lines
         #region Public Properties
 
         /// <summary>
+        ///   Center point on the line segment.
+        /// </summary>
+        public Vector2F Center
+        {
+            get
+            {
+                return new Vector2F((this.PointA.X + this.PointB.X) * 0.5f, (this.PointA.Y + this.PointB.Y) * 0.5f);
+            }
+        }
+
+        /// <summary>
         ///   Returns the direction of the line segment, assuming that PointA is the start point.
         /// </summary>
         public Vector2I Direction
@@ -67,17 +78,6 @@ namespace Slash.Math.Geometry.Lines
             }
         }
 
-        /// <summary>
-        ///   Center point on the line segment.
-        /// </summary>
-        public Vector2F Center
-        {
-            get
-            {
-                return new Vector2F((this.PointA.X + this.PointB.X) * 0.5f, (this.PointA.Y + this.PointB.Y) * 0.5f);
-            }
-        }
-
         #endregion
 
         #region Public Methods and Operators
@@ -90,7 +90,7 @@ namespace Slash.Math.Geometry.Lines
         ///   both to true means you are doing a line-segment to line-segment
         ///   intersection. Setting one of them to true means you are doing a
         ///   line to line-segment intersection test, and so on.
-        ///   Note: If two line segments are coincident, then 
+        ///   Note: If two line segments are coincident, then
         ///   no intersection is detected (there are actually
         ///   infinite intersection points).
         ///   Author: Jeremy Bell
@@ -171,7 +171,7 @@ namespace Slash.Math.Geometry.Lines
         ///   both to true means you are doing a line-segment to line-segment
         ///   intersection. Setting one of them to true means you are doing a
         ///   line to line-segment intersection test, and so on.
-        ///   Note: If two line segments are coincident, then 
+        ///   Note: If two line segments are coincident, then
         ///   no intersection is detected (there are actually
         ///   infinite intersection points).
         ///   Author: Jeremy Bell
@@ -199,8 +199,8 @@ namespace Slash.Math.Geometry.Lines
 
         /// <summary>
         ///   This method detects if two line segments intersect,
-        ///   and, if so, the point of intersection. 
-        ///   Note: If two line segments are coincident, then 
+        ///   and, if so, the point of intersection.
+        ///   Note: If two line segments are coincident, then
         ///   no intersection is detected (there are actually
         ///   infinite intersection points).
         /// </summary>
@@ -222,8 +222,8 @@ namespace Slash.Math.Geometry.Lines
 
         /// <summary>
         ///   This method detects if two line segments intersect,
-        ///   and, if so, the point of intersection. 
-        ///   Note: If two line segments are coincident, then 
+        ///   and, if so, the point of intersection.
+        ///   Note: If two line segments are coincident, then
         ///   no intersection is detected (there are actually
         ///   infinite intersection points).
         /// </summary>

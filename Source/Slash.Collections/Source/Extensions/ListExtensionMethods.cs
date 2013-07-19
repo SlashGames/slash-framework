@@ -44,7 +44,7 @@ namespace Slash.Collections.Extensions
             object item = list[oldIndex];
 
             list.RemoveAt(oldIndex);
-            
+
             list.Insert(newIndex, item);
         }
 

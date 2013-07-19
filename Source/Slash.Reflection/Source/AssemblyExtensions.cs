@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AssemblyExtensions.cs" company="Slash Games ">
-//   Copyright (c) Slash Games . All rights reserved.
+// <copyright file="AssemblyExtensions.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -25,7 +25,9 @@ namespace Slash.Reflection
         /// </summary>
         /// <param name="assembly"> Assembly to get available assemblies for. </param>
         /// <param name="assemblyFilter"> The filter which should be satisfied to consider an Assembly for the returned set of Types, if applicable. </param>
-        /// <returns> Any available assemblies for the specified assembly which match the <paramref name="assemblyFilter" /> . </returns>
+        /// <returns>
+        ///   Any available assemblies for the specified assembly which match the <paramref name="assemblyFilter" /> .
+        /// </returns>
         public static IEnumerable<Assembly> GetAvailableAssemblies(
             this Assembly assembly, Func<Assembly, bool> assemblyFilter = null)
         {
@@ -52,7 +54,9 @@ namespace Slash.Reflection
         /// <param name="assembly"> The Assembly on which the method is called. </param>
         /// <param name="assemblyFilter"> The filter which should be satisfied to consider an Assembly for the returned set of Types, if applicable. </param>
         /// <param name="typeFilter"> The filter which should be satisfied to include the Type in the returned set of Types, if applicable. </param>
-        /// <returns> Any Types which match the <paramref name="typeFilter" /> . </returns>
+        /// <returns>
+        ///   Any Types which match the <paramref name="typeFilter" /> .
+        /// </returns>
         public static IEnumerable<Type> GetAvailableTypes(
             this Assembly assembly, Func<Assembly, bool> assemblyFilter = null, Func<Type, bool> typeFilter = null)
         {

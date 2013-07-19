@@ -1,8 +1,8 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SystemManager.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.GameBase
 {
@@ -10,19 +10,19 @@ namespace Slash.GameBase
     using System.Collections.Generic;
 
     /// <summary>
-    /// Manages the game systems to be updated in each tick.
+    ///   Manages the game systems to be updated in each tick.
     /// </summary>
     public class SystemManager
     {
-        #region Constants and Fields
+        #region Fields
 
         /// <summary>
-        /// Game this manager controls the systems of.
+        ///   Game this manager controls the systems of.
         /// </summary>
         private readonly Game game;
 
         /// <summary>
-        /// Maps system types to actual game systems.
+        ///   Maps system types to actual game systems.
         /// </summary>
         private readonly Dictionary<Type, ISystem> systems;
 
@@ -31,10 +31,10 @@ namespace Slash.GameBase
         #region Constructors and Destructors
 
         /// <summary>
-        /// Constructs a new system manager without any systems.
+        ///   Constructs a new system manager without any systems.
         /// </summary>
         /// <param name="game">
-        /// Game to manage the systems for.
+        ///   Game to manage the systems for.
         /// </param>
         public SystemManager(Game game)
         {
@@ -44,20 +44,20 @@ namespace Slash.GameBase
 
         #endregion
 
-        #region Public Methods
+        #region Public Methods and Operators
 
         /// <summary>
-        /// Adds the passed system to this manager. The system will be updated
-        /// in each tick.
+        ///   Adds the passed system to this manager. The system will be updated
+        ///   in each tick.
         /// </summary>
         /// <param name="system">
-        /// System to add.
+        ///   System to add.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// The passed system is null.
+        ///   The passed system is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// A system of the same type has already been added.
+        ///   A system of the same type has already been added.
         /// </exception>
         public void AddSystem(ISystem system)
         {
@@ -79,19 +79,19 @@ namespace Slash.GameBase
         }
 
         /// <summary>
-        /// Gets the system of the specified type.
+        ///   Gets the system of the specified type.
         /// </summary>
         /// <param name="systemType">
-        /// Type of the system to get.
+        ///   Type of the system to get.
         /// </param>
         /// <returns>
-        /// System of the specified type.
+        ///   System of the specified type.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// The passed type is null.
+        ///   The passed type is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// A system of the specified type has never been added.
+        ///   A system of the specified type has never been added.
         /// </exception>
         public ISystem GetSystem(Type systemType)
         {
@@ -110,27 +110,26 @@ namespace Slash.GameBase
         }
 
         /// <summary>
-        /// Gets the system of the specified type.
+        ///   Gets the system of the specified type.
         /// </summary>
         /// <typeparam name="T">Type of the system to get.</typeparam>
         /// <returns>System of the specified type.</returns>
         /// <exception cref="ArgumentNullException">
-        /// The passed type is null.
+        ///   The passed type is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// A system of the specified type has never been added.
+        ///   A system of the specified type has never been added.
         /// </exception>
-        public T GetSystem<T>()
-            where T : class, ISystem
+        public T GetSystem<T>() where T : class, ISystem
         {
             return this.GetSystem(typeof(T)) as T;
         }
 
         /// <summary>
-        /// Ticks all systems.
+        ///   Ticks all systems.
         /// </summary>
         /// <param name="dt">
-        /// Time passed since the last tick, in seconds.
+        ///   Time passed since the last tick, in seconds.
         /// </param>
         public void Update(float dt)
         {

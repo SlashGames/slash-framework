@@ -33,6 +33,11 @@ public class DebugInputEditor : Editor
 
     #region Public Methods and Operators
 
+    public void OnDisable()
+    {
+        this.instance = null;
+    }
+
     /// <summary>
     ///   Called when the inspector gets active.
     /// </summary>
@@ -47,11 +52,6 @@ public class DebugInputEditor : Editor
         {
             this.propertyFields = null;
         }
-    }
-
-    public void OnDisable()
-    {
-        this.instance = null;
     }
 
     /// <summary>

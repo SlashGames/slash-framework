@@ -1,19 +1,23 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IGraphVertex.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.Collections.Graphs
 {
     /// <summary>
-    /// Vertex of any graph with a unique index.
+    ///   Vertex of any graph with a unique index.
     /// </summary>
     public interface IGraphVertex
     {
+        #region Public Properties
+
         /// <summary>
-        /// The unique array index of this vertex in the graph.
+        ///   The unique array index of this vertex in the graph.
         /// </summary>
         int Index { get; }
+
+        #endregion
     }
 }

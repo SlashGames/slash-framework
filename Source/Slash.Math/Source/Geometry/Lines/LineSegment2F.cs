@@ -90,7 +90,7 @@ namespace Slash.Math.Geometry.Lines
         ///   both to true means you are doing a line-segment to line-segment
         ///   intersection. Setting one of them to true means you are doing a
         ///   line to line-segment intersection test, and so on.
-        ///   Note: If two line segments are coincident, then 
+        ///   Note: If two line segments are coincident, then
         ///   no intersection is detected (there are actually
         ///   infinite intersection points).
         ///   Author: Jeremy Bell
@@ -171,7 +171,7 @@ namespace Slash.Math.Geometry.Lines
         ///   both to true means you are doing a line-segment to line-segment
         ///   intersection. Setting one of them to true means you are doing a
         ///   line to line-segment intersection test, and so on.
-        ///   Note: If two line segments are coincident, then 
+        ///   Note: If two line segments are coincident, then
         ///   no intersection is detected (there are actually
         ///   infinite intersection points).
         ///   Author: Jeremy Bell
@@ -199,8 +199,8 @@ namespace Slash.Math.Geometry.Lines
 
         /// <summary>
         ///   This method detects if two line segments intersect,
-        ///   and, if so, the point of intersection. 
-        ///   Note: If two line segments are coincident, then 
+        ///   and, if so, the point of intersection.
+        ///   Note: If two line segments are coincident, then
         ///   no intersection is detected (there are actually
         ///   infinite intersection points).
         /// </summary>
@@ -222,8 +222,8 @@ namespace Slash.Math.Geometry.Lines
 
         /// <summary>
         ///   This method detects if two line segments intersect,
-        ///   and, if so, the point of intersection. 
-        ///   Note: If two line segments are coincident, then 
+        ///   and, if so, the point of intersection.
+        ///   Note: If two line segments are coincident, then
         ///   no intersection is detected (there are actually
         ///   infinite intersection points).
         /// </summary>

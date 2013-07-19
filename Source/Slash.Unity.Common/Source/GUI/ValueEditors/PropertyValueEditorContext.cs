@@ -3,6 +3,7 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.Unity.Common.GUI.ValueEditors
 {
     using System;
@@ -10,9 +11,15 @@ namespace Slash.Unity.Common.GUI.ValueEditors
 
     public class PropertyValueEditorContext : IValueEditorContext
     {
-        private object obj;
+        #region Fields
 
-        private PropertyInfo propertyInfo;
+        private readonly object obj;
+
+        private readonly PropertyInfo propertyInfo;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         public PropertyValueEditorContext(object obj, PropertyInfo propertyInfo)
         {
@@ -20,13 +27,33 @@ namespace Slash.Unity.Common.GUI.ValueEditors
             this.propertyInfo = propertyInfo;
         }
 
+        #endregion
+
+        #region Public Properties
+
         public string Description { get; set; }
+
+        public object Key
+        {
+            get
+            {
+                return this.propertyInfo.GetHashCode() + this.obj.GetHashCode();
+            }
+        }
 
         public string Name
         {
             get
             {
                 return this.propertyInfo.Name;
+            }
+        }
+
+        public Type Type
+        {
+            get
+            {
+                return this.propertyInfo.PropertyType;
             }
         }
 
@@ -42,22 +69,9 @@ namespace Slash.Unity.Common.GUI.ValueEditors
             }
         }
 
-        public object Key
-        {
-            get
-            {
-                return this.propertyInfo.GetHashCode() + this.obj.GetHashCode();
-            }
-        }
+        #endregion
 
-
-        public Type Type
-        {
-            get
-            {
-                return this.propertyInfo.PropertyType;
-            }
-        }
+        #region Public Methods and Operators
 
         public T GetValue<T>()
         {
@@ -68,5 +82,7 @@ namespace Slash.Unity.Common.GUI.ValueEditors
         {
             return ValueEditorContext.TryGetValue(this.Value, out value);
         }
+
+        #endregion
     }
 }

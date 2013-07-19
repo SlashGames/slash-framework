@@ -1,3 +1,9 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BaseSetBlackboardAttributeBoolean.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.AI.BehaviorTrees.Implementations.Actions
 {
     using Slash.AI.BehaviorTrees.Attributes;

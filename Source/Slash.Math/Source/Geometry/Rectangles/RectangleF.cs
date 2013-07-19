@@ -93,7 +93,9 @@ namespace Slash.Math.Geometry.Rectangles
         ///   Checks whether this rectangle entirely encompasses the passed one.
         /// </summary>
         /// <param name="otherRectangle"> The rectangle to check. </param>
-        /// <returns> <c>true</c> , if this rectangle contains <c>otherRectangle</c> , and <c>false</c> otherwise. </returns>
+        /// <returns>
+        ///   <c>true</c> , if this rectangle contains <c>otherRectangle</c> , and <c>false</c> otherwise.
+        /// </returns>
         public bool Contains(RectangleI otherRectangle)
         {
             return (this.X <= otherRectangle.X && this.X + this.Width >= otherRectangle.X + otherRectangle.Width)
@@ -115,7 +117,9 @@ namespace Slash.Math.Geometry.Rectangles
         ///   Checks whether this rectangle at least partially intersects the passed one.
         /// </summary>
         /// <param name="otherRectangle"> The rectangle to check. </param>
-        /// <returns> <c>true</c> , if this rectangle intersetcts <c>otherRectangle</c> , and <c>false</c> otherwise. </returns>
+        /// <returns>
+        ///   <c>true</c> , if this rectangle intersetcts <c>otherRectangle</c> , and <c>false</c> otherwise.
+        /// </returns>
         public bool IntersectsWith(RectangleI otherRectangle)
         {
             return (this.X + this.Width > otherRectangle.X && this.X < otherRectangle.X + otherRectangle.Width)

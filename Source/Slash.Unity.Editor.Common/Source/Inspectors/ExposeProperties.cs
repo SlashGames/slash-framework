@@ -39,7 +39,7 @@ namespace Slash.Unity.Editor.Common.Inspectors
                 {
                     continue;
                 }
-                
+
                 // Convert value if conversion function is provided.
                 if (field.GetConversionFunc != null)
                 {
@@ -68,20 +68,18 @@ namespace Slash.Unity.Editor.Common.Inspectors
                         break;
 
                     case SerializedPropertyType.Vector2:
-                        newValue = 
-                            EditorGUILayout.Vector2Field(field.Name, (Vector2)value, emptyOptions);
+                        newValue = EditorGUILayout.Vector2Field(field.Name, (Vector2)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.Vector3:
-                        newValue = 
-                            EditorGUILayout.Vector3Field(field.Name, (Vector3)value, emptyOptions);
+                        newValue = EditorGUILayout.Vector3Field(field.Name, (Vector3)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.Enum:
                         newValue = EditorGUILayout.EnumPopup(field.Name, (Enum)value, emptyOptions);
                         break;
-                        
-                        case SerializedPropertyType.Rect:
+
+                    case SerializedPropertyType.Rect:
                         {
                             newValue = EditorGUILayout.RectField(field.Name, (Rect)value, emptyOptions);
                         }
@@ -134,7 +132,10 @@ namespace Slash.Unity.Editor.Common.Inspectors
                 }
 
                 PropertyField field = new PropertyField(obj, info, type)
-                    { GetConversionFunc = getConversionFunc, SetConversionFunc = setConversionFunc };
+                    {
+                        GetConversionFunc = getConversionFunc,
+                        SetConversionFunc = setConversionFunc
+                    };
                 fields.Add(field);
             }
 

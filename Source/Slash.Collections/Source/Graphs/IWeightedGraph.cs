@@ -1,39 +1,56 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="IWeightedGraph.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.Collections.Graphs
 {
     using System.Collections.Generic;
 
     /// <summary>
-    /// Interface of the abstract datatype weighted graph.
+    ///   Interface of the abstract datatype weighted graph.
     /// </summary>
     /// <typeparam name="T">Type of the vertices of this graph.</typeparam>
     public interface IWeightedGraph<T>
         where T : IGraphVertex
     {
-        /// <summary>
-        /// Number of vertices of this graph.
-        /// </summary>
-        int VertexCount { get; }
+        #region Public Properties
 
         /// <summary>
-        /// Number of edges between the vertices of this graph.
+        ///   Number of edges between the vertices of this graph.
         /// </summary>
         int EdgeCount { get; }
 
         /// <summary>
-        /// Returns the number of adjacent vertices of the given vertex.
+        ///   Number of vertices of this graph.
+        /// </summary>
+        int VertexCount { get; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        ///   Returns the number of adjacent vertices of the given vertex.
         /// </summary>
         /// <param name="node">Vertex to get the degree of.</param>
         /// <returns>Degree of the vertex.</returns>
         int Degree(T node);
 
         /// <summary>
-        /// Checks if there is an edge between two vertices of this graph.
+        ///   Gets the weight of the edge between the specified vertices.
+        /// </summary>
+        /// <param name="firstNode">First vertex to check.</param>
+        /// <param name="secondNode">Second vertex to check.</param>
+        /// <returns>
+        ///   Edge weight of the edge between the two vertices, if there is one,
+        ///   and -1 otherwise.
+        /// </returns>
+        int GetEdgeWeight(T firstNode, T secondNode);
+
+        /// <summary>
+        ///   Checks if there is an edge between two vertices of this graph.
         /// </summary>
         /// <param name="firstNode">First vertex to check.</param>
         /// <param name="secondNode">Second vertex to check.</param>
@@ -41,21 +58,12 @@ namespace Slash.Collections.Graphs
         bool HasEdge(T firstNode, T secondNode);
 
         /// <summary>
-        /// Gets the weight of the edge between the specified vertices.
-        /// </summary>
-        /// <param name="firstNode">First vertex to check.</param>
-        /// <param name="secondNode">Second vertex to check.</param>
-        /// <returns>
-        /// Edge weight of the edge between the two vertices, if there is one,
-        /// and -1 otherwise.
-        /// </returns>
-        int GetEdgeWeight(T firstNode, T secondNode);
-
-        /// <summary>
-        /// Returns a list containing the adjacent vertices of a given vertex in this graph.
+        ///   Returns a list containing the adjacent vertices of a given vertex in this graph.
         /// </summary>
         /// <param name="node">Vertex to get the neighbors of.</param>
         /// <returns>List with the neighbors of the given vertex.</returns>
         List<T> ListOfAdjacentVertices(T node);
+
+        #endregion
     }
 }

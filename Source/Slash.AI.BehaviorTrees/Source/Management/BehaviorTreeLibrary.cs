@@ -1,3 +1,9 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BehaviorTreeLibrary.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.AI.BehaviorTrees.Management
 {
     using System;
@@ -288,8 +294,7 @@ namespace Slash.AI.BehaviorTrees.Management
             // Encapsulate with CreateBlackboard task if blackboard is set.
             if (subTreeReference.Blackboard != null)
             {
-                treeReference = new CreateBlackboard
-                    { Task = treeReference, Blackboard = subTreeReference.Blackboard };
+                treeReference = new CreateBlackboard { Task = treeReference, Blackboard = subTreeReference.Blackboard };
             }
 
             return treeReference;

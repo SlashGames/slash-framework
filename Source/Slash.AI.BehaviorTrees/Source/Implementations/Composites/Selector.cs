@@ -19,8 +19,10 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
     ///   Task which selects one of its children to be executed. If the chosen child finished execution, the task finishes.
     /// </summary>
     [Serializable]
-    [Task(Name = "Selector", 
-        Description = "Task which selects one of its children to be executed. If the chosen child finished execution, the task finishes.")]
+    [Task(Name = "Selector",
+        Description =
+            "Task which selects one of its children to be executed. If the chosen child finished execution, the task finishes."
+        )]
     public class Selector : Composite<Selector.Data>
     {
         #region Constructors and Destructors
@@ -143,7 +145,10 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
             {
                 // Create decision data to pass to use in Activate() method.
                 decisionData = new DecisionData
-                    { SelectedChildIdx = selectedChildIdx, ChildDecisionData = childDecisionData };
+                    {
+                        SelectedChildIdx = selectedChildIdx,
+                        ChildDecisionData = childDecisionData
+                    };
 
                 return decideValue;
             }

@@ -3,6 +3,7 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.Unity.Common.GUI.ValueEditors
 {
     using UnityEngine;
@@ -12,6 +13,8 @@ namespace Slash.Unity.Common.GUI.ValueEditors
     /// </summary>
     public class TextValueEditor : IValueEditor
     {
+        #region Public Methods and Operators
+
         /// <summary>
         ///   Edits the specified context.
         /// </summary>
@@ -34,5 +37,7 @@ namespace Slash.Unity.Common.GUI.ValueEditors
                 context.Value = newValue;
             }
         }
+
+        #endregion
     }
 }

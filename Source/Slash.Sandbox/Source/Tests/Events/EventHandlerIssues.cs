@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EventHandlerIssues.cs" company="Slash Games ">
-//   Copyright (c) Slash Games . All rights reserved.
+// <copyright file="EventHandlerIssues.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 

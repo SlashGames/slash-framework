@@ -25,10 +25,6 @@ namespace Slash.Serialization.Utils
             return FromMemoryStream<T>(ToMemoryStream(obj));
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         ///   Deserializes an object of the specified type from the specified memory stream.
         /// </summary>

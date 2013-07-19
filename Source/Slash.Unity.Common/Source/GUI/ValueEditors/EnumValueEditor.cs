@@ -3,11 +3,11 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.Unity.Common.GUI.ValueEditors
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using UnityEngine;
 
@@ -16,8 +16,14 @@ namespace Slash.Unity.Common.GUI.ValueEditors
     /// </summary>
     public class EnumValueEditor : IValueEditor
     {
+        #region Fields
+
         private readonly Dictionary<object, bool> showPopupList =
             new Dictionary<object, bool>(EqualityComparer<object>.Default);
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>
         ///   Edits the specified context.
@@ -56,8 +62,10 @@ namespace Slash.Unity.Common.GUI.ValueEditors
 
             if (newSelectedItem != selectedItem)
             {
-               context.Value = enumValues.GetValue(newSelectedItem);
+                context.Value = enumValues.GetValue(newSelectedItem);
             }
         }
+
+        #endregion
     }
 }

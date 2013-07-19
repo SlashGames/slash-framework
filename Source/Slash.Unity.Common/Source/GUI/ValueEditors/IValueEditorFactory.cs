@@ -3,12 +3,15 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.Unity.Common.GUI.ValueEditors
 {
     using System;
 
     public interface IValueEditorFactory
     {
+        #region Public Methods and Operators
+
         /// <summary>
         ///   Returns the value editor for a value of the specified type.
         /// </summary>
@@ -22,5 +25,7 @@ namespace Slash.Unity.Common.GUI.ValueEditors
         /// <param name="type">Value type to get editor for.</param>
         /// <returns>Value editor for specified type.</returns>
         IValueEditor GetEditor(Type type);
+
+        #endregion
     }
 }

@@ -1,26 +1,26 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FibonacciHeapNode.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.Collections.PriorityQueues
 {
     /// <summary>
-    /// Node of an heap-ordered tree. Contains an item with a key which allows
-    /// comparing it to other heap items for order. Provides pointers to its
-    /// parent node, to its left and right siblings, and to one of its children.
-    /// Can be marked in order to decide whether to make a cascading cut after
-    /// the edge to this node's parent has been cut, or not.
+    ///   Node of an heap-ordered tree. Contains an item with a key which allows
+    ///   comparing it to other heap items for order. Provides pointers to its
+    ///   parent node, to its left and right siblings, and to one of its children.
+    ///   Can be marked in order to decide whether to make a cascading cut after
+    ///   the edge to this node's parent has been cut, or not.
     /// </summary>
     /// <typeparam name="T">Type of the item held by this node.</typeparam>
     internal class FibonacciHeapNode<T>
     {
-        #region Constructors
+        #region Constructors and Destructors
 
         /// <summary>
-        /// Constructs a new heap-ordered tree node holding the passed item.
-        /// The node initially has no siblings.
+        ///   Constructs a new heap-ordered tree node holding the passed item.
+        ///   The node initially has no siblings.
         /// </summary>
         /// <param name="item">the container holding this node's item and its key</param>
         public FibonacciHeapNode(FibonacciHeapItem<T> item)
@@ -37,48 +37,48 @@ namespace Slash.Collections.PriorityQueues
         #region Properties
 
         /// <summary>
-        /// The container holding this node's item and its key.
+        ///   The container holding this node's item and its key.
         /// </summary>
         internal FibonacciHeapItem<T> Item { get; set; }
 
         /// <summary>
-        /// The parent of this node.
-        /// </summary>
-        internal FibonacciHeapNode<T> Parent { get; set; }
-
-        /// <summary>
-        /// The left sibling of this node.
+        ///   The left sibling of this node.
         /// </summary>
         internal FibonacciHeapNode<T> LeftSibling { get; set; }
 
         /// <summary>
-        /// One of the children of this node.
+        ///   Whether to perform a cascading cut after the edge to this node's
+        ///   parent has been cut, or not.
         /// </summary>
-        internal FibonacciHeapNode<T> SomeChild { get; set; }
+        internal bool Marked { get; set; }
 
         /// <summary>
-        /// The right sibling of this node.
+        ///   The parent of this node.
         /// </summary>
-        internal FibonacciHeapNode<T> RightSibling { get; set; }
+        internal FibonacciHeapNode<T> Parent { get; set; }
 
         /// <summary>
-        /// The number of children of this node.
+        ///   The number of children of this node.
         /// </summary>
         internal int Rank { get; set; }
 
         /// <summary>
-        /// Whether to perform a cascading cut after the edge to this node's
-        /// parent has been cut, or not.
+        ///   The right sibling of this node.
         /// </summary>
-        internal bool Marked { get; set; }
+        internal FibonacciHeapNode<T> RightSibling { get; set; }
+
+        /// <summary>
+        ///   One of the children of this node.
+        /// </summary>
+        internal FibonacciHeapNode<T> SomeChild { get; set; }
 
         #endregion
 
-        #region Public Methods
+        #region Public Methods and Operators
 
         /// <summary>
-        /// Adds to passed heap-ordered tree node to the list of this node's
-        /// children, increasing the rank of this node.
+        ///   Adds to passed heap-ordered tree node to the list of this node's
+        ///   children, increasing the rank of this node.
         /// </summary>
         /// <param name="node">the new child of this node</param>
         public void AddChild(FibonacciHeapNode<T> node)
@@ -108,16 +108,16 @@ namespace Slash.Collections.PriorityQueues
         }
 
         /// <summary>
-        /// Cuts the edge to this node's parent, decreasing the rank of its
-        /// parent. Performs a cascading cut if necessary.
+        ///   Cuts the edge to this node's parent, decreasing the rank of its
+        ///   parent. Performs a cascading cut if necessary.
         /// </summary>
         /// <param name="addToRootList">
-        /// whether this node should be added to the list of roots of its
-        /// heap, or not
+        ///   whether this node should be added to the list of roots of its
+        ///   heap, or not
         /// </param>
         /// <param name="heap">
-        /// the heap whose root list this node is added to, if
-        /// <code>addToRootList</code> is set to true
+        ///   the heap whose root list this node is added to, if
+        ///   <code>addToRootList</code> is set to true
         /// </param>
         public void CutEdgeToParent(bool addToRootList, FibonacciHeap<T> heap)
         {
@@ -166,9 +166,9 @@ namespace Slash.Collections.PriorityQueues
         }
 
         /// <summary>
-        /// Combines the heap-ordered tree represented by the passed root node
-        /// with the tree represented by this one. Assumes that both trees are
-        /// item-disjoint.
+        ///   Combines the heap-ordered tree represented by the passed root node
+        ///   with the tree represented by this one. Assumes that both trees are
+        ///   item-disjoint.
         /// </summary>
         /// <param name="otherTreeRoot">the root of the other tree to combine with this one</param>
         /// <returns>the root of the resulting heap-ordered tree</returns>

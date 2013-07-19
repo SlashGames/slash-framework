@@ -9,7 +9,7 @@ namespace Slash.Math.Utils
     using System;
 
     /// <summary>
-    ///   Contains little math utils that are often used. If there are long methods or multiple methods of the same 
+    ///   Contains little math utils that are often used. If there are long methods or multiple methods of the same
     ///   type, think about moving them into a seperate class, so this file doesn't get too big.
     /// </summary>
     public static class MathUtils
@@ -54,7 +54,7 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
-        ///   Checks if the passed value is within the passed bounds (i.e. bigger or equal minimum bound and 
+        ///   Checks if the passed value is within the passed bounds (i.e. bigger or equal minimum bound and
         ///   smaller maximum bound).
         /// </summary>
         /// <param name="value"> Value to check. </param>

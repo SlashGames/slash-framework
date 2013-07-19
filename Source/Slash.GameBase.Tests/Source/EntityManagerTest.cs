@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EntityManagerTest.cs" company="Slash Games ">
-//   Copyright (c) Slash Games . All rights reserved.
+// <copyright file="EntityManagerTest.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -95,7 +95,8 @@ namespace Slash.GameBase.Tests
         {
             int entityId = this.entityManager.CreateEntity();
             this.entityManager.AddComponent(entityId, this.testEntityComponent);
-            Assert.AreEqual(this.testEntityComponent, this.entityManager.GetComponent(entityId, typeof(TestEntityComponent)));
+            Assert.AreEqual(
+                this.testEntityComponent, this.entityManager.GetComponent(entityId, typeof(TestEntityComponent)));
         }
 
         /// <summary>
@@ -133,7 +134,8 @@ namespace Slash.GameBase.Tests
         public void TestGetComponentBeforeAdding()
         {
             this.testEntityId = this.entityManager.CreateEntity();
-            IEntityComponent entityComponent = this.entityManager.GetComponent(this.testEntityId, typeof(TestEntityComponent));
+            IEntityComponent entityComponent = this.entityManager.GetComponent(
+                this.testEntityId, typeof(TestEntityComponent));
             Assert.IsNull(entityComponent);
         }
 

@@ -99,7 +99,7 @@ namespace Slash.Math.Algebra.Vectors
         ///   Constructor.
         /// </summary>
         /// <param name="values">
-        ///   Float array which contains the initial vector value. 
+        ///   Float array which contains the initial vector value.
         ///   Value at index 0 is taken as the initial x value, value at index 1 is taken as the initial y value.
         /// </param>
         public Vector2F(params float[] values)

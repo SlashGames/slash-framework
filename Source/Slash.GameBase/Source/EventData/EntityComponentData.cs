@@ -1,33 +1,33 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EntityComponentData.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.GameBase.EventData
 {
     using System;
 
     /// <summary>
-    /// Data container holding information on a component event, such as the
-    /// entity and the component the event occurred for.
+    ///   Data container holding information on a component event, such as the
+    ///   entity and the component the event occurred for.
     /// </summary>
     public class EntityComponentData
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Constructs a new data object holding information on a component
-        /// event.
+        ///   Constructs a new data object holding information on a component
+        ///   event.
         /// </summary>
         /// <param name="entityId">
-        /// Id of the entity the component event has been fired for.
+        ///   Id of the entity the component event has been fired for.
         /// </param>
         /// <param name="entityComponent">
-        /// Component that has been interacted with.
+        ///   Component that has been interacted with.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// Passed component is null.
+        ///   Passed component is null.
         /// </exception>
         public EntityComponentData(int entityId, IEntityComponent entityComponent)
         {
@@ -42,24 +42,24 @@ namespace Slash.GameBase.EventData
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>
-        /// Id of the entity the component event has been fired for.
-        /// </summary>
-        public int EntityId { get; private set; }
-
-        /// <summary>
-        /// Component that has been interacted with.
+        ///   Component that has been interacted with.
         /// </summary>
         public IEntityComponent EntityComponent { get; private set; }
 
+        /// <summary>
+        ///   Id of the entity the component event has been fired for.
+        /// </summary>
+        public int EntityId { get; private set; }
+
         #endregion
 
-        #region Public Methods
+        #region Public Methods and Operators
 
         /// <summary>
-        /// Returns the id of the entity and the component for which this event has occurred.
+        ///   Returns the id of the entity and the component for which this event has occurred.
         /// </summary>
         /// <returns>Entity id and component.</returns>
         public override string ToString()

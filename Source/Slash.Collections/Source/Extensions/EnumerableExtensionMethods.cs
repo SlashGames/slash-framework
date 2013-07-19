@@ -32,7 +32,9 @@ namespace Slash.Collections.Extensions
         /// </summary>
         /// <typeparam name="T"> The IEnumerable type. </typeparam>
         /// <param name="enumerable"> The enumerable, which may be null or empty. </param>
-        /// <returns> <c>true</c> if the IEnumerable is null or empty; otherwise, <c>false</c> . </returns>
+        /// <returns>
+        ///   <c>true</c> if the IEnumerable is null or empty; otherwise, <c>false</c> .
+        /// </returns>
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable)
         {
             if (enumerable == null)
@@ -46,7 +48,9 @@ namespace Slash.Collections.Extensions
         ///   Determines whether the collection is null or contains no elements.
         /// </summary>
         /// <param name="enumerable"> The enumerable, which may be null or empty. </param>
-        /// <returns> <c>true</c> if the IEnumerable is null or empty; otherwise, <c>false</c> . </returns>
+        /// <returns>
+        ///   <c>true</c> if the IEnumerable is null or empty; otherwise, <c>false</c> .
+        /// </returns>
         public static bool IsNullOrEmpty(this IEnumerable enumerable)
         {
             if (enumerable == null)

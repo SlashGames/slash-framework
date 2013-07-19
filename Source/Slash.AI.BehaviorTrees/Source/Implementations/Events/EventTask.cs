@@ -1,4 +1,10 @@
-﻿namespace Slash.AI.BehaviorTrees.Implementations.Events
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EventTask.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Slash.AI.BehaviorTrees.Implementations.Events
 {
     using System;
     using System.Collections.Generic;

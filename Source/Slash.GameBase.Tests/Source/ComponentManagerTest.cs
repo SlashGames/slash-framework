@@ -1,45 +1,46 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ComponentManagerTest.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.GameBase.Tests
 {
     using System;
+
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
 
     /// <summary>
-    /// Unit tests for the ComponentManagerTest class.
+    ///   Unit tests for the ComponentManagerTest class.
     /// </summary>
     [TestFixture]
     public class ComponentManagerTest
     {
-        #region Constants and Fields
+        #region Fields
 
         /// <summary>
-        /// Test game to run unit tests on.
-        /// </summary>
-        private Game game;
-
-        /// <summary>
-        /// Test component manager to run unit tests on.
+        ///   Test component manager to run unit tests on.
         /// </summary>
         private ComponentManager componentManager;
 
         /// <summary>
-        /// Test component to run unit tests on.
+        ///   Test game to run unit tests on.
+        /// </summary>
+        private Game game;
+
+        /// <summary>
+        ///   Test component to run unit tests on.
         /// </summary>
         private TestEntityComponent testEntityComponent;
 
         #endregion
 
-        #region Public Methods
+        #region Public Methods and Operators
 
         /// <summary>
-        /// Setup for the tests of the ComponentManagerTest class.
+        ///   Setup for the tests of the ComponentManagerTest class.
         /// </summary>
         [SetUp]
         public void SetUp()
@@ -50,7 +51,7 @@ namespace Slash.GameBase.Tests
         }
 
         /// <summary>
-        /// Tests adding a component to the component manager.
+        ///   Tests adding a component to the component manager.
         /// </summary>
         [Test]
         public void TestAddComponent()
@@ -60,17 +61,7 @@ namespace Slash.GameBase.Tests
         }
 
         /// <summary>
-        /// Tests adding null as a component to the component manager.
-        /// </summary>
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void TestAddNullComponent()
-        {
-            this.componentManager.AddComponent(0, null);
-        }
-
-        /// <summary>
-        /// Tests adding a component twice to the component manager.
+        ///   Tests adding a component twice to the component manager.
         /// </summary>
         [Test]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -81,7 +72,17 @@ namespace Slash.GameBase.Tests
         }
 
         /// <summary>
-        /// Tests removing a component from the component manager.
+        ///   Tests adding null as a component to the component manager.
+        /// </summary>
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestAddNullComponent()
+        {
+            this.componentManager.AddComponent(0, null);
+        }
+
+        /// <summary>
+        ///   Tests removing a component from the component manager.
         /// </summary>
         [Test]
         public void TestRemoveComponent()
@@ -95,17 +96,21 @@ namespace Slash.GameBase.Tests
         #endregion
 
         /// <summary>
-        /// Test implementation of a game component.
+        ///   Test implementation of a game component.
         /// </summary>
         private class TestEntityComponent : IEntityComponent
         {
+            #region Public Methods and Operators
+
             /// <summary>
-            /// Initializes this component.
+            ///   Initializes this component.
             /// </summary>
             /// <param name="attributeTable">This parameter is ignored.</param>
             public void InitComponent(IAttributeTable attributeTable)
             {
             }
+
+            #endregion
         }
     }
 }

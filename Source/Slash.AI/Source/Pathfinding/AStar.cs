@@ -1,8 +1,8 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="AStar.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.AI.Pathfinding
 {
@@ -13,28 +13,29 @@ namespace Slash.AI.Pathfinding
     using Slash.Collections.PriorityQueues;
 
     /// <summary>
-    /// Implemenation of the A* algorithm for calculating the most efficient path
-    /// between two specified pathfinding nodes.
+    ///   Implemenation of the A* algorithm for calculating the most efficient path
+    ///   between two specified pathfinding nodes.
     /// </summary>
     public class AStar
     {
+        #region Public Methods and Operators
+
         /// <summary>
-        /// Computes the most efficient path in the specified graph between the
-        /// specified pathfinding nodes using the A* algorithm.
+        ///   Computes the most efficient path in the specified graph between the
+        ///   specified pathfinding nodes using the A* algorithm.
         /// </summary>
         /// <param name="graph">Pathfinding graph to look at.</param>
         /// <param name="start">Starting node.</param>
         /// <param name="finish">Finish node.</param>
         /// <returns>
-        /// List of pathfinding nodes representing the shortest path, if there is one,
-        /// and null otherwise.
+        ///   List of pathfinding nodes representing the shortest path, if there is one,
+        ///   and null otherwise.
         /// </returns>
         /// <typeparam name="T">Type of the pathfinding nodes.</typeparam>
         /// <exception cref="ArgumentNullException">
-        /// Passed graph or start or finish node is <c>null</c>.
+        ///   Passed graph or start or finish node is <c>null</c>.
         /// </exception>
-        public static List<T> FindPath<T>(IWeightedGraph<T> graph, T start, T finish)
-            where T : IAStarNode
+        public static List<T> FindPath<T>(IWeightedGraph<T> graph, T start, T finish) where T : IAStarNode
         {
             if (graph == null)
             {
@@ -194,5 +195,7 @@ namespace Slash.AI.Pathfinding
                 return null;
             }
         }
+
+        #endregion
     }
 }

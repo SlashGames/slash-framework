@@ -1,26 +1,26 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Event.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.GameBase
 {
     using System;
 
     /// <summary>
-    /// Event that has occurred within the Slash Games Framework. May contain
-    /// additional data listeners might be interested in.
+    ///   Event that has occurred within the Slash Games Framework. May contain
+    ///   additional data listeners might be interested in.
     /// </summary>
     public class Event
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Constructs a new event of the specified type.
+        ///   Constructs a new event of the specified type.
         /// </summary>
         /// <param name="eventType">
-        /// Type of the new event.
+        ///   Type of the new event.
         /// </param>
         public Event(object eventType)
             : this(eventType, null)
@@ -28,17 +28,17 @@ namespace Slash.GameBase
         }
 
         /// <summary>
-        /// Constructs a new event of the specified type and holding the
-        /// passed event data.
+        ///   Constructs a new event of the specified type and holding the
+        ///   passed event data.
         /// </summary>
         /// <param name="eventType">
-        /// Type of the new event.
+        ///   Type of the new event.
         /// </param>
         /// <param name="eventData">
-        /// Data any listener might be interested in.
+        ///   Data any listener might be interested in.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// Specified event type is null.
+        ///   Specified event type is null.
         /// </exception>
         public Event(object eventType, object eventData)
         {
@@ -53,24 +53,24 @@ namespace Slash.GameBase
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>
-        /// Type of this event.
-        /// </summary>
-        public object EventType { get; private set; }
-
-        /// <summary>
-        /// Data any listener might be interested in.
+        ///   Data any listener might be interested in.
         /// </summary>
         public object EventData { get; private set; }
 
+        /// <summary>
+        ///   Type of this event.
+        /// </summary>
+        public object EventType { get; private set; }
+
         #endregion
 
-        #region Public Methods
+        #region Public Methods and Operators
 
         /// <summary>
-        /// Returns the type and data of this event, as string.
+        ///   Returns the type and data of this event, as string.
         /// </summary>
         /// <returns>Type and data of this event, as string.</returns>
         public override string ToString()

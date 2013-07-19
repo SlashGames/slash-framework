@@ -1,4 +1,10 @@
-﻿namespace Slash.AI.BehaviorTrees.Editor
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="TaskParameterDescription.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Slash.AI.BehaviorTrees.Editor
 {
     using System;
     using System.Reflection;

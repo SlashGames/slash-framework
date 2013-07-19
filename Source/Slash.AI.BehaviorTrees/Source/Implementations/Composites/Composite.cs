@@ -14,9 +14,8 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
     using Slash.AI.BehaviorTrees.Enums;
     using Slash.AI.BehaviorTrees.Interfaces;
     using Slash.AI.BehaviorTrees.Tree;
-    using Slash.Collections.Utils;
-
     using Slash.Collections.Extensions;
+    using Slash.Collections.Utils;
 
     /// <summary>
     ///   Task which contains array of references to other tasks.

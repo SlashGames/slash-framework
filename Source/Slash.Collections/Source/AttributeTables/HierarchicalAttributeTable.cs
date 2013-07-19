@@ -1,8 +1,8 @@
-﻿// -----------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="HierarchicalAttributeTable.cs" company="Slash Games">
-// Copyright (c) Slash Games. All rights reserved.
+//   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
-// -----------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.Collections.AttributeTables
 {
@@ -10,25 +10,25 @@ namespace Slash.Collections.AttributeTables
     using System.Collections.Generic;
 
     /// <summary>
-    /// Table that allows storing and looking up attributes and their
-    /// respective values. Provides a collection of parents that are
-    /// referred to if a key can not be found in this table.
+    ///   Table that allows storing and looking up attributes and their
+    ///   respective values. Provides a collection of parents that are
+    ///   referred to if a key can not be found in this table.
     /// </summary>
     public class HierarchicalAttributeTable : AttributeTable
     {
-        #region Constants and Fields
+        #region Fields
 
         /// <summary>
-        /// Parent tables to consult if a key can't be found in this one.
+        ///   Parent tables to consult if a key can't be found in this one.
         /// </summary>
-        private List<IAttributeTable> parents;
+        private readonly List<IAttributeTable> parents;
 
         #endregion
 
-        #region Constructors
+        #region Constructors and Destructors
 
         /// <summary>
-        /// Constructs a new, empty attribute table without any parents.
+        ///   Constructs a new, empty attribute table without any parents.
         /// </summary>
         public HierarchicalAttributeTable()
         {
@@ -37,10 +37,10 @@ namespace Slash.Collections.AttributeTables
 
         #endregion
 
-        #region Public Methods
+        #region Public Methods and Operators
 
         /// <summary>
-        /// Adds the passed attribute table as parent to this one.
+        ///   Adds the passed attribute table as parent to this one.
         /// </summary>
         /// <param name="parent">Parent to add.</param>
         public void AddParent(IAttributeTable parent)
@@ -54,7 +54,7 @@ namespace Slash.Collections.AttributeTables
         }
 
         /// <summary>
-        /// Removes all parents of this attribute table.
+        ///   Removes all parents of this attribute table.
         /// </summary>
         public void ClearParents()
         {
@@ -62,7 +62,7 @@ namespace Slash.Collections.AttributeTables
         }
 
         /// <summary>
-        /// Checks whether the passed attribute table is a parent of this one.
+        ///   Checks whether the passed attribute table is a parent of this one.
         /// </summary>
         /// <param name="parent">Table to check.</param>
         /// <returns>true, if the passed table is a parent of this one, and false otherwise.</returns>
@@ -72,8 +72,8 @@ namespace Slash.Collections.AttributeTables
         }
 
         /// <summary>
-        /// Inserts the passed attribute table as parent to be consulted with
-        /// the specified priority if a key can't be found in this one.
+        ///   Inserts the passed attribute table as parent to be consulted with
+        ///   the specified priority if a key can't be found in this one.
         /// </summary>
         /// <param name="priority">Priority of the new parent.</param>
         /// <param name="parent">Parent to add.</param>
@@ -88,7 +88,7 @@ namespace Slash.Collections.AttributeTables
         }
 
         /// <summary>
-        /// Removes the passed parent from this attribute table.
+        ///   Removes the passed parent from this attribute table.
         /// </summary>
         /// <param name="parent">Parent to remove.</param>
         public void RemoveParent(IAttributeTable parent)
@@ -97,9 +97,9 @@ namespace Slash.Collections.AttributeTables
         }
 
         /// <summary>
-        /// Tries to retrieve the value the passed key is mapped to within this
-        /// attribute table. If the key can't be found, the parents of this are
-        /// checked, in order.
+        ///   Tries to retrieve the value the passed key is mapped to within this
+        ///   attribute table. If the key can't be found, the parents of this are
+        ///   checked, in order.
         /// </summary>
         /// <param name="key">Key to retrieve the value of.</param>
         /// <param name="value">Retrieved value.</param>
@@ -110,9 +110,9 @@ namespace Slash.Collections.AttributeTables
         }
 
         /// <summary>
-        /// Tries to retrieve the value the passed key is mapped to within this
-        /// attribute table. If the key can't be found, the parents of this are
-        /// checked, in order.
+        ///   Tries to retrieve the value the passed key is mapped to within this
+        ///   attribute table. If the key can't be found, the parents of this are
+        ///   checked, in order.
         /// </summary>
         /// <typeparam name="T">Type of the value to retrieve.</typeparam>
         /// <param name="key">Key to retrieve the value of.</param>

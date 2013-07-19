@@ -178,7 +178,7 @@ namespace Slash.GameBase
 
         /// <summary>
         ///   Creates a new entity, adding components matching the passed
-        ///   blueprint and initializing these with the data stored in the 
+        ///   blueprint and initializing these with the data stored in the
         ///   blueprint and the specified configuration. Configuration data
         ///   is preferred over blueprint data.
         /// </summary>
@@ -193,46 +193,13 @@ namespace Slash.GameBase
         }
 
         /// <summary>
-        ///   Initializes the specified entity, adding components matching the
-        ///   passed blueprint and initializing these with the data stored in
-        ///   the blueprint and the specified configuration. Configuration
-        ///   data is preferred over blueprint data.
-        /// </summary>
-        /// <param name="entityId">Id of the entity to initialize.</param>
-        /// <param name="blueprint"> Blueprint describing the entity to create. </param>
-        /// <param name="configuration"> Data for initializing the entity. </param>
-        public void InitEntity(int entityId, Blueprint blueprint, IAttributeTable configuration)
-        {
-            foreach (Type type in blueprint.ComponentTypes)
-            {
-                // Create component.
-                IEntityComponent entityComponent = (IEntityComponent)Activator.CreateInstance(type);
-                this.AddComponent(entityId, entityComponent);
-
-                // Initialize component with the attribute table data.
-                HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
-                if (configuration != null)
-                {
-                    attributeTable.AddParent(configuration);
-                }
-
-                if (blueprint.AttributeTable != null)
-                {
-                    attributeTable.AddParent(blueprint.AttributeTable);
-                }
-
-                entityComponent.InitComponent(attributeTable);
-            }
-
-            this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
-        }
-
-        /// <summary>
         ///   Checks whether the entity with the passed id has been removed or
         ///   not.
         /// </summary>
         /// <param name="entityId"> Id of the entity to check. </param>
-        /// <returns> <c>false</c> , if the entity has been removed, and <c>true</c> otherwise. </returns>
+        /// <returns>
+        ///   <c>false</c> , if the entity has been removed, and <c>true</c> otherwise.
+        /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">Entity id is negative.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Entity id has not yet been assigned.</exception>
         public bool EntityIsAlive(int entityId)
@@ -321,8 +288,8 @@ namespace Slash.GameBase
         }
 
         /// <summary>
-        ///     Convenience method for retrieving components from two entities
-        ///     in case the order of the entities is unknown.
+        ///   Convenience method for retrieving components from two entities
+        ///   in case the order of the entities is unknown.
         /// </summary>
         /// <typeparam name="TComponentTypeA">Type of the first component to get.</typeparam>
         /// <typeparam name="TComponentTypeB">Type of the second component to get.</typeparam>
@@ -332,17 +299,16 @@ namespace Slash.GameBase
         /// <param name="componentA">First component.</param>
         /// <param name="componentB">Second component.</param>
         /// <returns>
-        ///     <c>true</c>, if one of the entities has a <typeparamref name="TComponentTypeA" />
-        ///     and the other one a <typeparamref name="TComponentTypeB" /> attached,
-        ///     and <c>false</c> otherwise.
+        ///   <c>true</c>, if one of the entities has a <typeparamref name="TComponentTypeA" />
+        ///   and the other one a <typeparamref name="TComponentTypeB" /> attached,
+        ///   and <c>false</c> otherwise.
         /// </returns>
         public bool GetEntityComponents<TComponentTypeA, TComponentTypeB>(
             Entity2Data data,
             out int entityIdA,
             out int entityIdB,
             out TComponentTypeA componentA,
-            out TComponentTypeB componentB)
-            where TComponentTypeA : class, IEntityComponent
+            out TComponentTypeB componentB) where TComponentTypeA : class, IEntityComponent
             where TComponentTypeB : class, IEntityComponent
         {
             entityIdA = data.First;
@@ -364,6 +330,41 @@ namespace Slash.GameBase
             }
 
             return true;
+        }
+
+        /// <summary>
+        ///   Initializes the specified entity, adding components matching the
+        ///   passed blueprint and initializing these with the data stored in
+        ///   the blueprint and the specified configuration. Configuration
+        ///   data is preferred over blueprint data.
+        /// </summary>
+        /// <param name="entityId">Id of the entity to initialize.</param>
+        /// <param name="blueprint"> Blueprint describing the entity to create. </param>
+        /// <param name="configuration"> Data for initializing the entity. </param>
+        public void InitEntity(int entityId, Blueprint blueprint, IAttributeTable configuration)
+        {
+            foreach (Type type in blueprint.ComponentTypes)
+            {
+                // Create component.
+                IEntityComponent entityComponent = (IEntityComponent)Activator.CreateInstance(type);
+                this.AddComponent(entityId, entityComponent);
+
+                // Initialize component with the attribute table data.
+                HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
+                if (configuration != null)
+                {
+                    attributeTable.AddParent(configuration);
+                }
+
+                if (blueprint.AttributeTable != null)
+                {
+                    attributeTable.AddParent(blueprint.AttributeTable);
+                }
+
+                entityComponent.InitComponent(attributeTable);
+            }
+
+            this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
         }
 
         /// <summary>

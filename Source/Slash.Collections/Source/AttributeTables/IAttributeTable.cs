@@ -36,7 +36,7 @@ namespace Slash.Collections.AttributeTables
         /// <param name="key"> Key to map. </param>
         /// <param name="value"> Value to map the key to. </param>
         /// <exception cref="ArgumentException">An element with the same key already exists in the attribute table.</exception>
-        void AddValue(object key, object value);
+        void Add(object key, object value);
 
         /// <summary>
         ///   Maps the passed key to the specified value in this attribute table,
@@ -45,7 +45,7 @@ namespace Slash.Collections.AttributeTables
         /// <param name="key"> Key to map. </param>
         /// <param name="value"> Value to map the key to. </param>
         /// <exception cref="ArgumentException">An element with the same key already exists in the attribute table.</exception>
-        void Add(object key, object value);
+        void AddValue(object key, object value);
 
         /// <summary>
         ///   Returns <c>true</c> if the passed key is mapped within this

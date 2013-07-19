@@ -77,9 +77,10 @@ namespace Slash.Collections.AttributeTables
         /// </summary>
         /// <param name="key"> Key to map. </param>
         /// <param name="value"> Value to map the key to. </param>
-        public void AddValue(object key, object value)
+        /// <exception cref="ArgumentException">An element with the same key already exists in the attribute table.</exception>
+        public void Add(object key, object value)
         {
-            this.attributes.Add(key, value);
+            this.AddValue(key, value);
         }
 
         /// <summary>
@@ -88,10 +89,9 @@ namespace Slash.Collections.AttributeTables
         /// </summary>
         /// <param name="key"> Key to map. </param>
         /// <param name="value"> Value to map the key to. </param>
-        /// <exception cref="ArgumentException">An element with the same key already exists in the attribute table.</exception>
-        public void Add(object key, object value)
+        public void AddValue(object key, object value)
         {
-            this.AddValue(key, value);
+            this.attributes.Add(key, value);
         }
 
         /// <summary>

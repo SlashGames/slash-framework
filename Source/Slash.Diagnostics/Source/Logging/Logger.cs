@@ -7,12 +7,12 @@
 namespace Slash.Diagnostics.Logging
 {
     using System;
-
-#if LOG4NET
     using System.IO;
 
     using log4net;
     using log4net.Config;
+#if LOG4NET
+
 #endif
 
     /// <summary>
@@ -22,7 +22,6 @@ namespace Slash.Diagnostics.Logging
     ///   project, all you have to do is uncomment
     ///   #define LOG4NET (say //#define LOG4NET)
     ///   at the top of this file.
-    ///    
     ///   You should definitely remove log4net when building Web players
     ///   as it increases the size significantly (around 1 to 2 MB!)
     /// </summary>
