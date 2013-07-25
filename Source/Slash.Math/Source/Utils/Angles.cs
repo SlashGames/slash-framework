@@ -138,7 +138,7 @@ namespace Slash.Math.Utils
         /// <summary>
         ///   Converts a radian angle to a degree angle.
         /// </summary>
-        /// <param name="deg"> Angle to convert (in radians). </param>
+        /// <param name="rad"> Angle to convert (in radians). </param>
         /// <returns> Converted angle (in degree). </returns>
         public static float Rad2Deg(float rad)
         {

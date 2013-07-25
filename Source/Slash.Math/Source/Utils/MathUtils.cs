@@ -71,7 +71,7 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="x"> First value. </param>
         /// <param name="y"> Second value. </param>
-        /// <param name="s"> Weight. </param>
+        /// <param name="step"> Weight. </param>
         /// <returns> Interpolated value. </returns>
         public static float Lerp(float x, float y, float step)
         {
