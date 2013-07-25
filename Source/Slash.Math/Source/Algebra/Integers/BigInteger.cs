@@ -1051,7 +1051,7 @@ namespace System.Numerics
             }
 
             // overflow check
-            int lastPos = maxLength - 1;
+            const int lastPos = maxLength - 1;
             if ((bi1.data[lastPos] & 0x80000000) == (bi2.data[lastPos] & 0x80000000)
                 && (result.data[lastPos] & 0x80000000) != (bi1.data[lastPos] & 0x80000000))
             {
@@ -1113,13 +1113,12 @@ namespace System.Numerics
         {
             BigInteger result = new BigInteger(bi1);
 
-            long val;
             bool carryIn = true;
             int index = 0;
 
             while (carryIn && index < maxLength)
             {
-                val = (result.data[index]);
+                long val = (result.data[index]);
                 val--;
 
                 result.data[index] = (uint)(val & 0xFFFFFFFF);
@@ -1143,7 +1142,7 @@ namespace System.Numerics
             }
 
             // overflow check
-            int lastPos = maxLength - 1;
+            const int lastPos = maxLength - 1;
 
             // overflow if initial value was -ve but -- caused a sign
             // change to positive.
@@ -1162,7 +1161,7 @@ namespace System.Numerics
             BigInteger quotient = new BigInteger();
             BigInteger remainder = new BigInteger();
 
-            int lastPos = maxLength - 1;
+            const int lastPos = maxLength - 1;
             bool divisorNeg = false, dividendNeg = false;
 
             if ((bi1.data[lastPos] & 0x80000000) != 0) // bi1 negative
@@ -1304,12 +1303,12 @@ namespace System.Numerics
         {
             BigInteger result = new BigInteger(bi1);
 
-            long val, carry = 1;
+            long carry = 1;
             int index = 0;
 
             while (carry != 0 && index < maxLength)
             {
-                val = (result.data[index]);
+                long val = (result.data[index]);
                 val++;
 
                 result.data[index] = (uint)(val & 0xFFFFFFFF);
@@ -1331,7 +1330,7 @@ namespace System.Numerics
             }
 
             // overflow check
-            int lastPos = maxLength - 1;
+            const int lastPos = maxLength - 1;
 
             // overflow if initial value was +ve but ++ caused a sign
             // change to negative.
@@ -1409,7 +1408,7 @@ namespace System.Numerics
             BigInteger quotient = new BigInteger();
             BigInteger remainder = new BigInteger(bi1);
 
-            int lastPos = maxLength - 1;
+            const int lastPos = maxLength - 1;
             bool dividendNeg = false;
 
             if ((bi1.data[lastPos] & 0x80000000) != 0) // bi1 negative
@@ -1449,7 +1448,7 @@ namespace System.Numerics
 
         public static BigInteger operator *(BigInteger bi1, BigInteger bi2)
         {
-            int lastPos = maxLength - 1;
+            const int lastPos = maxLength - 1;
             bool bi1Neg = false, bi2Neg = false;
 
             // take the absolute value of the inputs
@@ -1619,9 +1618,7 @@ namespace System.Numerics
             long carryIn = 0;
             for (int i = 0; i < result.dataLength; i++)
             {
-                long diff;
-
-                diff = bi1.data[i] - (long)bi2.data[i] - carryIn;
+                long diff = bi1.data[i] - (long)bi2.data[i] - carryIn;
                 result.data[i] = (uint)(diff & 0xFFFFFFFF);
 
                 if (diff < 0)
@@ -1652,7 +1649,7 @@ namespace System.Numerics
 
             // overflow check
 
-            int lastPos = maxLength - 1;
+            const int lastPos = maxLength - 1;
             if ((bi1.data[lastPos] & 0x80000000) != (bi2.data[lastPos] & 0x80000000)
                 && (result.data[lastPos] & 0x80000000) != (bi1.data[lastPos] & 0x80000000))
             {
@@ -1685,12 +1682,12 @@ namespace System.Numerics
             }
 
             // add one to result of 1's complement
-            long val, carry = 1;
+            long carry = 1;
             int index = 0;
 
             while (carry != 0 && index < maxLength)
             {
-                val = (result.data[index]);
+                long val = (result.data[index]);
                 val++;
 
                 result.data[index] = (uint)(val & 0xFFFFFFFF);
@@ -1885,7 +1882,7 @@ namespace System.Numerics
                 return false;
             }
 
-            return this.LucasStrongTestHelper(thisVal);
+            return LucasStrongTestHelper(thisVal);
         }
 
         public bool RabinMillerTest(int confidence)
@@ -1985,12 +1982,8 @@ namespace System.Numerics
                 Console.WriteLine("s = " + s);
                 */
 
-                bool result = false;
-
-                if (b.dataLength == 1 && b.data[0] == 1) // a^t mod p = 1
-                {
-                    result = true;
-                }
+                // Check if a^t mod p = 1.
+                bool result = b.dataLength == 1 && b.data[0] == 1;
 
                 for (int j = 0; result == false && j < s; j++)
                 {
@@ -2167,7 +2160,7 @@ namespace System.Numerics
                 throw (new ArgumentException("Radix must be >= 2 and <= 36"));
             }
 
-            string charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string result = "";
 
             BigInteger a = this;
@@ -2588,12 +2581,9 @@ namespace System.Numerics
 
             // b = a^t mod p
             BigInteger b = a.modPow(t, thisVal);
-            bool result = false;
 
-            if (b.dataLength == 1 && b.data[0] == 1) // a^t mod p = 1
-            {
-                result = true;
-            }
+            // Check if a^t mod p = 1.
+            bool result = b.dataLength == 1 && b.data[0] == 1;
 
             for (int j = 0; result == false && j < s; j++)
             {
@@ -2609,7 +2599,7 @@ namespace System.Numerics
             // if number is strong pseudoprime to base 2, then do a strong lucas test
             if (result)
             {
-                result = this.LucasStrongTestHelper(thisVal);
+                result = LucasStrongTestHelper(thisVal);
             }
 
             return result;
@@ -2764,12 +2754,12 @@ namespace System.Numerics
                 {
                     if ((exp.data[pos] & mask) != 0)
                     {
-                        resultNum = this.BarrettReduction(resultNum * tempNum, n, constant);
+                        resultNum = BarrettReduction(resultNum * tempNum, n, constant);
                     }
 
                     mask <<= 1;
 
-                    tempNum = this.BarrettReduction(tempNum * tempNum, n, constant);
+                    tempNum = BarrettReduction(tempNum * tempNum, n, constant);
 
                     if (tempNum.dataLength == 1 && tempNum.data[0] == 1)
                     {
@@ -2981,7 +2971,7 @@ namespace System.Numerics
                         u1 = (u1 * v1) % n;
 
                         v = ((v * v1) - (P * Q_k)) % n;
-                        v1 = n.BarrettReduction(v1 * v1, n, constant);
+                        v1 = BarrettReduction(v1 * v1, n, constant);
                         v1 = (v1 - ((Q_k * Q) << 1)) % n;
 
                         if (flag)
@@ -2990,7 +2980,7 @@ namespace System.Numerics
                         }
                         else
                         {
-                            Q_k = n.BarrettReduction(Q_k * Q_k, n, constant);
+                            Q_k = BarrettReduction(Q_k * Q_k, n, constant);
                         }
 
                         Q_k = (Q_k * Q) % n;
@@ -3001,7 +2991,7 @@ namespace System.Numerics
                         u1 = ((u1 * v) - Q_k) % n;
 
                         v1 = ((v * v1) - (P * Q_k)) % n;
-                        v = n.BarrettReduction(v * v, n, constant);
+                        v = BarrettReduction(v * v, n, constant);
                         v = (v - (Q_k << 1)) % n;
 
                         if (flag)
@@ -3011,7 +3001,7 @@ namespace System.Numerics
                         }
                         else
                         {
-                            Q_k = n.BarrettReduction(Q_k * Q_k, n, constant);
+                            Q_k = BarrettReduction(Q_k * Q_k, n, constant);
                         }
                     }
 
@@ -3031,7 +3021,7 @@ namespace System.Numerics
             }
             else
             {
-                Q_k = n.BarrettReduction(Q_k * Q_k, n, constant);
+                Q_k = BarrettReduction(Q_k * Q_k, n, constant);
             }
 
             Q_k = (Q_k * Q) % n;
@@ -3049,7 +3039,7 @@ namespace System.Numerics
                 }
                 else
                 {
-                    Q_k = n.BarrettReduction(Q_k * Q_k, n, constant);
+                    Q_k = BarrettReduction(Q_k * Q_k, n, constant);
                 }
             }
 
@@ -3364,7 +3354,7 @@ namespace System.Numerics
             }
         }
 
-        private BigInteger BarrettReduction(BigInteger x, BigInteger n, BigInteger constant)
+        private static BigInteger BarrettReduction(BigInteger x, BigInteger n, BigInteger constant)
         {
             int k = n.dataLength, kPlusOne = k + 1, kMinusOne = k - 1;
 
@@ -3455,7 +3445,7 @@ namespace System.Numerics
             return r1;
         }
 
-        private bool LucasStrongTestHelper(BigInteger thisVal)
+        private static bool LucasStrongTestHelper(BigInteger thisVal)
         {
             // Do the test (selects D based on Selfridge)
             // Let D be the first element of the sequence
@@ -3539,21 +3529,17 @@ namespace System.Numerics
             constant = constant / thisVal;
 
             BigInteger[] lucas = LucasSequenceHelper(1, Q, t, thisVal, constant, 0);
-            bool isPrime = false;
 
-            if ((lucas[0].dataLength == 1 && lucas[0].data[0] == 0)
-                || (lucas[1].dataLength == 1 && lucas[1].data[0] == 0))
-            {
-                // u(t) = 0 or V(t) = 0
-                isPrime = true;
-            }
+            // Check if u(t) = 0 or V(t) = 0.
+            bool isPrime = (lucas[0].dataLength == 1 && lucas[0].data[0] == 0)
+                           || (lucas[1].dataLength == 1 && lucas[1].data[0] == 0);
 
             for (int i = 1; i < s; i++)
             {
                 if (!isPrime)
                 {
                     // doubling of index
-                    lucas[1] = thisVal.BarrettReduction(lucas[1] * lucas[1], thisVal, constant);
+                    lucas[1] = BarrettReduction(lucas[1] * lucas[1], thisVal, constant);
                     lucas[1] = (lucas[1] - (lucas[2] << 1)) % thisVal;
 
                     //lucas[1] = ((lucas[1] * lucas[1]) - (lucas[2] << 1)) % thisVal;
@@ -3564,7 +3550,7 @@ namespace System.Numerics
                     }
                 }
 
-                lucas[2] = thisVal.BarrettReduction(lucas[2] * lucas[2], thisVal, constant); //Q^k
+                lucas[2] = BarrettReduction(lucas[2] * lucas[2], thisVal, constant); //Q^k
             }
 
             if (isPrime) // additional checks for composite numbers
