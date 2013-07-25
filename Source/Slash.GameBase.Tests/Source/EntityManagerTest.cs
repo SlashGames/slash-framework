@@ -83,6 +83,7 @@ namespace Slash.GameBase.Tests
         {
             this.testEntityId = this.entityManager.CreateEntity();
             this.entityManager.RemoveEntity(this.testEntityId);
+            this.entityManager.CleanUpEntities();
             this.entityManager.GetComponent(this.testEntityId, typeof(TestEntityComponent));
         }
 
