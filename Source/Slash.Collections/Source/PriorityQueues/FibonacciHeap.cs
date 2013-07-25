@@ -333,13 +333,12 @@ namespace Slash.Collections.PriorityQueues
             this.minimumNode = firstNewRoot;
             this.minimumNode.Parent = null;
 
-            FibonacciHeapNode<T> previousNewRoot = null;
             FibonacciHeapNode<T> currentNewRoot = firstNewRoot;
 
             for (int i = 1; i < newRoots.Count; i++)
             {
                 // Get the next new root.
-                previousNewRoot = currentNewRoot;
+                FibonacciHeapNode<T> previousNewRoot = currentNewRoot;
                 currentNewRoot = newRoots[i];
 
                 // Update pointers.

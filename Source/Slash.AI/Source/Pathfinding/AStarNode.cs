@@ -17,7 +17,7 @@ namespace Slash.AI.Pathfinding
         ///   Constructs a new A* node with the specified unique index.
         /// </summary>
         /// <param name="index">Unique index of the new vertex in the pathfinding graph.</param>
-        public AStarNode(int index)
+        protected AStarNode(int index)
         {
             this.Index = index;
         }

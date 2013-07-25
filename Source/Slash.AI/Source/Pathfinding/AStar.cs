@@ -66,10 +66,8 @@ namespace Slash.AI.Pathfinding
             Queue<T> closedList = new Queue<T>();
 
             // Declare current node to work on in order to calculate the path.
-            T currentNode;
 
             // Declare list to hold the neighbors of the current node.
-            List<T> neighbors;
 
             // Add starting node to open list.
             fibHeapItems[start.Index] = openList.Insert(start, 0);
@@ -80,7 +78,7 @@ namespace Slash.AI.Pathfinding
             while ((!algorithmComplete) && (!algorithmAborted))
             {
                 // Get the node with the lowest F score in the open list.
-                currentNode = openList.DeleteMin().Item;
+                T currentNode = openList.DeleteMin().Item;
 
                 // Drop that node from the open list and add it to the closed list.
                 closedList.Enqueue(currentNode);
@@ -94,7 +92,7 @@ namespace Slash.AI.Pathfinding
                 }
 
                 // Otherwise, get all adjacent nodes.
-                neighbors = graph.ListOfAdjacentVertices(currentNode);
+                List<T> neighbors = graph.ListOfAdjacentVertices(currentNode);
 
                 // Add all nodes that aren't already on the open or closed list to the open list.
                 foreach (T node in neighbors)

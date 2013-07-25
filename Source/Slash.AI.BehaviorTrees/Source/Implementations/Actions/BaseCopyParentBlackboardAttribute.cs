@@ -41,9 +41,9 @@ namespace Slash.AI.BehaviorTrees.Implementations.Actions
             }
 
             // Find attribute on parent blackboard.
-            object attribute = null;
             foreach (Blackboard parent in blackboard.Parents)
             {
+                object attribute = null;
                 if (parent.TryGetValue(this.AttributeKey, out attribute))
                 {
                     // Set attribute on blackboard.
