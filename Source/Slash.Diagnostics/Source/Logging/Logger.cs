@@ -9,10 +9,9 @@ namespace Slash.Diagnostics.Logging
     using System;
     using System.IO;
 
+#if LOG4NET
     using log4net;
     using log4net.Config;
-#if LOG4NET
-
 #endif
 
     /// <summary>
