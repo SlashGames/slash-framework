@@ -11,7 +11,7 @@ namespace Slash.Collections.PriorityQueues
     ///   Provides a key for comparing it to other items for order.
     /// </summary>
     /// <typeparam name="T">Type of the item held by this container.</typeparam>
-    public interface IPriorityQueueItem<T>
+    public interface IPriorityQueueItem<out T>
     {
         #region Public Properties
 

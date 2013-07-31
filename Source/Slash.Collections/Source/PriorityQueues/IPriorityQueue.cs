@@ -6,6 +6,8 @@
 
 namespace Slash.Collections.PriorityQueues
 {
+    using System;
+
     /// <summary>
     ///   Ordered data structure that is optimized for finding the minimum item.
     /// </summary>
