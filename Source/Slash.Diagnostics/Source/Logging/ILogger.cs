@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SlashGames.Diagnostics.Logging
+namespace Slash.Diagnostics.Logging
 {
     using System;
 
