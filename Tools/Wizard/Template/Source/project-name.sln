@@ -1,0 +1,27 @@
+﻿Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-vs", "Unity\Assembly-CSharp-vs.csproj", "{CD8C9303-404B-FB8D-6B9B-21988D5CAC0A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{001B2D96-4259-4E09-934F-290F74086E06} = {001B2D96-4259-4E09-934F-290F74086E06}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor-vs", "Unity\Assembly-CSharp-Editor-vs.csproj", "{6311E6C6-0A20-383B-320B-694068DE37A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass-vs", "Unity\Assembly-CSharp-firstpass-vs.csproj", "{2662B409-6332-1E56-D797-C9025C53BDD6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{001B2D96-4259-4E09-934F-290F74086E06} = {001B2D96-4259-4E09-934F-290F74086E06}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostBuild", "PostBuild\PostBuild.csproj", "{001B2D96-4259-4E09-934F-290F74086E06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
