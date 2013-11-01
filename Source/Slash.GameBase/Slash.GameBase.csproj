@@ -32,7 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Source\Blueprint.cs" />
+    <Compile Include="Source\Blueprints\Blueprint.cs" />
+    <Compile Include="Source\Blueprints\BlueprintManager.cs" />
+    <Compile Include="Source\Blueprints\BlueprintUtils.cs" />
+    <Compile Include="Source\Blueprints\HierarchicalBlueprintManager.cs" />
+    <Compile Include="Source\Blueprints\IBlueprintManager.cs" />
     <Compile Include="Source\Event.cs" />
     <Compile Include="Source\EventData\Entity2Data.cs" />
     <Compile Include="Source\EventData\EntityComponentData.cs" />
@@ -56,7 +60,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Source\Blueprints\" />
     <Folder Include="Source\Components\" />
     <Folder Include="Source\Systems\" />
   </ItemGroup>

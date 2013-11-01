@@ -9,7 +9,7 @@ namespace Slash.GameBase
     using System;
 
     /// <summary>
-    ///   Event that has occurred within the Slash Games Framework. May contain
+    ///   Event that has occurred within the entity system. May contain
     ///   additional data listeners might be interested in.
     /// </summary>
     public class Event

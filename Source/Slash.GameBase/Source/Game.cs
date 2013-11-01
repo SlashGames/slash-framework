@@ -7,7 +7,7 @@
 namespace Slash.GameBase
 {
     /// <summary>
-    ///   Base class of most Slash Games games. Provides default functionality
+    ///   Base game class. Provides default functionality
     ///   that is common across many games, such as components that are attached
     ///   to entities, or systems working on these components.
     /// </summary>
@@ -29,6 +29,11 @@ namespace Slash.GameBase
         ///   Manager responsible for updating all game systems in each tick.
         /// </summary>
         private readonly SystemManager systemManager;
+
+        /// <summary>
+        ///   Accumulated time for fixed updates (in sec).
+        /// </summary>
+        private float accumulatedTime;
 
         #endregion
 
@@ -99,24 +104,50 @@ namespace Slash.GameBase
         /// </summary>
         public float TimeElapsed { get; private set; }
 
+        /// <summary>
+        ///   Fixed time between two game ticks (in sec).
+        /// </summary>
+        public float UpdatePeriod { get; set; }
+
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Initialization of the game. Can be used for game-specific initialization steps.
+        /// </summary>
+        public virtual void InitGame()
+        {
+        }
 
         /// <summary>
         ///   Pauses this game, stopping ticking all systems.
         /// </summary>
         public virtual void PauseGame()
         {
+            if (!this.Running)
+            {
+                return;
+            }
+
             this.Running = false;
             this.eventManager.QueueEvent(FrameworkEventType.GamePaused);
+
+            // Process events till the paused event before stopping the game.
+            // TODO(co): Introduce a SendEvent method for event manager and handle both cases: Currently inside event handling and not inside.
+            this.eventManager.ProcessEvents();
         }
 
         /// <summary>
         ///   Resumes this game, continuing to tick all systems.
         /// </summary>
-        public virtual void ResumeGame()
+        public void ResumeGame()
         {
+            if (this.Running)
+            {
+                return;
+            }
+
             this.Running = true;
             this.eventManager.QueueEvent(FrameworkEventType.GameResumed);
         }
@@ -124,10 +155,15 @@ namespace Slash.GameBase
         /// <summary>
         ///   Starts this game, beginning to tick all systems.
         /// </summary>
-        public virtual void StartGame()
+        public void StartGame()
         {
             this.Running = true;
             this.eventManager.QueueEvent(FrameworkEventType.GameStarted);
+
+            // Init game.
+            this.InitGame();
+
+            this.eventManager.ProcessEvents();
         }
 
         /// <summary>
@@ -137,18 +173,49 @@ namespace Slash.GameBase
         /// <param name="dt">
         ///   Time passed since the last tick, in seconds.
         /// </param>
-        public virtual void Update(float dt)
+        public void Update(float dt)
         {
             if (!this.Running)
             {
                 return;
             }
 
-            this.systemManager.Update(dt);
-            this.eventManager.ProcessEvents(dt);
-            this.entityManager.CleanUpEntities();
+            if (this.UpdatePeriod > 0)
+            {
+                // Fixed update.
+                this.accumulatedTime += dt;
+
+                while (this.accumulatedTime >= this.UpdatePeriod)
+                {
+                    this.UpdateGame(this.UpdatePeriod);
+                    this.accumulatedTime -= this.UpdatePeriod;
+                }
+            }
+            else
+            {
+                this.UpdateGame(dt);
+            }
 
             this.TimeElapsed += dt;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///   Ticks this game, allowing all systems to update themselves and
+        ///   processing all game events.
+        /// </summary>
+        /// <param name="dt">
+        ///   Time passed since the last tick, in seconds.
+        /// </param>
+        private void UpdateGame(float dt)
+        {
+            this.systemManager.Update(dt);
+            this.eventManager.ProcessEvents();
+            this.entityManager.CleanUpEntities();
+            this.eventManager.ProcessEvents();
         }
 
         #endregion
