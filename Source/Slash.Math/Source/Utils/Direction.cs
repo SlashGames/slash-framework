@@ -9,6 +9,8 @@ namespace Slash.Math.Utils
     using System;
     using System.Collections.Generic;
 
+    using Slash.Math.Algebra.Vectors;
+
     /// <summary>
     ///   Orientations on the tile grid.
     /// </summary>
@@ -75,38 +77,10 @@ namespace Slash.Math.Utils
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Calculates opposite directions of given directions.
-        /// </summary>
-        /// <param name="direction">Direction of which to calculate opposite direction.</param>
-        /// <returns>Opposite direction of parameter.</returns>
-        public static DirectionType Opposite(DirectionType direction)
-        {
-            DirectionType ret = direction;
-            if ((direction & DirectionType.North) != 0)
-            {
-                ret = (ret & ~DirectionType.North) | DirectionType.South;
-            }
-            else if ((direction & DirectionType.South) != 0)
-            {
-                ret = (ret & ~DirectionType.South) | DirectionType.North;
-            }
-            if ((direction & DirectionType.West) != 0)
-            {
-                ret = (ret & ~DirectionType.West) | DirectionType.East;
-            }
-            else if ((direction & DirectionType.East) != 0)
-            {
-                ret = (ret & ~DirectionType.East) | DirectionType.West;
-            }
-
-            return ret;
-        }
-
-        /// <summary>
         ///   Returns an enumeration of cardinal directions (N-E-S-W).
         /// </summary>
         /// <returns>Enumeration of cardinal directions.</returns>
-        public static IEnumerable<DirectionType> cardinalDirections()
+        public static IEnumerable<DirectionType> CardinalDirections()
         {
             yield return DirectionType.North;
             yield return DirectionType.East;
@@ -119,11 +93,11 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="vector">Vector to get direction for.</param>
         /// <returns>Direction which is closest to the specified vector.</returns>
-        public static DirectionType computeCardinalDirection(Vector2F vector)
+        public static DirectionType ComputeCardinalDirection(Vector2F vector)
         {
             // Compute angle.
             float angle = Vector2F.CalculateAngle(Vector2F.Forward, vector);
-            return computeCardinalDirection(angle);
+            return ComputeCardinalDirection(angle);
         }
 
         /// <summary>
@@ -132,7 +106,7 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="angle">Angle to get direction for (from forward direction (0, 1) positive counter-clockwise).</param>
         /// <returns>Direction which is closest to the specified angle.</returns>
-        public static DirectionType computeCardinalDirection(float angle)
+        public static DirectionType ComputeCardinalDirection(float angle)
         {
             // Wrap angle.
             angle = MathF.WrapValue(angle, MathF.TwoPi);
@@ -164,7 +138,7 @@ namespace Slash.Math.Utils
         /// <param name="direction">Cardinal direction to get index for.</param>
         /// <exception cref="ArgumentException">Thrown if specified direction is no cardinal direction.</exception>
         /// <returns>Index between 0 and 4 (exclusive).</returns>
-        public static int getCardinalDirectionIndex(DirectionType direction)
+        public static int GetCardinalDirectionIndex(DirectionType direction)
         {
             switch (direction)
             {
@@ -186,7 +160,7 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="direction">Direction to check.</param>
         /// <returns>True if the specified direction is a cardinal direction; otherwise, false.</returns>
-        public static bool isCardinalDirection(DirectionType direction)
+        public static bool IsCardinalDirection(DirectionType direction)
         {
             switch (direction)
             {
@@ -205,9 +179,9 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>True if the specified value is a direction and a cardinal direction; otherwise, false.</returns>
-        public static bool isCardinalDirection(object value)
+        public static bool IsCardinalDirection(object value)
         {
-            return value is DirectionType && isCardinalDirection((DirectionType)value);
+            return value is DirectionType && IsCardinalDirection((DirectionType)value);
         }
 
         /// <summary>
@@ -215,7 +189,7 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="direction">Direction to check.</param>
         /// <returns>True if the specified direction is a horizontal one; otherwise, false.</returns>
-        public static bool isHorizontalDirection(DirectionType direction)
+        public static bool IsHorizontalDirection(DirectionType direction)
         {
             switch (direction)
             {
@@ -232,9 +206,37 @@ namespace Slash.Math.Utils
         /// <param name="gridLocation">Location to move.</param>
         /// <param name="direction">Direction to move to.</param>
         /// <returns>New location after moving the specified location into the specified direction.</returns>
-        public static Vector2I moveLocation(Vector2I gridLocation, DirectionType direction)
+        public static Vector2I MoveLocation(Vector2I gridLocation, DirectionType direction)
         {
-            return gridLocation + toVector2I(direction);
+            return gridLocation + ToVector2I(direction);
+        }
+
+        /// <summary>
+        ///   Calculates opposite directions of given directions.
+        /// </summary>
+        /// <param name="direction">Direction of which to calculate opposite direction.</param>
+        /// <returns>Opposite direction of parameter.</returns>
+        public static DirectionType Opposite(DirectionType direction)
+        {
+            DirectionType ret = direction;
+            if ((direction & DirectionType.North) != 0)
+            {
+                ret = (ret & ~DirectionType.North) | DirectionType.South;
+            }
+            else if ((direction & DirectionType.South) != 0)
+            {
+                ret = (ret & ~DirectionType.South) | DirectionType.North;
+            }
+            if ((direction & DirectionType.West) != 0)
+            {
+                ret = (ret & ~DirectionType.West) | DirectionType.East;
+            }
+            else if ((direction & DirectionType.East) != 0)
+            {
+                ret = (ret & ~DirectionType.East) | DirectionType.West;
+            }
+
+            return ret;
         }
 
         /// <summary>
@@ -242,7 +244,7 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
         /// <returns> Set of directions.</returns>
-        public static DirectionType toDirections(Vector2I vector)
+        public static DirectionType ToDirections(Vector2I vector)
         {
             DirectionType ret = DirectionType.None;
             if (vector.Y == 0 && vector.X == 0)
@@ -265,7 +267,7 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
         /// <returns> Set of directions.</returns>
-        public static DirectionType toDirections(Vector2F vector)
+        public static DirectionType ToDirections(Vector2F vector)
         {
             DirectionType ret = DirectionType.None;
             if (vector.Y == 0.0f && vector.X == 0.0f)
@@ -288,9 +290,9 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="direction">Direction to convert.</param>
         /// <returns>Vector pointing in the specified direction.</returns>
-        public static Vector2F toVector2F(this DirectionType direction)
+        public static Vector2F ToVector2F(this DirectionType direction)
         {
-            Vector2I directionVector = toVector2I(direction);
+            Vector2I directionVector = ToVector2I(direction);
             return new Vector2F(directionVector.X, directionVector.Y);
         }
 
@@ -299,7 +301,7 @@ namespace Slash.Math.Utils
         /// </summary>
         /// <param name="direction">Direction to convert.</param>
         /// <returns>Vector pointing in the specified direction.</returns>
-        public static Vector2I toVector2I(DirectionType direction)
+        public static Vector2I ToVector2I(DirectionType direction)
         {
             return
                 new Vector2I(
