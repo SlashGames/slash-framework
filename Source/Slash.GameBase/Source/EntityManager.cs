@@ -13,6 +13,7 @@ namespace Slash.GameBase
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.ObjectModel;
+    using Slash.GameBase.Blueprints;
     using Slash.GameBase.EventData;
 
     /// <summary>
@@ -39,6 +40,11 @@ namespace Slash.GameBase
         private readonly Game game;
 
         /// <summary>
+        ///   Inactive entities and their components.
+        /// </summary>
+        private readonly Dictionary<int, List<IEntityComponent>> inactiveEntities;
+
+        /// <summary>
         ///   Ids of all entities that have been removed in this tick.
         /// </summary>
         private readonly HashSet<int> removedEntities;
@@ -62,6 +68,7 @@ namespace Slash.GameBase
             this.nextEntityId = 1;
             this.entities = new HashSet<int>();
             this.removedEntities = new HashSet<int>();
+            this.inactiveEntities = new Dictionary<int, List<IEntityComponent>>();
             this.componentManagers = new Dictionary<Type, ComponentManager>();
         }
 
@@ -96,27 +103,79 @@ namespace Slash.GameBase
         #region Public Methods and Operators
 
         /// <summary>
+        ///   Re-activates the entity with the specified id, if it is inactive.
+        /// </summary>
+        /// <param name="entityId">Id of the entity to activate.</param>
+        public void ActivateEntity(int entityId)
+        {
+            // Check if entity is inactive.
+            List<IEntityComponent> components;
+
+            if (!this.inactiveEntities.TryGetValue(entityId, out components))
+            {
+                return;
+            }
+
+            // Activate entity.
+            this.CreateEntity(entityId);
+
+            // Add components.
+            foreach (IEntityComponent component in components)
+            {
+                this.AddComponent(entityId, component);
+            }
+
+            // Raise event.
+            this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
+
+            // Remove from list of inactive entities.
+            this.inactiveEntities.Remove(entityId);
+        }
+
+        /// <summary>
         ///   Attaches the passed component to the entity with the specified id.
         /// </summary>
         /// <param name="entityId"> Id of the entity to attach the component to. </param>
-        /// <param name="entityComponent"> Component to attach. </param>
+        /// <param name="component"> Component to attach. </param>
         /// <exception cref="ArgumentOutOfRangeException">Entity id is negative.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Entity id has not yet been assigned.</exception>
         /// <exception cref="ArgumentException">Entity with the specified id has already been removed.</exception>
         /// <exception cref="ArgumentNullException">Passed component is null.</exception>
         /// <exception cref="InvalidOperationException">There is already a component of the same type attached.</exception>
-        public void AddComponent(int entityId, IEntityComponent entityComponent)
+        public void AddComponent(int entityId, IEntityComponent component)
+        {
+            this.AddComponent(entityId, component, true);
+        }
+
+        /// <summary>
+        ///   Attaches the passed component to the entity with the specified id.
+        /// </summary>
+        /// <param name="entityId"> Id of the entity to attach the component to. </param>
+        /// <param name="component"> Component to attach. </param>
+        /// <param name="sendEvent">Indicates if an event should be send about the component adding.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Entity id is negative.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Entity id has not yet been assigned.</exception>
+        /// <exception cref="ArgumentException">Entity with the specified id has already been removed.</exception>
+        /// <exception cref="ArgumentNullException">Passed component is null.</exception>
+        /// <exception cref="InvalidOperationException">There is already a component of the same type attached.</exception>
+        public void AddComponent(int entityId, IEntityComponent component, bool sendEvent)
         {
             this.CheckEntityId(entityId);
 
-            Type componentType = entityComponent.GetType();
+            Type componentType = component.GetType();
 
             if (!this.componentManagers.ContainsKey(componentType))
             {
-                this.componentManagers.Add(componentType, new ComponentManager(this.game));
+                this.componentManagers.Add(componentType, new ComponentManager());
             }
 
-            this.componentManagers[entityComponent.GetType()].AddComponent(entityId, entityComponent);
+            this.componentManagers[component.GetType()].AddComponent(entityId, component);
+
+            if (sendEvent)
+            {
+                this.game.EventManager.QueueEvent(
+                    FrameworkEventType.ComponentAdded, new EntityComponentData(entityId, component));
+            }
         }
 
         /// <summary>
@@ -127,6 +186,7 @@ namespace Slash.GameBase
         {
             foreach (int id in this.removedEntities)
             {
+                // Remove components.
                 foreach (ComponentManager manager in this.componentManagers.Values)
                 {
                     manager.RemoveComponent(id);
@@ -158,7 +218,7 @@ namespace Slash.GameBase
                 yield break;
             }
 
-            foreach (KeyValuePair<int, IEntityComponent> component in componentManager.Components())
+            foreach (IEntityComponent component in componentManager.Components())
             {
                 yield return component;
             }
@@ -171,8 +231,35 @@ namespace Slash.GameBase
         public int CreateEntity()
         {
             int id = this.nextEntityId++;
+            return this.CreateEntity(id);
+        }
+
+        /// <summary>
+        ///   Creates a new entity with the specified id.
+        /// </summary>
+        /// <param name="id">Id of the entity to create.</param>
+        /// <returns>Unique id of the new entity.</returns>
+        public int CreateEntity(int id)
+        {
             this.entities.Add(id);
             this.game.EventManager.QueueEvent(FrameworkEventType.EntityCreated, id);
+            return id;
+        }
+
+        /// <summary>
+        ///   Creates a new entity, adding components matching the passed
+        ///   blueprint and initializing these with the data stored in the
+        ///   blueprint and the specified configuration. Configuration data
+        ///   is preferred over blueprint data.
+        /// </summary>
+        /// <param name="blueprint"> Blueprint describing the entity to create. </param>
+        /// <param name="configuration"> Data for initializing the entity. </param>
+        /// <param name="additionalComponents">Components to add to the entity, in addition to the ones specified by the blueprint.</param>
+        /// <returns> Unique id of the new entity. </returns>
+        public int CreateEntity(Blueprint blueprint, IAttributeTable configuration, List<Type> additionalComponents)
+        {
+            int id = this.CreateEntity();
+            this.InitEntity(id, blueprint, configuration, additionalComponents);
             return id;
         }
 
@@ -187,9 +274,70 @@ namespace Slash.GameBase
         /// <returns> Unique id of the new entity. </returns>
         public int CreateEntity(Blueprint blueprint, IAttributeTable configuration)
         {
-            int id = this.CreateEntity();
-            this.InitEntity(id, blueprint, configuration);
-            return id;
+            return this.CreateEntity(blueprint, configuration, new List<Type>());
+        }
+
+        /// <summary>
+        ///   De-activates the entity with the specified id. Inactive entities
+        ///   are considered as removed, until they are re-activated again.
+        /// </summary>
+        /// <param name="entityId">Id of the entity to de-activate.</param>
+        public void DeactivateEntity(int entityId)
+        {
+            // Check if entity is active.
+            if (this.inactiveEntities.ContainsKey(entityId))
+            {
+                return;
+            }
+
+            // Store entity components and their values.
+            List<IEntityComponent> components = new List<IEntityComponent>();
+
+            foreach (ComponentManager manager in this.componentManagers.Values)
+            {
+                IEntityComponent component;
+                if (!manager.RemoveComponent(entityId, out component))
+                {
+                    continue;
+                }
+
+                components.Add(component);
+
+                this.game.EventManager.QueueEvent(
+                    FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, component));
+            }
+
+            // Remove entity.
+            this.RemoveEntity(entityId);
+
+            // Add to list of inactive entities.
+            this.inactiveEntities.Add(entityId, components);
+        }
+
+        /// <summary>
+        ///   Returns an iterator over all entities having components of the specified type attached.
+        /// </summary>
+        /// <param name="type"> Type of the components to get the entities of. </param>
+        /// <returns> Entities having components of the specified type attached. </returns>
+        /// <exception cref="ArgumentNullException">Specified type is null.</exception>
+        public IEnumerable<int> EntitiesWithComponent(Type type)
+        {
+            ComponentManager componentManager;
+
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+
+            if (!this.componentManagers.TryGetValue(type, out componentManager))
+            {
+                yield break;
+            }
+
+            foreach (int entityId in componentManager.Entities())
+            {
+                yield return entityId;
+            }
         }
 
         /// <summary>
@@ -219,6 +367,33 @@ namespace Slash.GameBase
         }
 
         /// <summary>
+        ///   Checks if the entity with the specified id will be removed this
+        ///   frame.
+        /// </summary>
+        /// <param name="entityId">Id of the entity to check.</param>
+        /// <returns>
+        ///   <c>true</c>, if the entity with the specified id is about to be removed, and
+        ///   <c>false</c>, otherwise.
+        /// </returns>
+        public bool EntityIsBeingRemoved(int entityId)
+        {
+            return this.removedEntities.Contains(entityId);
+        }
+
+        /// <summary>
+        ///   Checks whether the entity with the specified id is inactive.
+        /// </summary>
+        /// <param name="id">Id of the entity to check.</param>
+        /// <returns>
+        ///   <c>true</c>, if the entity is inactive, and
+        ///   <c>false</c> otherwise.
+        /// </returns>
+        public bool EntityIsInactive(int id)
+        {
+            return this.inactiveEntities.ContainsKey(id);
+        }
+
+        /// <summary>
         ///   Gets a component of the passed type attached to the entity with the specified id.
         /// </summary>
         /// <param name="entityId"> Id of the entity to get the component of. </param>
@@ -238,6 +413,22 @@ namespace Slash.GameBase
             }
 
             // Get component manager.
+            if (componentType.IsInterface)
+            {
+                foreach (KeyValuePair<Type, ComponentManager> componentManagerPair in this.componentManagers)
+                {
+                    if (componentType.IsAssignableFrom(componentManagerPair.Key))
+                    {
+                        IEntityComponent component = componentManagerPair.Value.GetComponent(entityId);
+                        if (component != null)
+                        {
+                            return component;
+                        }
+                    }
+                }
+                return null;
+            }
+
             ComponentManager componentManager;
             return this.componentManagers.TryGetValue(componentType, out componentManager)
                        ? componentManager.GetComponent(entityId)
@@ -285,6 +476,44 @@ namespace Slash.GameBase
         public IEnumerable<int> GetEntities(Func<int, bool> predicate)
         {
             return this.entities.Count == 0 ? null : this.entities.Where(predicate);
+        }
+
+        /// <summary>
+        ///   Convenience method for retrieving a component from two possible entities.
+        /// </summary>
+        /// <typeparam name="TComponent">Type of the component to get.</typeparam>
+        /// <param name="data">Data for the event that affected two entities.</param>
+        /// <param name="entityId">Id of the entity having the component attached.</param>
+        /// <param name="component">Component.</param>
+        /// <returns>
+        ///   True if one of the entities has a <typeparamref name="TComponent" />
+        ///   attached; otherwise, false.
+        /// </returns>
+        public bool GetEntityComponent<TComponent>(Entity2Data data, out int entityId, out TComponent component)
+            where TComponent : class, IEntityComponent
+        {
+            int entityIdA = data.First;
+            int entityIdB = data.Second;
+
+            TComponent componentA = this.GetComponent<TComponent>(entityIdA);
+            if (componentA != null)
+            {
+                entityId = entityIdA;
+                component = componentA;
+                return true;
+            }
+
+            TComponent componentB = this.GetComponent<TComponent>(entityIdB);
+            if (componentB != null)
+            {
+                entityId = entityIdB;
+                component = componentB;
+                return true;
+            }
+
+            entityId = 0;
+            component = null;
+            return false;
         }
 
         /// <summary>
@@ -341,29 +570,35 @@ namespace Slash.GameBase
         /// <param name="entityId">Id of the entity to initialize.</param>
         /// <param name="blueprint"> Blueprint describing the entity to create. </param>
         /// <param name="configuration"> Data for initializing the entity. </param>
-        public void InitEntity(int entityId, Blueprint blueprint, IAttributeTable configuration)
+        /// <param name="additionalComponents">Components to add to the entity, in addition to the ones specified by the blueprint.</param>
+        public void InitEntity(
+            int entityId, Blueprint blueprint, IAttributeTable configuration, List<Type> additionalComponents)
         {
-            foreach (Type type in blueprint.ComponentTypes)
+            // Setup attribute table.
+            HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
+            if (configuration != null)
             {
-                // Create component.
-                IEntityComponent entityComponent = (IEntityComponent)Activator.CreateInstance(type);
-                this.AddComponent(entityId, entityComponent);
-
-                // Initialize component with the attribute table data.
-                HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
-                if (configuration != null)
-                {
-                    attributeTable.AddParent(configuration);
-                }
-
-                if (blueprint.AttributeTable != null)
-                {
-                    attributeTable.AddParent(blueprint.AttributeTable);
-                }
-
-                entityComponent.InitComponent(attributeTable);
+                attributeTable.AddParent(configuration);
             }
 
+            // Add attribute tables of all ancestors.
+            IAttributeTable blueprintAttributeTable = blueprint.getAttributeTable();
+            if (blueprintAttributeTable != null)
+            {
+                attributeTable.AddParent(blueprintAttributeTable);
+            }
+
+            // Build list of components to add.
+            IEnumerable<Type> blueprintComponentTypes = blueprint.getAllComponentTypes();
+            IEnumerable<Type> componentTypes = blueprintComponentTypes.Union(additionalComponents);
+
+            // Add components.
+            foreach (Type type in componentTypes)
+            {
+                this.AddComponent(type, entityId, attributeTable);
+            }
+
+            // Raise event.
             this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
         }
 
@@ -395,29 +630,113 @@ namespace Slash.GameBase
                     "A component of type " + componentType + " has never been added before.", "componentType");
             }
 
-            return componentManager.RemoveComponent(entityId);
+            IEntityComponent component;
+            bool removed = componentManager.RemoveComponent(entityId, out component);
+
+            if (removed)
+            {
+                this.game.EventManager.QueueEvent(
+                    FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, component));
+            }
+
+            return removed;
         }
 
         /// <summary>
-        ///   Issues the entity with the specified id for removal at the end of
-        ///   the current tick.
+        ///   Removes all entities.
         /// </summary>
-        /// <param name="id"> Id of the entity to remove. </param>
+        public void RemoveEntities()
+        {
+            IEnumerable<int> aliveEntities = this.entities.Except(this.removedEntities);
+            foreach (int entityId in aliveEntities)
+            {
+                this.game.EventManager.QueueEvent(FrameworkEventType.EntityRemoved, entityId);
+
+                // Remove components.
+                foreach (ComponentManager manager in this.componentManagers.Values)
+                {
+                    IEntityComponent component;
+                    if (manager.RemoveComponent(entityId, out component))
+                    {
+                        this.game.EventManager.QueueEvent(
+                            FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, component));
+                    }
+                }
+
+                this.removedEntities.Add(entityId);
+            }
+        }
+
+        /// <summary>
+        ///   <para>
+        ///     Issues the entity with the specified id for removal at the end of
+        ///     the current tick.
+        ///   </para>
+        ///   <para>
+        ///     If the entity is inactive, it is removed immediately and no
+        ///     further event is raised.
+        ///   </para>
+        /// </summary>
+        /// <param name="entityId"> Id of the entity to remove. </param>
         /// <exception cref="ArgumentOutOfRangeException">Entity id is negative.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Entity id has not yet been assigned.</exception>
         /// <exception cref="ArgumentException">Entity with the specified id has already been removed.</exception>
-        public void RemoveEntity(int id)
+        public void RemoveEntity(int entityId)
         {
-            this.CheckEntityId(id);
+            if (this.EntityIsInactive(entityId))
+            {
+                this.inactiveEntities.Remove(entityId);
+                return;
+            }
 
-            this.game.EventManager.QueueEvent(FrameworkEventType.EntityRemoved, id);
+            this.CheckEntityId(entityId);
 
-            this.removedEntities.Add(id);
+            if (this.EntityIsBeingRemoved(entityId))
+            {
+                return;
+            }
+
+            // Remove components.
+            foreach (ComponentManager manager in this.componentManagers.Values)
+            {
+                IEntityComponent component = manager.GetComponent(entityId);
+                if (component == null)
+                {
+                    continue;
+                }
+
+                this.game.EventManager.QueueEvent(
+                    FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, component));
+            }
+
+            this.game.EventManager.QueueEvent(FrameworkEventType.EntityRemoved, entityId);
+
+            this.removedEntities.Add(entityId);
         }
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///   Adds a component with the specified type to entity with the
+        ///   specified id and initializes it with the values taken from
+        ///   the passed attribute table.
+        /// </summary>
+        /// <param name="componentType">Type of the component to add.</param>
+        /// <param name="entityId">Id of the entity to add the component to.</param>
+        /// <param name="attributeTable">Attribute table to initialize the component with.</param>
+        private void AddComponent(Type componentType, int entityId, IAttributeTable attributeTable)
+        {
+            // Create component.
+            IEntityComponent component = (IEntityComponent)Activator.CreateInstance(componentType);
+
+            // Add component. 
+            this.AddComponent(entityId, component);
+
+            // Initialize component with the attribute table data.
+            component.InitComponent(attributeTable);
+        }
 
         /// <summary>
         ///   Checks whether the passed entity is valid, throwing an exception if not.

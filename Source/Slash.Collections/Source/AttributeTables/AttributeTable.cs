@@ -7,7 +7,10 @@
 namespace Slash.Collections.AttributeTables
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
+
+    using Slash.Collections.Utils;
 
     /// <summary>
     ///   Table that allows storing and looking up attributes and their
@@ -39,10 +42,25 @@ namespace Slash.Collections.AttributeTables
         ///   original one.
         /// </summary>
         /// <param name="original"> Attribute table to copy. </param>
-        public AttributeTable(AttributeTable original)
+        public AttributeTable(IAttributeTable original)
             : this()
         {
-            this.CopyAttributes(original);
+            this.AddRange(original);
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        ///   Number of attribute values stored in this table.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.attributes.Count;
+            }
         }
 
         #endregion
@@ -50,7 +68,7 @@ namespace Slash.Collections.AttributeTables
         #region Public Indexers
 
         /// <summary>
-        ///   Returns or sets the attribute with the specified key.
+        ///   Gets or sets the attribute with the specified key.
         ///   If no attribute is found when it should be returned, an exception is thrown.
         /// </summary>
         /// <param name="attributeKey"> Attribute key. </param>
@@ -61,6 +79,7 @@ namespace Slash.Collections.AttributeTables
             {
                 return this.GetValue(attributeKey);
             }
+
             set
             {
                 this.SetValue(attributeKey, value);
@@ -84,6 +103,18 @@ namespace Slash.Collections.AttributeTables
         }
 
         /// <summary>
+        ///   Adds all content of the passed attribute table to this one.
+        /// </summary>
+        /// <param name="attributeTable"> Table to add the content of. </param>
+        public void AddRange(IAttributeTable attributeTable)
+        {
+            foreach (KeyValuePair<object, object> keyValuePair in attributeTable)
+            {
+                this.attributes[keyValuePair.Key] = keyValuePair.Value;
+            }
+        }
+
+        /// <summary>
         ///   Maps the passed key to the specified value in this attribute table,
         ///   if it hasn't already been mapped before.
         /// </summary>
@@ -92,6 +123,14 @@ namespace Slash.Collections.AttributeTables
         public void AddValue(object key, object value)
         {
             this.attributes.Add(key, value);
+        }
+
+        /// <summary>
+        ///   Clears the attribute table.
+        /// </summary>
+        public void Clear()
+        {
+            this.attributes.Clear();
         }
 
         /// <summary>
@@ -105,6 +144,40 @@ namespace Slash.Collections.AttributeTables
             return this.attributes.ContainsKey(key);
         }
 
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+
+            return this.Equals((AttributeTable)obj);
+        }
+
+        /// <summary>
+        ///   Gets an enumerator over all attributes of this table.
+        /// </summary>
+        /// <returns>All attributes of this table.</returns>
+        public IEnumerator GetEnumerator()
+        {
+            return this.attributes.GetEnumerator();
+        }
+
+        public override int GetHashCode()
+        {
+            return this.attributes != null ? this.attributes.GetHashCode() : 0;
+        }
+
         /// <summary>
         ///   Returns the attribute with the specified key.
         ///   If no attribute is found, an exception is thrown.
@@ -114,7 +187,14 @@ namespace Slash.Collections.AttributeTables
         /// <exception cref="KeyNotFoundException">Specified key wasn't found.</exception>
         public object GetValue(object attributeKey)
         {
-            return this.attributes[attributeKey];
+            try
+            {
+                return this.attributes[attributeKey];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new KeyNotFoundException(string.Format("Attribute key not found: {0}", attributeKey));
+            }
         }
 
         /// <summary>
@@ -127,9 +207,9 @@ namespace Slash.Collections.AttributeTables
         /// <returns> Value of attribute of the specified type with the specified key. </returns>
         /// <exception cref="KeyNotFoundException">Specified key wasn't found.</exception>
         /// <exception cref="InvalidCastException">Attribute was found but couldn't be casted to specified type.</exception>
-        public virtual T GetValue<T>(object attributeKey)
+        public virtual T GetValue<T>(object attributeKey) where T : class
         {
-            object attributeValue = this.attributes[attributeKey];
+            object attributeValue = this.GetValue(attributeKey);
             return (T)attributeValue;
         }
 
@@ -137,9 +217,12 @@ namespace Slash.Collections.AttributeTables
         ///   Removes the passed key from this attribute table.
         /// </summary>
         /// <param name="key"> Key to remove. </param>
-        public void RemoveValue(object key)
+        /// <returns>
+        ///   <c>true</c>, if the key has been removed, and <c>false</c> otherwise.
+        /// </returns>
+        public bool RemoveValue(object key)
         {
-            this.attributes.Remove(key);
+            return this.attributes.Remove(key);
         }
 
         /// <summary>
@@ -165,44 +248,13 @@ namespace Slash.Collections.AttributeTables
             return this.attributes.TryGetValue(key, out value);
         }
 
-        /// <summary>
-        ///   Tries to retrieve the value the passed key is mapped to within this
-        ///   attribute table.
-        /// </summary>
-        /// <typeparam name="T"> Type of the value to retrieve. </typeparam>
-        /// <param name="key"> Key to retrieve the value of. </param>
-        /// <param name="value"> Retrieved value. </param>
-        /// <returns> true if a value was found, and false otherwise. </returns>
-        public virtual bool TryGetValue<T>(object key, out T value)
-        {
-            object o;
-
-            if (this.attributes.TryGetValue(key, out o) && o is T)
-            {
-                value = (T)o;
-                return true;
-            }
-            else
-            {
-                value = default(T);
-                return false;
-            }
-        }
-
         #endregion
 
         #region Methods
 
-        /// <summary>
-        ///   Copyies all content of the passed attribute table to this one.
-        /// </summary>
-        /// <param name="original"> Table to copy. </param>
-        private void CopyAttributes(AttributeTable original)
+        protected bool Equals(AttributeTable other)
         {
-            foreach (KeyValuePair<object, object> keyValuePair in original.attributes)
-            {
-                this.attributes.Add(keyValuePair.Key, keyValuePair.Value);
-            }
+            return CollectionUtils.DictionaryEqual(this.attributes, other.attributes);
         }
 
         #endregion

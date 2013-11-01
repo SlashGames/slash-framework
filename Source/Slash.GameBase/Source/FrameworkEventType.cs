@@ -16,7 +16,7 @@ namespace Slash.GameBase
         ///     A new entity has been created.
         ///   </para>
         ///   <para>
-        ///     Event data: <see cref="int" />
+        ///     Event data: <see cref="int" /> (Entity id).
         ///   </para>
         /// </summary>
         EntityCreated,
@@ -26,7 +26,7 @@ namespace Slash.GameBase
         ///     An entity has been removed.
         ///   </para>
         ///   <para>
-        ///     Event data: <see cref="int" />
+        ///     Event data: <see cref="int" /> (Entity id).
         ///   </para>
         /// </summary>
         EntityRemoved,
@@ -36,7 +36,7 @@ namespace Slash.GameBase
         ///     Entity components have been initialized.
         ///   </para>
         ///   <para>
-        ///     Event data: <see cref="int" />
+        ///     Event data: <see cref="int" /> (Entity id).
         ///   </para>
         /// </summary>
         EntityInitialized,
@@ -86,7 +86,7 @@ namespace Slash.GameBase
         ///     A new component has been added.
         ///   </para>
         ///   <para>
-        ///     Event data: <see cref="IEntityComponent" />
+        ///     Event data: <see cref="EntityComponentData" />
         ///   </para>
         /// </summary>
         ComponentAdded,
@@ -96,9 +96,29 @@ namespace Slash.GameBase
         ///     A component has been removed.
         ///   </para>
         ///   <para>
-        ///     Event data: <see cref="IEntityComponent" />
+        ///     Event data: <see cref="EntityComponentData" />
         ///   </para>
         /// </summary>
-        ComponentRemoved
+        ComponentRemoved,
+
+        /// <summary>
+        ///   <para>
+        ///     A component was enabled.
+        ///   </para>
+        ///   <para>
+        ///     Event data: <see cref="EntityComponentData" />
+        ///   </para>
+        /// </summary>
+        ComponentEnabled,
+
+        /// <summary>
+        ///   <para>
+        ///     A component was disabled.
+        ///   </para>
+        ///   <para>
+        ///     Event data: <see cref="EntityComponentData" />
+        ///   </para>
+        /// </summary>
+        ComponentDisabled,
     }
 }

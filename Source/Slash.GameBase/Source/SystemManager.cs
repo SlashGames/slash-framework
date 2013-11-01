@@ -22,9 +22,14 @@ namespace Slash.GameBase
         private readonly Game game;
 
         /// <summary>
+        ///   Systems to be updated in each tick.
+        /// </summary>
+        private readonly List<ISystem> systems;
+
+        /// <summary>
         ///   Maps system types to actual game systems.
         /// </summary>
-        private readonly Dictionary<Type, ISystem> systems;
+        private readonly Dictionary<Type, ISystem> systemsByType;
 
         #endregion
 
@@ -39,7 +44,8 @@ namespace Slash.GameBase
         public SystemManager(Game game)
         {
             this.game = game;
-            this.systems = new Dictionary<Type, ISystem>();
+            this.systems = new List<ISystem>();
+            this.systemsByType = new Dictionary<Type, ISystem>();
         }
 
         #endregion
@@ -68,12 +74,13 @@ namespace Slash.GameBase
 
             Type systemType = system.GetType();
 
-            if (this.systems.ContainsKey(systemType))
+            if (this.systemsByType.ContainsKey(systemType))
             {
                 throw new ArgumentException("A system of type " + systemType + " has already been added.", "system");
             }
 
-            this.systems.Add(system.GetType(), system);
+            this.systems.Add(system);
+            this.systemsByType.Add(system.GetType(), system);
 
             this.game.EventManager.QueueEvent(FrameworkEventType.SystemAdded, system);
         }
@@ -101,7 +108,7 @@ namespace Slash.GameBase
             }
 
             ISystem system;
-            if (this.systems.TryGetValue(systemType, out system))
+            if (this.systemsByType.TryGetValue(systemType, out system))
             {
                 return system;
             }
@@ -133,7 +140,7 @@ namespace Slash.GameBase
         /// </param>
         public void Update(float dt)
         {
-            foreach (ISystem system in this.systems.Values)
+            foreach (ISystem system in this.systems)
             {
                 system.UpdateSystem(dt);
             }

@@ -199,7 +199,7 @@ namespace Slash.GameBase.Tests
         private void OnComponentAdded(Event e)
         {
             EntityComponentData data = (EntityComponentData)e.EventData;
-            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.EntityComponent);
+            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.Component);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Slash.GameBase.Tests
         private void OnComponentRemoved(Event e)
         {
             EntityComponentData data = (EntityComponentData)e.EventData;
-            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.EntityComponent);
+            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.Component);
         }
 
         /// <summary>

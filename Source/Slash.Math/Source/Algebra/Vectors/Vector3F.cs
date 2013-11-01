@@ -12,7 +12,7 @@ namespace Slash.Math.Algebra.Vectors
     using Slash.Math.Utils;
 
     [Serializable]
-    public struct Vector3F
+    public class Vector3F
     {
         #region Static Fields
 
@@ -48,28 +48,45 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   X component.
         /// </summary>
-        public float X;
+        public readonly float X;
 
         /// <summary>
         ///   Y component.
         /// </summary>
-        public float Y;
+        public readonly float Y;
 
         /// <summary>
         ///   Z component.
         /// </summary>
-        public float Z;
+        public readonly float Z;
 
         #endregion
 
         #region Constructors and Destructors
+
+        public Vector3F()
+        {
+            this.X = 0;
+            this.Y = 0;
+            this.Z = 0;
+        }
 
         /// <summary>
         ///   Constructor.
         /// </summary>
         /// <param name="vector"> Initial vector. </param>
         public Vector3F(Vector3F vector)
-            : this()
+        {
+            this.X = vector.X;
+            this.Y = vector.Y;
+            this.Z = vector.Z;
+        }
+
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
+        /// <param name="vector"> Initial vector. </param>
+        public Vector3F(Vector3I vector)
         {
             this.X = vector.X;
             this.Y = vector.Y;
@@ -83,7 +100,6 @@ namespace Slash.Math.Algebra.Vectors
         /// <param name="y"> Initial y value. </param>
         /// <param name="z"> Initial z value. </param>
         public Vector3F(float x, float y, float z)
-            : this()
         {
             this.X = x;
             this.Y = y;
@@ -95,7 +111,6 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="values"> Float array which contains the initial vector value. Value at index 0 is taken as the initial x value, value at index 1 is taken as the initial y value, value at index 2 is taken as the initial z value. </param>
         public Vector3F(params float[] values)
-            : this()
         {
             if (values == null)
             {
@@ -227,7 +242,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> True if the two passed vectors are equal; otherwise, false. </returns>
         public static bool operator ==(Vector3F a, Vector3F b)
         {
-            return a.Equals(b);
+            return Equals(a, b);
         }
 
         /// <summary>
@@ -238,7 +253,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> True if the two passed vectors are not equal; otherwise, false. </returns>
         public static bool operator !=(Vector3F a, Vector3F b)
         {
-            return a.Equals(b) == false;
+            return !Equals(a, b);
         }
 
         /// <summary>
@@ -307,14 +322,19 @@ namespace Slash.Math.Algebra.Vectors
 
         public override bool Equals(object obj)
         {
-            Vector3F v = (Vector3F)obj;
-
-            return this.X == v.X && this.Y == v.Y && this.Z == v.Z;
-        }
-
-        public bool Equals(Vector3F v)
-        {
-            return this.X == v.X && this.Y == v.Y && this.Z == v.Z;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+            return this.Equals((Vector3F)obj);
         }
 
         /// <summary>
@@ -329,7 +349,13 @@ namespace Slash.Math.Algebra.Vectors
 
         public override int GetHashCode()
         {
-            return this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.Z.GetHashCode();
+            unchecked
+            {
+                int hashCode = this.X.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Z.GetHashCode();
+                return hashCode;
+            }
         }
 
         /// <summary>
@@ -343,10 +369,8 @@ namespace Slash.Math.Algebra.Vectors
             {
                 return new Vector3F(this.X / magnitude, this.Y / magnitude, this.Z / magnitude);
             }
-            else
-            {
-                return Zero;
-            }
+
+            return Zero;
         }
 
         /// <summary>
@@ -362,15 +386,14 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Normalizes this vector.
         /// </summary>
-        public void Normalize()
+        public Vector3F Normalize()
         {
             float magnitude = this.Magnitude;
             if (magnitude != 0.0f)
             {
-                this.X /= magnitude;
-                this.Y /= magnitude;
-                this.Z /= magnitude;
+                return new Vector3F(this.X / magnitude, this.Y / magnitude, this.Z / magnitude);
             }
+            return new Vector3F(this.X, this.Y, this.Z);
         }
 
         public override string ToString()
@@ -380,6 +403,15 @@ namespace Slash.Math.Algebra.Vectors
                 this.X.ToString(CultureInfo.InvariantCulture.NumberFormat),
                 this.Y.ToString(CultureInfo.InvariantCulture.NumberFormat),
                 this.Z.ToString(CultureInfo.InvariantCulture.NumberFormat));
+        }
+
+        #endregion
+
+        #region Methods
+
+        protected bool Equals(Vector3F other)
+        {
+            return this.X.Equals(other.X) && this.Y.Equals(other.Y) && this.Z.Equals(other.Z);
         }
 
         #endregion

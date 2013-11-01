@@ -6,12 +6,84 @@
 
 namespace Slash.Collections.Utils
 {
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     public static class CollectionUtils
     {
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Checks whether the first sequence contains all elements of the second one.
+        /// </summary>
+        /// <typeparam name="T">Type of the sequence to check.</typeparam>
+        /// <param name="first">Containing sequence.</param>
+        /// <param name="second">Contained sequence.</param>
+        /// <returns>
+        ///   <c>true</c>, if the first sequence contains all elements of the second one, and
+        ///   <c>false</c> otherwise.
+        /// </returns>
+        public static bool ContainsAll<T>(this IEnumerable<T> first, IEnumerable<T> second)
+        {
+            return second.All(first.Contains);
+        }
+
+        /// <summary>
+        ///   Compares two dictionary for equality.
+        /// </summary>
+        /// <typeparam name="TKey">Type of dictionary keys.</typeparam>
+        /// <typeparam name="TValue">Type of dictionary values.</typeparam>
+        /// <param name="first">First dictionary.</param>
+        /// <param name="second">Second dictionary.</param>
+        /// <returns>True if the two dictionaries are equal; otherwise, false.</returns>
+        public static bool DictionaryEqual<TKey, TValue>(
+            IDictionary<TKey, TValue> first, IDictionary<TKey, TValue> second)
+        {
+            if (first == second)
+            {
+                return true;
+            }
+            if ((first == null) || (second == null))
+            {
+                return false;
+            }
+            if (first.Count != second.Count)
+            {
+                return false;
+            }
+
+            EqualityComparer<TValue> comparer = EqualityComparer<TValue>.Default;
+
+            foreach (KeyValuePair<TKey, TValue> kvp in first)
+            {
+                TValue secondValue;
+                if (!second.TryGetValue(kvp.Key, out secondValue))
+                {
+                    return false;
+                }
+
+                if (kvp.Value is IEnumerable && secondValue is IEnumerable)
+                {
+                    IEnumerable enumerable1 = (IEnumerable)kvp.Value;
+                    IEnumerable enumerable2 = (IEnumerable)secondValue;
+                    if (!SequenceEqual(enumerable1.Cast<object>(), enumerable2.Cast<object>()))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (!comparer.Equals(kvp.Value, secondValue))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
         /// <summary>
         ///   Compares two sequences by comparing their items instead of their references. Also checks the case that
@@ -45,6 +117,68 @@ namespace Slash.Collections.Utils
         {
             return sequence1 == sequence2
                    || sequence1 != null && sequence2 != null && sequence1.SequenceEqual(sequence2, comparer);
+        }
+
+        /// <summary>
+        ///   Swaps the elements with the specified indices in the passed list.
+        /// </summary>
+        /// <typeparam name="T">Type of the list to swap the items of.</typeparam>
+        /// <param name="list">List to swap the items of.</param>
+        /// <param name="first">Index of the first item to swap.</param>
+        /// <param name="second">Index of the second item to swap.</param>
+        public static void Swap<T>(IList<T> list, int first, int second)
+        {
+            T temp = list[first];
+            list[first] = list[second];
+            list[second] = temp;
+        }
+
+        /// <summary>
+        ///   Enumerates the elements of the specified list in random order.
+        /// </summary>
+        /// <typeparam name="T">Type of list to enumerate the items of.</typeparam>
+        /// <param name="list">List to enumerate the items of.</param>
+        /// <returns>List with the same items in random order.</returns>
+        public static List<T> ToRandomOrder<T>(IList<T> list)
+        {
+            List<T> copy = new List<T>(list);
+            Random random = new Random();
+            int count = copy.Count;
+
+            while (count > 0)
+            {
+                int next = random.Next(count);
+                Swap(copy, next, count - 1);
+                count--;
+            }
+
+            return copy;
+        }
+
+        /// <summary>
+        ///   Returns a comma-seperated list of the elements of the passed sequence.
+        /// </summary>
+        /// <typeparam name="T">Type of the elements of the sequence.</typeparam>
+        /// <param name="sequence">Sequence to get a comma-seperated list of.</param>
+        /// <returns>Comma-seperated list of the elements of the passed sequence.</returns>
+        public static string ToString<T>(IEnumerable<T> sequence)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append("[");
+
+            foreach (T element in sequence)
+            {
+                stringBuilder.AppendFormat("{0}, ", element);
+            }
+
+            if (stringBuilder.Length > 1)
+            {
+                stringBuilder[stringBuilder.Length - 2] = ']';
+                return stringBuilder.ToString().Substring(0, stringBuilder.Length - 1);
+            }
+
+            return "[]";
         }
 
         #endregion

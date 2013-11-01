@@ -134,12 +134,12 @@ namespace Slash.AI.BehaviorTrees.Data
         /// <param name="id"> Id of attribute. </param>
         /// <param name="value"> Contains value if id was found. </param>
         /// <returns> True if the attribute was found, else false. </returns>
-        public override bool TryGetValue<T>(object id, out T value)
+        public override bool TryGetValue(object id, out object value)
         {
             object objectValue;
-            if (base.TryGetValue(id, out objectValue) && objectValue is T)
+            if (base.TryGetValue(id, out objectValue))
             {
-                value = (T)objectValue;
+                value = objectValue;
                 return true;
             }
 
@@ -154,7 +154,7 @@ namespace Slash.AI.BehaviorTrees.Data
                 }
             }
 
-            value = default(T);
+            value = null;
             return false;
         }
 

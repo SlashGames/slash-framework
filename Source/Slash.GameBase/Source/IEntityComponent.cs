@@ -17,7 +17,7 @@ namespace Slash.GameBase
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Initializes this component with the data stored in the passed
+        ///   Initializes this component with the data stored in the specified
         ///   attribute table.
         /// </summary>
         /// <param name="attributeTable">Component data.</param>

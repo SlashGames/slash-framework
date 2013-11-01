@@ -152,8 +152,7 @@ namespace Slash.Math.Geometry.Lines
                         if (ua != 0f || ub != 0f)
                         {
                             // There is an intersection
-                            point.X = point1.X + (ua * b);
-                            point.Y = point1.Y + (ua * d);
+                            point = new Vector2F(point1.X + (ua * b), point1.Y + (ua * d));
                             return true;
                         }
                     }

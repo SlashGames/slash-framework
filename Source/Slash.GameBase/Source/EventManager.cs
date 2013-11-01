@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EventManager.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
@@ -33,11 +33,6 @@ namespace Slash.GameBase
         private readonly List<DelayedEvent> elapsedEvents = new List<DelayedEvent>();
 
         /// <summary>
-        ///   Event type for listening to all events.
-        /// </summary>
-        private readonly object eventTypeAll = new object();
-
-        /// <summary>
         ///   Listeners that are interested in events of specific types.
         /// </summary>
         private readonly Dictionary<object, EventDelegate> listeners;
@@ -46,6 +41,11 @@ namespace Slash.GameBase
         ///   Queue of events to be processed.
         /// </summary>
         private readonly List<Event> newEvents;
+
+        /// <summary>
+        ///   Listeners which are interested in all events.
+        /// </summary>
+        private EventDelegate allEventListeners;
 
         #endregion
 
@@ -86,12 +86,7 @@ namespace Slash.GameBase
                 return this.currentEvents.Count + this.newEvents.Count;
             }
         }
-
-        /// <summary>
-        ///   Current number of registered event listeners.
-        /// </summary>
-        public int RegisteredListeners { get; private set; }
-
+        
         #endregion
 
         #region Public Methods and Operators
@@ -199,12 +194,21 @@ namespace Slash.GameBase
         }
 
         /// <summary>
+        ///   Queues a new event of the specified type along without any event data.
+        /// </summary>
+        /// <param name="eventType"> Type of the event to queue. </param>
+        public void QueueEvent(object eventType)
+        {
+            this.QueueEvent(eventType, null);
+        }
+
+        /// <summary>
         ///   Queues a new event of the specified type along with the passed
         ///   event data.
         /// </summary>
         /// <param name="eventType"> Type of the event to queue. </param>
         /// <param name="eventData"> Data any listeners might be interested in. </param>
-        public void QueueEvent(object eventType, object eventData = null)
+        public void QueueEvent(object eventType, object eventData)
         {
             this.QueueEvent(new Event(eventType, eventData));
         }
@@ -245,14 +249,13 @@ namespace Slash.GameBase
             {
                 this.listeners[eventType] = callback;
             }
-
-            this.RegisteredListeners++;
         }
 
         /// <summary>
         ///   Registers the specified delegate for all events. Note that the
         ///   delegate will be called twice if it is registered for a specific
-        ///   event type as well.
+        ///   event type as well. Listeners for all events are always notified
+        ///   before listeners for specific events.
         /// </summary>
         /// <param name="callback"> Delegate to invoke when specified type occurred. </param>
         /// <exception cref="ArgumentNullException">Specified delegate is null.</exception>
@@ -264,7 +267,7 @@ namespace Slash.GameBase
                 throw new ArgumentNullException("callback");
             }
 
-            this.RegisterListener(this.eventTypeAll, callback);
+            this.allEventListeners += callback;
         }
 
         /// <summary>
@@ -303,7 +306,12 @@ namespace Slash.GameBase
         /// <exception cref="ArgumentNullException">Specified event type is null.</exception>
         public void RemoveListener(EventDelegate callback)
         {
-            this.RemoveListener(this.eventTypeAll, callback);
+            if (callback == null)
+            {
+                throw new ArgumentNullException("callback");
+            }
+
+            this.allEventListeners -= callback;
         }
 
         #endregion
@@ -316,17 +324,14 @@ namespace Slash.GameBase
         /// <param name="e">Event to pass to listeners.</param>
         private void ProcessEvent(Event e)
         {
-            EventDelegate eventListeners;
-            if (this.listeners.TryGetValue(e.EventType, out eventListeners))
+            // Check for listeners to all events.
+            if (this.allEventListeners != null)
             {
-                if (eventListeners != null)
-                {
-                    eventListeners(e);
-                }
+                this.allEventListeners(e);
             }
 
-            // Check for listeners to all events.
-            if (this.listeners.TryGetValue(this.eventTypeAll, out eventListeners))
+            EventDelegate eventListeners;
+            if (this.listeners.TryGetValue(e.EventType, out eventListeners))
             {
                 if (eventListeners != null)
                 {

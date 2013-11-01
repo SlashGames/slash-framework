@@ -24,12 +24,7 @@ namespace Slash.GameBase.Tests
         ///   Test component manager to run unit tests on.
         /// </summary>
         private ComponentManager componentManager;
-
-        /// <summary>
-        ///   Test game to run unit tests on.
-        /// </summary>
-        private Game game;
-
+        
         /// <summary>
         ///   Test component to run unit tests on.
         /// </summary>
@@ -45,8 +40,7 @@ namespace Slash.GameBase.Tests
         [SetUp]
         public void SetUp()
         {
-            this.game = new Game();
-            this.componentManager = new ComponentManager(this.game);
+            this.componentManager = new ComponentManager();
             this.testEntityComponent = new TestEntityComponent();
         }
 

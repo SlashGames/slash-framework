@@ -10,8 +10,6 @@ namespace Slash.GameBase
     using System.Collections;
     using System.Collections.Generic;
 
-    using Slash.GameBase.EventData;
-
     /// <summary>
     ///   Maps entity ids to specific game components. By contract this manager
     ///   should be responsible for mapping components of a single type, only.
@@ -27,11 +25,6 @@ namespace Slash.GameBase
         /// </summary>
         private readonly Dictionary<int, IEntityComponent> components;
 
-        /// <summary>
-        ///   Game this manager maps the entity ids of.
-        /// </summary>
-        private readonly Game game;
-
         #endregion
 
         #region Constructors and Destructors
@@ -39,12 +32,8 @@ namespace Slash.GameBase
         /// <summary>
         ///   Constructs a new component manager without any initial components.
         /// </summary>
-        /// <param name="game">
-        ///   Game to map the entity ids of.
-        /// </param>
-        public ComponentManager(Game game)
+        public ComponentManager()
         {
-            this.game = game;
             this.components = new Dictionary<int, IEntityComponent>();
         }
 
@@ -59,7 +48,7 @@ namespace Slash.GameBase
         /// <param name="entityId">
         ///   Id of the entity to attach the component to.
         /// </param>
-        /// <param name="entityComponent">
+        /// <param name="component">
         ///   Component to attach.
         /// </param>
         /// <exception cref="ArgumentNullException">
@@ -68,23 +57,21 @@ namespace Slash.GameBase
         /// <exception cref="InvalidOperationException">
         ///   There is already a component of the same type attached.
         /// </exception>
-        public void AddComponent(int entityId, IEntityComponent entityComponent)
+        public void AddComponent(int entityId, IEntityComponent component)
         {
-            if (entityComponent == null)
+            if (component == null)
             {
-                throw new ArgumentNullException("entityComponent");
+                throw new ArgumentNullException("component");
             }
 
             if (this.components.ContainsKey(entityId))
             {
                 throw new InvalidOperationException(
-                    "There is already a component of type " + entityComponent.GetType() + " attached to entity with id "
+                    "There is already a component of type " + component.GetType() + " attached to entity with id "
                     + entityId + ".");
             }
 
-            this.components.Add(entityId, entityComponent);
-            this.game.EventManager.QueueEvent(
-                FrameworkEventType.ComponentAdded, new EntityComponentData(entityId, entityComponent));
+            this.components.Add(entityId, component);
         }
 
         /// <summary>
@@ -93,10 +80,16 @@ namespace Slash.GameBase
         /// <returns>Components of this manager.</returns>
         public IEnumerable Components()
         {
-            foreach (KeyValuePair<int, IEntityComponent> component in this.components)
-            {
-                yield return component;
-            }
+            return this.components.Values;
+        }
+
+        /// <summary>
+        ///   Returns an iterator over all entities having components of this manager attached.
+        /// </summary>
+        /// <returns>Entities having components of this manager attached.</returns>
+        public IEnumerable<int> Entities()
+        {
+            return this.components.Keys;
         }
 
         /// <summary>
@@ -111,9 +104,9 @@ namespace Slash.GameBase
         /// </returns>
         public IEntityComponent GetComponent(int entityId)
         {
-            IEntityComponent entityComponent;
-            this.components.TryGetValue(entityId, out entityComponent);
-            return entityComponent;
+            IEntityComponent component;
+            this.components.TryGetValue(entityId, out component);
+            return component;
         }
 
         /// <summary>
@@ -128,17 +121,30 @@ namespace Slash.GameBase
         /// </returns>
         public bool RemoveComponent(int entityId)
         {
-            IEntityComponent entityComponent;
+            IEntityComponent component;
+            return this.RemoveComponent(entityId, out component);
+        }
 
-            if (!this.components.TryGetValue(entityId, out entityComponent))
+        /// <summary>
+        ///   Removes the component mapped to the entity with the specified id.
+        ///   Note that this manager does not check whether the specified id is valid.
+        /// </summary>
+        /// <param name="entityId">
+        ///   Id of the entity to remove the component from.
+        /// </param>
+        /// <param name="component">Removed component.</param>
+        /// <returns>
+        ///   Whether a component has been removed, or not.
+        /// </returns>
+        public bool RemoveComponent(int entityId, out IEntityComponent component)
+        {
+            if (this.components.TryGetValue(entityId, out component))
             {
-                return false;
+                this.components.Remove(entityId);
+                return true;
             }
 
-            this.components.Remove(entityId);
-            this.game.EventManager.QueueEvent(
-                FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, entityComponent));
-            return true;
+            return false;
         }
 
         #endregion
