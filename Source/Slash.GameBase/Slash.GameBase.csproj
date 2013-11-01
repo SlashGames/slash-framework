@@ -37,9 +37,12 @@
     <Compile Include="Source\Blueprints\BlueprintUtils.cs" />
     <Compile Include="Source\Blueprints\HierarchicalBlueprintManager.cs" />
     <Compile Include="Source\Blueprints\IBlueprintManager.cs" />
+    <Compile Include="Source\Configurations\EntityConfiguration.cs" />
     <Compile Include="Source\Event.cs" />
+    <Compile Include="Source\EventData\ComponentStatusChangedEventData.cs" />
     <Compile Include="Source\EventData\Entity2Data.cs" />
     <Compile Include="Source\EventData\EntityComponentData.cs" />
+    <Compile Include="Source\EventData\EntityEventData.cs" />
     <Compile Include="Source\EventManager.cs" />
     <Compile Include="Source\FrameworkEventType.cs" />
     <Compile Include="Source\IEntityComponent.cs" />
@@ -52,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">

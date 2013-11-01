@@ -17,7 +17,7 @@ namespace Slash.Math.Utils
         #region Constants
 
         /// <summary>
-        ///     Euler's number. See http://en.wikipedia.org/wiki/E_%28mathematical_constant%29 for more details.
+        ///   Euler's number. See http://en.wikipedia.org/wiki/E_%28mathematical_constant%29 for more details.
         /// </summary>
         public const float E = 2.7182818284590452f;
 
@@ -30,8 +30,8 @@ namespace Slash.Math.Utils
         #region Public Methods and Operators
 
         /// <summary>
-        ///     Converts the specified float value to the ceil value as an integer.
-        ///     The smallest integer bigger than or equal the specified value is returned.
+        ///   Converts the specified float value to the ceil value as an integer.
+        ///   The smallest integer bigger than or equal the specified value is returned.
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <returns>Ceil integer for the specified float value.</returns>
@@ -41,8 +41,8 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
-        ///     Clamps the passed value to the passed bounds (i.e. if value is smaller than min bound it's set to min bound,
-        ///     if bigger than max bound it's set to max bound).
+        ///   Clamps the passed value to the passed bounds (i.e. if value is smaller than min bound it's set to min bound,
+        ///   if bigger than max bound it's set to max bound).
         /// </summary>
         /// <param name="value"> Value to clamp. </param>
         /// <param name="min"> Minimum bound. </param>
@@ -62,8 +62,8 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
-        ///     Converts the specified float value to the floor value as an integer.
-        ///     The largest integer less than or equal the specified value is returned.
+        ///   Converts the specified float value to the floor value as an integer.
+        ///   The largest integer less than or equal the specified value is returned.
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <returns>Floor integer for the specified float value.</returns>
@@ -73,8 +73,8 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
-        ///     Checks if the passed value is within the passed bounds (i.e. bigger or equal minimum bound and
-        ///     smaller maximum bound).
+        ///   Checks if the passed value is within the passed bounds (i.e. bigger or equal minimum bound and
+        ///   smaller maximum bound).
         /// </summary>
         /// <param name="value"> Value to check. </param>
         /// <param name="min"> Minimum bound. </param>
@@ -86,7 +86,7 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
-        ///     Linear interpolation of a float. TODO: generic
+        ///   Linear interpolation of a float. TODO: generic
         /// </summary>
         /// <param name="x"> First value. </param>
         /// <param name="y"> Second value. </param>
@@ -98,7 +98,7 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
-        ///     Returns the maximum value of the two passed values.
+        ///   Returns the maximum value of the two passed values.
         /// </summary>
         /// <param name="a"> First value. </param>
         /// <param name="b"> Second value. </param>
@@ -109,7 +109,7 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
-        ///     Returns the minimum value of the two passed values.
+        ///   Returns the minimum value of the two passed values.
         /// </summary>
         /// <param name="a"> First value. </param>
         /// <param name="b"> Second value. </param>
