@@ -58,9 +58,9 @@ namespace Slash.GameBase.Blueprints
         /// </summary>
         /// <param name="blueprintId">Id of blueprint to search for.</param>
         /// <returns>True if the blueprint was found; otherwise, false.</returns>
-        public bool containsBlueprint(string blueprintId)
+        public bool ContainsBlueprint(string blueprintId)
         {
-            return this.parents.Any(parent => parent.containsBlueprint(blueprintId));
+            return this.parents.Any(parent => parent.ContainsBlueprint(blueprintId));
         }
 
         /// <summary>
@@ -69,11 +69,11 @@ namespace Slash.GameBase.Blueprints
         /// <param name="blueprintId">Id of blueprint to search for.</param>
         /// <returns>Blueprint with the specified id.</returns>
         /// <exception cref="KeyNotFoundException">Thrown if no blueprint with the specified id exists.</exception>
-        public Blueprint getBlueprint(string blueprintId)
+        public Blueprint GetBlueprint(string blueprintId)
         {
             Blueprint blueprint = null;
 
-            if (this.parents.Any(parent => parent.tryGetBlueprint(blueprintId, out blueprint)))
+            if (this.parents.Any(parent => parent.TryGetBlueprint(blueprintId, out blueprint)))
             {
                 return blueprint;
             }
@@ -87,11 +87,11 @@ namespace Slash.GameBase.Blueprints
         /// <param name="blueprintId">Id of blueprint to search for.</param>
         /// <param name="blueprint">Parameter to write found blueprint to.</param>
         /// <returns>True if the blueprint was found; otherwise, false.</returns>
-        public bool tryGetBlueprint(string blueprintId, out Blueprint blueprint)
+        public bool TryGetBlueprint(string blueprintId, out Blueprint blueprint)
         {
             foreach (IBlueprintManager parent in this.parents)
             {
-                if (parent.tryGetBlueprint(blueprintId, out blueprint))
+                if (parent.TryGetBlueprint(blueprintId, out blueprint))
                 {
                     return true;
                 }

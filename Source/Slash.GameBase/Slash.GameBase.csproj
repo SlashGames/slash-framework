@@ -62,6 +62,10 @@
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>Slash.Collections</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Slash.Diagnostics\Slash.Diagnostics.csproj">
+      <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
+      <Name>Slash.Diagnostics</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Source\Components\" />
