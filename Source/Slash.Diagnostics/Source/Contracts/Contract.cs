@@ -24,8 +24,11 @@ namespace Slash.Diagnostics.Contracts
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Checks if the specified variable or variables are not null.
+        ///   Checks if the specified container of variables are not null.
         /// </summary>
+        /// <example>
+        ///   Contract.RequiresNotNull(new { variable }, "Variable is null.");
+        /// </example>
         /// <typeparam name="T">Type of variables.</typeparam>
         /// <param name="container">Variable(s) container.</param>
         /// <param name="userMessage">The message to display if one of the variables is null.</param>
