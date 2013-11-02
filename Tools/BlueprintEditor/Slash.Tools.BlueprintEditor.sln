@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Tools.BlueprintEditor.WPF", "Slash.Tools.BlueprintEditor.WPF\Slash.Tools.BlueprintEditor.WPF.csproj", "{6B9BABE2-4D7F-4BC9-B5AD-587538C6EDEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Tools.BlueprintEditor.Logic", "Slash.Tools.BlueprintEditor.Logic\Slash.Tools.BlueprintEditor.Logic.csproj", "{57BDCC2E-453D-4593-9467-39FC5C90141E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.GameBase", "%SLASH_FRAMEWORK_HOME%Source\Slash.GameBase\Slash.GameBase.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Collections", "%SLASH_FRAMEWORK_HOME%Source\Slash.Collections\Slash.Collections.csproj", "{03F9A6F7-F402-4581-B748-FA51BF3B1B82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Diagnostics", "%SLASH_FRAMEWORK_HOME%Source\Slash.Diagnostics\Slash.Diagnostics.csproj", "{E155097A-6A57-498E-A707-F852AA672111}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug NoLog4Net|Any CPU = Debug NoLog4Net|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release NoLog4Net|Any CPU = Release NoLog4Net|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B9BABE2-4D7F-4BC9-B5AD-587538C6EDEC}.Debug NoLog4Net|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B9BABE2-4D7F-4BC9-B5AD-587538C6EDEC}.Debug NoLog4Net|Any CPU.Build.0 = Debug|Any CPU
+		{6B9BABE2-4D7F-4BC9-B5AD-587538C6EDEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B9BABE2-4D7F-4BC9-B5AD-587538C6EDEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B9BABE2-4D7F-4BC9-B5AD-587538C6EDEC}.Release NoLog4Net|Any CPU.ActiveCfg = Release|Any CPU
+		{6B9BABE2-4D7F-4BC9-B5AD-587538C6EDEC}.Release NoLog4Net|Any CPU.Build.0 = Release|Any CPU
+		{6B9BABE2-4D7F-4BC9-B5AD-587538C6EDEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B9BABE2-4D7F-4BC9-B5AD-587538C6EDEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57BDCC2E-453D-4593-9467-39FC5C90141E}.Debug NoLog4Net|Any CPU.ActiveCfg = Debug|Any CPU
+		{57BDCC2E-453D-4593-9467-39FC5C90141E}.Debug NoLog4Net|Any CPU.Build.0 = Debug|Any CPU
+		{57BDCC2E-453D-4593-9467-39FC5C90141E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57BDCC2E-453D-4593-9467-39FC5C90141E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57BDCC2E-453D-4593-9467-39FC5C90141E}.Release NoLog4Net|Any CPU.ActiveCfg = Release|Any CPU
+		{57BDCC2E-453D-4593-9467-39FC5C90141E}.Release NoLog4Net|Any CPU.Build.0 = Release|Any CPU
+		{57BDCC2E-453D-4593-9467-39FC5C90141E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57BDCC2E-453D-4593-9467-39FC5C90141E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Debug NoLog4Net|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Debug NoLog4Net|Any CPU.Build.0 = Debug|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Release NoLog4Net|Any CPU.ActiveCfg = Release|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Release NoLog4Net|Any CPU.Build.0 = Release|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03F9A6F7-F402-4581-B748-FA51BF3B1B82}.Debug NoLog4Net|Any CPU.ActiveCfg = Debug|Any CPU
+		{03F9A6F7-F402-4581-B748-FA51BF3B1B82}.Debug NoLog4Net|Any CPU.Build.0 = Debug|Any CPU
+		{03F9A6F7-F402-4581-B748-FA51BF3B1B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03F9A6F7-F402-4581-B748-FA51BF3B1B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03F9A6F7-F402-4581-B748-FA51BF3B1B82}.Release NoLog4Net|Any CPU.ActiveCfg = Release|Any CPU
+		{03F9A6F7-F402-4581-B748-FA51BF3B1B82}.Release NoLog4Net|Any CPU.Build.0 = Release|Any CPU
+		{03F9A6F7-F402-4581-B748-FA51BF3B1B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03F9A6F7-F402-4581-B748-FA51BF3B1B82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E155097A-6A57-498E-A707-F852AA672111}.Debug NoLog4Net|Any CPU.ActiveCfg = Debug NoLog4Net|Any CPU
+		{E155097A-6A57-498E-A707-F852AA672111}.Debug NoLog4Net|Any CPU.Build.0 = Debug NoLog4Net|Any CPU
+		{E155097A-6A57-498E-A707-F852AA672111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E155097A-6A57-498E-A707-F852AA672111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E155097A-6A57-498E-A707-F852AA672111}.Release NoLog4Net|Any CPU.ActiveCfg = Release NoLog4Net|Any CPU
+		{E155097A-6A57-498E-A707-F852AA672111}.Release NoLog4Net|Any CPU.Build.0 = Release NoLog4Net|Any CPU
+		{E155097A-6A57-498E-A707-F852AA672111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E155097A-6A57-498E-A707-F852AA672111}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
