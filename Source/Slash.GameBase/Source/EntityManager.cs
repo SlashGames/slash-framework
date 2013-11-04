@@ -582,14 +582,14 @@ namespace Slash.GameBase
             }
 
             // Add attribute tables of all ancestors.
-            IAttributeTable blueprintAttributeTable = blueprint.getAttributeTable();
+            IAttributeTable blueprintAttributeTable = blueprint.GetAttributeTable();
             if (blueprintAttributeTable != null)
             {
                 attributeTable.AddParent(blueprintAttributeTable);
             }
 
             // Build list of components to add.
-            IEnumerable<Type> blueprintComponentTypes = blueprint.getAllComponentTypes();
+            IEnumerable<Type> blueprintComponentTypes = blueprint.GetAllComponentTypes();
             IEnumerable<Type> componentTypes = blueprintComponentTypes.Union(additionalComponents);
 
             // Add components.

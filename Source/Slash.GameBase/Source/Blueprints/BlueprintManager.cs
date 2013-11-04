@@ -30,7 +30,12 @@ namespace Slash.GameBase.Blueprints
         ///   All registered blueprints.
         /// </summary>
         private readonly SerializableDictionary<string, Blueprint> blueprints =
-            new SerializableDictionary<string, Blueprint>();
+            new SerializableDictionary<string, Blueprint>()
+                {
+                    ItemElementName = "Entry",
+                    KeyElementName = "Id",
+                    ValueElementName = "Blueprint"
+                };
 
         #endregion
 
@@ -51,7 +56,6 @@ namespace Slash.GameBase.Blueprints
         {
             if (blueprintManager.blueprints != null)
             {
-                this.blueprints = new SerializableDictionary<string, Blueprint>(blueprintManager.blueprints.Count);
                 this.AddBlueprints(blueprintManager);
             }
         }

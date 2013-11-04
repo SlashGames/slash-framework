@@ -18,9 +18,28 @@ namespace Slash.Serialization.Xml
     /// </summary>
     /// <typeparam name="TKey">Key type.</typeparam>
     /// <typeparam name="TValue">Value type.</typeparam>
-    [XmlRoot("dictionary")]
+    [XmlType("dictionary")]
     public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IXmlSerializable
     {
+        #region Fields
+
+        /// <summary>
+        ///   Xml element name for items in dictionary.
+        /// </summary>
+        private string itemElementName = "item";
+
+        /// <summary>
+        ///   Xml element name for key of items.
+        /// </summary>
+        private string keyElementName = "key";
+
+        /// <summary>
+        ///   Xml element name for value of items.
+        /// </summary>
+        private string valueElementName = "value";
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -41,6 +60,55 @@ namespace Slash.Serialization.Xml
 
         #endregion
 
+        #region Public Properties
+
+        /// <summary>
+        ///   Xml element name for items in dictionary.
+        /// </summary>
+        public string ItemElementName
+        {
+            get
+            {
+                return this.itemElementName;
+            }
+            set
+            {
+                this.itemElementName = value;
+            }
+        }
+
+        /// <summary>
+        ///   Xml element name for key of items.
+        /// </summary>
+        public string KeyElementName
+        {
+            get
+            {
+                return this.keyElementName;
+            }
+            set
+            {
+                this.keyElementName = value;
+            }
+        }
+
+        /// <summary>
+        ///   Xml element name for value of items.
+        /// </summary>
+        public string ValueElementName
+        {
+            get
+            {
+                return this.valueElementName;
+            }
+            set
+            {
+                this.valueElementName = value;
+            }
+        }
+
+        #endregion
+
         #region Public Methods and Operators
 
         public XmlSchema GetSchema()
@@ -50,8 +118,9 @@ namespace Slash.Serialization.Xml
 
         public void ReadXml(XmlReader reader)
         {
-            XmlSerializer keySerializer = new XmlSerializer(typeof(TKey));
-            XmlSerializer valueSerializer = new XmlSerializer(typeof(TValue));
+            XmlSerializer keySerializer = new XmlSerializer(typeof(TKey), new XmlRootAttribute(this.KeyElementName));
+            XmlSerializer valueSerializer = new XmlSerializer(
+                typeof(TValue), new XmlRootAttribute(this.ValueElementName));
 
             bool wasEmpty = reader.IsEmptyElement;
             reader.Read();
@@ -63,15 +132,10 @@ namespace Slash.Serialization.Xml
 
             while (reader.NodeType != XmlNodeType.EndElement)
             {
-                reader.ReadStartElement("item");
+                reader.ReadStartElement(this.ItemElementName);
 
-                reader.ReadStartElement("key");
                 TKey key = (TKey)keySerializer.Deserialize(reader);
-                reader.ReadEndElement();
-
-                reader.ReadStartElement("value");
                 TValue value = (TValue)valueSerializer.Deserialize(reader);
-                reader.ReadEndElement();
 
                 this.Add(key, value);
 
@@ -83,21 +147,17 @@ namespace Slash.Serialization.Xml
 
         public void WriteXml(XmlWriter writer)
         {
-            XmlSerializer keySerializer = new XmlSerializer(typeof(TKey));
-            XmlSerializer valueSerializer = new XmlSerializer(typeof(TValue));
-
+            XmlSerializer keySerializer = new XmlSerializer(typeof(TKey), new XmlRootAttribute(this.KeyElementName));
+            XmlSerializer valueSerializer = new XmlSerializer(
+                typeof(TValue), new XmlRootAttribute(this.ValueElementName));
+            var xns = new XmlSerializerNamespaces();
+            xns.Add(string.Empty, string.Empty);
             foreach (var keyValuePair in this)
             {
-                writer.WriteStartElement("item");
+                writer.WriteStartElement(this.ItemElementName);
 
-                writer.WriteStartElement("key");
-                keySerializer.Serialize(writer, keyValuePair.Key);
-                writer.WriteEndElement();
-
-                writer.WriteStartElement("value");
-                TValue value = keyValuePair.Value;
-                valueSerializer.Serialize(writer, value);
-                writer.WriteEndElement();
+                keySerializer.Serialize(writer, keyValuePair.Key, xns);
+                valueSerializer.Serialize(writer, keyValuePair.Value, xns);
 
                 writer.WriteEndElement();
             }
