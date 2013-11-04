@@ -42,6 +42,8 @@
     <Compile Include="Source\Dictionary\ValueWithType.cs" />
     <Compile Include="Source\Dictionary\ValueWithTypeDictionarySerializer.cs" />
     <Compile Include="Source\Utils\SerializationUtils.cs" />
+    <Compile Include="Source\Xml\SerializableDictionary.cs" />
+    <Compile Include="Source\Xml\XmlAnything.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
@@ -51,7 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
