@@ -21,6 +21,26 @@ namespace Slash.Serialization.Xml
     [XmlRoot("dictionary")]
     public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IXmlSerializable
     {
+        #region Constructors and Destructors
+
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
+        /// <param name="capacity">Initial capacity.</param>
+        public SerializableDictionary(int capacity)
+            : base(capacity)
+        {
+        }
+
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
+        public SerializableDictionary()
+        {
+        }
+
+        #endregion
+
         #region Public Methods and Operators
 
         public XmlSchema GetSchema()
@@ -66,16 +86,16 @@ namespace Slash.Serialization.Xml
             XmlSerializer keySerializer = new XmlSerializer(typeof(TKey));
             XmlSerializer valueSerializer = new XmlSerializer(typeof(TValue));
 
-            foreach (TKey key in this.Keys)
+            foreach (var keyValuePair in this)
             {
                 writer.WriteStartElement("item");
 
                 writer.WriteStartElement("key");
-                keySerializer.Serialize(writer, key);
+                keySerializer.Serialize(writer, keyValuePair.Key);
                 writer.WriteEndElement();
 
                 writer.WriteStartElement("value");
-                TValue value = this[key];
+                TValue value = keyValuePair.Value;
                 valueSerializer.Serialize(writer, value);
                 writer.WriteEndElement();
 

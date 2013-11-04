@@ -10,21 +10,27 @@ namespace Slash.GameBase.Blueprints
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Xml;
+    using System.Xml.Schema;
+    using System.Xml.Serialization;
 
     using Slash.Collections.Utils;
     using Slash.Diagnostics.Contracts;
+    using Slash.Serialization.Xml;
 
     /// <summary>
     ///   Manager that maps blueprint ids to blueprints.
     /// </summary>
-    public sealed class BlueprintManager : IBlueprintManager
+    [Serializable]
+    public sealed class BlueprintManager : IBlueprintManager, IXmlSerializable
     {
         #region Fields
 
         /// <summary>
         ///   All registered blueprints.
         /// </summary>
-        private readonly Dictionary<string, Blueprint> blueprints = new Dictionary<string, Blueprint>();
+        private readonly SerializableDictionary<string, Blueprint> blueprints =
+            new SerializableDictionary<string, Blueprint>();
 
         #endregion
 
@@ -45,7 +51,7 @@ namespace Slash.GameBase.Blueprints
         {
             if (blueprintManager.blueprints != null)
             {
-                this.blueprints = new Dictionary<string, Blueprint>(blueprintManager.blueprints.Count);
+                this.blueprints = new SerializableDictionary<string, Blueprint>(blueprintManager.blueprints.Count);
                 this.AddBlueprints(blueprintManager);
             }
         }
@@ -54,12 +60,18 @@ namespace Slash.GameBase.Blueprints
 
         #region Delegates
 
-        public delegate void BlueprintsChangedDelegate(BlueprintManager blueprintManager);
+        /// <summary>
+        ///   Delegate for BlueprintsChanged event.
+        /// </summary>
+        public delegate void BlueprintsChangedDelegate();
 
         #endregion
 
         #region Public Events
 
+        /// <summary>
+        ///   Raised when blueprints of this manager changed.
+        /// </summary>
         public event BlueprintsChangedDelegate BlueprintsChanged;
 
         #endregion
@@ -92,8 +104,9 @@ namespace Slash.GameBase.Blueprints
         {
             Contract.RequiresNotNull(new { blueprintId }, "No blueprint id provided.");
             Contract.RequiresNotNull(new { blueprint }, "No blueprint provided.");
-            Contract.Requires<ArgumentException>(!this.blueprints.ContainsKey(blueprintId), "A blueprint with this id already exists.", "blueprintId");
-            
+            Contract.Requires<ArgumentException>(
+                !this.blueprints.ContainsKey(blueprintId), "A blueprint with this id already exists.", "blueprintId");
+
             this.blueprints.Add(blueprintId, blueprint);
             this.OnBlueprintsChanged();
         }
@@ -111,6 +124,9 @@ namespace Slash.GameBase.Blueprints
             this.OnBlueprintsChanged();
         }
 
+        /// <summary>
+        ///   Removes all blueprints from the manager.
+        /// </summary>
         public void ClearBlueprints()
         {
             this.blueprints.Clear();
@@ -181,6 +197,16 @@ namespace Slash.GameBase.Blueprints
             return (this.blueprints != null ? this.blueprints.GetHashCode() : 0);
         }
 
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            this.blueprints.ReadXml(reader);
+        }
+
         /// <summary>
         ///   Removes the blueprint with the specified id. Returns if the blueprint was removed.
         /// </summary>
@@ -222,6 +248,11 @@ namespace Slash.GameBase.Blueprints
             return this.blueprints.TryGetValue(blueprintId, out blueprint);
         }
 
+        public void WriteXml(XmlWriter writer)
+        {
+            this.blueprints.WriteXml(writer);
+        }
+
         #endregion
 
         #region Explicit Interface Methods
@@ -245,7 +276,7 @@ namespace Slash.GameBase.Blueprints
             BlueprintsChangedDelegate handler = this.BlueprintsChanged;
             if (handler != null)
             {
-                handler(this);
+                handler();
             }
         }
 

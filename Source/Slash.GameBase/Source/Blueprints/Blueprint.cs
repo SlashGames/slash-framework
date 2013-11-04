@@ -8,10 +8,13 @@ namespace Slash.GameBase.Blueprints
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
+    using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
+    using Slash.Reflection.Utils;
 
     /// <summary>
     ///   Blueprint for creating an entity with a specific set of components
@@ -48,18 +51,58 @@ namespace Slash.GameBase.Blueprints
         ///   Data for initializing the components of entities created with this
         ///   blueprint.
         /// </summary>
+        [XmlIgnore]
         public IAttributeTable AttributeTable { get; set; }
+
+        /// <summary>
+        ///   Wrapper for AttributeTable property for xml serialization.
+        /// </summary>
+        [XmlElement("AttributeTable")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AttributeTable AttributeTableSerialized
+        {
+            get
+            {
+                return new AttributeTable(this.AttributeTable);
+            }
+            set
+            {
+                this.AttributeTable = value;
+            }
+        }
 
         /// <summary>
         ///   Collection of types of components to add to entities created with
         ///   this blueprint.
         /// </summary>
+        [XmlIgnore]
         public List<Type> ComponentTypes { get; set; }
+
+        /// <summary>
+        ///   Wrapper for ComponentTypes property for xml serialization.
+        /// </summary>
+        [XmlArray("ComponentTypes")]
+        [XmlArrayItem("ComponentType")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string[] ComponentTypesSerialized
+        {
+            get
+            {
+                return this.ComponentTypes.Select(componentType => componentType.AssemblyQualifiedName).ToArray();
+            }
+            set
+            {
+                this.ComponentTypes = value.Select(ReflectionUtils.FindType).ToList();
+            }
+        }
 
         /// <summary>
         ///   Parent blueprint of this one. All components and attributes of the parent are also
         ///   available for this one. Attributes can be overwritten though.
         /// </summary>
+        [XmlIgnore]
         public Blueprint Parent { get; set; }
 
         /// <summary>

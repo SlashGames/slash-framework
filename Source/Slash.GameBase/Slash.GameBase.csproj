@@ -66,6 +66,14 @@
       <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
       <Name>Slash.Diagnostics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
+      <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>
+      <Name>Slash.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
+      <Name>Slash.Serialization</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Source\Components\" />
