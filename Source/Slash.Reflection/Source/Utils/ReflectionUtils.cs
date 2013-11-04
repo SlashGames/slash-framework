@@ -33,6 +33,11 @@ namespace Slash.Reflection.Utils
         /// <exception cref="ArgumentException">If the type couldn't be found.</exception>
         public static Type FindType(string fullName)
         {
+            if (string.IsNullOrEmpty(fullName))
+            {
+                return null;
+            }
+
             // Split type name from .dll version.
             if (!fullName.Contains("["))
             {

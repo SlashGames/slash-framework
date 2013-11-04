@@ -9,15 +9,35 @@ namespace Slash.Collections.AttributeTables
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Xml;
+    using System.Xml.Schema;
+    using System.Xml.Serialization;
 
     using Slash.Collections.Utils;
+    using Slash.Reflection.Utils;
+    using Slash.Serialization.Utils;
 
     /// <summary>
     ///   Table that allows storing and looking up attributes and their
     ///   respective values.
     /// </summary>
-    public class AttributeTable : IAttributeTable
+    [Serializable]
+    public class AttributeTable : IAttributeTable, IXmlSerializable
     {
+        #region Constants
+
+        private const string ItemElementName = "Attribute";
+
+        private const string KeyElementName = "Key";
+
+        private const string KeyTypeAttributeName = "keyType";
+
+        private const string ValueElementName = "Value";
+
+        private const string ValueTypeAttributeName = "valueType";
+
+        #endregion
+
         #region Fields
 
         /// <summary>
@@ -103,6 +123,37 @@ namespace Slash.Collections.AttributeTables
         }
 
         /// <summary>
+        ///   Adds the specified attribute pair (key/value) to the attribute table.
+        /// </summary>
+        /// <param name="attributePair">Attribute pair to add.</param>
+        public void Add(KeyValuePair<object, object> attributePair)
+        {
+            this.attributes.Add(attributePair.Key, attributePair.Value);
+        }
+
+        /// <summary>
+        ///   Adds the specified attribute pair (key/value) to the attribute table.
+        /// </summary>
+        /// <param name="attributePair">Attribute pair to add.</param>
+        public void Add(object attributePair)
+        {
+            if (attributePair == null)
+            {
+                throw new ArgumentNullException("attributePair", "Attribute pair object is null.");
+            }
+
+            if (!(attributePair is KeyValuePair<object, object>))
+            {
+                throw new InvalidOperationException(
+                    string.Format(
+                        "Attribute pair is not of type KeyValuePair<object, object>, but '{0}'.",
+                        attributePair.GetType()));
+            }
+
+            this.Add((KeyValuePair<object, object>)attributePair);
+        }
+
+        /// <summary>
         ///   Adds all content of the passed attribute table to this one.
         /// </summary>
         /// <param name="attributeTable"> Table to add the content of. </param>
@@ -178,6 +229,11 @@ namespace Slash.Collections.AttributeTables
             return this.attributes != null ? this.attributes.GetHashCode() : 0;
         }
 
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
         /// <summary>
         ///   Returns the attribute with the specified key.
         ///   If no attribute is found, an exception is thrown.
@@ -211,6 +267,51 @@ namespace Slash.Collections.AttributeTables
         {
             object attributeValue = this.GetValue(attributeKey);
             return (T)attributeValue;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            reader.MoveToContent();
+            bool isEmpty = reader.IsEmptyElement;
+            reader.ReadStartElement();
+            if (isEmpty)
+            {
+                return;
+            }
+
+            while (reader.NodeType != XmlNodeType.EndElement)
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    bool isEmptyElement = reader.IsEmptyElement;
+                    string elementName = reader.Name;
+                    if (elementName == ItemElementName)
+                    {
+                        string keyTypeString = reader.GetAttribute(KeyTypeAttributeName);
+                        Type keyType = ReflectionUtils.FindType(keyTypeString);
+
+                        string valueTypeString = reader.GetAttribute(ValueTypeAttributeName);
+                        Type valueType = ReflectionUtils.FindType(valueTypeString);
+
+                        reader.ReadStartElement();
+                        KeyValuePair<object, object> attributePair = this.ReadAttributeXml(reader, keyType, valueType);
+                        this.attributes.Add(attributePair.Key, attributePair.Value);
+                    }
+                    else
+                    {
+                        reader.ReadStartElement();
+                    }
+
+                    if (!isEmptyElement)
+                    {
+                        reader.ReadEndElement();
+                    }
+                }
+                else
+                {
+                    reader.Read();
+                }
+            }
         }
 
         /// <summary>
@@ -248,6 +349,19 @@ namespace Slash.Collections.AttributeTables
             return this.attributes.TryGetValue(key, out value);
         }
 
+        public void WriteXml(XmlWriter writer)
+        {
+            if (this.attributes == null || this.attributes.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var attributePair in this.attributes)
+            {
+                this.WriteAttributeXml(writer, attributePair);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -255,6 +369,57 @@ namespace Slash.Collections.AttributeTables
         protected bool Equals(AttributeTable other)
         {
             return CollectionUtils.DictionaryEqual(this.attributes, other.attributes);
+        }
+
+        private KeyValuePair<object, object> ReadAttributeXml(XmlReader reader, Type keyType, Type valueType)
+        {
+            object key = null;
+            object value = null;
+
+            while (reader.NodeType != XmlNodeType.EndElement)
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    string elementName = reader.Name;
+
+                    if (elementName == KeyElementName)
+                    {
+                        key = SerializationUtils.ReadXml(reader, keyType, KeyElementName);
+                    }
+                    else if (elementName == ValueElementName)
+                    {
+                        value = SerializationUtils.ReadXml(reader, valueType, ValueElementName);
+                    }
+                    else
+                    {
+                        reader.Read();
+                    }
+                }
+                else
+                {
+                    reader.Read();
+                }
+            }
+
+            return new KeyValuePair<object, object>(key, value);
+        }
+
+        private void WriteAttributeXml(XmlWriter writer, KeyValuePair<object, object> attributePair)
+        {
+            writer.WriteStartElement(ItemElementName);
+            writer.WriteAttributeString(KeyTypeAttributeName, attributePair.Key.GetType().FullName);
+            if (attributePair.Value != null)
+            {
+                writer.WriteAttributeString(ValueTypeAttributeName, attributePair.Value.GetType().FullName);
+            }
+
+            SerializationUtils.WriteXml(writer, attributePair.Key, KeyElementName);
+            if (attributePair.Value != null)
+            {
+                SerializationUtils.WriteXml(writer, attributePair.Value, ValueElementName);
+            }
+
+            writer.WriteEndElement();
         }
 
         #endregion

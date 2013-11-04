@@ -163,6 +163,11 @@ namespace Slash.Collections.Utils
         /// <returns>Comma-seperated list of the elements of the passed sequence.</returns>
         public static string ToString<T>(IEnumerable<T> sequence)
         {
+            if (sequence == null)
+            {
+                return "null";
+            }
+            
             StringBuilder stringBuilder = new StringBuilder();
 
             stringBuilder.Append("[");
@@ -177,7 +182,7 @@ namespace Slash.Collections.Utils
                 stringBuilder[stringBuilder.Length - 2] = ']';
                 return stringBuilder.ToString().Substring(0, stringBuilder.Length - 1);
             }
-
+            
             return "[]";
         }
 
