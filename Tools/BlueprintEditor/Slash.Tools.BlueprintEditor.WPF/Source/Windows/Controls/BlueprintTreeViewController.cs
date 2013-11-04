@@ -10,32 +10,95 @@ namespace BlueprintEditor.Windows.Controls
 
     using Slash.GameBase.Blueprints;
 
+    /// <summary>
+    ///   Capsules a tree view to show the blueprints of a specified blueprint manager.
+    /// </summary>
     public class BlueprintTreeViewController
     {
         #region Fields
 
-        private readonly BlueprintManager blueprintManager;
-
+        /// <summary>
+        ///   Tree view to capsule.
+        /// </summary>
         private readonly TreeView treeView;
+
+        /// <summary>
+        ///   Blueprint manager to visualize with tree view.
+        /// </summary>
+        private BlueprintManager blueprintManager;
 
         #endregion
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
+        /// <param name="treeView">Tree view to capsule.</param>
+        /// <param name="blueprintManager">Blueprint manager to visualize with tree view.</param>
         public BlueprintTreeViewController(TreeView treeView, BlueprintManager blueprintManager)
         {
             this.treeView = treeView;
-            this.blueprintManager = blueprintManager;
-            this.blueprintManager.BlueprintsChanged += this.OnBlueprintsChanged;
+            this.BlueprintManager = blueprintManager;
+        }
 
-            this.UpdateTreeView();
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        ///   Blueprint manager to visualize with tree view.
+        /// </summary>
+        public BlueprintManager BlueprintManager
+        {
+            get
+            {
+                return this.blueprintManager;
+            }
+            set
+            {
+                if (ReferenceEquals(value, this.blueprintManager))
+                {
+                    return;
+                }
+
+                if (this.blueprintManager != null)
+                {
+                    this.blueprintManager.BlueprintsChanged -= this.OnBlueprintsChanged;
+                }
+
+                this.blueprintManager = value;
+
+                if (this.blueprintManager != null)
+                {
+                    this.blueprintManager.BlueprintsChanged += this.OnBlueprintsChanged;
+                }
+
+                this.UpdateTreeView();
+            }
+        }
+
+        /// <summary>
+        ///   Returns the selected item.
+        /// </summary>
+        public BlueprintTreeViewItem SelectedItem
+        {
+            get
+            {
+                if (this.treeView == null || this.treeView.SelectedItem == null)
+                {
+                    return null;
+                }
+
+                return (BlueprintTreeViewItem)this.treeView.SelectedItem;
+            }
         }
 
         #endregion
 
         #region Methods
 
-        private void OnBlueprintsChanged(BlueprintManager changedBlueprintManager)
+        private void OnBlueprintsChanged()
         {
             this.UpdateTreeView();
         }

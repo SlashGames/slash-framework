@@ -5,15 +5,16 @@
         xmlns:blueprints="clr-namespace:Slash.GameBase.Blueprints;assembly=Slash.GameBase"
         xmlns:controls="clr-namespace:BlueprintEditor.Windows.Controls"
         x:Class="BlueprintEditor.MainWindow"
-        Title="MainWindow" Height="370.528" Width="525">
+        Title="MainWindow" Height="480" Width="525">
     <Grid>
         <Menu HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="517">
             <MenuItem Header="_File">
-                <MenuItem x:Name="MenuFileNew" Header="_New" Click="MenuFileNewClick"/>
+                <MenuItem x:Name="MenuFileNew" Header="_New" Click="MenuFileNew_OnClick"/>
                 <Separator/>
                 <MenuItem x:Name="MenuFileLoad" Header="_Open" Click="MenuFileLoad_OnClick"/>
                 <Separator/>
                 <MenuItem x:Name="MenuFileSave" Header="_Save" Click="MenuFileSave_OnClick"/>
+                <MenuItem x:Name="MenuFileSaveAs" Header="Save_As" Click="MenuFileSaveAs_OnClick"/>
                 <Separator/>
                 <MenuItem x:Name="MenuFileExit" Header="_Exit" Click="MenuFileExit_OnClick"/>
             </MenuItem>
@@ -25,14 +26,15 @@
                 </DataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <Button x:Name="BtNewBlueprint" Content="New" HorizontalAlignment="Left" Margin="155,286,0,0" VerticalAlignment="Top" Width="36" Click="BtAddBlueprint_OnClick" RenderTransformOrigin="-0.511,0.109" Height="23"/>
-        <TextBox x:Name="TbNewBlueprintId" HorizontalAlignment="Left" Height="23" Margin="10,286,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="140"/>
-        <StatusBar x:Name="SbMain" HorizontalAlignment="Left" Height="17" VerticalAlignment="Bottom" Width="517">
+        <Button x:Name="BtNewBlueprint" Content="New" HorizontalAlignment="Left" Margin="155,313,0,0" VerticalAlignment="Top" Width="36" Click="BtAddBlueprint_OnClick" RenderTransformOrigin="-0.511,0.109" Height="23"/>
+        <TextBox x:Name="TbNewBlueprintId" HorizontalAlignment="Left" Height="23" Margin="10,313,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="140"/>
+        <StatusBar x:Name="SbMain" HorizontalAlignment="Left" Height="25" VerticalAlignment="Bottom" Width="517">
             <StatusBarItem>
                 <TextBlock x:Name="TbMessage"></TextBlock>
             </StatusBarItem>
-            
+
         </StatusBar>
+        <Button x:Name="BtDeleteBlueprint" Content="Delete" HorizontalAlignment="Left" Margin="10,285,0,0" VerticalAlignment="Top" Width="181" Click="BtDeleteBlueprint_OnClick" RenderTransformOrigin="-0.511,0.109" Height="23"/>
 
     </Grid>
 </Window>
