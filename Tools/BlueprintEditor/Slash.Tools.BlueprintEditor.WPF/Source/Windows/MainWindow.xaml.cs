@@ -7,16 +7,20 @@
 namespace BlueprintEditor
 {
     using System;
+    using System.Collections.Generic;
     using System.Media;
     using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
 
+    using BlueprintEditor.Windows;
     using BlueprintEditor.Windows.Controls;
 
     using Microsoft.Win32;
 
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Context;
-
+    
     /// <summary>
     ///   Interaction logic for MainWindow.xaml
     /// </summary>
@@ -24,15 +28,27 @@ namespace BlueprintEditor
     {
         #region Fields
 
+        public static readonly DependencyProperty ContextProperty = DependencyProperty.Register(
+            "Context",
+            typeof(EditorContext),
+            typeof(BlueprintControl),
+            new FrameworkPropertyMetadata(new EditorContext()));
+
         /// <summary>
         ///   Editor context which contains editing data.
         /// </summary>
-        private readonly EditorContext context = new EditorContext();
-
-        /// <summary>
-        ///   Controller which takes care about the blueprint tree view.
-        /// </summary>
-        private readonly BlueprintTreeViewController treeViewController;
+        public EditorContext Context
+        {
+            get
+            {
+                return (EditorContext)this.GetValue(ContextProperty);
+            }
+            set
+            {
+                this.SetValue(ContextProperty, value);
+            }
+        }
+        
 
         #endregion
 
@@ -42,42 +58,17 @@ namespace BlueprintEditor
         {
             this.InitializeComponent();
 
-            this.context.BlueprintManagerChanged += this.OnBlueprintManagerChanged;
+            //this.DataContext = this.context;
 
-            this.treeViewController = new BlueprintTreeViewController(
-                this.TreeBlueprints, this.context.BlueprintManager);
+            this.Context.BlueprintManagerChanged += this.OnBlueprintManagerChanged;
+
+            this.TreeBlueprints.BlueprintManager = this.Context.BlueprintManager;
+            //this.BlueprintControl.AvailableComponentTypes = this.context.EntityComponentTypes;
         }
 
         #endregion
 
         #region Methods
-
-        private void BtAddBlueprint_OnClick(object sender, RoutedEventArgs e)
-        {
-            string newBlueprintId = this.TbNewBlueprintId.Text;
-            try
-            {
-                this.context.BlueprintManager.AddBlueprint(newBlueprintId, new Blueprint());
-            }
-            catch (ArgumentException ex)
-            {
-                SystemSounds.Hand.Play();
-                this.TbMessage.Text = ex.Message;
-            }
-        }
-
-        private void BtDeleteBlueprint_OnClick(object sender, RoutedEventArgs e)
-        {
-            // Check if an item is selected.
-            BlueprintTreeViewItem selectedItem = this.treeViewController.SelectedItem;
-            if (selectedItem == null)
-            {
-                return;
-            }
-
-            // Delete current selected blueprint.
-            this.context.BlueprintManager.RemoveBlueprint(selectedItem.BlueprintId);
-        }
 
         /// <summary>
         ///   Checks if the context changed and what to do about it (save or discard changes).
@@ -123,7 +114,7 @@ namespace BlueprintEditor
 
             // If file was chosen, try to load.
             string filename = dlg.FileName;
-            this.context.Load(filename);
+            this.Context.Load(filename);
         }
 
         private void MenuFileNew_OnClick(object sender, RoutedEventArgs e)
@@ -135,7 +126,7 @@ namespace BlueprintEditor
             }
 
             // Create new blueprint manager.
-            this.context.New();
+            this.Context.New();
         }
 
         private void MenuFileSaveAs_OnClick(object sender, RoutedEventArgs e)
@@ -145,13 +136,13 @@ namespace BlueprintEditor
 
         private void MenuFileSave_OnClick(object sender, RoutedEventArgs e)
         {
-            this.SaveContext(this.context.SerializationPath);
+            this.SaveContext(this.Context.SerializationPath);
         }
 
         private void OnBlueprintManagerChanged(
             BlueprintManager newBlueprintManager, BlueprintManager oldBlueprintManager)
         {
-            this.treeViewController.BlueprintManager = newBlueprintManager;
+            this.TreeBlueprints.BlueprintManager = newBlueprintManager;
         }
 
         private void SaveContext(string path)
@@ -181,10 +172,17 @@ namespace BlueprintEditor
             }
 
             // Save context.
-            this.context.SerializationPath = path;
-            this.context.Save();
+            this.Context.SerializationPath = path;
+            this.Context.Save();
         }
 
         #endregion
+
+        private void TreeBlueprints_OnBlueprintSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            BlueprintSelectionChangedEventArgs eventArgs = ((BlueprintSelectionChangedEventArgs)e);
+            this.BlueprintControl.BlueprintId = eventArgs.BlueprintId;
+            this.BlueprintControl.Blueprint = eventArgs.Blueprint;
+        }
     }
 }

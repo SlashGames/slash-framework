@@ -49,18 +49,31 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="Source\App.xaml">
+    <ApplicationDefinition Include="Source\Application\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Source\Data\BlueprintManagerData.cs" />
-    <Compile Include="Source\Windows\Controls\BlueprintTreeViewController.cs" />
-    <Compile Include="Source\Windows\Controls\BlueprintTreeViewItem.cs" />
+    <Compile Include="Source\Controls\BlueprintControl.xaml.cs">
+      <DependentUpon>BlueprintControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Controls\BlueprintTreeView.xaml.cs">
+      <DependentUpon>BlueprintTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Controls\BlueprintTreeViewItem.cs" />
+    <Page Include="Source\Controls\BlueprintControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Controls\BlueprintTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Source\App.xaml.cs">
+    <Compile Include="Source\Application\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -94,7 +107,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Source\App.config" />
+    <None Include="Source\Application\App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Tools.BlueprintEditor.Logic\Slash.Tools.BlueprintEditor.Logic.csproj">

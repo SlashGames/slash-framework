@@ -6,6 +6,8 @@
 
 namespace Slash.Tools.BlueprintEditor.Logic.Context
 {
+    using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Runtime.Serialization;
     using System.Xml.Serialization;
@@ -20,6 +22,8 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 
         private BlueprintManager blueprintManager;
 
+        public IEnumerable<Type> EntityComponentTypes { get; set; }
+
         #endregion
 
         #region Constructors and Destructors
@@ -31,6 +35,9 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         {
             this.BlueprintManager = new BlueprintManager();
             this.blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
+
+            // NOTE(co): Available entity components should be set dynamically from application libraries.
+            this.EntityComponentTypes = new List<Type>() { typeof(int), typeof(bool) };
         }
 
         #endregion

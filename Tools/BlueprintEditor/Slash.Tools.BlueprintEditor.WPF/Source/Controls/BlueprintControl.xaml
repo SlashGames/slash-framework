@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="BlueprintEditor.Windows.BlueprintControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Label Content="Id" Margin="8,10,222,249" />
+        <TextBox x:Name="TbBlueprintId" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" Margin="82,19,0,0" Text="{Binding Path=BlueprintId}"/>
+        <TabControl HorizontalAlignment="Left" Height="214" Margin="10,62,0,0" VerticalAlignment="Top" Width="279">
+            <TabItem Header="Attributes">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Components">
+                <Grid Background="#FFE5E5E5">
+                    <Grid HorizontalAlignment="Left" Height="166" Margin="10,10,0,0" VerticalAlignment="Top" Width="253">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="59*"/>
+                            <ColumnDefinition Width="194*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListBox x:Name="LbComponentsAdded" HorizontalAlignment="Left" Width="96" Grid.ColumnSpan="2" Margin="0,21,0,0"/>
+                        <Label Content="Added:" HorizontalAlignment="Left" Margin="0,-5,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Available:" HorizontalAlignment="Left" Margin="78,-5,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                        <ListBox x:Name="LbComponentsAvailable" HorizontalAlignment="Left" Width="97" Margin="97,21,0,0" Grid.Column="1"/>
+                    </Grid>
+                    <Button x:Name="BtAdd" Content="&lt;-" HorizontalAlignment="Left" Margin="119,70,0,0" VerticalAlignment="Top" Width="27" Click="BtAdd_OnClick"/>
+                    <Button x:Name="BtRemove" Content="-&gt;" HorizontalAlignment="Left" Margin="119,107,0,0" VerticalAlignment="Top" Width="27" Click="BtRemove_OnClick"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
