@@ -48,6 +48,11 @@ namespace BlueprintEditor.Windows
         /// </summary>
         private BlueprintManager blueprintManager;
 
+        /// <summary>
+        ///   Indicates that the tree view is currently updated, so no selection event should be raised.
+        /// </summary>
+        private bool isUpdating;
+
         #endregion
 
         #region Constructors and Destructors
@@ -64,6 +69,11 @@ namespace BlueprintEditor.Windows
 
         private void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
+            if (this.isUpdating)
+            {
+                return;
+            }
+
             BlueprintTreeViewItem selectedItem = (BlueprintTreeViewItem)this.TvTree.SelectedItem;
             RaiseEvent(
                 new BlueprintSelectionChangedEventArgs(BlueprintSelectionChangedEvent, sender)
@@ -184,16 +194,32 @@ namespace BlueprintEditor.Windows
                 return;
             }
 
+            this.isUpdating = true;
+
+            // Store old selected item.
+            BlueprintTreeViewItem selectedItem = this.SelectedItem;
+
             this.TvTree.Items.Clear();
             if (this.blueprintManager == null)
             {
+                this.isUpdating = false;
                 return;
             }
 
             foreach (var blueprintPair in this.blueprintManager.Blueprints)
             {
-                this.TvTree.Items.Add(new BlueprintTreeViewItem(blueprintPair.Key, blueprintPair.Value));
+                BlueprintTreeViewItem blueprintTreeViewItem = new BlueprintTreeViewItem(blueprintPair.Key, blueprintPair.Value);
+
+                // Restore selected item.
+                if (selectedItem != null && ReferenceEquals(selectedItem.Blueprint, blueprintPair.Value))
+                {
+                    blueprintTreeViewItem.IsSelected = true;
+                }
+
+                this.TvTree.Items.Add(blueprintTreeViewItem);
             }
+
+            this.isUpdating = false;
         }
 
         #endregion

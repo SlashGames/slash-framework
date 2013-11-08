@@ -4,35 +4,46 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor
+namespace BlueprintEditor.Windows
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Media;
     using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Media;
 
-    using BlueprintEditor.Windows;
-    using BlueprintEditor.Windows.Controls;
+    using BlueprintEditor.Controls;
 
     using Microsoft.Win32;
 
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Context;
-    
+
     /// <summary>
     ///   Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
-        #region Fields
+        #region Static Fields
 
         public static readonly DependencyProperty ContextProperty = DependencyProperty.Register(
             "Context",
             typeof(EditorContext),
-            typeof(BlueprintControl),
+            typeof(BlueprintEditor.Controls.BlueprintControl),
             new FrameworkPropertyMetadata(new EditorContext()));
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public MainWindow()
+        {
+            this.InitializeComponent();
+
+            this.Context.BlueprintManagerChanged += this.OnBlueprintManagerChanged;
+
+            this.TreeBlueprints.BlueprintManager = this.Context.BlueprintManager;
+        }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         ///   Editor context which contains editing data.
@@ -47,23 +58,6 @@ namespace BlueprintEditor
             {
                 this.SetValue(ContextProperty, value);
             }
-        }
-        
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        public MainWindow()
-        {
-            this.InitializeComponent();
-
-            //this.DataContext = this.context;
-
-            this.Context.BlueprintManagerChanged += this.OnBlueprintManagerChanged;
-
-            this.TreeBlueprints.BlueprintManager = this.Context.BlueprintManager;
-            //this.BlueprintControl.AvailableComponentTypes = this.context.EntityComponentTypes;
         }
 
         #endregion
@@ -176,13 +170,17 @@ namespace BlueprintEditor
             this.Context.Save();
         }
 
-        #endregion
-
         private void TreeBlueprints_OnBlueprintSelectionChanged(object sender, RoutedEventArgs e)
         {
             BlueprintSelectionChangedEventArgs eventArgs = ((BlueprintSelectionChangedEventArgs)e);
-            this.BlueprintControl.BlueprintId = eventArgs.BlueprintId;
-            this.BlueprintControl.Blueprint = eventArgs.Blueprint;
+            this.BlueprintControl.BlueprintControlContext = new BlueprintControlContext
+                {
+                    Blueprint = eventArgs.Blueprint,
+                    BlueprintId = eventArgs.BlueprintId,
+                    BlueprintManager = this.Context.BlueprintManager
+                };
         }
+
+        #endregion
     }
 }

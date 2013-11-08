@@ -4,18 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor.Windows
+namespace BlueprintEditor.Controls
 {
     using System;
     using System.Collections.Generic;
     using System.Windows;
 
-    using Slash.GameBase.Blueprints;
-
     /// <summary>
     ///   Interaction logic for BlueprintControl.xaml
     /// </summary>
-    public partial class BlueprintControl
+    public sealed partial class BlueprintControl
     {
         #region Static Fields
 
@@ -26,17 +24,12 @@ namespace BlueprintEditor.Windows
                 typeof(BlueprintControl),
                 new FrameworkPropertyMetadata(null, OnAvailableComponentTypesChanged));
 
-        public static readonly DependencyProperty BlueprintIdProperty = DependencyProperty.Register(
-            "BlueprintId",
-            typeof(string),
-            typeof(BlueprintControl),
-            new FrameworkPropertyMetadata(null, OnBlueprintIdChanged));
-
-        #endregion
-
-        #region Fields
-
-        private Blueprint blueprint;
+        public static readonly DependencyProperty ContextProperty =
+            DependencyProperty.Register(
+                "BlueprintControlContext",
+                typeof(BlueprintControlContext),
+                typeof(BlueprintControl),
+                new FrameworkPropertyMetadata(null, OnContextChanged));
 
         #endregion
 
@@ -66,35 +59,15 @@ namespace BlueprintEditor.Windows
             }
         }
 
-        public Blueprint Blueprint
+        public BlueprintControlContext BlueprintControlContext
         {
             get
             {
-                return this.blueprint;
+                return (BlueprintControlContext)this.GetValue(ContextProperty);
             }
             set
             {
-                if (ReferenceEquals(value, this.blueprint))
-                {
-                    return;
-                }
-
-                this.blueprint = value;
-
-                this.UpdateBlueprintComponents();
-                this.UpdateAvailableComponents();
-            }
-        }
-
-        public string BlueprintId
-        {
-            get
-            {
-                return (string)this.GetValue(BlueprintIdProperty);
-            }
-            set
-            {
-                this.SetValue(BlueprintIdProperty, value);
+                this.SetValue(ContextProperty, value);
             }
         }
 
@@ -105,17 +78,20 @@ namespace BlueprintEditor.Windows
         private static void OnAvailableComponentTypesChanged(
             DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
-            ((BlueprintControl)source).UpdateAvailableComponents();
+            BlueprintControl blueprintControl = ((BlueprintControl)source);
+            blueprintControl.UpdateAvailableComponents();
         }
 
-        private static void OnBlueprintIdChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        private static void OnContextChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
-            // TODO(co): Fire event.
+            BlueprintControl blueprintControl = (BlueprintControl)source;
+            blueprintControl.UpdateBlueprintComponents();
+            blueprintControl.UpdateAvailableComponents();
         }
 
         private void BtAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            if (this.blueprint == null)
+            if (this.BlueprintControlContext.Blueprint == null)
             {
                 // TODO(co): Gray out button.
                 MessageBox.Show("No blueprint selected.");
@@ -132,7 +108,7 @@ namespace BlueprintEditor.Windows
             }
 
             // Add component type to blueprint.
-            this.blueprint.ComponentTypes.Add(componentType);
+            this.BlueprintControlContext.Blueprint.ComponentTypes.Add(componentType);
 
             // Remove from available, add to blueprint component types.
             this.LbComponentsAvailable.Items.Remove(componentType);
@@ -144,7 +120,7 @@ namespace BlueprintEditor.Windows
 
         private void BtRemove_OnClick(object sender, RoutedEventArgs e)
         {
-            if (this.blueprint == null)
+            if (this.BlueprintControlContext.Blueprint == null)
             {
                 // TODO(co): Gray out button.
                 MessageBox.Show("No blueprint selected.");
@@ -161,7 +137,7 @@ namespace BlueprintEditor.Windows
             }
 
             // Remove component type from blueprint.
-            this.blueprint.ComponentTypes.Remove(componentType);
+            this.BlueprintControlContext.Blueprint.ComponentTypes.Remove(componentType);
 
             // Remove from available, add to blueprint component types.
             this.LbComponentsAdded.Items.Remove(componentType);
@@ -176,7 +152,7 @@ namespace BlueprintEditor.Windows
             // Clear items.
             this.LbComponentsAvailable.Items.Clear();
 
-            if (this.AvailableComponentTypes == null)
+            if (this.AvailableComponentTypes == null || this.BlueprintControlContext == null)
             {
                 return;
             }
@@ -184,7 +160,8 @@ namespace BlueprintEditor.Windows
             // Add available component types.
             foreach (var componentType in this.AvailableComponentTypes)
             {
-                if (this.blueprint != null && this.blueprint.ComponentTypes.Contains(componentType))
+                if (this.BlueprintControlContext.Blueprint != null
+                    && this.BlueprintControlContext.Blueprint.ComponentTypes.Contains(componentType))
                 {
                     continue;
                 }
@@ -198,13 +175,13 @@ namespace BlueprintEditor.Windows
             // Clear items.
             this.LbComponentsAdded.Items.Clear();
 
-            if (this.blueprint == null)
+            if (this.BlueprintControlContext.Blueprint == null)
             {
                 return;
             }
 
             // Add existing components.
-            foreach (var componentType in this.blueprint.ComponentTypes)
+            foreach (var componentType in this.BlueprintControlContext.Blueprint.ComponentTypes)
             {
                 this.LbComponentsAdded.Items.Add(componentType);
             }

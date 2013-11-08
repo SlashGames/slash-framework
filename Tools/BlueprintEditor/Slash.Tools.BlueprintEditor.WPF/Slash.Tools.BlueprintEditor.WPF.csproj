@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Source\Controls\BlueprintControlContext.cs" />
     <Compile Include="Source\Data\BlueprintManagerData.cs" />
     <Compile Include="Source\Controls\BlueprintControl.xaml.cs">
       <DependentUpon>BlueprintControl.xaml</DependentUpon>
@@ -77,6 +78,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Source\Validation\UniqueBlueprintIdValidationRule.cs" />
+    <Compile Include="Source\Windows\BindingProxy.cs" />
     <Compile Include="Source\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -30,7 +30,7 @@ namespace Slash.GameBase.Blueprints
         ///   All registered blueprints.
         /// </summary>
         private readonly SerializableDictionary<string, Blueprint> blueprints =
-            new SerializableDictionary<string, Blueprint>()
+            new SerializableDictionary<string, Blueprint>
                 {
                     ItemElementName = "Entry",
                     KeyElementName = "Id",
@@ -126,6 +126,28 @@ namespace Slash.GameBase.Blueprints
             {
                 this.AddBlueprint(blueprintPair.Key, new Blueprint(blueprintPair.Value));
             }
+            this.OnBlueprintsChanged();
+        }
+
+        /// <summary>
+        ///   Changes the id under which a blueprint is stored.
+        /// </summary>
+        /// <param name="oldBlueprintId">Old blueprint id.</param>
+        /// <param name="newBlueprintId">New blueprint id.</param>
+        /// <exception cref="ArgumentException">Thrown if the old blueprint id doesn't exist in the manager.</exception>
+        public void ChangeBlueprintId(string oldBlueprintId, string newBlueprintId)
+        {
+            // Check that old blueprint id exists.
+            Blueprint blueprint;
+            if (!this.blueprints.TryGetValue(oldBlueprintId, out blueprint))
+            {
+                throw new ArgumentException(
+                    string.Format("Blueprint id '{0}' not found.", oldBlueprintId), "oldBlueprintId");
+            }
+
+            this.blueprints.Remove(oldBlueprintId);
+            this.blueprints.Add(newBlueprintId, blueprint);
+
             this.OnBlueprintsChanged();
         }
 
