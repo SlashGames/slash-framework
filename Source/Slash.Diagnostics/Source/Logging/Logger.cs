@@ -25,7 +25,7 @@ namespace Slash.Diagnostics.Logging
     ///   as it increases the size significantly (around 1 to 2 MB!)
     /// </summary>
     /// <author>Jashan Chittesh - jc (you know it) ramtiga (dot) com</author>
-    public class Logger
+    public class Logger : ILogger
     {
         private const string StartMessage =
             "Logger configured\nlog4net configuration file:\n{0}\n\n" + "    =======================================\n"

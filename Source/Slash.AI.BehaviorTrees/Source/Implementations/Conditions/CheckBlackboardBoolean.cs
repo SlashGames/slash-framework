@@ -36,9 +36,7 @@ namespace Slash.AI.BehaviorTrees.Implementations.Conditions
         /// <returns> Returns true if the condition is forfilled, else false. </returns>
         protected override bool Decide(IAgentData agentData)
         {
-            bool result = false;
-            agentData.Blackboard.TryGetValue(this.BlackboardAttributeKey, out result);
-            return result;
+            return agentData.Blackboard.GetValue(this.BlackboardAttributeKey, false);
         }
 
         #endregion

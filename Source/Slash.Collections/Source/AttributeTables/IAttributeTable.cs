@@ -7,14 +7,24 @@
 namespace Slash.Collections.AttributeTables
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     /// <summary>
     ///   Table that allows storing and looking up attributes and their
     ///   respective values.
     /// </summary>
-    public interface IAttributeTable
+    public interface IAttributeTable : IEnumerable
     {
+        #region Public Properties
+
+        /// <summary>
+        ///   Returns the number of attributes in the attribute table.
+        /// </summary>
+        int Count { get; }
+
+        #endregion
+
         #region Public Indexers
 
         /// <summary>
@@ -39,6 +49,12 @@ namespace Slash.Collections.AttributeTables
         void Add(object key, object value);
 
         /// <summary>
+        ///   Adds all content of the passed attribute table to this one.
+        /// </summary>
+        /// <param name="attributeTable"> Table to add the content of. </param>
+        void AddRange(IAttributeTable attributeTable);
+
+        /// <summary>
         ///   Maps the passed key to the specified value in this attribute table,
         ///   if it hasn't already been mapped before.
         /// </summary>
@@ -56,18 +72,6 @@ namespace Slash.Collections.AttributeTables
         bool Contains(object key);
 
         /// <summary>
-        ///   Returns the attribute with the specified key casted to the specified type.
-        ///   If no attribute with the specified key is found or the attribute can't be casted
-        ///   to the specified type, an exception is thrown.
-        /// </summary>
-        /// <typeparam name="T"> Expected type of attribute. </typeparam>
-        /// <param name="attributeKey"> Attribute key. </param>
-        /// <returns> Value of attribute of the specified type with the specified key. </returns>
-        /// <exception cref="KeyNotFoundException">Specified key wasn't found.</exception>
-        /// <exception cref="InvalidCastException">Attribute was found but couldn't be casted to specified type.</exception>
-        T GetValue<T>(object attributeKey);
-
-        /// <summary>
         ///   Returns the attribute with the specified key.
         ///   If no attribute is found, an exception is thrown.
         /// </summary>
@@ -80,7 +84,10 @@ namespace Slash.Collections.AttributeTables
         ///   Removes the passed key from this attribute table.
         /// </summary>
         /// <param name="key"> Key to remove. </param>
-        void RemoveValue(object key);
+        /// <returns>
+        ///   <c>true</c>, if the key has been removed, and <c>false</c> otherwise.
+        /// </returns>
+        bool RemoveValue(object key);
 
         /// <summary>
         ///   Puts the attribute with the specified key and value into the attribute table.
@@ -98,16 +105,6 @@ namespace Slash.Collections.AttributeTables
         /// <param name="value"> Retrieved value. </param>
         /// <returns> true if a value was found, and false otherwise. </returns>
         bool TryGetValue(object key, out object value);
-
-        /// <summary>
-        ///   Tries to retrieve the value the passed key is mapped to within this
-        ///   attribute table.
-        /// </summary>
-        /// <typeparam name="T"> Type of the value to retrieve. </typeparam>
-        /// <param name="key"> Key to retrieve the value of. </param>
-        /// <param name="value"> Retrieved value. </param>
-        /// <returns> true if a value was found, and false otherwise. </returns>
-        bool TryGetValue<T>(object key, out T value);
 
         #endregion
     }

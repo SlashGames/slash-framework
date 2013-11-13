@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{001B2D96-4259-4E09-934F-290F74086E06}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PostBuildLibraries</RootNamespace>
+    <AssemblyName>PostBuildLibraries</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="perl ${ProjectDir}/Build/Postbuild.pl ${ProjectDir}/../Unity/ ${TargetDir}" workingdir="" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="perl ${ProjectDir}Build\Postbuild.pl ${ProjectDir}..\Unity\ ${TargetDir}" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>perl $(ProjectDir)Build\Postbuild.pl $(ProjectDir)..\Unity\ $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Build\Postbuild.pl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.Collections\Slash.Collections.csproj">
+      <Project>{03f9a6f7-f402-4581-b748-fa51bf3b1b82}</Project>
+      <Name>Slash.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.Diagnostics\Slash.Diagnostics.csproj">
+      <Project>{e155097a-6a57-498e-a707-f852aa672111}</Project>
+      <Name>Slash.Diagnostics</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.GameBase\Slash.GameBase.csproj">
+      <Project>{8a6e1d65-c56c-4f71-9991-6ae99e8d5080}</Project>
+      <Name>Slash.GameBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.Math\Slash.Math.csproj">
+      <Project>{834e18de-a529-4f17-a838-92b1ef259fe3}</Project>
+      <Name>Slash.Math</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{c92c88b0-5268-443b-b32f-cc2a6d686c51}</Project>
+      <Name>Slash.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.Xml\Slash.Xml.csproj">
+      <Project>{e399fde3-a0dd-4aea-bbf5-2a16c5e6775b}</Project>
+      <Name>Slash.Xml</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

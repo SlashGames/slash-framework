@@ -44,6 +44,11 @@ namespace Slash.Math.Utils
             return (float)Math.Atan(x);
         }
 
+        public static float Abs(float x)
+        {
+            return Math.Abs(x);
+        }
+
         public static float Atan2(float x, float y)
         {
             return (float)Math.Atan2(x, y);

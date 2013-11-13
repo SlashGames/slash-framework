@@ -9,7 +9,8 @@ namespace Slash.GameBase.Tests
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.EventData;
+    using Slash.GameBase.Components;
+    using Slash.GameBase.Events;
 
     /// <summary>
     ///   Unit tests for the EventManager class.
@@ -199,7 +200,7 @@ namespace Slash.GameBase.Tests
         private void OnComponentAdded(Event e)
         {
             EntityComponentData data = (EntityComponentData)e.EventData;
-            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.EntityComponent);
+            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.Component);
         }
 
         /// <summary>
@@ -209,7 +210,7 @@ namespace Slash.GameBase.Tests
         private void OnComponentRemoved(Event e)
         {
             EntityComponentData data = (EntityComponentData)e.EventData;
-            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.EntityComponent);
+            this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.Component);
         }
 
         /// <summary>

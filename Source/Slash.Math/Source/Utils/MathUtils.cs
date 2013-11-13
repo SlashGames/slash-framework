@@ -30,6 +30,17 @@ namespace Slash.Math.Utils
         #region Public Methods and Operators
 
         /// <summary>
+        ///   Converts the specified float value to the ceil value as an integer.
+        ///   The smallest integer bigger than or equal the specified value is returned.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns>Ceil integer for the specified float value.</returns>
+        public static int CeilToInt(float value)
+        {
+            return (int)Math.Ceiling(value);
+        }
+
+        /// <summary>
         ///   Clamps the passed value to the passed bounds (i.e. if value is smaller than min bound it's set to min bound,
         ///   if bigger than max bound it's set to max bound).
         /// </summary>
@@ -43,14 +54,22 @@ namespace Slash.Math.Utils
             {
                 return min;
             }
-            else if (value.CompareTo(max) > 0)
+            if (value.CompareTo(max) > 0)
             {
                 return max;
             }
-            else
-            {
-                return value;
-            }
+            return value;
+        }
+
+        /// <summary>
+        ///   Converts the specified float value to the floor value as an integer.
+        ///   The largest integer less than or equal the specified value is returned.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns>Floor integer for the specified float value.</returns>
+        public static int FloorToInt(float value)
+        {
+            return (int)Math.Floor(value);
         }
 
         /// <summary>

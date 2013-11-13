@@ -28,7 +28,7 @@ namespace Slash.Collections.ObjectModel
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Constructor.
+        ///   Wraps the specified collection with a new read-only collection.
         /// </summary>
         /// <param name="collection"> Collection to wrap. </param>
         public ReadOnlyCollection(ICollection<T> collection)
@@ -116,7 +116,10 @@ namespace Slash.Collections.ObjectModel
         }
 
         /// <summary>
-        ///   Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1" /> to an <see cref="T:System.Array" />, starting at a particular
+        ///   Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1" /> to an
+        ///   <see
+        ///     cref="T:System.Array" />
+        ///   , starting at a particular
         ///   <see
         ///     cref="T:System.Array" />
         ///   index.

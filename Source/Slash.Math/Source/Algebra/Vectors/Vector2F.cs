@@ -10,12 +10,14 @@ namespace Slash.Math.Algebra.Vectors
     using System.Globalization;
 
     using Slash.Math.Utils;
+    using Slash.Serialization.Dictionary;
 
     /// <summary>
     ///   Struct which represents a 2 dimensional float vector.
     /// </summary>
     [Serializable]
-    public struct Vector2F
+    [DictionarySerializable]
+    public class Vector2F
     {
         #region Static Fields
 
@@ -23,6 +25,11 @@ namespace Slash.Math.Algebra.Vectors
         ///   Unrotated forward vector.
         /// </summary>
         public static Vector2F Forward = new Vector2F(0, 1);
+
+        /// <summary>
+        ///   Both vector components are -1.
+        /// </summary>
+        public static Vector2F MinusOne = new Vector2F(-1, -1);
 
         /// <summary>
         ///   Both vector components are 1.
@@ -61,23 +68,30 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   X component.
         /// </summary>
-        public float X;
+        [DictionarySerializable]
+        public readonly float X;
 
         /// <summary>
         ///   Y component.
         /// </summary>
-        public float Y;
+        [DictionarySerializable]
+        public readonly float Y;
 
         #endregion
 
         #region Constructors and Destructors
+
+        public Vector2F()
+        {
+            this.X = 0;
+            this.Y = 0;
+        }
 
         /// <summary>
         ///   Constructor.
         /// </summary>
         /// <param name="vector"> Initial vector. </param>
         public Vector2F(Vector2F vector)
-            : this()
         {
             this.X = vector.X;
             this.Y = vector.Y;
@@ -89,7 +103,6 @@ namespace Slash.Math.Algebra.Vectors
         /// <param name="x"> Initial x value. </param>
         /// <param name="y"> Initial y value. </param>
         public Vector2F(float x, float y)
-            : this()
         {
             this.X = x;
             this.Y = y;
@@ -103,7 +116,6 @@ namespace Slash.Math.Algebra.Vectors
         ///   Value at index 0 is taken as the initial x value, value at index 1 is taken as the initial y value.
         /// </param>
         public Vector2F(params float[] values)
-            : this()
         {
             if (values == null)
             {
@@ -332,6 +344,11 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Vector which components are the sum of the respective components of the two passed vectors. </returns>
         public static Vector2F operator +(Vector2F a, Vector2F b)
         {
+            if (a == null || b == null)
+            {
+                return null;
+            }
+
             return new Vector2F(a.X + b.X, a.Y + b.Y);
         }
 
@@ -343,7 +360,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Vector where each component is the sum of the particular component of the passed vector plus the passed float value. </returns>
         public static Vector2F operator +(Vector2F a, float b)
         {
-            return new Vector2F(a.X + b, a.Y + b);
+            return a != null ? new Vector2F(a.X + b, a.Y + b) : null;
         }
 
         /// <summary>
@@ -354,7 +371,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Vector where each component is the result of the particular component of the passed vector divided by the passed float value. </returns>
         public static Vector2F operator /(Vector2F a, float b)
         {
-            return new Vector2F(a.X / b, a.Y / b);
+            return a != null ? new Vector2F(a.X / b, a.Y / b) : null;
         }
 
         /// <summary>
@@ -365,7 +382,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> True if the two passed vectors are equal; otherwise, false. </returns>
         public static bool operator ==(Vector2F a, Vector2F b)
         {
-            return a.Equals(b);
+            return Equals(a, b);
         }
 
         /// <summary>
@@ -376,7 +393,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> True if the two passed vectors are not equal; otherwise, false. </returns>
         public static bool operator !=(Vector2F a, Vector2F b)
         {
-            return a.Equals(b) == false;
+            return !Equals(a, b);
         }
 
         /// <summary>
@@ -387,6 +404,11 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Vector which components are the product of the respective components of the passed vectors. </returns>
         public static Vector2F operator *(Vector2F a, Vector2F b)
         {
+            if (a == null || b == null)
+            {
+                return null;
+            }
+
             return new Vector2F(a.X * b.X, a.Y * b.Y);
         }
 
@@ -398,7 +420,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Vector which components are the product of the respective component of the passed vector and the float value. </returns>
         public static Vector2F operator *(Vector2F a, float b)
         {
-            return new Vector2F(a.X * b, a.Y * b);
+            return a != null ? new Vector2F(a.X * b, a.Y * b) : null;
         }
 
         /// <summary>
@@ -409,7 +431,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Vector which components are the product of the respective component of the passed vector and the float value. </returns>
         public static Vector2F operator *(float a, Vector2F b)
         {
-            return new Vector2F(a * b.X, a * b.Y);
+            return b != null ? new Vector2F(a * b.X, a * b.Y) : null;
         }
 
         /// <summary>
@@ -420,7 +442,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Vector where each component is the sum of the particular component of the passed vector minus the passed float value. </returns>
         public static Vector2F operator -(Vector2F a, float b)
         {
-            return new Vector2F(a.X - b, a.Y - b);
+            return a != null ? new Vector2F(a.X - b, a.Y - b) : null;
         }
 
         /// <summary>
@@ -431,6 +453,11 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Vector which components are the difference of the respective components of the two passed vectors. </returns>
         public static Vector2F operator -(Vector2F a, Vector2F b)
         {
+            if (a == null || b == null)
+            {
+                return null;
+            }
+
             return new Vector2F(a.X - b.X, a.Y - b.Y);
         }
 
@@ -441,7 +468,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Vector which components have the negated value of the respective components of the passed vector. </returns>
         public static Vector2F operator -(Vector2F a)
         {
-            return new Vector2F(-a.X, -a.Y);
+            return a != null ? new Vector2F(-a.X, -a.Y) : null;
         }
 
         /// <summary>
@@ -449,10 +476,9 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="addX"> Value to add to x. </param>
         /// <param name="addY"> Value to add to y. </param>
-        public void Add(float addX, float addY)
+        public Vector2F Add(float addX, float addY)
         {
-            this.X += addX;
-            this.Y += addY;
+            return new Vector2F(this.X + addX, this.Y + addY);
         }
 
         /// <summary>
@@ -467,17 +493,19 @@ namespace Slash.Math.Algebra.Vectors
 
         public override bool Equals(object obj)
         {
-            if (!(obj is Vector2F))
+            if (ReferenceEquals(null, obj))
             {
                 return false;
             }
-
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
             return this.Equals((Vector2F)obj);
-        }
-
-        public bool Equals(Vector2F v)
-        {
-            return this.X == v.X && this.Y == v.Y;
         }
 
         /// <summary>
@@ -492,7 +520,10 @@ namespace Slash.Math.Algebra.Vectors
 
         public override int GetHashCode()
         {
-            return this.X.GetHashCode() ^ this.Y.GetHashCode();
+            unchecked
+            {
+                return (this.X.GetHashCode() * 397) ^ this.Y.GetHashCode();
+            }
         }
 
         /// <summary>
@@ -506,10 +537,8 @@ namespace Slash.Math.Algebra.Vectors
             {
                 return new Vector2F(this.X / magnitude, this.Y / magnitude);
             }
-            else
-            {
-                return Zero;
-            }
+
+            return Zero;
         }
 
         /// <summary>
@@ -522,15 +551,17 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the counter-clockwise rotated vector.
+        ///   Creates a new vector which is reflected by the specified vector.
         /// </summary>
-        /// <param name="angle"> Angle (in radians). </param>
-        /// <returns> Rotated vector. </returns>
-        public Vector2F GetRotated(float angle)
+        /// <param name="reflect">Vector to reflect with.</param>
+        /// <returns>This vector reflected with the specified vector.</returns>
+        public Vector2F GetReflected(Vector2F reflect)
         {
-            Vector2F rotatedVector = new Vector2F(this);
-            rotatedVector.Rotate(angle);
-            return rotatedVector;
+            Vector2F normalizedReflect = reflect.GetNormalized();
+            return
+                new Vector2F(
+                    this.X - 2 * normalizedReflect.X * (normalizedReflect.X * this.X + normalizedReflect.Y * this.Y),
+                    this.Y - 2 * normalizedReflect.Y * (normalizedReflect.X * this.X + normalizedReflect.Y * this.Y));
         }
 
         /// <summary>
@@ -559,30 +590,45 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
+        ///   Creates a new vector which is limited to the specified length.
+        ///   If the vector is longer it is truncated, otherwise it stays the same.
+        /// </summary>
+        /// <param name="limit"> Maximum magnitude. </param>
+        public Vector2F Limit(float limit)
+        {
+            if (this.SquareMagnitude > limit * limit)
+            {
+                return this.GetNormalized() * limit;
+            }
+            return this;
+        }
+
+        /// <summary>
         ///   Normalizes this vector.
         /// </summary>
-        public void Normalize()
+        public Vector2F Normalize()
         {
             float magnitude = this.Magnitude;
             if (magnitude != 0.0f)
             {
-                this.X /= magnitude;
-                this.Y /= magnitude;
+                return new Vector2F(this.X / magnitude, this.Y / magnitude);
             }
+
+            return new Vector2F(this.X, this.Y);
         }
 
         /// <summary>
         ///   Rotates the vector counter-clockwise.
         /// </summary>
         /// <param name="angle"> Angle (in radians). </param>
-        public void Rotate(float angle)
+        /// <returns> Rotated vector. </returns>
+        public Vector2F Rotate(float angle)
         {
             float cos = MathF.Cos(angle);
             float sin = MathF.Sin(angle);
             float newX = this.X * cos - this.Y * sin;
             float newY = this.Y * cos + this.X * sin;
-            this.X = newX;
-            this.Y = newY;
+            return new Vector2F(newX, newY);
         }
 
         public override string ToString()
@@ -597,14 +643,23 @@ namespace Slash.Math.Algebra.Vectors
         ///   Changes the magnitude of this vector to the passed value.
         /// </summary>
         /// <param name="length"> New magnitude. </param>
-        public void Truncate(float length)
+        public Vector2F Truncate(float length)
         {
             float magnitude = this.Magnitude;
             if (magnitude != 0.0f)
             {
-                this.X = this.X / magnitude * length;
-                this.Y = this.Y / magnitude * length;
+                return new Vector2F(this.X / magnitude * length, this.Y / magnitude * length);
             }
+            return new Vector2F(this.X, this.Y);
+        }
+
+        #endregion
+
+        #region Methods
+
+        protected bool Equals(Vector2F other)
+        {
+            return this.X.Equals(other.X) && this.Y.Equals(other.Y);
         }
 
         #endregion

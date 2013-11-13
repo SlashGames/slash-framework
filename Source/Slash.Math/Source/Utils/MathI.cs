@@ -28,6 +28,11 @@ namespace Slash.Math.Utils
             return ret;
         }
 
+        public static int Pow2(int x)
+        {
+            return x * x;
+        }
+
         #endregion
     }
 }
