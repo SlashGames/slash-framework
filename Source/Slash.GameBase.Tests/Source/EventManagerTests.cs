@@ -9,7 +9,8 @@ namespace Slash.GameBase.Tests
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.EventData;
+    using Slash.GameBase.Components;
+    using Slash.GameBase.Events;
 
     /// <summary>
     ///   Unit tests for the EventManager class.

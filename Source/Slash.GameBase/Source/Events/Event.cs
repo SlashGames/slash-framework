@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase
+namespace Slash.GameBase.Events
 {
     using System;
-
+    
     /// <summary>
     ///   Event that has occurred within the entity system. May contain
     ///   additional data listeners might be interested in.

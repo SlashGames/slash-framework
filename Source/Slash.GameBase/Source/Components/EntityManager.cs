@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase
+namespace Slash.GameBase.Components
 {
     using System;
     using System.Collections;
@@ -14,7 +14,7 @@ namespace Slash.GameBase
     using Slash.Collections.AttributeTables;
     using Slash.Collections.ObjectModel;
     using Slash.GameBase.Blueprints;
-    using Slash.GameBase.EventData;
+    using Slash.GameBase.Events;
 
     /// <summary>
     ///   Creates and removes game entities. Holds references to all component

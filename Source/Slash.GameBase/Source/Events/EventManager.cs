@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase
+namespace Slash.GameBase.Events
 {
     using System;
     using System.Collections.Generic;
-
+    
     /// <summary>
     ///   Allows listeners to register for game-related events and notifies them
     ///   whenever one of these events is fired.

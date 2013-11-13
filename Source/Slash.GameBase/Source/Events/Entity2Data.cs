@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.EventData
+namespace Slash.GameBase.Events
 {
     using System;
-
+    
     /// <summary>
     ///   Event data for events concerning two entities.
     /// </summary>

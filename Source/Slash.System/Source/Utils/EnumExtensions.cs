@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.System.Utils
+namespace Slash.SystemExt.Utils
 {
     using global::System;
 

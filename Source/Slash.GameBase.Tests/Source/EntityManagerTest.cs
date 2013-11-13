@@ -11,6 +11,7 @@ namespace Slash.GameBase.Tests
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
+    using Slash.GameBase.Components;
 
     /// <summary>
     ///   Unit tests for the EntityManager class.

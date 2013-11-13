@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase
+namespace Slash.GameBase.Components
 {
     using Slash.Collections.AttributeTables;
 

@@ -4,10 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase
+namespace Slash.GameBase.Systems
 {
     using System;
     using System.Collections.Generic;
+
+    using Slash.GameBase.Events;
 
     /// <summary>
     ///   Manages the game systems to be updated in each tick.

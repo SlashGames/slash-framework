@@ -6,6 +6,10 @@
 
 namespace Slash.GameBase
 {
+    using Slash.GameBase.Components;
+    using Slash.GameBase.Events;
+    using Slash.GameBase.Systems;
+
     /// <summary>
     ///   Base game class. Provides default functionality
     ///   that is common across many games, such as components that are attached

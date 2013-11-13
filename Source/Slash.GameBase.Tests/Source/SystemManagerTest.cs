@@ -10,6 +10,8 @@ namespace Slash.GameBase.Tests
 
     using NUnit.Framework;
 
+    using Slash.GameBase.Systems;
+
     /// <summary>
     ///   Unit tests for the SystemManager class.
     /// </summary>

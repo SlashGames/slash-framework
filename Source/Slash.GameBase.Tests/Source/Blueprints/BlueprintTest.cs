@@ -10,6 +10,7 @@ namespace Slash.GameBase.Tests.Blueprints
 
     using Slash.Collections.AttributeTables;
     using Slash.GameBase.Blueprints;
+    using Slash.GameBase.Components;
     using Slash.Tests.Utils;
 
     public class BlueprintTest

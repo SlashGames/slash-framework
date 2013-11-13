@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase
+namespace Slash.GameBase.Events
 {
     /// <summary>
     ///   Type of an event that occurred within the entity system.
