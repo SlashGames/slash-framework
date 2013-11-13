@@ -19,6 +19,16 @@ namespace Slash.Reflection.Utils
         #region Public Methods and Operators
 
         /// <summary>
+        ///   Loads an assembly from the specified file.
+        /// </summary>
+        /// <param name="assemblyFile">Path to assembly file.</param>
+        /// <returns>Loaded assembly from specified path.</returns>
+        public static Assembly FindAssembly(string assemblyFile)
+        {
+            return Assembly.LoadFrom(assemblyFile);
+        }
+
+        /// <summary>
         ///   <para>
         ///     Looks up the specified full type name in all loaded assemblies,
         ///     ignoring assembly version.

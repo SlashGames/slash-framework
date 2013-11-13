@@ -25,7 +25,7 @@ namespace BlueprintEditor.Windows
         public static readonly DependencyProperty ContextProperty = DependencyProperty.Register(
             "Context",
             typeof(EditorContext),
-            typeof(BlueprintEditor.Controls.BlueprintControl),
+            typeof(BlueprintControl),
             new FrameworkPropertyMetadata(new EditorContext()));
 
         #endregion
@@ -37,8 +37,10 @@ namespace BlueprintEditor.Windows
             this.InitializeComponent();
 
             this.Context.BlueprintManagerChanged += this.OnBlueprintManagerChanged;
+            this.Context.EntityComponentTypesChanged += this.OnEntityComponentTypesChanged;
 
-            this.TreeBlueprints.BlueprintManager = this.Context.BlueprintManager;
+            this.OnBlueprintManagerChanged(this.Context.BlueprintManager, null);
+            this.OnEntityComponentTypesChanged();
         }
 
         #endregion
@@ -133,10 +135,33 @@ namespace BlueprintEditor.Windows
             this.SaveContext(this.Context.SerializationPath);
         }
 
+        private void MenuProjectAddAssembly_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Configure open file dialog box.
+            OpenFileDialog dlg = new OpenFileDialog { DefaultExt = ".dll", Filter = "Assemblies (.dll)|*.dll" };
+
+            // Show open file dialog box.
+            bool? result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result != true)
+            {
+                return;
+            }
+
+            // Add assembly to project.
+            this.Context.AddAssembly(dlg.FileName);
+        }
+
         private void OnBlueprintManagerChanged(
             BlueprintManager newBlueprintManager, BlueprintManager oldBlueprintManager)
         {
             this.TreeBlueprints.BlueprintManager = newBlueprintManager;
+        }
+
+        private void OnEntityComponentTypesChanged()
+        {
+            this.BlueprintControl.AvailableComponentTypes = this.Context.AvailableComponentTypes;
         }
 
         private void SaveContext(string path)

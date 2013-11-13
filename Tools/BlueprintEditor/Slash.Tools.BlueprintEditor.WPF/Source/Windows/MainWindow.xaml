@@ -19,6 +19,9 @@
                 <Separator />
                 <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Click = "MenuFileExit_OnClick" />
             </MenuItem>
+            <MenuItem Header = "_Project">
+                <MenuItem x:Name = "MenuProjectAddAssembly" Header = "_Add Assembly" Click = "MenuProjectAddAssembly_OnClick" />
+            </MenuItem>
         </Menu>
 
         <windows:BlueprintTreeView x:Name = "TreeBlueprints"
@@ -27,8 +30,7 @@
 
         <GroupBox Header = "Blueprint" HorizontalAlignment = "Left" Margin = "196,23,0,0" VerticalAlignment = "Top"
                   Height = "308" Width = "311">
-            <controls:BlueprintControl x:Name = "BlueprintControl"
-                                       AvailableComponentTypes = "{Binding ElementName=Main, Path=Context.EntityComponentTypes}" />
+            <controls:BlueprintControl x:Name = "BlueprintControl" />
         </GroupBox>
 
         <StatusBar x:Name = "SbMain" HorizontalAlignment = "Left" Height = "25" VerticalAlignment = "Bottom"

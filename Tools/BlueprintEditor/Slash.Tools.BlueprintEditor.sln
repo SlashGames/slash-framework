@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Serialization.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Collections.Tests", "..\..\Source\Slash.Collections.Tests\Slash.Collections.Tests.csproj", "{7EA73F8E-AB74-4DDA-9C17-8BE953DD16F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Tools.BlueprintEditor.SampleProject", "Slash.Tools.BlueprintEditor.SampleProject\Slash.Tools.BlueprintEditor.SampleProject.csproj", "{D713949F-6F11-4667-B316-101E5575E88A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.System", "..\..\Source\Slash.System\Slash.System.csproj", "{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug NoLog4Net|Any CPU = Debug NoLog4Net|Any CPU
@@ -119,6 +123,22 @@ Global
 		{7EA73F8E-AB74-4DDA-9C17-8BE953DD16F2}.Release NoLog4Net|Any CPU.Build.0 = Release|Any CPU
 		{7EA73F8E-AB74-4DDA-9C17-8BE953DD16F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EA73F8E-AB74-4DDA-9C17-8BE953DD16F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D713949F-6F11-4667-B316-101E5575E88A}.Debug NoLog4Net|Any CPU.ActiveCfg = Debug|Any CPU
+		{D713949F-6F11-4667-B316-101E5575E88A}.Debug NoLog4Net|Any CPU.Build.0 = Debug|Any CPU
+		{D713949F-6F11-4667-B316-101E5575E88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D713949F-6F11-4667-B316-101E5575E88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D713949F-6F11-4667-B316-101E5575E88A}.Release NoLog4Net|Any CPU.ActiveCfg = Release|Any CPU
+		{D713949F-6F11-4667-B316-101E5575E88A}.Release NoLog4Net|Any CPU.Build.0 = Release|Any CPU
+		{D713949F-6F11-4667-B316-101E5575E88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D713949F-6F11-4667-B316-101E5575E88A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Debug NoLog4Net|Any CPU.ActiveCfg = Debug|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Debug NoLog4Net|Any CPU.Build.0 = Debug|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Release NoLog4Net|Any CPU.ActiveCfg = Release|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Release NoLog4Net|Any CPU.Build.0 = Release|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

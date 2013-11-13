@@ -3,12 +3,10 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-namespace BlueprintEditor.Windows.Controls
+namespace BlueprintEditor.Controls
 {
-    using System;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Media.Imaging;
 
     using Slash.GameBase.Blueprints;
 
@@ -71,7 +69,7 @@ namespace BlueprintEditor.Windows.Controls
         {
             this.blueprintId = blueprintId;
             this.blueprint = blueprint;
-            CreateTreeViewItemTemplate();
+            this.CreateTreeViewItemTemplate();
         }
 
         #endregion
@@ -102,7 +100,7 @@ namespace BlueprintEditor.Windows.Controls
 
             stack.Children.Add(this.textBlock);
 
-            Header = stack;
+            this.Header = stack;
         }
 
         #endregion

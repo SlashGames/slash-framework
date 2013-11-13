@@ -10,7 +10,7 @@ namespace BlueprintEditor.Windows
     using System.Media;
     using System.Windows;
 
-    using BlueprintEditor.Windows.Controls;
+    using BlueprintEditor.Controls;
 
     using Slash.GameBase.Blueprints;
 
