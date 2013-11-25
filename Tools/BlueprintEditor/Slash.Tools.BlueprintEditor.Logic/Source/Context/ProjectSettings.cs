@@ -16,6 +16,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
     using Slash.GameBase.Blueprints;
     using Slash.GameBase.Components;
     using Slash.Reflection.Utils;
+    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
     ///    Blueprint file which belongs to a project.
@@ -177,14 +178,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// <returns>All types which are inherited from IEntityComponent in the project assemblies.</returns>
         private IEnumerable<Type> CollectEntityComponentTypes()
         {
-            List<Type> projectEntityComponentTypes = new List<Type>();
-            Type entityComponentInterfaceType = typeof(IEntityComponent);
-            foreach (
-                Type[] assemblyTypes in this.projectAssemblies.Select(projectAssembly => projectAssembly.GetTypes()))
-            {
-                projectEntityComponentTypes.AddRange(assemblyTypes.Where(entityComponentInterfaceType.IsAssignableFrom));
-            }
-            return projectEntityComponentTypes;
+            return ComponentUtils.FindComponentTypes(this.projectAssemblies);
         }
 
         private void OnEntityComponentTypesChanged()
