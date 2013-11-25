@@ -9,6 +9,12 @@ namespace BlueprintEditor.Controls
     using System;
     using System.Collections.Generic;
     using System.Windows;
+    using System.Windows.Controls;
+
+    using BlueprintEditor.Inspectors;
+
+    using Slash.GameBase.Attributes;
+    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
     ///   Interaction logic for BlueprintControl.xaml
@@ -30,6 +36,12 @@ namespace BlueprintEditor.Controls
                 typeof(BlueprintControlContext),
                 typeof(BlueprintControl),
                 new FrameworkPropertyMetadata(null, OnContextChanged));
+
+        #endregion
+
+        #region Fields
+
+        private readonly InspectorFactory inspectorFactory = new InspectorFactory();
 
         #endregion
 
@@ -87,6 +99,43 @@ namespace BlueprintEditor.Controls
             BlueprintControl blueprintControl = (BlueprintControl)source;
             blueprintControl.UpdateBlueprintComponents();
             blueprintControl.UpdateAvailableComponents();
+            blueprintControl.UpdateInspectors();
+        }
+
+        private void AddComponentInspectors(Type componentType, Panel panel)
+        {
+            // Get attributes.
+            InspectorComponent inspectorComponent = InspectorComponentTable.GetComponent(componentType);
+            if (inspectorComponent == null)
+            {
+                return;
+            }
+
+            // Add inspectors for component properties.
+            foreach (var inspectorProperty in inspectorComponent.Properties)
+            {
+                // Get current value.
+                object propertyValue;
+                if (
+                    !this.BlueprintControlContext.Blueprint.AttributeTable.TryGetValue(
+                        inspectorProperty.Name, out propertyValue))
+                {
+                    propertyValue = inspectorProperty.Default;
+                }
+
+                // Create control for inspector property.
+                var propertyControl = this.inspectorFactory.CreateInspectorControlFor(inspectorProperty, propertyValue);
+                if (propertyControl == null)
+                {
+                    continue;
+                }
+
+                // Subscribe for change of value.
+                propertyControl.ValueChanged += this.OnPropertyControlValueChanged;
+
+                // Add to panel.
+                panel.Children.Add((UIElement)propertyControl);
+            }
         }
 
         private void BtAdd_OnClick(object sender, RoutedEventArgs e)
@@ -116,6 +165,8 @@ namespace BlueprintEditor.Controls
 
             // Select component type.
             this.LbComponentsAdded.SelectedItem = componentType;
+
+            this.OnBlueprintComponentsChanged();
         }
 
         private void BtRemove_OnClick(object sender, RoutedEventArgs e)
@@ -145,6 +196,31 @@ namespace BlueprintEditor.Controls
 
             // Select component type.
             this.LbComponentsAvailable.SelectedItem = componentType;
+
+            this.OnBlueprintComponentsChanged();
+        }
+
+        private void OnBlueprintComponentsChanged()
+        {
+            this.UpdateInspectors();
+        }
+
+        private void OnPropertyControlValueChanged(
+            InspectorPropertyAttribute inspectorProperty, object newValue, object oldValue)
+        {
+            Console.WriteLine("Property value {0} changed from {1} to {2}", inspectorProperty, oldValue, newValue);
+
+            // Update blueprint configuration.
+
+            // Remove if default value.
+            if (Equals(newValue, inspectorProperty.Default))
+            {
+                this.BlueprintControlContext.Blueprint.AttributeTable.RemoveValue(inspectorProperty.Name);
+            }
+            else
+            {
+                this.BlueprintControlContext.Blueprint.AttributeTable.SetValue(inspectorProperty.Name, newValue);
+            }
         }
 
         private void UpdateAvailableComponents()
@@ -184,6 +260,25 @@ namespace BlueprintEditor.Controls
             foreach (var componentType in this.BlueprintControlContext.Blueprint.ComponentTypes)
             {
                 this.LbComponentsAdded.Items.Add(componentType);
+            }
+        }
+
+        private void UpdateInspectors()
+        {
+            // Clear inspectors.
+            this.AttributesPanel.Children.Clear();
+
+            if (this.BlueprintControlContext == null || this.BlueprintControlContext.Blueprint == null)
+            {
+                return;
+            }
+
+            InspectorComponentTable.LoadComponents();
+
+            // Add inspectors for blueprint components.
+            foreach (var componentType in this.BlueprintControlContext.Blueprint.ComponentTypes)
+            {
+                this.AddComponentInspectors(componentType, this.AttributesPanel);
             }
         }
 

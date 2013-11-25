@@ -41,7 +41,7 @@
 
         <TabControl Grid.Row = "1">
             <TabItem Header = "Attributes">
-                <Grid x:Name = "AttributesGrid" Background = "#FFE5E5E5" />
+                <StackPanel x:Name = "AttributesPanel" Background = "#FFE5E5E5" />
             </TabItem>
             <TabItem Header = "Components">
                 <Grid Background = "#FFE5E5E5">
