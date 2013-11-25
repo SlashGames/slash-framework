@@ -1,13 +1,11 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InspectorConditionalFlagsInspectorAttribute.cs" company="Slash Games">
+// <copyright file="InspectorConditionalFlagsPropertyAttribute.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.GameBase.Attributes
 {
-    using Slash.SystemExt;
-
     using Slash.SystemExt.Utils;
 
     using global::System;
@@ -16,14 +14,14 @@ namespace Slash.GameBase.Attributes
     ///   Property inspector should only be shown if condition is met.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class InspectorConditionalFlagsInspectorAttribute : InspectorConditionalInspectorAttribute
+    public class InspectorConditionalFlagsPropertyAttribute : InspectorConditionalPropertyAttribute
     {
         #region Constructors and Destructors
 
         /// <summary>
         ///   Constructor.
         /// </summary>
-        public InspectorConditionalFlagsInspectorAttribute()
+        public InspectorConditionalFlagsPropertyAttribute()
         {
             this.Check = ConditionalFlagsCheck.AllSet;
         }
@@ -46,7 +44,7 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>True if the specified value fulfills the condition; otherwise, false.</returns>
-        public override bool isFulfilled(object value)
+        public override bool IsFulfilled(object value)
         {
             if (!(value is Enum) || !(this.RequiredConditionValue is Enum))
             {
