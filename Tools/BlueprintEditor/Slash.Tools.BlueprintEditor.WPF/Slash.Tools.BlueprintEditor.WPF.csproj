@@ -63,6 +63,9 @@
       <DependentUpon>BlueprintTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Controls\BlueprintTreeViewItem.cs" />
+    <Compile Include="Source\Inspectors\InspectorControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Source\Inspectors\InspectorPropertyData.cs" />
     <Page Include="Source\Controls\BlueprintControl.xaml">
       <SubType>Designer</SubType>
