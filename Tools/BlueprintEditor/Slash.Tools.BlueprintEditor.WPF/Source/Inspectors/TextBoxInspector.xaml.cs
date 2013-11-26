@@ -6,9 +6,6 @@
 
 namespace BlueprintEditor.Inspectors
 {
-    using System;
-    using System.Windows.Controls;
-
     using Slash.GameBase.Attributes;
 
     /// <summary>
@@ -19,9 +16,9 @@ namespace BlueprintEditor.Inspectors
         #region Fields
 
         /// <summary>
-        ///   Current string value.
+        ///   Data context of inspector.
         /// </summary>
-        private string value;
+        private InspectorPropertyData dataContext;
 
         #endregion
 
@@ -33,54 +30,45 @@ namespace BlueprintEditor.Inspectors
         public TextBoxInspector()
         {
             this.InitializeComponent();
-
-            this.TbValue.TextChanged += this.TbValueOnTextChanged;
-            this.value = this.TbValue.Text;
         }
 
         #endregion
 
         #region Public Events
 
+        /// <summary>
+        ///   Raised when value of the inspector control changed.
+        /// </summary>
         public event InspectorControlValueChangedDelegate ValueChanged;
 
         #endregion
 
-        #region Public Properties
+        #region Public Methods and Operators
 
-        public InspectorPropertyAttribute InspectorProperty { get; set; }
+        /// <summary>
+        ///   Initializes the control with the inspector property it is for and the current value.
+        /// </summary>
+        /// <param name="inspectorProperty">Inspector property the control is for.</param>
+        /// <param name="currentValue">Current value.</param>
+        public void Init(InspectorPropertyAttribute inspectorProperty, object currentValue)
+        {
+            // Setup data context of control.
+            this.dataContext = new InspectorPropertyData { InspectorProperty = inspectorProperty, Value = currentValue };
+            this.dataContext.ValueChanged += this.OnValueChanged;
+            this.DataContext = this.dataContext;
+        }
 
         #endregion
 
         #region Methods
 
-        private void OnValueChanged(InspectorPropertyAttribute inspectorproperty, object newValue, object oldValue)
+        private void OnValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue, object oldValue)
         {
             InspectorControlValueChangedDelegate handler = this.ValueChanged;
             if (handler != null)
             {
-                handler(inspectorproperty, newValue, oldValue);
+                handler(inspectorProperty, newValue, oldValue);
             }
-        }
-
-        private void TbValueOnTextChanged(object sender, TextChangedEventArgs textChangedEventArgs)
-        {
-            // Property isn't set on initialization.
-            if (this.InspectorProperty == null)
-            {
-                return;
-            }
-
-            // Convert string value to correct type.
-            object oldValue = this.InspectorProperty.ConvertFromString(this.value);
-            object newValue = this.InspectorProperty.ConvertFromString(this.TbValue.Text);
-            if (Equals(oldValue, newValue))
-            {
-                return;
-            }
-
-            this.OnValueChanged(this.InspectorProperty, newValue, oldValue);
-            this.value = this.TbValue.Text;
         }
 
         #endregion

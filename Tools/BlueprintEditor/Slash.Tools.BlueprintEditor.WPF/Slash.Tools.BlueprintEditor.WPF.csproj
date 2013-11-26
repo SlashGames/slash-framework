@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Source\Controls\BlueprintControlContext.cs" />
     <Compile Include="Source\Data\BlueprintManagerData.cs" />
     <Compile Include="Source\Controls\BlueprintControl.xaml.cs">
@@ -62,6 +63,7 @@
       <DependentUpon>BlueprintTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Controls\BlueprintTreeViewItem.cs" />
+    <Compile Include="Source\Inspectors\InspectorPropertyData.cs" />
     <Page Include="Source\Controls\BlueprintControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
