@@ -16,13 +16,22 @@ namespace BlueprintEditor.Windows
 
     public class BlueprintSelectionChangedEventArgs : RoutedEventArgs
     {
+        #region Constructors and Destructors
+
         public BlueprintSelectionChangedEventArgs(RoutedEvent routedEvent, object source)
             : base(routedEvent, source)
-        { }
+        {
+        }
+
+        #endregion
+
+        #region Public Properties
 
         public Blueprint Blueprint { get; set; }
 
         public string BlueprintId { get; set; }
+
+        #endregion
     }
 
     /// <summary>
@@ -65,22 +74,6 @@ namespace BlueprintEditor.Windows
             this.InitializeComponent();
 
             this.TvTree.SelectedItemChanged += this.OnSelectedItemChanged;
-        }
-
-        private void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (this.isUpdating)
-            {
-                return;
-            }
-
-            BlueprintTreeViewItem selectedItem = (BlueprintTreeViewItem)this.TvTree.SelectedItem;
-            RaiseEvent(
-                new BlueprintSelectionChangedEventArgs(BlueprintSelectionChangedEvent, sender)
-                    {
-                        Blueprint = selectedItem != null ? selectedItem.Blueprint : null,
-                        BlueprintId = selectedItem != null ? selectedItem.BlueprintId : null
-                    });
         }
 
         #endregion
@@ -187,6 +180,27 @@ namespace BlueprintEditor.Windows
             this.UpdateTreeView();
         }
 
+        private void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (this.isUpdating)
+            {
+                return;
+            }
+
+            BlueprintTreeViewItem selectedItem = (BlueprintTreeViewItem)this.TvTree.SelectedItem;
+            this.OnSelectedItemChanged(selectedItem);
+        }
+
+        private void OnSelectedItemChanged(BlueprintTreeViewItem selectedItem)
+        {
+            this.RaiseEvent(
+                new BlueprintSelectionChangedEventArgs(BlueprintSelectionChangedEvent, this)
+                    {
+                        Blueprint = selectedItem != null ? selectedItem.Blueprint : null,
+                        BlueprintId = selectedItem != null ? selectedItem.BlueprintId : null
+                    });
+        }
+
         private void UpdateTreeView()
         {
             if (this.TvTree == null)
@@ -206,20 +220,29 @@ namespace BlueprintEditor.Windows
                 return;
             }
 
+            bool oldItemStillExists = false;
             foreach (var blueprintPair in this.blueprintManager.Blueprints)
             {
-                BlueprintTreeViewItem blueprintTreeViewItem = new BlueprintTreeViewItem(blueprintPair.Key, blueprintPair.Value);
+                BlueprintTreeViewItem blueprintTreeViewItem = new BlueprintTreeViewItem(
+                    blueprintPair.Key, blueprintPair.Value);
 
                 // Restore selected item.
                 if (selectedItem != null && ReferenceEquals(selectedItem.Blueprint, blueprintPair.Value))
                 {
                     blueprintTreeViewItem.IsSelected = true;
+                    oldItemStillExists = true;
                 }
 
                 this.TvTree.Items.Add(blueprintTreeViewItem);
             }
 
             this.isUpdating = false;
+
+            // If old item doesn't exist anymore, the selection changed.
+            if (selectedItem != null && !oldItemStillExists)
+            {
+                this.OnSelectedItemChanged(null);
+            }
         }
 
         #endregion

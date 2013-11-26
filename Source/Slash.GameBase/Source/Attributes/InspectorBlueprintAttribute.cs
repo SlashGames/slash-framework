@@ -69,6 +69,35 @@ namespace Slash.GameBase.Attributes
         }
 
         /// <summary>
+        ///   Tries to convert the specified text to a value of the correct type for this property.
+        /// </summary>
+        /// <param name="text">Text to convert.</param>
+        /// <param name="value">Value of the correct type for this property, if the conversion was successful.</param>
+        /// <returns>
+        ///   True if the conversion was successful; otherwise, false.
+        /// </returns>
+        public override bool TryConvertFromString(string text, out object value)
+        {
+            value = text;
+            return true;
+        }
+
+        /// <summary>
+        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this property.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <param name="text">String that can be converted back to a value of the correct type for this property.</param>
+        /// <see cref="InspectorPropertyAttribute.TryConvertFromString" />
+        /// <returns>
+        ///   True if the conversion was successful; otherwise, false.
+        /// </returns>
+        public override bool TryConvertToString(object value, out string text)
+        {
+            text = value.ToString();
+            return true;
+        }
+
+        /// <summary>
         ///   Checks whether the passed value is valid for this property.
         /// </summary>
         /// <param name="value">Value to check.</param>

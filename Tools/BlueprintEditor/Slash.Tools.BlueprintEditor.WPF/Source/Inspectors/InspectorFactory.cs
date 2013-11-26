@@ -3,15 +3,14 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace BlueprintEditor.Inspectors
 {
-    using System;
-    using System.Diagnostics;
-
     using Slash.GameBase.Attributes;
 
     public class InspectorFactory
     {
+        #region Public Methods and Operators
 
         /// <summary>
         ///   Creates and positions a new inspector control for the passed property.
@@ -19,30 +18,19 @@ namespace BlueprintEditor.Inspectors
         /// <param name="inspectorProperty">Property to create an inspector control for.</param>
         /// <param name="currentValue">Current value of the observed property.</param>
         public IInspectorControl CreateInspectorControlFor(
-            InspectorPropertyAttribute inspectorProperty,
-            object currentValue)
+            InspectorPropertyAttribute inspectorProperty, object currentValue)
         {
             // Create inspector control.
             IInspectorControl inspectorControl;
             if (inspectorProperty is InspectorBoolAttribute)
             {
-                inspectorControl = null;
+                CheckBoxInspector checkboxInspector = new CheckBoxInspector();
+                inspectorControl = checkboxInspector;
             }
-            else if (inspectorProperty is InspectorFloatAttribute)
+            else if (inspectorProperty is InspectorStringAttribute || inspectorProperty is InspectorFloatAttribute
+                     || inspectorProperty is InspectorIntAttribute)
             {
-                inspectorControl = null;
-            }
-            else if (inspectorProperty is InspectorIntAttribute)
-            {
-                inspectorControl = null;
-            }
-            else if (inspectorProperty is InspectorStringAttribute)
-            {
-                StringInspector stringInspector = new StringInspector
-                    {
-                        LbName = { Content = inspectorProperty.Name },
-                        TbValue = { Text = (string)currentValue }
-                    };
+                TextBoxInspector stringInspector = new TextBoxInspector();
                 inspectorControl = stringInspector;
             }
             else if (inspectorProperty is InspectorEnumAttribute)
@@ -50,10 +38,6 @@ namespace BlueprintEditor.Inspectors
                 inspectorControl = null;
             }
             else if (inspectorProperty is InspectorBlueprintAttribute)
-            {
-                inspectorControl = null;
-            }
-            else if (inspectorProperty is InspectorPrototypeAttribute)
             {
                 inspectorControl = null;
             }
@@ -65,10 +49,12 @@ namespace BlueprintEditor.Inspectors
             // Setup control.
             if (inspectorControl != null)
             {
-                inspectorControl.InspectorProperty = inspectorProperty;
+                inspectorControl.Init(inspectorProperty, currentValue);
             }
 
             return inspectorControl;
-        } 
+        }
+
+        #endregion
     }
 }

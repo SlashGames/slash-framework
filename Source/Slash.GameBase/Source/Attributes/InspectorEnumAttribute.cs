@@ -7,7 +7,7 @@
 namespace Slash.GameBase.Attributes
 {
     using System;
-    
+
     /// <summary>
     ///   Exposes the property to the landscape designer inspector.
     /// </summary>
@@ -98,6 +98,43 @@ namespace Slash.GameBase.Attributes
         public override string ToString()
         {
             return string.Format("Name: {0}, Enum: {1}, Default: {2}", this.Name, this.EnumType.Name, this.Default);
+        }
+
+        /// <summary>
+        ///   Tries to convert the specified text to a value of the correct type for this property.
+        /// </summary>
+        /// <param name="text">Text to convert.</param>
+        /// <param name="value">Value of the correct type for this property, if the conversion was successful.</param>
+        /// <returns>
+        ///   True if the conversion was successful; otherwise, false.
+        /// </returns>
+        public override bool TryConvertFromString(string text, out object value)
+        {
+            try
+            {
+                value = Enum.Parse(this.EnumType, text);
+                return true;
+            }
+            catch (Exception)
+            {
+                value = null;
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this property.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <param name="text">String that can be converted back to a value of the correct type for this property.</param>
+        /// <see cref="InspectorPropertyAttribute.TryConvertFromString" />
+        /// <returns>
+        ///   True if the conversion was successful; otherwise, false.
+        /// </returns>
+        public override bool TryConvertToString(object value, out string text)
+        {
+            text = value.ToString();
+            return true;
         }
 
         /// <summary>

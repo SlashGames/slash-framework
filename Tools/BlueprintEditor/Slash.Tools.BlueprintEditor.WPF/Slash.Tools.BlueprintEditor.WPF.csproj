@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Source\Controls\BlueprintControlContext.cs" />
     <Compile Include="Source\Data\BlueprintManagerData.cs" />
     <Compile Include="Source\Controls\BlueprintControl.xaml.cs">
@@ -62,6 +63,13 @@
       <DependentUpon>BlueprintTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Controls\BlueprintTreeViewItem.cs" />
+    <Compile Include="Source\Inspectors\CheckBoxInspector.xaml.cs">
+      <DependentUpon>CheckBoxInspector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Inspectors\InspectorControl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Source\Inspectors\InspectorPropertyData.cs" />
     <Page Include="Source\Controls\BlueprintControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -70,9 +78,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Inspectors\StringInspector.xaml">
+    <Page Include="Source\Inspectors\CheckBoxInspector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Inspectors\TextBoxInspector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Source\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -82,11 +94,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Source\Inspectors\TextBoxInspector.xaml.cs">
+      <DependentUpon>TextBoxInspector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Inspectors\IInspectorControl.cs" />
     <Compile Include="Source\Inspectors\InspectorFactory.cs" />
-    <Compile Include="Source\Inspectors\StringInspector.xaml.cs">
-      <DependentUpon>StringInspector.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Source\Validation\UniqueBlueprintIdValidationRule.cs" />
     <Compile Include="Source\Windows\BindingProxy.cs" />
     <Compile Include="Source\Windows\MainWindow.xaml.cs">

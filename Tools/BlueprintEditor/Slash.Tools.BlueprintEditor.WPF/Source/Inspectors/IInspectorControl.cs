@@ -22,12 +22,14 @@ namespace BlueprintEditor.Inspectors
 
         #endregion
 
-        #region Public Properties
+        #region Public Methods and Operators
 
         /// <summary>
-        ///   Inspector property this control is for.
+        ///   Initializes the control with the inspector property it is for and the current value.
         /// </summary>
-        InspectorPropertyAttribute InspectorProperty { get; set; }
+        /// <param name="inspectorProperty">Inspector property the control is for.</param>
+        /// <param name="currentValue">Current value.</param>
+        void Init(InspectorPropertyAttribute inspectorProperty, object currentValue);
 
         #endregion
     }
