@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\EntityComponents\BoolComponent.cs" />
     <Compile Include="Source\EntityComponents\FloatComponent.cs" />
     <Compile Include="Source\EntityComponents\IntegerComponent.cs" />
     <Compile Include="Source\EntityComponents\StringComponent.cs" />
