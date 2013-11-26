@@ -51,9 +51,7 @@ namespace Slash.GameBase.Attributes
         /// </returns>
         public override object ConvertFromString(string text)
         {
-            int intValue;
-            int.TryParse(text, out intValue);
-            return intValue;
+            return text == string.Empty ? 0 : int.Parse(text);
         }
 
         /// <summary>
@@ -83,8 +81,10 @@ namespace Slash.GameBase.Attributes
         /// </returns>
         public override bool TryConvertFromString(string text, out object value)
         {
-            int intValue;
-            bool success = int.TryParse(text, out intValue);
+            int intValue = 0;
+
+            // Treat empty string as 0.
+            bool success = text == string.Empty || int.TryParse(text, out intValue);
             value = intValue;
             return success;
         }
