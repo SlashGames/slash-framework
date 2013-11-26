@@ -47,9 +47,15 @@ namespace BlueprintEditor.Controls
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
         public BlueprintControl()
         {
             this.InitializeComponent();
+
+            // Check if to disable control.
+            this.IsEnabled = this.ShouldBeEnabled;
         }
 
         #endregion
@@ -85,6 +91,21 @@ namespace BlueprintEditor.Controls
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///   Checks if the control should be enabled. It's only enabled when a context and a blueprint is set.
+        /// </summary>
+        private bool ShouldBeEnabled
+        {
+            get
+            {
+                return this.BlueprintControlContext != null && this.BlueprintControlContext.Blueprint != null;
+            }
+        }
+
+        #endregion
+
         #region Methods
 
         private static void OnAvailableComponentTypesChanged(
@@ -100,6 +121,9 @@ namespace BlueprintEditor.Controls
             blueprintControl.UpdateBlueprintComponents();
             blueprintControl.UpdateAvailableComponents();
             blueprintControl.UpdateInspectors();
+
+            // Check if to disable control.
+            blueprintControl.IsEnabled = blueprintControl.ShouldBeEnabled;
         }
 
         private void AddComponentInspectors(Type componentType, Panel panel)
