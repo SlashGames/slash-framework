@@ -252,7 +252,7 @@ namespace BlueprintEditor.Controls
             // Clear items.
             this.LbComponentsAvailable.Items.Clear();
 
-            if (this.AvailableComponentTypes == null || this.BlueprintControlContext == null)
+            if (this.AvailableComponentTypes == null)
             {
                 return;
             }
@@ -260,7 +260,7 @@ namespace BlueprintEditor.Controls
             // Add available component types.
             foreach (var componentType in this.AvailableComponentTypes)
             {
-                if (this.BlueprintControlContext.Blueprint != null
+                if (this.BlueprintControlContext != null && this.BlueprintControlContext.Blueprint != null
                     && this.BlueprintControlContext.Blueprint.ComponentTypes.Contains(componentType))
                 {
                     continue;

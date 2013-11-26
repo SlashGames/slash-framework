@@ -28,20 +28,13 @@ namespace BlueprintEditor.Inspectors
             {
                 inspectorControl = null;
             }
-            else if (inspectorProperty is InspectorFloatAttribute)
+            else if (inspectorProperty is InspectorStringAttribute || inspectorProperty is InspectorFloatAttribute
+                     || inspectorProperty is InspectorIntAttribute)
             {
-                inspectorControl = null;
-            }
-            else if (inspectorProperty is InspectorIntAttribute)
-            {
-                inspectorControl = null;
-            }
-            else if (inspectorProperty is InspectorStringAttribute)
-            {
-                StringInspector stringInspector = new StringInspector
+                TextBoxInspector stringInspector = new TextBoxInspector
                     {
                         LbName = { Content = inspectorProperty.Name },
-                        TbValue = { Text = (string)currentValue }
+                        TbValue = { Text = inspectorProperty.ConvertToString(currentValue) }
                     };
                 inspectorControl = stringInspector;
             }
@@ -50,10 +43,6 @@ namespace BlueprintEditor.Inspectors
                 inspectorControl = null;
             }
             else if (inspectorProperty is InspectorBlueprintAttribute)
-            {
-                inspectorControl = null;
-            }
-            else if (inspectorProperty is InspectorPrototypeAttribute)
             {
                 inspectorControl = null;
             }
