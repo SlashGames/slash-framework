@@ -63,6 +63,9 @@
       <DependentUpon>BlueprintTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Controls\BlueprintTreeViewItem.cs" />
+    <Compile Include="Source\Inspectors\CheckBoxInspector.xaml.cs">
+      <DependentUpon>CheckBoxInspector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Inspectors\InspectorControl.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -72,6 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Controls\BlueprintTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Inspectors\CheckBoxInspector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

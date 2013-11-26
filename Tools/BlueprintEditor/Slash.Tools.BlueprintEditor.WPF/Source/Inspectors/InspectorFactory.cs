@@ -3,15 +3,14 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace BlueprintEditor.Inspectors
 {
-    using System;
-    using System.Diagnostics;
-
     using Slash.GameBase.Attributes;
 
     public class InspectorFactory
     {
+        #region Public Methods and Operators
 
         /// <summary>
         ///   Creates and positions a new inspector control for the passed property.
@@ -19,14 +18,14 @@ namespace BlueprintEditor.Inspectors
         /// <param name="inspectorProperty">Property to create an inspector control for.</param>
         /// <param name="currentValue">Current value of the observed property.</param>
         public IInspectorControl CreateInspectorControlFor(
-            InspectorPropertyAttribute inspectorProperty,
-            object currentValue)
+            InspectorPropertyAttribute inspectorProperty, object currentValue)
         {
             // Create inspector control.
             IInspectorControl inspectorControl;
             if (inspectorProperty is InspectorBoolAttribute)
             {
-                inspectorControl = null;
+                CheckBoxInspector checkboxInspector = new CheckBoxInspector();
+                inspectorControl = checkboxInspector;
             }
             else if (inspectorProperty is InspectorStringAttribute || inspectorProperty is InspectorFloatAttribute
                      || inspectorProperty is InspectorIntAttribute)
@@ -54,6 +53,8 @@ namespace BlueprintEditor.Inspectors
             }
 
             return inspectorControl;
-        } 
+        }
+
+        #endregion
     }
 }
