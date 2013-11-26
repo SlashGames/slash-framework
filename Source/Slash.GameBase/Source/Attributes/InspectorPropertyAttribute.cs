@@ -6,9 +6,7 @@
 
 namespace Slash.GameBase.Attributes
 {
-    using Slash.SystemExt;
-
-    using global::System;
+    using System;
 
     /// <summary>
     ///   Exposes the property to the landscape designer inspector.
@@ -70,6 +68,11 @@ namespace Slash.GameBase.Attributes
         public virtual bool IsAllowed(object value)
         {
             return true;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Name: {0}, Default: {1}", this.Name, this.Default);
         }
 
         /// <summary>

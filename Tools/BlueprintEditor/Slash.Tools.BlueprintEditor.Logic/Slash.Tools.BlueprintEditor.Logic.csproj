@@ -34,10 +34,11 @@
     <Compile Include="Source\Context\EditorContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Context\ProjectSettings.cs" />
+    <Compile Include="Source\Data\ComponentUtils.cs" />
+    <Compile Include="Source\Data\InspectorComponent.cs" />
+    <Compile Include="Source\Data\InspectorComponentTable.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Source\Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Slash.GameBase\Slash.GameBase.csproj">
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>

@@ -34,8 +34,8 @@
   <ItemGroup>
     <Compile Include="Source\Attributes\ConditionalFlagsCheck.cs" />
     <Compile Include="Source\Attributes\InspectorComponentAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorConditionalFlagsInspectorAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorConditionalInspectorAttribute.cs" />
+    <Compile Include="Source\Attributes\InspectorConditionalFlagsPropertyAttribute.cs" />
+    <Compile Include="Source\Attributes\InspectorConditionalPropertyAttribute.cs" />
     <Compile Include="Source\Attributes\InspectorBlueprintAttribute.cs" />
     <Compile Include="Source\Attributes\InspectorBoolAttribute.cs" />
     <Compile Include="Source\Attributes\InspectorEnumAttribute.cs" />

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InspectorConditionalInspectorAttribute.cs" company="Slash Games">
+// <copyright file="InspectorConditionalPropertyAttribute.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,13 +8,11 @@ namespace Slash.GameBase.Attributes
 {
     using System;
 
-    using Slash.SystemExt;
-
     /// <summary>
     ///   Property inspector should only be shown if condition is met.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class InspectorConditionalInspectorAttribute : Attribute
+    public class InspectorConditionalPropertyAttribute : Attribute
     {
         #region Constructors and Destructors
 
@@ -25,7 +23,7 @@ namespace Slash.GameBase.Attributes
         /// <param name="requiredConditionValue">
         ///   Attribute table value of the condition in the entity configuration for the inspector to be shown
         /// </param>
-        public InspectorConditionalInspectorAttribute(object conditionName, object requiredConditionValue)
+        public InspectorConditionalPropertyAttribute(object conditionName, object requiredConditionValue)
         {
             this.ConditionKey = conditionName;
             this.RequiredConditionValue = requiredConditionValue;
@@ -34,7 +32,7 @@ namespace Slash.GameBase.Attributes
         /// <summary>
         ///   Default constructor.
         /// </summary>
-        public InspectorConditionalInspectorAttribute()
+        public InspectorConditionalPropertyAttribute()
         {
         }
 
@@ -61,7 +59,7 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>True if the specified value fulfills the condition; otherwise, false.</returns>
-        public virtual bool isFulfilled(object value)
+        public virtual bool IsFulfilled(object value)
         {
             return Equals(value, this.RequiredConditionValue);
         }

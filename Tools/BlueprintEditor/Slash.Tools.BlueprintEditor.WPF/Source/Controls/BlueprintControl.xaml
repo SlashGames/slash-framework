@@ -4,7 +4,7 @@
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:validation = "clr-namespace:BlueprintEditor.Validation"
-             xmlns:blueprintEditor = "clr-namespace:BlueprintEditor" xmlns:a = "clr-namespace:BlueprintEditor.Controls"
+             xmlns:blueprintEditor = "clr-namespace:BlueprintEditor"
              mc:Ignorable = "d"
              d:DesignHeight = "300" d:DesignWidth = "300"
              DataContext = "{Binding RelativeSource={RelativeSource Self}}" Name = "Main">
@@ -12,49 +12,66 @@
         <blueprintEditor:BindingProxy x:Key = "Proxy" Data = "{Binding}" />
     </UserControl.Resources>
     <Grid>
-        <Label Content = "Id" Margin = "8,10,222,249" />
-        <TextBox x:Name = "TbBlueprintId" HorizontalAlignment = "Left" TextWrapping = "Wrap" VerticalAlignment = "Top"
-                 Width = "217" Margin = "82,19,0,0">
-            <TextBox.Text>
-                <Binding Path = "BlueprintControlContext.BlueprintId">
-                    <Binding.ValidationRules>
-                        <validation:UniqueBlueprintIdValidationRule>
-                            <validation:UniqueBlueprintIdValidationRule.Data>
-                                <validation:ValidationRuleData
-                                    Context = "{Binding Data.BlueprintControlContext, 
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "Auto"></RowDefinition>
+            <RowDefinition Height = "*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Height = "30" Margin = "8,10,8,10" VerticalAlignment = "Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "50"></ColumnDefinition>
+                <ColumnDefinition Width = "*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content = "Id" Grid.Column = "0" />
+            <TextBox x:Name = "TbBlueprintId" Grid.Column = "1">
+                <TextBox.Text>
+                    <Binding Path = "BlueprintControlContext.BlueprintId">
+                        <Binding.ValidationRules>
+                            <validation:UniqueBlueprintIdValidationRule>
+                                <validation:UniqueBlueprintIdValidationRule.Data>
+                                    <validation:ValidationRuleData
+                                        Context = "{Binding Data.BlueprintControlContext, 
     Source={StaticResource Proxy}}" />
-                            </validation:UniqueBlueprintIdValidationRule.Data>
-                        </validation:UniqueBlueprintIdValidationRule>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <TabControl HorizontalAlignment = "Left" Height = "214" Margin = "10,62,0,0" VerticalAlignment = "Top"
-                    Width = "279">
+                                </validation:UniqueBlueprintIdValidationRule.Data>
+                            </validation:UniqueBlueprintIdValidationRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
+
+        <TabControl Grid.Row = "1">
             <TabItem Header = "Attributes">
-                <Grid Background = "#FFE5E5E5" />
+                <StackPanel x:Name = "AttributesPanel" Background = "#FFE5E5E5" />
             </TabItem>
             <TabItem Header = "Components">
                 <Grid Background = "#FFE5E5E5">
-                    <Grid HorizontalAlignment = "Left" Height = "166" Margin = "10,10,0,0" VerticalAlignment = "Top"
-                          Width = "253">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width = "59*" />
-                            <ColumnDefinition Width = "194*" />
-                        </Grid.ColumnDefinitions>
-                        <ListBox x:Name = "LbComponentsAdded" HorizontalAlignment = "Left" Width = "96"
-                                 Grid.ColumnSpan = "2" Margin = "0,21,0,0" />
-                        <Label Content = "Added:" HorizontalAlignment = "Left" Margin = "0,-5,0,0"
-                               VerticalAlignment = "Top" />
-                        <Label Content = "Available:" HorizontalAlignment = "Left" Margin = "78,-5,0,0"
-                               VerticalAlignment = "Top" Grid.Column = "1" />
-                        <ListBox x:Name = "LbComponentsAvailable" HorizontalAlignment = "Left" Width = "97"
-                                 Margin = "97,21,0,0" Grid.Column = "1" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width = "50"></ColumnDefinition>
+                        <ColumnDefinition Width = "0.5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column = "0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height = "Auto"></RowDefinition>
+                            <RowDefinition Height = "*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Content = "Added:" Grid.Row = "0" />
+                        <ListBox x:Name = "LbComponentsAdded" Grid.Row = "1" />
                     </Grid>
-                    <Button x:Name = "BtAdd" Content = "&lt;-" HorizontalAlignment = "Left" Margin = "119,70,0,0"
-                            VerticalAlignment = "Top" Width = "27" Click = "BtAdd_OnClick" />
-                    <Button x:Name = "BtRemove" Content = "-&gt;" HorizontalAlignment = "Left" Margin = "119,107,0,0"
-                            VerticalAlignment = "Top" Width = "27" Click = "BtRemove_OnClick" />
+                    <StackPanel Grid.Column = "1" VerticalAlignment = "Center" Margin = "5, 0, 5, 0">
+                        <Button x:Name = "BtAdd" Content = "&lt;-" Click = "BtAdd_OnClick" Height = "30"
+                                Margin = "0, 10, 0, 10" />
+                        <Button x:Name = "BtRemove" Content = "-&gt;" Click = "BtRemove_OnClick" Height = "30"
+                                Margin = "0, 10, 0, 10" />
+                    </StackPanel>
+                    <Grid Grid.Column = "2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height = "Auto"></RowDefinition>
+                            <RowDefinition Height = "*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Content = "Available:" Grid.Row = "0" />
+                        <ListBox x:Name = "LbComponentsAvailable" Grid.Row = "1" />
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

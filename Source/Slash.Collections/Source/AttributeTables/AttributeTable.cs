@@ -312,6 +312,8 @@ namespace Slash.Collections.AttributeTables
                     reader.Read();
                 }
             }
+
+            reader.ReadEndElement();
         }
 
         /// <summary>

@@ -70,6 +70,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Source\Inspectors\StringInspector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -77,6 +81,11 @@
     <Compile Include="Source\Application\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Source\Inspectors\IInspectorControl.cs" />
+    <Compile Include="Source\Inspectors\InspectorFactory.cs" />
+    <Compile Include="Source\Inspectors\StringInspector.xaml.cs">
+      <DependentUpon>StringInspector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Validation\UniqueBlueprintIdValidationRule.cs" />
     <Compile Include="Source\Windows\BindingProxy.cs" />
@@ -113,6 +122,10 @@
     <None Include="Source\Application\App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Source\Slash.Collections\Slash.Collections.csproj">
+      <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
+      <Name>Slash.Collections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Slash.Tools.BlueprintEditor.Logic\Slash.Tools.BlueprintEditor.Logic.csproj">
       <Project>{57BDCC2E-453D-4593-9467-39FC5C90141E}</Project>
       <Name>Slash.Tools.BlueprintEditor.Logic</Name>

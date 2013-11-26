@@ -53,6 +53,14 @@ namespace Slash.GameBase.Tests.Blueprints
             SerializationTestUtils.TestXmlSerialization(this.blueprint);
         }
 
+        [Test]
+        public void TestAttributeTableAndComponentTypesSerialization()
+        {
+            this.blueprint.AttributeTable.Add(AttributeKey, AttributeValue);
+            this.blueprint.ComponentTypes.Add(typeof(TestComponent));
+            SerializationTestUtils.TestXmlSerialization(this.blueprint);
+        }
+
         #endregion
     }
 

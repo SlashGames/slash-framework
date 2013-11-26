@@ -8,7 +8,12 @@
     x:Class = "BlueprintEditor.Windows.MainWindow"
     Title = "MainWindow" Height = "480" Width = "525" Name = "Main">
     <Grid>
-        <Menu HorizontalAlignment = "Left" Height = "23" VerticalAlignment = "Top" Width = "517">
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "Auto"></RowDefinition>
+            <RowDefinition Height = "*"></RowDefinition>
+            <RowDefinition Height = "Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu>
             <MenuItem Header = "_File">
                 <MenuItem x:Name = "MenuFileNew" Header = "_New" Click = "MenuFileNew_OnClick" />
                 <Separator />
@@ -20,21 +25,26 @@
                 <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Click = "MenuFileExit_OnClick" />
             </MenuItem>
             <MenuItem Header = "_Project">
-                <MenuItem x:Name = "MenuProjectAddAssembly" Header = "_Add Assembly" Click = "MenuProjectAddAssembly_OnClick" />
+                <MenuItem x:Name = "MenuProjectAddAssembly" Header = "_Add Assembly"
+                          Click = "MenuProjectAddAssembly_OnClick" />
             </MenuItem>
         </Menu>
 
-        <windows:BlueprintTreeView x:Name = "TreeBlueprints"
-                                   BlueprintSelectionChanged = "TreeBlueprints_OnBlueprintSelectionChanged"
-                                   Margin = "0,23,0,-23" />
+        <Grid Grid.Row = "1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "Auto"></ColumnDefinition>
+                <ColumnDefinition Width = "*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <windows:BlueprintTreeView x:Name = "TreeBlueprints"
+                                       BlueprintSelectionChanged = "TreeBlueprints_OnBlueprintSelectionChanged"
+                                       Grid.Column = "0" Margin = "10, 0, 10, 0" />
 
-        <GroupBox Header = "Blueprint" HorizontalAlignment = "Left" Margin = "196,23,0,0" VerticalAlignment = "Top"
-                  Height = "308" Width = "311">
-            <controls:BlueprintControl x:Name = "BlueprintControl" />
-        </GroupBox>
+            <GroupBox Header = "Blueprint" Grid.Column = "1">
+                <controls:BlueprintControl x:Name = "BlueprintControl" />
+            </GroupBox>
+        </Grid>
 
-        <StatusBar x:Name = "SbMain" HorizontalAlignment = "Left" Height = "25" VerticalAlignment = "Bottom"
-                   Width = "517">
+        <StatusBar x:Name = "SbMain" Grid.Row = "2">
             <StatusBarItem>
                 <TextBlock x:Name = "TbMessage"></TextBlock>
             </StatusBarItem>
