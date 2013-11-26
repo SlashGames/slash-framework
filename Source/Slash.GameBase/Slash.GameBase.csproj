@@ -42,8 +42,6 @@
     <Compile Include="Source\Attributes\InspectorFloatAttribute.cs" />
     <Compile Include="Source\Attributes\InspectorIntAttribute.cs" />
     <Compile Include="Source\Attributes\InspectorPropertyAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorPrototypeAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorSkinAttribute.cs" />
     <Compile Include="Source\Attributes\InspectorStringAttribute.cs" />
     <Compile Include="Source\Blueprints\Blueprint.cs" />
     <Compile Include="Source\Blueprints\BlueprintManager.cs" />
