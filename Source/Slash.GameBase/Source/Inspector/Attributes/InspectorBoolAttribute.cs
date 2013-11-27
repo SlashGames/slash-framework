@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Attributes
+namespace Slash.GameBase.Inspector.Attributes
 {
     using Slash.GameBase.Inspector.Validation;
 

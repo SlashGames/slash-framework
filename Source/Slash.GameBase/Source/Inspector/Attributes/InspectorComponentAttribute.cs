@@ -4,9 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Attributes
+namespace Slash.GameBase.Inspector.Attributes
 {
-    using global::System;
+    using System;
 
     /// <summary>
     ///   Exposes the component to the inspector.

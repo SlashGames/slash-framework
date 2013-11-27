@@ -9,7 +9,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Data
     using System;
     using System.Collections.Generic;
 
-    using Slash.GameBase.Attributes;
+    using Slash.GameBase.Inspector.Attributes;
 
     /// <summary>
     ///   Component accessible to the user in the landscape designer.

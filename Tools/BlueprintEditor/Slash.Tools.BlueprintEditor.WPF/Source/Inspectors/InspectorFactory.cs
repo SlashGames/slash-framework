@@ -6,7 +6,7 @@
 
 namespace BlueprintEditor.Inspectors
 {
-    using Slash.GameBase.Attributes;
+    using Slash.GameBase.Inspector.Attributes;
 
     public class InspectorFactory
     {

@@ -1,34 +1,38 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InspectorEnumAttribute.cs" company="Slash Games">
+// <copyright file="InspectorIntAttribute.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Attributes
+namespace Slash.GameBase.Inspector.Attributes
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     using Slash.GameBase.Inspector.Validation;
 
     /// <summary>
     ///   Exposes the property to the landscape designer inspector.
     /// </summary>
-    public class InspectorEnumAttribute : InspectorPropertyAttribute
+    public class InspectorIntAttribute : InspectorPropertyAttribute
     {
+        #region Constants
+
+        /// <summary>
+        ///   Validation message to use for strings which are too long.
+        /// </summary>
+        private const string ValidationMessageOutOfRange = "Value is out of range (min: {0}, max: {1}).";
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
         ///   Exposes the property to the landscape designer inspector.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
-        /// <param name="enumType">Type of the enum this attribute is attached to.</param>
-        public InspectorEnumAttribute(string name, Type enumType)
+        public InspectorIntAttribute(string name)
             : base(name)
         {
-            this.EnumType = enumType;
-            this.Default = Enum.GetValues(enumType).GetValue(0);
+            this.Min = int.MinValue;
+            this.Max = int.MaxValue;
         }
 
         #endregion
@@ -36,47 +40,14 @@ namespace Slash.GameBase.Attributes
         #region Public Properties
 
         /// <summary>
-        ///   Allowed enum values. If not set, all values are allowed.
+        ///   Maximum property value (inclusive).
         /// </summary>
-        public object[] AllowedValues { get; set; }
+        public int Max { get; set; }
 
         /// <summary>
-        ///   Type of the enum this attribute is attached to.
+        ///   Minimum property value (inclusive).
         /// </summary>
-        public Type EnumType { get; private set; }
-
-        /// <summary>
-        ///   Indicates if the enum has a Flags attribute.
-        /// </summary>
-        public bool Flags { get; set; }
-
-        /// <summary>
-        ///   Forbidden enum values. If not set, no values are forbidden.
-        /// </summary>
-        public object[] ForbiddenValues { get; set; }
-
-        /// <summary>
-        ///   Returns a collection of values if the property has a defined set of possible values.
-        ///   Otherwise <c>null</c> is returned.
-        /// </summary>
-        public override IEnumerable<object> PossibleValues
-        {
-            get
-            {
-                if (this.AllowedValues != null)
-                {
-                    return this.AllowedValues;
-                }
-
-                // Collect all values and skip forbidden ones.
-                IEnumerable<object> values = Enum.GetValues(this.EnumType).Cast<object>();
-                IEnumerable<object> allowedValues = this.ForbiddenValues == null
-                                                        ? values
-                                                        : values.Where(
-                                                            value => Array.IndexOf(this.ForbiddenValues, value) == -1);
-                return allowedValues;
-            }
-        }
+        public int Min { get; set; }
 
         #endregion
 
@@ -91,7 +62,7 @@ namespace Slash.GameBase.Attributes
         /// </returns>
         public override object ConvertFromString(string text)
         {
-            return Enum.Parse(this.EnumType, text);
+            return text == string.Empty ? 0 : int.Parse(text);
         }
 
         /// <summary>
@@ -105,26 +76,10 @@ namespace Slash.GameBase.Attributes
             return value.ToString();
         }
 
-        /// <summary>
-        ///   Indicates if the specified value is allowed for the property.
-        /// </summary>
-        /// <param name="value">Value to check.</param>
-        /// <returns>True if the specified value is allowed; otherwise, false.</returns>
-        public override bool IsAllowed(object value)
-        {
-            // Check if forbidden.
-            if (this.ForbiddenValues != null && Array.IndexOf(this.ForbiddenValues, value) != -1)
-            {
-                return false;
-            }
-
-            // Check if allowed.
-            return this.AllowedValues == null || Array.IndexOf(this.AllowedValues, value) != -1;
-        }
-
         public override string ToString()
         {
-            return string.Format("Name: {0}, Enum: {1}, Default: {2}", this.Name, this.EnumType.Name, this.Default);
+            return string.Format(
+                "Name: {0}, Max: {1}, Min: {2}, Default: {3}", this.Name, this.Max, this.Min, this.Default);
         }
 
         /// <summary>
@@ -137,16 +92,12 @@ namespace Slash.GameBase.Attributes
         /// </returns>
         public override bool TryConvertFromString(string text, out object value)
         {
-            try
-            {
-                value = Enum.Parse(this.EnumType, text);
-                return true;
-            }
-            catch (Exception)
-            {
-                value = null;
-                return false;
-            }
+            int intValue = 0;
+
+            // Treat empty string as 0.
+            bool success = text == string.Empty || int.TryParse(text, out intValue);
+            value = intValue;
+            return success;
         }
 
         /// <summary>
@@ -169,7 +120,7 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>
-        ///   <c>null</c>, if the passed value is valid for this property,
+        ///   <c>null</c>, if the passed value is valid for this property, 
         ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
         public override ValidationError Validate(object value)
@@ -179,9 +130,15 @@ namespace Slash.GameBase.Attributes
                 return ValidationError.Null;
             }
 
-            if (value.GetType() != this.EnumType)
+            if (!(value is int))
             {
-                return ValidationError.Default;
+                return ValidationError.WrongType;
+            }
+
+            int intValue = (int)value;
+            if (intValue < this.Min || intValue > this.Max)
+            {
+                return new ValidationError { Message = string.Format(ValidationMessageOutOfRange, this.Min, this.Max) };
             }
 
             return null;

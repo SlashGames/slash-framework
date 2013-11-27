@@ -1,40 +1,37 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InspectorFloatAttribute.cs" company="Slash Games">
+// <copyright file="InspectorStringAttribute.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Attributes
+namespace Slash.GameBase.Inspector.Attributes
 {
-    using System.Globalization;
-
     using Slash.GameBase.Inspector.Validation;
 
     /// <summary>
-    ///   Exposes the property to the landscape designer inspector.
+    ///   Exposes the property to the inspector.
     /// </summary>
-    public class InspectorFloatAttribute : InspectorPropertyAttribute
+    public class InspectorStringAttribute : InspectorPropertyAttribute
     {
         #region Constants
 
         /// <summary>
         ///   Validation message to use for strings which are too long.
         /// </summary>
-        private const string ValidationMessageOutOfRange = "Value is out of range (min: {0}, max: {1}).";
+        private const string ValidationMessageTooLong = "String is too long.";
 
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Exposes the property to the landscape designer inspector.
+        ///   Constructor.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
-        public InspectorFloatAttribute(string name)
+        public InspectorStringAttribute(string name)
             : base(name)
         {
-            this.Min = float.MinValue;
-            this.Max = float.MaxValue;
+            this.MaxLength = int.MaxValue;
         }
 
         #endregion
@@ -42,14 +39,9 @@ namespace Slash.GameBase.Attributes
         #region Public Properties
 
         /// <summary>
-        ///   Maximum property value.
+        ///   Maximum length of the string.
         /// </summary>
-        public float Max { get; set; }
-
-        /// <summary>
-        ///   Minimum property value.
-        /// </summary>
-        public float Min { get; set; }
+        public int MaxLength { get; set; }
 
         #endregion
 
@@ -64,9 +56,7 @@ namespace Slash.GameBase.Attributes
         /// </returns>
         public override object ConvertFromString(string text)
         {
-            float floatValue;
-            float.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out floatValue);
-            return floatValue;
+            return text;
         }
 
         /// <summary>
@@ -82,8 +72,7 @@ namespace Slash.GameBase.Attributes
 
         public override string ToString()
         {
-            return string.Format(
-                "Name: {0}, Max: {1}, Min: {2}, Default: {3}", this.Name, this.Max, this.Min, this.Default);
+            return string.Format("Name: {0}, MaxLength: {1}, Default: {2}", this.Name, this.MaxLength, this.Default);
         }
 
         /// <summary>
@@ -96,10 +85,8 @@ namespace Slash.GameBase.Attributes
         /// </returns>
         public override bool TryConvertFromString(string text, out object value)
         {
-            float floatValue;
-            bool success = float.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out floatValue);
-            value = floatValue;
-            return success;
+            value = text;
+            return true;
         }
 
         /// <summary>
@@ -132,15 +119,15 @@ namespace Slash.GameBase.Attributes
                 return ValidationError.Null;
             }
 
-            if (!(value is float))
+            var stringValue = value as string;
+            if (stringValue == null)
             {
                 return ValidationError.WrongType;
             }
 
-            float floatValue = (float)value;
-            if (floatValue < this.Min || floatValue > this.Max)
+            if (stringValue.Length > this.MaxLength)
             {
-                return new ValidationError { Message = string.Format(ValidationMessageOutOfRange, this.Min, this.Max) };
+                return new ValidationError { Message = ValidationMessageTooLong };
             }
 
             return null;

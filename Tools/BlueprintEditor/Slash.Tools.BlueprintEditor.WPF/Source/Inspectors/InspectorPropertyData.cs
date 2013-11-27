@@ -11,7 +11,7 @@ namespace BlueprintEditor.Inspectors
 
     using BlueprintEditor.Annotations;
 
-    using Slash.GameBase.Attributes;
+    using Slash.GameBase.Inspector.Attributes;
     using Slash.GameBase.Inspector.Validation;
 
     public class InspectorPropertyData : IDataErrorInfo, INotifyPropertyChanged
