@@ -8,6 +8,8 @@ namespace Slash.GameBase.Attributes
 {
     using System;
 
+    using Slash.GameBase.Inspector.Validation;
+
     /// <summary>
     ///   Exposes the property to the landscape designer inspector.
     /// </summary>
@@ -101,9 +103,10 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>
-        ///   <c>true</c>, if the passed value is valid for this property, and <c>false</c> otherwise.
+        ///   <c>null</c>, if the passed value is valid for this property, 
+        ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
-        public abstract bool Validate(object value);
+        public abstract ValidationError Validate(object value);
 
         #endregion
     }

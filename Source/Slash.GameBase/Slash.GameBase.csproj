@@ -61,6 +61,7 @@
     <Compile Include="Source\Components\EntityManager.cs" />
     <Compile Include="Source\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Inspector\Validation\ValidationError.cs" />
     <Compile Include="Source\Systems\ISystem.cs" />
     <Compile Include="Source\Systems\SystemManager.cs" />
   </ItemGroup>

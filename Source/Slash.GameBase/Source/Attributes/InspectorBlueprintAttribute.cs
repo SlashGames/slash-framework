@@ -9,6 +9,7 @@ namespace Slash.GameBase.Attributes
     using System;
 
     using Slash.Collections.Utils;
+    using Slash.GameBase.Inspector.Validation;
 
     /// <summary>
     ///   Exposes the property to the landscape designer inspector.
@@ -102,11 +103,22 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>
-        ///   <c>true</c>, if the passed value is valid for this property, and <c>false</c> otherwise.
+        ///   <c>null</c>, if the passed value is valid for this property,
+        ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
-        public override bool Validate(object value)
+        public override ValidationError Validate(object value)
         {
-            return value is string;
+            if (value == null)
+            {
+                return ValidationError.Null;
+            }
+
+            if (!(value is string))
+            {
+                return ValidationError.Default;
+            }
+
+            return null;
         }
 
         #endregion

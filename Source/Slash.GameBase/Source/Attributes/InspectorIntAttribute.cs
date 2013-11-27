@@ -6,11 +6,22 @@
 
 namespace Slash.GameBase.Attributes
 {
+    using Slash.GameBase.Inspector.Validation;
+
     /// <summary>
     ///   Exposes the property to the landscape designer inspector.
     /// </summary>
     public class InspectorIntAttribute : InspectorPropertyAttribute
     {
+        #region Constants
+
+        /// <summary>
+        ///   Validation message to use for strings which are too long.
+        /// </summary>
+        private const string ValidationMessageOutOfRange = "Value is out of range (min: {0}, max: {1}).";
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -109,17 +120,28 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>
-        ///   <c>true</c>, if the passed value is valid for this property, and <c>false</c> otherwise.
+        ///   <c>null</c>, if the passed value is valid for this property, 
+        ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
-        public override bool Validate(object value)
+        public override ValidationError Validate(object value)
         {
-            if (value is int)
+            if (value == null)
             {
-                int intValue = (int)value;
-                return intValue >= this.Min && intValue <= this.Max;
+                return ValidationError.Null;
             }
 
-            return false;
+            if (!(value is int))
+            {
+                return ValidationError.WrongType;
+            }
+
+            int intValue = (int)value;
+            if (intValue < this.Min || intValue > this.Max)
+            {
+                return new ValidationError { Message = string.Format(ValidationMessageOutOfRange, this.Min, this.Max) };
+            }
+
+            return null;
         }
 
         #endregion

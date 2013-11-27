@@ -6,11 +6,22 @@
 
 namespace Slash.GameBase.Attributes
 {
+    using Slash.GameBase.Inspector.Validation;
+
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>
     public class InspectorStringAttribute : InspectorPropertyAttribute
     {
+        #region Constants
+
+        /// <summary>
+        ///   Validation message to use for strings which are too long.
+        /// </summary>
+        private const string ValidationMessageTooLong = "String is too long.";
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -98,18 +109,28 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>
-        ///   <c>true</c>, if the passed value is valid for this property, and <c>false</c> otherwise.
+        ///   <c>null</c>, if the passed value is valid for this property, 
+        ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
-        public override bool Validate(object value)
+        public override ValidationError Validate(object value)
         {
-            var stringValue = value as string;
-
-            if (stringValue != null)
+            if (value == null)
             {
-                return stringValue.Length <= this.MaxLength;
+                return ValidationError.Null;
             }
 
-            return false;
+            var stringValue = value as string;
+            if (stringValue == null)
+            {
+                return ValidationError.WrongType;
+            }
+
+            if (stringValue.Length > this.MaxLength)
+            {
+                return new ValidationError { Message = ValidationMessageTooLong };
+            }
+
+            return null;
         }
 
         #endregion
