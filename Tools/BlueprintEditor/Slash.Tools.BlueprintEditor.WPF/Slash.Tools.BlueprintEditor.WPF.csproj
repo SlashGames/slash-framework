@@ -67,6 +67,9 @@
     <Compile Include="Source\Inspectors\CheckBoxInspector.xaml.cs">
       <DependentUpon>CheckBoxInspector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Inspectors\ComboBoxInspector.xaml.cs">
+      <DependentUpon>ComboBoxInspector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Inspectors\InspectorControl.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -82,6 +85,10 @@
     <Page Include="Source\Inspectors\CheckBoxInspector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Inspectors\ComboBoxInspector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Source\Inspectors\TextBoxInspector.xaml">
       <Generator>MSBuild:Compile</Generator>

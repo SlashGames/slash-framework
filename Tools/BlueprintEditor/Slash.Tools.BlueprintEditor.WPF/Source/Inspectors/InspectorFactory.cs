@@ -24,18 +24,16 @@ namespace BlueprintEditor.Inspectors
             IInspectorControl inspectorControl;
             if (inspectorProperty is InspectorBoolAttribute)
             {
-                CheckBoxInspector checkboxInspector = new CheckBoxInspector();
-                inspectorControl = checkboxInspector;
+                inspectorControl = new CheckBoxInspector();
             }
             else if (inspectorProperty is InspectorStringAttribute || inspectorProperty is InspectorFloatAttribute
                      || inspectorProperty is InspectorIntAttribute)
             {
-                TextBoxInspector stringInspector = new TextBoxInspector();
-                inspectorControl = stringInspector;
+                inspectorControl = new TextBoxInspector();
             }
             else if (inspectorProperty is InspectorEnumAttribute)
             {
-                inspectorControl = null;
+                inspectorControl = new ComboBoxInspector();
             }
             else if (inspectorProperty is InspectorBlueprintAttribute)
             {

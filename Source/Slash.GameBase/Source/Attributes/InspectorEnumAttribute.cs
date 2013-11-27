@@ -7,6 +7,8 @@
 namespace Slash.GameBase.Attributes
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using Slash.GameBase.Inspector.Validation;
 
@@ -52,6 +54,29 @@ namespace Slash.GameBase.Attributes
         ///   Forbidden enum values. If not set, no values are forbidden.
         /// </summary>
         public object[] ForbiddenValues { get; set; }
+
+        /// <summary>
+        ///   Returns a collection of values if the property has a defined set of possible values.
+        ///   Otherwise <c>null</c> is returned.
+        /// </summary>
+        public override IEnumerable<object> PossibleValues
+        {
+            get
+            {
+                if (this.AllowedValues != null)
+                {
+                    return this.AllowedValues;
+                }
+
+                // Collect all values and skip forbidden ones.
+                IEnumerable<object> values = Enum.GetValues(this.EnumType).Cast<object>();
+                IEnumerable<object> allowedValues = this.ForbiddenValues == null
+                                                        ? values
+                                                        : values.Where(
+                                                            value => Array.IndexOf(this.ForbiddenValues, value) == -1);
+                return allowedValues;
+            }
+        }
 
         #endregion
 
@@ -144,7 +169,7 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>
-        ///   <c>null</c>, if the passed value is valid for this property, 
+        ///   <c>null</c>, if the passed value is valid for this property,
         ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
         public override ValidationError Validate(object value)
@@ -158,7 +183,7 @@ namespace Slash.GameBase.Attributes
             {
                 return ValidationError.Default;
             }
-            
+
             return null;
         }
 

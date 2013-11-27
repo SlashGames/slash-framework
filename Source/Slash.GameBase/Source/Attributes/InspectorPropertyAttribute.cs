@@ -7,6 +7,7 @@
 namespace Slash.GameBase.Attributes
 {
     using System;
+    using System.Collections.Generic;
 
     using Slash.GameBase.Inspector.Validation;
 
@@ -40,6 +41,18 @@ namespace Slash.GameBase.Attributes
         ///   Property name to be shown in the inspector.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        ///   Returns a collection of values if the property has a defined set of possible values.
+        ///   Otherwise <c>null</c> is returned.
+        /// </summary>
+        public virtual IEnumerable<object> PossibleValues
+        {
+            get
+            {
+                return null;
+            }
+        }
 
         #endregion
 
@@ -103,7 +116,7 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>
-        ///   <c>null</c>, if the passed value is valid for this property, 
+        ///   <c>null</c>, if the passed value is valid for this property,
         ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
         public abstract ValidationError Validate(object value);
