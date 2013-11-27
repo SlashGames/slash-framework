@@ -31,8 +31,8 @@ namespace Slash.GameBase.Attributes
         public InspectorIntAttribute(string name)
             : base(name)
         {
-            this.Min = 0;
-            this.Max = 31;
+            this.Min = int.MinValue;
+            this.Max = int.MaxValue;
         }
 
         #endregion
@@ -40,12 +40,12 @@ namespace Slash.GameBase.Attributes
         #region Public Properties
 
         /// <summary>
-        ///   Maximum property value.
+        ///   Maximum property value (inclusive).
         /// </summary>
         public int Max { get; set; }
 
         /// <summary>
-        ///   Minimum property value.
+        ///   Minimum property value (inclusive).
         /// </summary>
         public int Min { get; set; }
 

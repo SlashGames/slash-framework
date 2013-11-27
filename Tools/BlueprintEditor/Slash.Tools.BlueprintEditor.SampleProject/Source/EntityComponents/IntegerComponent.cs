@@ -38,7 +38,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <summary>
         ///   Test integer attribute.
         /// </summary>
-        [InspectorInt(AttributeInteger, Default = DefaultInteger)]
+        [InspectorInt(AttributeInteger, Default = DefaultInteger, Min = 0, Max = 31)]
         public int Integer
         {
             get

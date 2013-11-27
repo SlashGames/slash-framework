@@ -32,7 +32,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <summary>
         ///   Test string attribute
         /// </summary>
-        [InspectorString(AttributeString, Default = DefaultString)]
+        [InspectorString(AttributeString, Default = DefaultString, MaxLength = 5)]
         public string String { get; set; }
 
         #endregion
