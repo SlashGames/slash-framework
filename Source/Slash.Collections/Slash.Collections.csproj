@@ -37,6 +37,7 @@
     <Compile Include="Source\AttributeTables\AttributeTableExtensions.cs" />
     <Compile Include="Source\AttributeTables\HierarchicalAttributeTable.cs" />
     <Compile Include="Source\AttributeTables\IAttributeTable.cs" />
+    <Compile Include="Source\Grid\Grid.cs" />
     <Compile Include="Source\ObjectModel\ReadOnlyCollection.cs" />
     <Compile Include="Source\Graphs\IGraphVertex.cs" />
     <Compile Include="Source\Graphs\AdjacencyListWeightedDirectedGraph.cs" />
@@ -63,6 +64,7 @@
       <Name>Slash.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
