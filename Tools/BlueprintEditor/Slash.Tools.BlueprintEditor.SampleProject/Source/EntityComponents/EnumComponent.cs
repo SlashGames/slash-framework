@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IntegerComponent.cs" company="Slash Games">
+// <copyright file="BoolComponent.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -10,44 +10,53 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
     using Slash.GameBase.Components;
     using Slash.GameBase.Inspector.Attributes;
 
+    public enum TestEnum
+    {
+        One,
+        Forbidden,
+        Two,
+        Default,
+        Three
+    }
+
     [InspectorComponent]
-    public class IntegerComponent : IEntityComponent
+    public class EnumComponent : IEntityComponent
     {
         #region Constants
 
         /// <summary>
-        ///   Attribute: Test integer attribute.
+        ///   Attribute: Test attribute.
         /// </summary>
-        public const string AttributeInteger = "IntegerComponent.Integer";
+        public const string AttributeValue = "EnumComponent.Value";
 
         /// <summary>
-        ///   Attribute default: Test integer attribute.
+        ///   Attribute default: Test attribute.
         /// </summary>
-        public const int DefaultInteger = 0;
+        public const TestEnum DefaultValue = TestEnum.Default;
 
         #endregion
 
         #region Fields
 
-        private int integer = DefaultInteger;
+        private TestEnum value = DefaultValue;
 
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        ///   Test integer attribute.
+        ///   Test attribute.
         /// </summary>
-        [InspectorInt(AttributeInteger, Default = DefaultInteger, Min = 0, Max = 31)]
-        public int Integer
+        [InspectorEnum(AttributeValue, typeof(TestEnum), Default = DefaultValue, ForbiddenValues = new object[]{TestEnum.Forbidden})]
+        public TestEnum Value
         {
             get
             {
-                return this.integer;
+                return this.value;
             }
             set
             {
-                this.integer = value;
+                this.value = value;
             }
         }
 
@@ -62,7 +71,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <param name="attributeTable">Component data.</param>
         public void InitComponent(IAttributeTable attributeTable)
         {
-            attributeTable.TryGetInt(AttributeInteger, out this.integer);
+            attributeTable.TryGetValue(AttributeValue, out this.value);
         }
 
         #endregion

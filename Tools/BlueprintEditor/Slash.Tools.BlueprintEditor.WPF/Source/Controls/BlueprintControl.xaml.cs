@@ -13,7 +13,7 @@ namespace BlueprintEditor.Controls
 
     using BlueprintEditor.Inspectors;
 
-    using Slash.GameBase.Attributes;
+    using Slash.GameBase.Inspector.Attributes;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>

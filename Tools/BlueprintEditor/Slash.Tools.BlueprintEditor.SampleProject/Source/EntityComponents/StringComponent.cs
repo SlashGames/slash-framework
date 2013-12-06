@@ -7,8 +7,8 @@
 namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
 {
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Attributes;
     using Slash.GameBase.Components;
+    using Slash.GameBase.Inspector.Attributes;
 
     [InspectorComponent]
     public class StringComponent : IEntityComponent
@@ -32,7 +32,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <summary>
         ///   Test string attribute
         /// </summary>
-        [InspectorString(AttributeString, Default = DefaultString)]
+        [InspectorString(AttributeString, Default = DefaultString, MaxLength = 5)]
         public string String { get; set; }
 
         #endregion

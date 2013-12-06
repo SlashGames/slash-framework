@@ -8,7 +8,7 @@ namespace BlueprintEditor.Inspectors
 {
     using System.Windows.Controls;
 
-    using Slash.GameBase.Attributes;
+    using Slash.GameBase.Inspector.Attributes;
 
     public class InspectorControl : UserControl, IInspectorControl
     {

@@ -10,7 +10,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Data
     using System.Collections.Generic;
     using System.Linq;
 
-    using Slash.GameBase.Attributes;
+    using Slash.GameBase.Inspector.Attributes;
 
     /// <summary>
     ///   Lookup table for designer components. Avoids expensive reflection

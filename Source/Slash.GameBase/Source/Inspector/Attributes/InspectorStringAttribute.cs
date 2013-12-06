@@ -1,29 +1,37 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InspectorBlueprintAttribute.cs" company="Slash Games">
+// <copyright file="InspectorStringAttribute.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Attributes
+namespace Slash.GameBase.Inspector.Attributes
 {
-    using System;
-
-    using Slash.Collections.Utils;
+    using Slash.GameBase.Inspector.Validation;
 
     /// <summary>
-    ///   Exposes the property to the landscape designer inspector.
+    ///   Exposes the property to the inspector.
     /// </summary>
-    public class InspectorBlueprintAttribute : InspectorPropertyAttribute
+    public class InspectorStringAttribute : InspectorPropertyAttribute
     {
+        #region Constants
+
+        /// <summary>
+        ///   Validation message to use for strings which are too long.
+        /// </summary>
+        private const string ValidationMessageTooLong = "String is too long.";
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Exposes the property to the landscape designer inspector.
+        ///   Constructor.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
-        public InspectorBlueprintAttribute(string name)
+        public InspectorStringAttribute(string name)
             : base(name)
         {
+            this.MaxLength = int.MaxValue;
         }
 
         #endregion
@@ -31,9 +39,9 @@ namespace Slash.GameBase.Attributes
         #region Public Properties
 
         /// <summary>
-        ///   Types of the components of the blueprints that are available in the inspector.
+        ///   Maximum length of the string.
         /// </summary>
-        public Type[] RequiredComponents { get; set; }
+        public int MaxLength { get; set; }
 
         #endregion
 
@@ -64,8 +72,7 @@ namespace Slash.GameBase.Attributes
 
         public override string ToString()
         {
-            return string.Format(
-                "Name: {0}, Required Components: {1}", this.Name, CollectionUtils.ToString(this.RequiredComponents));
+            return string.Format("Name: {0}, MaxLength: {1}, Default: {2}", this.Name, this.MaxLength, this.Default);
         }
 
         /// <summary>
@@ -102,11 +109,28 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>
-        ///   <c>true</c>, if the passed value is valid for this property, and <c>false</c> otherwise.
+        ///   <c>null</c>, if the passed value is valid for this property, 
+        ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
-        public override bool Validate(object value)
+        public override ValidationError Validate(object value)
         {
-            return value is string;
+            if (value == null)
+            {
+                return ValidationError.Null;
+            }
+
+            var stringValue = value as string;
+            if (stringValue == null)
+            {
+                return ValidationError.WrongType;
+            }
+
+            if (stringValue.Length > this.MaxLength)
+            {
+                return new ValidationError { Message = ValidationMessageTooLong };
+            }
+
+            return null;
         }
 
         #endregion

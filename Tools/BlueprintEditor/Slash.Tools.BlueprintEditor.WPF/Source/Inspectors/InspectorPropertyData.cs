@@ -11,10 +11,20 @@ namespace BlueprintEditor.Inspectors
 
     using BlueprintEditor.Annotations;
 
-    using Slash.GameBase.Attributes;
+    using Slash.GameBase.Inspector.Attributes;
+    using Slash.GameBase.Inspector.Validation;
 
     public class InspectorPropertyData : IDataErrorInfo, INotifyPropertyChanged
     {
+        #region Constants
+
+        /// <summary>
+        ///   Validation message when provided string can't be converted to value.
+        /// </summary>
+        private const string ValidationMessageConversionFailed = "String can't be converted to value.";
+
+        #endregion
+
         #region Fields
 
         private InspectorPropertyAttribute inspectorProperty;
@@ -105,7 +115,24 @@ namespace BlueprintEditor.Inspectors
                     bool isValid = this.InspectorProperty.TryConvertFromString(this.StringValue, out convertedValue);
                     if (!isValid)
                     {
-                        result = "Invalid value";
+                        result = ValidationMessageConversionFailed;
+                    }
+                    else
+                    {
+                        // Validate value itself.
+                        ValidationError validationError = this.inspectorProperty.Validate(this.value);
+                        if (validationError != null)
+                        {
+                            result = validationError.Message;
+                        }
+                    }
+                }
+                if (columnName == "Value")
+                {
+                    ValidationError validationError = this.inspectorProperty.Validate(this.value);
+                    if (validationError != null)
+                    {
+                        result = validationError.Message;
                     }
                 }
                 return result;
@@ -153,6 +180,7 @@ namespace BlueprintEditor.Inspectors
 
             // Raise event.
             this.OnValueChanged(this.value, oldValue);
+            this.OnPropertyChanged("Value");
         }
 
         #endregion

@@ -1,27 +1,40 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InspectorIntAttribute.cs" company="Slash Games">
+// <copyright file="InspectorFloatAttribute.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Attributes
+namespace Slash.GameBase.Inspector.Attributes
 {
+    using System.Globalization;
+
+    using Slash.GameBase.Inspector.Validation;
+
     /// <summary>
     ///   Exposes the property to the landscape designer inspector.
     /// </summary>
-    public class InspectorIntAttribute : InspectorPropertyAttribute
+    public class InspectorFloatAttribute : InspectorPropertyAttribute
     {
+        #region Constants
+
+        /// <summary>
+        ///   Validation message to use for strings which are too long.
+        /// </summary>
+        private const string ValidationMessageOutOfRange = "Value is out of range (min: {0}, max: {1}).";
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
         ///   Exposes the property to the landscape designer inspector.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
-        public InspectorIntAttribute(string name)
+        public InspectorFloatAttribute(string name)
             : base(name)
         {
-            this.Min = 0;
-            this.Max = 31;
+            this.Min = float.MinValue;
+            this.Max = float.MaxValue;
         }
 
         #endregion
@@ -31,12 +44,12 @@ namespace Slash.GameBase.Attributes
         /// <summary>
         ///   Maximum property value.
         /// </summary>
-        public int Max { get; set; }
+        public float Max { get; set; }
 
         /// <summary>
         ///   Minimum property value.
         /// </summary>
-        public int Min { get; set; }
+        public float Min { get; set; }
 
         #endregion
 
@@ -51,7 +64,9 @@ namespace Slash.GameBase.Attributes
         /// </returns>
         public override object ConvertFromString(string text)
         {
-            return text == string.Empty ? 0 : int.Parse(text);
+            float floatValue;
+            float.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out floatValue);
+            return floatValue;
         }
 
         /// <summary>
@@ -81,11 +96,9 @@ namespace Slash.GameBase.Attributes
         /// </returns>
         public override bool TryConvertFromString(string text, out object value)
         {
-            int intValue = 0;
-
-            // Treat empty string as 0.
-            bool success = text == string.Empty || int.TryParse(text, out intValue);
-            value = intValue;
+            float floatValue;
+            bool success = float.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out floatValue);
+            value = floatValue;
             return success;
         }
 
@@ -109,17 +122,28 @@ namespace Slash.GameBase.Attributes
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns>
-        ///   <c>true</c>, if the passed value is valid for this property, and <c>false</c> otherwise.
+        ///   <c>null</c>, if the passed value is valid for this property, 
+        ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
-        public override bool Validate(object value)
+        public override ValidationError Validate(object value)
         {
-            if (value is int)
+            if (value == null)
             {
-                int intValue = (int)value;
-                return intValue >= this.Min && intValue <= this.Max;
+                return ValidationError.Null;
             }
 
-            return false;
+            if (!(value is float))
+            {
+                return ValidationError.WrongType;
+            }
+
+            float floatValue = (float)value;
+            if (floatValue < this.Min || floatValue > this.Max)
+            {
+                return new ValidationError { Message = string.Format(ValidationMessageOutOfRange, this.Min, this.Max) };
+            }
+
+            return null;
         }
 
         #endregion

@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Attributes
+namespace Slash.GameBase.Inspector.Attributes
 {
     using Slash.SystemExt.Utils;
 
-    using global::System;
+    using System;
 
     /// <summary>
     ///   Property inspector should only be shown if condition is met.

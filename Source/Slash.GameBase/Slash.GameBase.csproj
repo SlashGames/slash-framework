@@ -32,17 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Source\Attributes\ConditionalFlagsCheck.cs" />
-    <Compile Include="Source\Attributes\InspectorComponentAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorConditionalFlagsPropertyAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorConditionalPropertyAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorBlueprintAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorBoolAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorEnumAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorFloatAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorIntAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorPropertyAttribute.cs" />
-    <Compile Include="Source\Attributes\InspectorStringAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\ConditionalFlagsCheck.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorComponentAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorConditionalFlagsPropertyAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorConditionalPropertyAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorBlueprintAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorBoolAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorEnumAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorFloatAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorIntAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorPropertyAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorStringAttribute.cs" />
     <Compile Include="Source\Blueprints\Blueprint.cs" />
     <Compile Include="Source\Blueprints\BlueprintManager.cs" />
     <Compile Include="Source\Blueprints\BlueprintUtils.cs" />
@@ -61,6 +61,7 @@
     <Compile Include="Source\Components\EntityManager.cs" />
     <Compile Include="Source\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Inspector\Validation\ValidationError.cs" />
     <Compile Include="Source\Systems\ISystem.cs" />
     <Compile Include="Source\Systems\SystemManager.cs" />
   </ItemGroup>
