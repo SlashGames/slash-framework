@@ -14,17 +14,16 @@
             <RowDefinition Height = "Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem Header = "_File">
+            <MenuItem Header = "_FILE">
                 <MenuItem x:Name = "MenuFileNew" Header = "_New" Click = "MenuFileNew_OnClick" />
-                <Separator />
-                <MenuItem x:Name = "MenuFileLoad" Header = "_Open" Click = "MenuFileLoad_OnClick" />
+                <MenuItem x:Name = "MenuFileOpen" Header = "_Open" Click = "MenuFileOpen_OnClick" />
                 <Separator />
                 <MenuItem x:Name = "MenuFileSave" Header = "_Save" Click = "MenuFileSave_OnClick" />
-                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save_As" Click = "MenuFileSaveAs_OnClick" />
+                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save _As..." Click = "MenuFileSaveAs_OnClick" />
                 <Separator />
                 <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Click = "MenuFileExit_OnClick" />
             </MenuItem>
-            <MenuItem Header = "_Project">
+            <MenuItem Header = "_PROJECT">
                 <MenuItem Header="_Settings" Name="MenuProjectSettings" Click="MenuProjectSettings_OnClick"></MenuItem>
             </MenuItem>
         </Menu>

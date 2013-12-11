@@ -83,7 +83,19 @@ namespace BlueprintEditor.Windows
             Application.Current.Shutdown();
         }
 
-        private void MenuFileLoad_OnClick(object sender, RoutedEventArgs e)
+        private void MenuFileNew_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Check if context changed and should be saved before continuing.
+            if (!this.CheckContextChange())
+            {
+                return;
+            }
+
+            // Create new blueprint manager.
+            this.Context.New();
+        }
+
+        private void MenuFileOpen_OnClick(object sender, RoutedEventArgs e)
         {
             // Check if context changed and should be saved before continuing.
             if (!this.CheckContextChange())
@@ -113,18 +125,6 @@ namespace BlueprintEditor.Windows
             this.Context.Load(filename);
         }
 
-        private void MenuFileNew_OnClick(object sender, RoutedEventArgs e)
-        {
-            // Check if context changed and should be saved before continuing.
-            if (!this.CheckContextChange())
-            {
-                return;
-            }
-
-            // Create new blueprint manager.
-            this.Context.New();
-        }
-
         private void MenuFileSaveAs_OnClick(object sender, RoutedEventArgs e)
         {
             this.SaveContext(null);
@@ -137,7 +137,11 @@ namespace BlueprintEditor.Windows
 
         private void MenuProjectSettings_OnClick(object sender, RoutedEventArgs e)
         {
-            ProjectSettingsWindow dlg = new ProjectSettingsWindow { Owner = this, DataContext = this.Context.ProjectSettings };
+            ProjectSettingsWindow dlg = new ProjectSettingsWindow
+                {
+                    Owner = this,
+                    DataContext = this.Context.ProjectSettings
+                };
             dlg.ShowDialog();
         }
 
