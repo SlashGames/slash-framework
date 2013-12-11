@@ -6,9 +6,11 @@
 
 namespace BlueprintEditor.Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using System.Windows;
-    using System.Windows.Controls;
 
     using Microsoft.Win32;
 
@@ -25,6 +27,10 @@ namespace BlueprintEditor.Controls
         {
             this.InitializeComponent();
         }
+
+        #endregion
+
+        #region Methods
 
         private void AddAssembly_OnClick(object sender, RoutedEventArgs e)
         {
@@ -46,10 +52,8 @@ namespace BlueprintEditor.Controls
             projectSettings.AddAssembly(assembly);
 
             // Refresh list.
-            AssembliesList.Items.Refresh();
+            this.AssembliesList.Items.Refresh();
         }
-
-        #endregion
 
         private void RemoveAssembly_OnClick(object sender, RoutedEventArgs e)
         {
@@ -60,12 +64,37 @@ namespace BlueprintEditor.Controls
                 return;
             }
 
-            // Remove selected assembly.
             ProjectSettings projectSettings = (ProjectSettings)this.DataContext;
+
+            // Check if still used.
+            IEnumerable<Type> usedTypes = projectSettings.FindUsedTypes(selectedAssembly);
+            IEnumerable<Type> usedTypesList = usedTypes as IList<Type> ?? usedTypes.ToList();
+            if (usedTypesList.Any())
+            {
+                string message = string.Format(
+                    "Can't remove assembly '{0}', {1} types are still used by the project:\n",
+                    selectedAssembly.GetName().Name,
+                    usedTypesList.Count());
+                const int MaxShownTypes = 5;
+                foreach (Type usedType in usedTypesList.Take(MaxShownTypes))
+                {
+                    message += "- " + usedType.FullName + "\n";
+                }
+                if (usedTypesList.Count() > MaxShownTypes)
+                {
+                    message += "- ...\n";
+                }
+                MessageBox.Show(message);
+                return;
+            }
+
+            // Remove selected assembly.
             projectSettings.RemoveAssembly(selectedAssembly);
 
             // Refresh list.
-            AssembliesList.Items.Refresh();
+            this.AssembliesList.Items.Refresh();
         }
+
+        #endregion
     }
 }

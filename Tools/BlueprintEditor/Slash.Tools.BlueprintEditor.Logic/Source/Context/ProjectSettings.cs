@@ -173,15 +173,74 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         }
 
         /// <summary>
+        ///   Determines the used types from the specified assembly in the project.
+        /// </summary>
+        /// <param name="assembly">Assembly to check.</param>
+        /// <returns>Enumeration of used types of the specified assembly.</returns>
+        public IEnumerable<Type> FindUsedTypes(Assembly assembly)
+        {
+            // Check all blueprint managers.
+            HashSet<Type> usedTypes = new HashSet<Type>();
+            if (!this.ProjectAssemblies.Contains(assembly))
+            {
+                return usedTypes;
+            }
+
+            foreach (var blueprintFile in this.BlueprintFiles)
+            {
+                if (blueprintFile.BlueprintManager == null)
+                {
+                    continue;
+                }
+
+                foreach (KeyValuePair<string, Blueprint> blueprintPair in blueprintFile.BlueprintManager)
+                {
+                    Blueprint blueprint = blueprintPair.Value;
+
+                    // Check component types.
+                    foreach (Type componentType in
+                        blueprint.ComponentTypes.Where(componentType => Equals(componentType.Assembly, assembly)))
+                    {
+                        usedTypes.Add(componentType);
+                    }
+                }
+            }
+            return usedTypes;
+        }
+
+        /// <summary>
+        ///   Indicates if specified assembly is used in the project, i.e. any types of the assembly are
+        ///   in use.
+        /// </summary>
+        /// <param name="assembly">Assembly to check.</param>
+        /// <returns>True if the assembly is still used in the project; otherwise, false.</returns>
+        public bool IsAssemblyUsed(Assembly assembly)
+        {
+            // Get component types used from this assembly.
+            IEnumerable<Type> usedTypes = this.FindUsedTypes(assembly);
+            return usedTypes.Any();
+        }
+
+        /// <summary>
         ///   Removes an assembly from the project.
         /// </summary>
         /// <param name="assembly">Assembly to remove.</param>
         public bool RemoveAssembly(Assembly assembly)
         {
-            if (!this.ProjectAssemblies.Remove(assembly))
+            // Check if project contains assembly.
+            if (!this.ProjectAssemblies.Contains(assembly))
             {
                 return false;
             }
+
+            // Check if still used.
+            if (this.IsAssemblyUsed(assembly))
+            {
+                return false;
+            }
+
+            // Remove from project.
+            this.ProjectAssemblies.Remove(assembly);
 
             this.entityComponentTypes = null;
             this.OnEntityComponentTypesChanged();
