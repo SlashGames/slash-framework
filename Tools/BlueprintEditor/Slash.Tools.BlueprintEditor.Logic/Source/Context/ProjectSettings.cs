@@ -43,11 +43,6 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         #region Fields
 
         /// <summary>
-        ///   Assemblies which belong to the project.
-        /// </summary>
-        private IList<Assembly> projectAssemblies;
-
-        /// <summary>
         ///   Available entity component types in the project.
         /// </summary>
         private IEnumerable<Type> entityComponentTypes;
@@ -61,7 +56,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// </summary>
         public ProjectSettings()
         {
-            this.projectAssemblies = new List<Assembly>();
+            this.ProjectAssemblies = new List<Assembly>();
             this.BlueprintFiles = new List<BlueprintFile>();
         }
 
@@ -125,15 +120,21 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         {
             get
             {
-                return this.projectAssemblies.Select(projectAssembly => projectAssembly.Location).ToArray();
+                return this.ProjectAssemblies.Select(projectAssembly => projectAssembly.Location).ToArray();
             }
             set
             {
-                this.projectAssemblies = value.Select(ReflectionUtils.FindAssembly).ToList();
+                this.ProjectAssemblies = value.Select(ReflectionUtils.FindAssembly).ToList();
                 this.entityComponentTypes = null;
                 this.OnEntityComponentTypesChanged();
             }
         }
+
+        /// <summary>
+        ///   Assemblies which belong to the project.
+        /// </summary>
+        [XmlIgnore]
+        public IList<Assembly> ProjectAssemblies { get; private set; }
 
         #endregion
 
@@ -145,7 +146,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// <param name="assembly">Assembly to add to the project.</param>
         public void AddAssembly(Assembly assembly)
         {
-            this.projectAssemblies.Add(assembly);
+            this.ProjectAssemblies.Add(assembly);
             this.entityComponentTypes = null;
             this.OnEntityComponentTypesChanged();
         }
@@ -157,7 +158,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// <param name="assembly">Assembly to remove.</param>
         public bool RemoveAssembly(Assembly assembly)
         {
-            if (!this.projectAssemblies.Remove(assembly))
+            if (!this.ProjectAssemblies.Remove(assembly))
             {
                 return false;
             }
@@ -178,7 +179,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// <returns>All types which are inherited from IEntityComponent in the project assemblies.</returns>
         private IEnumerable<Type> CollectEntityComponentTypes()
         {
-            return ComponentUtils.FindComponentTypes(this.projectAssemblies);
+            return ComponentUtils.FindComponentTypes(this.ProjectAssemblies);
         }
 
         private void OnEntityComponentTypesChanged()

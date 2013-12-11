@@ -111,7 +111,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// <summary>
         ///   Project to edit.
         /// </summary>
-        private ProjectSettings ProjectSettings { get; set; }
+        public ProjectSettings ProjectSettings { get; set; }
 
         #endregion
 

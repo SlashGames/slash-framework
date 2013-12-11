@@ -27,6 +27,7 @@
             <MenuItem Header = "_Project">
                 <MenuItem x:Name = "MenuProjectAddAssembly" Header = "_Add Assembly"
                           Click = "MenuProjectAddAssembly_OnClick" />
+                <MenuItem Header="_Settings" Name="MenuProjectSettings" Click="MenuProjectSettings_OnClick"></MenuItem>
             </MenuItem>
         </Menu>
 

@@ -153,6 +153,12 @@ namespace BlueprintEditor.Windows
             this.Context.AddAssembly(dlg.FileName);
         }
 
+        private void MenuProjectSettings_OnClick(object sender, RoutedEventArgs e)
+        {
+            ProjectSettingsWindow dlg = new ProjectSettingsWindow { Owner = this, DataContext = this.Context.ProjectSettings };
+            dlg.ShowDialog();
+        }
+
         private void OnBlueprintManagerChanged(
             BlueprintManager newBlueprintManager, BlueprintManager oldBlueprintManager)
         {
