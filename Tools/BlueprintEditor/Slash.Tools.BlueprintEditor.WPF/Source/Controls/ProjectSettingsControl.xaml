@@ -3,10 +3,10 @@
              xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:context="clr-namespace:Slash.Tools.BlueprintEditor.Logic.Context;assembly=Slash.Tools.BlueprintEditor.Logic"
-             xmlns:converters="clr-namespace:BlueprintEditor.Converters"
+             xmlns:context = "clr-namespace:Slash.Tools.BlueprintEditor.Logic.Context;assembly=Slash.Tools.BlueprintEditor.Logic"
+             xmlns:converters = "clr-namespace:BlueprintEditor.Converters"
              mc:Ignorable = "d"
-             d:DesignHeight = "400" d:DesignWidth = "600" d:DataContext="{d:DesignInstance context:ProjectSettings}">
+             d:DesignHeight = "400" d:DesignWidth = "600" d:DataContext = "{d:DesignInstance context:ProjectSettings}">
     <UserControl.Resources>
         <converters:AssemblyToNameConverter x:Key = "AssemblyToNameConverter" />
     </UserControl.Resources>
@@ -14,23 +14,27 @@
         <StackPanel>
             <DockPanel>
                 <Label Width = "100">Name</Label>
-                <TextBox Name = "TbName"></TextBox>
+                <TextBox Name = "TbName" Text = "{Binding Name}"></TextBox>
             </DockPanel>
             <DockPanel>
                 <Label Width = "100">Description</Label>
-                <TextBox Name = "TbDescription"></TextBox>
+                <TextBox Name = "TbDescription" Text = "{Binding Description}" TextWrapping = "Wrap"
+                         AcceptsReturn = "True" Height = "78">
+                </TextBox>
             </DockPanel>
             <DockPanel>
                 <Label Width = "100">Assemblies</Label>
                 <StackPanel>
-                <DataGrid Name="AssembliesList" ItemsSource="{Binding ProjectAssemblies}" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Dll" Width="400" Binding="{Binding Path=., Converter={StaticResource AssemblyToNameConverter}}">
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
+                    <DataGrid Name = "AssembliesList" ItemsSource = "{Binding ProjectAssemblies}"
+                              AutoGenerateColumns = "False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header = "Dll" Width = "400"
+                                                Binding = "{Binding Path=., Converter={StaticResource AssemblyToNameConverter}}">
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
                     </DataGrid>
-                    <Button Click="AddAssembly_OnClick" IsEnabled="{Binding }">Add</Button>
-                    <Button Click="RemoveAssembly_OnClick">Remove</Button>
+                    <Button Click = "AddAssembly_OnClick" IsEnabled = "{Binding }">Add</Button>
+                    <Button Click = "RemoveAssembly_OnClick">Remove</Button>
                 </StackPanel>
             </DockPanel>
         </StackPanel>

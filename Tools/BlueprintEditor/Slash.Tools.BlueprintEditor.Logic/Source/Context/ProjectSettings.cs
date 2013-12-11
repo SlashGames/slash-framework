@@ -14,15 +14,16 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
     using System.Xml.Serialization;
 
     using Slash.GameBase.Blueprints;
-    using Slash.GameBase.Components;
     using Slash.Reflection.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
-    ///    Blueprint file which belongs to a project.
+    ///   Blueprint file which belongs to a project.
     /// </summary>
     public sealed class BlueprintFile
     {
+        #region Public Properties
+
         /// <summary>
         ///   Blueprint manager which contains the data.
         /// </summary>
@@ -32,6 +33,8 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         ///   Path where the blueprint file is stored.
         /// </summary>
         public string Path { get; set; }
+
+        #endregion
     }
 
     /// <summary>
@@ -76,24 +79,13 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 
         #region Public Properties
 
-        /// <summary>
-        ///   Available entity component types in the project.
-        /// </summary>
-        public IEnumerable<Type> EntityComponentTypes
-        {
-            get
-            {
-                return this.entityComponentTypes ?? (this.entityComponentTypes = this.CollectEntityComponentTypes());
-            }
-        }
-
         [XmlIgnore]
         public IList<BlueprintFile> BlueprintFiles { get; set; }
 
         /// <summary>
         ///   Wrapper for ProjectAssemblies property for xml serialization.
         /// </summary>
-        [XmlArray("BlueprintFiles", Order = 1)]
+        [XmlArray("BlueprintFiles", Order = 3)]
         [XmlArrayItem("BlueprintFile")]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -109,10 +101,39 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             }
         }
 
-            /// <summary>
+        /// <summary>
+        ///   Description of project.
+        /// </summary>
+        [XmlElement(Order = 1)]
+        public string Description { get; set; }
+
+        /// <summary>
+        ///   Available entity component types in the project.
+        /// </summary>
+        public IEnumerable<Type> EntityComponentTypes
+        {
+            get
+            {
+                return this.entityComponentTypes ?? (this.entityComponentTypes = this.CollectEntityComponentTypes());
+            }
+        }
+
+        /// <summary>
+        ///   Project name.
+        /// </summary>
+        [XmlElement(Order = 0)]
+        public string Name { get; set; }
+
+        /// <summary>
+        ///   Assemblies which belong to the project.
+        /// </summary>
+        [XmlIgnore]
+        public IList<Assembly> ProjectAssemblies { get; private set; }
+
+        /// <summary>
         ///   Wrapper for ProjectAssemblies property for xml serialization.
         /// </summary>
-        [XmlArray("ProjectAssemblies", Order = 0)]
+        [XmlArray("ProjectAssemblies", Order = 2)]
         [XmlArrayItem("ProjectAssembly")]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -130,12 +151,6 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             }
         }
 
-        /// <summary>
-        ///   Assemblies which belong to the project.
-        /// </summary>
-        [XmlIgnore]
-        public IList<Assembly> ProjectAssemblies { get; private set; }
-
         #endregion
 
         #region Public Methods and Operators
@@ -150,7 +165,6 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             this.entityComponentTypes = null;
             this.OnEntityComponentTypesChanged();
         }
-
 
         /// <summary>
         ///   Removes an assembly from the project.
