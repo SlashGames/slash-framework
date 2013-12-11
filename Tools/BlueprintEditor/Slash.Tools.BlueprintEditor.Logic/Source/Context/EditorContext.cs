@@ -116,17 +116,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         #endregion
 
         #region Public Methods and Operators
-
-        /// <summary>
-        ///   Adds the assembly at the specified path to the project.
-        /// </summary>
-        /// <param name="assemblyPath">Path to assembly.</param>
-        public void AddAssembly(string assemblyPath)
-        {
-            Assembly assembly = Assembly.LoadFile(assemblyPath);
-            this.ProjectSettings.AddAssembly(assembly);
-        }
-
+        
         public void Load(string path)
         {
             // Load project.

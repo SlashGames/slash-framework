@@ -56,8 +56,8 @@
     <Compile Include="Source\Converters\AssemblyToNameConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Source\Controls\BlueprintControlContext.cs" />
-    <Compile Include="Source\Controls\ProjectSettings.xaml.cs">
-      <DependentUpon>ProjectSettings.xaml</DependentUpon>
+    <Compile Include="Source\Controls\ProjectSettingsControl.xaml.cs">
+      <DependentUpon>ProjectSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Converters\BooleanOrConverter.cs" />
     <Compile Include="Source\Data\BlueprintManagerData.cs" />
@@ -89,7 +89,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Controls\ProjectSettings.xaml">
+    <Page Include="Source\Controls\ProjectSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

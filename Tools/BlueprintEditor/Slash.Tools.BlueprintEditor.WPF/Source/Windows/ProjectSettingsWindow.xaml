@@ -3,6 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="clr-namespace:BlueprintEditor.Controls"
         Title="ProjectSettingsWindow" Height="400" Width="600">
     <Grid>
-        <controls:ProjectSettings />
+        <controls:ProjectSettingsControl />
     </Grid>
 </Window>

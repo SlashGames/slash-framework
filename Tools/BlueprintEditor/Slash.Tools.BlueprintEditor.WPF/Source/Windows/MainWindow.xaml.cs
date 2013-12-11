@@ -135,24 +135,6 @@ namespace BlueprintEditor.Windows
             this.SaveContext(this.Context.SerializationPath);
         }
 
-        private void MenuProjectAddAssembly_OnClick(object sender, RoutedEventArgs e)
-        {
-            // Configure open file dialog box.
-            OpenFileDialog dlg = new OpenFileDialog { DefaultExt = ".dll", Filter = "Assemblies (.dll)|*.dll" };
-
-            // Show open file dialog box.
-            bool? result = dlg.ShowDialog();
-
-            // Process open file dialog box results 
-            if (result != true)
-            {
-                return;
-            }
-
-            // Add assembly to project.
-            this.Context.AddAssembly(dlg.FileName);
-        }
-
         private void MenuProjectSettings_OnClick(object sender, RoutedEventArgs e)
         {
             ProjectSettingsWindow dlg = new ProjectSettingsWindow { Owner = this, DataContext = this.Context.ProjectSettings };

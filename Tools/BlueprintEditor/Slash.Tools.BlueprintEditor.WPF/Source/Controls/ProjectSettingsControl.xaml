@@ -1,4 +1,4 @@
-﻿<UserControl x:Class = "BlueprintEditor.Controls.ProjectSettings"
+﻿<UserControl x:Class = "BlueprintEditor.Controls.ProjectSettingsControl"
              xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -22,12 +22,16 @@
             </DockPanel>
             <DockPanel>
                 <Label Width = "100">Assemblies</Label>
+                <StackPanel>
                 <DataGrid Name="AssembliesList" ItemsSource="{Binding ProjectAssemblies}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Dll" Width="400" Binding="{Binding Path=., Converter={StaticResource AssemblyToNameConverter}}">
                         </DataGridTextColumn>
                     </DataGrid.Columns>
-                </DataGrid>
+                    </DataGrid>
+                    <Button Click="AddAssembly_OnClick" IsEnabled="{Binding }">Add</Button>
+                    <Button Click="RemoveAssembly_OnClick">Remove</Button>
+                </StackPanel>
             </DockPanel>
         </StackPanel>
     </Grid>
