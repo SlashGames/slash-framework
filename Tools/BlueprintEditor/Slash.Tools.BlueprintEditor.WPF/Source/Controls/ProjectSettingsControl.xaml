@@ -29,7 +29,7 @@
                               AutoGenerateColumns = "False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header = "Dll" Width = "400"
-                                                Binding = "{Binding Path=., Converter={StaticResource AssemblyToNameConverter}}">
+                                                Binding = "{Binding Converter={StaticResource AssemblyToNameConverter}}">
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
