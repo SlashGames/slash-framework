@@ -1,0 +1,79 @@
+﻿<UserControl x:Class = "BlueprintEditor.Controls.BlueprintControl"
+             xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:validation = "clr-namespace:BlueprintEditor.Validation"
+             xmlns:blueprintEditor = "clr-namespace:BlueprintEditor"
+             mc:Ignorable = "d"
+             d:DesignHeight = "300" d:DesignWidth = "300"
+             DataContext = "{Binding RelativeSource={RelativeSource Self}}" Name = "Main">
+    <UserControl.Resources>
+        <blueprintEditor:BindingProxy x:Key = "Proxy" Data = "{Binding}" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "Auto"></RowDefinition>
+            <RowDefinition Height = "*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Height = "30" Margin = "8,10,8,10" VerticalAlignment = "Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "50"></ColumnDefinition>
+                <ColumnDefinition Width = "*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content = "Id" Grid.Column = "0" />
+            <TextBox x:Name = "TbBlueprintId" Grid.Column = "1">
+                <TextBox.Text>
+                    <Binding Path = "BlueprintControlContext.BlueprintId">
+                        <Binding.ValidationRules>
+                            <validation:UniqueBlueprintIdValidationRule>
+                                <validation:UniqueBlueprintIdValidationRule.Data>
+                                    <validation:ValidationRuleData
+                                        Context = "{Binding Data.BlueprintControlContext, 
+    Source={StaticResource Proxy}}" />
+                                </validation:UniqueBlueprintIdValidationRule.Data>
+                            </validation:UniqueBlueprintIdValidationRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
+
+        <TabControl Grid.Row = "1">
+            <TabItem Header = "Attributes">
+                <StackPanel x:Name = "AttributesPanel" Background = "#FFE5E5E5" />
+            </TabItem>
+            <TabItem Header = "Components">
+                <Grid Background = "#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width = "50"></ColumnDefinition>
+                        <ColumnDefinition Width = "0.5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column = "0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height = "Auto"></RowDefinition>
+                            <RowDefinition Height = "*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Content = "Added:" Grid.Row = "0" />
+                        <ListBox x:Name = "LbComponentsAdded" Grid.Row = "1" />
+                    </Grid>
+                    <StackPanel Grid.Column = "1" VerticalAlignment = "Center" Margin = "5, 0, 5, 0">
+                        <Button x:Name = "BtAdd" Content = "&lt;-" Click = "BtAdd_OnClick" Height = "30"
+                                Margin = "0, 10, 0, 10" />
+                        <Button x:Name = "BtRemove" Content = "-&gt;" Click = "BtRemove_OnClick" Height = "30"
+                                Margin = "0, 10, 0, 10" />
+                    </StackPanel>
+                    <Grid Grid.Column = "2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height = "Auto"></RowDefinition>
+                            <RowDefinition Height = "*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Content = "Available:" Grid.Row = "0" />
+                        <ListBox x:Name = "LbComponentsAvailable" Grid.Row = "1" />
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

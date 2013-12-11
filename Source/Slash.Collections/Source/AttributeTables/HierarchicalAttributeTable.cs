@@ -58,6 +58,21 @@ namespace Slash.Collections.AttributeTables
 
         #endregion
 
+        #region Public Properties
+
+        /// <summary>
+        ///   Returns the number of attributes in the attribute table.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.attributeTable.Count + this.parents.Sum(parent => parent.Count);
+            }
+        }
+
+        #endregion
+
         #region Public Indexers
 
         /// <summary>

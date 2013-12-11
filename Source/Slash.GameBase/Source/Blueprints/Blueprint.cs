@@ -8,15 +8,19 @@ namespace Slash.GameBase.Blueprints
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
+    using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
+    using Slash.Reflection.Utils;
 
     /// <summary>
     ///   Blueprint for creating an entity with a specific set of components
     ///   and initial attribute values.
     /// </summary>
+    [Serializable]
     public class Blueprint
     {
         #region Constructors and Destructors
@@ -48,18 +52,58 @@ namespace Slash.GameBase.Blueprints
         ///   Data for initializing the components of entities created with this
         ///   blueprint.
         /// </summary>
+        [XmlIgnore]
         public IAttributeTable AttributeTable { get; set; }
+
+        /// <summary>
+        ///   Wrapper for AttributeTable property for xml serialization.
+        /// </summary>
+        [XmlElement("AttributeTable")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AttributeTable AttributeTableSerialized
+        {
+            get
+            {
+                return new AttributeTable(this.AttributeTable);
+            }
+            set
+            {
+                this.AttributeTable = value;
+            }
+        }
 
         /// <summary>
         ///   Collection of types of components to add to entities created with
         ///   this blueprint.
         /// </summary>
+        [XmlIgnore]
         public List<Type> ComponentTypes { get; set; }
+
+        /// <summary>
+        ///   Wrapper for ComponentTypes property for xml serialization.
+        /// </summary>
+        [XmlArray("ComponentTypes")]
+        [XmlArrayItem("ComponentType")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string[] ComponentTypesSerialized
+        {
+            get
+            {
+                return this.ComponentTypes.Select(componentType => componentType.AssemblyQualifiedName).ToArray();
+            }
+            set
+            {
+                this.ComponentTypes = value.Select(ReflectionUtils.FindType).ToList();
+            }
+        }
 
         /// <summary>
         ///   Parent blueprint of this one. All components and attributes of the parent are also
         ///   available for this one. Attributes can be overwritten though.
         /// </summary>
+        [XmlIgnore]
         public Blueprint Parent { get; set; }
 
         /// <summary>
@@ -91,31 +135,15 @@ namespace Slash.GameBase.Blueprints
             return this.Equals((Blueprint)obj);
         }
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return ((this.AttributeTable != null ? this.AttributeTable.GetHashCode() : 0) * 397)
-                       ^ (this.ComponentTypes != null ? this.ComponentTypes.GetHashCode() : 0);
-            }
-        }
-
-        public override string ToString()
-        {
-            string componentTypesString = this.ComponentTypes.Aggregate(
-                string.Empty, (current, componentType) => current + string.Format("{0}, ", componentType.FullName));
-            return string.Format("AttributeTable: {0}, ComponentTypes: {1}", this.AttributeTable, componentTypesString);
-        }
-
         /// <summary>
         ///   Returns an enumeration of all component types of this and all ancestor blueprints.
         /// </summary>
         /// <returns>Enumeration of component types of this and all ancestor blueprints.</returns>
-        public IEnumerable<Type> getAllComponentTypes()
+        public IEnumerable<Type> GetAllComponentTypes()
         {
             return this.Parent == null
                        ? this.ComponentTypes
-                       : this.ComponentTypes.Union(this.Parent.getAllComponentTypes());
+                       : this.ComponentTypes.Union(this.Parent.GetAllComponentTypes());
         }
 
         /// <summary>
@@ -123,7 +151,7 @@ namespace Slash.GameBase.Blueprints
         ///   Considers the attribute tables of the ancestors of this blueprint if there are any.
         /// </summary>
         /// <returns>Final attribute table to use for entity creation.</returns>
-        public IAttributeTable getAttributeTable()
+        public IAttributeTable GetAttributeTable()
         {
             if (this.Parent == null)
             {
@@ -143,6 +171,40 @@ namespace Slash.GameBase.Blueprints
             return attributeTable;
         }
 
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((this.AttributeTable != null ? this.AttributeTable.GetHashCode() : 0) * 397)
+                       ^ (this.ComponentTypes != null ? this.ComponentTypes.GetHashCode() : 0);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates if the AttributeTableSerialized property should be serialized via Xml.
+        /// </summary>
+        /// <returns>True if it should be serialized; otherwise, false.</returns>
+        public bool ShouldSerializeAttributeTableSerialized()
+        {
+            return this.AttributeTable != null && this.AttributeTable.Count > 0;
+        }
+
+        /// <summary>
+        ///   Indicates if the ComponentTypesSerialized property should be serialized via Xml.
+        /// </summary>
+        /// <returns>True if it should be serialized; otherwise, false.</returns>
+        public bool ShouldSerializeComponentTypesSerialized()
+        {
+            return this.ComponentTypes != null && this.ComponentTypes.Count > 0;
+        }
+
+        public override string ToString()
+        {
+            string componentTypesString = this.ComponentTypes.Aggregate(
+                string.Empty, (current, componentType) => current + string.Format("{0}, ", componentType.FullName));
+            return string.Format("AttributeTable: {0}, ComponentTypes: {1}", this.AttributeTable, componentTypesString);
+        }
+
         /// <summary>
         ///   Tries to retrieve the value the specified key is mapped to within this
         ///   blueprint. Searches for the key in a parent blueprint if existent.
@@ -150,7 +212,7 @@ namespace Slash.GameBase.Blueprints
         /// <param name="key"> Key to retrieve the value of. </param>
         /// <param name="value"> Retrieved value. </param>
         /// <returns> True if a value was found; otherwise, false. </returns>
-        public bool tryGetValue(object key, out object value)
+        public bool TryGetValue(object key, out object value)
         {
             if (this.AttributeTable.TryGetValue(key, out value))
             {
@@ -159,7 +221,7 @@ namespace Slash.GameBase.Blueprints
 
             if (this.Parent != null)
             {
-                return this.Parent.tryGetValue(key, out value);
+                return this.Parent.TryGetValue(key, out value);
             }
 
             return false;

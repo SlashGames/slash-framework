@@ -19,6 +19,16 @@ namespace Slash.Reflection.Utils
         #region Public Methods and Operators
 
         /// <summary>
+        ///   Loads an assembly from the specified file.
+        /// </summary>
+        /// <param name="assemblyFile">Path to assembly file.</param>
+        /// <returns>Loaded assembly from specified path.</returns>
+        public static Assembly FindAssembly(string assemblyFile)
+        {
+            return Assembly.LoadFrom(assemblyFile);
+        }
+
+        /// <summary>
         ///   <para>
         ///     Looks up the specified full type name in all loaded assemblies,
         ///     ignoring assembly version.
@@ -33,6 +43,11 @@ namespace Slash.Reflection.Utils
         /// <exception cref="ArgumentException">If the type couldn't be found.</exception>
         public static Type FindType(string fullName)
         {
+            if (string.IsNullOrEmpty(fullName))
+            {
+                return null;
+            }
+
             // Split type name from .dll version.
             if (!fullName.Contains("["))
             {

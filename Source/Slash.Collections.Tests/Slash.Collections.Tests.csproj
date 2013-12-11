@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\AttributeTables\AttributeTableTest.cs" />
     <Compile Include="Source\Extensions\EnumerableExtensionMethodsTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +52,10 @@
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>Slash.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Tests\Slash.Tests.csproj">
+      <Project>{8E13A2AF-DA04-44F3-A097-4D69ADB0592E}</Project>
+      <Name>Slash.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,8 +6,11 @@
 
 namespace Slash.Serialization.Utils
 {
+    using System;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
+    using System.Xml;
+    using System.Xml.Serialization;
 
     public static class SerializationUtils
     {
@@ -38,6 +41,19 @@ namespace Slash.Serialization.Utils
         }
 
         /// <summary>
+        ///   Deserializes an object of the specified type from the specified xml reader.
+        /// </summary>
+        /// <param name="reader">Xml reader to read object from.</param>
+        /// <param name="type">Type of object to deserialize.</param>
+        /// <param name="elementName">Element node name the object is serialized under.</param>
+        public static object ReadXml(XmlReader reader, Type type, string elementName)
+        {
+            // Deserialize object.
+            XmlSerializer xmlSerializer = new XmlSerializer(type, new XmlRootAttribute(elementName));
+            return xmlSerializer.Deserialize(reader);
+        }
+
+        /// <summary>
         ///   Serializes the specified object to a binary stream.
         /// </summary>
         /// <param name="obj"> Object to serialize. </param>
@@ -49,6 +65,20 @@ namespace Slash.Serialization.Utils
             binaryFormatter.Serialize(memoryStream, obj);
             memoryStream.Close();
             return memoryStream;
+        }
+
+        /// <summary>
+        ///   Serializes the specified object to xml and adds it to the specified xml writer.
+        /// </summary>
+        /// <param name="writer">Xml writer to add object to.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <param name="elementName">Element node name to serialize object as.</param>
+        public static void WriteXml(XmlWriter writer, object obj, string elementName)
+        {
+            // Serialize object.
+            Type type = obj.GetType();
+            XmlSerializer xmlSerializer = new XmlSerializer(type, new XmlRootAttribute(elementName));
+            xmlSerializer.Serialize(writer, obj);
         }
 
         #endregion

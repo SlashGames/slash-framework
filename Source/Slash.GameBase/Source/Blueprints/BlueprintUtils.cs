@@ -22,14 +22,14 @@ namespace Slash.GameBase.Blueprints
         /// <param name="blueprint">Blueprint to resolve parent reference for.</param>
         /// <param name="blueprintManager">Blueprint manager to use to search for parent blueprints.</param>
         /// <exception cref="KeyNotFoundException">Thrown if parent couldn't be resolved.</exception>
-        public static void resolveParent(Blueprint blueprint, IBlueprintManager blueprintManager)
+        public static void ResolveParent(Blueprint blueprint, IBlueprintManager blueprintManager)
         {
             if (string.IsNullOrEmpty(blueprint.ParentId) || blueprint.Parent != null)
             {
                 return;
             }
 
-            blueprint.Parent = blueprintManager.getBlueprint(blueprint.ParentId);
+            blueprint.Parent = blueprintManager.GetBlueprint(blueprint.ParentId);
         }
 
         /// <summary>
@@ -39,12 +39,12 @@ namespace Slash.GameBase.Blueprints
         /// <param name="blueprintManager">Blueprint manager to resolve parent references from.</param>
         /// <param name="availableBlueprintManager">Blueprint manager to use to search for parent blueprints.</param>
         /// <exception cref="KeyNotFoundException">Thrown if a parent couldn't be resolved.</exception>
-        public static void resolveParents(
+        public static void ResolveParents(
             IBlueprintManager blueprintManager, IBlueprintManager availableBlueprintManager)
         {
             foreach (Blueprint blueprint in blueprintManager)
             {
-                resolveParent(blueprint, availableBlueprintManager);
+                ResolveParent(blueprint, availableBlueprintManager);
             }
         }
 
@@ -54,7 +54,7 @@ namespace Slash.GameBase.Blueprints
         /// </summary>
         /// <param name="blueprint">Blueprint to try to resolve parent reference for.</param>
         /// <param name="blueprintManager">Blueprint manager to use to search for parent blueprints.</param>
-        public static bool tryResolveParent(Blueprint blueprint, IBlueprintManager blueprintManager)
+        public static bool TryResolveParent(Blueprint blueprint, IBlueprintManager blueprintManager)
         {
             if (string.IsNullOrEmpty(blueprint.ParentId) || blueprint.Parent != null)
             {
@@ -62,7 +62,7 @@ namespace Slash.GameBase.Blueprints
             }
 
             Blueprint parentBlueprint;
-            bool foundParent = blueprintManager.tryGetBlueprint(blueprint.ParentId, out parentBlueprint);
+            bool foundParent = blueprintManager.TryGetBlueprint(blueprint.ParentId, out parentBlueprint);
             blueprint.Parent = parentBlueprint;
             return foundParent;
         }
@@ -73,12 +73,12 @@ namespace Slash.GameBase.Blueprints
         /// </summary>
         /// <param name="blueprintManager">Blueprint manager to resolve parent references from.</param>
         /// <param name="availableBlueprintManager">Blueprint manager to use to search for parent blueprints.</param>
-        public static void tryResolveParents(
+        public static void TryResolveParents(
             IBlueprintManager blueprintManager, IBlueprintManager availableBlueprintManager)
         {
             foreach (Blueprint blueprint in blueprintManager)
             {
-                tryResolveParent(blueprint, availableBlueprintManager);
+                TryResolveParent(blueprint, availableBlueprintManager);
             }
         }
 

@@ -16,6 +16,15 @@ namespace Slash.Collections.AttributeTables
     /// </summary>
     public interface IAttributeTable : IEnumerable
     {
+        #region Public Properties
+
+        /// <summary>
+        ///   Returns the number of attributes in the attribute table.
+        /// </summary>
+        int Count { get; }
+
+        #endregion
+
         #region Public Indexers
 
         /// <summary>
