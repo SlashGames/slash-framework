@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Source\Converters\AssemblyToNameConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Source\Controls\BlueprintControlContext.cs" />
     <Compile Include="Source\Controls\ProjectSettings.xaml.cs">

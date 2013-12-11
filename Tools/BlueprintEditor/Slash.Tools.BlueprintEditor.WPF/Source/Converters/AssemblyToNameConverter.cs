@@ -1,0 +1,31 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AssemblyToNameConverter.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace BlueprintEditor.Converters
+{
+    using System;
+    using System.Globalization;
+    using System.Reflection;
+    using System.Windows.Data;
+
+    public class AssemblyToNameConverter : IValueConverter
+    {
+        #region Public Methods and Operators
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Assembly assembly = (Assembly)value;
+            return assembly.GetName().Name;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
+}

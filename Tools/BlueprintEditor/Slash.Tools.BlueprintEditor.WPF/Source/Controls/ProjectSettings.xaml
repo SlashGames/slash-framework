@@ -4,8 +4,12 @@
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:context="clr-namespace:Slash.Tools.BlueprintEditor.Logic.Context;assembly=Slash.Tools.BlueprintEditor.Logic"
+             xmlns:converters="clr-namespace:BlueprintEditor.Converters"
              mc:Ignorable = "d"
              d:DesignHeight = "400" d:DesignWidth = "600" d:DataContext="{d:DesignInstance context:ProjectSettings}">
+    <UserControl.Resources>
+        <converters:AssemblyToNameConverter x:Key = "AssemblyToNameConverter" />
+    </UserControl.Resources>
     <Grid>
         <StackPanel>
             <DockPanel>
@@ -20,7 +24,7 @@
                 <Label Width = "100">Assemblies</Label>
                 <DataGrid Name="AssembliesList" ItemsSource="{Binding ProjectAssemblies}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Dll" Width="400" Binding="{Binding Converter=AssemblyNameConverter, Source=}">
+                        <DataGridTextColumn Header="Dll" Width="400" Binding="{Binding Path=., Converter={StaticResource AssemblyToNameConverter}}">
                         </DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
