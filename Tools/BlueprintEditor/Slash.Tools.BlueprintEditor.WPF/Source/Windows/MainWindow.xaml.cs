@@ -36,11 +36,11 @@ namespace BlueprintEditor.Windows
         {
             this.InitializeComponent();
 
-            this.Context.BlueprintManagerChanged += this.OnBlueprintManagerChanged;
             this.Context.EntityComponentTypesChanged += this.OnEntityComponentTypesChanged;
 
-            this.OnBlueprintManagerChanged(this.Context.BlueprintManager, null);
             this.OnEntityComponentTypesChanged();
+
+            this.DataContext = Context;
         }
 
         #endregion
@@ -144,13 +144,7 @@ namespace BlueprintEditor.Windows
                 };
             dlg.ShowDialog();
         }
-
-        private void OnBlueprintManagerChanged(
-            BlueprintManager newBlueprintManager, BlueprintManager oldBlueprintManager)
-        {
-            this.TreeBlueprints.BlueprintManager = newBlueprintManager;
-        }
-
+        
         private void OnEntityComponentTypesChanged()
         {
             this.BlueprintControl.AvailableComponentTypes = this.Context.AvailableComponentTypes;

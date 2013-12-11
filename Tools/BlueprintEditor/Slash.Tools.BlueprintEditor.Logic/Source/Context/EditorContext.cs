@@ -8,15 +8,16 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Runtime.Serialization;
     using System.Xml.Serialization;
 
     using Slash.GameBase.Blueprints;
+    using Slash.Tools.BlueprintEditor.Logic.Annotations;
 
-    public sealed class EditorContext
+    public sealed class EditorContext : INotifyPropertyChanged
     {
         #region Fields
 
@@ -38,11 +39,6 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// </summary>
         public EditorContext()
         {
-            this.ProjectSettings = new ProjectSettings();
-            BlueprintManager initialBlueprintManager = new BlueprintManager();
-            this.ProjectSettings.BlueprintFiles.Add(new BlueprintFile { BlueprintManager = initialBlueprintManager });
-            this.ProjectSettings.EntityComponentTypesChanged += this.OnEntityComponentTypesChanged;
-            this.BlueprintManager = initialBlueprintManager;
             this.blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
             this.projectSettingsSerializer = new XmlSerializer(typeof(ProjectSettings));
         }
@@ -60,12 +56,9 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 
         #region Public Events
 
-        /// <summary>
-        ///   Raised when the blueprint manager in the context changed.
-        /// </summary>
-        public event BlueprintManagerChangedDelegate BlueprintManagerChanged;
-
         public event EntityComponentTypesChangedDelegate EntityComponentTypesChanged;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -75,7 +68,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         {
             get
             {
-                return this.ProjectSettings.EntityComponentTypes;
+                return this.ProjectSettings != null ? this.ProjectSettings.EntityComponentTypes : null;
             }
         }
 
@@ -95,45 +88,39 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
                     return;
                 }
 
-                BlueprintManager oldBlueprintManager = this.blueprintManager;
                 this.blueprintManager = value;
 
-                this.OnBlueprintManagerChanged(this.blueprintManager, oldBlueprintManager);
+                // Raise event.
+                this.OnPropertyChanged("BlueprintManager");
             }
         }
-
-        public string SerializationPath { get; set; }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         ///   Project to edit.
         /// </summary>
         public ProjectSettings ProjectSettings { get; set; }
 
+        public string SerializationPath { get; set; }
+
         #endregion
 
         #region Public Methods and Operators
-        
+
         public void Load(string path)
         {
             // Load project.
             FileStream fileStream = new FileStream(path, FileMode.Open);
-            this.ProjectSettings = (ProjectSettings)this.projectSettingsSerializer.Deserialize(fileStream);
-            if (this.ProjectSettings == null)
+            ProjectSettings newProjectSettings = (ProjectSettings)this.projectSettingsSerializer.Deserialize(fileStream);
+            if (newProjectSettings == null)
             {
                 throw new SerializationException(
                     string.Format("Couldn't deserialize project settings from '{0}'.", path));
             }
-            this.ProjectSettings.EntityComponentTypesChanged += this.OnEntityComponentTypesChanged;
 
             fileStream.Close();
-            this.SerializationPath = path;
 
             // Load blueprint files.
-            foreach (var blueprintFile in this.ProjectSettings.BlueprintFiles)
+            foreach (var blueprintFile in newProjectSettings.BlueprintFiles)
             {
                 FileStream blueprintFileStream = new FileStream(blueprintFile.Path, FileMode.Open);
                 BlueprintManager newBlueprintManager =
@@ -147,22 +134,26 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
                 blueprintFileStream.Close();
             }
 
-            // Set first blueprint file as active blueprint manager.
-            BlueprintFile firstBlueprintFile = this.ProjectSettings.BlueprintFiles.FirstOrDefault();
-            this.BlueprintManager = firstBlueprintFile != null ? firstBlueprintFile.BlueprintManager : null;
-
-            // Raise events.
-            this.OnEntityComponentTypesChanged();
+            // Set new project.
+            this.SetProject(newProjectSettings);
         }
 
         public void New()
         {
-            this.BlueprintManager = new BlueprintManager();
-            this.SerializationPath = null;
+            ProjectSettings newProjectSettings = new ProjectSettings();
+            newProjectSettings.BlueprintFiles.Add(new BlueprintFile { BlueprintManager = new BlueprintManager() });
+
+            // Set new project.
+            this.SetProject(newProjectSettings);
         }
 
         public void Save()
         {
+            if (this.ProjectSettings == null)
+            {
+                return;
+            }
+
             // Save blueprint files.
             for (int index = 0; index < this.ProjectSettings.BlueprintFiles.Count; index++)
             {
@@ -197,16 +188,6 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
                 fileIndex);
         }
 
-        private void OnBlueprintManagerChanged(
-            BlueprintManager newBlueprintManager, BlueprintManager oldBlueprintManager)
-        {
-            BlueprintManagerChangedDelegate handler = this.BlueprintManagerChanged;
-            if (handler != null)
-            {
-                handler(newBlueprintManager, oldBlueprintManager);
-            }
-        }
-
         private void OnEntityComponentTypesChanged()
         {
             EntityComponentTypesChangedDelegate handler = this.EntityComponentTypesChanged;
@@ -214,6 +195,32 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             {
                 handler();
             }
+        }
+
+        [NotifyPropertyChangedInvocator]
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private void SetProject(ProjectSettings projectSettings, string serializationPath = null)
+        {
+            this.ProjectSettings = projectSettings;
+            this.SerializationPath = serializationPath;
+
+            this.ProjectSettings.EntityComponentTypesChanged += this.OnEntityComponentTypesChanged;
+
+            // Set first blueprint file as active blueprint manager.
+            BlueprintFile firstBlueprintFile = this.ProjectSettings.BlueprintFiles.FirstOrDefault();
+            this.BlueprintManager = firstBlueprintFile != null ? firstBlueprintFile.BlueprintManager : null;
+
+            // Raise events.
+            this.OnPropertyChanged("ProjectSettings");
+            this.OnEntityComponentTypesChanged();
         }
 
         #endregion

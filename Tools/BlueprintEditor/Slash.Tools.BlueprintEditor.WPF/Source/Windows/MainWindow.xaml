@@ -1,12 +1,23 @@
 ﻿<Window
     xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml" xmlns:windows = "clr-namespace:BlueprintEditor.Windows"
+    xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
+    xmlns:context = "clr-namespace:Slash.Tools.BlueprintEditor.Logic.Context;assembly=Slash.Tools.BlueprintEditor.Logic"
     mc:Ignorable = "d"
     x:Class = "BlueprintEditor.Windows.MainWindow"
-    Title = "MainWindow" Height = "480" Width = "525" Name = "Main">
+    Title = "MainWindow" Height = "480" Width = "525" Name = "Main"
+    d:DataContext = "{d:DesignInstance context:EditorContext}">
+    <Window.Resources>
+        <Style TargetType = "FrameworkElement" x:Key = "ProjectDependentStyle">
+            <Style.Triggers>
+                <DataTrigger Binding = "{Binding Path=ProjectSettings}" Value = "{x:Null}">
+                    <Setter Property = "IsEnabled" Value = "False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto"></RowDefinition>
@@ -18,24 +29,27 @@
                 <MenuItem x:Name = "MenuFileNew" Header = "_New" Click = "MenuFileNew_OnClick" />
                 <MenuItem x:Name = "MenuFileOpen" Header = "_Open" Click = "MenuFileOpen_OnClick" />
                 <Separator />
-                <MenuItem x:Name = "MenuFileSave" Header = "_Save" Click = "MenuFileSave_OnClick" />
-                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save _As..." Click = "MenuFileSaveAs_OnClick" />
+                <MenuItem x:Name = "MenuFileSave" Header = "_Save" Click = "MenuFileSave_OnClick"
+                          Style = "{StaticResource ProjectDependentStyle}" />
+                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save _As..." Click = "MenuFileSaveAs_OnClick"
+                          Style = "{StaticResource ProjectDependentStyle}" />
                 <Separator />
                 <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Click = "MenuFileExit_OnClick" />
             </MenuItem>
-            <MenuItem Header = "_PROJECT">
-                <MenuItem Header="_Settings" Name="MenuProjectSettings" Click="MenuProjectSettings_OnClick"></MenuItem>
+            <MenuItem Header = "_PROJECT" Style = "{StaticResource ProjectDependentStyle}">
+                <MenuItem Header = "_Settings" Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick"></MenuItem>
             </MenuItem>
         </Menu>
 
-        <Grid Grid.Row = "1">
+        <Grid Grid.Row = "1" Style = "{StaticResource ProjectDependentStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width = "Auto"></ColumnDefinition>
                 <ColumnDefinition Width = "*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <windows:BlueprintTreeView x:Name = "TreeBlueprints"
-                                       BlueprintSelectionChanged = "TreeBlueprints_OnBlueprintSelectionChanged"
-                                       Grid.Column = "0" Margin = "10, 0, 10, 0" />
+            <controls:BlueprintTreeView x:Name = "TreeBlueprints"
+                                        BlueprintSelectionChanged = "TreeBlueprints_OnBlueprintSelectionChanged"
+                                        Grid.Column = "0" Margin = "10, 0, 10, 0"
+                                        DataContext = "{Binding BlueprintManager}" />
 
             <GroupBox Header = "Blueprint" Grid.Column = "1">
                 <controls:BlueprintControl x:Name = "BlueprintControl" />

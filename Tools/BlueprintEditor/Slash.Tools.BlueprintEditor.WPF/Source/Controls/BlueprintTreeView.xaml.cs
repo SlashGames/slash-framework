@@ -4,13 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor.Windows
+namespace BlueprintEditor.Controls
 {
     using System;
     using System.Media;
     using System.Windows;
-
-    using BlueprintEditor.Controls;
 
     using Slash.GameBase.Blueprints;
 
@@ -53,11 +51,6 @@ namespace BlueprintEditor.Windows
         #region Fields
 
         /// <summary>
-        ///   Blueprint manager to visualize with tree view.
-        /// </summary>
-        private BlueprintManager blueprintManager;
-
-        /// <summary>
         ///   Indicates that the tree view is currently updated, so no selection event should be raised.
         /// </summary>
         private bool isUpdating;
@@ -74,6 +67,8 @@ namespace BlueprintEditor.Windows
             this.InitializeComponent();
 
             this.TvTree.SelectedItemChanged += this.OnSelectedItemChanged;
+
+            this.DataContextChanged += this.OnDataContextChanged;
         }
 
         #endregion
@@ -95,38 +90,6 @@ namespace BlueprintEditor.Windows
         #endregion
 
         #region Public Properties
-
-        /// <summary>
-        ///   Blueprint manager to visualize with tree view.
-        /// </summary>
-        public BlueprintManager BlueprintManager
-        {
-            get
-            {
-                return this.blueprintManager;
-            }
-            set
-            {
-                if (ReferenceEquals(value, this.blueprintManager))
-                {
-                    return;
-                }
-
-                if (this.blueprintManager != null)
-                {
-                    this.blueprintManager.BlueprintsChanged -= this.OnBlueprintsChanged;
-                }
-
-                this.blueprintManager = value;
-
-                if (this.blueprintManager != null)
-                {
-                    this.blueprintManager.BlueprintsChanged += this.OnBlueprintsChanged;
-                }
-
-                this.UpdateTreeView();
-            }
-        }
 
         /// <summary>
         ///   Returns the selected item.
@@ -153,7 +116,7 @@ namespace BlueprintEditor.Windows
             string newBlueprintId = this.TbNewBlueprintId.Text;
             try
             {
-                this.BlueprintManager.AddBlueprint(newBlueprintId, new Blueprint());
+                ((BlueprintManager)this.DataContext).AddBlueprint(newBlueprintId, new Blueprint());
             }
             catch (ArgumentException ex)
             {
@@ -172,12 +135,30 @@ namespace BlueprintEditor.Windows
             }
 
             // Delete current selected blueprint.
-            this.BlueprintManager.RemoveBlueprint(selectedItem.BlueprintId);
+            ((BlueprintManager)this.DataContext).RemoveBlueprint(selectedItem.BlueprintId);
         }
 
         private void OnBlueprintsChanged()
         {
-            this.UpdateTreeView();
+            this.UpdateTreeView((BlueprintManager)this.DataContext);
+        }
+
+        private void OnDataContextChanged(
+            object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            BlueprintManager oldBlueprintManager = (BlueprintManager)dependencyPropertyChangedEventArgs.OldValue;
+            if (oldBlueprintManager != null)
+            {
+                oldBlueprintManager.BlueprintsChanged -= this.OnBlueprintsChanged;
+            }
+
+            BlueprintManager newBlueprintManager = (BlueprintManager)dependencyPropertyChangedEventArgs.NewValue;
+            if (newBlueprintManager != null)
+            {
+                newBlueprintManager.BlueprintsChanged += this.OnBlueprintsChanged;
+            }
+
+            this.UpdateTreeView(newBlueprintManager);
         }
 
         private void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -201,7 +182,7 @@ namespace BlueprintEditor.Windows
                     });
         }
 
-        private void UpdateTreeView()
+        private void UpdateTreeView(BlueprintManager blueprintManager)
         {
             if (this.TvTree == null)
             {
@@ -214,14 +195,14 @@ namespace BlueprintEditor.Windows
             BlueprintTreeViewItem selectedItem = this.SelectedItem;
 
             this.TvTree.Items.Clear();
-            if (this.blueprintManager == null)
+            if (blueprintManager == null)
             {
                 this.isUpdating = false;
                 return;
             }
 
             bool oldItemStillExists = false;
-            foreach (var blueprintPair in this.blueprintManager.Blueprints)
+            foreach (var blueprintPair in blueprintManager.Blueprints)
             {
                 BlueprintTreeViewItem blueprintTreeViewItem = new BlueprintTreeViewItem(
                     blueprintPair.Key, blueprintPair.Value);
