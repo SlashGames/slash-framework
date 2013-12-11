@@ -161,6 +161,12 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// <param name="assembly">Assembly to add to the project.</param>
         public void AddAssembly(Assembly assembly)
         {
+            // Check if assembly already exists in project.
+            if (this.ProjectAssemblies.Contains(assembly))
+            {
+                return;
+            }
+
             this.ProjectAssemblies.Add(assembly);
             this.entityComponentTypes = null;
             this.OnEntityComponentTypesChanged();
