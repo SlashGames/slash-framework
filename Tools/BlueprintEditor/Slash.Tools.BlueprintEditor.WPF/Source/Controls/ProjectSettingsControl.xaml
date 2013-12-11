@@ -33,8 +33,19 @@
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Click = "AddAssembly_OnClick" IsEnabled = "{Binding }">Add</Button>
-                    <Button Click = "RemoveAssembly_OnClick">Remove</Button>
+                    <Button Click = "AddAssembly_OnClick">Add</Button>
+                    <Button Click = "RemoveAssembly_OnClick" Content = "Remove">
+                        <Button.Style>
+                            <Style TargetType = "Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding = "{Binding SelectedItem, ElementName=AssembliesList}"
+                                                 Value = "{x:Null}">
+                                        <Setter Property = "IsEnabled" Value = "False"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
             </DockPanel>
         </StackPanel>
