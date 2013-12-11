@@ -60,6 +60,7 @@
       <DependentUpon>ProjectSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Converters\BooleanOrConverter.cs" />
+    <Compile Include="Source\Converters\TypeToClassNameConverter.cs" />
     <Compile Include="Source\Data\BlueprintManagerData.cs" />
     <Compile Include="Source\Controls\BlueprintControl.xaml.cs">
       <DependentUpon>BlueprintControl.xaml</DependentUpon>
