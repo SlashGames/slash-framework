@@ -6,6 +6,8 @@
 
 namespace BlueprintEditor.Windows
 {
+    using System;
+    using System.Runtime.Serialization;
     using System.Windows;
 
     using BlueprintEditor.Controls;
@@ -122,7 +124,15 @@ namespace BlueprintEditor.Windows
 
             // If file was chosen, try to load.
             string filename = dlg.FileName;
-            this.Context.Load(filename);
+
+            try
+            {
+                this.Context.Load(filename);
+            }
+            catch (SerializationException exception)
+            {
+                MessageBox.Show(exception.Message, "Loading failed");
+            }
         }
 
         private void MenuFileSaveAs_OnClick(object sender, RoutedEventArgs e)

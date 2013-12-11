@@ -124,8 +124,17 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             foreach (var blueprintFile in newProjectSettings.BlueprintFiles)
             {
                 FileStream blueprintFileStream = new FileStream(blueprintFile.Path, FileMode.Open);
-                BlueprintManager newBlueprintManager =
-                    (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
+                BlueprintManager newBlueprintManager;
+                try
+                {
+                    newBlueprintManager = (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
+                }
+                catch (Exception e)
+                {
+                    throw new SerializationException(
+                        string.Format("Couldn't deserialize blueprint manager from '{0}': {1}.", path, e.Message), e);
+                }
+
                 if (newBlueprintManager == null)
                 {
                     throw new SerializationException(
