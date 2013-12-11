@@ -141,7 +141,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         {
             get
             {
-                return this.ProjectAssemblies.Select(projectAssembly => projectAssembly.Location).ToArray();
+                return this.ProjectAssemblies.Select(projectAssembly => projectAssembly.CodeBase).ToArray();
             }
             set
             {

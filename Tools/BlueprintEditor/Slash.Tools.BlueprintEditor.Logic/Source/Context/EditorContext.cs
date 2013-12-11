@@ -16,6 +16,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
+    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public sealed class EditorContext : INotifyPropertyChanged
     {
@@ -116,7 +117,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
                 throw new SerializationException(
                     string.Format("Couldn't deserialize project settings from '{0}'.", path));
             }
-
+            
             fileStream.Close();
 
             // Load blueprint files.
@@ -135,7 +136,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             }
 
             // Set new project.
-            this.SetProject(newProjectSettings);
+            this.SetProject(newProjectSettings, path);
         }
 
         public void New()
@@ -217,6 +218,9 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             // Set first blueprint file as active blueprint manager.
             BlueprintFile firstBlueprintFile = this.ProjectSettings.BlueprintFiles.FirstOrDefault();
             this.BlueprintManager = firstBlueprintFile != null ? firstBlueprintFile.BlueprintManager : null;
+
+            // Update component table.
+            InspectorComponentTable.LoadComponents();
 
             // Raise events.
             this.OnPropertyChanged("ProjectSettings");

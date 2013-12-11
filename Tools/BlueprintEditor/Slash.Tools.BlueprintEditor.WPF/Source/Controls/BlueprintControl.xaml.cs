@@ -297,8 +297,6 @@ namespace BlueprintEditor.Controls
                 return;
             }
 
-            InspectorComponentTable.LoadComponents();
-
             // Add inspectors for blueprint components.
             foreach (var componentType in this.BlueprintControlContext.Blueprint.ComponentTypes)
             {
