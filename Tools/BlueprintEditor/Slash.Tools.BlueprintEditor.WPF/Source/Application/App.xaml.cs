@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="App.xaml.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor
+namespace BlueprintEditor.Application
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///   Application entry point.
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
     }
 }
