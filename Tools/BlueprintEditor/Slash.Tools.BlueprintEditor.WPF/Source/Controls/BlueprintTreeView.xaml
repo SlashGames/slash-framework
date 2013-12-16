@@ -19,19 +19,19 @@
             </Style>
         </Grid.Style>
 
-        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top">
+        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top" ToolTip="Available Blueprints">
             <TreeView.ItemTemplate>
                 <DataTemplate DataType = "controls:BlueprintTreeViewItem">
                     <TextBlock Text = "{Binding BlueprintId}" />
                 </DataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
+        <Button x:Name = "BtDeleteBlueprint" Content = "Delete" Margin = "0,267,0,0" VerticalAlignment = "Top"
+                Click = "BtDeleteBlueprint_OnClick" RenderTransformOrigin = "-0.511,0.109" Height = "23" ToolTip="Delete selected blueprints"/>
         <Button x:Name = "BtNewBlueprint" Content = "New" HorizontalAlignment = "Right" Margin = "164,295,0,0"
                 VerticalAlignment = "Top" Width = "36" Click = "BtAddBlueprint_OnClick"
-                RenderTransformOrigin = "-0.511,0.109" Height = "23" />
+                RenderTransformOrigin = "-0.511,0.109" Height = "23" ToolTip="Create new blueprint with entered id"/>
         <TextBox x:Name = "TbNewBlueprintId" HorizontalAlignment = "Left" Height = "23" Margin = "0,295,0,0"
-                 TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "140" />
-        <Button x:Name = "BtDeleteBlueprint" Content = "Delete" Margin = "0,267,0,0" VerticalAlignment = "Top"
-                Click = "BtDeleteBlueprint_OnClick" RenderTransformOrigin = "-0.511,0.109" Height = "23" />
+                 TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "140" ToolTip="Id of new blueprint"/>
     </Grid>
 </UserControl>
