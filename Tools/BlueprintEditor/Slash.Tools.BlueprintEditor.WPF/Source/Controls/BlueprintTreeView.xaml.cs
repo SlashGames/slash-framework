@@ -146,13 +146,13 @@ namespace BlueprintEditor.Controls
         private void OnDataContextChanged(
             object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            BlueprintManager oldBlueprintManager = (BlueprintManager)dependencyPropertyChangedEventArgs.OldValue;
+            BlueprintManager oldBlueprintManager = dependencyPropertyChangedEventArgs.OldValue as BlueprintManager;
             if (oldBlueprintManager != null)
             {
                 oldBlueprintManager.BlueprintsChanged -= this.OnBlueprintsChanged;
             }
 
-            BlueprintManager newBlueprintManager = (BlueprintManager)dependencyPropertyChangedEventArgs.NewValue;
+            BlueprintManager newBlueprintManager = dependencyPropertyChangedEventArgs.NewValue as BlueprintManager;
             if (newBlueprintManager != null)
             {
                 newBlueprintManager.BlueprintsChanged += this.OnBlueprintsChanged;

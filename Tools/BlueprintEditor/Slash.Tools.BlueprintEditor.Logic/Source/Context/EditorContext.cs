@@ -132,7 +132,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
                 catch (Exception e)
                 {
                     throw new SerializationException(
-                        string.Format("Couldn't deserialize blueprint manager from '{0}': {1}.", path, e.Message), e);
+                        string.Format("Couldn't deserialize blueprint manager from '{0}': {1}.", path, e.GetBaseException().Message), e);
                 }
 
                 if (newBlueprintManager == null)
