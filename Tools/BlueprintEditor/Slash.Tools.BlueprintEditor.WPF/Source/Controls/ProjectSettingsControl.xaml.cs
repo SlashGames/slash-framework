@@ -55,41 +55,44 @@ namespace BlueprintEditor.Controls
             this.AssembliesList.Items.Refresh();
         }
 
-        private void RemoveAssembly_OnClick(object sender, RoutedEventArgs e)
+        private void RemoveAssemblies_OnClick(object sender, RoutedEventArgs e)
         {
             // Get selected assembly.
-            Assembly selectedAssembly = (Assembly)this.AssembliesList.SelectedItem;
-            if (selectedAssembly == null)
+            IEnumerable<Assembly> selectedAssemblies = this.AssembliesList.SelectedItems.Cast<Assembly>().ToList();
+            if (!selectedAssemblies.Any())
             {
                 return;
             }
 
             ProjectSettings projectSettings = (ProjectSettings)this.DataContext;
 
-            // Check if still used.
-            IEnumerable<Type> usedTypes = projectSettings.FindUsedTypes(selectedAssembly);
-            IEnumerable<Type> usedTypesList = usedTypes as IList<Type> ?? usedTypes.ToList();
-            if (usedTypesList.Any())
+            foreach (var selectedAssembly in selectedAssemblies)
             {
-                string message = string.Format(
-                    "Can't remove assembly '{0}', {1} types are still used by the project:\n",
-                    selectedAssembly.GetName().Name,
-                    usedTypesList.Count());
-                const int MaxShownTypes = 5;
-                foreach (Type usedType in usedTypesList.Take(MaxShownTypes))
+                // Check if still used.
+                IEnumerable<Type> usedTypes = projectSettings.FindUsedTypes(selectedAssembly);
+                IEnumerable<Type> usedTypesList = usedTypes as IList<Type> ?? usedTypes.ToList();
+                if (usedTypesList.Any())
                 {
-                    message += "- " + usedType.FullName + "\n";
+                    string message = string.Format(
+                        "Can't remove assembly '{0}', {1} types are still used by the project:\n",
+                        selectedAssembly.GetName().Name,
+                        usedTypesList.Count());
+                    const int MaxShownTypes = 5;
+                    foreach (Type usedType in usedTypesList.Take(MaxShownTypes))
+                    {
+                        message += "- " + usedType.FullName + "\n";
+                    }
+                    if (usedTypesList.Count() > MaxShownTypes)
+                    {
+                        message += "- ...\n";
+                    }
+                    MessageBox.Show(message);
+                    continue;
                 }
-                if (usedTypesList.Count() > MaxShownTypes)
-                {
-                    message += "- ...\n";
-                }
-                MessageBox.Show(message);
-                return;
-            }
 
-            // Remove selected assembly.
-            projectSettings.RemoveAssembly(selectedAssembly);
+                // Remove selected assembly.
+                projectSettings.RemoveAssembly(selectedAssembly);
+            }
 
             // Refresh list.
             this.AssembliesList.Items.Refresh();

@@ -34,7 +34,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button Click = "AddAssembly_OnClick" ToolTip="Add new assembly">Add</Button>
-                    <Button Click = "RemoveAssembly_OnClick" Content = "Remove" ToolTip="Remove selected assemblies">
+                    <Button Click = "RemoveAssemblies_OnClick" Content = "Remove" ToolTip="Remove selected assemblies">
                         <Button.Style>
                             <Style TargetType = "Button">
                                 <Style.Triggers>
