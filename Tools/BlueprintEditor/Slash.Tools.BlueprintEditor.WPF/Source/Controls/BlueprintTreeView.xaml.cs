@@ -160,7 +160,7 @@ namespace BlueprintEditor.Controls
         private void CanExecuteCreateNewBlueprint(object sender, CanExecuteRoutedEventArgs e)
         {
             string newBlueprintId = this.TbNewBlueprintId.Text;
-            BlueprintManager blueprintManager = ((BlueprintManager)this.DataContext);
+            BlueprintManager blueprintManager = this.DataContext as BlueprintManager;
             e.CanExecute = blueprintManager != null && !string.IsNullOrEmpty(newBlueprintId)
                            && !blueprintManager.ContainsBlueprint(newBlueprintId);
         }
