@@ -26,18 +26,38 @@
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header = "_FILE">
-                <MenuItem x:Name = "MenuFileNew" Header = "_New" Click = "MenuFileNew_OnClick" />
-                <MenuItem x:Name = "MenuFileOpen" Header = "_Open" Click = "MenuFileOpen_OnClick" />
+                <MenuItem x:Name = "MenuFileNew" Header = "_New" Click = "MenuFileNew_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/NewSolutionFolder_6289.png" />
+                    </MenuItem.Icon>
+                </MenuItem> 
+                <MenuItem x:Name = "MenuFileOpen" Header = "_Open" Click = "MenuFileOpen_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/Open_6529.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem x:Name = "MenuFileSave" Header = "_Save" Click = "MenuFileSave_OnClick"
-                          Style = "{StaticResource ProjectDependentStyle}" />
+                          Style = "{StaticResource ProjectDependentStyle}">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/Save_6530.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem x:Name = "MenuFileSaveAs" Header = "Save _As..." Click = "MenuFileSaveAs_OnClick"
                           Style = "{StaticResource ProjectDependentStyle}" />
                 <Separator />
-                <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Click = "MenuFileExit_OnClick" />
+                <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Click = "MenuFileExit_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/Close_16xLG.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header = "_PROJECT" Style = "{StaticResource ProjectDependentStyle}">
-                <MenuItem Header = "_Settings" Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick"></MenuItem>
+                <MenuItem Header = "_Settings" Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/gear_16xLG.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
         </Menu>
 

@@ -176,6 +176,13 @@
       <Name>Slash.GameBase</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\Close_16xLG.png" />
+    <Resource Include="Resources\Images\Icons\gear_16xLG.png" />
+    <Resource Include="Resources\Images\Icons\NewSolutionFolder_6289.png" />
+    <Resource Include="Resources\Images\Icons\Open_6529.png" />
+    <Resource Include="Resources\Images\Icons\Save_6530.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

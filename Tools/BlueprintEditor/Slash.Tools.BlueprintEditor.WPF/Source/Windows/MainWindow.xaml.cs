@@ -158,7 +158,7 @@ namespace BlueprintEditor.Windows
         private void OnEntityComponentTypesChanged()
         {
             this.BlueprintControl.AvailableComponentTypes = this.Context.AvailableComponentTypes;
-        }
+        } 
 
         private void SaveContext(string path)
         {
