@@ -7,8 +7,10 @@
 namespace BlueprintEditor.Controls
 {
     using System;
+    using System.ComponentModel;
     using System.Media;
     using System.Windows;
+    using System.Windows.Controls;
 
     using Slash.GameBase.Blueprints;
 
@@ -35,7 +37,7 @@ namespace BlueprintEditor.Controls
     /// <summary>
     ///   Interaction logic for BlueprintTreeView.xaml
     /// </summary>
-    public partial class BlueprintTreeView
+    public partial class BlueprintTreeView : IDataErrorInfo
     {
         #region Static Fields
 
@@ -58,6 +60,8 @@ namespace BlueprintEditor.Controls
         #endregion
 
         #region Constructors and Destructors
+
+        public string NewBlueprintId { get; set; }
 
         /// <summary>
         ///   Constructor.
@@ -121,7 +125,7 @@ namespace BlueprintEditor.Controls
             catch (ArgumentException ex)
             {
                 SystemSounds.Hand.Play();
-                //this.TbMessage.Text = ex.Message;
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -227,5 +231,29 @@ namespace BlueprintEditor.Controls
         }
 
         #endregion
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = null;
+                if (columnName == "NewBlueprintId")
+                {
+                    // Check if already existent.
+                    BlueprintManager blueprintManager = (BlueprintManager)this.DataContext;
+                    if (blueprintManager != null)
+                    {
+                        if (blueprintManager.ContainsBlueprint(this.NewBlueprintId))
+                        {
+                            result = "Blueprint id already exists.";
+                        }
+                    }
+                }
+
+                return result;
+            }
+        }
+
+        public string Error { get; private set; }
     }
 }

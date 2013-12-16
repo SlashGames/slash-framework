@@ -5,12 +5,21 @@
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
              xmlns:blueprints = "clr-namespace:Slash.GameBase.Blueprints;assembly=Slash.GameBase"
+             xmlns:converters = "clr-namespace:BlueprintEditor.Converters"
              mc:Ignorable = "d"
              d:DesignHeight = "343" d:DesignWidth = "200"
-             d:DataContext = "{d:DesignInstance blueprints:BlueprintManager}">
+             d:DataContext = "{d:DesignInstance blueprints:BlueprintManager}" Name = "MainControl">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source = "../Controls/Templates/TextBoxErrorTemplate.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:StringNullOrEmptyConverter x:Key = "StringNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.Style>
-            <Style TargetType="Grid">
+            <Style TargetType = "Grid">
                 <Style.Triggers>
                     <DataTrigger Binding = "{Binding Path=.}" Value = "{x:Null}">
                         <Setter Property = "IsEnabled" Value = "False"></Setter>
@@ -19,7 +28,7 @@
             </Style>
         </Grid.Style>
 
-        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top" ToolTip="Available Blueprints">
+        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top" ToolTip = "Available Blueprints">
             <TreeView.ItemTemplate>
                 <DataTemplate DataType = "controls:BlueprintTreeViewItem">
                     <TextBlock Text = "{Binding BlueprintId}" />
@@ -27,11 +36,38 @@
             </TreeView.ItemTemplate>
         </TreeView>
         <Button x:Name = "BtDeleteBlueprint" Content = "Delete" Margin = "0,267,0,0" VerticalAlignment = "Top"
-                Click = "BtDeleteBlueprint_OnClick" RenderTransformOrigin = "-0.511,0.109" Height = "23" ToolTip="Delete selected blueprints"/>
+                Click = "BtDeleteBlueprint_OnClick" RenderTransformOrigin = "-0.511,0.109" Height = "23"
+                ToolTip = "Delete selected blueprints" />
+        <TextBox x:Name = "TbNewBlueprintId" HorizontalAlignment = "Left" Height = "23" Margin = "0,295,0,0"
+                 TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "159" ToolTip = "Id of new blueprint"
+                 Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}">
+            <TextBox.Text>
+                <Binding ElementName = "MainControl" Path = "NewBlueprintId" UpdateSourceTrigger = "PropertyChanged">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Button x:Name = "BtNewBlueprint" Content = "New" HorizontalAlignment = "Right" Margin = "164,295,0,0"
                 VerticalAlignment = "Top" Width = "36" Click = "BtAddBlueprint_OnClick"
-                RenderTransformOrigin = "-0.511,0.109" Height = "23" ToolTip="Create new blueprint with entered id"/>
-        <TextBox x:Name = "TbNewBlueprintId" HorizontalAlignment = "Left" Height = "23" Margin = "0,295,0,0"
-                 TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "140" ToolTip="Id of new blueprint"/>
+                RenderTransformOrigin = "-0.511,0.109" Height = "23" ToolTip = "Create new blueprint with entered id">
+            <Button.Style>
+                <Style TargetType = "Button">
+                    <Style.Triggers>
+                        <DataTrigger Value = "True">
+                            <DataTrigger.Binding>
+                                <MultiBinding Converter = "{StaticResource BooleanOrConverter}">
+                                    <Binding ElementName = "TbNewBlueprintId" Path = "Text"
+                                             Converter = "{StaticResource StringNullOrEmptyConverter}" />
+                                    <Binding ElementName = "TbNewBlueprintId" Path = "(Validation.HasError)" />
+                                </MultiBinding>
+                            </DataTrigger.Binding>
+                            <Setter Property = "IsEnabled" Value = "False"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </UserControl>

@@ -60,6 +60,7 @@
       <DependentUpon>ProjectSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Converters\BooleanOrConverter.cs" />
+    <Compile Include="Source\Converters\StringNullOrEmptyConverter.cs" />
     <Compile Include="Source\Converters\TypeToClassNameConverter.cs" />
     <Compile Include="Source\Data\BlueprintManagerData.cs" />
     <Compile Include="Source\Controls\BlueprintControl.xaml.cs">
@@ -106,7 +107,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Source\Inspectors\Templates\TextBoxErrorTemplate.xaml">
+    <Page Include="Source\Controls\Templates\TextBoxErrorTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
