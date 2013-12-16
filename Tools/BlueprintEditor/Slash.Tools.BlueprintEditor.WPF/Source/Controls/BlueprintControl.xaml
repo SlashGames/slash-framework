@@ -55,67 +55,72 @@
                 <TabItem.Header>
                     <TextBlock ToolTip = "Attributes of blueprint">Attributes</TextBlock>
                 </TabItem.Header>
-                <StackPanel x:Name = "AttributesPanel" Background = "#FFE5E5E5" />
+                <AdornerDecorator>
+                    <StackPanel x:Name = "AttributesPanel" Background = "#FFE5E5E5" />
+                </AdornerDecorator>
             </TabItem>
             <TabItem>
                 <TabItem.Header>
                     <TextBlock ToolTip = "Components of blueprint">Components</TextBlock>
                 </TabItem.Header>
-                <Grid Background = "#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width = "0.5*"></ColumnDefinition>
-                        <ColumnDefinition Width = "50"></ColumnDefinition>
-                        <ColumnDefinition Width = "0.5*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column = "0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height = "Auto"></RowDefinition>
-                            <RowDefinition Height = "*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Label Content = "Added:" Grid.Row = "0" ToolTip = "Already added components" />
-                        <ListBox x:Name = "LbComponentsAdded" Grid.Row = "1"
-                                 ItemTemplate = "{StaticResource ComponentListBoxItemTemplate}" />
+                <AdornerDecorator>
+                    <Grid Background = "#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width = "0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width = "50"></ColumnDefinition>
+                            <ColumnDefinition Width = "0.5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column = "0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height = "Auto"></RowDefinition>
+                                <RowDefinition Height = "*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Content = "Added:" Grid.Row = "0" ToolTip = "Already added components" />
+                            <ListBox x:Name = "LbComponentsAdded" Grid.Row = "1"
+                                     ItemTemplate = "{StaticResource ComponentListBoxItemTemplate}" />
+                        </Grid>
+                        <StackPanel Grid.Column = "1" VerticalAlignment = "Center" Margin = "5, 0, 5, 0">
+                            <Button x:Name = "BtAdd" Content = "&lt;-" Click = "BtAdd_OnClick" Height = "30"
+                                    Margin = "0, 10, 0, 10" ToolTip = "Add selected available component">
+                                <Button.Style>
+                                    <Style TargetType = "Button">
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding = "{Binding SelectedItem, ElementName=LbComponentsAvailable}"
+                                                Value = "{x:Null}">
+                                                <Setter Property = "IsEnabled" Value = "False"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button x:Name = "BtRemove" Content = "-&gt;" Click = "BtRemove_OnClick" Height = "30"
+                                    Margin = "0, 10, 0, 10" ToolTip = "Remove selected added component">
+                                <Button.Style>
+                                    <Style TargetType = "Button">
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding = "{Binding SelectedItem, ElementName=LbComponentsAdded}"
+                                                Value = "{x:Null}">
+                                                <Setter Property = "IsEnabled" Value = "False"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </StackPanel>
+                        <Grid Grid.Column = "2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height = "Auto"></RowDefinition>
+                                <RowDefinition Height = "*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Content = "Available:" Grid.Row = "0"
+                                   ToolTip = "Additional available components from project assemblies" />
+                            <ListBox x:Name = "LbComponentsAvailable" Grid.Row = "1"
+                                     ItemTemplate = "{StaticResource ComponentListBoxItemTemplate}" />
+                        </Grid>
                     </Grid>
-                    <StackPanel Grid.Column = "1" VerticalAlignment = "Center" Margin = "5, 0, 5, 0">
-                        <Button x:Name = "BtAdd" Content = "&lt;-" Click = "BtAdd_OnClick" Height = "30"
-                                Margin = "0, 10, 0, 10" ToolTip = "Add selected available component">
-                            <Button.Style>
-                                <Style TargetType = "Button">
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                            Binding = "{Binding SelectedItem, ElementName=LbComponentsAvailable}"
-                                            Value = "{x:Null}">
-                                            <Setter Property = "IsEnabled" Value = "False"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button x:Name = "BtRemove" Content = "-&gt;" Click = "BtRemove_OnClick" Height = "30"
-                                Margin = "0, 10, 0, 10" ToolTip = "Remove selected added component">
-                            <Button.Style>
-                                <Style TargetType = "Button">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding = "{Binding SelectedItem, ElementName=LbComponentsAdded}"
-                                                     Value = "{x:Null}">
-                                            <Setter Property = "IsEnabled" Value = "False"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </StackPanel>
-                    <Grid Grid.Column = "2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height = "Auto"></RowDefinition>
-                            <RowDefinition Height = "*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Label Content = "Available:" Grid.Row = "0"
-                               ToolTip = "Additional available components from project assemblies" />
-                        <ListBox x:Name = "LbComponentsAvailable" Grid.Row = "1"
-                                 ItemTemplate = "{StaticResource ComponentListBoxItemTemplate}" />
-                    </Grid>
-                </Grid>
+                </AdornerDecorator>
             </TabItem>
         </TabControl>
     </Grid>
