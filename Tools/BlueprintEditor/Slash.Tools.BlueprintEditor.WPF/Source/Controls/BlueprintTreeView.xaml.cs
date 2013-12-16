@@ -10,7 +10,7 @@ namespace BlueprintEditor.Controls
     using System.ComponentModel;
     using System.Media;
     using System.Windows;
-    using System.Windows.Controls;
+    using System.Windows.Input;
 
     using Slash.GameBase.Blueprints;
 
@@ -48,6 +48,8 @@ namespace BlueprintEditor.Controls
                 typeof(RoutedEventHandler),
                 typeof(BlueprintTreeView));
 
+        public static RoutedCommand NewBlueprintCommand = new RoutedCommand();
+
         #endregion
 
         #region Fields
@@ -61,8 +63,6 @@ namespace BlueprintEditor.Controls
 
         #region Constructors and Destructors
 
-        public string NewBlueprintId { get; set; }
-
         /// <summary>
         ///   Constructor.
         /// </summary>
@@ -71,7 +71,6 @@ namespace BlueprintEditor.Controls
             this.InitializeComponent();
 
             this.TvTree.SelectedItemChanged += this.OnSelectedItemChanged;
-
             this.DataContextChanged += this.OnDataContextChanged;
         }
 
@@ -95,6 +94,10 @@ namespace BlueprintEditor.Controls
 
         #region Public Properties
 
+        public string Error { get; private set; }
+
+        public string NewBlueprintId { get; set; }
+
         /// <summary>
         ///   Returns the selected item.
         /// </summary>
@@ -113,21 +116,33 @@ namespace BlueprintEditor.Controls
 
         #endregion
 
-        #region Methods
+        #region Public Indexers
 
-        private void BtAddBlueprint_OnClick(object sender, RoutedEventArgs e)
+        public string this[string columnName]
         {
-            string newBlueprintId = this.TbNewBlueprintId.Text;
-            try
+            get
             {
-                ((BlueprintManager)this.DataContext).AddBlueprint(newBlueprintId, new Blueprint());
-            }
-            catch (ArgumentException ex)
-            {
-                SystemSounds.Hand.Play();
-                MessageBox.Show(ex.Message);
+                string result = null;
+                if (columnName == "NewBlueprintId")
+                {
+                    // Check if already existent.
+                    BlueprintManager blueprintManager = (BlueprintManager)this.DataContext;
+                    if (blueprintManager != null)
+                    {
+                        if (blueprintManager.ContainsBlueprint(this.NewBlueprintId))
+                        {
+                            result = "Blueprint id already exists.";
+                        }
+                    }
+                }
+
+                return result;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         private void BtDeleteBlueprint_OnClick(object sender, RoutedEventArgs e)
         {
@@ -140,6 +155,31 @@ namespace BlueprintEditor.Controls
 
             // Delete current selected blueprint.
             ((BlueprintManager)this.DataContext).RemoveBlueprint(selectedItem.BlueprintId);
+        }
+
+        private void CanExecuteCreateNewBlueprint(object sender, CanExecuteRoutedEventArgs e)
+        {
+            string newBlueprintId = this.TbNewBlueprintId.Text;
+            BlueprintManager blueprintManager = ((BlueprintManager)this.DataContext);
+            e.CanExecute = blueprintManager != null && !string.IsNullOrEmpty(newBlueprintId)
+                           && !blueprintManager.ContainsBlueprint(newBlueprintId);
+        }
+
+        private void ExecutedCreateNewBlueprint(object sender, ExecutedRoutedEventArgs e)
+        {
+            string newBlueprintId = this.TbNewBlueprintId.Text;
+            try
+            {
+                ((BlueprintManager)this.DataContext).AddBlueprint(newBlueprintId, new Blueprint());
+            }
+            catch (ArgumentException ex)
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show(ex.Message);
+            }
+
+            // Clear textbox.
+            this.TbNewBlueprintId.Text = string.Empty;
         }
 
         private void OnBlueprintsChanged()
@@ -231,29 +271,5 @@ namespace BlueprintEditor.Controls
         }
 
         #endregion
-
-        public string this[string columnName]
-        {
-            get
-            {
-                string result = null;
-                if (columnName == "NewBlueprintId")
-                {
-                    // Check if already existent.
-                    BlueprintManager blueprintManager = (BlueprintManager)this.DataContext;
-                    if (blueprintManager != null)
-                    {
-                        if (blueprintManager.ContainsBlueprint(this.NewBlueprintId))
-                        {
-                            result = "Blueprint id already exists.";
-                        }
-                    }
-                }
-
-                return result;
-            }
-        }
-
-        public string Error { get; private set; }
     }
 }

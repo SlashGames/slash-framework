@@ -17,6 +17,10 @@
             <converters:StringNullOrEmptyConverter x:Key = "StringNullOrEmptyConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
+    <UserControl.CommandBindings>
+        <CommandBinding Command = "{x:Static controls:BlueprintTreeView.NewBlueprintCommand}"
+                        Executed = "ExecutedCreateNewBlueprint" CanExecute = "CanExecuteCreateNewBlueprint" />
+    </UserControl.CommandBindings>
     <Grid>
         <Grid.Style>
             <Style TargetType = "Grid">
@@ -48,26 +52,14 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
+            <TextBox.InputBindings>
+                <KeyBinding Command = "{x:Static controls:BlueprintTreeView.NewBlueprintCommand}" Key = "Enter" />
+            </TextBox.InputBindings>
         </TextBox>
         <Button x:Name = "BtNewBlueprint" Content = "New" HorizontalAlignment = "Right" Margin = "164,295,0,0"
-                VerticalAlignment = "Top" Width = "36" Click = "BtAddBlueprint_OnClick"
+                VerticalAlignment = "Top" Width = "36"
+                Command = "{x:Static controls:BlueprintTreeView.NewBlueprintCommand}"
                 RenderTransformOrigin = "-0.511,0.109" Height = "23" ToolTip = "Create new blueprint with entered id">
-            <Button.Style>
-                <Style TargetType = "Button">
-                    <Style.Triggers>
-                        <DataTrigger Value = "True">
-                            <DataTrigger.Binding>
-                                <MultiBinding Converter = "{StaticResource BooleanOrConverter}">
-                                    <Binding ElementName = "TbNewBlueprintId" Path = "Text"
-                                             Converter = "{StaticResource StringNullOrEmptyConverter}" />
-                                    <Binding ElementName = "TbNewBlueprintId" Path = "(Validation.HasError)" />
-                                </MultiBinding>
-                            </DataTrigger.Binding>
-                            <Setter Property = "IsEnabled" Value = "False"></Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
         </Button>
     </Grid>
 </UserControl>
