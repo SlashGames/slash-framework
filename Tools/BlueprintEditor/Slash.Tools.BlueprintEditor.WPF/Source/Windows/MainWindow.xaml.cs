@@ -16,6 +16,7 @@ namespace BlueprintEditor.Windows
 
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Context;
+    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
     ///   Interaction logic for MainWindow.xaml
@@ -108,9 +109,8 @@ namespace BlueprintEditor.Windows
             // Configure open file dialog box
             OpenFileDialog dlg = new OpenFileDialog
                 {
-                    FileName = "Blueprints",
-                    DefaultExt = ".xml",
-                    Filter = "Xml documents (.xml)|*.xml"
+                    DefaultExt = EditorContext.ProjectExtension,
+                    Filter = string.Format("Blueprint Editor Projects|*.{0}", EditorContext.ProjectExtension)
                 };
 
             // Show open file dialog box
@@ -157,6 +157,9 @@ namespace BlueprintEditor.Windows
         
         private void OnEntityComponentTypesChanged()
         {
+            // Update component table.
+            InspectorComponentTable.LoadComponents();
+
             this.BlueprintControl.AvailableComponentTypes = this.Context.AvailableComponentTypes;
         } 
 
@@ -168,9 +171,9 @@ namespace BlueprintEditor.Windows
                 // Configure save file dialog box
                 SaveFileDialog dlg = new SaveFileDialog
                     {
-                        FileName = "Blueprints",
-                        DefaultExt = ".xml",
-                        Filter = "Xml documents (.xml)|*.xml"
+                        FileName = this.Context.ProjectSettings.Name,
+                        DefaultExt = EditorContext.ProjectExtension,
+                        Filter = string.Format("Blueprint Editor Projects|*.{0}", EditorContext.ProjectExtension)
                     };
 
                 // Show save file dialog box

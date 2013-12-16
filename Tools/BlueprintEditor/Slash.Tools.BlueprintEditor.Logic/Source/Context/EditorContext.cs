@@ -16,10 +16,23 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
-    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public sealed class EditorContext : INotifyPropertyChanged
     {
+        #region Static Fields
+
+        /// <summary>
+        ///   Default blueprint file extension.
+        /// </summary>
+        public static string ProjectBlueprintExtension = "blueprints";
+
+        /// <summary>
+        ///   Default project file extension.
+        /// </summary>
+        public static string ProjectExtension = "bep";
+
+        #endregion
+
         #region Fields
 
         private readonly XmlSerializer blueprintManagerSerializer;
@@ -101,6 +114,9 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// </summary>
         public ProjectSettings ProjectSettings { get; set; }
 
+        /// <summary>
+        ///   File path to store project xml at.
+        /// </summary>
         public string SerializationPath { get; set; }
 
         #endregion
@@ -117,7 +133,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
                 throw new SerializationException(
                     string.Format("Couldn't deserialize project settings from '{0}'.", path));
             }
-            
+
             fileStream.Close();
 
             // Load blueprint files.
@@ -127,12 +143,17 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
                 BlueprintManager newBlueprintManager;
                 try
                 {
-                    newBlueprintManager = (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
+                    newBlueprintManager =
+                        (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
                 }
                 catch (Exception e)
                 {
                     throw new SerializationException(
-                        string.Format("Couldn't deserialize blueprint manager from '{0}': {1}.", path, e.GetBaseException().Message), e);
+                        string.Format(
+                            "Couldn't deserialize blueprint manager from '{0}': {1}.",
+                            path,
+                            e.GetBaseException().Message),
+                        e);
                 }
 
                 if (newBlueprintManager == null)
@@ -193,9 +214,10 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         private static string GenerateBlueprintFilePath(string projectPath, int fileIndex)
         {
             return string.Format(
-                "{0}_{1}.xml",
+                "{0}{1}.{2}",
                 Path.Combine(Path.GetDirectoryName(projectPath), Path.GetFileNameWithoutExtension(projectPath)),
-                fileIndex);
+                fileIndex == 0 ? string.Empty : string.Format("({0})", fileIndex),
+                ProjectBlueprintExtension);
         }
 
         private void OnEntityComponentTypesChanged()
@@ -227,9 +249,6 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             // Set first blueprint file as active blueprint manager.
             BlueprintFile firstBlueprintFile = this.ProjectSettings.BlueprintFiles.FirstOrDefault();
             this.BlueprintManager = firstBlueprintFile != null ? firstBlueprintFile.BlueprintManager : null;
-
-            // Update component table.
-            InspectorComponentTable.LoadComponents();
 
             // Raise events.
             this.OnPropertyChanged("ProjectSettings");
