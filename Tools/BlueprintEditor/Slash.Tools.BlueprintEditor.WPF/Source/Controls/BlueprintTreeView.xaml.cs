@@ -7,7 +7,9 @@
 namespace BlueprintEditor.Controls
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Media;
     using System.Windows;
     using System.Windows.Input;
@@ -246,7 +248,9 @@ namespace BlueprintEditor.Controls
             }
 
             bool oldItemStillExists = false;
-            foreach (var blueprintPair in blueprintManager.Blueprints)
+            IEnumerable<KeyValuePair<string, Blueprint>> blueprints =
+                blueprintManager.Blueprints.OrderBy(blueprintPair => blueprintPair.Key);
+            foreach (var blueprintPair in blueprints)
             {
                 BlueprintTreeViewItem blueprintTreeViewItem = new BlueprintTreeViewItem(
                     blueprintPair.Key, blueprintPair.Value);
