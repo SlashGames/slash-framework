@@ -166,7 +166,6 @@ namespace BlueprintEditor.Controls
         {
             if (this.BlueprintControlContext.Blueprint == null)
             {
-                // TODO(co): Gray out button.
                 MessageBox.Show("No blueprint selected.");
                 return;
             }
@@ -175,7 +174,6 @@ namespace BlueprintEditor.Controls
             Type componentType = (Type)this.LbComponentsAvailable.SelectedItem;
             if (componentType == null)
             {
-                // TODO(co): Gray out button.
                 MessageBox.Show("No component type selected.");
                 return;
             }
@@ -197,7 +195,6 @@ namespace BlueprintEditor.Controls
         {
             if (this.BlueprintControlContext.Blueprint == null)
             {
-                // TODO(co): Gray out button.
                 MessageBox.Show("No blueprint selected.");
                 return;
             }
@@ -206,7 +203,6 @@ namespace BlueprintEditor.Controls
             Type componentType = (Type)this.LbComponentsAdded.SelectedItem;
             if (componentType == null)
             {
-                // TODO(co): Gray out button.
                 MessageBox.Show("No component type selected.");
                 return;
             }
