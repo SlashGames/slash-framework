@@ -8,6 +8,7 @@ namespace BlueprintEditor.Controls
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -212,7 +213,10 @@ namespace BlueprintEditor.Controls
 
             // Remove from available, add to blueprint component types.
             this.LbComponentsAdded.Items.Remove(componentType);
-            this.LbComponentsAvailable.Items.Add(componentType);
+            if (this.AvailableComponentTypes.Contains(componentType))
+            {
+                this.LbComponentsAvailable.Items.Add(componentType);
+            }
 
             // Select component type.
             this.LbComponentsAvailable.SelectedItem = componentType;
