@@ -13,17 +13,17 @@
     <Grid>
         <StackPanel>
             <DockPanel>
-                <Label Width = "100">Name</Label>
+                <Label Width = "100" ToolTip="Project name">Name</Label>
                 <TextBox Name = "TbName" Text = "{Binding Name}"></TextBox>
             </DockPanel>
             <DockPanel>
-                <Label Width = "100">Description</Label>
+                <Label Width = "100" ToolTip="Project description">Description</Label>
                 <TextBox Name = "TbDescription" Text = "{Binding Description}" TextWrapping = "Wrap"
                          AcceptsReturn = "True" Height = "78">
                 </TextBox>
             </DockPanel>
             <DockPanel>
-                <Label Width = "100">Assemblies</Label>
+                <Label Width = "100" ToolTip="Project assemblies which contain components that can be added to blueprints">Assemblies</Label>
                 <StackPanel>
                     <DataGrid Name = "AssembliesList" ItemsSource = "{Binding ProjectAssemblies}"
                               AutoGenerateColumns = "False">
@@ -33,8 +33,8 @@
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Click = "AddAssembly_OnClick">Add</Button>
-                    <Button Click = "RemoveAssembly_OnClick" Content = "Remove">
+                    <Button Click = "AddAssembly_OnClick" ToolTip="Add new assembly">Add</Button>
+                    <Button Click = "RemoveAssemblies_OnClick" Content = "Remove" ToolTip="Remove selected assemblies">
                         <Button.Style>
                             <Style TargetType = "Button">
                                 <Style.Triggers>

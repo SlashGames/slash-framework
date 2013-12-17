@@ -8,8 +8,10 @@ namespace BlueprintEditor.Controls
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
 
     using BlueprintEditor.Inspectors;
 
@@ -36,6 +38,16 @@ namespace BlueprintEditor.Controls
                 typeof(BlueprintControlContext),
                 typeof(BlueprintControl),
                 new FrameworkPropertyMetadata(null, OnContextChanged));
+
+        /// <summary>
+        ///   Command to add component to blueprint.
+        /// </summary>
+        public static ICommand AddComponentCommand = new RoutedCommand();
+
+        /// <summary>
+        ///   Command to remove component from blueprint.
+        /// </summary>
+        public static ICommand RemoveComponentCommand = new RoutedCommand();
 
         #endregion
 
@@ -162,11 +174,22 @@ namespace BlueprintEditor.Controls
             }
         }
 
-        private void BtAdd_OnClick(object sender, RoutedEventArgs e)
+        private void CanExecuteAddComponent(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.LbComponentsAvailable != null && this.LbComponentsAvailable.SelectedItems != null
+                           && this.LbComponentsAvailable.SelectedItems.Count > 0;
+        }
+
+        private void CanExecuteRemoveComponent(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.LbComponentsAdded != null && this.LbComponentsAdded.SelectedItems != null
+                           && this.LbComponentsAdded.SelectedItems.Count > 0;
+        }
+
+        private void ExecutedAddComponent(object sender, ExecutedRoutedEventArgs e)
         {
             if (this.BlueprintControlContext.Blueprint == null)
             {
-                // TODO(co): Gray out button.
                 MessageBox.Show("No blueprint selected.");
                 return;
             }
@@ -175,7 +198,6 @@ namespace BlueprintEditor.Controls
             Type componentType = (Type)this.LbComponentsAvailable.SelectedItem;
             if (componentType == null)
             {
-                // TODO(co): Gray out button.
                 MessageBox.Show("No component type selected.");
                 return;
             }
@@ -193,11 +215,10 @@ namespace BlueprintEditor.Controls
             this.OnBlueprintComponentsChanged();
         }
 
-        private void BtRemove_OnClick(object sender, RoutedEventArgs e)
+        private void ExecutedRemoveComponent(object sender, ExecutedRoutedEventArgs e)
         {
             if (this.BlueprintControlContext.Blueprint == null)
             {
-                // TODO(co): Gray out button.
                 MessageBox.Show("No blueprint selected.");
                 return;
             }
@@ -206,7 +227,6 @@ namespace BlueprintEditor.Controls
             Type componentType = (Type)this.LbComponentsAdded.SelectedItem;
             if (componentType == null)
             {
-                // TODO(co): Gray out button.
                 MessageBox.Show("No component type selected.");
                 return;
             }
@@ -216,12 +236,27 @@ namespace BlueprintEditor.Controls
 
             // Remove from available, add to blueprint component types.
             this.LbComponentsAdded.Items.Remove(componentType);
-            this.LbComponentsAvailable.Items.Add(componentType);
+            if (this.AvailableComponentTypes.Contains(componentType))
+            {
+                this.LbComponentsAvailable.Items.Add(componentType);
+            }
 
             // Select component type.
             this.LbComponentsAvailable.SelectedItem = componentType;
 
             this.OnBlueprintComponentsChanged();
+        }
+
+        private void LbComponentsAdded_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Send command.
+            RemoveComponentCommand.Execute(null);
+        }
+
+        private void LbComponentsAvailable_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Send command.
+            AddComponentCommand.Execute(null);
         }
 
         private void OnBlueprintComponentsChanged()

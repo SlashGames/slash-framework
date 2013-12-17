@@ -60,6 +60,7 @@
       <DependentUpon>ProjectSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Converters\BooleanOrConverter.cs" />
+    <Compile Include="Source\Converters\StringNullOrEmptyConverter.cs" />
     <Compile Include="Source\Converters\TypeToClassNameConverter.cs" />
     <Compile Include="Source\Data\BlueprintManagerData.cs" />
     <Compile Include="Source\Controls\BlueprintControl.xaml.cs">
@@ -106,7 +107,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Source\Inspectors\Templates\TextBoxErrorTemplate.xaml">
+    <Page Include="Source\Controls\Templates\TextBoxErrorTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,6 +175,13 @@
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
       <Name>Slash.GameBase</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\Close_16xLG.png" />
+    <Resource Include="Resources\Images\Icons\gear_16xLG.png" />
+    <Resource Include="Resources\Images\Icons\NewSolutionFolder_6289.png" />
+    <Resource Include="Resources\Images\Icons\Open_6529.png" />
+    <Resource Include="Resources\Images\Icons\Save_6530.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

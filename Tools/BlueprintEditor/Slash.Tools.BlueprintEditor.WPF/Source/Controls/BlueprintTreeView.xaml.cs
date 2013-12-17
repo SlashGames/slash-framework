@@ -7,8 +7,12 @@
 namespace BlueprintEditor.Controls
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
     using System.Media;
     using System.Windows;
+    using System.Windows.Input;
 
     using Slash.GameBase.Blueprints;
 
@@ -35,7 +39,7 @@ namespace BlueprintEditor.Controls
     /// <summary>
     ///   Interaction logic for BlueprintTreeView.xaml
     /// </summary>
-    public partial class BlueprintTreeView
+    public partial class BlueprintTreeView : IDataErrorInfo
     {
         #region Static Fields
 
@@ -45,6 +49,8 @@ namespace BlueprintEditor.Controls
                 RoutingStrategy.Bubble,
                 typeof(RoutedEventHandler),
                 typeof(BlueprintTreeView));
+
+        public static RoutedCommand NewBlueprintCommand = new RoutedCommand();
 
         #endregion
 
@@ -67,7 +73,6 @@ namespace BlueprintEditor.Controls
             this.InitializeComponent();
 
             this.TvTree.SelectedItemChanged += this.OnSelectedItemChanged;
-
             this.DataContextChanged += this.OnDataContextChanged;
         }
 
@@ -91,6 +96,10 @@ namespace BlueprintEditor.Controls
 
         #region Public Properties
 
+        public string Error { get; private set; }
+
+        public string NewBlueprintId { get; set; }
+
         /// <summary>
         ///   Returns the selected item.
         /// </summary>
@@ -109,21 +118,33 @@ namespace BlueprintEditor.Controls
 
         #endregion
 
-        #region Methods
+        #region Public Indexers
 
-        private void BtAddBlueprint_OnClick(object sender, RoutedEventArgs e)
+        public string this[string columnName]
         {
-            string newBlueprintId = this.TbNewBlueprintId.Text;
-            try
+            get
             {
-                ((BlueprintManager)this.DataContext).AddBlueprint(newBlueprintId, new Blueprint());
-            }
-            catch (ArgumentException ex)
-            {
-                SystemSounds.Hand.Play();
-                //this.TbMessage.Text = ex.Message;
+                string result = null;
+                if (columnName == "NewBlueprintId")
+                {
+                    // Check if already existent.
+                    BlueprintManager blueprintManager = (BlueprintManager)this.DataContext;
+                    if (blueprintManager != null)
+                    {
+                        if (blueprintManager.ContainsBlueprint(this.NewBlueprintId))
+                        {
+                            result = "Blueprint id already exists.";
+                        }
+                    }
+                }
+
+                return result;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         private void BtDeleteBlueprint_OnClick(object sender, RoutedEventArgs e)
         {
@@ -138,6 +159,31 @@ namespace BlueprintEditor.Controls
             ((BlueprintManager)this.DataContext).RemoveBlueprint(selectedItem.BlueprintId);
         }
 
+        private void CanExecuteCreateNewBlueprint(object sender, CanExecuteRoutedEventArgs e)
+        {
+            string newBlueprintId = this.TbNewBlueprintId.Text;
+            BlueprintManager blueprintManager = this.DataContext as BlueprintManager;
+            e.CanExecute = blueprintManager != null && !string.IsNullOrEmpty(newBlueprintId)
+                           && !blueprintManager.ContainsBlueprint(newBlueprintId);
+        }
+
+        private void ExecutedCreateNewBlueprint(object sender, ExecutedRoutedEventArgs e)
+        {
+            string newBlueprintId = this.TbNewBlueprintId.Text;
+            try
+            {
+                ((BlueprintManager)this.DataContext).AddBlueprint(newBlueprintId, new Blueprint());
+            }
+            catch (ArgumentException ex)
+            {
+                SystemSounds.Hand.Play();
+                MessageBox.Show(ex.Message);
+            }
+
+            // Clear textbox.
+            this.TbNewBlueprintId.Text = string.Empty;
+        }
+
         private void OnBlueprintsChanged()
         {
             this.UpdateTreeView((BlueprintManager)this.DataContext);
@@ -146,13 +192,13 @@ namespace BlueprintEditor.Controls
         private void OnDataContextChanged(
             object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            BlueprintManager oldBlueprintManager = (BlueprintManager)dependencyPropertyChangedEventArgs.OldValue;
+            BlueprintManager oldBlueprintManager = dependencyPropertyChangedEventArgs.OldValue as BlueprintManager;
             if (oldBlueprintManager != null)
             {
                 oldBlueprintManager.BlueprintsChanged -= this.OnBlueprintsChanged;
             }
 
-            BlueprintManager newBlueprintManager = (BlueprintManager)dependencyPropertyChangedEventArgs.NewValue;
+            BlueprintManager newBlueprintManager = dependencyPropertyChangedEventArgs.NewValue as BlueprintManager;
             if (newBlueprintManager != null)
             {
                 newBlueprintManager.BlueprintsChanged += this.OnBlueprintsChanged;
@@ -202,7 +248,9 @@ namespace BlueprintEditor.Controls
             }
 
             bool oldItemStillExists = false;
-            foreach (var blueprintPair in blueprintManager.Blueprints)
+            IEnumerable<KeyValuePair<string, Blueprint>> blueprints =
+                blueprintManager.Blueprints.OrderBy(blueprintPair => blueprintPair.Key);
+            foreach (var blueprintPair in blueprints)
             {
                 BlueprintTreeViewItem blueprintTreeViewItem = new BlueprintTreeViewItem(
                     blueprintPair.Key, blueprintPair.Value);
