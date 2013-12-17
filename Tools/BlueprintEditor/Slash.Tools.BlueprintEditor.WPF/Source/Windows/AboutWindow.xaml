@@ -4,7 +4,7 @@
         Title="About Blueprint Editor" Height="210" Width="320">
     <StackPanel>
         <DockPanel>
-            <Image DockPanel.Dock="Left" Source="pack://application:,,,/Resources/Images/Icons/Icon_slashgames_RGB.ico" Width="100" Margin="20"/>
+            <Image DockPanel.Dock="Left" Source="/Resources/Images/Icons/Icon_slashgames_RGB.ico" Width="100" Margin="20"/>
             <TextBlock VerticalAlignment="Center" >
                 Blueprint Editor<LineBreak />
                 Version 1.0<LineBreak />
