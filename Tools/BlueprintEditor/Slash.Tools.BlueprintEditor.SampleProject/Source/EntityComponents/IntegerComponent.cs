@@ -10,7 +10,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
     using Slash.GameBase.Components;
     using Slash.GameBase.Inspector.Attributes;
 
-    [InspectorComponent]
+    [InspectorComponent(Description = "A test component with a integer attribute.")]
     public class IntegerComponent : IEntityComponent
     {
         #region Constants

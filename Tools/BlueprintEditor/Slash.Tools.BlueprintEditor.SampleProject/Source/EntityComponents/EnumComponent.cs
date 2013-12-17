@@ -19,7 +19,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         Three
     }
 
-    [InspectorComponent]
+    [InspectorComponent(Description = "A test component with a enum attribute.")]
     public class EnumComponent : IEntityComponent
     {
         #region Constants

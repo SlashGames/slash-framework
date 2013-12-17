@@ -10,7 +10,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
     using Slash.GameBase.Components;
     using Slash.GameBase.Inspector.Attributes;
 
-    [InspectorComponent]
+    [InspectorComponent(Description = "A test component with a float attribute.")]
     public class FloatComponent : IEntityComponent
     {
         #region Constants
