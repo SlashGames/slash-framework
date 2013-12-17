@@ -8,8 +8,7 @@
              xmlns:converters = "clr-namespace:BlueprintEditor.Converters"
              xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
              mc:Ignorable = "d"
-             d:DesignHeight = "300" d:DesignWidth = "300"
-             DataContext = "{Binding RelativeSource={RelativeSource Self}}" Name = "Main">
+             d:DesignHeight = "300" d:DesignWidth = "300" Name = "Main">
     <UserControl.Resources>
         <blueprintEditor:BindingProxy x:Key = "Proxy" Data = "{Binding}" />
         <converters:TypeToClassNameConverter x:Key = "TypeToClassNameConverter" />
@@ -43,13 +42,12 @@
             <Label Content = "Id" Grid.Column = "0" ToolTip = "Unique id of blueprint" />
             <TextBox x:Name = "TbBlueprintId" Grid.Column = "1">
                 <TextBox.Text>
-                    <Binding Path = "BlueprintControlContext.BlueprintId">
+                    <Binding Path = "BlueprintId">
                         <Binding.ValidationRules>
                             <validation:UniqueBlueprintIdValidationRule>
                                 <validation:UniqueBlueprintIdValidationRule.Data>
                                     <validation:ValidationRuleData
-                                        Context = "{Binding Data.BlueprintControlContext, 
-    Source={StaticResource Proxy}}" />
+                                        Context = "{Binding Data, Source={StaticResource Proxy}}" />
                                 </validation:UniqueBlueprintIdValidationRule.Data>
                             </validation:UniqueBlueprintIdValidationRule>
                         </Binding.ValidationRules>

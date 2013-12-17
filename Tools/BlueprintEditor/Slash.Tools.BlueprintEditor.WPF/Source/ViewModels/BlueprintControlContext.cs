@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor.Controls
+namespace BlueprintEditor.ViewModels
 {
     using System.Windows;
 

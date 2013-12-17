@@ -56,11 +56,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Source\Commands\BlueprintManagerCommands.cs" />
+    <Compile Include="Source\Commands\DelegateCommand.cs" />
     <Compile Include="Source\Converters\ComponentToolTipConverter.cs" />
     <Compile Include="Source\Controls\EditorDialog.cs" />
     <Compile Include="Source\Converters\AssemblyToNameConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Source\Controls\BlueprintControlContext.cs" />
+    <Compile Include="Source\ViewModels\BlueprintControlContext.cs" />
     <Compile Include="Source\Controls\ProjectSettingsControl.xaml.cs">
       <DependentUpon>ProjectSettingsControl.xaml</DependentUpon>
     </Compile>
@@ -74,7 +76,6 @@
     <Compile Include="Source\Controls\BlueprintTreeView.xaml.cs">
       <DependentUpon>BlueprintTreeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Controls\BlueprintTreeViewItem.cs" />
     <Compile Include="Source\Inspectors\CheckBoxInspector.xaml.cs">
       <DependentUpon>CheckBoxInspector.xaml</DependentUpon>
     </Compile>
@@ -85,6 +86,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Source\Inspectors\InspectorPropertyData.cs" />
+    <Compile Include="Source\ViewModels\BlueprintManagerViewModel.cs" />
+    <Compile Include="Source\ViewModels\BlueprintViewModel.cs" />
+    <Compile Include="Source\ViewModels\EditorContext.cs" />
     <Compile Include="Source\Windows\ProjectSettingsWindow.xaml.cs">
       <DependentUpon>ProjectSettingsWindow.xaml</DependentUpon>
     </Compile>

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Tools.BlueprintEditor.Logic.Context
+namespace BlueprintEditor.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -16,6 +16,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
+    using Slash.Tools.BlueprintEditor.Logic.Context;
 
     public sealed class EditorContext : INotifyPropertyChanged
     {
@@ -43,6 +44,8 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         ///   Active blueprint manager.
         /// </summary>
         private BlueprintManager blueprintManager;
+
+        private BlueprintManagerViewModel blueprintManagerViewModel;
 
         #endregion
 
@@ -106,6 +109,27 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 
                 // Raise event.
                 this.OnPropertyChanged("BlueprintManager");
+
+                this.BlueprintManagerViewModel = new BlueprintManagerViewModel(this.blueprintManager);
+            }
+        }
+
+        public BlueprintManagerViewModel BlueprintManagerViewModel
+        {
+            get
+            {
+                return this.blueprintManagerViewModel;
+            }
+            set
+            {
+                if (value == this.blueprintManagerViewModel)
+                {
+                    return;
+                }
+
+                this.blueprintManagerViewModel = value;
+
+                this.OnPropertyChanged("BlueprintManagerViewModel");
             }
         }
 

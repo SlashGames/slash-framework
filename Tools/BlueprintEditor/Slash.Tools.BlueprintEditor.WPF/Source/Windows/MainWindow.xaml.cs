@@ -11,6 +11,7 @@ namespace BlueprintEditor.Windows
     using System.Windows;
 
     using BlueprintEditor.Controls;
+    using BlueprintEditor.ViewModels;
 
     using Microsoft.Win32;
 
@@ -197,12 +198,7 @@ namespace BlueprintEditor.Windows
         private void TreeBlueprints_OnBlueprintSelectionChanged(object sender, RoutedEventArgs e)
         {
             BlueprintSelectionChangedEventArgs eventArgs = ((BlueprintSelectionChangedEventArgs)e);
-            this.BlueprintControl.BlueprintControlContext = new BlueprintControlContext
-                {
-                    Blueprint = eventArgs.Blueprint,
-                    BlueprintId = eventArgs.BlueprintId,
-                    BlueprintManager = this.Context.BlueprintManager
-                };
+            this.BlueprintControl.DataContext = eventArgs.Blueprint;
         }
 
         #endregion
