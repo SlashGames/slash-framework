@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Source\Converters\ComponentToolTipConverter.cs" />
     <Compile Include="Source\Controls\EditorDialog.cs" />
     <Compile Include="Source\Converters\AssemblyToNameConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -189,6 +190,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Icons\Icon_slashgames_RGB.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Converters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

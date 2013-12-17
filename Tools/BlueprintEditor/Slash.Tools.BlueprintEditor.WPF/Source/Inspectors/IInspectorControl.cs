@@ -22,6 +22,15 @@ namespace BlueprintEditor.Inspectors
 
         #endregion
 
+        #region Public Properties
+
+        /// <summary>
+        ///   Tooltip to set for the control.
+        /// </summary>
+        string ToolTip { set; }
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>

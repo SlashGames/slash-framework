@@ -13,11 +13,12 @@
     <UserControl.Resources>
         <blueprintEditor:BindingProxy x:Key = "Proxy" Data = "{Binding}" />
         <converters:TypeToClassNameConverter x:Key = "TypeToClassNameConverter" />
+        <converters:ComponentToolTipConverter x:Key = "ComponentToolTipConverter" /> 
         <DataTemplate x:Key = "ComponentListBoxItemTemplate">
             <TextBlock Text = "{Binding Converter={StaticResource TypeToClassNameConverter}}">
                 <TextBlock.ToolTip>
                     <ToolTip>
-                        <TextBlock Text = "{Binding .}"></TextBlock>
+                        <TextBlock Text = "{Binding ., Converter={StaticResource ComponentToolTipConverter}}"></TextBlock>
                     </ToolTip>
                 </TextBlock.ToolTip>
             </TextBlock>

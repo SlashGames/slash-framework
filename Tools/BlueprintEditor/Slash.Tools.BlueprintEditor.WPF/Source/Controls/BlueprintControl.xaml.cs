@@ -141,14 +141,23 @@ namespace BlueprintEditor.Controls
         private void AddComponentInspectors(Type componentType, Panel panel)
         {
             // Get attributes.
-            InspectorComponent inspectorComponent = InspectorComponentTable.GetComponent(componentType);
-            if (inspectorComponent == null)
+            InspectorComponent componentInfo = InspectorComponentTable.GetComponent(componentType);
+            if (componentInfo == null)
             {
                 return;
             }
 
+            // Add label for component name.
+            Label componentLabel = new Label
+                {
+                    Content = componentInfo.Type.Name,
+                    ToolTip = componentInfo.Component.Description,
+                    FontWeight = FontWeights.Bold
+                };
+            panel.Children.Add(componentLabel);
+
             // Add inspectors for component properties.
-            foreach (var inspectorProperty in inspectorComponent.Properties)
+            foreach (var inspectorProperty in componentInfo.Properties)
             {
                 // Get current value.
                 object propertyValue;
