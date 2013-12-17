@@ -9,7 +9,8 @@
     mc:Ignorable = "d"
     x:Class = "BlueprintEditor.Windows.MainWindow"
     Title = "MainWindow" Height = "600" Width = "800" Name = "Main"
-    d:DataContext = "{d:DesignInstance viewModels:EditorContext}">
+    d:DataContext = "{d:DesignInstance viewModels:EditorContext}"
+    Loaded="MainWindow_OnLoaded">
     <Window.Resources>
         <Style TargetType = "FrameworkElement" x:Key = "ProjectDependentStyle">
             <Style.Triggers>
@@ -22,29 +23,30 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto"></RowDefinition>
+            <RowDefinition Height = "Auto"></RowDefinition>
             <RowDefinition Height = "*"></RowDefinition>
             <RowDefinition Height = "Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header = "_FILE">
-                <MenuItem x:Name = "MenuFileNew" Header = "_New" Click = "MenuFileNew_OnClick">
+                <MenuItem x:Name = "MenuFileNew" Header = "_New Project" Click = "MenuFileNew_OnClick">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/NewSolutionFolder_6289.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name = "MenuFileOpen" Header = "_Open" Click = "MenuFileOpen_OnClick">
+                <MenuItem x:Name = "MenuFileOpen" Header = "_Open Project..." Click = "MenuFileOpen_OnClick">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Open_6529.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem x:Name = "MenuFileSave" Header = "_Save" Click = "MenuFileSave_OnClick"
+                <MenuItem x:Name = "MenuFileSave" Header = "_Save Project" Click = "MenuFileSave_OnClick"
                           Style = "{StaticResource ProjectDependentStyle}">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Save_6530.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save _As..." Click = "MenuFileSaveAs_OnClick"
+                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save Project _As..." Click = "MenuFileSaveAs_OnClick"
                           Style = "{StaticResource ProjectDependentStyle}" />
                 <Separator />
                 <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Click = "MenuFileExit_OnClick">
@@ -54,15 +56,49 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header = "_PROJECT" Style = "{StaticResource ProjectDependentStyle}">
-                <MenuItem Header = "_Settings" Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick">
+                <MenuItem Header = "_Settings..." Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/gear_16xLG.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header = "_HELP">
+                <MenuItem Header = "_About Blueprint Editor" Name = "MenuHelpAbout" Click="MenuHelpAbout_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/StatusAnnotations_Help_and_inconclusive_16xMD.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
         </Menu>
 
-        <Grid Grid.Row = "1" Style = "{StaticResource ProjectDependentStyle}">
+        <ToolBarTray Grid.Row="1">
+            <ToolBar>
+                <Button Click="MenuFileNew_OnClick">
+                    <Image Source="/Resources/Images/Icons/NewSolutionFolder_6289.png" />
+                    <Button.ToolTip>
+                        <TextBlock>New Project</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+
+                <Button Click="MenuFileOpen_OnClick">
+                    <Image Source="/Resources/Images/Icons/Open_6529.png" />
+                    <Button.ToolTip>
+                        <TextBlock>Open Project</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+
+                <Separator />
+                
+                <Button Click="MenuFileSave_OnClick">
+                    <Image Source="/Resources/Images/Icons/Save_6530.png" />
+                    <Button.ToolTip>
+                        <TextBlock>Save Project</TextBlock>
+                    </Button.ToolTip>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        
+        <Grid Grid.Row = "2" Style = "{StaticResource ProjectDependentStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width = "Auto"></ColumnDefinition>
                 <ColumnDefinition Width = "*"></ColumnDefinition>
@@ -77,7 +113,7 @@
             </GroupBox>
         </Grid>
 
-        <StatusBar x:Name = "SbMain" Grid.Row = "2">
+        <StatusBar x:Name = "SbMain" Grid.Row = "3">
             <StatusBarItem>
                 <TextBlock x:Name = "TbMessage"></TextBlock>
             </StatusBarItem>

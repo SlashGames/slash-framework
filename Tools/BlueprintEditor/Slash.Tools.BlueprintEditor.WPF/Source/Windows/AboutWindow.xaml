@@ -1,0 +1,18 @@
+﻿<Window x:Class="BlueprintEditor.Windows.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About Blueprint Editor" Height="210" Width="320">
+    <StackPanel>
+        <DockPanel>
+            <Image DockPanel.Dock="Left" Source="/Resources/Images/Icons/Icon_slashgames_RGB.ico" Width="100" Margin="20"/>
+            <TextBlock VerticalAlignment="Center" >
+                Blueprint Editor<LineBreak />
+                Version 1.0<LineBreak />
+                Copyright 2013 Slash Games<LineBreak />
+                All rights reserved.<LineBreak />
+            </TextBlock>
+        </DockPanel>
+        
+        <Button Width="100" Name="ButtonClose" Click="ButtonClose_OnClick">Close</Button>
+    </StackPanel>
+</Window>

@@ -43,6 +43,15 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
     [Serializable]
     public sealed class ProjectSettings
     {
+        #region Constants
+
+        /// <summary>
+        ///   Default name of new blueprint editor projects.
+        /// </summary>
+        private const string DefaultProjectName = "Another Slash Games Project";
+
+        #endregion
+
         #region Fields
 
         /// <summary>
@@ -61,6 +70,8 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         {
             this.ProjectAssemblies = new List<Assembly>();
             this.BlueprintFiles = new List<BlueprintFile>();
+
+            this.Name = DefaultProjectName;
         }
 
         #endregion

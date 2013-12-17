@@ -6,7 +6,6 @@
 
 namespace BlueprintEditor.Windows
 {
-    using System;
     using System.Runtime.Serialization;
     using System.Windows;
 
@@ -15,7 +14,6 @@ namespace BlueprintEditor.Windows
 
     using Microsoft.Win32;
 
-    using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Context;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
@@ -24,6 +22,15 @@ namespace BlueprintEditor.Windows
     /// </summary>
     public partial class MainWindow
     {
+        #region Constants
+
+        /// <summary>
+        ///   Title of the main window to be shown in addition to the project name.
+        /// </summary>
+        private const string MainWindowTitle = "Blueprint Editor";
+
+        #endregion
+
         #region Static Fields
 
         public static readonly DependencyProperty ContextProperty = DependencyProperty.Register(
@@ -44,7 +51,7 @@ namespace BlueprintEditor.Windows
 
             this.OnEntityComponentTypesChanged();
 
-            this.DataContext = Context;
+            this.DataContext = this.Context;
         }
 
         #endregion
@@ -82,6 +89,11 @@ namespace BlueprintEditor.Windows
             return true;
         }
 
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.UpdateWindowTitle();
+        }
+
         private void MenuFileExit_OnClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -97,6 +109,7 @@ namespace BlueprintEditor.Windows
 
             // Create new blueprint manager.
             this.Context.New();
+            this.UpdateWindowTitle();
         }
 
         private void MenuFileOpen_OnClick(object sender, RoutedEventArgs e)
@@ -129,6 +142,7 @@ namespace BlueprintEditor.Windows
             try
             {
                 this.Context.Load(filename);
+                this.UpdateWindowTitle();
             }
             catch (SerializationException exception)
             {
@@ -146,23 +160,33 @@ namespace BlueprintEditor.Windows
             this.SaveContext(this.Context.SerializationPath);
         }
 
+        private void MenuHelpAbout_OnClick(object sender, RoutedEventArgs e)
+        {
+            AboutWindow dlg = new AboutWindow { Owner = this };
+            dlg.ShowDialog();
+        }
+
         private void MenuProjectSettings_OnClick(object sender, RoutedEventArgs e)
         {
+            // Show project settings window.
             ProjectSettingsWindow dlg = new ProjectSettingsWindow
                 {
                     Owner = this,
                     DataContext = this.Context.ProjectSettings
                 };
             dlg.ShowDialog();
+
+            // Update window title as soon as settings window is closed by the user.
+            this.UpdateWindowTitle();
         }
-        
+
         private void OnEntityComponentTypesChanged()
         {
             // Update component table.
             InspectorComponentTable.LoadComponents();
 
             this.BlueprintControl.AvailableComponentTypes = this.Context.AvailableComponentTypes;
-        } 
+        }
 
         private void SaveContext(string path)
         {
@@ -199,6 +223,22 @@ namespace BlueprintEditor.Windows
         {
             BlueprintSelectionChangedEventArgs eventArgs = ((BlueprintSelectionChangedEventArgs)e);
             this.BlueprintControl.DataContext = eventArgs.Blueprint;
+        }
+
+        /// <summary>
+        ///   Updates the title of the main window, showing the current project name if available.
+        /// </summary>
+        private void UpdateWindowTitle()
+        {
+            if (this.Context != null && this.Context.ProjectSettings != null
+                && !string.IsNullOrEmpty(this.Context.ProjectSettings.Name))
+            {
+                this.Title = string.Format("{0} - {1}", MainWindowTitle, this.Context.ProjectSettings.Name);
+            }
+            else
+            {
+                this.Title = MainWindowTitle;
+            }
         }
 
         #endregion
