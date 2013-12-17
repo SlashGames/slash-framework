@@ -84,6 +84,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Source\Inspectors\InspectorPropertyData.cs" />
+    <Compile Include="Source\Windows\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Windows\ProjectSettingsWindow.xaml.cs">
       <DependentUpon>ProjectSettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Source\Controls\Templates\TextBoxErrorTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,9 +193,8 @@
     <Resource Include="Resources\Images\Icons\NewSolutionFolder_6289.png" />
     <Resource Include="Resources\Images\Icons\Open_6529.png" />
     <Resource Include="Resources\Images\Icons\Save_6530.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\Icons\Icon_slashgames_RGB.ico" />
+    <Resource Include="Resources\Images\Icons\StatusAnnotations_Help_and_inconclusive_16xMD.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

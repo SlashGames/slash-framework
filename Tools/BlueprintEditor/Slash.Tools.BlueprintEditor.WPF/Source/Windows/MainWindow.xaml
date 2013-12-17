@@ -60,6 +60,13 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header = "_HELP">
+                <MenuItem Header = "_About Blueprint Editor" Name = "MenuHelpAbout" Click="MenuHelpAbout_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/StatusAnnotations_Help_and_inconclusive_16xMD.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
         </Menu>
 
         <Grid Grid.Row = "1" Style = "{StaticResource ProjectDependentStyle}">

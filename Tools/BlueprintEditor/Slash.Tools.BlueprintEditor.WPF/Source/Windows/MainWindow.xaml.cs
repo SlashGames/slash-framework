@@ -159,6 +159,12 @@ namespace BlueprintEditor.Windows
             this.SaveContext(this.Context.SerializationPath);
         }
 
+        private void MenuHelpAbout_OnClick(object sender, RoutedEventArgs e)
+        {
+            AboutWindow dlg = new AboutWindow { Owner = this };
+            dlg.ShowDialog();
+        }
+
         private void MenuProjectSettings_OnClick(object sender, RoutedEventArgs e)
         {
             // Show project settings window.
