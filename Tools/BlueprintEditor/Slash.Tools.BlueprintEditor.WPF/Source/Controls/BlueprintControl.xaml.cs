@@ -175,6 +175,9 @@ namespace BlueprintEditor.Controls
                     continue;
                 }
 
+                // Setup control.
+                propertyControl.ToolTip = inspectorProperty.Description;
+
                 // Subscribe for change of value.
                 propertyControl.ValueChanged += this.OnPropertyControlValueChanged;
 

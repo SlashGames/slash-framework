@@ -38,6 +38,11 @@ namespace Slash.GameBase.Inspector.Attributes
         public object Default { get; set; }
 
         /// <summary>
+        ///   A user-friendly description of the property.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         ///   Property name to be shown in the inspector.
         /// </summary>
         public string Name { get; set; }

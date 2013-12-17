@@ -1,14 +1,21 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ComponentToolTipConverter.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace BlueprintEditor.Converters
 {
     using System;
     using System.Globalization;
-    using System.Windows;
     using System.Windows.Data;
 
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public class ComponentToolTipConverter : IValueConverter
     {
+        #region Public Methods and Operators
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
@@ -25,5 +32,7 @@ namespace BlueprintEditor.Converters
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

@@ -38,7 +38,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <summary>
         ///   Test attribute.
         /// </summary>
-        [InspectorBool(AttributeValue, Default = DefaultValue)]
+        [InspectorBool(AttributeValue, Description = "Test bool attribute", Default = DefaultValue)]
         public bool Value
         {
             get

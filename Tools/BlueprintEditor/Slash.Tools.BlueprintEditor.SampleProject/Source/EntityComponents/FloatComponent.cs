@@ -38,7 +38,8 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <summary>
         ///   Test attribute.
         /// </summary>
-        [InspectorFloat(AttributeValue, Default = DefaultValue, Min = -128.0f, Max = 127.87f)]
+        [InspectorFloat(AttributeValue, Description = "Test float attribute", Default = DefaultValue, Min = -128.0f,
+            Max = 127.87f)]
         public float Value
         {
             get
