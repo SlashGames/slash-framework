@@ -8,7 +8,8 @@
     mc:Ignorable = "d"
     x:Class = "BlueprintEditor.Windows.MainWindow"
     Title = "MainWindow" Height = "600" Width = "800" Name = "Main"
-    d:DataContext = "{d:DesignInstance context:EditorContext}">
+    d:DataContext = "{d:DesignInstance context:EditorContext}"
+    Loaded="MainWindow_OnLoaded">
     <Window.Resources>
         <Style TargetType = "FrameworkElement" x:Key = "ProjectDependentStyle">
             <Style.Triggers>
