@@ -131,7 +131,7 @@ namespace BlueprintEditor.Windows
             }
             catch (SerializationException exception)
             {
-                MessageBox.Show(exception.Message, "Loading failed");
+                EditorDialog.Error("Unable to load project", exception.Message);
             }
         }
 

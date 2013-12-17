@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Images\Icons\Icon_slashgames_RGB.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -53,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Source\Controls\EditorDialog.cs" />
     <Compile Include="Source\Converters\AssemblyToNameConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Source\Controls\BlueprintControlContext.cs" />
@@ -182,6 +186,9 @@
     <Resource Include="Resources\Images\Icons\NewSolutionFolder_6289.png" />
     <Resource Include="Resources\Images\Icons\Open_6529.png" />
     <Resource Include="Resources\Images\Icons\Save_6530.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\Icon_slashgames_RGB.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,7 +7,7 @@
     xmlns:context = "clr-namespace:Slash.Tools.BlueprintEditor.Logic.Context;assembly=Slash.Tools.BlueprintEditor.Logic"
     mc:Ignorable = "d"
     x:Class = "BlueprintEditor.Windows.MainWindow"
-    Title = "MainWindow" Height = "480" Width = "525" Name = "Main"
+    Title = "MainWindow" Height = "600" Width = "800" Name = "Main"
     d:DataContext = "{d:DesignInstance context:EditorContext}">
     <Window.Resources>
         <Style TargetType = "FrameworkElement" x:Key = "ProjectDependentStyle">

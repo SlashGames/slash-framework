@@ -176,8 +176,7 @@ namespace BlueprintEditor.Controls
             }
             catch (ArgumentException ex)
             {
-                SystemSounds.Hand.Play();
-                MessageBox.Show(ex.Message);
+                EditorDialog.Error("Unable to add blueprint", ex.Message);
             }
 
             // Clear textbox.
