@@ -64,12 +64,12 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header = "_EDIT" Style = "{StaticResource ProjectDependentStyle}">
-                <MenuItem Header = "_Undo" Command = "{x:Static commands:MenuCommands.EditUndoCommand}">
+                <MenuItem Header = "{Binding UndoDescription}" Command = "{x:Static commands:MenuCommands.EditUndoCommand}">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Undo_16x.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header = "_Redo" Command = "{x:Static commands:MenuCommands.EditRedoCommand}">
+                <MenuItem Header = "{Binding RedoDescription}" Command = "{x:Static commands:MenuCommands.EditRedoCommand}">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Redo_16x.png" />
                     </MenuItem.Icon>

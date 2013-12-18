@@ -191,7 +191,16 @@ namespace BlueprintEditor.ViewModels
                     this.blueprintManager.AddBlueprint(item.BlueprintId, item.Blueprint);
                 }
 
-                undoMessage = "Blueprint added";
+                if (e.NewItems.Count == 1)
+                {
+                    BlueprintViewModel item = (BlueprintViewModel)e.NewItems[0];
+                    undoMessage = string.Format("Add blueprint '{0}'", item.BlueprintId);
+                }
+                else
+                {
+                    undoMessage = "Add blueprints";
+                }
+
                 foreach (BlueprintViewModel item in e.NewItems)
                 {
                     item.Root = this;
@@ -205,7 +214,16 @@ namespace BlueprintEditor.ViewModels
                     this.blueprintManager.RemoveBlueprint(item.BlueprintId);
                 }
 
-                undoMessage = "Blueprint removed";
+                if (e.OldItems.Count == 1)
+                {
+                    BlueprintViewModel item = (BlueprintViewModel)e.OldItems[0];
+                    undoMessage = string.Format("Remove blueprint '{0}'", item.BlueprintId);
+                }
+                else
+                {
+                    undoMessage = "Remove blueprints";
+                }
+
                 foreach (BlueprintViewModel item in e.OldItems)
                 {
                     item.Root = null;
