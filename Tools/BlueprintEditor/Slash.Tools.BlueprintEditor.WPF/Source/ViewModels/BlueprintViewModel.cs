@@ -11,9 +11,11 @@ namespace BlueprintEditor.ViewModels
 
     using BlueprintEditor.Annotations;
 
+    using MonitoredUndo;
+
     using Slash.GameBase.Blueprints;
 
-    public class BlueprintViewModel : INotifyPropertyChanged
+    public class BlueprintViewModel : INotifyPropertyChanged, ISupportsUndo
     {
         #region Fields
 
@@ -73,6 +75,17 @@ namespace BlueprintEditor.ViewModels
         ///   Blueprint manager the blueprint belongs to.
         /// </summary>
         public BlueprintManager BlueprintManager { get; set; }
+
+        public object Root { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public object GetUndoRoot()
+        {
+            return this.Root;
+        }
 
         #endregion
 

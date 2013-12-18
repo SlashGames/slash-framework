@@ -9,14 +9,17 @@ namespace BlueprintEditor.ViewModels
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
     using System.Windows.Data;
 
+    using MonitoredUndo;
+
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
 
-    public class BlueprintManagerViewModel : INotifyPropertyChanged, IDataErrorInfo
+    public class BlueprintManagerViewModel : INotifyPropertyChanged, IDataErrorInfo, ISupportsUndo
     {
         #region Fields
 
@@ -33,7 +36,17 @@ namespace BlueprintEditor.ViewModels
         public BlueprintManagerViewModel(BlueprintManager blueprintManager)
         {
             this.blueprintManager = blueprintManager;
-            this.UpdateBlueprints();
+
+            this.Blueprints = new ObservableCollection<BlueprintViewModel>();
+
+            IEnumerable<KeyValuePair<string, Blueprint>> blueprints = this.blueprintManager.Blueprints;
+            foreach (var blueprintPair in blueprints)
+            {
+                this.Blueprints.Add(
+                    new BlueprintViewModel { BlueprintId = blueprintPair.Key, Blueprint = blueprintPair.Value });
+            }
+
+            this.Blueprints.CollectionChanged += this.OnBlueprintsChanged;
         }
 
         #endregion
@@ -70,7 +83,13 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
-        public string Error { get; private set; }
+        public string Error
+        {
+            get
+            {
+                return null;
+            }
+        }
 
         public string NewBlueprintId
         {
@@ -128,14 +147,17 @@ namespace BlueprintEditor.ViewModels
 
         public void CreateNewBlueprint()
         {
-            Blueprint newBlueprint = new Blueprint();
-            this.blueprintManager.AddBlueprint(this.newBlueprintId, newBlueprint);
-
             // Update blueprint view models.
-            this.Blueprints.Add(new BlueprintViewModel { BlueprintId = this.newBlueprintId, Blueprint = newBlueprint });
+            this.Blueprints.Add(
+                new BlueprintViewModel { BlueprintId = this.newBlueprintId, Blueprint = new Blueprint() });
 
             // Clear blueprint id.
             this.NewBlueprintId = String.Empty;
+        }
+
+        public object GetUndoRoot()
+        {
+            return this;
         }
 
         public void RemoveBlueprint(string blueprintId)
@@ -158,16 +180,41 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
-        private void UpdateBlueprints()
+        private void OnBlueprintsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            this.Blueprints = new ObservableCollection<BlueprintViewModel>();
-            IEnumerable<KeyValuePair<string, Blueprint>> blueprints = this.blueprintManager.Blueprints;
-            foreach (var blueprintPair in blueprints)
+            string undoMessage = null;
+            if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                this.Blueprints.Add(
-                    new BlueprintViewModel { BlueprintId = blueprintPair.Key, Blueprint = blueprintPair.Value });
+                // Update blueprints in blueprint manager.
+                foreach (BlueprintViewModel item in e.NewItems)
+                {
+                    this.blueprintManager.AddBlueprint(item.BlueprintId, item.Blueprint);
+                }
+
+                undoMessage = "Blueprint added";
+                foreach (BlueprintViewModel item in e.NewItems)
+                {
+                    item.Root = this;
+                }
             }
-            this.OnPropertyChanged("Blueprints");
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                // Update blueprints in blueprint manager.
+                foreach (BlueprintViewModel item in e.OldItems)
+                {
+                    this.blueprintManager.RemoveBlueprint(item.BlueprintId);
+                }
+
+                undoMessage = "Blueprint removed";
+                foreach (BlueprintViewModel item in e.OldItems)
+                {
+                    item.Root = null;
+                }
+            }
+
+            // This line will log the collection change with the undo framework.
+            DefaultChangeFactory.Current.OnCollectionChanged(
+                this, "Blueprints", this.Blueprints, e, undoMessage ?? "Collection of Blueprints changed");
         }
 
         #endregion
