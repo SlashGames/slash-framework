@@ -75,6 +75,21 @@ namespace BlueprintEditor.Windows
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///   Gets whether there's an active project set at the context.
+        /// </summary>
+        private bool ProjectActive
+        {
+            get
+            {
+                return this.Context != null && this.Context.ProjectSettings != null;
+            }
+        }
+
+        #endregion
+
         #region Methods
 
         private void CanExecuteEditRedo(object sender, CanExecuteRoutedEventArgs e)
@@ -85,6 +100,31 @@ namespace BlueprintEditor.Windows
         private void CanExecuteEditUndo(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.Context.CanExecuteUndo();
+        }
+
+        private void CanExecuteFileClose(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CanExecuteFileOpen(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CanExecuteFileSave(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.ProjectActive;
+        }
+
+        private void CanExecuteFileSaveAs(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.ProjectActive;
+        }
+
+        private void CanExecuteHelpAbout(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
 
         /// <summary>
@@ -109,30 +149,18 @@ namespace BlueprintEditor.Windows
             this.Context.Undo();
         }
 
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        private void ExecutedFileAbout(object sender, RoutedEventArgs e)
         {
-            this.UpdateWindowTitle();
+            AboutWindow dlg = new AboutWindow { Owner = this };
+            dlg.ShowDialog();
         }
 
-        private void MenuFileExit_OnClick(object sender, RoutedEventArgs e)
+        private void ExecutedFileExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
-        private void MenuFileNew_OnClick(object sender, RoutedEventArgs e)
-        {
-            // Check if context changed and should be saved before continuing.
-            if (!this.CheckContextChange())
-            {
-                return;
-            }
-
-            // Create new blueprint manager.
-            this.Context.New();
-            this.UpdateWindowTitle();
-        }
-
-        private void MenuFileOpen_OnClick(object sender, RoutedEventArgs e)
+        private void ExecutedFileOpen(object sender, RoutedEventArgs e)
         {
             // Check if context changed and should be saved before continuing.
             if (!this.CheckContextChange())
@@ -170,20 +198,32 @@ namespace BlueprintEditor.Windows
             }
         }
 
-        private void MenuFileSaveAs_OnClick(object sender, RoutedEventArgs e)
-        {
-            this.SaveContext(null);
-        }
-
-        private void MenuFileSave_OnClick(object sender, RoutedEventArgs e)
+        private void ExecutedFileSave(object sender, RoutedEventArgs e)
         {
             this.SaveContext(this.Context.SerializationPath);
         }
 
-        private void MenuHelpAbout_OnClick(object sender, RoutedEventArgs e)
+        private void ExecutedSaveAs(object sender, RoutedEventArgs e)
         {
-            AboutWindow dlg = new AboutWindow { Owner = this };
-            dlg.ShowDialog();
+            this.SaveContext(null);
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.UpdateWindowTitle();
+        }
+
+        private void MenuFileNew_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Check if context changed and should be saved before continuing.
+            if (!this.CheckContextChange())
+            {
+                return;
+            }
+
+            // Create new blueprint manager.
+            this.Context.New();
+            this.UpdateWindowTitle();
         }
 
         private void MenuProjectSettings_OnClick(object sender, RoutedEventArgs e)
