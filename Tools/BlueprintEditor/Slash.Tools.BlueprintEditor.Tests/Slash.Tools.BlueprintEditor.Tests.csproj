@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{57BDCC2E-453D-4593-9467-39FC5C90141E}</ProjectGuid>
+    <ProjectGuid>{9CBFF8BB-140F-49DF-81A4-FC1855F136F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Slash.Tools.BlueprintEditor.Logic</RootNamespace>
-    <AssemblyName>Slash.Tools.BlueprintEditor.Logic</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RootNamespace>Slash.Tools.BlueprintEditor.Tests</RootNamespace>
+    <AssemblyName>Slash.Tools.BlueprintEditor.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,35 +30,39 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\Context\ProjectSettings.cs" />
-    <Compile Include="Source\Data\ComponentUtils.cs" />
-    <Compile Include="Source\Data\InspectorComponent.cs" />
-    <Compile Include="Source\Data\InspectorComponentTable.cs" />
+    <Reference Include="MonitoredUndo35">
+      <HintPath>..\packages\MUF.1.2.1\lib\net35\MonitoredUndo35.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\Source\Slash.GameBase.Tests\bin\Debug\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Monitored Undo Documentation.docx" />
-    <None Include="packages.config" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\ViewModels\BlueprintManagerViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Slash.GameBase\Slash.GameBase.csproj">
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
       <Name>Slash.GameBase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\Slash.Reflection\Slash.Reflection.csproj">
-      <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>
-      <Name>Slash.Reflection</Name>
+    <ProjectReference Include="..\Slash.Tools.BlueprintEditor.Logic\Slash.Tools.BlueprintEditor.Logic.csproj">
+      <Project>{57bdcc2e-453d-4593-9467-39fc5c90141e}</Project>
+      <Name>Slash.Tools.BlueprintEditor.Logic</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="MonitoredUndo35">
-      <HintPath>..\packages\MUF.1.2.1\lib\net35\MonitoredUndo35.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\Slash.Tools.BlueprintEditor.WPF\Slash.Tools.BlueprintEditor.WPF.csproj">
+      <Project>{6b9babe2-4d7f-4bc9-b5ad-587538c6edec}</Project>
+      <Name>Slash.Tools.BlueprintEditor.WPF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

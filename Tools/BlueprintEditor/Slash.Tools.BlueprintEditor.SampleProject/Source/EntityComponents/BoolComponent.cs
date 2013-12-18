@@ -10,7 +10,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
     using Slash.GameBase.Components;
     using Slash.GameBase.Inspector.Attributes;
 
-    [InspectorComponent]
+    [InspectorComponent(Description = "A test component with a boolean attribute.")]
     public class BoolComponent : IEntityComponent
     {
         #region Constants
@@ -38,7 +38,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <summary>
         ///   Test attribute.
         /// </summary>
-        [InspectorBool(AttributeValue, Default = DefaultValue)]
+        [InspectorBool(AttributeValue, Description = "Test bool attribute", Default = DefaultValue)]
         public bool Value
         {
             get

@@ -3,22 +3,20 @@
              xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
-             xmlns:blueprints = "clr-namespace:Slash.GameBase.Blueprints;assembly=Slash.GameBase"
-             xmlns:converters = "clr-namespace:BlueprintEditor.Converters"
+             xmlns:commands="clr-namespace:BlueprintEditor.Commands"
+             xmlns:viewModels="clr-namespace:BlueprintEditor.ViewModels"
              mc:Ignorable = "d"
              d:DesignHeight = "343" d:DesignWidth = "200"
-             d:DataContext = "{d:DesignInstance blueprints:BlueprintManager}" Name = "MainControl">
+             d:DataContext = "{d:DesignInstance viewModels:BlueprintManagerViewModel}" Name = "MainControl">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source = "../Controls/Templates/TextBoxErrorTemplate.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-            <converters:StringNullOrEmptyConverter x:Key = "StringNullOrEmptyConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.CommandBindings>
-        <CommandBinding Command = "{x:Static controls:BlueprintTreeView.NewBlueprintCommand}"
+        <CommandBinding Command = "{x:Static commands:BlueprintManagerCommands.NewBlueprintCommand}"
                         Executed = "ExecutedCreateNewBlueprint" CanExecute = "CanExecuteCreateNewBlueprint" />
     </UserControl.CommandBindings>
     <Grid>
@@ -32,9 +30,9 @@
             </Style>
         </Grid.Style>
 
-        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top" ToolTip = "Available Blueprints">
+        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top" ToolTip = "Available Blueprints" ItemsSource="{Binding BlueprintsView}">
             <TreeView.ItemTemplate>
-                <DataTemplate DataType = "controls:BlueprintTreeViewItem">
+                <DataTemplate DataType = "viewModels:BlueprintViewModel">
                     <TextBlock Text = "{Binding BlueprintId}" />
                 </DataTemplate>
             </TreeView.ItemTemplate>
@@ -46,19 +44,19 @@
                  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "159" ToolTip = "Id of new blueprint"
                  Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}">
             <TextBox.Text>
-                <Binding ElementName = "MainControl" Path = "NewBlueprintId" UpdateSourceTrigger = "PropertyChanged">
+                <Binding Path = "NewBlueprintId" UpdateSourceTrigger = "PropertyChanged">
                     <Binding.ValidationRules>
                         <DataErrorValidationRule />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
             <TextBox.InputBindings>
-                <KeyBinding Command = "{x:Static controls:BlueprintTreeView.NewBlueprintCommand}" Key = "Enter" />
+                <KeyBinding Command = "{x:Static commands:BlueprintManagerCommands.NewBlueprintCommand}" Key = "Enter" />
             </TextBox.InputBindings>
         </TextBox>
         <Button x:Name = "BtNewBlueprint" Content = "New" HorizontalAlignment = "Right" Margin = "164,295,0,0"
                 VerticalAlignment = "Top" Width = "36"
-                Command = "{x:Static controls:BlueprintTreeView.NewBlueprintCommand}"
+                Command = "{x:Static commands:BlueprintManagerCommands.NewBlueprintCommand}"
                 RenderTransformOrigin = "-0.511,0.109" Height = "23" ToolTip = "Create new blueprint with entered id">
         </Button>
     </Grid>

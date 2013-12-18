@@ -35,6 +35,11 @@ namespace Slash.GameBase.Inspector.Attributes
         public bool CanBeRemoved { get; set; }
 
         /// <summary>
+        ///   A user-friendly description of the component.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         ///   Component priority. Specifies the position the component appears within lists.
         ///   A lower value indicates a higher priority.
         /// </summary>

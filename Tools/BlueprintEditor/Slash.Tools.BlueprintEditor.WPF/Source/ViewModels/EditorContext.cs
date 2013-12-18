@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Tools.BlueprintEditor.Logic.Context
+namespace BlueprintEditor.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -14,8 +14,11 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
     using System.Runtime.Serialization;
     using System.Xml.Serialization;
 
+    using MonitoredUndo;
+
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
+    using Slash.Tools.BlueprintEditor.Logic.Context;
 
     public sealed class EditorContext : INotifyPropertyChanged
     {
@@ -43,6 +46,8 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         ///   Active blueprint manager.
         /// </summary>
         private BlueprintManager blueprintManager;
+
+        private BlueprintManagerViewModel blueprintManagerViewModel;
 
         #endregion
 
@@ -106,6 +111,27 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 
                 // Raise event.
                 this.OnPropertyChanged("BlueprintManager");
+
+                this.BlueprintManagerViewModel = new BlueprintManagerViewModel(this.blueprintManager);
+            }
+        }
+
+        public BlueprintManagerViewModel BlueprintManagerViewModel
+        {
+            get
+            {
+                return this.blueprintManagerViewModel;
+            }
+            set
+            {
+                if (value == this.blueprintManagerViewModel)
+                {
+                    return;
+                }
+
+                this.blueprintManagerViewModel = value;
+
+                this.OnPropertyChanged("BlueprintManagerViewModel");
             }
         }
 
@@ -122,6 +148,16 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         #endregion
 
         #region Public Methods and Operators
+
+        public bool CanExecuteRedo()
+        {
+            return UndoService.Current[this.BlueprintManagerViewModel].CanRedo;
+        }
+
+        public bool CanExecuteUndo()
+        {
+            return UndoService.Current[this.BlueprintManagerViewModel].CanUndo;
+        }
 
         public void Load(string path)
         {
@@ -178,6 +214,11 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             this.SetProject(newProjectSettings);
         }
 
+        public void Redo()
+        {
+            UndoService.Current[this.BlueprintManagerViewModel].Redo();
+        }
+
         public void Save()
         {
             if (this.ProjectSettings == null)
@@ -205,6 +246,11 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             var fileStream = new FileStream(this.SerializationPath, FileMode.Create);
             this.projectSettingsSerializer.Serialize(fileStream, this.ProjectSettings);
             fileStream.Close();
+        }
+
+        public void Undo()
+        {
+            UndoService.Current[this.BlueprintManagerViewModel].Undo();
         }
 
         #endregion

@@ -4,11 +4,11 @@
     xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
-    xmlns:context = "clr-namespace:Slash.Tools.BlueprintEditor.Logic.Context;assembly=Slash.Tools.BlueprintEditor.Logic"
+    xmlns:viewModels="clr-namespace:BlueprintEditor.ViewModels" xmlns:commands="clr-namespace:BlueprintEditor.Commands"
     mc:Ignorable = "d"
     x:Class = "BlueprintEditor.Windows.MainWindow"
     Title = "MainWindow" Height = "600" Width = "800" Name = "Main"
-    d:DataContext = "{d:DesignInstance context:EditorContext}"
+    d:DataContext = "{d:DesignInstance viewModels:EditorContext}"
     Loaded="MainWindow_OnLoaded">
     <Window.Resources>
         <Style TargetType = "FrameworkElement" x:Key = "ProjectDependentStyle">
@@ -19,6 +19,10 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static commands:MenuCommands.EditUndoCommand}" Executed="ExecutedEditUndo" CanExecute="CanExecuteEditUndo"></CommandBinding>
+        <CommandBinding Command="{x:Static commands:MenuCommands.EditRedoCommand}" Executed="ExecutedEditRedo" CanExecute="CanExecuteEditRedo"></CommandBinding>
+    </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto"></RowDefinition>
@@ -32,7 +36,7 @@
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/NewSolutionFolder_6289.png" />
                     </MenuItem.Icon>
-                </MenuItem> 
+                </MenuItem>
                 <MenuItem x:Name = "MenuFileOpen" Header = "_Open Project..." Click = "MenuFileOpen_OnClick">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Open_6529.png" />
@@ -53,6 +57,10 @@
                         <Image Source = "/Resources/Images/Icons/Close_16xLG.png" />
                     </MenuItem.Icon>
                 </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_EDIT" Style="{StaticResource ProjectDependentStyle}">
+                <MenuItem Header="_Undo" Command="{x:Static commands:MenuCommands.EditUndoCommand}"></MenuItem>
+                <MenuItem Header="_Redo" Command="{x:Static commands:MenuCommands.EditRedoCommand}"></MenuItem>
             </MenuItem>
             <MenuItem Header = "_PROJECT" Style = "{StaticResource ProjectDependentStyle}">
                 <MenuItem Header = "_Settings..." Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick">
@@ -105,7 +113,7 @@
             <controls:BlueprintTreeView x:Name = "TreeBlueprints"
                                         BlueprintSelectionChanged = "TreeBlueprints_OnBlueprintSelectionChanged"
                                         Grid.Column = "0" Margin = "10, 0, 10, 0"
-                                        DataContext = "{Binding BlueprintManager}" />
+                                        DataContext = "{Binding BlueprintManagerViewModel}" />
 
             <GroupBox Header = "Blueprint" Grid.Column = "1">
                 <controls:BlueprintControl x:Name = "BlueprintControl" />

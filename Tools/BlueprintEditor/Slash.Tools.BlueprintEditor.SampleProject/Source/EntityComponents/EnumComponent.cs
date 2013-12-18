@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BoolComponent.cs" company="Slash Games">
+// <copyright file="EnumComponent.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -13,13 +13,17 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
     public enum TestEnum
     {
         One,
+
         Forbidden,
+
         Two,
+
         Default,
+
         Three
     }
 
-    [InspectorComponent]
+    [InspectorComponent(Description = "A test component with a enum attribute.")]
     public class EnumComponent : IEntityComponent
     {
         #region Constants
@@ -47,7 +51,8 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <summary>
         ///   Test attribute.
         /// </summary>
-        [InspectorEnum(AttributeValue, typeof(TestEnum), Default = DefaultValue, ForbiddenValues = new object[]{TestEnum.Forbidden})]
+        [InspectorEnum(AttributeValue, typeof(TestEnum), Description = "Test enum attribute", Default = DefaultValue,
+            ForbiddenValues = new object[] { TestEnum.Forbidden })]
         public TestEnum Value
         {
             get

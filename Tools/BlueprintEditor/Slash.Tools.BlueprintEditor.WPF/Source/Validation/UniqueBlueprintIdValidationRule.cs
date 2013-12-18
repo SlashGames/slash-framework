@@ -10,24 +10,24 @@ namespace BlueprintEditor.Validation
     using System.Windows;
     using System.Windows.Controls;
 
-    using BlueprintEditor.Controls;
+    using BlueprintEditor.ViewModels;
 
     public class ValidationRuleData : DependencyObject
     {
         #region Static Fields
 
         public static readonly DependencyProperty ContextProperty = DependencyProperty.Register(
-            "Context", typeof(BlueprintControlContext), typeof(ValidationRuleData), new FrameworkPropertyMetadata(null));
+            "Context", typeof(BlueprintViewModel), typeof(ValidationRuleData), new FrameworkPropertyMetadata(null));
 
         #endregion
 
         #region Public Properties
 
-        public BlueprintControlContext Context
+        public BlueprintViewModel Context
         {
             get
             {
-                return (BlueprintControlContext)this.GetValue(ContextProperty);
+                return (BlueprintViewModel)this.GetValue(ContextProperty);
             }
             set
             {
