@@ -7,12 +7,11 @@
 namespace BlueprintEditor.Controls
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
 
+    using BlueprintEditor.Commands;
     using BlueprintEditor.Inspectors;
     using BlueprintEditor.ViewModels;
 
@@ -24,34 +23,6 @@ namespace BlueprintEditor.Controls
     /// </summary>
     public sealed partial class BlueprintControl
     {
-        #region Static Fields
-
-        public static readonly DependencyProperty AvailableComponentTypesProperty =
-            DependencyProperty.Register(
-                "AvailableComponentTypes",
-                typeof(IEnumerable<Type>),
-                typeof(BlueprintControl),
-                new FrameworkPropertyMetadata(null, OnAvailableComponentTypesChanged));
-
-        public static readonly DependencyProperty ContextProperty =
-            DependencyProperty.Register(
-                "BlueprintControlContext",
-                typeof(BlueprintControlContext),
-                typeof(BlueprintControl),
-                new FrameworkPropertyMetadata(null, OnContextChanged));
-
-        /// <summary>
-        ///   Command to add component to blueprint.
-        /// </summary>
-        public static ICommand AddComponentCommand = new RoutedCommand();
-
-        /// <summary>
-        ///   Command to remove component from blueprint.
-        /// </summary>
-        public static ICommand RemoveComponentCommand = new RoutedCommand();
-
-        #endregion
-
         #region Fields
 
         private readonly InspectorFactory inspectorFactory = new InspectorFactory();
@@ -67,65 +38,12 @@ namespace BlueprintEditor.Controls
         {
             this.InitializeComponent();
 
-            // Check if to disable control.
-            //this.IsEnabled = this.ShouldBeEnabled;
-        }
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        ///   All available entity component types which can be added to a blueprint.
-        /// </summary>
-        public IEnumerable<Type> AvailableComponentTypes
-        {
-            get
-            {
-                return (IEnumerable<Type>)this.GetValue(AvailableComponentTypesProperty);
-            }
-            set
-            {
-                this.SetValue(AvailableComponentTypesProperty, value);
-            }
-        }
-        
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///   Checks if the control should be enabled. It's only enabled when a context and a blueprint is set.
-        /// </summary>
-        private bool ShouldBeEnabled
-        {
-            get
-            {
-                return this.DataContext != null && ((BlueprintViewModel)this.DataContext).Blueprint != null;
-            }
+            this.DataContextChanged += this.OnDataContextChanged;
         }
 
         #endregion
 
         #region Methods
-
-        private static void OnAvailableComponentTypesChanged(
-            DependencyObject source, DependencyPropertyChangedEventArgs e)
-        {
-            BlueprintControl blueprintControl = ((BlueprintControl)source);
-            blueprintControl.UpdateAvailableComponents();
-        }
-
-        private static void OnContextChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
-        {
-            BlueprintControl blueprintControl = (BlueprintControl)source;
-            blueprintControl.UpdateBlueprintComponents();
-            blueprintControl.UpdateAvailableComponents();
-            blueprintControl.UpdateInspectors();
-
-            // Check if to disable control.
-            blueprintControl.IsEnabled = blueprintControl.ShouldBeEnabled;
-        }
 
         private void AddComponentInspectors(Type componentType, Panel panel)
         {
@@ -152,9 +70,7 @@ namespace BlueprintEditor.Controls
             {
                 // Get current value.
                 object propertyValue;
-                if (
-                    !viewModel.Blueprint.AttributeTable.TryGetValue(
-                        inspectorProperty.Name, out propertyValue))
+                if (!viewModel.Blueprint.AttributeTable.TryGetValue(inspectorProperty.Name, out propertyValue))
                 {
                     propertyValue = inspectorProperty.Default;
                 }
@@ -191,13 +107,6 @@ namespace BlueprintEditor.Controls
 
         private void ExecutedAddComponent(object sender, ExecutedRoutedEventArgs e)
         {
-            BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-            if (viewModel.Blueprint == null)
-            {
-                MessageBox.Show("No blueprint selected.");
-                return;
-            }
-
             // Get selected component type of available component types.
             Type componentType = (Type)this.LbComponentsAvailable.SelectedItem;
             if (componentType == null)
@@ -206,12 +115,8 @@ namespace BlueprintEditor.Controls
                 return;
             }
 
-            // Add component type to blueprint.
-            viewModel.Blueprint.ComponentTypes.Add(componentType);
-
-            // Remove from available, add to blueprint component types.
-            this.LbComponentsAvailable.Items.Remove(componentType);
-            this.LbComponentsAdded.Items.Add(componentType);
+            BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
+            viewModel.AddComponent(componentType);
 
             // Select component type.
             this.LbComponentsAdded.SelectedItem = componentType;
@@ -221,13 +126,6 @@ namespace BlueprintEditor.Controls
 
         private void ExecutedRemoveComponent(object sender, ExecutedRoutedEventArgs e)
         {
-            BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-            if (viewModel.Blueprint == null)
-            {
-                MessageBox.Show("No blueprint selected.");
-                return;
-            }
-
             // Get selected component type of added component types.
             Type componentType = (Type)this.LbComponentsAdded.SelectedItem;
             if (componentType == null)
@@ -236,14 +134,11 @@ namespace BlueprintEditor.Controls
                 return;
             }
 
-            // Remove component type from blueprint.
-            viewModel.Blueprint.ComponentTypes.Remove(componentType);
+            BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
 
-            // Remove from available, add to blueprint component types.
-            this.LbComponentsAdded.Items.Remove(componentType);
-            if (this.AvailableComponentTypes.Contains(componentType))
+            if (!viewModel.RemoveComponent(componentType))
             {
-                this.LbComponentsAvailable.Items.Add(componentType);
+                return;
             }
 
             // Select component type.
@@ -255,16 +150,21 @@ namespace BlueprintEditor.Controls
         private void LbComponentsAdded_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             // Send command.
-            RemoveComponentCommand.Execute(null);
+            BlueprintCommands.RemoveComponentCommand.Execute(null);
         }
 
         private void LbComponentsAvailable_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             // Send command.
-            AddComponentCommand.Execute(null);
+            BlueprintCommands.AddComponentCommand.Execute(null);
         }
 
         private void OnBlueprintComponentsChanged()
+        {
+            this.UpdateInspectors();
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             this.UpdateInspectors();
         }
@@ -288,61 +188,19 @@ namespace BlueprintEditor.Controls
             }
         }
 
-        private void UpdateAvailableComponents()
-        {
-            // Clear items.
-            this.LbComponentsAvailable.Items.Clear();
-
-            if (this.AvailableComponentTypes == null)
-            {
-                return;
-            }
-
-            // Add available component types.
-            BlueprintViewModel viewModel = this.DataContext as BlueprintViewModel;
-            foreach (var componentType in this.AvailableComponentTypes)
-            {
-                if (viewModel != null && viewModel.Blueprint != null
-                    && viewModel.Blueprint.ComponentTypes.Contains(componentType))
-                {
-                    continue;
-                }
-
-                this.LbComponentsAvailable.Items.Add(componentType);
-            }
-        }
-
-        private void UpdateBlueprintComponents()
-        {
-            // Clear items.
-            this.LbComponentsAdded.Items.Clear();
-
-            BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-            if (viewModel.Blueprint == null)
-            {
-                return;
-            }
-
-            // Add existing components.
-            foreach (var componentType in viewModel.Blueprint.ComponentTypes)
-            {
-                this.LbComponentsAdded.Items.Add(componentType);
-            }
-        }
-
         private void UpdateInspectors()
         {
             // Clear inspectors.
             this.AttributesPanel.Children.Clear();
 
             BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-            if (viewModel == null || viewModel.Blueprint == null)
+            if (viewModel == null || viewModel.AddedComponents == null)
             {
                 return;
             }
 
             // Add inspectors for blueprint components.
-            foreach (var componentType in viewModel.Blueprint.ComponentTypes)
+            foreach (var componentType in viewModel.AddedComponents)
             {
                 this.AddComponentInspectors(componentType, this.AttributesPanel);
             }

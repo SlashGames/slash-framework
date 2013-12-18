@@ -7,13 +7,13 @@
 namespace BlueprintEditor.Controls
 {
     using System;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Input;
 
+    using BlueprintEditor.Annotations;
     using BlueprintEditor.ViewModels;
-
-    using Slash.GameBase.Blueprints;
-    using Slash.Tools.BlueprintEditor.Logic.Context;
 
     public class BlueprintSelectionChangedEventArgs : RoutedEventArgs
     {
@@ -36,28 +36,8 @@ namespace BlueprintEditor.Controls
     /// <summary>
     ///   Interaction logic for BlueprintTreeView.xaml
     /// </summary>
-    public partial class BlueprintTreeView
+    public partial class BlueprintTreeView : INotifyPropertyChanged
     {
-        #region Static Fields
-
-        public static readonly RoutedEvent BlueprintSelectionChangedEvent =
-            EventManager.RegisterRoutedEvent(
-                "BlueprintSelectionChanged",
-                RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler),
-                typeof(BlueprintTreeView));
-
-        #endregion
-
-        #region Fields
-
-        /// <summary>
-        ///   Indicates that the tree view is currently updated, so no selection event should be raised.
-        /// </summary>
-        private bool isUpdating;
-
-        #endregion
-
         #region Constructors and Destructors
 
         /// <summary>
@@ -74,34 +54,19 @@ namespace BlueprintEditor.Controls
 
         #region Public Events
 
-        public event RoutedEventHandler BlueprintSelectionChanged
-        {
-            add
-            {
-                this.AddHandler(BlueprintSelectionChangedEvent, value);
-            }
-            remove
-            {
-                this.RemoveHandler(BlueprintSelectionChangedEvent, value);
-            }
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>
         ///   Returns the selected item.
         /// </summary>
-        private BlueprintViewModel SelectedItem
+        public BlueprintViewModel SelectedItem
         {
             get
             {
-                if (this.TvTree == null || this.TvTree.SelectedItem == null)
-                {
-                    return null;
-                }
-
                 return (BlueprintViewModel)this.TvTree.SelectedItem;
             }
         }
@@ -109,6 +74,16 @@ namespace BlueprintEditor.Controls
         #endregion
 
         #region Methods
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         private void BtDeleteBlueprint_OnClick(object sender, RoutedEventArgs e)
         {
@@ -147,22 +122,7 @@ namespace BlueprintEditor.Controls
 
         private void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (this.isUpdating)
-            {
-                return;
-            }
-
-            BlueprintViewModel selectedItem = (BlueprintViewModel)this.TvTree.SelectedItem;
-            this.OnSelectedItemChanged(selectedItem);
-        }
-
-        private void OnSelectedItemChanged(BlueprintViewModel selectedItem)
-        {
-            this.RaiseEvent(
-                new BlueprintSelectionChangedEventArgs(BlueprintSelectionChangedEvent, this)
-                    {
-                        Blueprint = selectedItem
-                    });
+            this.OnPropertyChanged("SelectedItem");
         }
 
         #endregion

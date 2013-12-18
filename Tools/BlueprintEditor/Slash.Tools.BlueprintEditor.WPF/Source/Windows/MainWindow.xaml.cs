@@ -46,11 +46,7 @@ namespace BlueprintEditor.Windows
         public MainWindow()
         {
             this.InitializeComponent();
-
-            this.Context.EntityComponentTypesChanged += this.OnEntityComponentTypesChanged;
-
-            this.OnEntityComponentTypesChanged();
-
+            
             this.DataContext = this.Context;
         }
 
@@ -199,15 +195,7 @@ namespace BlueprintEditor.Windows
             // Update window title as soon as settings window is closed by the user.
             this.UpdateWindowTitle();
         }
-
-        private void OnEntityComponentTypesChanged()
-        {
-            // Update component table.
-            InspectorComponentTable.LoadComponents();
-
-            this.BlueprintControl.AvailableComponentTypes = this.Context.AvailableComponentTypes;
-        }
-
+        
         private void SaveContext(string path)
         {
             // Check if already a path to save was set, otherwise request.
@@ -238,13 +226,7 @@ namespace BlueprintEditor.Windows
             this.Context.SerializationPath = path;
             this.Context.Save();
         }
-
-        private void TreeBlueprints_OnBlueprintSelectionChanged(object sender, RoutedEventArgs e)
-        {
-            BlueprintSelectionChangedEventArgs eventArgs = ((BlueprintSelectionChangedEventArgs)e);
-            this.BlueprintControl.DataContext = eventArgs.Blueprint;
-        }
-
+        
         /// <summary>
         ///   Updates the title of the main window, showing the current project name if available.
         /// </summary>

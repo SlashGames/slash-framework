@@ -18,12 +18,15 @@ namespace BlueprintEditor.ViewModels
 
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
+    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public class BlueprintManagerViewModel : INotifyPropertyChanged, IDataErrorInfo, ISupportsUndo
     {
         #region Fields
 
         private readonly BlueprintManager blueprintManager;
+
+        private IEnumerable<Type> assemblyComponents;
 
         private ListCollectionView blueprintsView;
 
@@ -43,7 +46,10 @@ namespace BlueprintEditor.ViewModels
             foreach (var blueprintPair in blueprints)
             {
                 this.Blueprints.Add(
-                    new BlueprintViewModel { BlueprintId = blueprintPair.Key, Blueprint = blueprintPair.Value });
+                    new BlueprintViewModel(blueprintPair.Key, blueprintPair.Value)
+                        {
+                            AssemblyComponents = this.assemblyComponents
+                        });
             }
 
             this.Blueprints.CollectionChanged += this.OnBlueprintsChanged;
@@ -58,6 +64,29 @@ namespace BlueprintEditor.ViewModels
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        ///   All available entity component types which can be added to a blueprint.
+        /// </summary>
+        public IEnumerable<Type> AssemblyComponents
+        {
+            get
+            {
+                return this.assemblyComponents;
+            }
+            set
+            {
+                this.assemblyComponents = value;
+
+                // Update component table.
+                InspectorComponentTable.LoadComponents();
+
+                foreach (var blueprintViewModel in this.Blueprints)
+                {
+                    blueprintViewModel.AssemblyComponents = value;
+                }
+            }
+        }
 
         public IEnumerable<KeyValuePair<string, Blueprint>> BlueprintPairs
         {
@@ -149,7 +178,10 @@ namespace BlueprintEditor.ViewModels
         {
             // Update blueprint view models.
             this.Blueprints.Add(
-                new BlueprintViewModel { BlueprintId = this.newBlueprintId, Blueprint = new Blueprint() });
+                new BlueprintViewModel(this.newBlueprintId, new Blueprint())
+                    {
+                        AssemblyComponents = this.assemblyComponents
+                    });
 
             // Clear blueprint id.
             this.NewBlueprintId = String.Empty;
