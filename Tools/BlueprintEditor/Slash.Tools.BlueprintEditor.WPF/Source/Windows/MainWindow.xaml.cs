@@ -8,13 +8,13 @@ namespace BlueprintEditor.Windows
 {
     using System.Runtime.Serialization;
     using System.Windows;
+    using System.Windows.Input;
 
     using BlueprintEditor.Controls;
     using BlueprintEditor.ViewModels;
 
     using Microsoft.Win32;
 
-    using Slash.Tools.BlueprintEditor.Logic.Context;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
@@ -77,6 +77,16 @@ namespace BlueprintEditor.Windows
 
         #region Methods
 
+        private void CanExecuteEditRedo(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.Context.CanExecuteRedo();
+        }
+
+        private void CanExecuteEditUndo(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.Context.CanExecuteUndo();
+        }
+
         /// <summary>
         ///   Checks if the context changed and what to do about it (save or discard changes).
         ///   The user can also choose to cancel, so the method returns if to continue execution.
@@ -87,6 +97,16 @@ namespace BlueprintEditor.Windows
             // TODO: Check if changed.
 
             return true;
+        }
+
+        private void ExecutedEditRedo(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Context.Redo();
+        }
+
+        private void ExecutedEditUndo(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Context.Undo();
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)

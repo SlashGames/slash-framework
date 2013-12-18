@@ -4,8 +4,7 @@
     xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
-    xmlns:context = "clr-namespace:Slash.Tools.BlueprintEditor.Logic.Context"
-    xmlns:viewModels="clr-namespace:BlueprintEditor.ViewModels"
+    xmlns:viewModels="clr-namespace:BlueprintEditor.ViewModels" xmlns:commands="clr-namespace:BlueprintEditor.Commands"
     mc:Ignorable = "d"
     x:Class = "BlueprintEditor.Windows.MainWindow"
     Title = "MainWindow" Height = "600" Width = "800" Name = "Main"
@@ -20,6 +19,10 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static commands:MenuCommands.EditUndoCommand}" Executed="ExecutedEditUndo" CanExecute="CanExecuteEditUndo"></CommandBinding>
+        <CommandBinding Command="{x:Static commands:MenuCommands.EditRedoCommand}" Executed="ExecutedEditRedo" CanExecute="CanExecuteEditRedo"></CommandBinding>
+    </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto"></RowDefinition>
@@ -54,6 +57,10 @@
                         <Image Source = "/Resources/Images/Icons/Close_16xLG.png" />
                     </MenuItem.Icon>
                 </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_EDIT" Style="{StaticResource ProjectDependentStyle}">
+                <MenuItem Header="_Undo" Command="{x:Static commands:MenuCommands.EditUndoCommand}"></MenuItem>
+                <MenuItem Header="_Redo" Command="{x:Static commands:MenuCommands.EditRedoCommand}"></MenuItem>
             </MenuItem>
             <MenuItem Header = "_PROJECT" Style = "{StaticResource ProjectDependentStyle}">
                 <MenuItem Header = "_Settings..." Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick">

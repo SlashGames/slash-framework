@@ -14,6 +14,8 @@ namespace BlueprintEditor.ViewModels
     using System.Runtime.Serialization;
     using System.Xml.Serialization;
 
+    using MonitoredUndo;
+
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
     using Slash.Tools.BlueprintEditor.Logic.Context;
@@ -147,6 +149,16 @@ namespace BlueprintEditor.ViewModels
 
         #region Public Methods and Operators
 
+        public bool CanExecuteRedo()
+        {
+            return UndoService.Current[this.BlueprintManagerViewModel].CanRedo;
+        }
+
+        public bool CanExecuteUndo()
+        {
+            return UndoService.Current[this.BlueprintManagerViewModel].CanUndo;
+        }
+
         public void Load(string path)
         {
             // Load project.
@@ -202,6 +214,11 @@ namespace BlueprintEditor.ViewModels
             this.SetProject(newProjectSettings);
         }
 
+        public void Redo()
+        {
+            UndoService.Current[this.BlueprintManagerViewModel].Redo();
+        }
+
         public void Save()
         {
             if (this.ProjectSettings == null)
@@ -229,6 +246,11 @@ namespace BlueprintEditor.ViewModels
             var fileStream = new FileStream(this.SerializationPath, FileMode.Create);
             this.projectSettingsSerializer.Serialize(fileStream, this.ProjectSettings);
             fileStream.Close();
+        }
+
+        public void Undo()
+        {
+            UndoService.Current[this.BlueprintManagerViewModel].Undo();
         }
 
         #endregion
