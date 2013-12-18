@@ -38,7 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonitoredUndo35">
-      <HintPath>..\packages\MUF.1.2.1\lib\net35\MonitoredUndo35.dll</HintPath>
+      <HintPath>..\..\..\Ext\MUF-1.2.1\NET35\MonitoredUndo35.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
