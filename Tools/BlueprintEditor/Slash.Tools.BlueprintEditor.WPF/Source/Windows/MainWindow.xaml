@@ -18,19 +18,23 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="Button" x:Key="ButtonActivityStyle">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Window.CommandBindings>
-        <CommandBinding Command = "{x:Static ApplicationCommands.Undo}" Executed = "ExecutedEditUndo"
-                        CanExecute = "CanExecuteEditUndo">
-        </CommandBinding>
-        <CommandBinding Command = "{x:Static ApplicationCommands.Redo}" Executed = "ExecutedEditRedo"
-                        CanExecute = "CanExecuteEditRedo">
-        </CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="ExecutedFileOpen" CanExecute="CanExecuteFileOpen"/>
+        <CommandBinding Command="ApplicationCommands.Save" Executed="ExecutedFileSave" CanExecute="CanExecuteFileSave" />
+        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="ExecutedSaveAs" CanExecute="CanExecuteFileSaveAs" />
+        <CommandBinding Command="ApplicationCommands.Close" Executed="ExecutedFileExit" CanExecute="CanExecuteFileClose" />
+        <CommandBinding Command="ApplicationCommands.Help" Executed="ExecutedFileAbout" CanExecute="CanExecuteHelpAbout" />
+        <CommandBinding Command="ApplicationCommands.Undo" Executed="ExecutedEditUndo" CanExecute="CanExecuteEditUndo" />
+        <CommandBinding Command="ApplicationCommands.Redo" Executed="ExecutedEditRedo" CanExecute="CanExecuteEditRedo" />
     </Window.CommandBindings>
-    <Window.InputBindings>
-        <KeyBinding Command="{x:Static ApplicationCommands.Undo}" Key="Z" Modifiers="Control"></KeyBinding>
-        <KeyBinding Command="{x:Static ApplicationCommands.Redo}" Key="Y" Modifiers="Control"></KeyBinding>
-    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto"></RowDefinition>
@@ -45,22 +49,20 @@
                         <Image Source = "/Resources/Images/Icons/NewSolutionFolder_6289.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name = "MenuFileOpen" Header = "_Open Project..." Click = "MenuFileOpen_OnClick">
+                <MenuItem x:Name = "MenuFileOpen" Header = "_Open Project..." Command="ApplicationCommands.Open">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Open_6529.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem x:Name = "MenuFileSave" Header = "_Save Project" Click = "MenuFileSave_OnClick"
-                          Style = "{StaticResource ProjectDependentStyle}">
+                <MenuItem x:Name = "MenuFileSave" Header = "_Save Project" Command="ApplicationCommands.Save">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Save_6530.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save Project _As..." Click = "MenuFileSaveAs_OnClick"
-                          Style = "{StaticResource ProjectDependentStyle}" />
+                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save Project _As..." Command="ApplicationCommands.SaveAs"/>
                 <Separator />
-                <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Click = "MenuFileExit_OnClick">
+                <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Command="ApplicationCommands.Close">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Close_16xLG.png" />
                     </MenuItem.Icon>
@@ -86,7 +88,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header = "_HELP">
-                <MenuItem Header = "_About Blueprint Editor" Name = "MenuHelpAbout" Click = "MenuHelpAbout_OnClick">
+                <MenuItem Header = "_About Blueprint Editor" Name = "MenuHelpAbout" Command="ApplicationCommands.Help">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/StatusAnnotations_Help_and_inconclusive_16xMD.png" />
                     </MenuItem.Icon>
@@ -96,14 +98,14 @@
 
         <ToolBarTray Grid.Row = "1">
             <ToolBar>
-                <Button Click = "MenuFileNew_OnClick">
+                <Button Click = "MenuFileNew_OnClick" Style="{StaticResource ButtonActivityStyle}">
                     <Image Source = "/Resources/Images/Icons/NewSolutionFolder_6289.png" />
                     <Button.ToolTip>
                         <TextBlock>New Project</TextBlock>
                     </Button.ToolTip>
                 </Button>
 
-                <Button Click = "MenuFileOpen_OnClick">
+                <Button Command="ApplicationCommands.Open" Style="{StaticResource ButtonActivityStyle}">
                     <Image Source = "/Resources/Images/Icons/Open_6529.png" />
                     <Button.ToolTip>
                         <TextBlock>Open Project</TextBlock>
@@ -112,7 +114,7 @@
 
                 <Separator />
 
-                <Button Click = "MenuFileSave_OnClick">
+                <Button Command="ApplicationCommands.Save" Style="{StaticResource ButtonActivityStyle}">
                     <Image Source = "/Resources/Images/Icons/Save_6530.png" />
                     <Button.ToolTip>
                         <TextBlock>Save Project</TextBlock>
