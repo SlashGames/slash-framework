@@ -4,12 +4,13 @@
     xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
-    xmlns:viewModels="clr-namespace:BlueprintEditor.ViewModels" xmlns:commands="clr-namespace:BlueprintEditor.Commands"
+    xmlns:viewModels = "clr-namespace:BlueprintEditor.ViewModels"
+    xmlns:commands = "clr-namespace:BlueprintEditor.Commands"
     mc:Ignorable = "d"
     x:Class = "BlueprintEditor.Windows.MainWindow"
     Title = "MainWindow" Height = "600" Width = "800" Name = "Main"
     d:DataContext = "{d:DesignInstance viewModels:EditorContext}"
-    Loaded="MainWindow_OnLoaded">
+    Loaded = "MainWindow_OnLoaded">
     <Window.Resources>
         <Style TargetType = "FrameworkElement" x:Key = "ProjectDependentStyle">
             <Style.Triggers>
@@ -20,8 +21,12 @@
         </Style>
     </Window.Resources>
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static commands:MenuCommands.EditUndoCommand}" Executed="ExecutedEditUndo" CanExecute="CanExecuteEditUndo"></CommandBinding>
-        <CommandBinding Command="{x:Static commands:MenuCommands.EditRedoCommand}" Executed="ExecutedEditRedo" CanExecute="CanExecuteEditRedo"></CommandBinding>
+        <CommandBinding Command = "{x:Static commands:MenuCommands.EditUndoCommand}" Executed = "ExecutedEditUndo"
+                        CanExecute = "CanExecuteEditUndo">
+        </CommandBinding>
+        <CommandBinding Command = "{x:Static commands:MenuCommands.EditRedoCommand}" Executed = "ExecutedEditRedo"
+                        CanExecute = "CanExecuteEditRedo">
+        </CommandBinding>
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -58,9 +63,17 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_EDIT" Style="{StaticResource ProjectDependentStyle}">
-                <MenuItem Header="_Undo" Command="{x:Static commands:MenuCommands.EditUndoCommand}"></MenuItem>
-                <MenuItem Header="_Redo" Command="{x:Static commands:MenuCommands.EditRedoCommand}"></MenuItem>
+            <MenuItem Header = "_EDIT" Style = "{StaticResource ProjectDependentStyle}">
+                <MenuItem Header = "_Undo" Command = "{x:Static commands:MenuCommands.EditUndoCommand}">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/Undo_16x.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header = "_Redo" Command = "{x:Static commands:MenuCommands.EditRedoCommand}">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/Redo_16x.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header = "_PROJECT" Style = "{StaticResource ProjectDependentStyle}">
                 <MenuItem Header = "_Settings..." Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick">
@@ -70,7 +83,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header = "_HELP">
-                <MenuItem Header = "_About Blueprint Editor" Name = "MenuHelpAbout" Click="MenuHelpAbout_OnClick">
+                <MenuItem Header = "_About Blueprint Editor" Name = "MenuHelpAbout" Click = "MenuHelpAbout_OnClick">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/StatusAnnotations_Help_and_inconclusive_16xMD.png" />
                     </MenuItem.Icon>
@@ -78,33 +91,33 @@
             </MenuItem>
         </Menu>
 
-        <ToolBarTray Grid.Row="1">
+        <ToolBarTray Grid.Row = "1">
             <ToolBar>
-                <Button Click="MenuFileNew_OnClick">
-                    <Image Source="/Resources/Images/Icons/NewSolutionFolder_6289.png" />
+                <Button Click = "MenuFileNew_OnClick">
+                    <Image Source = "/Resources/Images/Icons/NewSolutionFolder_6289.png" />
                     <Button.ToolTip>
                         <TextBlock>New Project</TextBlock>
                     </Button.ToolTip>
                 </Button>
 
-                <Button Click="MenuFileOpen_OnClick">
-                    <Image Source="/Resources/Images/Icons/Open_6529.png" />
+                <Button Click = "MenuFileOpen_OnClick">
+                    <Image Source = "/Resources/Images/Icons/Open_6529.png" />
                     <Button.ToolTip>
                         <TextBlock>Open Project</TextBlock>
                     </Button.ToolTip>
                 </Button>
 
                 <Separator />
-                
-                <Button Click="MenuFileSave_OnClick">
-                    <Image Source="/Resources/Images/Icons/Save_6530.png" />
+
+                <Button Click = "MenuFileSave_OnClick">
+                    <Image Source = "/Resources/Images/Icons/Save_6530.png" />
                     <Button.ToolTip>
                         <TextBlock>Save Project</TextBlock>
                     </Button.ToolTip>
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        
+
         <Grid Grid.Row = "2" Style = "{StaticResource ProjectDependentStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width = "Auto"></ColumnDefinition>
