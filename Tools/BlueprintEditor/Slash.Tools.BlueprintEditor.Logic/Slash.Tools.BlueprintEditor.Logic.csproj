@@ -39,10 +39,6 @@
     <Compile Include="Source\Data\InspectorComponentTable.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Monitored Undo Documentation.docx" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Slash.GameBase\Slash.GameBase.csproj">
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
       <Name>Slash.GameBase</Name>
@@ -54,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonitoredUndo35">
-      <HintPath>..\packages\MUF.1.2.1\lib\net35\MonitoredUndo35.dll</HintPath>
+      <HintPath>..\..\..\Ext\MUF-1.2.1\NET35\MonitoredUndo35.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />

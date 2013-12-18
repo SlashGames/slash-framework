@@ -129,7 +129,22 @@ namespace BlueprintEditor.ViewModels
                     return;
                 }
 
+                UndoRoot oldUndoRoot = this.UndoRoot;
+                if (oldUndoRoot != null)
+                {
+                    oldUndoRoot.UndoStackChanged -= this.OnUndoStackChanged;
+                    oldUndoRoot.RedoStackChanged -= this.OnRedoStackChanged;
+                }
+
                 this.blueprintManagerViewModel = value;
+
+                // Monitor undo system.
+                UndoRoot undoRoot = this.UndoRoot;
+                if (undoRoot != null)
+                {
+                    undoRoot.UndoStackChanged += this.OnUndoStackChanged;
+                    undoRoot.RedoStackChanged += this.OnRedoStackChanged;
+                }
 
                 this.OnPropertyChanged("BlueprintManagerViewModel");
             }
@@ -141,9 +156,50 @@ namespace BlueprintEditor.ViewModels
         public ProjectSettings ProjectSettings { get; set; }
 
         /// <summary>
+        ///   Dynamic description for redo action.
+        /// </summary>
+        public string RedoDescription
+        {
+            get
+            {
+                UndoRoot undoRoot = this.UndoRoot;
+                ChangeSet lastChange = undoRoot != null ? undoRoot.RedoStack.FirstOrDefault() : null;
+                return lastChange != null ? string.Format("_Redo '{0}'", lastChange.Description) : "_Redo";
+            }
+        }
+
+        /// <summary>
         ///   File path to store project xml at.
         /// </summary>
         public string SerializationPath { get; set; }
+
+        /// <summary>
+        ///   Dynamic description for undo action.
+        /// </summary>
+        public string UndoDescription
+        {
+            get
+            {
+                UndoRoot undoRoot = this.UndoRoot;
+                ChangeSet lastChange = undoRoot != null ? undoRoot.UndoStack.FirstOrDefault() : null;
+                return lastChange != null ? string.Format("_Undo '{0}'", lastChange.Description) : "_Undo";
+            }
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///   Returns the undo root for the current blueprint manager view model.
+        /// </summary>
+        private UndoRoot UndoRoot
+        {
+            get
+            {
+                return UndoService.Current[this.blueprintManagerViewModel];
+            }
+        }
 
         #endregion
 
@@ -283,6 +339,16 @@ namespace BlueprintEditor.ViewModels
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private void OnRedoStackChanged(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("RedoDescription");
+        }
+
+        private void OnUndoStackChanged(object sender, EventArgs eventArgs)
+        {
+            this.OnPropertyChanged("UndoDescription");
         }
 
         private void SetProject(ProjectSettings projectSettings, string serializationPath = null)
