@@ -53,6 +53,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\..\..\Ext\ExtendedWPFToolkit\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="Source\Application\App.xaml">
@@ -66,6 +69,12 @@
     <Compile Include="Source\Controls\EditorDialog.cs" />
     <Compile Include="Source\Converters\AssemblyToNameConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Source\Inspectors\SingleUpDownInspector.xaml.cs">
+      <DependentUpon>SingleUpDownInspector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Inspectors\IntegerUpDownInspector.xaml.cs">
+      <DependentUpon>IntegerUpDownInspector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\ViewModels\BlueprintControlContext.cs" />
     <Compile Include="Source\Controls\ProjectSettingsControl.xaml.cs">
       <DependentUpon>ProjectSettingsControl.xaml</DependentUpon>
@@ -116,6 +125,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Inspectors\ComboBoxInspector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Source\Inspectors\SingleUpDownInspector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Source\Inspectors\IntegerUpDownInspector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
