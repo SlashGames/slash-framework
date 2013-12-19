@@ -42,11 +42,6 @@ namespace BlueprintEditor.ViewModels
 
         private readonly XmlSerializer projectSettingsSerializer;
 
-        /// <summary>
-        ///   Active blueprint manager.
-        /// </summary>
-        private BlueprintManager blueprintManager;
-
         private BlueprintManagerViewModel blueprintManagerViewModel;
 
         #endregion
@@ -68,11 +63,11 @@ namespace BlueprintEditor.ViewModels
 
         public delegate void BlueprintManagerChangedDelegate(
             BlueprintManager newBlueprintManager, BlueprintManager oldBlueprintManager);
-        
+
         #endregion
 
         #region Public Events
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
@@ -84,34 +79,6 @@ namespace BlueprintEditor.ViewModels
             get
             {
                 return this.ProjectSettings != null ? this.ProjectSettings.EntityComponentTypes : null;
-            }
-        }
-
-        /// <summary>
-        ///   Blueprint manager which is edited.
-        /// </summary>
-        public BlueprintManager BlueprintManager
-        {
-            get
-            {
-                return this.blueprintManager;
-            }
-            private set
-            {
-                if (ReferenceEquals(value, this.blueprintManager))
-                {
-                    return;
-                }
-
-                this.blueprintManager = value;
-
-                // Raise event.
-                this.OnPropertyChanged("BlueprintManager");
-
-                this.BlueprintManagerViewModel = new BlueprintManagerViewModel(this.blueprintManager)
-                    {
-                        AssemblyComponents = this.AvailableComponentTypes
-                    };
             }
         }
 
@@ -212,6 +179,18 @@ namespace BlueprintEditor.ViewModels
         public bool CanExecuteUndo()
         {
             return UndoService.Current[this.BlueprintManagerViewModel].CanUndo;
+        }
+
+        public void Close()
+        {
+            if (this.ProjectSettings == null)
+            {
+                return;
+            }
+
+            // TODO(co): Check for changes and ask user if to save before closing.
+
+            this.SetProject(null);
         }
 
         public void Load(string path)
@@ -354,11 +333,27 @@ namespace BlueprintEditor.ViewModels
             this.ProjectSettings = projectSettings;
             this.SerializationPath = serializationPath;
 
-            this.ProjectSettings.EntityComponentTypesChanged += this.OnEntityComponentTypesChanged;
+            if (this.ProjectSettings != null)
+            {
+                this.ProjectSettings.EntityComponentTypesChanged += this.OnEntityComponentTypesChanged;
 
-            // Set first blueprint file as active blueprint manager.
-            BlueprintFile firstBlueprintFile = this.ProjectSettings.BlueprintFiles.FirstOrDefault();
-            this.BlueprintManager = firstBlueprintFile != null ? firstBlueprintFile.BlueprintManager : null;
+                // Set first blueprint file as active blueprint manager.
+                BlueprintFile firstBlueprintFile = this.ProjectSettings.BlueprintFiles.FirstOrDefault();
+                BlueprintManager blueprintManager = firstBlueprintFile != null
+                                                        ? firstBlueprintFile.BlueprintManager
+                                                        : null;
+
+                this.BlueprintManagerViewModel = blueprintManager != null
+                                                     ? new BlueprintManagerViewModel(blueprintManager)
+                                                         {
+                                                             AssemblyComponents = this.AvailableComponentTypes
+                                                         }
+                                                     : null;
+            }
+            else
+            {
+                this.BlueprintManagerViewModel = null;
+            }
 
             // Raise events.
             this.OnPropertyChanged("ProjectSettings");
