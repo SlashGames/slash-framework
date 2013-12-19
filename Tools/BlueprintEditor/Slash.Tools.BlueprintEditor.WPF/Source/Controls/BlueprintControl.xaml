@@ -6,9 +6,10 @@
              xmlns:validation = "clr-namespace:BlueprintEditor.Validation"
              xmlns:blueprintEditor = "clr-namespace:BlueprintEditor"
              xmlns:converters = "clr-namespace:BlueprintEditor.Converters"
-             xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
+             xmlns:viewModels="clr-namespace:BlueprintEditor.ViewModels"
+             xmlns:commands="clr-namespace:BlueprintEditor.Commands"
              mc:Ignorable = "d"
-             d:DesignHeight = "300" d:DesignWidth = "300" Name = "Main">
+             d:DesignHeight = "300" d:DesignWidth = "300" Name = "Main" d:DataContext="{d:DesignInstance viewModels:BlueprintViewModel}">
     <UserControl.Resources>
         <blueprintEditor:BindingProxy x:Key = "Proxy" Data = "{Binding}" />
         <converters:TypeToClassNameConverter x:Key = "TypeToClassNameConverter" />
@@ -24,9 +25,9 @@
         </DataTemplate>
     </UserControl.Resources>
     <UserControl.CommandBindings>
-        <CommandBinding Command = "{x:Static controls:BlueprintControl.AddComponentCommand}"
+        <CommandBinding Command = "{x:Static commands:BlueprintCommands.AddComponentCommand}"
                         Executed = "ExecutedAddComponent" CanExecute = "CanExecuteAddComponent" />
-        <CommandBinding Command = "{x:Static controls:BlueprintControl.RemoveComponentCommand}"
+        <CommandBinding Command = "{x:Static commands:BlueprintCommands.RemoveComponentCommand}"
                         Executed = "ExecutedRemoveComponent" CanExecute = "CanExecuteRemoveComponent" />
     </UserControl.CommandBindings>
     <Grid>
@@ -47,7 +48,7 @@
                             <validation:UniqueBlueprintIdValidationRule>
                                 <validation:UniqueBlueprintIdValidationRule.Data>
                                     <validation:ValidationRuleData
-                                        Context = "{Binding Data, Source={StaticResource Proxy}}" />
+                                         Context = "{Binding Data, Source={StaticResource Proxy}}" />
                                 </validation:UniqueBlueprintIdValidationRule.Data>
                             </validation:UniqueBlueprintIdValidationRule>
                         </Binding.ValidationRules>
@@ -84,15 +85,16 @@
                             <Label Content = "Added:" Grid.Row = "0" ToolTip = "Already added components" />
                             <ListBox x:Name = "LbComponentsAdded" Grid.Row = "1"
                                      ItemTemplate = "{StaticResource ComponentListBoxItemTemplate}"
-                                     MouseDoubleClick = "LbComponentsAdded_OnMouseDoubleClick" />
+                                     MouseDoubleClick = "LbComponentsAdded_OnMouseDoubleClick" 
+                                     ItemsSource="{Binding AddedComponents}"/>
                         </Grid>
                         <StackPanel Grid.Column = "1" VerticalAlignment = "Center" Margin = "5, 0, 5, 0">
                             <Button x:Name = "BtAdd" Content = "&lt;-" Height = "30"
                                     Margin = "0, 10, 0, 10" ToolTip = "Add selected available component"
-                                    Command = "{x:Static controls:BlueprintControl.AddComponentCommand}" />
+                                    Command = "{x:Static commands:BlueprintCommands.AddComponentCommand}" />
                             <Button x:Name = "BtRemove" Content = "-&gt;" Height = "30"
                                     Margin = "0, 10, 0, 10" ToolTip = "Remove selected added component"
-                                    Command = "{x:Static controls:BlueprintControl.RemoveComponentCommand}" />
+                                    Command = "{x:Static commands:BlueprintCommands.RemoveComponentCommand}" />
                         </StackPanel>
                         <Grid Grid.Column = "2">
                             <Grid.RowDefinitions>
@@ -103,7 +105,8 @@
                                    ToolTip = "Additional available components from project assemblies" />
                             <ListBox x:Name = "LbComponentsAvailable" Grid.Row = "1"
                                      ItemTemplate = "{StaticResource ComponentListBoxItemTemplate}"
-                                     MouseDoubleClick = "LbComponentsAvailable_OnMouseDoubleClick" />
+                                     MouseDoubleClick = "LbComponentsAvailable_OnMouseDoubleClick"
+                                     ItemsSource="{Binding AvailableComponents}"/>
                         </Grid>
                     </Grid>
                 </AdornerDecorator>

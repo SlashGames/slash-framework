@@ -6,6 +6,7 @@
 
 namespace Slash.GameBase.Inspector.Attributes
 {
+    using System;
     using System.Globalization;
 
     using Slash.GameBase.Inspector.Validation;
@@ -77,7 +78,13 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <see cref="InspectorPropertyAttribute.ConvertFromString" />
         public override string ConvertToString(object value)
         {
-            return value.ToString();
+            if (value == null)
+            {
+                return null;
+            }
+
+            float floatValue = Convert.ToSingle(value);
+            return floatValue.ToString(CultureInfo.InvariantCulture);
         }
 
         public override string ToString()

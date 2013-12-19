@@ -26,10 +26,17 @@ namespace BlueprintEditor.Inspectors
             {
                 inspectorControl = new CheckBoxInspector();
             }
-            else if (inspectorProperty is InspectorStringAttribute || inspectorProperty is InspectorFloatAttribute
-                     || inspectorProperty is InspectorIntAttribute)
+            else if (inspectorProperty is InspectorStringAttribute)
             {
                 inspectorControl = new TextBoxInspector();
+            }
+            else if (inspectorProperty is InspectorFloatAttribute)
+            {
+                inspectorControl = new SingleUpDownInspector();
+            }
+            else if (inspectorProperty is InspectorIntAttribute)
+            {
+                inspectorControl = new IntegerUpDownInspector();
             }
             else if (inspectorProperty is InspectorEnumAttribute)
             {

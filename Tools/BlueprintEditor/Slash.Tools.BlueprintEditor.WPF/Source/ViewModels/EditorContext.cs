@@ -68,15 +68,11 @@ namespace BlueprintEditor.ViewModels
 
         public delegate void BlueprintManagerChangedDelegate(
             BlueprintManager newBlueprintManager, BlueprintManager oldBlueprintManager);
-
-        public delegate void EntityComponentTypesChangedDelegate();
-
+        
         #endregion
 
         #region Public Events
-
-        public event EntityComponentTypesChangedDelegate EntityComponentTypesChanged;
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
@@ -112,7 +108,10 @@ namespace BlueprintEditor.ViewModels
                 // Raise event.
                 this.OnPropertyChanged("BlueprintManager");
 
-                this.BlueprintManagerViewModel = new BlueprintManagerViewModel(this.blueprintManager);
+                this.BlueprintManagerViewModel = new BlueprintManagerViewModel(this.blueprintManager)
+                    {
+                        AssemblyComponents = this.AvailableComponentTypes
+                    };
             }
         }
 
@@ -324,10 +323,9 @@ namespace BlueprintEditor.ViewModels
 
         private void OnEntityComponentTypesChanged()
         {
-            EntityComponentTypesChangedDelegate handler = this.EntityComponentTypesChanged;
-            if (handler != null)
+            if (this.BlueprintManagerViewModel != null)
             {
-                handler();
+                this.BlueprintManagerViewModel.AssemblyComponents = this.ProjectSettings.EntityComponentTypes;
             }
         }
 

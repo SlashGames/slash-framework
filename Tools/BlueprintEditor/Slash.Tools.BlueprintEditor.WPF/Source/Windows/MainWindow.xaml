@@ -18,22 +18,36 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="Button" x:Key="ButtonActivityStyle">
+        <Style TargetType = "FrameworkElement" x:Key = "DataContextDependentStyle">
             <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.5" />
+                <DataTrigger Binding = "{Binding Path=.}" Value = "{x:Null}">
+                    <Setter Property = "IsEnabled" Value = "False"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType = "Button" x:Key = "ButtonActivityStyle">
+            <Style.Triggers>
+                <Trigger Property = "IsEnabled" Value = "False">
+                    <Setter Property = "Opacity" Value = "0.5" />
                 </Trigger>
             </Style.Triggers>
         </Style>
     </Window.Resources>
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.Open" Executed="ExecutedFileOpen" CanExecute="CanExecuteFileOpen"/>
-        <CommandBinding Command="ApplicationCommands.Save" Executed="ExecutedFileSave" CanExecute="CanExecuteFileSave" />
-        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="ExecutedSaveAs" CanExecute="CanExecuteFileSaveAs" />
-        <CommandBinding Command="ApplicationCommands.Close" Executed="ExecutedFileExit" CanExecute="CanExecuteFileClose" />
-        <CommandBinding Command="ApplicationCommands.Help" Executed="ExecutedFileAbout" CanExecute="CanExecuteHelpAbout" />
-        <CommandBinding Command="ApplicationCommands.Undo" Executed="ExecutedEditUndo" CanExecute="CanExecuteEditUndo" />
-        <CommandBinding Command="ApplicationCommands.Redo" Executed="ExecutedEditRedo" CanExecute="CanExecuteEditRedo" />
+        <CommandBinding Command = "ApplicationCommands.Open" Executed = "ExecutedFileOpen"
+                        CanExecute = "CanExecuteFileOpen" />
+        <CommandBinding Command = "ApplicationCommands.Save" Executed = "ExecutedFileSave"
+                        CanExecute = "CanExecuteFileSave" />
+        <CommandBinding Command = "ApplicationCommands.SaveAs" Executed = "ExecutedSaveAs"
+                        CanExecute = "CanExecuteFileSaveAs" />
+        <CommandBinding Command = "ApplicationCommands.Close" Executed = "ExecutedFileExit"
+                        CanExecute = "CanExecuteFileClose" />
+        <CommandBinding Command = "ApplicationCommands.Help" Executed = "ExecutedFileAbout"
+                        CanExecute = "CanExecuteHelpAbout" />
+        <CommandBinding Command = "ApplicationCommands.Undo" Executed = "ExecutedEditUndo"
+                        CanExecute = "CanExecuteEditUndo" />
+        <CommandBinding Command = "ApplicationCommands.Redo" Executed = "ExecutedEditRedo"
+                        CanExecute = "CanExecuteEditRedo" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -49,20 +63,21 @@
                         <Image Source = "/Resources/Images/Icons/NewSolutionFolder_6289.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name = "MenuFileOpen" Header = "_Open Project..." Command="ApplicationCommands.Open">
+                <MenuItem x:Name = "MenuFileOpen" Header = "_Open Project..." Command = "ApplicationCommands.Open">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Open_6529.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem x:Name = "MenuFileSave" Header = "_Save Project" Command="ApplicationCommands.Save">
+                <MenuItem x:Name = "MenuFileSave" Header = "_Save Project" Command = "ApplicationCommands.Save">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Save_6530.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save Project _As..." Command="ApplicationCommands.SaveAs"/>
+                <MenuItem x:Name = "MenuFileSaveAs" Header = "Save Project _As..."
+                          Command = "ApplicationCommands.SaveAs" />
                 <Separator />
-                <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Command="ApplicationCommands.Close">
+                <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Command = "ApplicationCommands.Close">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Close_16xLG.png" />
                     </MenuItem.Icon>
@@ -88,7 +103,8 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header = "_HELP">
-                <MenuItem Header = "_About Blueprint Editor" Name = "MenuHelpAbout" Command="ApplicationCommands.Help">
+                <MenuItem Header = "_About Blueprint Editor" Name = "MenuHelpAbout"
+                          Command = "ApplicationCommands.Help">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/StatusAnnotations_Help_and_inconclusive_16xMD.png" />
                     </MenuItem.Icon>
@@ -98,14 +114,14 @@
 
         <ToolBarTray Grid.Row = "1">
             <ToolBar>
-                <Button Click = "MenuFileNew_OnClick" Style="{StaticResource ButtonActivityStyle}">
+                <Button Click = "MenuFileNew_OnClick" Style = "{StaticResource ButtonActivityStyle}">
                     <Image Source = "/Resources/Images/Icons/NewSolutionFolder_6289.png" />
                     <Button.ToolTip>
                         <TextBlock>New Project</TextBlock>
                     </Button.ToolTip>
                 </Button>
 
-                <Button Command="ApplicationCommands.Open" Style="{StaticResource ButtonActivityStyle}">
+                <Button Command = "ApplicationCommands.Open" Style = "{StaticResource ButtonActivityStyle}">
                     <Image Source = "/Resources/Images/Icons/Open_6529.png" />
                     <Button.ToolTip>
                         <TextBlock>Open Project</TextBlock>
@@ -114,7 +130,7 @@
 
                 <Separator />
 
-                <Button Command="ApplicationCommands.Save" Style="{StaticResource ButtonActivityStyle}">
+                <Button Command = "ApplicationCommands.Save" Style = "{StaticResource ButtonActivityStyle}">
                     <Image Source = "/Resources/Images/Icons/Save_6530.png" />
                     <Button.ToolTip>
                         <TextBlock>Save Project</TextBlock>
@@ -129,12 +145,13 @@
                 <ColumnDefinition Width = "*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <controls:BlueprintTreeView x:Name = "TreeBlueprints"
-                                        BlueprintSelectionChanged = "TreeBlueprints_OnBlueprintSelectionChanged"
                                         Grid.Column = "0" Margin = "10, 0, 10, 0"
                                         DataContext = "{Binding BlueprintManagerViewModel}" />
 
             <GroupBox Header = "Blueprint" Grid.Column = "1">
-                <controls:BlueprintControl x:Name = "BlueprintControl" />
+                <controls:BlueprintControl x:Name = "BlueprintControl"
+                                           DataContext = "{Binding SelectedItem, ElementName=TreeBlueprints}"
+                                           Style = "{StaticResource DataContextDependentStyle}" />
             </GroupBox>
         </Grid>
 

@@ -48,6 +48,7 @@
                 <DataTrigger.Binding>
                     <MultiBinding Converter = "{StaticResource BooleanOrConverter}">
                         <Binding ElementName = "adorner" Path = "AdornedElement.IsKeyboardFocused" />
+                        <Binding ElementName = "adorner" Path = "AdornedElement.IsKeyboardFocusWithin" />
                         <Binding ElementName = "toolTipCorner" Path = "IsMouseOver" />
                     </MultiBinding>
                 </DataTrigger.Binding>
