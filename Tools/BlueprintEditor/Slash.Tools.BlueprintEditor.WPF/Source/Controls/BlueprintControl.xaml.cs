@@ -93,6 +93,25 @@ namespace BlueprintEditor.Controls
             }
         }
 
+        /// <summary>
+        ///   Adds inspectors for the components of the specified blueprint and its parents.
+        /// </summary>
+        /// <param name="viewModel">Blueprint to add component inspectors for.</param>
+        private void AddComponentInspectorsRecursively(BlueprintViewModel viewModel)
+        {
+            // Add inspectors for parent blueprints.
+            if (viewModel.Parent != null)
+            {
+                this.AddComponentInspectorsRecursively(viewModel.Parent);
+            }
+
+            // Add inspectors for specified blueprint.
+            foreach (var componentType in viewModel.AddedComponents)
+            {
+                this.AddComponentInspectors(componentType, this.AttributesPanel);
+            }
+        }
+
         private void CanExecuteAddComponent(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.LbComponentsAvailable != null && this.LbComponentsAvailable.SelectedItems != null
@@ -200,10 +219,7 @@ namespace BlueprintEditor.Controls
             }
 
             // Add inspectors for blueprint components.
-            foreach (var componentType in viewModel.AddedComponents)
-            {
-                this.AddComponentInspectors(componentType, this.AttributesPanel);
-            }
+            this.AddComponentInspectorsRecursively(viewModel);
         }
 
         #endregion

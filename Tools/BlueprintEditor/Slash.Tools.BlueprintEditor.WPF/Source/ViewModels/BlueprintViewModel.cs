@@ -140,6 +140,11 @@ namespace BlueprintEditor.ViewModels
         /// </summary>
         public ObservableCollection<BlueprintViewModel> DerivedBlueprints { get; set; }
 
+        /// <summary>
+        ///   Parent of this blueprint.
+        /// </summary>
+        public BlueprintViewModel Parent { get; set; }
+
         public object Root { get; set; }
 
         #endregion
