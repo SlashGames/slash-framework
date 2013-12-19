@@ -50,6 +50,8 @@ namespace BlueprintEditor.ViewModels
             this.BlueprintId = this.newBlueprintId = blueprintId;
             this.Blueprint = blueprint;
 
+            this.DerivedBlueprints = new ObservableCollection<BlueprintViewModel>();
+
             // Set added components.
             this.AddedComponents = new ObservableCollection<Type>(this.Blueprint.ComponentTypes);
             this.AddedComponents.CollectionChanged += this.OnAddedComponentsChanged;
@@ -123,6 +125,11 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
+        /// <summary>
+        ///   Blueprints derived from the blueprint.
+        /// </summary>
+        public ObservableCollection<BlueprintViewModel> DerivedBlueprints { get; set; }
+
         public string Error
         {
             get
@@ -153,6 +160,14 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
+        /// <summary>
+        ///   Parent of this blueprint.
+        /// </summary>
+        public BlueprintViewModel Parent { get; set; }
+
+        /// <summary>
+        ///   Root view model.
+        /// </summary>
         public BlueprintManagerViewModel Root { get; set; }
 
         #endregion
@@ -202,11 +217,50 @@ namespace BlueprintEditor.ViewModels
             // Remove from available, add to blueprint component types.
             this.AvailableComponents.Remove(componentType);
             this.AddedComponents.Add(componentType);
+
+            // Make children inherit component.
+            foreach (var child in this.DerivedBlueprints)
+            {
+                child.InheritComponent(componentType);
+            }
+        }
+
+        /// <summary>
+        ///   Gets all components of the ancestors of this blueprint.
+        /// </summary>
+        /// <returns>Components of the parent of this blueprint and its parents.</returns>
+        public IEnumerable<Type> GetParentComponents()
+        {
+            if (this.Parent == null)
+            {
+                yield break;
+            }
+
+            foreach (var type in this.Parent.Blueprint.ComponentTypes.Union(this.Parent.GetParentComponents()))
+            {
+                yield return type;
+            }
         }
 
         public object GetUndoRoot()
         {
             return this.Root;
+        }
+
+        /// <summary>
+        ///   Removes the specified component from the current and avaliable components,
+        ///   proceeding recursively with all deriving blueprints.
+        /// </summary>
+        /// <param name="componentType">Type of the component to inherit.</param>
+        public void InheritComponent(Type componentType)
+        {
+            this.AddedComponents.Remove(componentType);
+            this.AvailableComponents.Remove(componentType);
+
+            foreach (var child in this.DerivedBlueprints)
+            {
+                child.InheritComponent(componentType);
+            }
         }
 
         public bool RemoveComponent(Type componentType)
@@ -217,7 +271,50 @@ namespace BlueprintEditor.ViewModels
                 this.AvailableComponents.Add(componentType);
             }
 
+            // Make children no longer inherit component.
+            foreach (var child in this.DerivedBlueprints)
+            {
+                child.UninheritComponent(componentType);
+            }
+
             return this.AddedComponents.Remove(componentType);
+        }
+
+        /// <summary>
+        ///   Adds the specified component to the avaliable components,
+        ///   proceeding recursively with all deriving blueprints.
+        /// </summary>
+        /// <param name="componentType">Type of the component to uninherit.</param>
+        public void UninheritComponent(Type componentType)
+        {
+            this.AvailableComponents.Add(componentType);
+
+            foreach (var child in this.DerivedBlueprints)
+            {
+                child.UninheritComponent(componentType);
+            }
+        }
+
+        public void UpdateAvailableComponents()
+        {
+            if (this.assemblyComponents == null)
+            {
+                this.AvailableComponents.Clear();
+                return;
+            }
+
+            // Update available components.
+            IEnumerable<Type> newAvailableComponents =
+                this.assemblyComponents.Except(this.Blueprint.ComponentTypes)
+                    .Except(this.GetParentComponents())
+                    .ToList();
+
+            this.AvailableComponents.Clear();
+
+            foreach (var newAvailableComponent in newAvailableComponents)
+            {
+                this.AvailableComponents.Add(newAvailableComponent);
+            }
         }
 
         #endregion
@@ -257,35 +354,6 @@ namespace BlueprintEditor.ViewModels
         private void OnAvailableComponentsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("AvailableComponents");
-        }
-
-        private void UpdateAvailableComponents()
-        {
-            if (this.assemblyComponents == null)
-            {
-                this.AvailableComponents.Clear();
-                return;
-            }
-
-            // Update available components.
-            IEnumerable<Type> newAvailableComponents =
-                this.assemblyComponents.Except(this.Blueprint.ComponentTypes).ToList();
-
-            foreach (var availableComponent in this.AvailableComponents)
-            {
-                if (!newAvailableComponents.Contains(availableComponent))
-                {
-                    this.AvailableComponents.Remove(availableComponent);
-                }
-            }
-
-            foreach (var newAvailableComponent in newAvailableComponents)
-            {
-                if (!this.AvailableComponents.Contains(newAvailableComponent))
-                {
-                    this.AvailableComponents.Add(newAvailableComponent);
-                }
-            }
         }
 
         #endregion

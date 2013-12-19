@@ -173,12 +173,14 @@ namespace BlueprintEditor.ViewModels
 
         public bool CanExecuteRedo()
         {
-            return UndoService.Current[this.BlueprintManagerViewModel].CanRedo;
+            var undoRoot = UndoService.Current[this.BlueprintManagerViewModel];
+            return undoRoot != null && undoRoot.CanRedo;
         }
 
         public bool CanExecuteUndo()
         {
-            return UndoService.Current[this.BlueprintManagerViewModel].CanUndo;
+            var undoRoot = UndoService.Current[this.BlueprintManagerViewModel];
+            return undoRoot != null && undoRoot.CanUndo;
         }
 
         public void Close()

@@ -69,11 +69,7 @@ namespace BlueprintEditor.Controls
             foreach (var inspectorProperty in componentInfo.Properties)
             {
                 // Get current value.
-                object propertyValue;
-                if (!viewModel.Blueprint.AttributeTable.TryGetValue(inspectorProperty.Name, out propertyValue))
-                {
-                    propertyValue = inspectorProperty.Default;
-                }
+                var propertyValue = this.GetCurrentAttributeValue(viewModel, inspectorProperty);
 
                 // Create control for inspector property.
                 var propertyControl = this.inspectorFactory.CreateInspectorControlFor(inspectorProperty, propertyValue);
@@ -90,6 +86,25 @@ namespace BlueprintEditor.Controls
 
                 // Add to panel.
                 panel.Children.Add((UIElement)propertyControl);
+            }
+        }
+
+        /// <summary>
+        ///   Adds inspectors for the components of the specified blueprint and its parents.
+        /// </summary>
+        /// <param name="viewModel">Blueprint to add component inspectors for.</param>
+        private void AddComponentInspectorsRecursively(BlueprintViewModel viewModel)
+        {
+            // Add inspectors for parent blueprints.
+            if (viewModel.Parent != null)
+            {
+                this.AddComponentInspectorsRecursively(viewModel.Parent);
+            }
+
+            // Add inspectors for specified blueprint.
+            foreach (var componentType in viewModel.AddedComponents)
+            {
+                this.AddComponentInspectors(componentType, this.AttributesPanel);
             }
         }
 
@@ -147,6 +162,33 @@ namespace BlueprintEditor.Controls
             this.OnBlueprintComponentsChanged();
         }
 
+        /// <summary>
+        ///   Gets the current value of the specified property for the passed blueprint,
+        ///   taking into account, in order: Blueprint attribute table, parents, default value.
+        /// </summary>
+        /// <param name="viewModel">Blueprint to get the attribute value for.</param>
+        /// <param name="property">Property to get the current value of.</param>
+        /// <returns>Current value of the specified property for the passed blueprint.</returns>
+        private object GetCurrentAttributeValue(BlueprintViewModel viewModel, InspectorPropertyAttribute property)
+        {
+            object propertyValue;
+
+            // Check own attribute table.
+            if (viewModel.Blueprint.AttributeTable.TryGetValue(property.Name, out propertyValue))
+            {
+                return propertyValue;
+            }
+
+            // Search in parents.
+            if (viewModel.Parent != null)
+            {
+                return this.GetCurrentAttributeValue(viewModel.Parent, property);
+            }
+
+            // Return default value.
+            return property.Default;
+        }
+
         private void LbComponentsAdded_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             // Send command.
@@ -176,15 +218,29 @@ namespace BlueprintEditor.Controls
             Console.WriteLine("Property value {0} changed from {1} to {2}", inspectorProperty, oldValue, newValue);
 
             // Update blueprint configuration.
-
-            // Remove if default value.
-            if (Equals(newValue, inspectorProperty.Default))
+            if (viewModel.Parent == null)
             {
-                viewModel.Blueprint.AttributeTable.RemoveValue(inspectorProperty.Name);
+                // No parent - check if property is reset to default value.
+                if (Equals(newValue, inspectorProperty.Default))
+                {
+                    viewModel.Blueprint.AttributeTable.RemoveValue(inspectorProperty.Name);
+                }
+                else
+                {
+                    viewModel.Blueprint.AttributeTable.SetValue(inspectorProperty.Name, newValue);
+                }
             }
             else
             {
-                viewModel.Blueprint.AttributeTable.SetValue(inspectorProperty.Name, newValue);
+                // Check if property is set to inherited value.
+                if (Equals(newValue, this.GetCurrentAttributeValue(viewModel.Parent, inspectorProperty)))
+                {
+                    viewModel.Blueprint.AttributeTable.RemoveValue(inspectorProperty.Name);
+                }
+                else
+                {
+                    viewModel.Blueprint.AttributeTable.SetValue(inspectorProperty.Name, newValue);
+                }
             }
         }
 
@@ -200,10 +256,7 @@ namespace BlueprintEditor.Controls
             }
 
             // Add inspectors for blueprint components.
-            foreach (var componentType in viewModel.AddedComponents)
-            {
-                this.AddComponentInspectors(componentType, this.AttributesPanel);
-            }
+            this.AddComponentInspectorsRecursively(viewModel);
         }
 
         #endregion

@@ -145,6 +145,22 @@
                         <TextBlock>Save Project</TextBlock>
                     </Button.ToolTip>
                 </Button>
+
+                <Separator />
+
+                <Button Command = "ApplicationCommands.Undo" Style = "{StaticResource ButtonActivityStyle}">
+                    <Image Source = "/Resources/Images/Icons/Undo_16x.png" />
+                    <Button.ToolTip>
+                        <TextBlock Text="Undo" />
+                    </Button.ToolTip>
+                </Button>
+
+                <Button Command = "ApplicationCommands.Redo" Style = "{StaticResource ButtonActivityStyle}">
+                    <Image Source = "/Resources/Images/Icons/Redo_16x.png" />
+                    <Button.ToolTip>
+                        <TextBlock Text="Redo" />
+                    </Button.ToolTip>
+                </Button>
             </ToolBar>
         </ToolBarTray>
 

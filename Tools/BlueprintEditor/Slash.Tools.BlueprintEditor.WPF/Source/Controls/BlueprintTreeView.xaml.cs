@@ -10,6 +10,7 @@ namespace BlueprintEditor.Controls
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
 
     using BlueprintEditor.Annotations;
@@ -38,6 +39,15 @@ namespace BlueprintEditor.Controls
     /// </summary>
     public partial class BlueprintTreeView : INotifyPropertyChanged
     {
+        #region Fields
+
+        /// <summary>
+        ///   Whether the user is currently dragging a treeview item.
+        /// </summary>
+        private bool dragging;
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -123,12 +133,70 @@ namespace BlueprintEditor.Controls
             }
 
             // Delete current selected blueprint.
-            ((BlueprintManagerViewModel)this.DataContext).RemoveBlueprint(selectedItem.BlueprintId);
+            try
+            {
+                ((BlueprintManagerViewModel)this.DataContext).RemoveBlueprint(selectedItem.BlueprintId);
+            }
+            catch (InvalidOperationException exception)
+            {
+                EditorDialog.Error("Unable to delete blueprint", exception.Message);
+            }
         }
 
         private void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             this.OnPropertyChanged("SelectedItem");
+        }
+
+        private void TvTree_OnDrop(object sender, DragEventArgs e)
+        {
+            TreeViewItem dropTarget = (TreeViewItem)sender;
+
+            if (dropTarget == null || !this.dragging)
+            {
+                return;
+            }
+
+            // Check if any data is present.
+            if (!e.Data.GetDataPresent(DataFormats.StringFormat))
+            {
+                return;
+            }
+
+            string dragSourceBlueprintId = (string)e.Data.GetData(DataFormats.StringFormat);
+            BlueprintViewModel dropTargetBlueprint = (BlueprintViewModel)dropTarget.Header;
+
+            // Prevent dragging and dropping on self.
+            if (dragSourceBlueprintId.Equals(dropTargetBlueprint.BlueprintId))
+            {
+                return;
+            }
+
+            // Reparent blueprint.
+            BlueprintManagerViewModel viewModel = this.DataContext as BlueprintManagerViewModel;
+            if (viewModel != null)
+            {
+                viewModel.ReparentBlueprint(dragSourceBlueprintId, dropTargetBlueprint.BlueprintId);
+            }
+
+            // Stop dragging to prevent raising the drop event on parent items.
+            this.dragging = false;
+        }
+
+        private void TvTree_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+            {
+                return;
+            }
+
+            TreeViewItem dragSource = (TreeViewItem)sender;
+            BlueprintViewModel blueprintViewModel = (BlueprintViewModel)dragSource.Header;
+
+            // Start dragging.
+            this.dragging = true;
+
+            DragDrop.DoDragDrop(dragSource, blueprintViewModel.BlueprintId, DragDropEffects.Move);
         }
 
         #endregion

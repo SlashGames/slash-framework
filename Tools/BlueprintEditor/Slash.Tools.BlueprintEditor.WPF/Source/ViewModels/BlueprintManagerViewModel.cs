@@ -53,6 +53,12 @@ namespace BlueprintEditor.ViewModels
             }
 
             this.Blueprints.CollectionChanged += this.OnBlueprintsChanged;
+
+            // Setup correct parent hierarchy.
+            foreach (var blueprint in this.Blueprints.Where(blueprint => blueprint.Blueprint.ParentId != null))
+            {
+                this.ReparentBlueprint(blueprint.BlueprintId, blueprint.Blueprint.ParentId);
+            }
         }
 
         #endregion
@@ -107,6 +113,9 @@ namespace BlueprintEditor.ViewModels
                     this.blueprintsView = new ListCollectionView(this.Blueprints);
                     this.blueprintsView.SortDescriptions.Add(
                         new SortDescription("BlueprintId", ListSortDirection.Ascending));
+
+                    // Don't show blueprints at root level that have parents.
+                    this.blueprintsView.Filter = blueprint => ((BlueprintViewModel)blueprint).Parent == null;
                 }
                 return this.blueprintsView;
             }
@@ -205,8 +214,64 @@ namespace BlueprintEditor.ViewModels
 
         public void RemoveBlueprint(string blueprintId)
         {
+            // Get blueprint to remove.
+            var blueprintToRemove = this.Blueprints.First(blueprint => blueprint.BlueprintId == blueprintId);
+
+            // Check for blueprints that derive from the blueprint to remove.
+            if (blueprintToRemove.DerivedBlueprints.Count > 0)
+            {
+                throw new InvalidOperationException("Other blueprints depend on this one!");
+            }
+
             this.blueprintManager.RemoveBlueprint(blueprintId);
-            this.Blueprints.Remove(this.Blueprints.First(blueprint => blueprint.BlueprintId == blueprintId));
+            this.Blueprints.Remove(blueprintToRemove);
+
+            // Remove from parent's children list, if necessary.
+            if (blueprintToRemove.Parent != null)
+            {
+                blueprintToRemove.Parent.DerivedBlueprints.Remove(blueprintToRemove);
+            }
+        }
+
+        /// <summary>
+        ///   Changes the parent of the blueprint with the specified id, updating
+        ///   children collections.
+        /// </summary>
+        /// <param name="childId">Id of the blueprint whose parent to change.</param>
+        /// <param name="newParentId">Id of the new parent blueprint.</param>
+        public void ReparentBlueprint(string childId, string newParentId)
+        {
+            // Find blueprints.
+            var childBlueprint = this.Blueprints.First(blueprint => blueprint.BlueprintId.Equals(childId));
+            var oldParentBlueprint = childBlueprint.Parent;
+            var newParentBlueprint = this.Blueprints.First(blueprint => blueprint.BlueprintId.Equals(newParentId));
+
+            // Update parent.
+            childBlueprint.Blueprint.ParentId = newParentBlueprint.BlueprintId;
+            childBlueprint.Parent = newParentBlueprint;
+
+            // Update children of old parent.
+            if (oldParentBlueprint != null)
+            {
+                oldParentBlueprint.DerivedBlueprints.Remove(childBlueprint);
+            }
+
+            // Update children of new parent.
+            newParentBlueprint.DerivedBlueprints.Add(childBlueprint);
+
+            // Update available components.
+            childBlueprint.UpdateAvailableComponents();
+
+            foreach (var descendant in childBlueprint.DerivedBlueprints)
+            {
+                descendant.UpdateAvailableComponents();
+            }
+
+            // Update blueprints view.
+            if (this.blueprintsView != null)
+            {
+                this.blueprintsView.Refresh();
+            }
         }
 
         #endregion
@@ -247,6 +312,12 @@ namespace BlueprintEditor.ViewModels
                 foreach (BlueprintViewModel item in e.NewItems)
                 {
                     item.Root = this;
+
+                    // Setup correct parent hierarchy.
+                    if (item.Parent != null)
+                    {
+                        this.ReparentBlueprint(item.BlueprintId, item.Blueprint.ParentId);
+                    }
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -270,6 +341,12 @@ namespace BlueprintEditor.ViewModels
                 foreach (BlueprintViewModel item in e.OldItems)
                 {
                     item.Root = null;
+
+                    // Remove from parent's children list, if necessary.
+                    if (item.Parent != null)
+                    {
+                        item.Parent.DerivedBlueprints.Remove(item);
+                    }
                 }
             }
 
