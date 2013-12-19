@@ -161,7 +161,6 @@
     </Compile>
     <Compile Include="Source\Inspectors\IInspectorControl.cs" />
     <Compile Include="Source\Inspectors\InspectorFactory.cs" />
-    <Compile Include="Source\Validation\UniqueBlueprintIdValidationRule.cs" />
     <Compile Include="Source\Windows\BindingProxy.cs" />
     <Compile Include="Source\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -228,6 +227,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Icons\Redo_16x.png" />
     <Resource Include="Resources\Images\Icons\Undo_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\Close_6519.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

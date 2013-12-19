@@ -95,7 +95,35 @@ namespace BlueprintEditor.Controls
             }
         }
 
-        private void BtDeleteBlueprint_OnClick(object sender, RoutedEventArgs e)
+        private void CanExecuteCreateNewBlueprint(object sender, CanExecuteRoutedEventArgs e)
+        {
+            BlueprintManagerViewModel viewModel = this.DataContext as BlueprintManagerViewModel;
+            e.CanExecute = viewModel == null || viewModel.CanExecuteCreateNewBlueprint();
+        }
+
+        private void CanExecuteRemoveBlueprint(object sender, CanExecuteRoutedEventArgs e)
+        {
+            // Check if an item is selected.
+            e.CanExecute = this.SelectedItem != null;
+        }
+
+        private void ExecutedCreateNewBlueprint(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                BlueprintManagerViewModel viewModel = this.DataContext as BlueprintManagerViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.CreateNewBlueprint();
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                EditorDialog.Error("Unable to add blueprint", ex.Message);
+            }
+        }
+
+        private void ExecutedRemoveBlueprint(object sender, RoutedEventArgs e)
         {
             // Check if an item is selected.
             BlueprintViewModel selectedItem = this.SelectedItem;
@@ -112,28 +140,6 @@ namespace BlueprintEditor.Controls
             catch (InvalidOperationException exception)
             {
                 EditorDialog.Error("Unable to delete blueprint", exception.Message);
-            }
-        }
-
-        private void CanExecuteCreateNewBlueprint(object sender, CanExecuteRoutedEventArgs e)
-        {
-            BlueprintManagerViewModel viewModel = this.DataContext as BlueprintManagerViewModel;
-            e.CanExecute = viewModel == null || viewModel.CanExecuteCreateNewBlueprint();
-        }
-
-        private void ExecutedCreateNewBlueprint(object sender, ExecutedRoutedEventArgs e)
-        {
-            try
-            {
-                BlueprintManagerViewModel viewModel = this.DataContext as BlueprintManagerViewModel;
-                if (viewModel != null)
-                {
-                    viewModel.CreateNewBlueprint();
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                EditorDialog.Error("Unable to add blueprint", ex.Message);
             }
         }
 

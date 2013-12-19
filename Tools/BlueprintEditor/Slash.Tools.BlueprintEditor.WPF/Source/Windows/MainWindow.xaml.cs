@@ -15,8 +15,6 @@ namespace BlueprintEditor.Windows
 
     using Microsoft.Win32;
 
-    using Slash.Tools.BlueprintEditor.Logic.Data;
-
     /// <summary>
     ///   Interaction logic for MainWindow.xaml
     /// </summary>
@@ -46,7 +44,7 @@ namespace BlueprintEditor.Windows
         public MainWindow()
         {
             this.InitializeComponent();
-            
+
             this.DataContext = this.Context;
         }
 
@@ -100,6 +98,11 @@ namespace BlueprintEditor.Windows
 
         private void CanExecuteFileClose(object sender, CanExecuteRoutedEventArgs e)
         {
+            e.CanExecute = this.ProjectActive;
+        }
+
+        private void CanExecuteFileExit(object sender, CanExecuteRoutedEventArgs e)
+        {
             e.CanExecute = true;
         }
 
@@ -149,6 +152,11 @@ namespace BlueprintEditor.Windows
         {
             AboutWindow dlg = new AboutWindow { Owner = this };
             dlg.ShowDialog();
+        }
+
+        private void ExecutedFileClose(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Context.Close();
         }
 
         private void ExecutedFileExit(object sender, RoutedEventArgs e)
@@ -235,7 +243,7 @@ namespace BlueprintEditor.Windows
             // Update window title as soon as settings window is closed by the user.
             this.UpdateWindowTitle();
         }
-        
+
         private void SaveContext(string path)
         {
             // Check if already a path to save was set, otherwise request.
@@ -266,7 +274,7 @@ namespace BlueprintEditor.Windows
             this.Context.SerializationPath = path;
             this.Context.Save();
         }
-        
+
         /// <summary>
         ///   Updates the title of the main window, showing the current project name if available.
         /// </summary>

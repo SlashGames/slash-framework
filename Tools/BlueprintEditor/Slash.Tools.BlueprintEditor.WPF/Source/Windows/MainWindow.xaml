@@ -5,6 +5,7 @@
     xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
     xmlns:viewModels = "clr-namespace:BlueprintEditor.ViewModels"
+    xmlns:commands = "clr-namespace:BlueprintEditor.Commands"
     mc:Ignorable = "d"
     x:Class = "BlueprintEditor.Windows.MainWindow"
     Title = "MainWindow" Height = "600" Width = "800" Name = "Main"
@@ -36,12 +37,14 @@
     <Window.CommandBindings>
         <CommandBinding Command = "ApplicationCommands.Open" Executed = "ExecutedFileOpen"
                         CanExecute = "CanExecuteFileOpen" />
+        <CommandBinding Command = "ApplicationCommands.Close" Executed = "ExecutedFileClose"
+                        CanExecute = "CanExecuteFileClose" />
         <CommandBinding Command = "ApplicationCommands.Save" Executed = "ExecutedFileSave"
                         CanExecute = "CanExecuteFileSave" />
         <CommandBinding Command = "ApplicationCommands.SaveAs" Executed = "ExecutedSaveAs"
                         CanExecute = "CanExecuteFileSaveAs" />
-        <CommandBinding Command = "ApplicationCommands.Close" Executed = "ExecutedFileExit"
-                        CanExecute = "CanExecuteFileClose" />
+        <CommandBinding Command = "commands:MenuCommands.Exit" Executed = "ExecutedFileExit"
+                        CanExecute = "CanExecuteFileExit" />
         <CommandBinding Command = "ApplicationCommands.Help" Executed = "ExecutedFileAbout"
                         CanExecute = "CanExecuteHelpAbout" />
         <CommandBinding Command = "ApplicationCommands.Undo" Executed = "ExecutedEditUndo"
@@ -69,6 +72,12 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
+                <MenuItem x:Name = "MenuFileClose" Header = "_Close Project..." Command = "ApplicationCommands.Close">
+                    <MenuItem.Icon>
+                        <Image Source = "/Resources/Images/Icons/Close_6519.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
                 <MenuItem x:Name = "MenuFileSave" Header = "_Save Project" Command = "ApplicationCommands.Save">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Save_6530.png" />
@@ -77,7 +86,7 @@
                 <MenuItem x:Name = "MenuFileSaveAs" Header = "Save Project _As..."
                           Command = "ApplicationCommands.SaveAs" />
                 <Separator />
-                <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Command = "ApplicationCommands.Close">
+                <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Command = "commands:MenuCommands.Exit">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Close_16xLG.png" />
                     </MenuItem.Icon>
