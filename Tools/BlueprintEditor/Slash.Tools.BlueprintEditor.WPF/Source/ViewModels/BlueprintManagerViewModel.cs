@@ -248,6 +248,15 @@ namespace BlueprintEditor.ViewModels
             // Update children of new parent.
             newParentBlueprint.DerivedBlueprints.Add(childBlueprint);
 
+            // Update available components.
+            childBlueprint.UpdateAvailableComponents();
+
+            foreach (var descendant in childBlueprint.DerivedBlueprints)
+            {
+                descendant.UpdateAvailableComponents();
+            }
+
+            // Update blueprints view.
             if (this.blueprintsView != null)
             {
                 this.blueprintsView.Refresh();

@@ -171,6 +171,23 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
+        /// <summary>
+        ///   Gets all components of the ancestors of this blueprint.
+        /// </summary>
+        /// <returns>Components of the parent of this blueprint and its parents.</returns>
+        public IEnumerable<Type> GetParentComponents()
+        {
+            if (this.Parent == null)
+            {
+                yield break;
+            }
+
+            foreach (var type in this.Parent.Blueprint.ComponentTypes.Union(this.Parent.GetParentComponents()))
+            {
+                yield return type;
+            }
+        }
+
         public object GetUndoRoot()
         {
             return this.Root;
@@ -224,6 +241,28 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
+        public void UpdateAvailableComponents()
+        {
+            if (this.assemblyComponents == null)
+            {
+                this.AvailableComponents.Clear();
+                return;
+            }
+
+            // Update available components.
+            IEnumerable<Type> newAvailableComponents =
+                this.assemblyComponents.Except(this.Blueprint.ComponentTypes)
+                    .Except(this.GetParentComponents())
+                    .ToList();
+
+            this.AvailableComponents.Clear();
+
+            foreach (var newAvailableComponent in newAvailableComponents)
+            {
+                this.AvailableComponents.Add(newAvailableComponent);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -261,35 +300,6 @@ namespace BlueprintEditor.ViewModels
         private void OnAvailableComponentsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("AvailableComponents");
-        }
-
-        private void UpdateAvailableComponents()
-        {
-            if (this.assemblyComponents == null)
-            {
-                this.AvailableComponents.Clear();
-                return;
-            }
-
-            // Update available components.
-            IEnumerable<Type> newAvailableComponents =
-                this.assemblyComponents.Except(this.Blueprint.ComponentTypes).ToList();
-
-            foreach (var availableComponent in this.AvailableComponents)
-            {
-                if (!newAvailableComponents.Contains(availableComponent))
-                {
-                    this.AvailableComponents.Remove(availableComponent);
-                }
-            }
-
-            foreach (var newAvailableComponent in newAvailableComponents)
-            {
-                if (!this.AvailableComponents.Contains(newAvailableComponent))
-                {
-                    this.AvailableComponents.Add(newAvailableComponent);
-                }
-            }
         }
 
         #endregion
