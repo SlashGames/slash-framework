@@ -85,23 +85,16 @@ namespace BlueprintEditor.Controls
             }
         }
 
-        private void BtDeleteBlueprint_OnClick(object sender, RoutedEventArgs e)
-        {
-            // Check if an item is selected.
-            BlueprintViewModel selectedItem = this.SelectedItem;
-            if (selectedItem == null)
-            {
-                return;
-            }
-
-            // Delete current selected blueprint.
-            ((BlueprintManagerViewModel)this.DataContext).RemoveBlueprint(selectedItem.BlueprintId);
-        }
-
         private void CanExecuteCreateNewBlueprint(object sender, CanExecuteRoutedEventArgs e)
         {
             BlueprintManagerViewModel viewModel = this.DataContext as BlueprintManagerViewModel;
             e.CanExecute = viewModel == null || viewModel.CanExecuteCreateNewBlueprint();
+        }
+
+        private void CanExecuteRemoveBlueprint(object sender, CanExecuteRoutedEventArgs e)
+        {
+            // Check if an item is selected.
+            e.CanExecute = this.SelectedItem != null;
         }
 
         private void ExecutedCreateNewBlueprint(object sender, ExecutedRoutedEventArgs e)
@@ -118,6 +111,19 @@ namespace BlueprintEditor.Controls
             {
                 EditorDialog.Error("Unable to add blueprint", ex.Message);
             }
+        }
+
+        private void ExecutedRemoveBlueprint(object sender, RoutedEventArgs e)
+        {
+            // Check if an item is selected.
+            BlueprintViewModel selectedItem = this.SelectedItem;
+            if (selectedItem == null)
+            {
+                return;
+            }
+
+            // Delete current selected blueprint.
+            ((BlueprintManagerViewModel)this.DataContext).RemoveBlueprint(selectedItem.BlueprintId);
         }
 
         private void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

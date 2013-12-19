@@ -3,8 +3,8 @@
              xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:commands="clr-namespace:BlueprintEditor.Commands"
-             xmlns:viewModels="clr-namespace:BlueprintEditor.ViewModels"
+             xmlns:commands = "clr-namespace:BlueprintEditor.Commands"
+             xmlns:viewModels = "clr-namespace:BlueprintEditor.ViewModels"
              mc:Ignorable = "d"
              d:DesignHeight = "343" d:DesignWidth = "200"
              d:DataContext = "{d:DesignInstance viewModels:BlueprintManagerViewModel}" Name = "MainControl">
@@ -18,6 +18,8 @@
     <UserControl.CommandBindings>
         <CommandBinding Command = "{x:Static commands:BlueprintManagerCommands.NewBlueprintCommand}"
                         Executed = "ExecutedCreateNewBlueprint" CanExecute = "CanExecuteCreateNewBlueprint" />
+        <CommandBinding Command = "{x:Static commands:BlueprintManagerCommands.RemoveBlueprintCommand}"
+                        Executed = "ExecutedRemoveBlueprint" CanExecute = "CanExecuteRemoveBlueprint" />
     </UserControl.CommandBindings>
     <Grid>
         <Grid.Style>
@@ -30,16 +32,17 @@
             </Style>
         </Grid.Style>
 
-        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top" ToolTip = "Available Blueprints" ItemsSource="{Binding BlueprintsView}">
+        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top" ToolTip = "Available Blueprints"
+                  ItemsSource = "{Binding BlueprintsView}">
             <TreeView.ItemTemplate>
                 <DataTemplate DataType = "viewModels:BlueprintViewModel">
                     <TextBlock Text = "{Binding BlueprintId}" />
                 </DataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <Button x:Name = "BtDeleteBlueprint" Content = "Delete" Margin = "0,267,0,0" VerticalAlignment = "Top"
-                Click = "BtDeleteBlueprint_OnClick" RenderTransformOrigin = "-0.511,0.109" Height = "23"
-                ToolTip = "Delete selected blueprints" />
+        <Button Content = "Remove" Margin = "0,267,0,0" VerticalAlignment = "Top" Height = "23"
+                ToolTip = "Remove selected blueprint from blueprint manager"
+                Command = "{x:Static commands:BlueprintManagerCommands.RemoveBlueprintCommand}" />
         <TextBox x:Name = "TbNewBlueprintId" HorizontalAlignment = "Left" Height = "23" Margin = "0,295,0,0"
                  TextWrapping = "Wrap" VerticalAlignment = "Top" Width = "159" ToolTip = "Id of new blueprint"
                  Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}">
