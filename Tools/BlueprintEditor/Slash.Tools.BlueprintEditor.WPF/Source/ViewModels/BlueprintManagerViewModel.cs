@@ -151,12 +151,9 @@ namespace BlueprintEditor.ViewModels
                 if (columnName == "NewBlueprintId")
                 {
                     // Check if already existent.
-                    if (this.blueprintManager != null && this.NewBlueprintId != null)
+                    if (this.Blueprints.Any(blueprintViewModel => blueprintViewModel.BlueprintId == this.NewBlueprintId))
                     {
-                        if (this.blueprintManager.ContainsBlueprint(this.NewBlueprintId))
-                        {
-                            result = "Blueprint id already exists.";
-                        }
+                        result = "Blueprint id already exists.";
                     }
                 }
 
@@ -172,6 +169,20 @@ namespace BlueprintEditor.ViewModels
         {
             return this.blueprintManager != null && !String.IsNullOrEmpty(this.newBlueprintId)
                    && !this.blueprintManager.ContainsBlueprint(this.newBlueprintId);
+        }
+
+        public void ChangeBlueprintId(BlueprintViewModel blueprintViewModel, string blueprintId)
+        {
+            if (this.blueprintManager == null)
+            {
+                return;
+            }
+
+            this.blueprintManager.ChangeBlueprintId(blueprintViewModel.BlueprintId, blueprintId);
+            blueprintViewModel.BlueprintId = blueprintId;
+
+            // Validate new blueprint id again as it may be valid/invalid now.
+            this.OnPropertyChanged("NewBlueprintId");
         }
 
         public void CreateNewBlueprint()
@@ -265,6 +276,9 @@ namespace BlueprintEditor.ViewModels
             // This line will log the collection change with the undo framework.
             DefaultChangeFactory.Current.OnCollectionChanged(
                 this, "Blueprints", this.Blueprints, e, undoMessage ?? "Collection of Blueprints changed");
+
+            // Validate new blueprint id again as it may be valid/invalid now.
+            this.OnPropertyChanged("NewBlueprintId");
         }
 
         #endregion

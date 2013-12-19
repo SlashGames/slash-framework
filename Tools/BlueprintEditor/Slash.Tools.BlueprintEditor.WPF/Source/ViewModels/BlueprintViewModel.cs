@@ -20,7 +20,7 @@ namespace BlueprintEditor.ViewModels
 
     using Slash.GameBase.Blueprints;
 
-    public class BlueprintViewModel : INotifyPropertyChanged, ISupportsUndo
+    public class BlueprintViewModel : INotifyPropertyChanged, ISupportsUndo, IDataErrorInfo
     {
         #region Fields
 
@@ -30,6 +30,11 @@ namespace BlueprintEditor.ViewModels
         ///   Id of the blueprint.
         /// </summary>
         private string blueprintId;
+
+        /// <summary>
+        ///   New blueprint id.
+        /// </summary>
+        private string newBlueprintId;
 
         #endregion
 
@@ -42,7 +47,7 @@ namespace BlueprintEditor.ViewModels
         /// <param name="blueprint">Blueprint.</param>
         public BlueprintViewModel(string blueprintId, Blueprint blueprint)
         {
-            this.blueprintId = blueprintId;
+            this.BlueprintId = this.newBlueprintId = blueprintId;
             this.Blueprint = blueprint;
 
             // Set added components.
@@ -112,28 +117,74 @@ namespace BlueprintEditor.ViewModels
                     return;
                 }
 
-                string oldBlueprintId = this.blueprintId;
                 this.blueprintId = value;
-
-                // Move in blueprint manager.
-                if (this.BlueprintManager != null)
-                {
-                    if (oldBlueprintId != null && value != null)
-                    {
-                        this.BlueprintManager.ChangeBlueprintId(oldBlueprintId, value);
-                    }
-                }
 
                 this.OnPropertyChanged();
             }
         }
 
-        /// <summary>
-        ///   Blueprint manager the blueprint belongs to.
-        /// </summary>
-        public BlueprintManager BlueprintManager { get; set; }
+        public string Error
+        {
+            get
+            {
+                return null;
+            }
+        }
 
-        public object Root { get; set; }
+        /// <summary>
+        ///   Id of the blueprint.
+        /// </summary>
+        public string NewBlueprintId
+        {
+            get
+            {
+                return this.newBlueprintId;
+            }
+            set
+            {
+                if (value == this.newBlueprintId)
+                {
+                    return;
+                }
+
+                this.newBlueprintId = value;
+
+                this.OnPropertyChanged();
+            }
+        }
+
+        public BlueprintManagerViewModel Root { get; set; }
+
+        #endregion
+
+        #region Public Indexers
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = null;
+                if (columnName == "NewBlueprintId")
+                {
+                    if (this.Root != null)
+                    {
+                        BlueprintViewModel blueprintViewModel =
+                            this.Root.Blueprints.FirstOrDefault(
+                                viewModel => viewModel.BlueprintId == this.NewBlueprintId);
+                        if (blueprintViewModel != null && blueprintViewModel != this)
+                        {
+                            result = "Blueprint id already exists.";
+                        }
+                        else if (this.newBlueprintId != this.blueprintId)
+                        {
+                            // Move in blueprint manager.
+                            this.Root.ChangeBlueprintId(this, this.newBlueprintId);
+                        }
+                    }
+                }
+                return result;
+            }
+        }
 
         #endregion
 

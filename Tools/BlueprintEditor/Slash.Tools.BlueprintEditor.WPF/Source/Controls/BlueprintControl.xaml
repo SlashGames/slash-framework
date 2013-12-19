@@ -3,26 +3,29 @@
              xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:validation = "clr-namespace:BlueprintEditor.Validation"
-             xmlns:blueprintEditor = "clr-namespace:BlueprintEditor"
              xmlns:converters = "clr-namespace:BlueprintEditor.Converters"
-             xmlns:viewModels="clr-namespace:BlueprintEditor.ViewModels"
-             xmlns:commands="clr-namespace:BlueprintEditor.Commands"
+             xmlns:viewModels = "clr-namespace:BlueprintEditor.ViewModels"
+             xmlns:commands = "clr-namespace:BlueprintEditor.Commands"
              mc:Ignorable = "d"
-             d:DesignHeight = "300" d:DesignWidth = "300" Name = "Main" d:DataContext="{d:DesignInstance viewModels:BlueprintViewModel}">
+             d:DesignHeight = "300" d:DesignWidth = "300" Name = "Main"
+             d:DataContext = "{d:DesignInstance viewModels:BlueprintViewModel}">
     <UserControl.Resources>
-        <blueprintEditor:BindingProxy x:Key = "Proxy" Data = "{Binding}" />
-        <converters:TypeToClassNameConverter x:Key = "TypeToClassNameConverter" />
-        <converters:ComponentToolTipConverter x:Key = "ComponentToolTipConverter" /> 
-        <DataTemplate x:Key = "ComponentListBoxItemTemplate">
-            <TextBlock Text = "{Binding Converter={StaticResource TypeToClassNameConverter}}">
-                <TextBlock.ToolTip>
-                    <ToolTip>
-                        <TextBlock Text = "{Binding ., Converter={StaticResource ComponentToolTipConverter}}"></TextBlock>
-                    </ToolTip>
-                </TextBlock.ToolTip>
-            </TextBlock>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source = "../Controls/Templates/TextBoxErrorTemplate.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:TypeToClassNameConverter x:Key = "TypeToClassNameConverter" />
+            <converters:ComponentToolTipConverter x:Key = "ComponentToolTipConverter" />
+            <DataTemplate x:Key = "ComponentListBoxItemTemplate">
+                <TextBlock Text = "{Binding Converter={StaticResource TypeToClassNameConverter}}">
+                    <TextBlock.ToolTip>
+                        <ToolTip>
+                            <TextBlock Text = "{Binding ., Converter={StaticResource ComponentToolTipConverter}}"></TextBlock>
+                        </ToolTip>
+                    </TextBlock.ToolTip>
+                </TextBlock>
+            </DataTemplate>
+        </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.CommandBindings>
         <CommandBinding Command = "{x:Static commands:BlueprintCommands.AddComponentCommand}"
@@ -41,16 +44,12 @@
                 <ColumnDefinition Width = "*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Content = "Id" Grid.Column = "0" ToolTip = "Unique id of blueprint" />
-            <TextBox x:Name = "TbBlueprintId" Grid.Column = "1">
+            <TextBox x:Name = "TbBlueprintId" Grid.Column = "1"
+                     Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}">
                 <TextBox.Text>
-                    <Binding Path = "BlueprintId">
+                    <Binding Path = "NewBlueprintId" UpdateSourceTrigger = "PropertyChanged">
                         <Binding.ValidationRules>
-                            <validation:UniqueBlueprintIdValidationRule>
-                                <validation:UniqueBlueprintIdValidationRule.Data>
-                                    <validation:ValidationRuleData
-                                         Context = "{Binding Data, Source={StaticResource Proxy}}" />
-                                </validation:UniqueBlueprintIdValidationRule.Data>
-                            </validation:UniqueBlueprintIdValidationRule>
+                            <DataErrorValidationRule />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -85,8 +84,8 @@
                             <Label Content = "Added:" Grid.Row = "0" ToolTip = "Already added components" />
                             <ListBox x:Name = "LbComponentsAdded" Grid.Row = "1"
                                      ItemTemplate = "{StaticResource ComponentListBoxItemTemplate}"
-                                     MouseDoubleClick = "LbComponentsAdded_OnMouseDoubleClick" 
-                                     ItemsSource="{Binding AddedComponents}"/>
+                                     MouseDoubleClick = "LbComponentsAdded_OnMouseDoubleClick"
+                                     ItemsSource = "{Binding AddedComponents}" />
                         </Grid>
                         <StackPanel Grid.Column = "1" VerticalAlignment = "Center" Margin = "5, 0, 5, 0">
                             <Button x:Name = "BtAdd" Content = "&lt;-" Height = "30"
@@ -106,7 +105,7 @@
                             <ListBox x:Name = "LbComponentsAvailable" Grid.Row = "1"
                                      ItemTemplate = "{StaticResource ComponentListBoxItemTemplate}"
                                      MouseDoubleClick = "LbComponentsAvailable_OnMouseDoubleClick"
-                                     ItemsSource="{Binding AvailableComponents}"/>
+                                     ItemsSource = "{Binding AvailableComponents}" />
                         </Grid>
                     </Grid>
                 </AdornerDecorator>

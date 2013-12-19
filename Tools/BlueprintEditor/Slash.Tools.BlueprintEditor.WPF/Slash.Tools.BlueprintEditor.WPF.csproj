@@ -161,7 +161,6 @@
     </Compile>
     <Compile Include="Source\Inspectors\IInspectorControl.cs" />
     <Compile Include="Source\Inspectors\InspectorFactory.cs" />
-    <Compile Include="Source\Validation\UniqueBlueprintIdValidationRule.cs" />
     <Compile Include="Source\Windows\BindingProxy.cs" />
     <Compile Include="Source\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
