@@ -158,11 +158,33 @@ namespace BlueprintEditor.ViewModels
             // Remove from available, add to blueprint component types.
             this.AvailableComponents.Remove(componentType);
             this.AddedComponents.Add(componentType);
+
+            // Make children inherit component.
+            foreach (var child in this.DerivedBlueprints)
+            {
+                child.InheritComponent(componentType);
+            }
         }
 
         public object GetUndoRoot()
         {
             return this.Root;
+        }
+
+        /// <summary>
+        ///   Removes the specified component from the current and avaliable components,
+        ///   proceeding recursively with all deriving blueprints.
+        /// </summary>
+        /// <param name="componentType">Type of the component to inherit.</param>
+        public void InheritComponent(Type componentType)
+        {
+            this.AddedComponents.Remove(componentType);
+            this.AvailableComponents.Remove(componentType);
+
+            foreach (var child in this.DerivedBlueprints)
+            {
+                child.InheritComponent(componentType);
+            }
         }
 
         public bool RemoveComponent(Type componentType)
@@ -173,7 +195,28 @@ namespace BlueprintEditor.ViewModels
                 this.AvailableComponents.Add(componentType);
             }
 
+            // Make children no longer inherit component.
+            foreach (var child in this.DerivedBlueprints)
+            {
+                child.UninheritComponent(componentType);
+            }
+
             return this.AddedComponents.Remove(componentType);
+        }
+
+        /// <summary>
+        ///   Adds the specified component to the avaliable components,
+        ///   proceeding recursively with all deriving blueprints.
+        /// </summary>
+        /// <param name="componentType">Type of the component to uninherit.</param>
+        public void UninheritComponent(Type componentType)
+        {
+            this.AvailableComponents.Add(componentType);
+
+            foreach (var child in this.DerivedBlueprints)
+            {
+                child.UninheritComponent(componentType);
+            }
         }
 
         #endregion
