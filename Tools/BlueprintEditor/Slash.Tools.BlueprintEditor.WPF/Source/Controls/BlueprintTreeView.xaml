@@ -30,12 +30,18 @@
             </Style>
         </Grid.Style>
 
-        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top" ToolTip = "Available Blueprints" ItemsSource="{Binding BlueprintsView}">
+        <TreeView Name = "TvTree" Height = "252" VerticalAlignment = "Top" ToolTip = "Available Blueprints" ItemsSource="{Binding BlueprintsView}" AllowDrop="True">
             <TreeView.ItemTemplate>
-                <DataTemplate DataType = "viewModels:BlueprintViewModel">
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=DerivedBlueprints}" DataType = "viewModels:BlueprintViewModel">
                     <TextBlock Text = "{Binding BlueprintId}" />
-                </DataTemplate>
+                </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <EventSetter Event="TreeViewItem.Drop" Handler="TvTree_OnDrop"/>
+                    <EventSetter Event="TreeViewItem.MouseMove" Handler="TvTree_OnMouseMove"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
         </TreeView>
         <Button x:Name = "BtDeleteBlueprint" Content = "Delete" Margin = "0,267,0,0" VerticalAlignment = "Top"
                 Click = "BtDeleteBlueprint_OnClick" RenderTransformOrigin = "-0.511,0.109" Height = "23"

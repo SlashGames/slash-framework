@@ -45,6 +45,8 @@ namespace BlueprintEditor.ViewModels
             this.blueprintId = blueprintId;
             this.Blueprint = blueprint;
 
+            this.DerivedBlueprints = new ObservableCollection<BlueprintViewModel>();
+
             // Set added components.
             this.AddedComponents = new ObservableCollection<Type>(this.Blueprint.ComponentTypes);
             this.AddedComponents.CollectionChanged += this.OnAddedComponentsChanged;
@@ -132,6 +134,11 @@ namespace BlueprintEditor.ViewModels
         ///   Blueprint manager the blueprint belongs to.
         /// </summary>
         public BlueprintManager BlueprintManager { get; set; }
+
+        /// <summary>
+        ///   Blueprints derived from the blueprint.
+        /// </summary>
+        public ObservableCollection<BlueprintViewModel> DerivedBlueprints { get; set; }
 
         public object Root { get; set; }
 
