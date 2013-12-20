@@ -35,11 +35,14 @@ if ($mode == "setup")
         chop($project_name);
     }
     
-    # Create main directory.
-    print "\nCreating new project '$project_name'.";
-    unless(mkdir $project_name)
+    # Create main directory if it doesn't exist.
+    unless(-d $project_name) 
     {
-        die "\nUnable to create directory $project_name";
+        print "\nCreating new project '$project_name'.";
+        unless(mkdir $project_name)
+        {
+            die "\nUnable to create directory $project_name";
+        }
     }
     
     # Copy project template to directory.
