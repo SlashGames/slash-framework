@@ -118,6 +118,9 @@ UpgradeLog*.XML
 
 /Source/Unity/Unity.userprefs
 
-/Source/Unity/Assets/Plugins/*.mdb*
-/Source/Unity/Assets/Plugins/*.pdb*
+/Source/Unity/Assets/Plugins/*/*.mdb*
+/Source/Unity/Assets/Plugins/*/*.pdb*
 /Build
+
+# If you don't want to check in DLLs to the Unity folder, uncomment this line.
+# /Source/Unity/Assets/Plugins/*/*.dll*
