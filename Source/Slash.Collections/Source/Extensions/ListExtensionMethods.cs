@@ -48,6 +48,28 @@ namespace Slash.Collections.Extensions
             list.Insert(newIndex, item);
         }
 
+        /// <summary>
+        ///   Shuffle a list randomly.
+        /// </summary>
+        /// <param name="list">List to shuffle.</param>
+        /// <param name="random">Random number generator.</param>
+        public static void Shuffle(this IList list, Random random = null)
+        {
+            if (random == null)
+            {
+                random = new Random();
+            }
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                object value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
+
         #endregion
     }
 }

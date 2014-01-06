@@ -214,8 +214,7 @@ namespace BlueprintEditor.ViewModels
                     "componentType");
             }
 
-            // Remove from available, add to blueprint component types.
-            this.AvailableComponents.Remove(componentType);
+            // Add to blueprint component types.
             this.AddedComponents.Add(componentType);
 
             // Make children inherit component.
@@ -265,12 +264,6 @@ namespace BlueprintEditor.ViewModels
 
         public bool RemoveComponent(Type componentType)
         {
-            // Remove from available, add to blueprint component types.
-            if (this.AssemblyComponents.Contains(componentType))
-            {
-                this.AvailableComponents.Add(componentType);
-            }
-
             // Make children no longer inherit component.
             foreach (var child in this.DerivedBlueprints)
             {
@@ -333,12 +326,27 @@ namespace BlueprintEditor.ViewModels
 
         private void OnAddedComponentsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            string undoMessage = null;
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 // Add component types to blueprint.
                 foreach (Type item in e.NewItems)
                 {
+                    // Remove from available component types.
+                    this.AvailableComponents.Remove(item);
+
                     this.Blueprint.ComponentTypes.Add(item);
+                }
+
+                // Create undo message.
+                if (e.NewItems.Count == 1)
+                {
+                    Type item = (Type)e.NewItems[0];
+                    undoMessage = string.Format("Add component '{0}'", item.Name);
+                }
+                else
+                {
+                    undoMessage = "Add components";
                 }
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -347,8 +355,29 @@ namespace BlueprintEditor.ViewModels
                 foreach (Type item in e.OldItems)
                 {
                     this.Blueprint.ComponentTypes.Remove(item);
+
+                    // Remove from available, add to blueprint component types.
+                    if (this.AssemblyComponents.Contains(item))
+                    {
+                        this.AvailableComponents.Add(item);
+                    }
+                }
+
+                // Create undo message.
+                if (e.OldItems.Count == 1)
+                {
+                    Type item = (Type)e.OldItems[0];
+                    undoMessage = string.Format("Remove component '{0}'", item.Name);
+                }
+                else
+                {
+                    undoMessage = "Remove components";
                 }
             }
+
+            // Log the collection change with the undo framework.
+            DefaultChangeFactory.Current.OnCollectionChanged(
+                this, "AddedComponents", this.AddedComponents, e, undoMessage ?? "Blueprint components changed");
         }
 
         private void OnAvailableComponentsChanged(object sender, NotifyCollectionChangedEventArgs e)

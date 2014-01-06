@@ -7,6 +7,7 @@
 namespace BlueprintEditor.Controls
 {
     using System;
+    using System.Collections.Specialized;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -135,8 +136,6 @@ namespace BlueprintEditor.Controls
 
             // Select component type.
             this.LbComponentsAdded.SelectedItem = componentType;
-
-            this.OnBlueprintComponentsChanged();
         }
 
         private void ExecutedRemoveComponent(object sender, ExecutedRoutedEventArgs e)
@@ -158,8 +157,6 @@ namespace BlueprintEditor.Controls
 
             // Select component type.
             this.LbComponentsAvailable.SelectedItem = componentType;
-
-            this.OnBlueprintComponentsChanged();
         }
 
         /// <summary>
@@ -201,13 +198,26 @@ namespace BlueprintEditor.Controls
             BlueprintCommands.AddComponentCommand.Execute(null);
         }
 
-        private void OnBlueprintComponentsChanged()
+        private void OnBlueprintComponentsChanged(
+            object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
             this.UpdateInspectors();
         }
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            BlueprintViewModel oldViewModel = (BlueprintViewModel)e.OldValue;
+            if (oldViewModel != null)
+            {
+                oldViewModel.AddedComponents.CollectionChanged -= this.OnBlueprintComponentsChanged;
+            }
+
+            BlueprintViewModel newViewModel = (BlueprintViewModel)e.NewValue;
+            if (newViewModel != null)
+            {
+                newViewModel.AddedComponents.CollectionChanged += this.OnBlueprintComponentsChanged;
+            }
+
             this.UpdateInspectors();
         }
 

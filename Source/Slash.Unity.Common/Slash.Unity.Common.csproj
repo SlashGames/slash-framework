@@ -82,6 +82,7 @@
     <Compile Include="Source\Utils\GarbageCollectionBehaviour.cs" />
     <Compile Include="Source\Utils\GLUtils.cs" />
     <Compile Include="Source\Utils\UnityUtils.cs" />
+    <Compile Include="Source\Utils\VersionNumberBehaviour.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup Condition="'$(Configuration)' != 'Debug NoLog4Net' And '$(Configuration)' != 'Release NoLog4Net'">

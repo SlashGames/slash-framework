@@ -48,7 +48,8 @@ namespace BlueprintEditor.ViewModels
                 this.Blueprints.Add(
                     new BlueprintViewModel(blueprintPair.Key, blueprintPair.Value)
                         {
-                            AssemblyComponents = this.assemblyComponents
+                            AssemblyComponents = this.assemblyComponents,
+                            Root = this
                         });
             }
 

@@ -8,8 +8,8 @@
     <ProjectGuid>{001B2D96-4259-4E09-934F-290F74086E06}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PostBuildLibraries</RootNamespace>
-    <AssemblyName>PostBuildLibraries</AssemblyName>
+    <RootNamespace>PostBuild</RootNamespace>
+    <AssemblyName>PostBuild</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
