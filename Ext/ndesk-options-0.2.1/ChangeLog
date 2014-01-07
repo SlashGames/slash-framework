@@ -1,0 +1,1168 @@
+commit 0bc3f2a057039e089b4b3ae5aa93f6f84393aa50
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Oct 13 15:14:05 2008 -0400
+
+    Remove AC_CANONICAL_SYSTEM.
+    
+    	* configure.ac: Remove AC_CANONICAL_SYSTEM, as we're generating
+    	  platform-independent IL, and thus don't need to care about the build
+    	  system/platform/OS/etc.
+
+commit 3565c7ab498b59de7a5b66f59d427379a4272761
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Oct 13 14:39:50 2008 -0400
+
+    $(DOC_EXAMPLES_OUTPUT) should be in $(DOC_CLEANFILES).
+    
+    	* doc/Makefile.include: Remove $(DOC_EXAMPLES_OUTPUT) from
+    	  $(DOC_CLEANFILES), as these files are stored in git and thus
+    	  shouldn't be removed as part of the build process.  (The sample
+    	  output is in git as a secondary set of "unit tests", ensuring that
+    	  no unexpected changes occur.)
+
+commit cd1a9765ff21cc446de2095f162740f479b8bf9e
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Oct 13 14:28:26 2008 -0400
+
+    Prefix documentation targets with `doc-`.
+    
+    	doc/Makefile.include: Prefix documentation targets with `doc-`.
+
+commit 8c3fc5aa855cae2df6a6486742af266794bfee4c
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Sep 16 15:13:39 2008 -0400
+
+    Fix .NET Compatibility.
+    
+    Apparently .NET's KeyedCollection<TKey,TValue>.Dictionary is originally null,
+    and isn't allocated until .SetItem() or .InsertItem() is invoked...meaning we
+    need to ensure that one of these methods is invoked before we use Dictionary.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Ensure that InsertItem()
+    	  or SetItem() are called before accessing the Dictionary property.
+    	  GetKeyForItem() needs a null check (to fix an OptionSetTest for
+    	  `v.Add(null)`, which would otherwise NRE).
+
+commit 5c9d7e88747cee060c571d7c3a839f1e0cc16fe8
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Sep 16 15:05:33 2008 -0400
+
+    Correct "exception-safe" insertion.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Properly keep track of
+    	  the names that were added to the Dictionary, so that if an insertion
+    	  fails we can properly "roll back" to the previous state.
+
+commit 1d55227f6a8904beaa26d9e66fbe70fd46ec4184
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Aug 16 16:41:20 2008 -0400
+
+    Remove several Gendarme warnings within NDesk.Options.dll
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Remove warnings about
+    	  non-static but can be static methods, OptionException missing a
+    	  default constructor, a missing LinkDemand in
+    	  OptionException.GetObjectData(), internal classes which can be
+    	  sealed, string optimizations, etc.
+
+commit c52aa20569b49b620deb0fd28b19909b7c577d47
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jun 2 17:12:29 2008 -0400
+
+    Fix a build break for alp.
+    
+    	* Makefile.am: Apparently $(builddir) can be unset, which breaks the
+    	  build as /src/NDesk.Options/AssemblyInfo.cs can't be found.
+
+commit 90ffd957cfece518b04167d1ad081471a1e38f24
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon May 26 21:32:25 2008 -0400
+
+    Fix `make html` target.
+    
+    	* doc/.gitignore: Ignore the generated doc/ndesk-options directory.
+    	* doc/Makefile.include: Fix the `html` target (broken by the previous
+    	  "fix `make clean; make distcheck`" commit).
+
+commit 9d74d6b2e237e2616cdd7ba90a9800394d149f5b
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon May 26 12:30:28 2008 -0400
+
+    Fix `make distcheck`.
+    
+    	* configure.ac: Don't generate `doc/Makefile` anymore.
+    	* Makefile.am: `SUBDIRS=doc` caused `make clean; make distcheck` to fail, as
+    	  `doc' would be built before `.' which fails as doc requires
+    	  NDesk.Options.dll, built by `.'.  The documented solution of
+    	  `SUBDIRS=. doc` didn't work, so just remove the recursive make nonsense
+    	  and place everything relevant into the top-level Makefile.
+    	* doc/Makefile.am: Rename to doc/Makefile.include.
+    	* doc/Makefile.include: Rename symbols for namespace scoping, as this file
+    	  will be `include`d from top-level Makefile.am.
+    	* doc/en/examples/bundling.in, doc/en/examples/context.in,
+    	  doc/en/examples/greet.in, doc/en/examples/localization.in,
+    	  doc/en/examples/subclass.in: Change the program path, as they'll be
+    	  executed from topdir, not from topdir/doc.
+
+commit e9fdba8f802e9ccf7fd5eb861b893c286b52e8c2
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Thu May 15 22:22:52 2008 -0400
+
+    Flush the documentation.
+    
+    	* doc/en/index.xml: Minor monodoc-2.0 format change.
+    	* doc/en/NDesk.Options/Option.xml,
+    	  doc/en/NDesk.Options/OptionAction`2.xml,
+    	  doc/en/NDesk.Options/OptionSet.xml: monodoc-2.0 format
+    	  changes (addition of <TypeParameters/> and changes to
+    	  <TypeParameter/>); improve the docs.
+
+commit 67ec0435ee6a2e4d90d8f9f02abffe51903a5bc3
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Apr 7 02:49:06 2008 -0400
+
+    Cleanup documentation; better C# 2.0 support.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Update comments to reflect
+    	  current implementation (w/o repeating all the actual docs); fix some
+    	  C# 3-isms that were left in the code (not sure why -langversion:ISO-2
+    	  didn't catch these).
+
+commit c96999c2025a7c4ae9e6c732ec95f9fb9384b492
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sun Mar 30 22:29:19 2008 -0400
+
+    Migrate the unit tests to use NUnit; place into separte files.
+    
+    	* Makefile.am: Don't build bin/options-test*.exe, instead build
+    	  lib/ndesk-options/NDesk.Options_test(_linq?).dll, which contains NUnit
+    	  tests for NDesk.Options.dll.  Change the `check' target to use
+    	  nunit-console2 to run the unit tests.
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Move unit tests under
+    	  src/NDesk.Options/Test/NDesk.Options/*.cs.
+    	* src/NDesk.Options/Test/NDesk.Options/OptionContextTest.cs,
+    	  src/NDesk.Options/Test/NDesk.Options/OptionSetTest.cs,
+    	  src/NDesk.Options/Test/NDesk.Options/OptionTest.cs,
+    	  src/NDesk.Options/Test/NDesk.Options/Utils.cs: Added; unit tests for
+    	  NDesk.Options (originally from Options.cs).
+
+commit 3f62c3561b7c6e4edd46540a1499d49861b75814
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Mar 29 22:19:09 2008 -0400
+
+    Force C# 2.0 support within NDesk.Options.dll.
+    
+    	* Makefile.am: Ensure that NDesk.Options.dll can be built under a C# 2.0
+    	  compiler by specifying -langversion:ISO-2.
+
+commit 3987f067f98f20f9ffc3416b4fa7903b071e7536
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Mar 10 22:25:14 2008 -0400
+
+    Use KeyedCollection<string, Option> as the OptionSet base class.
+    
+    	* configure.ac: Bump the package version to 0.2.1.
+    	* doc/en/NDesk.Options/Option.xml, doc/en/NDesk.Options/OptionAction`2.xml,
+    	  doc/en/NDesk.Options/OptionContext.xml,
+    	  doc/en/NDesk.Options/OptionException.xml,
+    	  doc/en/NDesk.Options/OptionValueCollection.xml,
+    	  doc/en/NDesk.Options/OptionValueType.xml: Flush new <AssemblyVersion/>.
+    	* doc/en/NDesk.Options/OptionSet.xml: Flush; add new members; remove old
+    	  members; flush <AssemblyVersion/>s; etc.
+    	* doc/en/index.xml: Version bump.
+    	* doc/en/examples/subclass.cs: Use non-obsolete methods.
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Use
+    	  KeyedCollection<string,Option> instead of Collection<Option> as the
+    	  OptionSet base class, as KeyedCollection is closer semantically to what
+    	  OptionSet does.  Remove unnecessary overloads, members.  Obsolete
+    	  public/protected members that we shouldn't remove yet.
+
+commit fae194519c8e718d60214a5895ab0a360e9a4952
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Fri Mar 7 22:14:15 2008 -0500
+
+    Document the default handler, WriteOptionDescriptions() changes.
+    
+    	* doc/en/NDesk.Options/Option.xml, doc/en/NDesk.Options/OptionSet.xml:
+    	  Flush updated docs.
+    	* doc/en/examples/bundling.cs: Add an example of a default handler.
+    	* doc/en/examples/bundling.in: Test the default handler.
+    	* doc/en/examples/bundling.txt: Flush.
+    	* doc/en/examples/greet.cs: Update to make use of WriteOptionDescriptions()
+    	  value formatting feature.
+    	* doc/en/examples/greet.txt: Flush.
+
+commit 2091ef0592e89d840bdeb1a286feb7daf84070ad
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sun Mar 2 19:30:03 2008 -0500
+
+    Fix Option prototype checking.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: The previous checks for '<>'
+    	  handlers was wrong, as it flagged "a|b=" (requiring 2 values) as a '<>'
+    	  handler, generating an exception (which is wrong).
+
+commit 0f02362bb01d67fc58d8d0841eaab511fcaa60cc
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Feb 27 16:31:18 2008 -0500
+
+    Permit C# 2.0 compatibility.
+    
+    	* Makefile.am: Add CSFLAGS, so that we can test C# 2.0 compatibility in the
+    	  future with `make CSFLAGS=-langversion:ISO-2`.
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Allow non-TEST code to be
+    	  compiled with a C# 2.0 compile (no lambdas, no var, no auto-properties...).
+
+commit e1e7c3d133eba542f8fb32776278f54ba36b965a
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Feb 26 13:19:05 2008 -0500
+
+    Add "default" argument handling support.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Add "default" argument
+    	  handling support.  Normally, all unhandled arguments are returned from
+    	  OptionSet.Parse().  However, if an Option with the name "<>" is
+    	  registered, then that Option will be invoked to handle unhandled arguments
+    	  (and thus OptionSet.Parse() will always return an empty list).
+    	  This is useful to handle "argument runs", where some arguments are
+    	  influenced by a preceeding Option, e.g.
+    	  `mdoc assemble --format=ecma dirA dirB --format=error dirC dirD`
+
+commit dc474562041b464c2299b0693859b43e9de3eba9
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sun Feb 24 08:46:03 2008 -0500
+
+    Improve HTML-generated docs.
+    
+    	* doc/.gitignore: Ignore doc-def-template.xsl.
+    	* doc/doc-template.html: Rename to doc-template.xsl.
+    	* doc-template.xsl: Simplification; use named templates from
+    	* doc-def-template.xsl so that less code needs to be duplicated.  Add a
+    	  <script/> block for prettyprint.js.
+    	* doc/Makefile.am: Use `mdoc export-html` (depends on svn-version of
+    	  monodoc), and extract the default template into doc-def-template.xsl.
+    	  This allows us to re-use the named templates within this file, simplifying
+    	  doc-template.xsl.
+    	* doc/prettyprint.js: Added; JavaScript file that provides syntax color
+    	  highlighting for <pre/> blocks; from Monologue.
+
+commit 33a02f39c9b73d0817f619ca1e641ba1ea9ae0c1
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Feb 20 20:27:37 2008 -0500
+
+    The pkgconfig file should provide a Libs: section.
+    
+    	* lib/pkgconfig/ndesk-options.pc.in: Properly follow
+    	  http://www.mono-project.com/Guidelines:Application_Deployment#Libraries_with_Unstable_APIs
+    	  and provide a Libs: section so `pkg-config --libs` has useful output.
+
+commit 436d2539d265801838b07b49cf07b7a9b6762eb3
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Feb 19 22:22:28 2008 -0500
+
+    Add Option.Description auto-wrapping to OptionSet.WriteOptionDescriptions().
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Auto-wrap the descriptive text
+    	  so that it looks nice on an 80-column wide display (i.e. descriptions
+    	  shouldn't enter column 1).
+
+commit 2b2e8350b3de58b684a18532ead0fda15b9b579b
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Feb 19 15:55:53 2008 -0500
+
+    Add name substitution support to OptionSet.WriteOptionDescriptions().
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Add name substitution support.
+    	  This allows the description string to contain alternate value strings to
+    	  use within the option description; for example, by default the key/value
+    	  Option "D=" would generate "-D=VALUE1:VALUE2 docs..."; if we provide a
+    	  description of "foo {0:key}/{1:value}", then we would instead generate
+    	  "-D=key:value".  If the Option takes only 1 argument, you can drop the
+    	  numeric prefix and just use "{name}".
+
+commit 0f0f7d9a7951b874a704d5b5226b9b096338f269
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Thu Feb 14 15:35:08 2008 -0500
+
+    Use a version-less directory for the docs.zip file.
+    
+    	* doc/Makefile.am: Use a version-less directory for the docs.zip file.
+    	  This simplifies deployment to ndesk.org.
+
+commit f8681ab484945204fe3e3a27867d1bd57c5e1dcb
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Thu Feb 14 11:10:25 2008 -0500
+
+    Fix `make distcheck`.
+    
+    	* configure.ac: Don't generate lib/pkgconfig/ndesk-options-linq.pc.
+
+commit 4098d01af4a78e0557662d8f2c883e7d2374d8e2
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Thu Feb 14 11:08:43 2008 -0500
+
+    Ignore generated .mdb files.
+    
+    	* doc/en/examples/.gitignore: Ignore *.mdb files.
+
+commit 754f392aa0ca6f9df3d713349c76444837b50593
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Thu Feb 14 11:06:50 2008 -0500
+
+    Add documentation for new types.
+    
+    	* doc/en/NDesk.Options/OptionAction`2.xml,
+    	  doc/en/NDesk.Options/OptionValueCollection.xml: Added.
+
+commit d886bc19e720d1c7b7bef63989452ef89b4b1380
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Thu Feb 14 11:05:00 2008 -0500
+
+    Remove .NET 3.5 pseudo-requirement/support.
+    
+    The .NET 3.5 support really complicated the version numbering scheme; it's
+    easier to just remove the use of System.Action`2 and use a custom delegate
+    type instead.  (Using the major version number for framework version means
+    that the NDesk.Options major number is the assembly minor number, and by
+    convention if only the assembly minor number changes the changes are intended
+    to be backward compatible, which I do NOT want to gaurantee if the
+    NDesk.Options major number changes, etc.  Plus, lupus called it stupid.)
+    
+    	* Makefile.am: Only create lib/ndesk-options/NDesk.Options.dll.
+    	* README: Remove information about LINQ build & .NET 3.5 info.
+    	* doc/Makefile.am: Use the right NDesk.Options.dll; Add
+    	  NDesk.Options.OptionAction`2.xml; Remove System.* types.
+    	* doc/en/examples/subclass.cs: Option.ValueCount -> Option.MaxValueCount.
+    	* doc/en/NDesk.Options/Option.xml, doc/en/NDesk.Options/OptionContext.xml,
+    	  doc/en/NDesk.Options/OptionException.xml,
+    	  doc/en/NDesk.Options/OptionSet.xml,
+    	  doc/en/NDesk.Options/OptionValueType.xml, doc/en/index.xml: Flush;
+    	  fix version numbers, fix <see cref="..." /> links, etc.
+    	* doc/en/System/Action`2.xml, doc/en/ns-System.xml: Remove.
+    	* lib/pkgconfig/.gitignore: Remove no-longer-generated files.
+    	* lib/pkgconfig/ndesk-options.pc.in: Update.
+    	* lib/pkgconfig/ndesk-options-linq.pc.in: Remove.
+    	* src/NDesk.Options/AssemblyInfo.cs.in: Simplify the assembly version number
+    	  to "@VERSION@.0".  It will now always be tied to the package version.
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Remove System.Action`2 when
+    	  LINQ isn't defined; add NDesk.Options.OptionAction`2 as replacement;
+    	  rename Option.ValueCount to Option.MaxValueCount.
+
+commit 5f22a12e6184fd2bbe42aaae0b5403842234af0e
+Author: Alp Toker <alp@atoker.com>
+Date:   Thu Feb 14 00:06:17 2008 +0000
+
+    Typo fix
+
+commit d7b626ac5063dd92a08461524c654647f72e80c2
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Feb 13 17:00:26 2008 -0500
+
+    Documentation flush.
+    
+    	* doc/Makefile.am: Add OptionValueCollection.xml.
+    	* doc/doc-template.html: CSS changes for HTML documentation.
+    	* doc/en/NDesk.Options/Option.xml, doc/en/NDesk.Options/OptionContext.xml,
+    	  doc/en/NDesk.Options/OptionException.xml,
+    	  doc/en/NDesk.Options/OptionSet.xml,
+    	  doc/en/NDesk.Options/OptionValueType.xml, doc/en/System/Action`2.xml,
+    	  doc/en/index.xml: Flush documentation updates.
+    	* doc/en/examples/.gitignore: Ignore generated files.
+    	* doc/en/examples/bundling.cs, doc/en/examples/bundling.in,
+    	  doc/en/examples/bundling.txt: Add new example program.
+
+commit be38289e823c88814605f41be413cad5cb4af364
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Feb 13 16:56:12 2008 -0500
+
+    Documentation consistency: use `argument' for not-yet-parsed strings.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Use `argument' or `arguments'
+    	  for Parse()able elements that are only potentially Options.
+
+commit d6304d1488b0fc99db40abf104941238310915b4
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Feb 13 16:54:22 2008 -0500
+
+    Bump VERSION and MONO_REQ_VERSION.
+    
+    	* configure.ac: Bump VERSION to 0.2.0, and bump MONO_REQ_VERSION to 1.9 (as
+    	  this is the first Mono release that can actually *build* NDesk.Options;
+    	  1.2.6 couldn't, despite checking for it earlier...)
+
+commit 1ecddc70ed4dcfa42c72b1350f9c4118ae200597
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Feb 12 22:37:05 2008 -0500
+
+    Value bundling semantic changes and other documentation-influenced improvements.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Random changes...
+    	  - Change the ordering of the default GetValueSeparators() to :=.  This
+    	    allows WriteOptionDescriptions() to generate more readable key/value
+    	    documentation, e.g. --foo=VALUE1:VALUE2 instead of -foo=VALUE1=VALUE2.
+    	  - Merge ParseBundled() with ParseBundledValue(); an option taking a value
+    	    can now be bundled with other non-value options, and the option taking a
+    	    value "eats" everything after it's option.  (So bundling value-accepting
+    	    with non-value accepting options is now possible for both Optional and
+    	    Required Options.)
+
+commit e5b156e56410953d58ef21bb51b8e587093bf4f6
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Feb 12 11:44:36 2008 -0500
+
+    Add another example program.
+    
+    	* doc/Makefile.am: Use .NET 3.5 for examples; add bundling test.
+    	* doc/en/examples/bundling.cs, doc/en/examples/bundling.in,
+    	  doc/en/examples/bundling.txt: Added; option & value bundling example.
+
+commit 3ef3eca1e7a46e46f697b52f0234825c929da8c3
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 11 23:12:29 2008 -0500
+
+    Remove generated file.
+    
+    	* src/NDesk.Options/AssemblyInfo.cs: Deleted (should have been removed with
+    	  the prior commit that added AssemblyInfo.cs.in).
+
+commit 5a1ae8553d8b4b48e3bc3bb2020061fdec3fead6
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 11 23:11:51 2008 -0500
+
+    Fix <see cref="..." /> value.
+    
+    	* doc/en/NDesk.Options/OptionSet.xml: Fix <see cref="..."/> value.
+
+commit 01a3aa7e02117898c4499d5fc37645734e5745ca
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 11 23:08:59 2008 -0500
+
+    Documentation build improvements.
+    
+    	* doc/Makefile.am:
+    	  - Build samples with -debug+;
+    	  - Copy NDesk.Options.dll.mdb;
+    	  - Include $(EXAMPLES_OUTPUT) in $(EXTRA_DIST);
+    	  - Place docs into $(PACKAGE)-$(VERSION), as not all versions can be merged.
+    	  - Don't kill the $(PACKAGE)-$(VERSION) html directory.
+    	* doc/en/examples/.gitignore: Don't ignore the .txt files.
+    	* doc/en/examples/context.in, doc/en/examples/greet.in,
+    	  doc/en/examples/subclass.in: Update argument lists due to prior Options.cs
+    	  changes for 0.2.0.
+    	* doc/en/examples/context.cs, doc/en/examples/subclass.cs: Update code due
+    	  to prior Options.cs changes for 0.2.0.
+    	* doc/en/examples/context.txt, doc/en/examples/greet.txt,
+    	  doc/en/examples/localization.txt, doc/en/examples/subclass.txt: Added;
+    	  output from the sample programs.  Useful to tell how exactly the output
+    	  changes as the samples change w/o needing to compare to the XML docs.
+
+commit eb20db1abddd99063e05d5f157344e39af85093c
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 11 22:57:31 2008 -0500
+
+    Fix `make distcheck`.
+    
+    	* Makefile.am: Fix `make distcheck`; it was broken once AssemblyInfo.cs was
+    	  made into a generated file.
+
+commit 3e779116bf0b9f1a509e280fdc4bfd096a3fe879
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 11 22:20:06 2008 -0500
+
+    Revise the versioning scheme.
+    
+    	* configure.ac: Create the file src/NDesk.Options/AssemblyInfo.cs.
+    	* src/NDesk.Options/.gitignore: Ignore generated files.
+    	* src/NDesk.Options/AssemblyInfo.cs.in: Of the major.minor.micro.build
+    	  tuple, previously major.minor was used to differentiate between the
+    	  .NET 2.0 and .NET 3.5 builds, while micro.build were effectively ignored.
+    	  Instead, use just the major number to differentiate and set
+    	  minor.micro.build to the ndesk-options PACKAGE version.
+
+commit 8c888bbddd9396168957b42fd59f7f8b4be489d5
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 11 22:08:47 2008 -0500
+
+    Use consistent terminology.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: The OptionSet.Add() methods
+    	  should use `prototype' as the string parameter, not `options', as
+    	  1. this is what the Option constructor uses, and 2. the string contains
+    	  more than just a listing of the options, but also value information.
+
+commit 71bf9a8a394aab5675a0eebfc638a16528ad470a
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 11 21:48:36 2008 -0500
+
+    Add parameter checking to OptionSet.GetOptionParts().
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Add parameter checking to
+    	  OptionSet.GetOptionParts().
+
+commit 35a445d1520a58017e2e8f0819f00f947033a3a1
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 11 15:56:51 2008 -0500
+
+    Add Option.Parse<T>() method; cleanup.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs:
+    	  - Move `private T OptionSet.ConvertFromString<T>(string, string)` to
+    	    `protected T Option.Parse<T>(string, OptionContext)`.  This makes it
+    	    easier for subclasses to do generic type parsing w/o code duplication.
+    	  - Code cleanup; remove unused variables, constructors, etc.
+
+commit d750bbfc67742e1db053481b46237f39ec41083f
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 4 09:37:00 2008 -0500
+
+    Allow key/value separators to be specified within the Option prototype.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Lots 'o changes:
+    	  - Option() `prototype' argument now contains the key/value separators to
+    	    use when > 1 value is required for the option.
+    	    - After the '=' or ':'; either the whole string *between* {...} OR the
+    	      literal character, so "s={-->}/" permits EITHER the string "-->" or
+    	      "/" to be used as key/value separators, "-d k/v" vs. "-d k-->v".
+    	  - OptionSet.GetOptionParts() now retrieves the string that separates the
+    	    option name from the option value.
+    	  - Improve value bundling so "-DNAME=>VALUE" does The Right Thing for
+    	    prototype "D={=>}".
+    	  - Add tests for all this and more. :-)
+
+commit 200f8ebcc7423ee0be3ab232617f9839a0341fe9
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 4 04:35:30 2008 -0500
+
+    Remove temporary directories.
+    
+    	* doc/Makefile.am: Remove temporary directories.
+
+commit ed562586f94f7eb13cf74cceccf8adfbd2776789
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Feb 4 04:32:57 2008 -0500
+
+    Make optional options less "greedy".
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Optional options should look
+    	  *only* at the current argument for the value, and should NEVER "eat" the
+    	  following argument (as opposed to Required options, which will ALWAYS
+    	  "eat" the following argument if the current argument doesn't contain a
+    	  value).  Behavior suggested by Miguel de Icaza; also needed to support
+    	  `ls --color`-style handling.
+
+commit 3257df27b17ec85d806c527e6ddc04d74abdf59c
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Feb 2 23:01:24 2008 -0500
+
+    Remove the tyranny of only one value per option.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Yet another major change.
+    	  - Remove OptionContext.OptionValue and replace with
+    	    OptionContext.OptionValues, a list of values for a given option.
+    	  - Add new type OptionValueCollection, used for OptionContext.OptionValues.
+    	  - Add OptionSet.MessageLocalizer property.
+    	  - Add OptionContext.OptionSet property.  This is so that additional
+    	    instances can access OptionSet.MessageLocalizer.
+    	  - Add OptionSet.Add(string, string, Action<string, string>) method for
+    	    key/value options.
+    	  - Add OptioNSet.Add<TKey,TValue>(string, string, Action<TKey,TValue>)
+    	    method for generic key/value options.
+    	  - Add tests for all of the above.
+
+commit 0e04c07e82d5ca4f931adc913a2415dca3ad175c
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Feb 2 03:25:21 2008 -0500
+
+    Remove the OptionSet.Add() overloads which take an OptionContext.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Simplify; remove all the
+    	  OptionSet.Add() overloads which take an Action<?, OptionContext> action,
+    	  as no one can think of any sensible reason to expose them.  (They were
+    	  originally added as an implementation detail for OptionSet.Add<T>().)
+    	  Also fixes the `new OptionSet Add(Option)' method, which previously didn't
+    	  add the Option to the collection; CheckOptionContext now checks this too.
+
+commit ea512c8735928792f84b976ef71ecdb978554887
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Feb 2 02:51:07 2008 -0500
+
+    Permit optional values to be bundled.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Permit bundling of option vals.
+
+commit 7a196b78f0adcee81aac53647650e5888f41b8d7
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Feb 2 02:46:50 2008 -0500
+
+    Permit value bundling, to support things like `gcc -DNAME=VALUE`.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Permit value bundling, to
+    	  support things like `gcc -DNAME[=VALUE]`.  If -DNAME isn't itself a
+    	  registered option, and -D is a registered option taking a value, then NAME
+    	  is used as the value for -D.
+
+commit 9526f597bf3d4ad16be9cb41fd5385b913d37404
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Jan 30 19:13:27 2008 -0500
+
+    Fix the `rpm` target.
+    
+    	* Makefile.am: Fix the `rpm` target so that it creates the right file under
+    	  /usr/src/packages/SOURCES.
+
+commit c891cf6a14620b2be601666abe95634ad9519cc0
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 28 14:00:48 2008 -0500
+
+    Make the NDesk.Options.Option constructor 'protected'.
+    
+    	* doc/en/NDesk.Options/Option.xml, doc/en/NDesk.Options/OptionSet.xml: Flush.
+    	*	src/NDesk.Options/NDesk.Options/Options.cs: Make the NDesk.Options.Option
+    	  constructor 'protected'.  According to FxDG, constructors of 'abstract'
+    	  types should be protected, not public.
+
+commit 675a519668eb9638180016477fa82e93b09bdc70
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 28 13:58:21 2008 -0500
+
+    Fix typo.
+    
+    	* doc/en/examples/greet.cs: Fix typo.
+
+commit 93ba68cea6cf36e1d64f339b5e706f4a313f4e02
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 28 13:56:47 2008 -0500
+
+    Fix a documentation link.
+    
+    	* doc/en/NDesk.Options/OptionContext.xml: Fix a <see/> link.
+
+commit 6cca271bdcaa6b2a631f1843a33f13c39c83ca55
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 28 13:56:07 2008 -0500
+
+    Cleanup the example to ease understanding.
+    
+    	* doc/en/examples/localization.cs: Redo the --with-* option handling so that
+    	  the callbacks are simpler; makes the example easier to understand.
+
+commit a199507a1c6b5d009134cdbb4883d687451a59c0
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Jan 26 17:38:10 2008 -0500
+
+    Ignore generated files
+    
+    	* doc/.gitignore: Ignore generated files & directories.
+
+commit 9e1277ac2710b7f35c68a4bede3df3ed2dcec7b6
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Jan 26 17:37:14 2008 -0500
+
+    Updates to simplify deployments to ndesk.org...
+    
+    	* .gitignore: Ignore generated files.
+    	* configure.ac: Generate ndesk-options.spec
+    	* Makefile.am: Use `archive' as the archive location, not `doc/web/archive'.
+    	  Add a `prepare-release' target, which creates .tar.gz, .bin.zip, and
+    	  -docs.tar.gz.  RPM isn't made (due to $PATH issues with sudo).
+    	* ndesk-options.spec: Rename to ndesk-options.spec.in.
+    	* doc/web/.gitignore, doc/web/archive/.gitignore, doc/web/index.html: Remove.
+
+commit fd5daf62c6ee60877bd5145af79fba57973b1bd7
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Jan 26 10:18:13 2008 -0500
+
+    Cleanup.
+    
+    	* Makefile.am: Correct dist-hook so that it works with distcheck.
+    	  Alter the `rpm' target to place generates RPM files into doc/web/archive.
+    	  Add a `bin-zip' target to create a .bin.zip file of the installed files.
+    	* doc/Makefile.am: Add EXTRA_DIST files; fix `html' target to generate
+    	  documentation under web/docs.
+    	* doc/web/index.html: Added; http://www.ndesk.org/Options page.
+    	*	doc/web/.gitignore, doc/web/archive/.gitignore: Added; ignore generated
+    	 	files and directories.
+    	*	doc/en/examples/.gitignore, lib/pkgconfig/.gitignore: Ignore generated
+    	 	files (from renames & added example programs).
+
+commit bb140d571f62b8a86c48fdf27ca3033365c4fda5
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Jan 26 04:36:44 2008 -0500
+
+    Flush documentation.
+    
+    	*	doc/en/ns-NDesk.Options.xml, doc/en/ns-System.xml: Flush.
+
+commit bdeb6f20f30c26abe5a15933d89e6e3178fbf733
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Jan 26 04:36:22 2008 -0500
+
+    Add `html' target to build HTML documentation.
+    
+    	* doc/Makefile.am: Add `html' target to build HTML documentation.
+    	* doc/doc-template.html: The monodocs2html template to use for HTML output.
+
+commit 48a6de0b50e35bfb8d173a7aee896d4e0dc62a48
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Jan 26 03:59:22 2008 -0500
+
+    Specify .PHONY targets.
+    
+    	* Makefile.am, doc/Makefile.am: Specify .PHONY targets.
+
+commit f4e26ff26af8997ea1bed474764c17f48b8eb901
+Author: Alp Toker <alp@atoker.com>
+Date:   Sat Jan 26 02:32:41 2008 +0000
+
+    Fix some typos
+
+commit c81171872985f7d4b169e340078c182c20b2f2d0
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Fri Jan 25 22:38:11 2008 -0500
+
+    Rename .pc files (suggested to Alp Toker); flush README.
+    
+    	* ChangeLog: Empty contents.  Use dist-hook to generate this based on
+    	  git-log so it's always up-to-date.
+    	* configure.ac: Rename generated .pc files.
+    	*	lib/pkgconfig/ndesk-options-net3.5.pc.in: Rename to
+    	  lib/pkgconfig/ndesk-options-linq.pc.in
+    	*	lib/pkgconfig/ndesk-options-net2.0.pc.in: Rename to
+    	  lib/pkgconfig/ndesk-options.pc.in
+    	* Makefile.am: Add dist-hook target to create ChangeLog based on git-log.
+    	  Renames:
+    		- s/ndesk-options-net2.0/ndesk-options/g.
+    		- s/ndesk-options-net3.5/ndesk-options-linq/g.
+    		- s/options-test2.exe/options-test.exe/.
+    		- s/options-test3.exe/options-test-linq.exe/.
+    	* README: Flush description.
+
+commit 0f208290578174925764f6a4f2148c9f3151706d
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Thu Jan 24 03:16:27 2008 -0500
+
+    Ensure that `make rpm` use up-to-date sources; copy the result to cwd.
+    
+    	* Makefile.am: Ensure that `make rpm` use up-to-date sources; copy the
+    	  resulting RPM to the current working directory.
+
+commit 3219d3d9033294c102c12fcdbf1dfa1444cb8330
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Thu Jan 24 03:12:48 2008 -0500
+
+    Flush assembly-level description.
+    
+    	* doc/en/index.xml: Flush assembly-level description.
+
+commit fe3c1aa52fe05b3eb6edbcc45cc8f3f7c5987cce
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Jan 23 15:35:29 2008 -0500
+
+    Alter Option.Invoke() to be safer for subclasses.
+    
+    	*	src/NDesk.Options/NDesk.Options/Options.cs: Make Option.Invoke()
+    	 	non-virtual, and have it invoke an abstract OnParseComplete() method.
+    	 	Subclasses can now just override Option.OnParseComplete() w/o needing to
+    	 	invoke a base class implementation.
+    	*	doc/en/examples/subclass.cs: Cope with above change.
+    	*	doc/en/NDesk.Options/Option.xml, doc/en/NDesk.Options/OptionSet.xml:
+    	 	Flush Document
+
+commit a70afde7e186ed1591b1ee3cb086998b935fd102
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Jan 23 14:54:34 2008 -0500
+
+    Add noarch RPM building support.
+    
+    	* Makefile.am: Add an `rpm` target, which uses rpmbuild to build the RPM.
+    	  Add ndesk-options.spec as an EXTRA_DIST file.
+    	* ndesk-options.spec: Added; RPM noarch spec file.
+
+commit 684116ad34ee754f0d642404fd5bf01d8501cfca
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Jan 23 09:45:12 2008 -0500
+
+    Permit blank lines in example output; Flush docs.
+    
+    	* Makefile.am: Rewrite `%.txt: %.in %.exe` rule to avoid the use of
+    	  script(1) (which added extra '\r's to the output), and permit the
+    	  insertion of blank lines into the .txt file based on the .in file.
+    	*	doc/en/examples/context.in, doc/en/examples/greet.in,
+    	 	doc/en/examples/localization.in, doc/en/examples/subclass.in: Add blank
+    	 	lines after every command to make it easier to read within the docs.
+    	*	doc/en/NDesk.Options/Option.xml, doc/en/NDesk.Options/OptionSet.xml:
+    	  Flush (alters Option.Invoke(), adds OptionSet.GetOptionForName(), updates
+    	  example output to remove the '\r' characters; adds new `subclass' demo.
+
+commit 60606bfa1428a1eb3c3e268cdd33c7cfde73cc9e
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Jan 23 04:35:11 2008 -0500
+
+    Add example about creating an OptionSet subclass.
+    
+    	*	doc/Makefile.am: Add example expected output.
+    	*	doc/en/examples/subclass.cs: Added; sample program.
+    	*	doc/en/examples/subclass.in: Added; example command lines.
+
+commit fbc41a688f395cb0d8fa6eb809cfdc7448310520
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Jan 23 04:24:50 2008 -0500
+
+    Better support derived types.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs:
+    	  - Make Option.Invoke() virtual, not abstract, so that common (~required)
+    	    code can be shared.  (Not entirely happy -- this should likely be a
+    	    non-virtual + an abstract method to ensure the code is executed when
+    	    Invoke() is called, but the only abstract method name I can think of if
+    	    InvokeImpl(), which...sucks.)
+    	  - Add protected OptionSet.GetOptionForName(), so that subclasses can
+    	    perform a name->Option mapping for their processing.
+    	  - Add tests for OptionSet.GetOptionForName().
+
+commit adba5651e079b872249602261519eb0a2784b2d1
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Jan 22 14:19:32 2008 -0500
+
+    Monodoc & pkg-config fixes...
+    
+    	* doc/ndesk-options-docs.source: Place the NDesk.Options documentation into
+    	  the correct monodoc tree.
+    	* lib/pkgconfig/ndesk-options-net3.5.pc.in: Use the correct assembly
+    	  directory, otherwise `pkg-config --variable=Sources ndesk-options-net3.5`
+    	  gives a non-existant file.
+
+commit 54410f923f70b71be1ba80d3349393c4d84e2370
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Jan 22 11:45:59 2008 -0500
+
+    Ignore generated files.
+    
+    	* doc/en/examples/.gitignore: Added; ignore generated files.
+
+commit f6e5c213637092410148f99132b39d27fa774e42
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Jan 22 11:44:34 2008 -0500
+
+    Don't keep the intermediate doc/en/examples/*.txt files.
+    
+    	* doc/Makefile.am: Don't keep the intermediate doc/en/examples/*.txt files.
+    	  These aren't necessary, as the XML files already contain their output, and
+    	  the default `make assemblies` target doesn't require that they exist.
+    	*	doc/en/NDesk.Options/OptionSet.xml: Flush (example output changed due to
+    	 	prior OptionSet/OptionContext changes).
+    	*	doc/en/examples/context.txt, doc/en/examples/greet.txt,
+    	 	doc/en/examples/localization.txt: Removed.
+
+commit a4a6fe6e2ef811d25ba009735e0f829633ba60a4
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Jan 22 11:36:20 2008 -0500
+
+    Get `make distcheck` working.
+    
+    	* Makefile.am, doc/Makefile.am: Add the appropriate automake-fu to allow
+    	  `make distcheck` to work w/o error.
+
+commit 3fc6a226863df6230e56f26fc59963fcd4349dcf
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 21 02:38:16 2008 -0500
+
+    Don't add symlinks to the repository.
+    
+    	* INSTALL: Replace with a version containing actual data, and don't store a
+    	  symlink.
+
+commit affb4e273bb239da82e26661993e8bb0f7d4d36f
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 21 02:35:49 2008 -0500
+
+    Add some generated files used by the documentation process.
+    
+    	*	doc/en/examples/context.txt, doc/en/examples/greet.txt,
+    	 	doc/en/examples/localization.txt: Added; expected output which corresponds
+    	 	to the commnds from the corresponding .in files.
+
+commit 2f2e72d40c552335017c4e3cea5e5735e3463861
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 21 02:34:41 2008 -0500
+
+    Ignore generated files.
+    
+    	* lib/pkgconfig/.gitignore: Added; ignore generated files.
+
+commit 9599492228d4cb47e959e800da314f2ea13349ed
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 21 02:34:07 2008 -0500
+
+    Ignore generated files.
+    
+    	* .gitignore, doc/.gitignore, lib/.gitignore: Added; ignore generated files.
+
+commit d49a1b3cf8a2c170975c90e7e33d36e59c1a4737
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 21 02:29:05 2008 -0500
+
+    Autotool-ify the build system.
+    
+    	* AUTHORS, ChangeLog, INSTALL, NEWS, README: Added to appease auto*.
+    	* Makefile: Renamed to Makefile.am.  Modify variables/targets for
+    	  $srcdir != $builddir builds, automake targets, etc.
+    	* autogen.sh: Added; runs the autotools to get things started.
+    	* configure.ac: Added; configure script.
+    	* doc/Makefile: Renamed to doc/Makefile.am.  Modify variables/targets for
+    	  $srcdir != $builddir builds, automake targets, etc.
+    	  Note that doc/Makefile.am does not permit complete $srcdir != $builddir
+    	  separation; when updating the docs themselves, $srcdir === $builddir.
+    	*	lib/pkgconfig/ndesk-options-2.0.pc: Renamed to
+    	  lib/pkgconfig/ndesk-options-net2.0.pc.in
+    	*	lib/pkgconfig/ndesk-options-3.5.pc: Renamed to
+    	  lib/pkgconfig/ndesk-options-net3.5.pc.in
+
+commit 28cedf00e5ab73815c8e84dec21156980bc1cdf1
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 21 00:17:35 2008 -0500
+
+    Add module license.
+    
+    	* COPYING: Added; module license (MIT/X11).
+
+commit c1f7fb12006e9756c501da9e65f35e689d8b727d
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Jan 19 23:20:54 2008 -0500
+
+    Documentation Dump (includes OptionSet).
+    
+    	*	doc/Makefile: Build localization.mo; add new EXAMPLES_OUTPUT files.
+    	*	doc/en/NDesk.Options/Option.xml, doc/en/NDesk.Options/OptionContext.xml,
+    	 	doc/en/NDesk.Options/OptionException.xml,
+    	 	doc/en/NDesk.Options/OptionSet.xml,
+    	 	doc/en/System/Action`2.xml: Flush docs.
+    	*	doc/en/examples/context.cs, doc/en/examples/context.in,
+    	 	doc/en/examples/greet.cs, doc/en/examples/greet.in,
+    	 	doc/en/examples/localization.cs, doc/en/examples/localization.in: Added;
+    	 	documentation examples and shell input files.
+    	*	doc/en/examples/localization-es.po: gettext translation file for
+    	 	doc/en/examples/localization.cs.
+    	*	doc/en/examples/locale/es/LC_MESSAGES/localization.mo: Compiled message
+    	 	file for doc/en/examples/localization-es.po.
+
+commit b341054aef9ed00163463043c9ed964a91724a5b
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sat Jan 19 22:10:31 2008 -0500
+
+    Add more assertions; add tests for (and fix) OptionContext behavior.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs:
+    	  - OptionSet.Add(Option) should assert that the option isn't null.
+    	  - Add tests for OptionContext behavior -- OptionContext.OptionIndex should
+    	    be correct, etc.  Fix .OptionIndex bugs found by tests (off-by-1 error).
+
+commit 7c2052dc06a1bc252ea2acc3f625b63378b6d679
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Fri Jan 18 08:53:03 2008 -0500
+
+    Flush more documentation.
+    
+    	* doc/en/**/*.xml: Flush added documentation.
+
+commit a4a37741b12166858d6f77259fcd14582d56d51c
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Jan 16 12:46:45 2008 -0500
+
+    Explicitly set version numbers so docs aren't filled with bad versions.
+    
+    	* src/NDesk.Options/AssemblyInfo.cs: Use full version numbers like 2.0.0.0
+    	  instead of wildcard versions like 2.0.*.  This prevents the compiler from
+    	  creating a new version number on each compile, which fills the
+    	  documentation with spurious unnecessary version numbers.
+    	* doc/en/**/*.xml: Flush (cleanup extra version numbers).
+
+commit 7817b33d6cf36d0507214e4b0abdbb11b429a7c4
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Wed Jan 16 12:45:06 2008 -0500
+
+    Allow the GC to cleanup unused objects.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: The Regex instance should be
+    	  scoped to the OptionSet instance, so that when the OptionSet is collected
+    	  the Regex instance can be as well.  Otherwise, the Regex will hang around
+    	  for the entire process lifetime, for no real purpose.
+
+commit 44a0f5d21a9046aaab333ab1755664dc4cc6c6a2
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Tue Jan 15 11:41:42 2008 -0500
+
+    Add documentation example infrastructure.
+    
+    	* doc/Makefile: Add targets to generate example output based on example
+    	  programs.
+    	* doc/en/**/*.xml: Flush (new versions; need to cleanup later).
+    	* doc/en/NDesk.Options/OptionSet.xml: Use of the new example infrastructure.
+    	  Use <code lang="lang" src="examples/filename" /> and the contents of
+    	  examples/filename will be inserted when monodocer is run.
+    	* doc/en/examples/localization.cs: Localization example program.
+    	* doc/en/examples/localization.in: Localization sample comand-lines.
+
+commit e5053dcd9315dff697326bfe887c61f87f4969e6
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 14 10:12:32 2008 -0500
+
+    Document some members.
+    
+    	* doc/en/**/*.xml: Add documentation.
+
+commit a0587f7a6b2d9daf232c7bf40e8540a0c9112772
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 14 09:35:16 2008 -0500
+
+    Ensure that a fresh checkout builds.
+    
+    	* Makefile: Make sure that destination directories exist before building.
+
+commit 43ba45544ba04b2ce89dbff898d276ed440a73cd
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 14 08:47:30 2008 -0500
+
+    Add documentation stubs.
+    
+    	* Makefile: Generate assemblies as
+    	  lib/ndesk-options/VERSION/NDesk.Options.dll, not as
+    	  lib/ndesk-options/NDesk.Options.VERSION.dll.  This makes the assembly name
+    	  more consistent within the documentation.
+    	* doc/Makefile: Added; generate/update NDesk.Options documentation.
+    	* doc/ndesk-options-docs.source: Added; monodoc .source file for documentation.
+    	* doc/en/**: Added; ECMA-format XML documentation stubs for NDesk.Options.
+
+commit a410eaa5482274792cb835092c4edba3300cd45c
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 14 08:22:15 2008 -0500
+
+    Add assembly version information.
+    
+    	* Makefile: Build AssemblyInfo.cs.
+    	* src/NDesk.Options/AssemblyInfo.cs: Added; contains version information.
+
+commit fa53c095980fc99099cb25e25b08f42a34c45b6a
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Mon Jan 14 03:45:42 2008 -0500
+
+    Reduce memory use; add Option prototype sanity checking.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Reduce memory requirements by
+    	  caching the option name (w/o the trailing '=' or ':'), so that
+    	  OptionSet.GetOptionNames() doesn't need to constantly re-generate this
+    	  information (in SetItem(), WriteOptionDescriptions(), etc.).  Add Option
+    	  tests for conflicting option types ('=' vs. ':'), empty option names.
+
+commit 07e418d6e582b8684db1e7af3cdaf6aabfb55493
+Author: Jonathan Pryor <jonpryor@vt.edu>
+Date:   Sun Jan 13 19:23:20 2008 -0500
+
+    Use System.Converter, not System.Func, for localization.
+    
+    	* src/NDesk.Options/NDesk.Options/Options.cs: Use Converter<string,string>
+    	  to convert just the format string, instead of using
+    	  Func<string,string[],string> to convert the format + arguments to a
+    	  string.  This reduces the number of .NET 3.5-included types, and most uses
+    	  of localization only require the format string, not the number of
+    	  arguments.
+
+commit d9f5fa4308e14c270b86fe77de88ef76486cdd90
+Author: Jonathan Pryor <jon@lina.magi.jprl.com>
+Date:   Sun Jan 13 17:31:52 2008 -0500
+
+    Renaming and Re-architecture for future API evolution.
+    
+    	* Makefile: Update file/path names.
+    	* lib/pkgconfig/mono-program-2.0.pc: Rename to
+    	  lib/pkgconfig/ndesk-options-2.0.pc.
+    	* lib/pkgconfig/mono-program-3.5.pc: Rename to
+    	  lib/pkgconfig/ndesk-options-3.5.pc.
+    	* src/Mono.Program/Mono.Program/Options.cs: Rename to
+    	  src/NDesk.Options/NDesk.Options/Options.cs
+    	* src/NDesk.Options/NDesk.Options/Options.cs:
+    	  - Rename namespace from Mono.Documentation to NDesk.Options.
+    	  - Rename OptionValue to OptionValueType, and make public.
+    	  - Add a OptionContext.Option property.
+    	  - Make Option `abstract', and remove the Action property.  Add a new
+    	    abstract Invoke(OptionContext) method.
+    	    This is to permit future evolution of the callback mechanism, to use
+    	    types other than Action`2 if necessary (since we already went from
+    	    Action`1 to Action`2).
+    	  - Rename Options to OptionSet.
+    	  - Make OptionSet.Add(Option) exception-safe.
+    	  - Cleanup option parsing by using more, smaller methods.
+    	  - Add virtual OptionSet.CreateOptionContext() and OptionSet.Parse()
+    	    methods, so that subclasses can have some control over parsing.
+    	    - Test with CiOptionSet, a case-insensitive option parser.
+
+commit 7223d2422579111a74c7fd801134c809e41d7a86
+Author: Jonathan Pryor <jon@lina.magi.jprl.com>
+Date:   Sun Jan 13 16:49:52 2008 -0500
+
+    Add message localization support, OptionContext, LINQ-fun.
+    
+    	* src/Mono.Program/Mono.Program/Options.cs:
+    	  - Use a Func<string,string[],string> for message translation.
+    	  - Add a new OptionContext class which contains parser context.  This
+    	    permits more useful error messages (e.g. the *exact* option used,
+    	    particularly useful when a prototype contains aliases).
+    	    - External callers can get OptionContext via a 2-argument callback.
+    	  - For Fun, a Options.Parse() implementation that uses LINQ.
+
+commit 7148f06ebeb63e8361b2bc06e0a8002ff9272e58
+Author: Jonathan Pryor <jon@lina.magi.jprl.com>
+Date:   Sun Jan 13 16:44:46 2008 -0500
+
+    Follow Getopt::Long parsing behavior.
+    
+    	* src/Mono.Program/Mono.Program/Options.cs:
+    	  - What do do when a {-,/,--} argument follows an option requiring a value?
+    	    Previously, Options would error.  Perl's Getopt::Long doesn't, and sets
+    	    the option value to the {-,/,--} argument.  Follow Perl.
+    	  - Throw an OptionException if TypeConverter generates an exception --
+    	    facilitates readable error messages.
+
+commit 2f8f5420af6995916f9f5cf7e1bb34f2b742add6
+Author: Jonathan Pryor <jon@lina.magi.jprl.com>
+Date:   Sun Jan 13 16:31:59 2008 -0500
+
+    Implement feedback about error handling, return types.
+    
+    	* src/Mono.Program/Mono.Program/Options.cs:
+    	  - Use OptionException to report parse errors.
+    	  - OptionException.Message should contain a reasonably useful error message
+    	    that can be printed directly to Console.Error.
+    	  - Check exception message values in AssertException().
+    	  - Options.Parse() should return List<string>, not IEnumerable<string>.
+    	  - Remove extra ()'s when unnecessary.
+
+commit 32396a89089505bc7a99b62df64429de2a23e5dd
+Author: Jonathan Pryor <jon@lina.magi.jprl.com>
+Date:   Sun Jan 13 16:24:00 2008 -0500
+
+    Add option bundling and option termination support.
+    
+    	* src/Mono.Program/Mono.Program/Options.cs:
+    	  - Add option bundling and option termination support.  Only
+    	    single-character non-value options can be bundled.
+    	  - Option parsing is disabled once a "--" option is encountered.
+    	  - For Add<T>, if the option value is optional, then pass default(T) to the
+    	    callback, not null.
+    	  - Rename WriteDescriptions() to WriteOptionDescriptions().
+    	  - Cleanup WriteOptionDescriptions().
+    	  - Allow running a subset of all unit tests (using Options for option
+    	    parsing, of course).
+    	  - Add more tests.
+
+commit b34164c646fc0549d553e6ee996c3b7e17043662
+Author: Jonathan Pryor <jon@lina.magi.jprl.com>
+Date:   Sun Jan 13 15:57:15 2008 -0500
+
+    Start a Getopt::Long-inspired Options parser for C#.
+    
+    	* Makefile: Build and check the world.
+    	* lib/pkgconfig/mono-program-2.0.pc,
+    	* lib/pkgconfig/mono-program-3.5.pc: pkgconfig files for .NET 2.0 and 3.5
+    	  profiles.
+    	* src/Mono.Program/Mono.Program/Options.cs: the Option parser.

@@ -134,6 +134,33 @@ namespace Slash.Collections.Utils
         }
 
         /// <summary>
+        ///   Returns a random item from the specified sequence.
+        /// </summary>
+        /// <typeparam name="T">Type of sequence items.</typeparam>
+        /// <param name="sequence">Sequence to get item from.</param>
+        /// <returns>Time-dependent random item.</returns>
+        public static T RandomItem<T>(this IEnumerable<T> sequence)
+        {
+            Random random = new Random();
+
+            T current = default(T);
+            int count = 0;
+            foreach (T element in sequence)
+            {
+                count++;
+                if (random.Next(count) == 0)
+                {
+                    current = element;
+                }
+            }
+            if (count == 0)
+            {
+                throw new InvalidOperationException("Sequence was empty");
+            }
+            return current;
+        }
+
+        /// <summary>
         ///   Enumerates the elements of the specified list in random order.
         /// </summary>
         /// <typeparam name="T">Type of list to enumerate the items of.</typeparam>

@@ -1,0 +1,114 @@
+if ENABLE_MONODOC
+SOURCESDIR=$(prefix)/lib/monodoc/sources
+TARGETS= \
+	doc/ndesk-options-docs.source \
+	doc/ndesk-options-docs.tree \
+	doc/ndesk-options-docs.zip
+else
+SOURCESDIR=
+TARGETS=
+endif
+
+monodocdir=$(SOURCESDIR)
+monodoc_DATA=$(TARGETS)
+
+ASSEMBLIES = NDesk.Options.dll
+
+UPDATER = $(MONODOCER) -overrides -pretty -path:en
+
+.PHONY: assemble clean edit html update update-delete
+
+doc-assemble: doc/ndesk-options-docs.zip doc/ndesk-options-docs.tree
+
+$(srcdir)/doc/en/examples/NDesk.Options.dll: $(srcdir)/lib/ndesk-options/NDesk.Options.dll
+	cp $^ $@
+	-cp $^.mdb $@.mdb
+
+%.exe: %.cs $(srcdir)/doc/en/examples/NDesk.Options.dll
+	gmcs -debug+ -r:Mono.Posix.dll -r:System.Core.dll -lib:doc/en/examples -r:NDesk.Options.dll -out:$@ $<
+
+$(srcdir)/doc/en/examples/locale/es/LC_MESSAGES/localization.mo: $(srcdir)/doc/en/examples/localization-es.po
+	msgfmt $< -o $@
+
+$(srcdir)/doc/en/examples/localization.exe: $(srcdir)/doc/en/examples/locale/es/LC_MESSAGES/localization.mo
+
+DOCUMENTATION = \
+	$(srcdir)/doc/en/index.xml \
+	$(srcdir)/doc/en/ns-NDesk.Options.xml \
+	$(srcdir)/doc/en/NDesk.Options/Option.xml \
+	$(srcdir)/doc/en/NDesk.Options/OptionAction`2.xml \
+	$(srcdir)/doc/en/NDesk.Options/OptionContext.xml \
+	$(srcdir)/doc/en/NDesk.Options/OptionException.xml \
+	$(srcdir)/doc/en/NDesk.Options/OptionSet.xml \
+	$(srcdir)/doc/en/NDesk.Options/OptionValueCollection.xml \
+	$(srcdir)/doc/en/NDesk.Options/OptionValueType.xml
+
+DOC_EXAMPLES_OUTPUT = \
+	$(srcdir)/doc/en/examples/bundling.txt \
+	$(srcdir)/doc/en/examples/context.txt \
+	$(srcdir)/doc/en/examples/greet.txt \
+	$(srcdir)/doc/en/examples/localization.txt \
+	$(srcdir)/doc/en/examples/subclass.txt
+
+%.txt: %.in %.exe
+	-rm $@
+	exec 3<$< ; \
+	while read line 0<&3 ; do \
+		if test -n "$$line" ; then \
+			echo "$$ $$line" | sed 's#doc/en/examples/##' >> $@ ; \
+			sh -c "$$line" >> $@ ; \
+		else \
+			echo "" >> $@ ; \
+		fi ; \
+	done ; \
+	exec 3>&-;
+
+doc/ndesk-options-docs.zip doc/ndesk-options-docs.tree: $(DOCUMENTATION)
+	-mkdir doc
+	$(MDASSEMBLER) --ecma $(srcdir)/doc/en -o doc/ndesk-options-docs
+
+doc-update: $(addprefix lib/ndesk-options/, $(ASSEMBLIES)) $(srcdir)/doc/en/examples/*.cs $(DOC_EXAMPLES_OUTPUT)
+	for a in $(ASSEMBLIES) ; do \
+		$(UPDATER) -assembly:lib/ndesk-options/$$a ; \
+	done
+
+doc-update-delete: $(addprefix lib/ndesk-options/, $(ASSEMBLIES)) $(srcdir)/doc/en/examples/*.cs $(DOC_EXAMPLES_OUTPUT)
+	for a in $(ASSEMBLIES) ; do \
+		$(UPDATER) --delete -assembly:lib/ndesk-options/$$a ; \
+	done
+
+DOC_EXTRA_DIST = \
+	$(srcdir)/doc/doc-template.xsl \
+	$(srcdir)/doc/ndesk-options-docs.source \
+	$(srcdir)/doc/en/examples/bundling.cs \
+	$(srcdir)/doc/en/examples/bundling.in \
+	$(srcdir)/doc/en/examples/context.cs \
+	$(srcdir)/doc/en/examples/context.in \
+	$(srcdir)/doc/en/examples/greet.cs \
+	$(srcdir)/doc/en/examples/greet.in \
+	$(srcdir)/doc/en/examples/localization.cs \
+	$(srcdir)/doc/en/examples/localization.in \
+	$(srcdir)/doc/en/examples/locale/es/LC_MESSAGES/localization.mo \
+	$(srcdir)/doc/en/examples/subclass.cs \
+	$(srcdir)/doc/en/examples/subclass.in \
+	$(DOCUMENTATION) \
+	$(DOC_EXAMPLES_OUTPUT)
+
+DOC_CLEANFILES = \
+	doc/ndesk-options-docs.zip \
+	doc/ndesk-options-docs.tree \
+	doc/en/examples/NDesk.Options.dll* \
+	doc/en/examples/*.exe
+
+doc-edit:
+	monodoc --edit $(srcdir)/doc/en
+
+doc-html: $(DOCUMENTATION)
+	mdoc export-html --default-template > doc/doc-def-template.xsl
+	mdoc export-html --template=doc/doc-template.xsl --ext=html -o doc/$(PACKAGE) doc/en
+	cp doc/prettyprint.js doc/$(PACKAGE)
+	(cd doc && zip -q -r ../archive/$(PACKAGE)-$(VERSION)-docs.zip $(PACKAGE))
+
+clean:
+	-rm $(CLEANFILES)
+	-rm -Rf $(PACKAGE)-$(VERSION)

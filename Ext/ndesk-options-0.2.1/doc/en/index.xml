@@ -1,0 +1,46 @@
+<Overview>
+  <Title>NDesk.Options</Title>
+  <Remarks>Program option parser.</Remarks>
+  <Copyright>2008 Novell, Inc.</Copyright>
+  <Assemblies>
+    <Assembly Name="NDesk.Options" Version="0.2.1.0">
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTrademark("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCopyright("2008")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyProduct("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCompany("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyConfiguration("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyDescription("C# Option Parser.")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle("NDesk.Options")</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Types>
+    <Namespace Name="NDesk.Options">
+      <Type Name="Option" Kind="Class" />
+      <Type Name="OptionAction`2" DisplayName="OptionAction&lt;TKey,TValue&gt;" Kind="Delegate" />
+      <Type Name="OptionContext" Kind="Class" />
+      <Type Name="OptionException" Kind="Class" />
+      <Type Name="OptionSet" Kind="Class" />
+      <Type Name="OptionValueCollection" Kind="Class" />
+      <Type Name="OptionValueType" Kind="Enumeration" />
+    </Namespace>
+  </Types>
+</Overview>
