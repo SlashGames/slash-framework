@@ -71,12 +71,13 @@ namespace Slash.Tools.BlueprintEditor.Tests.Source.ViewModels
         [Test]
         public void TestUndoCreateNewBlueprint()
         {
-            this.AddBlueprint("NewBlueprint");
+            const string BlueprintName = "NewBlueprint";
+            this.AddBlueprint(BlueprintName);
 
             Assert.AreEqual(1, UndoService.Current[this.testViewModel].UndoStack.Count());
 
             var change = UndoService.Current[this.testViewModel].UndoStack.FirstOrDefault();
-            Assert.AreEqual("Blueprint added", change.Description);
+            Assert.AreEqual(string.Format("Add blueprint '{0}'", BlueprintName), change.Description);
 
             // Check undo.
             this.AssertBlueprintCount(1);
