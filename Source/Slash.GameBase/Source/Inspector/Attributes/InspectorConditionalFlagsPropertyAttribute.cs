@@ -54,6 +54,7 @@ namespace Slash.GameBase.Inspector.Attributes
             Enum enumValue = (Enum)value;
             Enum requiredEnumValue = (Enum)this.RequiredConditionValue;
 
+#if !WINDOWS_STORE
             switch (this.Check)
             {
                 case ConditionalFlagsCheck.AllSet:
@@ -63,6 +64,9 @@ namespace Slash.GameBase.Inspector.Attributes
                 default:
                     return false;
             }
+#else
+            throw new NotImplementedException("Not implemented for Windows Store build targets.");
+#endif
         }
 
         #endregion

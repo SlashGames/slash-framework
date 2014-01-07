@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if !WINDOWS_STORE
+
 namespace Slash.SystemExt.Utils
 {
     using global::System;
@@ -125,3 +127,5 @@ namespace Slash.SystemExt.Utils
         #endregion
     }
 }
+
+#endif
