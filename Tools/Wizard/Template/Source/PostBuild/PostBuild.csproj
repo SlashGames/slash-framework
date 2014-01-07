@@ -23,7 +23,7 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="perl ${ProjectDir}/Build/Postbuild.pl ${ProjectDir}/../Unity/ ${TargetDir}" workingdir="" />
+        <Command type="AfterBuild" command="perl ${ProjectDir}/Build/Postbuild.pl run ${ProjectDir}/../Unity/ ${TargetDir}" workingdir="" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="perl ${ProjectDir}Build\Postbuild.pl ${ProjectDir}..\Unity\ ${TargetDir}" />
+        <Command type="AfterBuild" command="perl ${ProjectDir}Build\Postbuild.pl run ${ProjectDir}..\Unity\ ${TargetDir}" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -45,7 +45,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>perl $(ProjectDir)Build\Postbuild.pl $(ProjectDir)..\Unity\ $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>perl $(ProjectDir)Build\Postbuild.pl run $(ProjectDir)..\Unity\ $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -74,6 +74,10 @@
       <Project>{c92c88b0-5268-443b-b32f-cc2a6d686c51}</Project>
       <Name>Slash.Serialization</Name>
     </ProjectReference>
+    <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.Unity.Common\Slash.Unity.Common.csproj">
+      <Project>{aa429d02-6020-44f3-8b62-6a5c1ad4fe7d}</Project>
+      <Name>Slash.Unity.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.Xml\Slash.Xml.csproj">
       <Project>{e399fde3-a0dd-4aea-bbf5-2a16c5e6775b}</Project>
       <Name>Slash.Xml</Name>
@@ -86,4 +90,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterClean">
+    <Exec Command="perl $(ProjectDir)/Build/Postbuild.pl clean $(ProjectDir)/../Unity/ $(TargetDir)" />
+  </Target>
 </Project>

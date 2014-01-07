@@ -27,64 +27,78 @@ use warnings;
 use File::Copy;
 use File::Basename;
 use File::Path qw(make_path);
+use File::Path qw(remove_tree);
 use Cwd 'abs_path';
 use Cwd 'cwd';
 
 # Read arguments.
-my $PATH_TO_UNITY_PROJECT = abs_path($ARGV[0]);
+my $COMMAND = $ARGV[0];
+my $PATH_TO_UNITY_PROJECT = abs_path($ARGV[1]);
 my $DLL_TARGET_DIR = "${PATH_TO_UNITY_PROJECT}/Assets/Plugins/Game";
-my $DLL_SOURCE_DIR = abs_path($ARGV[1]);
+my $DLL_SOURCE_DIR = abs_path($ARGV[2]);
 my $AOT_COMPATLYZER_PATH = abs_path(dirname($0)."/AOT-Compatlyzer/AOTCompatlyzer.exe");
 
 print "Paths:\n${DLL_SOURCE_DIR}\n${DLL_TARGET_DIR}\n";
 
-if ($ENV{'UNITY_PATH'}) {
-	
-	my $UNITY_PATH = $ENV{'UNITY_PATH'};
+if ($COMMAND eq "run") {
 
-	# Convert pdb to mdb and copy to plugins folder.
-	print "Convert pdb to mdb in '${DLL_SOURCE_DIR}/*.dll'\n";
-	my $pwd = cwd();
-	chdir(${DLL_SOURCE_DIR});
-	for my $file (<${DLL_SOURCE_DIR}/*.dll>) 
-	{
-		my $abs_path = abs_path($file);
-		print "Converting '${abs_path}' to mdb \n";
-		print "\"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe\" ${abs_path}\n";
-		my $status = system("\"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe\" ${abs_path}");
+    if ($ENV{'UNITY_PATH'}) {
+        
+        my $UNITY_PATH = $ENV{'UNITY_PATH'};
+
+        # Convert pdb to mdb and copy to plugins folder.
+        print "Convert pdb to mdb in '${DLL_SOURCE_DIR}/*.dll'\n";
+        my $pwd = cwd();
+        chdir(${DLL_SOURCE_DIR});
+        for my $file (<${DLL_SOURCE_DIR}/*.dll>) 
+        {
+            my $abs_path = abs_path($file);
+            print "Converting '${abs_path}' to mdb \n";
+            print "\"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe\" ${abs_path}\n";
+            my $status = system("\"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe\" ${abs_path}");
+        
+            print "Postprocessing DLL ${abs_path} to be AOT compatible\n";
+            system("\"${AOT_COMPATLYZER_PATH}\" ${abs_path}");
+        }
+        chdir($pwd);
+    } else {
+        print "Unity path not set in UNITY_PATH environment variable, so pdbs won't be converted to mdbs.";
+    }
+
+    # Make sure target folder exists.
+    unless(-e $DLL_TARGET_DIR or make_path $DLL_TARGET_DIR) {
+        die "Unable to create $DLL_TARGET_DIR: $!";
+    }
+
+    # Copy all dlls to Unity plugins folder.
+    print "Copying '${DLL_SOURCE_DIR}/*.dll' and '${DLL_SOURCE_DIR}/*.mdb' to '${DLL_TARGET_DIR}'\n";
+
+    for my $file (<${DLL_SOURCE_DIR}/*.dll>) 
+    {
+        my $basename = basename($file);
+        
+        # Don't copy Unity dlls.
+        if ($basename eq "UnityEngine.dll" || $basename eq "UnityEditor.dll") {
+            next;
+        }
+        
+        print "Copying ${basename} to ${DLL_TARGET_DIR}/${basename}\n";
+        copy($file, "${DLL_TARGET_DIR}/${basename}") or die "copy $file failed: $!";
+    }
+
+    for my $mdbFile (<${DLL_SOURCE_DIR}/*.mdb>) 
+    {
+        my $basename = basename($mdbFile);
+        print "Copying ${basename} to ${DLL_TARGET_DIR}/${basename}\n";
+        copy($mdbFile, "${DLL_TARGET_DIR}/${basename}") or die "copy $mdbFile failed: $!";
+    }
+}
+
+if ($COMMAND eq "clean") {
     
-        print "Postprocessing DLL ${abs_path} to be AOT compatible\n";
-        system("\"${AOT_COMPATLYZER_PATH}\" ${abs_path}");
-	}
-	chdir($pwd);
-} else {
-	print "Unity path not set in UNITY_PATH environment variable, so pdbs won't be converted to mdbs.";
-}
-
-# Make sure target folder exists.
-unless(-e $DLL_TARGET_DIR or make_path $DLL_TARGET_DIR) {
-    die "Unable to create $DLL_TARGET_DIR: $!";
-}
-
-# Copy all dlls to Unity plugins folder.
-print "Copying '${DLL_SOURCE_DIR}/*.dll' and '${DLL_SOURCE_DIR}/*.mdb' to '${DLL_TARGET_DIR}'\n";
-
-for my $file (<${DLL_SOURCE_DIR}/*.dll>) 
-{
-	my $basename = basename($file);
-	
-	# Don't copy Unity dlls.
-	if ($basename eq "UnityEngine.dll" || $basename eq "UnityEditor.dll") {
-		next;
-	}
-	
-	print "Copying ${basename} to ${DLL_TARGET_DIR}/${basename}\n";
-    copy($file, "${DLL_TARGET_DIR}/${basename}") or die "copy $file failed: $!";
-}
-
-for my $mdbFile (<${DLL_SOURCE_DIR}/*.mdb>) 
-{
-	my $basename = basename($mdbFile);
-	print "Copying ${basename} to ${DLL_TARGET_DIR}/${basename}\n";
-    copy($mdbFile, "${DLL_TARGET_DIR}/${basename}") or die "copy $mdbFile failed: $!";
+    # Remove dll folder.
+    if (-e $DLL_TARGET_DIR) {
+        remove_tree $DLL_TARGET_DIR;
+    }
+    
 }
