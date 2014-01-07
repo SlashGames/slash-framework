@@ -6,20 +6,11 @@
 
 namespace Slash.Unity.Common.Input
 {
-    using System.Reflection;
-
-    using Slash.Diagnostics.Logging;
-
     using UnityEngine;
 
     public static class InputUtils
     {
         #region Static Fields
-
-        /// <summary>
-        ///   Logger.
-        /// </summary>
-        private static readonly Logger Log = new Logger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private static bool mouseOver2dGUI;
 

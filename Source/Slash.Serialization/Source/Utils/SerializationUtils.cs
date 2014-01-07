@@ -55,7 +55,7 @@ namespace Slash.Serialization.Utils
             return xmlSerializer.Deserialize(reader);
         }
 
-#if !WINDOWS8
+#if !WINDOWS_STORE
         /// <summary>
         ///   Serializes the specified object to a binary stream.
         /// </summary>
