@@ -50,15 +50,15 @@ if ($COMMAND eq "run") {
         print "Convert pdb to mdb in '${DLL_SOURCE_DIR}/*.dll'\n";
         my $pwd = cwd();
         chdir(${DLL_SOURCE_DIR});
-        for my $file (<${DLL_SOURCE_DIR}/*.dll>) 
+        for my $file (<"${DLL_SOURCE_DIR}/*.dll">) 
         {
+            print "Converting '${file}' to mdb \n";
             my $abs_path = abs_path($file);
-            print "Converting '${abs_path}' to mdb \n";
-            print "\"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe\" ${abs_path}\n";
-            my $status = system("\"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe\" ${abs_path}");
+            print '"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe" "${abs_path}"\n';
+            my $status = system('"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe" "${abs_path}"');
         
-            print "Postprocessing DLL ${abs_path} to be AOT compatible\n";
-            system("\"${AOT_COMPATLYZER_PATH}\" ${abs_path}");
+            print "Postprocessing DLL \"${abs_path}\" to be AOT compatible\n";
+            system('"${AOT_COMPATLYZER_PATH}" "${abs_path}"');
         }
         chdir($pwd);
     } else {
@@ -73,7 +73,7 @@ if ($COMMAND eq "run") {
     # Copy all dlls to Unity plugins folder.
     print "Copying '${DLL_SOURCE_DIR}/*.dll' and '${DLL_SOURCE_DIR}/*.mdb' to '${DLL_TARGET_DIR}'\n";
 
-    for my $file (<${DLL_SOURCE_DIR}/*.dll>) 
+    for my $file (<"${DLL_SOURCE_DIR}/*.dll">) 
     {
         my $basename = basename($file);
         
@@ -86,7 +86,7 @@ if ($COMMAND eq "run") {
         copy($file, "${DLL_TARGET_DIR}/${basename}") or die "copy $file failed: $!";
     }
 
-    for my $mdbFile (<${DLL_SOURCE_DIR}/*.mdb>) 
+    for my $mdbFile (<"${DLL_SOURCE_DIR}/*.mdb">) 
     {
         my $basename = basename($mdbFile);
         print "Copying ${basename} to ${DLL_TARGET_DIR}/${basename}\n";

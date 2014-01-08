@@ -23,7 +23,7 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command='perl "${ProjectDir}/Build/Postbuild.pl" run "${ProjectDir}/../Unity/" "${TargetDir}\"' workingdir="" />
+        <Command type="AfterBuild" command="perl &quot;${ProjectDir}/Build/Postbuild.pl&quot; run &quot;${ProjectDir}/../Unity/&quot; &quot;${TargetDir}\&quot;" workingdir="" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -36,12 +36,12 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command='perl "${ProjectDir}Build\Postbuild.pl" run "${ProjectDir}..\Unity" "${TargetDir}\"' />
+        <Command type="AfterBuild" command="perl &quot;${ProjectDir}Build\Postbuild.pl&quot; run &quot;${ProjectDir}..\Unity&quot; &quot;${TargetDir}\&quot;" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
   <PropertyGroup>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -94,6 +94,6 @@
   </Target>
   -->
   <Target Name="AfterClean">
-    <Exec Command='perl "$(ProjectDir)/Build/Postbuild.pl" clean "$(ProjectDir)/../Unity/" "$(TargetDir)\"' />
+    <Exec Command="perl &quot;$(ProjectDir)/Build/Postbuild.pl&quot; clean &quot;$(ProjectDir)/../Unity/&quot; &quot;$(TargetDir)\&quot;" />
   </Target>
 </Project>
