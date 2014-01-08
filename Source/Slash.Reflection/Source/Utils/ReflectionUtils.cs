@@ -45,25 +45,6 @@ namespace Slash.Reflection.Utils
         /// <exception cref="TypeLoadException">If the type couldn't be found.</exception>
         public static Type FindType(string fullName)
         {
-            return FindType(fullName, AppDomain.CurrentDomain);
-        }
-
-        /// <summary>
-        ///   <para>
-        ///     Looks up the specified full type name in all loaded assemblies,
-        ///     ignoring assembly version.
-        ///   </para>
-        ///   <para>
-        ///     In order to understand how to access generic types,
-        ///     see http://msdn.microsoft.com/en-us/library/w3f99sx1.aspx.
-        ///   </para>
-        /// </summary>
-        /// <param name="fullName">Full name of the type to find.</param>
-        /// <param name="domain">App domain to search for the type.</param>
-        /// <returns>Type with the specified name.</returns>
-        /// <exception cref="TypeLoadException">If the type couldn't be found.</exception>
-        public static Type FindType(string fullName, AppDomain domain)
-        {
             if (string.IsNullOrEmpty(fullName))
             {
                 return null;
@@ -82,7 +63,7 @@ namespace Slash.Reflection.Utils
                 return t;
             }
 
-            foreach (Assembly asm in domain.GetAssemblies())
+            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
             {
                 t = asm.GetType(fullName);
                 if (t != null)
@@ -97,18 +78,12 @@ namespace Slash.Reflection.Utils
         /// <summary>
         ///   Searches all loaded assemblies and returns the types which have the specified attribute.
         /// </summary>
-        /// <param name="domain">App domain to search for the types.</param>
         /// <returns>List of found types.</returns>
-        public static IEnumerable<Type> FindTypesWithAttribute<T>(AppDomain domain = null) where T : Attribute
+        /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
+        public static IEnumerable<Type> FindTypesWithAttribute<T>() where T : Attribute
         {
-            // Use current domain if domain not specified.
-            if (domain == null)
-            {
-                domain = AppDomain.CurrentDomain;
-            }
-
             List<Type> types = new List<Type>();
-            foreach (Assembly assembly in domain.GetAssemblies())
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 types.AddRange(assembly.GetTypes().Where(type => Attribute.IsDefined(type, typeof(T))));
             }
@@ -121,17 +96,11 @@ namespace Slash.Reflection.Utils
         ///   and executes the specified action for those.
         /// </summary>
         /// <param name="action">Action to execute for found types and their attribute.</param>
-        /// <param name="domain">App domain to search for the types.</param>
-        public static void HandleTypesWithAttribute<T>(Action<Type, T> action, AppDomain domain = null)
+        /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
+        public static void HandleTypesWithAttribute<T>(Action<Type, T> action)
             where T : Attribute
         {
-            // Use current domain if domain not specified.
-            if (domain == null)
-            {
-                domain = AppDomain.CurrentDomain;
-            }
-
-            foreach (Assembly assembly in domain.GetAssemblies())
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 foreach (Type type in assembly.GetTypes())
                 {
