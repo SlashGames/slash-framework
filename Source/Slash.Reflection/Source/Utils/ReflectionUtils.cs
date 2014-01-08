@@ -18,6 +18,7 @@ namespace Slash.Reflection.Utils
     {
         #region Public Methods and Operators
 
+#if !WINDOWS_STORE
         /// <summary>
         ///   Loads an assembly from the specified file.
         /// </summary>
@@ -27,6 +28,7 @@ namespace Slash.Reflection.Utils
         {
             return Assembly.LoadFrom(assemblyFile);
         }
+#endif
 
         /// <summary>
         ///   <para>

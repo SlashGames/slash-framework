@@ -16,6 +16,7 @@ namespace Slash.Serialization.Utils
     {
         #region Public Methods and Operators
 
+#if !WINDOWS_STORE
         /// <summary>
         ///   Makes a deep copy of the specified object by serializing and deserializing the specified object.
         /// </summary>
@@ -39,6 +40,7 @@ namespace Slash.Serialization.Utils
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             return (T)binaryFormatter.Deserialize(memoryStream);
         }
+#endif
 
         /// <summary>
         ///   Deserializes an object of the specified type from the specified xml reader.
@@ -53,6 +55,7 @@ namespace Slash.Serialization.Utils
             return xmlSerializer.Deserialize(reader);
         }
 
+#if !WINDOWS_STORE
         /// <summary>
         ///   Serializes the specified object to a binary stream.
         /// </summary>
@@ -66,6 +69,7 @@ namespace Slash.Serialization.Utils
             memoryStream.Close();
             return memoryStream;
         }
+#endif
 
         /// <summary>
         ///   Serializes the specified object to xml and adds it to the specified xml writer.

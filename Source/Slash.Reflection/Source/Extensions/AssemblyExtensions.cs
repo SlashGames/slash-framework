@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if !WINDOWS_STORE
+
 namespace Slash.Reflection
 {
     using System;
@@ -112,3 +114,5 @@ namespace Slash.Reflection
         #endregion
     }
 }
+
+#endif

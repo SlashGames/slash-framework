@@ -59,7 +59,9 @@ namespace Slash.GameBase.Blueprints
         ///   Wrapper for AttributeTable property for xml serialization.
         /// </summary>
         [XmlElement("AttributeTable")]
+#if !WINDOWS_STORE
         [Browsable(false)]
+#endif
         [EditorBrowsable(EditorBrowsableState.Never)]
         public AttributeTable AttributeTableSerialized
         {
@@ -85,7 +87,9 @@ namespace Slash.GameBase.Blueprints
         /// </summary>
         [XmlArray("ComponentTypes")]
         [XmlArrayItem("ComponentType")]
+#if !WINDOWS_STORE
         [Browsable(false)]
+#endif
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string[] ComponentTypesSerialized
         {
