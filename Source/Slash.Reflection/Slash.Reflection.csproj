@@ -29,15 +29,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release WindowsStore|AnyCPU' ">
-    <OutputPath>bin\Release WindowsStore\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS_STORE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Source\Utils\AssemblyUtils.cs" />
     <Compile Include="Source\Utils\PropertyUtils.cs" />
     <Compile Include="Source\Utils\ReflectionUtils.cs" />
   </ItemGroup>

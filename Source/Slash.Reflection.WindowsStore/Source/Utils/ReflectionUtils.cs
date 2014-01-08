@@ -19,16 +19,6 @@ namespace Slash.Reflection.Utils
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Loads an assembly from the specified file.
-        /// </summary>
-        /// <param name="assemblyFile">Path to assembly file.</param>
-        /// <returns>Loaded assembly from specified path.</returns>
-        public static Assembly FindAssembly(string assemblyFile)
-        {
-            return Assembly.LoadFrom(assemblyFile);
-        }
-
-        /// <summary>
         ///   <para>
         ///     Looks up the specified full type name in all loaded assemblies,
         ///     ignoring assembly version.
@@ -83,7 +73,10 @@ namespace Slash.Reflection.Utils
             List<Type> types = new List<Type>();
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-                types.AddRange(assembly.GetTypes().Where(type => Attribute.IsDefined(type, typeof(T))));
+                foreach (var typeInfo in assembly.DefinedTypes.Where(definedType => definedType.GetCustomAttribute<T>() != null))
+                {
+                    types.Add(typeInfo.AsType());
+                }
             }
 
             return types;
@@ -100,12 +93,12 @@ namespace Slash.Reflection.Utils
         {
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-                foreach (Type type in assembly.GetTypes())
+                foreach (var typeInfo in assembly.DefinedTypes)
                 {
-                    T attribute = (T)Attribute.GetCustomAttribute(type, typeof(T));
+                    T attribute = typeInfo.GetCustomAttribute<T>();
                     if (attribute != null)
                     {
-                        action(type, attribute);
+                        action(typeInfo.AsType(), attribute);
                     }
                 }
             }
