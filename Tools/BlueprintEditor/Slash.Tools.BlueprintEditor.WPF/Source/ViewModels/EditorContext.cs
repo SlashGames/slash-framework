@@ -117,6 +117,17 @@ namespace BlueprintEditor.ViewModels
         }
 
         /// <summary>
+        ///   Gets the current project path with trailing backslash.
+        /// </summary>
+        public string ProjectPath
+        {
+            get
+            {
+                return Path.GetDirectoryName(this.SerializationPath) + "\\";
+            }
+        }
+
+        /// <summary>
         ///   Project to edit.
         /// </summary>
         public ProjectSettings ProjectSettings { get; set; }
@@ -171,6 +182,23 @@ namespace BlueprintEditor.ViewModels
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Gets the path to <paramref name="path" /> relative to <paramref name="relativeTo" />.
+        /// </summary>
+        /// <param name="path">Path to get the relative path of.</param>
+        /// <param name="relativeTo">Path to get the relative path to.</param>
+        /// <returns>
+        ///   Path to <paramref name="path" /> relative to <paramref name="relativeTo" />.
+        /// </returns>
+        public static string GetRelativePath(string path, string relativeTo)
+        {
+            var relativeToUri = new Uri(relativeTo);
+            var pathUri = new Uri(path);
+            var relativePathUri = relativeToUri.MakeRelativeUri(pathUri);
+
+            return Uri.UnescapeDataString(relativePathUri.ToString());
+        }
+
         public bool CanExecuteRedo()
         {
             var undoRoot = UndoService.Current[this.BlueprintManagerViewModel];
@@ -211,7 +239,9 @@ namespace BlueprintEditor.ViewModels
             // Load blueprint files.
             foreach (var blueprintFile in newProjectSettings.BlueprintFiles)
             {
-                FileStream blueprintFileStream = new FileStream(blueprintFile.Path, FileMode.Open);
+                var absoluteBlueprintFilePath = string.Format(
+                    "{0}\\{1}", Path.GetDirectoryName(path), blueprintFile.Path);
+                FileStream blueprintFileStream = new FileStream(absoluteBlueprintFilePath, FileMode.Open);
                 BlueprintManager newBlueprintManager;
                 try
                 {
@@ -270,10 +300,12 @@ namespace BlueprintEditor.ViewModels
                 // Set generic blueprint file path if not set.
                 if (blueprintFile.Path == null)
                 {
-                    blueprintFile.Path = GenerateBlueprintFilePath(this.SerializationPath, index);
+                    var absolutePath = GenerateBlueprintFilePath(this.SerializationPath, index);
+                    blueprintFile.Path = GetRelativePath(absolutePath, this.ProjectPath);
                 }
 
-                var blueprintFileStream = new FileStream(blueprintFile.Path, FileMode.Create);
+                var absoluteBlueprintFilePath = string.Format("{0}\\{1}", this.ProjectPath, blueprintFile.Path);
+                var blueprintFileStream = new FileStream(absoluteBlueprintFilePath, FileMode.Create);
                 this.blueprintManagerSerializer.Serialize(blueprintFileStream, blueprintFile.BlueprintManager);
                 blueprintFileStream.Close();
             }

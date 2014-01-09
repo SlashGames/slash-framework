@@ -104,7 +104,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         {
             get
             {
-                return this.BlueprintFiles.Select(projectAssembly => projectAssembly.Path).ToArray();
+                return this.BlueprintFiles.Select(blueprintFile => blueprintFile.Path).ToArray();
             }
             set
             {
