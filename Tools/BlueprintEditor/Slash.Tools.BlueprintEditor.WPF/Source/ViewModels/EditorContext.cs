@@ -241,30 +241,38 @@ namespace BlueprintEditor.ViewModels
             {
                 var absoluteBlueprintFilePath = string.Format(
                     "{0}\\{1}", Path.GetDirectoryName(path), blueprintFile.Path);
-                FileStream blueprintFileStream = new FileStream(absoluteBlueprintFilePath, FileMode.Open);
-                BlueprintManager newBlueprintManager;
-                try
+                var fileInfo = new FileInfo(absoluteBlueprintFilePath);
+                
+                if (!fileInfo.Exists)
                 {
-                    newBlueprintManager =
-                        (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
-                }
-                catch (Exception e)
-                {
-                    throw new SerializationException(
-                        string.Format(
-                            "Couldn't deserialize blueprint manager from '{0}': {1}.",
-                            path,
-                            e.GetBaseException().Message),
-                        e);
+                    throw new FileNotFoundException(string.Format("Blueprint file not found: {0}.", path));
                 }
 
-                if (newBlueprintManager == null)
+                using (var blueprintFileStream = fileInfo.OpenRead())
                 {
-                    throw new SerializationException(
-                        string.Format("Couldn't deserialize blueprint manager from '{0}'.", path));
+                    try
+                    {
+                        var newBlueprintManager =
+                            (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
+
+                        if (newBlueprintManager == null)
+                        {
+                            throw new SerializationException(
+                                string.Format("Couldn't deserialize blueprint manager from '{0}'.", path));
+                        }
+
+                        blueprintFile.BlueprintManager = newBlueprintManager;
+                    }
+                    catch (Exception e)
+                    {
+                        throw new SerializationException(
+                            string.Format(
+                                "Couldn't deserialize blueprint manager from '{0}': {1}.",
+                                path,
+                                e.GetBaseException().Message),
+                            e);
+                    }
                 }
-                blueprintFile.BlueprintManager = newBlueprintManager;
-                blueprintFileStream.Close();
             }
 
             // Set new project.
