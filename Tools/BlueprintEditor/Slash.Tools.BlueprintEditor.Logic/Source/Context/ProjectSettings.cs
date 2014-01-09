@@ -14,7 +14,6 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
     using System.Xml.Serialization;
 
     using Slash.GameBase.Blueprints;
-    using Slash.Reflection.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
@@ -58,6 +57,11 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         ///   Available entity component types in the project.
         /// </summary>
         private IEnumerable<Type> entityComponentTypes;
+
+        /// <summary>
+        ///   Assemblies which belong to the project.
+        /// </summary>
+        private IList<Assembly> projectAssemblies;
 
         #endregion
 
@@ -139,7 +143,19 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         ///   Assemblies which belong to the project.
         /// </summary>
         [XmlIgnore]
-        public IList<Assembly> ProjectAssemblies { get; private set; }
+        public IList<Assembly> ProjectAssemblies
+        {
+            get
+            {
+                return this.projectAssemblies;
+            }
+            set
+            {
+                this.projectAssemblies = value;
+                this.entityComponentTypes = null;
+                this.OnEntityComponentTypesChanged();
+            }
+        }
 
         /// <summary>
         ///   Wrapper for ProjectAssemblies property for xml serialization.
@@ -148,19 +164,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         [XmlArrayItem("ProjectAssembly")]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string[] ProjectAssembliesSerialized
-        {
-            get
-            {
-                return this.ProjectAssemblies.Select(projectAssembly => projectAssembly.CodeBase).ToArray();
-            }
-            set
-            {
-                this.ProjectAssemblies = value.Select(ReflectionUtils.FindAssembly).ToList();
-                this.entityComponentTypes = null;
-                this.OnEntityComponentTypesChanged();
-            }
-        }
+        public string[] ProjectAssembliesSerialized { get; set; }
 
         #endregion
 

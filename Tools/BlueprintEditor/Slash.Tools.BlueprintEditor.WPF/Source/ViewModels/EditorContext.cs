@@ -17,6 +17,7 @@ namespace BlueprintEditor.ViewModels
     using MonitoredUndo;
 
     using Slash.GameBase.Blueprints;
+    using Slash.Reflection.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
     using Slash.Tools.BlueprintEditor.Logic.Context;
 
@@ -236,6 +237,13 @@ namespace BlueprintEditor.ViewModels
 
             fileStream.Close();
 
+            // Convert project assembly paths.
+            newProjectSettings.ProjectAssemblies =
+                newProjectSettings.ProjectAssembliesSerialized.Select(
+                    assemblyPath =>
+                    ReflectionUtils.FindAssembly(string.Format("{0}\\{1}", Path.GetDirectoryName(path), assemblyPath)))
+                                  .ToList();
+
             // Load blueprint files.
             foreach (var blueprintFile in newProjectSettings.BlueprintFiles)
             {
@@ -320,6 +328,12 @@ namespace BlueprintEditor.ViewModels
 
             // Save project.
             var fileStream = new FileStream(this.SerializationPath, FileMode.Create);
+
+            // Convert project assembly paths.
+            this.ProjectSettings.ProjectAssembliesSerialized =
+                this.ProjectSettings.ProjectAssemblies.Select(
+                    projectAssembly => GetRelativePath(projectAssembly.CodeBase, this.SerializationPath)).ToArray();
+
             this.projectSettingsSerializer.Serialize(fileStream, this.ProjectSettings);
             fileStream.Close();
         }
