@@ -13,14 +13,14 @@ namespace Slash.GameBase.Inspector.Attributes
     using Slash.GameBase.Inspector.Validation;
 
     /// <summary>
-    ///   Exposes the property to the landscape designer inspector.
+    ///   Exposes the property to the inspector.
     /// </summary>
     public class InspectorEnumAttribute : InspectorPropertyAttribute
     {
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Exposes the property to the landscape designer inspector.
+        ///   Exposes the property to the inspector.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
         /// <param name="enumType">Type of the enum this attribute is attached to.</param>
