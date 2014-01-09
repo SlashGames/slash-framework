@@ -9,8 +9,8 @@
     <ProjectGuid>{B98DD3EA-25C3-41BE-8253-206960364CC8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Slash.Reflection.WindowsStore</RootNamespace>
-    <AssemblyName>Slash.Reflection.WindowsStore</AssemblyName>
+    <RootNamespace>Slash.Reflection</RootNamespace>
+    <AssemblyName>Slash.Reflection</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
