@@ -264,6 +264,17 @@ namespace Slash.GameBase.Components
         }
 
         /// <summary>
+        /// Creates a new entity, adding components matching the passed
+        /// blueprint.
+        /// </summary>
+        /// <param name="blueprint">Blueprint describing the entity to create.</param>
+        /// <returns>Unique id of the new entity.</returns>
+        public int CreateEntity(Blueprint blueprint)
+        {
+            return this.CreateEntity(blueprint, new AttributeTable());
+        }
+
+        /// <summary>
         ///   Creates a new entity, adding components matching the passed
         ///   blueprint and initializing these with the data stored in the
         ///   blueprint and the specified configuration. Configuration data
