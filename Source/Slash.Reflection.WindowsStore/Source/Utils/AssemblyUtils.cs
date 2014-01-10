@@ -8,6 +8,7 @@ namespace Slash.Reflection.Utils
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Reflection;
 
     using Windows.ApplicationModel;
@@ -35,9 +36,21 @@ namespace Slash.Reflection.Utils
             {
                 if (file.FileType == ".dll" || file.FileType == ".exe")
                 {
-                    AssemblyName name = new AssemblyName { Name = file.Name };
-                    Assembly asm = Assembly.Load(name);
-                    assemblies.Add(asm);
+                    try
+                    {
+                        var filename = file.Name.Substring(0, file.Name.Length - file.FileType.Length);
+                        AssemblyName name = new AssemblyName { Name = filename };
+                        Assembly asm = Assembly.Load(name);
+                        assemblies.Add(asm);
+                    }
+                    catch (BadImageFormatException)
+                    {
+                        /*
+                         * TODO(np): Thrown reflecting on C++ executable files for which the C++ compiler
+                         * stripped the relocation addresses (such as Unity dlls):
+                         * http://msdn.microsoft.com/en-us/library/x4cw969y(v=vs.110).aspx
+                         */
+                    }
                 }
             }
 
