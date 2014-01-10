@@ -12,7 +12,7 @@ namespace Slash.GameBase.Inspector.Attributes
     using Slash.GameBase.Inspector.Validation;
 
     /// <summary>
-    ///   Exposes the property to the landscape designer inspector.
+    ///   Exposes the property to the inspector.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public abstract class InspectorPropertyAttribute : Attribute
@@ -20,7 +20,7 @@ namespace Slash.GameBase.Inspector.Attributes
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Exposes the property to the landscape designer inspector.
+        ///   Exposes the property to the inspector.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
         protected InspectorPropertyAttribute(string name)

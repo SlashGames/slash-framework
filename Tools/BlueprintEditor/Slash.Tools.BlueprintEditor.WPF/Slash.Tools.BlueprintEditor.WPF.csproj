@@ -203,6 +203,10 @@
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>Slash.Collections</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Slash.Reflection\Slash.Reflection.csproj">
+      <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>
+      <Name>Slash.Reflection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Slash.Tools.BlueprintEditor.Logic\Slash.Tools.BlueprintEditor.Logic.csproj">
       <Project>{57BDCC2E-453D-4593-9467-39FC5C90141E}</Project>
       <Name>Slash.Tools.BlueprintEditor.Logic</Name>

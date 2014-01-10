@@ -95,7 +95,7 @@ namespace Slash.GameBase.Blueprints
         {
             get
             {
-                return this.ComponentTypes.Select(componentType => componentType.AssemblyQualifiedName).ToArray();
+                return this.ComponentTypes.Select(componentType => componentType.FullName).ToArray();
             }
             set
             {

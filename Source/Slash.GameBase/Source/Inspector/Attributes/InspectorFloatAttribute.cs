@@ -12,7 +12,7 @@ namespace Slash.GameBase.Inspector.Attributes
     using Slash.GameBase.Inspector.Validation;
 
     /// <summary>
-    ///   Exposes the property to the landscape designer inspector.
+    ///   Exposes the property to the inspector.
     /// </summary>
     public class InspectorFloatAttribute : InspectorPropertyAttribute
     {

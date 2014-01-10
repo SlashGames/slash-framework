@@ -6,6 +6,7 @@
 
 namespace BlueprintEditor.Windows
 {
+    using System.IO;
     using System.Runtime.Serialization;
     using System.Windows;
     using System.Windows.Input;
@@ -197,6 +198,10 @@ namespace BlueprintEditor.Windows
                 this.UpdateWindowTitle();
             }
             catch (SerializationException exception)
+            {
+                EditorDialog.Error("Unable to load project", exception.Message);
+            }
+            catch (FileNotFoundException exception)
             {
                 EditorDialog.Error("Unable to load project", exception.Message);
             }

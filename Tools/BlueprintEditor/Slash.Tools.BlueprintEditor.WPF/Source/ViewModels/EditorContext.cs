@@ -17,6 +17,7 @@ namespace BlueprintEditor.ViewModels
     using MonitoredUndo;
 
     using Slash.GameBase.Blueprints;
+    using Slash.Reflection.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
     using Slash.Tools.BlueprintEditor.Logic.Context;
 
@@ -117,6 +118,17 @@ namespace BlueprintEditor.ViewModels
         }
 
         /// <summary>
+        ///   Gets the current project path with trailing backslash.
+        /// </summary>
+        public string ProjectPath
+        {
+            get
+            {
+                return Path.GetDirectoryName(this.SerializationPath) + "\\";
+            }
+        }
+
+        /// <summary>
         ///   Project to edit.
         /// </summary>
         public ProjectSettings ProjectSettings { get; set; }
@@ -171,6 +183,23 @@ namespace BlueprintEditor.ViewModels
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Gets the path to <paramref name="path" /> relative to <paramref name="relativeTo" />.
+        /// </summary>
+        /// <param name="path">Path to get the relative path of.</param>
+        /// <param name="relativeTo">Path to get the relative path to.</param>
+        /// <returns>
+        ///   Path to <paramref name="path" /> relative to <paramref name="relativeTo" />.
+        /// </returns>
+        public static string GetRelativePath(string path, string relativeTo)
+        {
+            var relativeToUri = new Uri(relativeTo);
+            var pathUri = new Uri(path);
+            var relativePathUri = relativeToUri.MakeRelativeUri(pathUri);
+
+            return Uri.UnescapeDataString(relativePathUri.ToString());
+        }
+
         public bool CanExecuteRedo()
         {
             var undoRoot = UndoService.Current[this.BlueprintManagerViewModel];
@@ -208,33 +237,50 @@ namespace BlueprintEditor.ViewModels
 
             fileStream.Close();
 
+            // Convert project assembly paths.
+            newProjectSettings.ProjectAssemblies =
+                newProjectSettings.ProjectAssembliesSerialized.Select(
+                    assemblyPath =>
+                    ReflectionUtils.FindAssembly(string.Format("{0}\\{1}", Path.GetDirectoryName(path), assemblyPath)))
+                                  .ToList();
+
             // Load blueprint files.
             foreach (var blueprintFile in newProjectSettings.BlueprintFiles)
             {
-                FileStream blueprintFileStream = new FileStream(blueprintFile.Path, FileMode.Open);
-                BlueprintManager newBlueprintManager;
-                try
+                var absoluteBlueprintFilePath = string.Format(
+                    "{0}\\{1}", Path.GetDirectoryName(path), blueprintFile.Path);
+                var fileInfo = new FileInfo(absoluteBlueprintFilePath);
+                
+                if (!fileInfo.Exists)
                 {
-                    newBlueprintManager =
-                        (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
-                }
-                catch (Exception e)
-                {
-                    throw new SerializationException(
-                        string.Format(
-                            "Couldn't deserialize blueprint manager from '{0}': {1}.",
-                            path,
-                            e.GetBaseException().Message),
-                        e);
+                    throw new FileNotFoundException(string.Format("Blueprint file not found: {0}.", path));
                 }
 
-                if (newBlueprintManager == null)
+                using (var blueprintFileStream = fileInfo.OpenRead())
                 {
-                    throw new SerializationException(
-                        string.Format("Couldn't deserialize blueprint manager from '{0}'.", path));
+                    try
+                    {
+                        var newBlueprintManager =
+                            (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
+
+                        if (newBlueprintManager == null)
+                        {
+                            throw new SerializationException(
+                                string.Format("Couldn't deserialize blueprint manager from '{0}'.", path));
+                        }
+
+                        blueprintFile.BlueprintManager = newBlueprintManager;
+                    }
+                    catch (Exception e)
+                    {
+                        throw new SerializationException(
+                            string.Format(
+                                "Couldn't deserialize blueprint manager from '{0}': {1}.",
+                                path,
+                                e.GetBaseException().Message),
+                            e);
+                    }
                 }
-                blueprintFile.BlueprintManager = newBlueprintManager;
-                blueprintFileStream.Close();
             }
 
             // Set new project.
@@ -270,16 +316,24 @@ namespace BlueprintEditor.ViewModels
                 // Set generic blueprint file path if not set.
                 if (blueprintFile.Path == null)
                 {
-                    blueprintFile.Path = GenerateBlueprintFilePath(this.SerializationPath, index);
+                    var absolutePath = GenerateBlueprintFilePath(this.SerializationPath, index);
+                    blueprintFile.Path = GetRelativePath(absolutePath, this.ProjectPath);
                 }
 
-                var blueprintFileStream = new FileStream(blueprintFile.Path, FileMode.Create);
+                var absoluteBlueprintFilePath = string.Format("{0}\\{1}", this.ProjectPath, blueprintFile.Path);
+                var blueprintFileStream = new FileStream(absoluteBlueprintFilePath, FileMode.Create);
                 this.blueprintManagerSerializer.Serialize(blueprintFileStream, blueprintFile.BlueprintManager);
                 blueprintFileStream.Close();
             }
 
             // Save project.
             var fileStream = new FileStream(this.SerializationPath, FileMode.Create);
+
+            // Convert project assembly paths.
+            this.ProjectSettings.ProjectAssembliesSerialized =
+                this.ProjectSettings.ProjectAssemblies.Select(
+                    projectAssembly => GetRelativePath(projectAssembly.CodeBase, this.SerializationPath)).ToArray();
+
             this.projectSettingsSerializer.Serialize(fileStream, this.ProjectSettings);
             fileStream.Close();
         }
