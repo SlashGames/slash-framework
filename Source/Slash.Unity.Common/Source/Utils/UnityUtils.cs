@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace oxyd.unity.utils
+namespace Slash.Unity.Common.Utils
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -14,6 +14,29 @@ namespace oxyd.unity.utils
     public static class UnityUtils
     {
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Instantiates a new game object from the specified prefab and adds it
+        ///   to the game object.
+        ///   Makes sure the position/rotation/scale are initialized correctly.
+        /// </summary>
+        /// <param name="parent">Game object to add child to.</param>
+        /// <param name="prefab">Prefab to instantiate new child from.</param>
+        /// <returns>Instantiated new child.</returns>
+        public static GameObject AddChild(this GameObject parent, GameObject prefab)
+        {
+            GameObject go = Object.Instantiate(prefab) as GameObject;
+            if (go != null && parent != null)
+            {
+                Transform t = go.transform;
+                t.parent = parent.transform;
+                t.localPosition = Vector3.zero;
+                t.localRotation = Quaternion.identity;
+                t.localScale = Vector3.one;
+                go.layer = parent.layer;
+            }
+            return go;
+        }
 
         /// <summary>
         ///   Destroys all children from the specified game object.

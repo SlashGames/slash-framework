@@ -86,7 +86,6 @@
     <Compile Include="Source\Utils\UnityUtils.cs" />
     <Compile Include="Source\Utils\VersionNumberBehaviour.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup Condition="'$(Configuration)' != 'Debug NoLog4Net' And '$(Configuration)' != 'Release NoLog4Net'">
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
