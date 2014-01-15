@@ -115,7 +115,7 @@ namespace Slash.GameBase.Tests
         public void TestGamePausedEvent()
         {
             this.game.EventManager.RegisterListener(FrameworkEventType.GamePaused, this.OnGamePaused);
-            this.game.StartGame();
+            this.game.StartGame(null);
             this.game.PauseGame();
             this.CheckTestPassed();
         }
@@ -127,7 +127,7 @@ namespace Slash.GameBase.Tests
         public void TestGameResumedEvent()
         {
             this.game.EventManager.RegisterListener(FrameworkEventType.GameResumed, this.OnGameResumed);
-            this.game.StartGame();
+            this.game.StartGame(null);
             this.game.PauseGame();
             this.game.ResumeGame();
             this.CheckTestPassed();
@@ -140,7 +140,7 @@ namespace Slash.GameBase.Tests
         public void TestGameStartedEvent()
         {
             this.game.EventManager.RegisterListener(FrameworkEventType.GameStarted, this.OnGameStarted);
-            this.game.StartGame();
+            this.game.StartGame(null);
             this.CheckTestPassed();
         }
 
@@ -293,19 +293,8 @@ namespace Slash.GameBase.Tests
         /// <summary>
         ///   Test implementation of a game system.
         /// </summary>
-        private class TestSystem : ISystem
+        private class TestSystem : SystemBase
         {
-            #region Public Methods and Operators
-
-            /// <summary>
-            ///   Ticks this system.
-            /// </summary>
-            /// <param name="dt"> Time passed since the last tick, in seconds. </param>
-            public void UpdateSystem(float dt)
-            {
-            }
-
-            #endregion
         }
     }
 }
