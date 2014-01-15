@@ -6,6 +6,8 @@
 
 namespace Slash.GameBase.Events
 {
+    using Slash.GameBase.Systems;
+
     /// <summary>
     ///   Type of an event that occurred within the entity system.
     /// </summary>

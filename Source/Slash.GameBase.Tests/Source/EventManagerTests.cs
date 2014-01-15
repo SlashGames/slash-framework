@@ -11,6 +11,7 @@ namespace Slash.GameBase.Tests
     using Slash.Collections.AttributeTables;
     using Slash.GameBase.Components;
     using Slash.GameBase.Events;
+    using Slash.GameBase.Systems;
 
     /// <summary>
     ///   Unit tests for the EventManager class.

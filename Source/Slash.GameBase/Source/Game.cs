@@ -6,6 +6,8 @@
 
 namespace Slash.GameBase
 {
+    using Slash.Collections.AttributeTables;
+    using Slash.GameBase.Blueprints;
     using Slash.GameBase.Components;
     using Slash.GameBase.Events;
     using Slash.GameBase.Systems;
@@ -58,6 +60,11 @@ namespace Slash.GameBase
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        ///   Manages all blueprints available in the game.
+        /// </summary>
+        public IBlueprintManager BlueprintManager { get; set; }
 
         /// <summary>
         ///   Manager responsible for creating and removing entities in this game.
@@ -118,6 +125,17 @@ namespace Slash.GameBase
         #region Public Methods and Operators
 
         /// <summary>
+        ///   Adds and initializes the system of the specified type.
+        /// </summary>
+        /// <typeparam name="T">Type of the system to add.</typeparam>
+        public void AddSystem<T>() where T : ISystem, new()
+        {
+            var system = new T();
+            this.SystemManager.AddSystem(system);
+            system.Game = this;
+        }
+
+        /// <summary>
         ///   Initialization of the game. Can be used for game-specific initialization steps.
         /// </summary>
         public virtual void InitGame()
@@ -159,13 +177,20 @@ namespace Slash.GameBase
         /// <summary>
         ///   Starts this game, beginning to tick all systems.
         /// </summary>
-        public void StartGame()
+        /// <param name="gameConfiguration">Configuration for game systems.</param>
+        public void StartGame(IAttributeTable gameConfiguration)
         {
             this.Running = true;
             this.eventManager.QueueEvent(FrameworkEventType.GameStarted);
 
             // Init game.
             this.InitGame();
+
+            // Init systems.
+            foreach (ISystem system in this.systemManager)
+            {
+                system.Init(gameConfiguration);
+            }
 
             this.eventManager.ProcessEvents();
         }
