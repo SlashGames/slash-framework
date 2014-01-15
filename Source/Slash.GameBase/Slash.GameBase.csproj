@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Source\Inspector\Attributes\ConditionalFlagsCheck.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorTypeAttribute.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorComponentAttribute.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorConditionalFlagsPropertyAttribute.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorConditionalPropertyAttribute.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Source\Components\EntityManager.cs" />
     <Compile Include="Source\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Inspector\Utils\InspectorUtils.cs" />
     <Compile Include="Source\Inspector\Validation\ValidationError.cs" />
     <Compile Include="Source\Systems\ISystem.cs" />
     <Compile Include="Source\Systems\SystemBase.cs" />

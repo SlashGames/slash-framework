@@ -11,6 +11,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Data
     using System.Linq;
 
     using Slash.GameBase.Inspector.Attributes;
+    using Slash.GameBase.Inspector.Utils;
 
     /// <summary>
     ///   Lookup table for designer components. Avoids expensive reflection
@@ -99,7 +100,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Data
                 foreach (var designerComponentType in designerComponentTypes)
                 {
                     List<InspectorPropertyAttribute> inspectorProperties =
-                        ComponentUtils.CollectInspectorProperties(designerComponentType, ref conditionalInspectors);
+                        InspectorUtils.CollectInspectorProperties(designerComponentType, ref conditionalInspectors);
 
                     var component = new InspectorComponent
                         {

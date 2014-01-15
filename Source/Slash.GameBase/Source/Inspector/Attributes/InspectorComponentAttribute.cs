@@ -6,13 +6,10 @@
 
 namespace Slash.GameBase.Inspector.Attributes
 {
-    using System;
-
     /// <summary>
     ///   Exposes the component to the inspector.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
-    public class InspectorComponentAttribute : Attribute
+    public class InspectorComponentAttribute : InspectorTypeAttribute
     {
         #region Constructors and Destructors
 
@@ -33,11 +30,6 @@ namespace Slash.GameBase.Inspector.Attributes
         ///   Default: true.
         /// </summary>
         public bool CanBeRemoved { get; set; }
-
-        /// <summary>
-        ///   A user-friendly description of the component.
-        /// </summary>
-        public string Description { get; set; }
 
         /// <summary>
         ///   Component priority. Specifies the position the component appears within lists.
