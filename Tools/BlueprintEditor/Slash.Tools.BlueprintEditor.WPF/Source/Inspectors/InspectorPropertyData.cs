@@ -21,7 +21,7 @@ namespace BlueprintEditor.Inspectors
         /// <summary>
         ///   Validation message when provided string can't be converted to value.
         /// </summary>
-        private const string ValidationMessageConversionFailed = "String can't be converted to value.";
+        public const string ValidationMessageConversionFailed = "String can't be converted to value.";
 
         #endregion
 
@@ -110,6 +110,7 @@ namespace BlueprintEditor.Inspectors
         {
             get
             {
+                // Implements IDataErrorInfo indexer for returning validation error messages.
                 string result = null;
                 if (columnName == "StringValue")
                 {

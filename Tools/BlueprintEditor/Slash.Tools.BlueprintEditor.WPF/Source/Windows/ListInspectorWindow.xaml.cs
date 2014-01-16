@@ -21,7 +21,7 @@ namespace BlueprintEditor.Windows
     ///   Allows editing the value of a list property by providing buttons for
     ///   adding new items, editing and removing existing ones.
     /// </summary>
-    public partial class ListInspectorWindow
+    public partial class ListInspectorWindow : IDataErrorInfo
     {
         #region Fields
 
@@ -43,10 +43,49 @@ namespace BlueprintEditor.Windows
 
         #region Public Properties
 
+        public string Error { get; private set; }
+
         /// <summary>
         ///   Items shown in the list view.
         /// </summary>
         public ObservableCollection<ItemWrapper> Items { get; set; }
+
+        /// <summary>
+        ///   Item to add to the list.
+        /// </summary>
+        public string NewItemText { get; set; }
+
+        #endregion
+
+        #region Public Indexers
+
+        public string this[string columnName]
+        {
+            get
+            {
+                // Implements IDataErrorInfo indexer for returning validation error messages.
+                if (columnName == "NewItemText")
+                {
+                    object convertedValue;
+
+                    if (
+                        !this.propertyData.InspectorProperty.TryConvertStringToValue(
+                            this.TbAdd.Text, out convertedValue))
+                    {
+                        return InspectorPropertyData.ValidationMessageConversionFailed;
+                    }
+
+                    var error = this.propertyData.InspectorProperty.Validate(convertedValue);
+
+                    if (error != null)
+                    {
+                        return error.Message;
+                    }
+                }
+
+                return null;
+            }
+        }
 
         #endregion
 
