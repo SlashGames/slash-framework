@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Attributes\ExposePropertyAttribute.cs" />
+    <Compile Include="Source\Configuration\GameConfigurationBehaviour.cs" />
     <Compile Include="Source\Core\EntityGameObjectsBehaviour.cs" />
     <Compile Include="Source\Core\EntityObjectPool.cs" />
     <Compile Include="Source\Core\LogicToVisualDelegate.cs" />
@@ -94,11 +95,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>$(UNITY_PATH)Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
+      <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
+      <Name>Slash.Collections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Slash.Diagnostics\Slash.Diagnostics.csproj">
       <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
       <Name>Slash.Diagnostics</Name>
