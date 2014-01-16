@@ -7,6 +7,7 @@
 namespace Slash.GameBase.Systems
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     using Slash.GameBase.Events;
@@ -14,7 +15,7 @@ namespace Slash.GameBase.Systems
     /// <summary>
     ///   Manages the game systems to be updated in each tick.
     /// </summary>
-    public class SystemManager
+    public class SystemManager : IEnumerable<ISystem>
     {
         #region Fields
 
@@ -87,6 +88,11 @@ namespace Slash.GameBase.Systems
             this.game.EventManager.QueueEvent(FrameworkEventType.SystemAdded, system);
         }
 
+        public IEnumerator<ISystem> GetEnumerator()
+        {
+            return this.systems.GetEnumerator();
+        }
+
         /// <summary>
         ///   Gets the system of the specified type.
         /// </summary>
@@ -146,6 +152,15 @@ namespace Slash.GameBase.Systems
             {
                 system.UpdateSystem(dt);
             }
+        }
+
+        #endregion
+
+        #region Explicit Interface Methods
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
 
         #endregion

@@ -120,7 +120,7 @@ namespace Slash.GameBase.Tests
         ///   Test implementation of a game system. Remebers whether it has
         ///   been updated any time, or not.
         /// </summary>
-        private class TestSystem : ISystem
+        private class TestSystem : SystemBase
         {
             #region Public Properties
 
@@ -139,7 +139,7 @@ namespace Slash.GameBase.Tests
             /// <param name="dt">
             ///   Time passed since the last tick, in seconds.
             /// </param>
-            public void UpdateSystem(float dt)
+            public override void UpdateSystem(float dt)
             {
                 this.Updated = true;
             }

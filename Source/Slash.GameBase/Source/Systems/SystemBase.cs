@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISystem.cs" company="Slash Games">
+// <copyright file="System.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,17 +9,16 @@ namespace Slash.GameBase.Systems
     using Slash.Collections.AttributeTables;
 
     /// <summary>
-    ///   Contract that all systems that make up a game have to fulfill,
-    ///   e.g. physics, combat or AI.
+    ///   Base system class.
     /// </summary>
-    public interface ISystem
+    public class SystemBase : ISystem
     {
         #region Public Properties
 
         /// <summary>
         ///   Game this system belongs to.
         /// </summary>
-        Game Game { get; set; }
+        public Game Game { get; set; }
 
         #endregion
 
@@ -30,7 +29,9 @@ namespace Slash.GameBase.Systems
         ///   attribute table.
         /// </summary>
         /// <param name="configuration">System configuration data.</param>
-        void Init(IAttributeTable configuration);
+        public virtual void Init(IAttributeTable configuration)
+        {
+        }
 
         /// <summary>
         ///   Ticks this system.
@@ -38,7 +39,9 @@ namespace Slash.GameBase.Systems
         /// <param name="dt">
         ///   Time passed since the last tick, in seconds.
         /// </param>
-        void UpdateSystem(float dt);
+        public virtual void UpdateSystem(float dt)
+        {
+        }
 
         #endregion
     }

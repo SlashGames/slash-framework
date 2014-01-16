@@ -129,6 +129,21 @@ namespace Slash.Collections.AttributeTables
             return true;
         }
 
+        /// <summary>
+        ///   Tries to get the value of the attribute with the specified key. If not found,
+        ///   the specified default value is returned.
+        /// </summary>
+        /// <typeparam name="T">Expected type of attribute. Only classes are allowed as the method wouldn't be AOT compatible otherwise.</typeparam>
+        /// <param name="attributeTable">Attribute table to work on.</param>
+        /// <param name="key"> Key to retrieve the value of. </param>
+        /// <param name="defaultValue">Default value to use if attribute wasn't found.</param>
+        /// <returns>Value of attribute with specified key, if found. Specified default value otherwise.</returns>
+        public static T GetValueOrDefault<T>(this IAttributeTable attributeTable, object key, T defaultValue)
+        {
+            T value;
+            return TryGetValue(attributeTable, key, out value) ? value : defaultValue;
+        }
+
         #endregion
     }
 }

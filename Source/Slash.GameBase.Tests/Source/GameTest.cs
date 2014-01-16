@@ -41,7 +41,7 @@ namespace Slash.GameBase.Tests
         public void TestGameRunning()
         {
             Assert.IsFalse(this.game.Running);
-            this.game.StartGame();
+            this.game.StartGame(null);
             Assert.IsTrue(this.game.Running);
             this.game.PauseGame();
             Assert.IsFalse(this.game.Running);
@@ -59,7 +59,7 @@ namespace Slash.GameBase.Tests
             Assert.AreEqual(this.game.TimeElapsed, 0);
             this.game.Update(1.0f);
             Assert.AreEqual(this.game.TimeElapsed, 0);
-            this.game.StartGame();
+            this.game.StartGame(null);
             this.game.Update(1.0f);
             Assert.AreEqual(this.game.TimeElapsed, 1.0f);
             this.game.PauseGame();
