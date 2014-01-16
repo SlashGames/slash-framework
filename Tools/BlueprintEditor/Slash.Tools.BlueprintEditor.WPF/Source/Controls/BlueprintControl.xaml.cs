@@ -8,6 +8,7 @@ namespace BlueprintEditor.Controls
 {
     using System;
     using System.Collections.Specialized;
+    using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace BlueprintEditor.Controls
     using BlueprintEditor.ViewModels;
 
     using Slash.GameBase.Inspector.Attributes;
+    using Slash.SystemExt.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
@@ -56,9 +58,13 @@ namespace BlueprintEditor.Controls
             }
 
             // Add label for component name.
+            var componentName = componentInfo.Type.Name;
+            componentName = componentName.Replace("Component", string.Empty);
+            componentName = componentName.SplitByCapitalLetters();
+
             Label componentLabel = new Label
                 {
-                    Content = componentInfo.Type.Name,
+                    Content = componentName,
                     ToolTip = componentInfo.Component.Description,
                     FontWeight = FontWeights.Bold
                 };

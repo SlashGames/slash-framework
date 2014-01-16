@@ -7,6 +7,7 @@
 namespace Slash.GameBase.Inspector.Attributes
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -89,7 +90,7 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <returns>
         ///   Value of the correct type for this property, if the conversion was successful, and <c>null</c> otherwise.
         /// </returns>
-        public override object ConvertFromString(string text)
+        public override object ConvertStringToValue(string text)
         {
             return Enum.Parse(this.EnumType, text);
         }
@@ -99,10 +100,21 @@ namespace Slash.GameBase.Inspector.Attributes
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <returns>String that can be converted back to a value of the correct type for this property.</returns>
-        /// <see cref="InspectorPropertyAttribute.ConvertFromString" />
-        public override string ConvertToString(object value)
+        /// <see cref="InspectorPropertyAttribute.ConvertStringToValue" />
+        public override string ConvertValueToString(object value)
         {
             return value.ToString();
+        }
+
+        /// <summary>
+        ///   Gets an empty list for elements of the type of the property the attribute is attached to.
+        /// </summary>
+        /// <returns>Empty list of matching type.</returns>
+        public override IList GetEmptyList()
+        {
+            var listType = typeof(List<>);
+            var constructedListType = listType.MakeGenericType(this.EnumType);
+            return (IList)Activator.CreateInstance(constructedListType);
         }
 
         /// <summary>
@@ -135,7 +147,7 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <returns>
         ///   True if the conversion was successful; otherwise, false.
         /// </returns>
-        public override bool TryConvertFromString(string text, out object value)
+        public override bool TryConvertStringToValue(string text, out object value)
         {
             try
             {
@@ -154,11 +166,11 @@ namespace Slash.GameBase.Inspector.Attributes
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <param name="text">String that can be converted back to a value of the correct type for this property.</param>
-        /// <see cref="InspectorPropertyAttribute.TryConvertFromString" />
+        /// <see cref="InspectorPropertyAttribute.TryConvertStringToValue" />
         /// <returns>
         ///   True if the conversion was successful; otherwise, false.
         /// </returns>
-        public override bool TryConvertToString(object value, out string text)
+        public override bool TryConvertValueToString(object value, out string text)
         {
             text = value.ToString();
             return true;

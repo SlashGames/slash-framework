@@ -28,7 +28,7 @@
                     <DataGrid Name = "AssembliesList" ItemsSource = "{Binding ProjectAssemblies}"
                               AutoGenerateColumns = "False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header = "Dll" Width = "400"
+                            <DataGridTextColumn Header = "Assembly" Width="*"
                                                 Binding = "{Binding Converter={StaticResource AssemblyToNameConverter}}">
                             </DataGridTextColumn>
                         </DataGrid.Columns>

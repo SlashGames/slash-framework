@@ -6,7 +6,8 @@
 
 namespace Slash.SystemExt.Utils
 {
-    using global::System;
+    using System;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     ///   Extension methods for classes of the System namespace.
@@ -26,6 +27,21 @@ namespace Slash.SystemExt.Utils
         public static bool IsBetween<T>(this T value, T low, T high) where T : IComparable<T>
         {
             return value.CompareTo(low) >= 0 && value.CompareTo(high) < 0;
+        }
+
+        /// <summary>
+        ///   Splits the string, inserting spaces before each capital letter except the first one.
+        /// </summary>
+        /// <param name="s">String to split.</param>
+        /// <returns>Split string.</returns>
+        public static string SplitByCapitalLetters(this string s)
+        {
+            var r = new Regex(
+               @"(?<=[A-Z])(?=[A-Z][a-z]) |
+                 (?<=[^A-Z])(?=[A-Z]) |
+                 (?<=[A-Za-z])(?=[^A-Za-z])",
+               RegexOptions.IgnorePatternWhitespace);
+            return r.Replace(s, " ");
         }
 
         #endregion
