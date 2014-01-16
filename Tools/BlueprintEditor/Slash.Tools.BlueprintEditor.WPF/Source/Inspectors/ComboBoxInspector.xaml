@@ -12,7 +12,7 @@
             <ColumnDefinition Width = "*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Name = "LbName" Grid.Column = "0">
-            <Binding Path = "InspectorProperty.Name"></Binding>
+            <Binding Path = "PropertyName"></Binding>
         </Label>
         <ComboBox Name = "CbValue" Grid.Column = "1">
             <ComboBox.SelectedValue><Binding Path="Value" /></ComboBox.SelectedValue>

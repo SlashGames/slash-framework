@@ -13,6 +13,7 @@ namespace BlueprintEditor.Inspectors
 
     using Slash.GameBase.Inspector.Attributes;
     using Slash.GameBase.Inspector.Validation;
+    using Slash.SystemExt.Utils;
 
     public class InspectorPropertyData : IDataErrorInfo, INotifyPropertyChanged
     {
@@ -62,6 +63,20 @@ namespace BlueprintEditor.Inspectors
                 this.StringValue = this.value != null
                                        ? this.inspectorProperty.ConvertValueOrListToString(this.value)
                                        : null;
+            }
+        }
+
+        public string PropertyName
+        {
+            get
+            {
+                var propertyName = this.inspectorProperty.Name;
+                if (propertyName.Contains("."))
+                {
+                    propertyName = propertyName.Substring(propertyName.LastIndexOf('.') + 1);
+                }
+                propertyName = propertyName.SplitByCapitalLetters();
+                return propertyName;
             }
         }
 

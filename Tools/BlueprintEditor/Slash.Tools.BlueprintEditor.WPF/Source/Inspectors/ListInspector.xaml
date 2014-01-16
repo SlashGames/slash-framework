@@ -23,7 +23,7 @@
             <ColumnDefinition Width = "40"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Name = "LbName" Grid.Column = "0">
-            <Binding Path = "InspectorProperty.Name"></Binding>
+            <Binding Path = "PropertyName"></Binding>
         </Label>
         <Label Name = "LbValue" Grid.Column = "1">
             <Binding Path="StringValue" Converter="{StaticResource ListToStringConverter}" />

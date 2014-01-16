@@ -17,7 +17,7 @@
             <ColumnDefinition Width = "*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Name = "LbName" Grid.Column = "0">
-            <Binding Path = "InspectorProperty.Name"></Binding>
+            <Binding Path = "PropertyName"></Binding>
         </Label>
         <xctk:IntegerUpDown Grid.Column = "1"
                  Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}">
