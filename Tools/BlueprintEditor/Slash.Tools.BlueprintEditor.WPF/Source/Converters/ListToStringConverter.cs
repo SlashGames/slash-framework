@@ -17,7 +17,7 @@ namespace BlueprintEditor.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string str = (string)value;
-            return string.IsNullOrWhiteSpace(str) ? "(none)" : str;
+            return string.IsNullOrWhiteSpace(str) ? "(none)" : str.Replace(";", ", ");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

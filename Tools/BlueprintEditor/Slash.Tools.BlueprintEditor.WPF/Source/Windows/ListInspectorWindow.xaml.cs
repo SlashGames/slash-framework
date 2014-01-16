@@ -11,8 +11,6 @@ namespace BlueprintEditor.Windows
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
 
     using BlueprintEditor.Annotations;
     using BlueprintEditor.Inspectors;
@@ -26,11 +24,6 @@ namespace BlueprintEditor.Windows
     public partial class ListInspectorWindow
     {
         #region Fields
-
-        /// <summary>
-        ///   Inspector for editing a single list item.
-        /// </summary>
-        private TextBox inspector;
 
         /// <summary>
         ///   Data about the list property being edited.
@@ -100,14 +93,6 @@ namespace BlueprintEditor.Windows
                     }
                 }
             }
-
-            // Setup list item inspector.
-            this.inspector = new TextBox();
-            var binding = new Binding("SelectedItem.Item") { ElementName = "ListView" };
-            this.inspector.SetBinding(TextBox.TextProperty, binding);
-
-            this.SpInspector.Children.Clear();
-            this.SpInspector.Children.Add(this.inspector);
         }
 
         #endregion
@@ -116,7 +101,7 @@ namespace BlueprintEditor.Windows
 
         private void OnAdd(object sender, RoutedEventArgs e)
         {
-            var wrapper = ItemWrapper.WrapListItem(this.propertyData.InspectorProperty, this.inspector.Text);
+            var wrapper = ItemWrapper.WrapListItem(this.propertyData.InspectorProperty, this.TbAdd.Text);
 
             if (wrapper != null)
             {
