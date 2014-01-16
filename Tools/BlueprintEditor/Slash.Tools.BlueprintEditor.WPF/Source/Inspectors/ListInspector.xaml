@@ -4,11 +4,17 @@
                              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
                              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
                              xmlns:inspectors = "clr-namespace:BlueprintEditor.Inspectors"
+                             xmlns:converters="clr-namespace:BlueprintEditor.Converters"
                              mc:Ignorable = "d"
                              d:DesignWidth = "400" Height = "26"
                              d:DataContext = "{d:DesignInstance inspectors:InspectorPropertyData}">
     <inspectors:InspectorControl.Resources>
-        <ResourceDictionary Source = "..\Controls\Templates\TextBoxErrorTemplate.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source = "../Controls/Templates/TextBoxErrorTemplate.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:ListToStringConverter x:Key = "ListToStringConverter" />
+        </ResourceDictionary>
     </inspectors:InspectorControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -20,7 +26,7 @@
             <Binding Path = "InspectorProperty.Name"></Binding>
         </Label>
         <Label Name = "LbValue" Grid.Column = "1">
-            <Binding Path = "StringValue" />
+            <Binding Path="StringValue" Converter="{StaticResource ListToStringConverter}" />
         </Label>
         <Button Name = "BtEdit" Grid.Column = "2" Click = "BtEdit_OnClick">
             ...
