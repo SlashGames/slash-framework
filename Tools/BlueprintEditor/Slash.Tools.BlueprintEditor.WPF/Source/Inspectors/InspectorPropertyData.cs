@@ -59,7 +59,9 @@ namespace BlueprintEditor.Inspectors
                 this.OnPropertyChanged();
 
                 // Update string value.
-                this.StringValue = this.value != null ? this.inspectorProperty.ConvertToString(this.value) : null;
+                this.StringValue = this.value != null
+                                       ? this.inspectorProperty.ConvertValueOrListToString(this.value)
+                                       : null;
             }
         }
 
@@ -79,7 +81,7 @@ namespace BlueprintEditor.Inspectors
                 this.stringValue = value;
 
                 object newValue;
-                if (this.InspectorProperty.TryConvertFromString(this.StringValue, out newValue))
+                if (this.InspectorProperty.TryConvertStringToListOrValue(this.StringValue, out newValue))
                 {
                     this.SetValue(newValue, false);
                 }
@@ -112,7 +114,8 @@ namespace BlueprintEditor.Inspectors
                 if (columnName == "StringValue")
                 {
                     object convertedValue;
-                    bool isValid = this.InspectorProperty.TryConvertFromString(this.StringValue, out convertedValue);
+                    bool isValid = this.InspectorProperty.TryConvertStringToListOrValue(
+                        this.StringValue, out convertedValue);
                     if (!isValid)
                     {
                         result = ValidationMessageConversionFailed;
@@ -175,7 +178,7 @@ namespace BlueprintEditor.Inspectors
             if (updateStringValue)
             {
                 // Update string value.
-                this.StringValue = this.inspectorProperty.ConvertToString(this.value);
+                this.StringValue = this.inspectorProperty.ConvertValueOrListToString(this.value);
             }
 
             // Raise event.

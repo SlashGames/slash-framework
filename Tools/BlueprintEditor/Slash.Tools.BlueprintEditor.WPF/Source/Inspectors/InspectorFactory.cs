@@ -22,7 +22,11 @@ namespace BlueprintEditor.Inspectors
         {
             // Create inspector control.
             IInspectorControl inspectorControl;
-            if (inspectorProperty is InspectorBoolAttribute)
+            if (inspectorProperty.List)
+            {
+                inspectorControl = new ListInspector();
+            }
+            else if (inspectorProperty is InspectorBoolAttribute)
             {
                 inspectorControl = new CheckBoxInspector();
             }

@@ -70,6 +70,9 @@
     <Compile Include="Source\Controls\EditorDialog.cs" />
     <Compile Include="Source\Converters\AssemblyToNameConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Source\Inspectors\ListInspector.xaml.cs">
+      <DependentUpon>ListInspector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Inspectors\SingleUpDownInspector.xaml.cs">
       <DependentUpon>SingleUpDownInspector.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,9 @@
     <Compile Include="Source\Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Windows\ListInspectorWindow.xaml.cs">
+      <DependentUpon>ListInspectorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Windows\ProjectSettingsWindow.xaml.cs">
       <DependentUpon>ProjectSettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -128,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Source\Inspectors\ListInspector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Inspectors\SingleUpDownInspector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -145,6 +155,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Windows\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Windows\ListInspectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
