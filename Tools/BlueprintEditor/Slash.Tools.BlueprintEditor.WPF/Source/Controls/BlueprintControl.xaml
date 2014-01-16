@@ -14,10 +14,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source = "../Controls/Templates/TextBoxErrorTemplate.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-            <converters:TypeToClassNameConverter x:Key = "TypeToClassNameConverter" />
+            <converters:TypeToComponentNameConverter x:Key = "TypeToComponentNameConverter" />
             <converters:ComponentToolTipConverter x:Key = "ComponentToolTipConverter" />
             <DataTemplate x:Key = "ComponentListBoxItemTemplate">
-                <TextBlock Text = "{Binding Converter={StaticResource TypeToClassNameConverter}}">
+                <TextBlock Text = "{Binding Converter={StaticResource TypeToComponentNameConverter}}">
                     <TextBlock.ToolTip>
                         <ToolTip>
                             <TextBlock Text = "{Binding ., Converter={StaticResource ComponentToolTipConverter}}"></TextBlock>

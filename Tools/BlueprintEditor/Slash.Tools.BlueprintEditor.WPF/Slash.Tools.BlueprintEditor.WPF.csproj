@@ -71,6 +71,7 @@
     <Compile Include="Source\Converters\AssemblyToNameConverter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Source\Converters\ListToStringConverter.cs" />
+    <Compile Include="Source\Converters\TypeToComponentNameConverter.cs" />
     <Compile Include="Source\Inspectors\ListInspector.xaml.cs">
       <DependentUpon>ListInspector.xaml</DependentUpon>
     </Compile>
