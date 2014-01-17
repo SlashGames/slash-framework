@@ -70,7 +70,7 @@ namespace Slash.GameBase.Inspector.Data
 
                     InspectorTypeAttribute inspectorTypeAttribute =
                         (InspectorTypeAttribute)
-                        inspectorType.GetCustomAttributes(typeof(InspectorComponentAttribute), false)[0];
+                        inspectorType.GetCustomAttributes(typeof(InspectorTypeAttribute), false)[0];
                     var inspectorTypeData = new InspectorType
                         {
                             Attribute = inspectorTypeAttribute,
