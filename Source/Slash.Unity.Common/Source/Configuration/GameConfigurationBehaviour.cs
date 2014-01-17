@@ -50,7 +50,7 @@ namespace Slash.Unity.Common.Configuration
 
         public void Load()
         {
-            Debug.Log("Load configuration from resources at " + this.ConfigurationFilePath);
+            Debug.Log("Loading game configuration from resources at " + this.ConfigurationFilePath);
 
             TextAsset configurationFile = (TextAsset)Resources.Load(this.ConfigurationFilePath);
             if (configurationFile == null)
@@ -83,7 +83,6 @@ namespace Slash.Unity.Common.Configuration
 
         private void OnEnable()
         {
-            Debug.Log("Enable configuration");
             if (this.Configuration == null)
             {
                 this.Load();
