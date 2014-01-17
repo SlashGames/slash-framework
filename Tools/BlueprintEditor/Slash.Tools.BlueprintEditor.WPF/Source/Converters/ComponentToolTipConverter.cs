@@ -10,6 +10,7 @@ namespace BlueprintEditor.Converters
     using System.Globalization;
     using System.Windows.Data;
 
+    using Slash.GameBase.Inspector.Data;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public class ComponentToolTipConverter : IValueConverter
@@ -24,8 +25,8 @@ namespace BlueprintEditor.Converters
             }
 
             Type componentType = (Type)value;
-            InspectorComponent componentInfo = InspectorComponentTable.GetComponent(componentType);
-            return string.Format("{0}\n{1}", componentType.FullName, componentInfo.Component.Description);
+            InspectorType componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
+            return string.Format("{0}\n{1}", componentType.FullName, componentInfo.Description);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

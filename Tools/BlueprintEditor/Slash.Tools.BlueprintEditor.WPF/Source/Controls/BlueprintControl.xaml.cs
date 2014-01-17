@@ -18,6 +18,7 @@ namespace BlueprintEditor.Controls
     using BlueprintEditor.ViewModels;
 
     using Slash.GameBase.Inspector.Attributes;
+    using Slash.GameBase.Inspector.Data;
     using Slash.SystemExt.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
@@ -51,7 +52,7 @@ namespace BlueprintEditor.Controls
         private void AddComponentInspectors(Type componentType, Panel panel)
         {
             // Get attributes.
-            InspectorComponent componentInfo = InspectorComponentTable.GetComponent(componentType);
+            InspectorType componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
             if (componentInfo == null)
             {
                 return;
@@ -65,7 +66,7 @@ namespace BlueprintEditor.Controls
             Label componentLabel = new Label
                 {
                     Content = componentName,
-                    ToolTip = componentInfo.Component.Description,
+                    ToolTip = componentInfo.Description,
                     FontWeight = FontWeights.Bold
                 };
             panel.Children.Add(componentLabel);

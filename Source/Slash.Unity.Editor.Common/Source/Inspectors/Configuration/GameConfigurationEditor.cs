@@ -7,13 +7,11 @@
 namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 {
     using System;
-    using System.Collections.Generic;
 
     using Slash.Collections.AttributeTables;
     using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Utils;
+    using Slash.GameBase.Inspector.Data;
     using Slash.GameBase.Systems;
-    using Slash.Reflection.Utils;
     using Slash.Unity.Common.Configuration;
 
     using UnityEditor;
@@ -27,7 +25,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 
         private GameConfigurationBehaviour gameConfiguration;
 
-        private IEnumerable<Type> inspectorTypes;
+        private InspectorTypeTable inspectorSystemTypes;
 
         #endregion
 
@@ -40,20 +38,16 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
                 "Configuration File", this.gameConfiguration.ConfigurationFilePath);
 
             // Collect system types.
-            if (this.inspectorTypes == null)
+            if (this.inspectorSystemTypes == null)
             {
-                this.inspectorTypes = ReflectionUtils.FindTypesWithAttribute<InspectorTypeAttribute>();
+                this.inspectorSystemTypes = InspectorTypeTable.FindInspectorTypes(typeof(ISystem));
             }
-            Type systemType = typeof(ISystem);
-            foreach (var inspectorType in this.inspectorTypes)
-            {
-                if (!systemType.IsAssignableFrom(inspectorType))
-                {
-                    continue;
-                }
 
+            IAttributeTable configuration = this.gameConfiguration.Configuration;
+            foreach (var inspectorType in this.inspectorSystemTypes)
+            {
                 // Draw inspector type.
-                this.DrawInspector(inspectorType);
+                this.DrawInspector(inspectorType, configuration);
             }
 
             if (GUILayout.Button("Reload"))
@@ -74,17 +68,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 
         #region Methods
 
-        private void DrawInspector(Type inspectorType)
+        private void DrawInspector(InspectorType inspectorType, IAttributeTable configuration)
         {
-            // Get inspector properties.
-            Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute> conditionalInspectors =
-                new Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute>();
-            List<InspectorPropertyAttribute> inspectorProperties =
-                InspectorUtils.CollectInspectorProperties(inspectorType, ref conditionalInspectors);
-
-            IAttributeTable configuration = this.gameConfiguration.Configuration;
-
-            foreach (var inspectorProperty in inspectorProperties)
+            foreach (var inspectorProperty in inspectorType.Properties)
             {
                 // Get current value.
                 object currentValue = configuration.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default);
