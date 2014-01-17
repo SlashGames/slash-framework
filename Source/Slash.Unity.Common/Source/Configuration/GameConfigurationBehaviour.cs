@@ -6,6 +6,7 @@
 
 namespace Slash.Unity.Common.Configuration
 {
+    using System;
     using System.IO;
     using System.Xml.Serialization;
 
@@ -66,6 +67,9 @@ namespace Slash.Unity.Common.Configuration
 
         public void Save()
         {
+#if WINDOWS_STORE
+            throw new NotImplementedException("Not implemented for Windows Store build target.");
+#else
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
             string filePath = "Assets/Resources/" + this.ConfigurationFilePath + ".xml";
             // Make sure directory exists.
@@ -75,6 +79,7 @@ namespace Slash.Unity.Common.Configuration
             StreamWriter writer = new StreamWriter(filePath);
             xmlSerializer.Serialize(writer, this.Configuration);
             writer.Close();
+#endif
         }
 
         #endregion
