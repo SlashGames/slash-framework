@@ -14,6 +14,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass-v
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostBuild", "PostBuild\PostBuild.csproj", "{001B2D96-4259-4E09-934F-290F74086E06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostBuild.Editor", "PostBuild.Editor\PostBuild.Editor.csproj", "{40F51FDE-0A0A-4683-B97C-AF3DD39C8ABB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{001B2D96-4259-4E09-934F-290F74086E06} = {001B2D96-4259-4E09-934F-290F74086E06}
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Math", "%SLASH_FRAMEWORK_HOME%Source\Slash.Math\Slash.Math.csproj", "{834E18DE-A529-4F17-A838-92B1EF259FE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Diagnostics", "%SLASH_FRAMEWORK_HOME%Source\Slash.Diagnostics\Slash.Diagnostics.csproj", "{E155097A-6A57-498E-A707-F852AA672111}"
@@ -21,6 +26,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.GameBase", "%SLASH_FRAMEWORK_HOME%Source\Slash.GameBase\Slash.GameBase.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Serialization", "%SLASH_FRAMEWORK_HOME%Source\Slash.Serialization\Slash.Serialization.csproj", "{C92C88B0-5268-443B-B32F-CC2A6D686C51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Unity.Common", "%SLASH_FRAMEWORK_HOME%Source\Slash.Unity.Common\Slash.Unity.Common.csproj", "{AA429D02-6020-44F3-8B62-6A5C1AD4FE7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Unity.Editor.Common", "%SLASH_FRAMEWORK_HOME%Source\Slash.Unity.Editor.Common\Slash.Unity.Editor.Common.csproj", "{1A55D911-697C-4E3B-8FBC-55388C32F20F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Xml", "%SLASH_FRAMEWORK_HOME%Source\Slash.Xml\Slash.Xml.csproj", "{E399FDE3-A0DD-4AEA-BBF5-2A16C5E6775B}"
 EndProject
