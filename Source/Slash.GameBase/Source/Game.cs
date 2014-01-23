@@ -180,9 +180,6 @@ namespace Slash.GameBase
         /// <param name="gameConfiguration">Configuration for game systems.</param>
         public void StartGame(IAttributeTable gameConfiguration)
         {
-            this.Running = true;
-            this.eventManager.QueueEvent(FrameworkEventType.GameStarted);
-
             // Init game.
             this.InitGame();
 
@@ -191,6 +188,13 @@ namespace Slash.GameBase
             {
                 system.Init(gameConfiguration);
             }
+
+            // Send event.
+            this.Running = true;
+            this.eventManager.QueueEvent(FrameworkEventType.GameStarted);
+
+            // Give the derived game the chance to do game start things.
+            this.OnGameStarted();
 
             this.eventManager.ProcessEvents();
         }
@@ -231,6 +235,13 @@ namespace Slash.GameBase
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///   Called after initialization of game was done and the game was started.
+        /// </summary>
+        protected virtual void OnGameStarted()
+        {
+        }
 
         /// <summary>
         ///   Ticks this game, allowing all systems to update themselves and

@@ -61,6 +61,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
                 // Save configuration.
                 // TODO(co): Save automatically if changed.
                 this.gameConfiguration.Save();
+
+                // Refresh assets.
+                AssetDatabase.Refresh();
             }
         }
 
