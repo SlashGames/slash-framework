@@ -34,6 +34,10 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
         public override void OnInspectorGUI()
         {
             // Text asset which contains configuration.
+            this.gameConfiguration.BlueprintAssetPath = EditorGUILayout.TextField(
+                "Blueprint File", this.gameConfiguration.BlueprintAssetPath);
+
+            // Text asset which contains configuration.
             this.gameConfiguration.ConfigurationFilePath = EditorGUILayout.TextField(
                 "Configuration File", this.gameConfiguration.ConfigurationFilePath);
 
