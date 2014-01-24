@@ -6,11 +6,11 @@
 
 namespace Slash.Unity.Common.Configuration
 {
-    using System;
     using System.IO;
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
+    using Slash.GameBase.Blueprints;
 
     using UnityEngine;
 
@@ -21,6 +21,14 @@ namespace Slash.Unity.Common.Configuration
     {
         #region Fields
 
+        /// <summary>
+        ///   Path to blueprint manager asset.
+        /// </summary>
+        public string BlueprintAssetPath = "Blueprints/Game.blueprints";
+
+        /// <summary>
+        ///   Path to configuration file asset.
+        /// </summary>
         public string ConfigurationFilePath = "Configuration/GameConfiguration";
 
         private IAttributeTable configuration;
@@ -28,6 +36,17 @@ namespace Slash.Unity.Common.Configuration
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        ///   Load blueprint manager from asset.
+        /// </summary>
+        public BlueprintManager BlueprintManager
+        {
+            get
+            {
+                return this.LoadBlueprints();
+            }
+        }
 
         public IAttributeTable Configuration
         {
@@ -85,6 +104,29 @@ namespace Slash.Unity.Common.Configuration
         #endregion
 
         #region Methods
+
+        private BlueprintManager LoadBlueprints()
+        {
+            var blueprintAsset = Resources.Load(this.BlueprintAssetPath) as TextAsset;
+
+            BlueprintManager blueprintManager = null;
+            if (blueprintAsset != null)
+            {
+                // Load blueprints.
+                var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
+                var blueprintStream = new MemoryStream(blueprintAsset.bytes);
+                blueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+
+                // Resolve parents.
+                BlueprintUtils.ResolveParents(blueprintManager, blueprintManager);
+            }
+            else
+            {
+                Debug.LogError(string.Format("Blueprint asset not found: {0}", this.BlueprintAssetPath));
+            }
+
+            return blueprintManager;
+        }
 
         private void OnEnable()
         {
