@@ -122,5 +122,15 @@ namespace Slash.GameBase.Events
         ///   </para>
         /// </summary>
         ComponentDisabled,
+
+        /// <summary>
+        ///   <para>
+        ///     A generic logging event.
+        ///   </para>
+        ///   <para>
+        ///     Event data: <see cref="string"/> (Log message).
+        ///   </para>
+        /// </summary>
+        Logging,
     }
 }
