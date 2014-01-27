@@ -4,11 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if !WINDOWS_STORE
-
 namespace Slash.SystemExt.Utils
 {
-    using global::System;
+    using System;
 
     public static class EnumExtensions
     {
@@ -16,7 +14,7 @@ namespace Slash.SystemExt.Utils
 
         public static Enum AndComplementOption(this Enum value, Enum option, Type enumType)
         {
-            if (IsSignedTypeCode(value.GetTypeCode()))
+            if (IsSignedEnumValue(value))
             {
                 long longVal = Convert.ToInt64(value);
                 long longOpt = Convert.ToInt64(option);
@@ -32,7 +30,7 @@ namespace Slash.SystemExt.Utils
 
         public static Enum AndOption(this Enum value, Enum option, Type enumType)
         {
-            if (IsSignedTypeCode(value.GetTypeCode()))
+            if (IsSignedEnumValue(value))
             {
                 long longVal = Convert.ToInt64(value);
                 long longOpt = Convert.ToInt64(option);
@@ -54,7 +52,7 @@ namespace Slash.SystemExt.Utils
         /// <returns>True if the at least one option is set for the specified value.</returns>
         public static bool AnyOptionSet(this Enum value, Enum options)
         {
-            if (IsSignedTypeCode(value.GetTypeCode()))
+            if (IsSignedEnumValue(value))
             {
                 long longVal = Convert.ToInt64(value);
                 long longOpt = Convert.ToInt64(options);
@@ -76,7 +74,7 @@ namespace Slash.SystemExt.Utils
         /// <returns>True if the specified option is set for the specified value.</returns>
         public static bool IsOptionSet(this Enum value, Enum option)
         {
-            if (IsSignedTypeCode(value.GetTypeCode()))
+            if (IsSignedEnumValue(value))
             {
                 long longVal = Convert.ToInt64(value);
                 long longOpt = Convert.ToInt64(option);
@@ -92,7 +90,7 @@ namespace Slash.SystemExt.Utils
 
         public static Enum OrOption(this Enum value, Enum option, Type enumType)
         {
-            if (IsSignedTypeCode(value.GetTypeCode()))
+            if (IsSignedEnumValue(value))
             {
                 long longVal = Convert.ToInt64(value);
                 long longOpt = Convert.ToInt64(option);
@@ -110,9 +108,15 @@ namespace Slash.SystemExt.Utils
 
         #region Methods
 
-        private static bool IsSignedTypeCode(TypeCode code)
+        private static bool IsSignedEnumValue(Enum enumValue)
         {
-            switch (code)
+#if WINDOWS_STORE
+            var enumType = enumValue.GetType();
+
+            return (enumType == typeof(byte) || enumType == typeof(ushort) || enumType == typeof(uint)
+                    || enumType == typeof(ulong));
+#else
+            switch (enumValue.GetTypeCode())
             {
                 case TypeCode.Byte:
                 case TypeCode.UInt16:
@@ -122,10 +126,9 @@ namespace Slash.SystemExt.Utils
                 default:
                     return true;
             }
+#endif
         }
 
         #endregion
     }
 }
-
-#endif

@@ -87,7 +87,7 @@ namespace Slash.Unity.Common.Configuration
         public void Save()
         {
 #if WINDOWS_STORE
-            throw new NotImplementedException("Not implemented for Windows Store build target.");
+            throw new System.NotImplementedException("Not implemented for Windows Store build target.");
 #else
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
             string filePath = "Assets/Resources/" + this.ConfigurationFilePath + ".xml";
