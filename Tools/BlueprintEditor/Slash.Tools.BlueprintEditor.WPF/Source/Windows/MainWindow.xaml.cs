@@ -6,6 +6,7 @@
 
 namespace BlueprintEditor.Windows
 {
+    using System.ComponentModel;
     using System.IO;
     using System.Runtime.Serialization;
     using System.Windows;
@@ -40,6 +41,15 @@ namespace BlueprintEditor.Windows
 
         #endregion
 
+        #region Fields
+
+        /// <summary>
+        ///   Window showing a progress bar and status label.
+        /// </summary>
+        private ProgressWindow progressWindow;
+
+        #endregion
+
         #region Constructors and Destructors
 
         public MainWindow()
@@ -62,6 +72,7 @@ namespace BlueprintEditor.Windows
             {
                 return (EditorContext)this.GetValue(ContextProperty);
             }
+
             set
             {
                 this.SetValue(ContextProperty, value);
@@ -86,6 +97,31 @@ namespace BlueprintEditor.Windows
         #endregion
 
         #region Methods
+
+        private void BackgroundLoadContext(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                var data = (BackgroundLoadContextData)e.Argument;
+                data.Context.Load(data.Filename);
+            }
+            catch (SerializationException exception)
+            {
+                EditorDialog.Error("Unable to load project", exception.Message);
+            }
+            catch (FileNotFoundException exception)
+            {
+                EditorDialog.Error("Unable to load project", exception.Message);
+            }
+        }
+
+        private void BackgroundLoadContextCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Hide progress bar.
+            this.progressWindow.Hide();
+
+            this.UpdateWindowTitle();
+        }
 
         private void CanExecuteEditRedo(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -135,7 +171,6 @@ namespace BlueprintEditor.Windows
         private bool CheckContextChange()
         {
             // TODO: Check if changed.
-
             return true;
         }
 
@@ -194,8 +229,16 @@ namespace BlueprintEditor.Windows
 
             try
             {
-                this.Context.Load(filename);
-                this.UpdateWindowTitle();
+                // Show progress bar.
+                this.progressWindow = new ProgressWindow();
+                this.progressWindow.Text.Content = "Loading project...";
+                this.progressWindow.Show();
+
+                // Load data.
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += this.BackgroundLoadContext;
+                worker.RunWorkerCompleted += this.BackgroundLoadContextCompleted;
+                worker.RunWorkerAsync(new BackgroundLoadContextData { Context = this.Context, Filename = filename });
             }
             catch (SerializationException exception)
             {
@@ -297,5 +340,16 @@ namespace BlueprintEditor.Windows
         }
 
         #endregion
+
+        private class BackgroundLoadContextData
+        {
+            #region Public Properties
+
+            public EditorContext Context { get; set; }
+
+            public string Filename { get; set; }
+
+            #endregion
+        }
     }
 }
