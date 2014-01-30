@@ -6,8 +6,6 @@
 
 namespace BlueprintEditor.Windows
 {
-    using System.Windows;
-
     /// <summary>
     ///   Shows a progress bar and a status label.
     /// </summary>
@@ -18,6 +16,16 @@ namespace BlueprintEditor.Windows
         public ProgressWindow()
         {
             this.InitializeComponent();
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public void Show(string message)
+        {
+            this.Text.Content = message;
+            this.Show();
         }
 
         #endregion

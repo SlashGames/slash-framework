@@ -123,6 +123,18 @@ namespace BlueprintEditor.Windows
             this.UpdateWindowTitle();
         }
 
+        private void BackgroundSaveContext(object sender, DoWorkEventArgs e)
+        {
+            var context = (EditorContext)e.Argument;
+            context.Save();
+        }
+
+        private void BackgroundSaveContextCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Hide progress bar.
+            this.progressWindow.Close();
+        }
+
         private void CanExecuteEditRedo(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.Context.CanExecuteRedo();
@@ -229,8 +241,7 @@ namespace BlueprintEditor.Windows
 
             // Show progress bar.
             this.progressWindow = new ProgressWindow();
-            this.progressWindow.Text.Content = "Loading project...";
-            this.progressWindow.Show();
+            this.progressWindow.Show("Loading project...");
 
             // Load data.
             BackgroundWorker worker = new BackgroundWorker();
@@ -307,9 +318,17 @@ namespace BlueprintEditor.Windows
                 path = dlg.FileName;
             }
 
+            // Show progress bar.
+            this.progressWindow = new ProgressWindow();
+            this.progressWindow.Show("Saving project...");
+
             // Save context.
             this.Context.SerializationPath = path;
-            this.Context.Save();
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += this.BackgroundSaveContext;
+            worker.RunWorkerCompleted += this.BackgroundSaveContextCompleted;
+            worker.RunWorkerAsync(this.Context);
         }
 
         /// <summary>
