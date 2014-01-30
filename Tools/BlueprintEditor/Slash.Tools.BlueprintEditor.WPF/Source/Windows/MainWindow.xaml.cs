@@ -118,7 +118,7 @@ namespace BlueprintEditor.Windows
         private void BackgroundLoadContextCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // Hide progress bar.
-            this.progressWindow.Hide();
+            this.progressWindow.Close();
 
             this.UpdateWindowTitle();
         }
@@ -227,27 +227,16 @@ namespace BlueprintEditor.Windows
             // If file was chosen, try to load.
             string filename = dlg.FileName;
 
-            try
-            {
-                // Show progress bar.
-                this.progressWindow = new ProgressWindow();
-                this.progressWindow.Text.Content = "Loading project...";
-                this.progressWindow.Show();
+            // Show progress bar.
+            this.progressWindow = new ProgressWindow();
+            this.progressWindow.Text.Content = "Loading project...";
+            this.progressWindow.Show();
 
-                // Load data.
-                BackgroundWorker worker = new BackgroundWorker();
-                worker.DoWork += this.BackgroundLoadContext;
-                worker.RunWorkerCompleted += this.BackgroundLoadContextCompleted;
-                worker.RunWorkerAsync(new BackgroundLoadContextData { Context = this.Context, Filename = filename });
-            }
-            catch (SerializationException exception)
-            {
-                EditorDialog.Error("Unable to load project", exception.Message);
-            }
-            catch (FileNotFoundException exception)
-            {
-                EditorDialog.Error("Unable to load project", exception.Message);
-            }
+            // Load data.
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += this.BackgroundLoadContext;
+            worker.RunWorkerCompleted += this.BackgroundLoadContextCompleted;
+            worker.RunWorkerAsync(new BackgroundLoadContextData { Context = this.Context, Filename = filename });
         }
 
         private void ExecutedFileSave(object sender, RoutedEventArgs e)
