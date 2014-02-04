@@ -157,7 +157,7 @@ namespace Slash.GameBase
 
             // Process events till the paused event before stopping the game.
             // TODO(co): Introduce a SendEvent method for event manager and handle both cases: Currently inside event handling and not inside.
-            //this.eventManager.ProcessEvents();
+            this.eventManager.ProcessEvents();
         }
 
         /// <summary>

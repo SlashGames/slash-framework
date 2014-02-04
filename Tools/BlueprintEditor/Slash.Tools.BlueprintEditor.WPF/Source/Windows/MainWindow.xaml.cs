@@ -6,6 +6,7 @@
 
 namespace BlueprintEditor.Windows
 {
+    using System.ComponentModel;
     using System.IO;
     using System.Runtime.Serialization;
     using System.Windows;
@@ -40,6 +41,15 @@ namespace BlueprintEditor.Windows
 
         #endregion
 
+        #region Fields
+
+        /// <summary>
+        ///   Window showing a progress bar and status label.
+        /// </summary>
+        private ProgressWindow progressWindow;
+
+        #endregion
+
         #region Constructors and Destructors
 
         public MainWindow()
@@ -62,6 +72,7 @@ namespace BlueprintEditor.Windows
             {
                 return (EditorContext)this.GetValue(ContextProperty);
             }
+
             set
             {
                 this.SetValue(ContextProperty, value);
@@ -86,6 +97,43 @@ namespace BlueprintEditor.Windows
         #endregion
 
         #region Methods
+
+        private void BackgroundLoadContext(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                var data = (BackgroundLoadContextData)e.Argument;
+                data.Context.Load(data.Filename);
+            }
+            catch (SerializationException exception)
+            {
+                EditorDialog.Error("Unable to load project", exception.Message);
+            }
+            catch (FileNotFoundException exception)
+            {
+                EditorDialog.Error("Unable to load project", exception.Message);
+            }
+        }
+
+        private void BackgroundLoadContextCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Hide progress bar.
+            this.progressWindow.Close();
+
+            this.UpdateWindowTitle();
+        }
+
+        private void BackgroundSaveContext(object sender, DoWorkEventArgs e)
+        {
+            var context = (EditorContext)e.Argument;
+            context.Save();
+        }
+
+        private void BackgroundSaveContextCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Hide progress bar.
+            this.progressWindow.Close();
+        }
 
         private void CanExecuteEditRedo(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -135,7 +183,6 @@ namespace BlueprintEditor.Windows
         private bool CheckContextChange()
         {
             // TODO: Check if changed.
-
             return true;
         }
 
@@ -192,19 +239,15 @@ namespace BlueprintEditor.Windows
             // If file was chosen, try to load.
             string filename = dlg.FileName;
 
-            try
-            {
-                this.Context.Load(filename);
-                this.UpdateWindowTitle();
-            }
-            catch (SerializationException exception)
-            {
-                EditorDialog.Error("Unable to load project", exception.Message);
-            }
-            catch (FileNotFoundException exception)
-            {
-                EditorDialog.Error("Unable to load project", exception.Message);
-            }
+            // Show progress bar.
+            this.progressWindow = new ProgressWindow();
+            this.progressWindow.Show("Loading project...");
+
+            // Load data.
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += this.BackgroundLoadContext;
+            worker.RunWorkerCompleted += this.BackgroundLoadContextCompleted;
+            worker.RunWorkerAsync(new BackgroundLoadContextData { Context = this.Context, Filename = filename });
         }
 
         private void ExecutedFileSave(object sender, RoutedEventArgs e)
@@ -275,9 +318,17 @@ namespace BlueprintEditor.Windows
                 path = dlg.FileName;
             }
 
+            // Show progress bar.
+            this.progressWindow = new ProgressWindow();
+            this.progressWindow.Show("Saving project...");
+
             // Save context.
             this.Context.SerializationPath = path;
-            this.Context.Save();
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += this.BackgroundSaveContext;
+            worker.RunWorkerCompleted += this.BackgroundSaveContextCompleted;
+            worker.RunWorkerAsync(this.Context);
         }
 
         /// <summary>
@@ -297,5 +348,16 @@ namespace BlueprintEditor.Windows
         }
 
         #endregion
+
+        private class BackgroundLoadContextData
+        {
+            #region Public Properties
+
+            public EditorContext Context { get; set; }
+
+            public string Filename { get; set; }
+
+            #endregion
+        }
     }
 }

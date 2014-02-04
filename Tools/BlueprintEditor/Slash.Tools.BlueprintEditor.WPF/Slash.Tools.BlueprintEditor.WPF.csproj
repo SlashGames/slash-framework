@@ -113,6 +113,9 @@
     <Compile Include="Source\Windows\ListInspectorWindow.xaml.cs">
       <DependentUpon>ListInspectorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Windows\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Windows\ProjectSettingsWindow.xaml.cs">
       <DependentUpon>ProjectSettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Source\Windows\ProgressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Windows\ProjectSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
