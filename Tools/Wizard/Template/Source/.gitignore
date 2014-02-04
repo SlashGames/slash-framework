@@ -120,7 +120,14 @@ UpgradeLog*.XML
 
 /Unity/Assets/Plugins/*/*.mdb*
 /Unity/Assets/Plugins/*/*.pdb*
+/Unity/Assets/Editor/Plugins
+/Unity/Assets/Editor/Plugins.meta
+/Unity/Assets/Editor/Plugins/*/*.mdb*
+/Unity/Assets/Editor/Plugins/*/*.pdb*
 /Build
 
 # If you don't want to check in DLLs to the Unity folder, uncomment this line.
 # /Unity/Assets/Plugins/*/*.dll*
+
+# If you don't want to check in DLLs to the Unity Editor folder, uncomment this line.
+# /Unity/Assets/Editor/Plugins/*/*.dll*

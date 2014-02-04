@@ -52,13 +52,15 @@ if ($COMMAND eq "run") {
         chdir(${DLL_SOURCE_DIR});
         for my $file (<"${DLL_SOURCE_DIR}/*.dll">) 
         {
-            print "Converting '${file}' to mdb \n";
+            print "Converting '${file}' to mdb \n";        
             my $abs_path = abs_path($file);
-            print '"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe" "${abs_path}"\n';
-            my $status = system('"${UNITY_PATH}Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe" "${abs_path}"');
-        
+            my $pdb2mdb_call = '"' . $UNITY_PATH . 'Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe" "' . $abs_path . '"';
+            system($pdb2mdb_call);
+
             print "Postprocessing DLL \"${abs_path}\" to be AOT compatible\n";
-            system('"${AOT_COMPATLYZER_PATH}" "${abs_path}"');
+            
+            my $aotcompatlyzer_call = '"' . $AOT_COMPATLYZER_PATH . '" "' . $abs_path . '"';
+            system($aotcompatlyzer_call);
         }
         chdir($pwd);
     } else {
