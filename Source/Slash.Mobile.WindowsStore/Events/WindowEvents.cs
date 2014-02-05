@@ -6,11 +6,13 @@
 
 namespace Slash.Mobile.Events
 {
-    public class WindowEvents
+    public static class WindowEvents
     {
         #region Static Fields
 
         public static VisibilityChangedDelegate VisibilityChanged;
+
+        public static SizeChangedDelegate SizeChanged;
 
         #endregion
 
@@ -18,6 +20,7 @@ namespace Slash.Mobile.Events
 
         public delegate void VisibilityChangedDelegate(bool visible);
 
+        public delegate void SizeChangedDelegate(double width, double height);
         #endregion
 
         #region Public Methods and Operators
@@ -28,6 +31,15 @@ namespace Slash.Mobile.Events
             if (handler != null)
             {
                 handler(visible);
+            }
+        }
+
+        public static void OnSizeChanged(double width, double height)
+        {
+            var handler = SizeChanged;
+            if (handler != null)
+            {
+                handler(width, height);
             }
         }
 
