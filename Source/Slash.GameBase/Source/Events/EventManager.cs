@@ -18,6 +18,11 @@ namespace Slash.GameBase.Events
         #region Fields
 
         /// <summary>
+        ///   Queue of events that are currently being processed.
+        /// </summary>
+        private readonly List<Event> currentEvents;
+
+        /// <summary>
         ///   Events to be fired later.
         /// </summary>
         private readonly List<DelayedEvent> delayedEvents = new List<DelayedEvent>();
@@ -38,9 +43,19 @@ namespace Slash.GameBase.Events
         private readonly List<Event> newEvents;
 
         /// <summary>
+        ///   Accumulated passed time to use for delayed events (in s).
+        /// </summary>
+        private float accumulatedPassedTime;
+
+        /// <summary>
         ///   Listeners which are interested in all events.
         /// </summary>
         private EventDelegate allEventListeners;
+
+        /// <summary>
+        ///   Indicates if the event manager is currently processing events.
+        /// </summary>
+        private bool isProcessing;
 
         #endregion
 
@@ -53,6 +68,7 @@ namespace Slash.GameBase.Events
         public EventManager()
         {
             this.newEvents = new List<Event>();
+            this.currentEvents = new List<Event>();
             this.listeners = new Dictionary<object, EventDelegate>();
         }
 
@@ -148,40 +164,55 @@ namespace Slash.GameBase.Events
         /// <param name="dt">Time passed since the last tick, in seconds.</param>
         public void ProcessEvents(float dt)
         {
+            // Add passed time.
+            this.accumulatedPassedTime += dt;
+
+            // If events are currently processed, we have to return as the events are
+            // otherwise processed in the wrong order.
+            if (this.isProcessing)
+            {
+                return;
+            }
+
+            this.isProcessing = true;
+
             // Process queues events.
             while (this.newEvents.Count > 0)
             {
-                List<Event> currentEvents = new List<Event>(this.newEvents);
+                this.currentEvents.AddRange(this.newEvents);
                 this.newEvents.Clear();
 
-                foreach (Event e in currentEvents)
+                foreach (Event e in this.currentEvents)
                 {
                     this.ProcessEvent(e);
                 }
             }
 
             // Process delayed events.
-            if (dt <= 0)
+            while (this.accumulatedPassedTime > 0)
             {
-                return;
-            }
+                float passedTime = this.accumulatedPassedTime;
 
-            this.elapsedEvents.Clear();
-
-            foreach (DelayedEvent e in this.delayedEvents)
-            {
-                e.TimeRemaining -= dt;
-
-                if (e.TimeRemaining <= 0)
+                // Collect elapsed events.
+                this.elapsedEvents.Clear();
+                foreach (DelayedEvent e in this.delayedEvents)
                 {
-                    this.elapsedEvents.Add(e);
-                }
-            }
+                    e.TimeRemaining -= passedTime;
 
-            foreach (DelayedEvent e in this.elapsedEvents)
-            {
-                this.ProcessEvent(e.Event);
-                this.delayedEvents.Remove(e);
+                    if (e.TimeRemaining <= 0)
+                    {
+                        this.elapsedEvents.Add(e);
+                    }
+                }
+
+                // Process elapsed events.
+                foreach (DelayedEvent e in this.elapsedEvents)
+                {
+                    this.ProcessEvent(e.Event);
+                    this.delayedEvents.Remove(e);
+                }
+
+                this.accumulatedPassedTime -= passedTime;
             }
         }
 

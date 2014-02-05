@@ -6,9 +6,12 @@
 
 namespace Slash.GameBase.Tests
 {
+    using System.Collections.Generic;
+
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
+    using Slash.Collections.Utils;
     using Slash.GameBase.Components;
     using Slash.GameBase.Events;
     using Slash.GameBase.Systems;
@@ -178,6 +181,69 @@ namespace Slash.GameBase.Tests
             this.game.EventManager.RegisterListener(FrameworkEventType.SystemAdded, this.OnSystemAdded);
             this.game.SystemManager.AddSystem(this.system);
             this.CheckTestPassed();
+        }
+
+        /// <summary>
+        ///   Tests that event order is maintained even if ProcessEvents is called while processing events.
+        /// </summary>
+        [Test]
+        public void TestProcessEventsWhileProcessing()
+        {
+            const int TestEvent1 = 1;
+            const int TestEvent2 = 2;
+            const int TestEvent3 = 3;
+            this.game.EventManager.RegisterListener(
+                TestEvent1,
+                ev =>
+                    {
+                        this.game.EventManager.QueueEvent(TestEvent3);
+                        this.game.EventManager.ProcessEvents();
+                    });
+            List<object> events = new List<object>();
+            this.game.EventManager.RegisterListener(ev => events.Add(ev.EventType));
+
+            // Queue two events.
+            this.game.EventManager.QueueEvent(TestEvent1);
+            this.game.EventManager.QueueEvent(TestEvent2);
+
+            // Process events.
+            this.game.EventManager.ProcessEvents();
+
+            // Check order.
+            Assert.IsTrue(
+                CollectionUtils.SequenceEqual(events, new List<object>() { TestEvent1, TestEvent2, TestEvent3 }));
+        }
+
+        /// <summary>
+        ///   Tests that delayed events are correctly dispatched when calling ProcessEvents while processing.
+        /// </summary>
+        [Test]
+        public void TestDelayedEventsDispatchedWhenProcessEventsWhileProcessing()
+        {
+            const int TestEvent1 = 1;
+            const int TestEvent2 = 2;
+            const int TestEvent3 = 3;
+            const float dt = 0.5f;
+            this.game.EventManager.RegisterListener(
+                TestEvent1,
+                ev =>
+                {
+                    this.game.EventManager.QueueEvent(TestEvent3);
+                    this.game.EventManager.ProcessEvents(dt);
+                });
+            List<object> events = new List<object>();
+            this.game.EventManager.RegisterListener(ev => events.Add(ev.EventType));
+
+            // Queue two events.
+            this.game.EventManager.QueueEvent(TestEvent1);
+            this.game.EventManager.FireDelayed(dt * 1.5f, TestEvent2);
+
+            // Process events.
+            this.game.EventManager.ProcessEvents(dt);
+
+            // Check order.
+            Assert.IsTrue(
+                CollectionUtils.SequenceEqual(events, new List<object>() { TestEvent1, TestEvent3, TestEvent2 }));
         }
 
         #endregion
