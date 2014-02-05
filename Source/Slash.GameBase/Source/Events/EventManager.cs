@@ -214,6 +214,8 @@ namespace Slash.GameBase.Events
 
                 this.accumulatedPassedTime -= passedTime;
             }
+
+            this.isProcessing = false;
         }
 
         /// <summary>
