@@ -86,6 +86,7 @@
     <Compile Include="Source\GUI\ValueEditors\ValueEditorContext.cs" />
     <Compile Include="Source\GUI\ValueEditors\Vector2IValueEditor.cs" />
     <Compile Include="Source\Input\InputUtils.cs" />
+    <Compile Include="Source\GUI\SwitchFullscreenBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneBehaviour.cs" />
     <Compile Include="Source\Logging\ConsoleAppender.cs" />
     <Compile Include="Source\Logging\LoggerExtensions.cs" />
