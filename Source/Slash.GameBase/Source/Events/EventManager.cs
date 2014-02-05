@@ -8,7 +8,7 @@ namespace Slash.GameBase.Events
 {
     using System;
     using System.Collections.Generic;
-    
+
     /// <summary>
     ///   Allows listeners to register for game-related events and notifies them
     ///   whenever one of these events is fired.
@@ -16,11 +16,6 @@ namespace Slash.GameBase.Events
     public class EventManager
     {
         #region Fields
-
-        /// <summary>
-        ///   Queue of events that are currently being processed.
-        /// </summary>
-        private readonly List<Event> currentEvents;
 
         /// <summary>
         ///   Events to be fired later.
@@ -58,7 +53,6 @@ namespace Slash.GameBase.Events
         public EventManager()
         {
             this.newEvents = new List<Event>();
-            this.currentEvents = new List<Event>();
             this.listeners = new Dictionary<object, EventDelegate>();
         }
 
@@ -83,10 +77,10 @@ namespace Slash.GameBase.Events
         {
             get
             {
-                return this.currentEvents.Count + this.newEvents.Count;
+                return this.newEvents.Count;
             }
         }
-        
+
         #endregion
 
         #region Public Methods and Operators
@@ -157,15 +151,13 @@ namespace Slash.GameBase.Events
             // Process queues events.
             while (this.newEvents.Count > 0)
             {
-                this.currentEvents.AddRange(this.newEvents);
+                List<Event> currentEvents = new List<Event>(this.newEvents);
                 this.newEvents.Clear();
 
-                foreach (Event e in this.currentEvents)
+                foreach (Event e in currentEvents)
                 {
                     this.ProcessEvent(e);
                 }
-
-                this.currentEvents.Clear();
             }
 
             // Process delayed events.
@@ -325,12 +317,12 @@ namespace Slash.GameBase.Events
         private void ProcessEvent(Event e)
         {
             // Check for listeners to all events.
-            if (this.allEventListeners != null)
+            EventDelegate eventListeners = this.allEventListeners;
+            if (eventListeners != null)
             {
-                this.allEventListeners(e);
+                eventListeners(e);
             }
 
-            EventDelegate eventListeners;
             if (this.listeners.TryGetValue(e.EventType, out eventListeners))
             {
                 if (eventListeners != null)
