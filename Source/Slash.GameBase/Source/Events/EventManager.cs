@@ -186,6 +186,7 @@ namespace Slash.GameBase.Events
                 {
                     this.ProcessEvent(e);
                 }
+                this.currentEvents.Clear();
             }
 
             // Process delayed events.
