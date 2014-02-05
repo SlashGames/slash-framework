@@ -253,7 +253,7 @@ namespace Slash.GameBase
         private void UpdateGame(float dt)
         {
             this.systemManager.Update(dt);
-            this.eventManager.ProcessEvents();
+            this.eventManager.ProcessEvents(dt);
             this.entityManager.CleanUpEntities();
             this.eventManager.ProcessEvents();
         }
