@@ -26,6 +26,7 @@ use strict;
 use warnings;
 use File::Copy;
 use File::Basename;
+use File::Find;
 use File::Path qw(make_path);
 use File::Path qw(remove_tree);
 use Cwd 'abs_path';
@@ -145,9 +146,17 @@ if ($COMMAND eq "run") {
 
 if ($COMMAND eq "clean") {
     
-    # Remove dll folder.
-    if (-e $DLL_TARGET_DIR) {
-        remove_tree $DLL_TARGET_DIR;
+    # Remove dll, mdb and pdb files from target folder.
+    sub find_file_to_delete {
+        my $F = $File::Find::name;
+
+        if ($F =~ /dll$/ or /pdb$/ or /mdb$/) {
+            print "$F\n";
+            unlink $F;
+        }
     }
+
+    print "Cleaning target dir '${DLL_TARGET_DIR}':\n\n";
+    find({ wanted => \&find_file_to_delete, no_chdir=>1}, $DLL_TARGET_DIR);   
     
 }

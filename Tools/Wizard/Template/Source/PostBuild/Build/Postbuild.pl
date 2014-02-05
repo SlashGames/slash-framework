@@ -26,6 +26,7 @@ use strict;
 use warnings;
 use File::Copy;
 use File::Basename;
+use File::Find;
 use File::Path qw(make_path);
 use File::Path qw(remove_tree);
 use Cwd 'abs_path';
@@ -38,7 +39,7 @@ my $DLL_TARGET_DIR = "${PATH_TO_UNITY_PROJECT}/Assets/Plugins/Game";
 my $DLL_SOURCE_DIR = abs_path($ARGV[2]);
 my $AOT_COMPATLYZER_PATH = abs_path(dirname($0)."/AOT-Compatlyzer/AOTCompatlyzer.exe");
 
-print "Paths:\n${DLL_SOURCE_DIR}\n${DLL_TARGET_DIR}\n";
+print "Paths:\n${DLL_SOURCE_DIR}\n${DLL_TARGET_DIR}\n\n";
 
 if ($COMMAND eq "run") {
 
@@ -52,7 +53,8 @@ if ($COMMAND eq "run") {
         chdir(${DLL_SOURCE_DIR});
         for my $file (<"${DLL_SOURCE_DIR}/*.dll">) 
         {
-            print "Converting '${file}' to mdb \n";        
+            print "Converting '${file}' to mdb \n";
+            
             my $abs_path = abs_path($file);
             my $pdb2mdb_call = '"' . $UNITY_PATH . 'Data/MonoBleedingEdge/lib/mono/4.0/pdb2mdb.exe" "' . $abs_path . '"';
             system($pdb2mdb_call);
@@ -98,9 +100,16 @@ if ($COMMAND eq "run") {
 
 if ($COMMAND eq "clean") {
     
-    # Remove dll folder.
-    if (-e $DLL_TARGET_DIR) {
-        remove_tree $DLL_TARGET_DIR;
+    # Remove dll, mdb and pdb files from target folder.
+    sub find_file_to_delete {
+        my $F = $File::Find::name;
+
+        if ($F =~ /dll$/ or /pdb$/ or /mdb$/) {
+            print "$F\n";
+            unlink $F;
+        }
     }
-    
+
+    print "Cleaning target dir '${DLL_TARGET_DIR}':\n\n";
+    find({ wanted => \&find_file_to_delete, no_chdir=>1}, $DLL_TARGET_DIR);    
 }
