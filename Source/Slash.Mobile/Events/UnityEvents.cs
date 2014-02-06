@@ -15,11 +15,18 @@ namespace Slash.Mobile.Events
         /// </summary>
         public static UnityLoadedDelegate UnityLoaded;
 
+        /// <summary>
+        ///   Called from Unity when shutting down.
+        /// </summary>
+        public static UnityShutDownDelegate UnityShutDown;
+
         #endregion
 
         #region Delegates
 
         public delegate void UnityLoadedDelegate();
+
+        public delegate void UnityShutDownDelegate();
 
         #endregion
 
@@ -27,7 +34,16 @@ namespace Slash.Mobile.Events
 
         public static void OnUnityLoaded()
         {
-            UnityLoadedDelegate handler = UnityLoaded;
+            var handler = UnityLoaded;
+            if (handler != null)
+            {
+                handler();
+            }
+        }
+
+        public static void OnUnityShutDown()
+        {
+            var handler = UnityShutDown;
             if (handler != null)
             {
                 handler();
