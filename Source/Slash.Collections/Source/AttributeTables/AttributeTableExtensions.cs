@@ -16,6 +16,46 @@ namespace Slash.Collections.AttributeTables
     {
         #region Public Methods and Operators
 
+        public static bool GetBoolOrDefault(this IAttributeTable attributeTable, object key, bool defaultValue)
+        {
+            bool value;
+            return TryGetBool(attributeTable, key, out value) ? value : defaultValue;
+        }
+
+        public static object GetEnumOrDefault(this IAttributeTable attributeTable, object key, object defaultValue)
+        {
+            object value;
+            return attributeTable.TryGetValue(key, out value) ? value : defaultValue;
+        }
+
+        public static float GetFloatOrDefault(this IAttributeTable attributeTable, object key, float defaultValue)
+        {
+            float value;
+            return TryGetFloat(attributeTable, key, out value) ? value : defaultValue;
+        }
+
+        public static int GetIntOrDefault(this IAttributeTable attributeTable, object key, int defaultValue)
+        {
+            int value;
+            return TryGetInt(attributeTable, key, out value) ? value : defaultValue;
+        }
+
+        /// <summary>
+        ///   Tries to get the value of the attribute with the specified key. If not found,
+        ///   the specified default value is returned.
+        /// </summary>
+        /// <typeparam name="T">Expected type of attribute. Only classes are allowed as the method wouldn't be AOT compatible otherwise.</typeparam>
+        /// <param name="attributeTable">Attribute table to work on.</param>
+        /// <param name="key"> Key to retrieve the value of. </param>
+        /// <param name="defaultValue">Default value to use if attribute wasn't found.</param>
+        /// <returns>Value of attribute with specified key, if found. Specified default value otherwise.</returns>
+        public static T GetValueOrDefault<T>(this IAttributeTable attributeTable, object key, T defaultValue)
+            where T : class
+        {
+            T value;
+            return TryGetValue(attributeTable, key, out value) ? value : defaultValue;
+        }
+
         /// <summary>
         ///   Tries to get an boolean value from the specified attribute table with the specified key.
         /// </summary>
@@ -108,7 +148,7 @@ namespace Slash.Collections.AttributeTables
         /// <param name="key"> Key to retrieve the value of. </param>
         /// <param name="value"> Retrieved value. </param>
         /// <returns> true if a value was found, and false otherwise. </returns>
-        public static bool TryGetValue<T>(this IAttributeTable attributeTable, object key, out T value)
+        public static bool TryGetValue<T>(this IAttributeTable attributeTable, object key, out T value) where T : class
         {
             // Try get value.
             object objectValue;
@@ -127,21 +167,6 @@ namespace Slash.Collections.AttributeTables
 
             value = (T)objectValue;
             return true;
-        }
-
-        /// <summary>
-        ///   Tries to get the value of the attribute with the specified key. If not found,
-        ///   the specified default value is returned.
-        /// </summary>
-        /// <typeparam name="T">Expected type of attribute. Only classes are allowed as the method wouldn't be AOT compatible otherwise.</typeparam>
-        /// <param name="attributeTable">Attribute table to work on.</param>
-        /// <param name="key"> Key to retrieve the value of. </param>
-        /// <param name="defaultValue">Default value to use if attribute wasn't found.</param>
-        /// <returns>Value of attribute with specified key, if found. Specified default value otherwise.</returns>
-        public static T GetValueOrDefault<T>(this IAttributeTable attributeTable, object key, T defaultValue)
-        {
-            T value;
-            return TryGetValue(attributeTable, key, out value) ? value : defaultValue;
         }
 
         #endregion
