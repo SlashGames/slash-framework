@@ -8,25 +8,25 @@ namespace Slash.Mobile.Events
 {
     public static class UnityEvents
     {
-        #region Static Fields
-
-        /// <summary>
-        ///   Called from Unity when the app is responsive and ready for play.
-        /// </summary>
-        public static UnityLoadedDelegate UnityLoaded;
-
-        /// <summary>
-        ///   Called from Unity when shutting down.
-        /// </summary>
-        public static UnityShutDownDelegate UnityShutDown;
-
-        #endregion
-
         #region Delegates
 
         public delegate void UnityLoadedDelegate();
 
         public delegate void UnityShutDownDelegate();
+
+        #endregion
+
+        #region Public Events
+
+        /// <summary>
+        ///   Called from Unity when the app is responsive and ready for play.
+        /// </summary>
+        public static event UnityLoadedDelegate UnityLoaded;
+
+        /// <summary>
+        ///   Called from Unity when shutting down.
+        /// </summary>
+        public static event UnityShutDownDelegate UnityShutDown;
 
         #endregion
 
