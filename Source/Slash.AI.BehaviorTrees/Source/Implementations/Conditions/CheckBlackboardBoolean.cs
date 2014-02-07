@@ -10,6 +10,7 @@ namespace Slash.AI.BehaviorTrees.Implementations.Conditions
     using System.Xml.Serialization;
 
     using Slash.AI.BehaviorTrees.Interfaces;
+    using Slash.Collections.AttributeTables;
 
     /// <summary>
     ///   Checks a boolean attribute from the blackboard.
@@ -36,7 +37,7 @@ namespace Slash.AI.BehaviorTrees.Implementations.Conditions
         /// <returns> Returns true if the condition is forfilled, else false. </returns>
         protected override bool Decide(IAgentData agentData)
         {
-            return agentData.Blackboard.GetValue(this.BlackboardAttributeKey, false);
+            return agentData.Blackboard.GetBoolOrDefault(this.BlackboardAttributeKey, false);
         }
 
         #endregion
