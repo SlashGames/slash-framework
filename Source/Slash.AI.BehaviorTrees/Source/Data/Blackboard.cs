@@ -113,20 +113,7 @@ namespace Slash.AI.BehaviorTrees.Data
                 return (base.GetHashCode() * 397) ^ (this.Parents != null ? this.Parents.GetHashCode() : 0);
             }
         }
-
-        /// <summary>
-        ///   Returns the attribute with the passed id. If not found the passed default value is returned.
-        /// </summary>
-        /// <typeparam name="T"> Type of attribute. </typeparam>
-        /// <param name="id"> Id of attribute. </param>
-        /// <param name="defaultValue"> Default value to return if attribute is not found. </param>
-        /// <returns> Value of attribute. Returns the default value if no object with the passed id was found. </returns>
-        public T GetValue<T>(object id, T defaultValue)
-        {
-            T attribute;
-            return this.TryGetValue(id, out attribute) ? attribute : defaultValue;
-        }
-
+        
         /// <summary>
         ///   Tries to find the attribute with the passed id.
         /// </summary>
