@@ -76,7 +76,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <param name="attributeTable">Component data.</param>
         public void InitComponent(IAttributeTable attributeTable)
         {
-            attributeTable.TryGetValue(AttributeValue, out this.value);
+            this.value = (TestEnum)attributeTable.GetEnumOrDefault(AttributeValue, DefaultValue);
         }
 
         #endregion

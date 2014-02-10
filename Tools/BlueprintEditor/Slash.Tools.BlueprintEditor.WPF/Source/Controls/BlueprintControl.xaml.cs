@@ -8,9 +8,7 @@ namespace BlueprintEditor.Controls
 {
     using System;
     using System.Collections.Specialized;
-    using System.Text.RegularExpressions;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Input;
 
     using BlueprintEditor.Commands;
@@ -19,7 +17,6 @@ namespace BlueprintEditor.Controls
 
     using Slash.GameBase.Inspector.Attributes;
     using Slash.GameBase.Inspector.Data;
-    using Slash.SystemExt.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
@@ -49,54 +46,6 @@ namespace BlueprintEditor.Controls
 
         #region Methods
 
-        private void AddComponentInspectors(Type componentType, Panel panel)
-        {
-            // Get attributes.
-            InspectorType componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
-            if (componentInfo == null)
-            {
-                return;
-            }
-
-            // Add label for component name.
-            var componentName = componentInfo.Type.Name;
-            componentName = componentName.Replace("Component", string.Empty);
-            componentName = componentName.SplitByCapitalLetters();
-
-            Label componentLabel = new Label
-                {
-                    Content = componentName,
-                    ToolTip = componentInfo.Description,
-                    FontWeight = FontWeights.Bold
-                };
-            panel.Children.Add(componentLabel);
-
-            BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-
-            // Add inspectors for component properties.
-            foreach (var inspectorProperty in componentInfo.Properties)
-            {
-                // Get current value.
-                var propertyValue = this.GetCurrentAttributeValue(viewModel, inspectorProperty);
-
-                // Create control for inspector property.
-                var propertyControl = this.inspectorFactory.CreateInspectorControlFor(inspectorProperty, propertyValue);
-                if (propertyControl == null)
-                {
-                    continue;
-                }
-
-                // Setup control.
-                propertyControl.ToolTip = inspectorProperty.Description;
-
-                // Subscribe for change of value.
-                propertyControl.ValueChanged += this.OnPropertyControlValueChanged;
-
-                // Add to panel.
-                panel.Children.Add((UIElement)propertyControl);
-            }
-        }
-
         /// <summary>
         ///   Adds inspectors for the components of the specified blueprint and its parents.
         /// </summary>
@@ -112,7 +61,18 @@ namespace BlueprintEditor.Controls
             // Add inspectors for specified blueprint.
             foreach (var componentType in viewModel.AddedComponents)
             {
-                this.AddComponentInspectors(componentType, this.AttributesPanel);
+                // Get attributes.
+                InspectorType componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
+                if (componentInfo == null)
+                {
+                    continue;
+                }
+
+                this.inspectorFactory.AddInspectorControls(
+                    componentInfo,
+                    this.AttributesPanel,
+                    this.GetCurrentAttributeValue,
+                    this.OnPropertyControlValueChanged);
             }
         }
 
@@ -164,6 +124,18 @@ namespace BlueprintEditor.Controls
 
             // Select component type.
             this.LbComponentsAvailable.SelectedItem = componentType;
+        }
+
+        /// <summary>
+        ///   Gets the current value of the specified property for the passed blueprint,
+        ///   taking into account, in order: Blueprint attribute table, parents, default value.
+        /// </summary>
+        /// <param name="property">Property to get the current value of.</param>
+        /// <returns>Current value of the specified property for the passed blueprint.</returns>
+        private object GetCurrentAttributeValue(InspectorPropertyAttribute property)
+        {
+            BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
+            return this.GetCurrentAttributeValue(viewModel, property);
         }
 
         /// <summary>

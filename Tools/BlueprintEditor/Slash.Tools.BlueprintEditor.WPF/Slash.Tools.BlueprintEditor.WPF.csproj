@@ -72,6 +72,9 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Source\Converters\ListToStringConverter.cs" />
     <Compile Include="Source\Converters\TypeToComponentNameConverter.cs" />
+    <Compile Include="Source\Inspectors\DataInspector.xaml.cs">
+      <DependentUpon>DataInspector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Inspectors\ListInspector.xaml.cs">
       <DependentUpon>ListInspector.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Inspectors\ComboBoxInspector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Source\Inspectors\DataInspector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
