@@ -64,21 +64,7 @@ namespace Slash.GameBase.Inspector.Data
 
                 foreach (var inspectorType in inspectorTypes)
                 {
-                    List<InspectorPropertyAttribute> inspectorProperties =
-                        InspectorUtils.CollectInspectorProperties(
-                            inspectorType, ref inspectorTypeTable.conditionalInspectors);
-
-                    InspectorTypeAttribute inspectorTypeAttribute =
-                        (InspectorTypeAttribute)
-                        inspectorType.GetCustomAttributes(typeof(InspectorTypeAttribute), false)[0];
-                    var inspectorTypeData = new InspectorType
-                        {
-                            Attribute = inspectorTypeAttribute,
-                            Name = inspectorType.Name,
-                            Description = inspectorTypeAttribute.Description,
-                            Properties = inspectorProperties,
-                            Type = inspectorType,
-                        };
+                    InspectorType inspectorTypeData = InspectorType.GetInspectorType(inspectorType);
 
                     inspectorTypeTable.inspectorTypes.Add(inspectorType, inspectorTypeData);
                 }

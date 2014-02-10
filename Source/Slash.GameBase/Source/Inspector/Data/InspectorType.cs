@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InspectorComponent.cs" company="Slash Games">
+// <copyright file="InspectorType.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -10,6 +10,7 @@ namespace Slash.GameBase.Inspector.Data
     using System.Collections.Generic;
 
     using Slash.GameBase.Inspector.Attributes;
+    using Slash.GameBase.Inspector.Utils;
 
     /// <summary>
     ///   Component accessible to the user in the landscape designer.
@@ -19,9 +20,9 @@ namespace Slash.GameBase.Inspector.Data
         #region Public Properties
 
         /// <summary>
-        ///   Name of type.
+        ///   Raw attribute.
         /// </summary>
-        public string Name { get; set; }
+        public InspectorTypeAttribute Attribute { get; set; }
 
         /// <summary>
         ///   Description of type.
@@ -29,9 +30,9 @@ namespace Slash.GameBase.Inspector.Data
         public string Description { get; set; }
 
         /// <summary>
-        ///   Raw attribute.
+        ///   Name of type.
         /// </summary>
-        public InspectorTypeAttribute Attribute { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         ///   Properties exposed in the inspector.
@@ -42,6 +43,38 @@ namespace Slash.GameBase.Inspector.Data
         ///   C# type of the component.
         /// </summary>
         public Type Type { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public static InspectorType GetInspectorType(Type type)
+        {
+            Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute> tmpConditionalInspectors =
+                null;
+            return GetInspectorType(type, ref tmpConditionalInspectors);
+        }
+
+        public static InspectorType GetInspectorType(
+            Type type,
+            ref Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute> conditionalInspectors)
+        {
+            List<InspectorPropertyAttribute> inspectorProperties = InspectorUtils.CollectInspectorProperties(
+                type, ref conditionalInspectors);
+
+            InspectorTypeAttribute inspectorTypeAttribute =
+                (InspectorTypeAttribute)type.GetCustomAttributes(typeof(InspectorTypeAttribute), false)[0];
+            var inspectorTypeData = new InspectorType
+                {
+                    Attribute = inspectorTypeAttribute,
+                    Name = type.Name,
+                    Description = inspectorTypeAttribute.Description,
+                    Properties = inspectorProperties,
+                    Type = type,
+                };
+
+            return inspectorTypeData;
+        }
 
         #endregion
     }

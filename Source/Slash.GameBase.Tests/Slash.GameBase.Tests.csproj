@@ -68,6 +68,8 @@
     <Compile Include="Source\EventManagerTests.cs" />
     <Compile Include="Source\GameTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorDataAttributeTest.cs" />
+    <Compile Include="Source\Inspector\Utils\InspectorUtilsTest.cs" />
     <Compile Include="Source\SystemManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>

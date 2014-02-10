@@ -75,6 +75,18 @@ namespace Slash.GameBase.Inspector.Attributes
             }
         }
 
+        /// <summary>
+        ///   Name of property this attribute belongs to.
+        ///   Only set manually when collecting inspector type information.
+        /// </summary>
+        public string PropertyName { get; set; }
+
+        /// <summary>
+        ///   Type of property this attribute belongs to.
+        ///   Only set manually when collecting inspector type information.
+        /// </summary>
+        public Type PropertyType { get; set; }
+
         #endregion
 
         #region Public Methods and Operators
