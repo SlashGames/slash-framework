@@ -9,6 +9,7 @@ namespace BlueprintEditor.Windows
     using System.ComponentModel;
     using System.IO;
     using System.Runtime.Serialization;
+    using System.Text;
     using System.Windows;
     using System.Windows.Input;
 
@@ -16,6 +17,8 @@ namespace BlueprintEditor.Windows
     using BlueprintEditor.ViewModels;
 
     using Microsoft.Win32;
+
+    using Slash.SystemExt.Exceptions;
 
     /// <summary>
     ///   Interaction logic for MainWindow.xaml
@@ -117,6 +120,26 @@ namespace BlueprintEditor.Windows
 
         private void BackgroundLoadContextCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            // Setup correct blueprint parent hierarchy.
+            if (this.Context.BlueprintManagerViewModel != null)
+            {
+                try
+                {
+                    this.Context.BlueprintManagerViewModel.SetupBlueprintHierarchy();
+                }
+                catch (AggregateException exception)
+                {
+                    var stringBuilder = new StringBuilder();
+                    
+                    foreach (var innerException in exception.InnerExceptions)
+                    {
+                        stringBuilder.AppendLine(innerException.Message);
+                    }
+
+                    EditorDialog.Warning("Blueprint hierarchy not properly set up", stringBuilder.ToString());
+                }
+            }
+
             // Hide progress bar.
             this.progressWindow.Close();
 
