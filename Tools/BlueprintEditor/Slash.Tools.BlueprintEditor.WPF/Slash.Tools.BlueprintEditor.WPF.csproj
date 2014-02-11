@@ -75,6 +75,9 @@
     <Compile Include="Source\Inspectors\DataInspector.xaml.cs">
       <DependentUpon>DataInspector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Inspectors\InspectorWithLabel.xaml.cs">
+      <DependentUpon>InspectorWithLabel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Inspectors\ListInspector.xaml.cs">
       <DependentUpon>ListInspector.xaml</DependentUpon>
     </Compile>
@@ -145,6 +148,10 @@
     <Page Include="Source\Inspectors\DataInspector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Source\Inspectors\InspectorWithLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Inspectors\ListInspector.xaml">
       <SubType>Designer</SubType>
