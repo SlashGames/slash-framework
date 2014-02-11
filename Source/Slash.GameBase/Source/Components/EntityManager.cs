@@ -15,6 +15,8 @@ namespace Slash.GameBase.Components
     using Slash.Collections.ObjectModel;
     using Slash.GameBase.Blueprints;
     using Slash.GameBase.Events;
+    using Slash.GameBase.Inspector.Data;
+    using Slash.GameBase.Inspector.Utils;
 
     /// <summary>
     ///   Creates and removes game entities. Holds references to all component
@@ -45,6 +47,11 @@ namespace Slash.GameBase.Components
         private readonly Dictionary<int, List<IEntityComponent>> inactiveEntities;
 
         /// <summary>
+        ///   Inspector types of entity components.
+        /// </summary>
+        private readonly InspectorTypeTable inspectorTypes;
+
+        /// <summary>
         ///   Ids of all entities that have been removed in this tick.
         /// </summary>
         private readonly HashSet<int> removedEntities;
@@ -70,6 +77,7 @@ namespace Slash.GameBase.Components
             this.removedEntities = new HashSet<int>();
             this.inactiveEntities = new Dictionary<int, List<IEntityComponent>>();
             this.componentManagers = new Dictionary<Type, ComponentManager>();
+            this.inspectorTypes = InspectorTypeTable.FindInspectorTypes(typeof(IEntityComponent));
         }
 
         #endregion
@@ -264,8 +272,8 @@ namespace Slash.GameBase.Components
         }
 
         /// <summary>
-        /// Creates a new entity, adding components matching the passed
-        /// blueprint.
+        ///   Creates a new entity, adding components matching the passed
+        ///   blueprint.
         /// </summary>
         /// <param name="blueprint">Blueprint describing the entity to create.</param>
         /// <returns>Unique id of the new entity.</returns>
@@ -745,6 +753,9 @@ namespace Slash.GameBase.Components
             // Add component. 
             this.AddComponent(entityId, component);
 
+            // Init component.
+            this.InitComponent(component, attributeTable);
+
             // Initialize component with the attribute table data.
             component.InitComponent(attributeTable);
         }
@@ -762,6 +773,17 @@ namespace Slash.GameBase.Components
             {
                 throw new ArgumentException("id", "The entity with id " + id + " has already been removed.");
             }
+        }
+
+        /// <summary>
+        ///   Initializes the specified component with the specified attribute table.
+        /// </summary>
+        /// <param name="component">Component to initialize.</param>
+        /// <param name="attributeTable">Attribute table which contains the data of the component.</param>
+        private void InitComponent(IEntityComponent component, IAttributeTable attributeTable)
+        {
+            InspectorUtils.InitFromAttributeTable(
+                this.game, this.inspectorTypes.GetInspectorType(component.GetType()), component, attributeTable);
         }
 
         #endregion

@@ -21,6 +21,8 @@ namespace Slash.GameBase.Tests.Inspector.Attributes
 
         private InspectorType parentInspectorType;
 
+        private Game testGame;
+
         #endregion
 
         #region Public Methods and Operators
@@ -30,6 +32,7 @@ namespace Slash.GameBase.Tests.Inspector.Attributes
         {
             this.parentInspectorType = InspectorType.GetInspectorType(typeof(TestDataParent));
             this.dataInspectorType = InspectorType.GetInspectorType(typeof(TestData));
+            this.testGame = new Game();
         }
 
         [Test]
@@ -43,7 +46,7 @@ namespace Slash.GameBase.Tests.Inspector.Attributes
             IAttributeTable parentAttributeTable = new AttributeTable();
             parentAttributeTable.SetValue(TestDataParent.AttributeTestData, attributeTable);
 
-            TestDataParent testDataParent = InspectorUtils.CreateFromAttributeTable<TestDataParent>(this.parentInspectorType, parentAttributeTable);
+            TestDataParent testDataParent = InspectorUtils.CreateFromAttributeTable<TestDataParent>(this.testGame, this.parentInspectorType, parentAttributeTable);
             Assert.AreEqual(testDataParent.TestData.String1, TestValueString1);
             Assert.AreEqual(testDataParent.TestData.String2, TestValueString2);
         }

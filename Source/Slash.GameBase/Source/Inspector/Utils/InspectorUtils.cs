@@ -64,14 +64,14 @@ namespace Slash.GameBase.Inspector.Utils
             return inspectorProperties;
         }
 
-        public static T CreateFromAttributeTable<T>(InspectorType inspectorType, IAttributeTable attributeTable)
+        public static T CreateFromAttributeTable<T>(Game game, InspectorType inspectorType, IAttributeTable attributeTable)
             where T : class
         {
             // Create object.
             T obj = (T)Activator.CreateInstance(inspectorType.Type);
 
             // Init object.
-            InitFromAttributeTable(inspectorType, obj, attributeTable);
+            InitFromAttributeTable(game, inspectorType, obj, attributeTable);
 
             return obj;
         }
@@ -82,10 +82,10 @@ namespace Slash.GameBase.Inspector.Utils
         /// </summary>
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
-        public static void InitFromAttributeTable(object obj, IAttributeTable attributeTable)
+        public static void InitFromAttributeTable(Game game, object obj, IAttributeTable attributeTable)
         {
             InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
-            InitFromAttributeTable(inspectorType, obj, attributeTable);
+            InitFromAttributeTable(game, inspectorType, obj, attributeTable);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Slash.GameBase.Inspector.Utils
         /// <param name="inspectorType">Contains information about the properties of the object.</param>
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
-        public static void InitFromAttributeTable(
+        public static void InitFromAttributeTable(Game game,
             InspectorType inspectorType, object obj, IAttributeTable attributeTable)
         {
             // Set values for all properties.
@@ -105,17 +105,7 @@ namespace Slash.GameBase.Inspector.Utils
                 object propertyValue = attributeTable.GetValueOrDefault(
                     inspectorProperty.Name, inspectorProperty.Default);
 
-                // Create data property if necessary.
-                if (inspectorProperty is InspectorDataAttribute)
-                {
-                    IAttributeTable propertyAttributeTable = (IAttributeTable)propertyValue;
-
-                    propertyValue = Activator.CreateInstance(inspectorProperty.PropertyType);
-                    InspectorType propertyInspectorType = InspectorType.GetInspectorType(inspectorProperty.PropertyType);
-                    InitFromAttributeTable(propertyInspectorType, propertyValue, propertyAttributeTable);
-                }
-
-                obj.GetType().GetProperty(inspectorProperty.PropertyName).SetValue(obj, propertyValue, null);
+                inspectorProperty.SetPropertyValue(game, obj, propertyValue);
             }
         }
 

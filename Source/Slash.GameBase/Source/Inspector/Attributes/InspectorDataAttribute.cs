@@ -7,10 +7,10 @@
 namespace Slash.GameBase.Inspector.Attributes
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
 
-    using Slash.GameBase.Inspector.Validation;
+    using Slash.Collections.AttributeTables;
+    using Slash.GameBase.Inspector.Data;
+    using Slash.GameBase.Inspector.Utils;
 
     public class InspectorDataAttribute : InspectorPropertyAttribute
     {
@@ -30,41 +30,21 @@ namespace Slash.GameBase.Inspector.Attributes
             throw new NotImplementedException();
         }
 
-        public override string ConvertValueToString(object value)
-        {
-            return value.ToString();
-        }
-
-        public override IList GetEmptyList()
-        {
-            return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(this.PropertyType));
-        }
-
         public override bool TryConvertStringToValue(string text, out object value)
         {
             value = null;
             return false;
         }
 
-        public override bool TryConvertValueToString(object value, out string text)
+        public override void SetPropertyValue(Game game, object obj, object propertyValue)
         {
-            text = value.ToString();
-            return true;
-        }
+            IAttributeTable propertyAttributeTable = (IAttributeTable)propertyValue;
 
-        public override ValidationError Validate(object value)
-        {
-            if (value == null)
-            {
-                return ValidationError.Null;
-            }
+            propertyValue = Activator.CreateInstance(this.PropertyType);
+            InspectorType propertyInspectorType = InspectorType.GetInspectorType(this.PropertyType);
+            InspectorUtils.InitFromAttributeTable(game, propertyInspectorType, propertyValue, propertyAttributeTable);
 
-            if (value.GetType() != this.PropertyType)
-            {
-                return ValidationError.WrongType;
-            }
-
-            return null;
+            base.SetPropertyValue(game, obj, propertyValue);
         }
 
         #endregion

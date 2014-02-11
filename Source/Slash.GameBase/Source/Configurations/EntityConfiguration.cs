@@ -32,7 +32,7 @@ namespace Slash.GameBase.Configurations
         /// <summary>
         ///   Configuration for the entity.
         /// </summary>
-        private AttributeTable configuration;
+        private IAttributeTable configuration;
 
         #endregion
 
@@ -89,7 +89,7 @@ namespace Slash.GameBase.Configurations
         ///   Configuration for the entity.
         /// </summary>
         [XmlIgnore]
-        public AttributeTable Configuration
+        public IAttributeTable Configuration
         {
             get
             {
