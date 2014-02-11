@@ -62,7 +62,9 @@
                     <TextBlock ToolTip = "Attributes of blueprint">Attributes</TextBlock>
                 </TabItem.Header>
                 <AdornerDecorator>
-                    <StackPanel x:Name = "AttributesPanel" Background = "#FFE5E5E5" />
+                    <ScrollViewer>
+                        <StackPanel x:Name = "AttributesPanel" Background = "#FFE5E5E5" />
+                    </ScrollViewer>
                 </AdornerDecorator>
             </TabItem>
             <TabItem>
