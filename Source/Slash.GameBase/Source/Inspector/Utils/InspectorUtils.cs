@@ -9,7 +9,9 @@ namespace Slash.GameBase.Inspector.Utils
     using System;
     using System.Collections.Generic;
 
+    using Slash.Collections.AttributeTables;
     using Slash.GameBase.Inspector.Attributes;
+    using Slash.GameBase.Inspector.Data;
 
     public static class InspectorUtils
     {
@@ -32,24 +34,89 @@ namespace Slash.GameBase.Inspector.Utils
 
                 if (inspectorPropertyAttributes != null)
                 {
+                    // Inject property info.
+                    foreach (var inspectorPropertyAttribute in inspectorPropertyAttributes)
+                    {
+                        inspectorPropertyAttribute.PropertyType = property.PropertyType;
+                        inspectorPropertyAttribute.PropertyName = property.Name;
+                    }
+
                     inspectorProperties.AddRange(inspectorPropertyAttributes);
                 }
 
-                // Find all properties whose inspectors are shown only if certain conditions are met.
-                var conditionInspector =
-                    (InspectorConditionalPropertyAttribute)
-                    Attribute.GetCustomAttribute(property, typeof(InspectorConditionalPropertyAttribute));
-
-                if (conditionInspector != null && inspectorPropertyAttributes != null)
+                if (conditionalInspectors != null)
                 {
-                    foreach (var attribute in inspectorPropertyAttributes)
+                    // Find all properties whose inspectors are shown only if certain conditions are met.
+                    var conditionInspector =
+                        (InspectorConditionalPropertyAttribute)
+                        Attribute.GetCustomAttribute(property, typeof(InspectorConditionalPropertyAttribute));
+
+                    if (conditionInspector != null && inspectorPropertyAttributes != null)
                     {
-                        conditionalInspectors.Add(attribute, conditionInspector);
+                        foreach (var attribute in inspectorPropertyAttributes)
+                        {
+                            conditionalInspectors.Add(attribute, conditionInspector);
+                        }
                     }
                 }
             }
 
             return inspectorProperties;
+        }
+
+        public static T CreateFromAttributeTable<T>(InspectorType inspectorType, IAttributeTable attributeTable)
+            where T : class
+        {
+            // Create object.
+            T obj = (T)Activator.CreateInstance(inspectorType.Type);
+
+            // Init object.
+            InitFromAttributeTable(inspectorType, obj, attributeTable);
+
+            return obj;
+        }
+
+        /// <summary>
+        ///   Initializes an object by getting its inspector properties via reflection and
+        ///   look them up in the specified attribute table.
+        /// </summary>
+        /// <param name="obj">Object to initialize.</param>
+        /// <param name="attributeTable">Attribute table to initialize from.</param>
+        public static void InitFromAttributeTable(object obj, IAttributeTable attributeTable)
+        {
+            InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
+            InitFromAttributeTable(inspectorType, obj, attributeTable);
+        }
+
+        /// <summary>
+        ///   Initializes an object by getting its inspector properties from the specified inspector type
+        ///   and look them up in the specified attribute table.
+        /// </summary>
+        /// <param name="inspectorType">Contains information about the properties of the object.</param>
+        /// <param name="obj">Object to initialize.</param>
+        /// <param name="attributeTable">Attribute table to initialize from.</param>
+        public static void InitFromAttributeTable(
+            InspectorType inspectorType, object obj, IAttributeTable attributeTable)
+        {
+            // Set values for all properties.
+            foreach (var inspectorProperty in inspectorType.Properties)
+            {
+                // Get value from attribute table or default.
+                object propertyValue = attributeTable.GetValueOrDefault(
+                    inspectorProperty.Name, inspectorProperty.Default);
+
+                // Create data property if necessary.
+                if (inspectorProperty is InspectorDataAttribute)
+                {
+                    IAttributeTable propertyAttributeTable = (IAttributeTable)propertyValue;
+
+                    propertyValue = Activator.CreateInstance(inspectorProperty.PropertyType);
+                    InspectorType propertyInspectorType = InspectorType.GetInspectorType(inspectorProperty.PropertyType);
+                    InitFromAttributeTable(propertyInspectorType, propertyValue, propertyAttributeTable);
+                }
+
+                obj.GetType().GetProperty(inspectorProperty.PropertyName).SetValue(obj, propertyValue, null);
+            }
         }
 
         #endregion
