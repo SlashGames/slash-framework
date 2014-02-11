@@ -16,6 +16,7 @@ namespace Slash.GameBase.Inspector.Attributes
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>
+    [Serializable]
     public class InspectorBlueprintAttribute : InspectorPropertyAttribute
     {
         #region Constructors and Destructors

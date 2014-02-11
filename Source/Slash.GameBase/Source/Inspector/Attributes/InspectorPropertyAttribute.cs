@@ -17,6 +17,7 @@ namespace Slash.GameBase.Inspector.Attributes
     ///   Exposes the property to the inspector.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
+    [Serializable]
     public abstract class InspectorPropertyAttribute : Attribute
     {
         #region Constants

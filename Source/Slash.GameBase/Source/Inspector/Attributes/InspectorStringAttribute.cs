@@ -6,6 +6,7 @@
 
 namespace Slash.GameBase.Inspector.Attributes
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -14,6 +15,7 @@ namespace Slash.GameBase.Inspector.Attributes
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>
+    [Serializable]
     public class InspectorStringAttribute : InspectorPropertyAttribute
     {
         #region Constants

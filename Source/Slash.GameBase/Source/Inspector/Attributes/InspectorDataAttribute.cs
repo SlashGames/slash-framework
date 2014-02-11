@@ -12,6 +12,7 @@ namespace Slash.GameBase.Inspector.Attributes
     using Slash.GameBase.Inspector.Data;
     using Slash.GameBase.Inspector.Utils;
 
+    [Serializable]
     public class InspectorDataAttribute : InspectorPropertyAttribute
     {
         #region Constructors and Destructors
