@@ -20,6 +20,8 @@ namespace BlueprintEditor.ViewModels
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
+    using AggregateException = Slash.SystemExt.Exceptions.AggregateException;
+
     public class BlueprintManagerViewModel : INotifyPropertyChanged, IDataErrorInfo, ISupportsUndo
     {
         #region Fields
@@ -54,12 +56,6 @@ namespace BlueprintEditor.ViewModels
             }
 
             this.Blueprints.CollectionChanged += this.OnBlueprintsChanged;
-
-            // Setup correct parent hierarchy.
-            foreach (var blueprint in this.Blueprints.Where(blueprint => blueprint.Blueprint.ParentId != null))
-            {
-                this.ReparentBlueprint(blueprint.BlueprintId, blueprint.Blueprint.ParentId);
-            }
         }
 
         #endregion
@@ -245,7 +241,15 @@ namespace BlueprintEditor.ViewModels
             // Find blueprints.
             var childBlueprint = this.Blueprints.First(blueprint => blueprint.BlueprintId.Equals(childId));
             var oldParentBlueprint = childBlueprint.Parent;
-            var newParentBlueprint = this.Blueprints.First(blueprint => blueprint.BlueprintId.Equals(newParentId));
+            var newParentBlueprint =
+                this.Blueprints.FirstOrDefault(blueprint => blueprint.BlueprintId.Equals(newParentId));
+
+            if (newParentBlueprint == null)
+            {
+                throw new InvalidOperationException(
+                    string.Format(
+                        "No blueprint with id {1} found. Could not parent blueprint {0} to {1}.", childId, newParentId));
+            }
 
             // Update parent.
             childBlueprint.Blueprint.ParentId = newParentBlueprint.BlueprintId;
@@ -272,6 +276,31 @@ namespace BlueprintEditor.ViewModels
             if (this.blueprintsView != null)
             {
                 this.blueprintsView.Refresh();
+            }
+        }
+
+        /// <summary>
+        ///   Checks the parent blueprint id of all blueprints, and reparents these blueprints if necessary.
+        /// </summary>
+        public void SetupBlueprintHierarchy()
+        {
+            var errors = new List<Exception>();
+
+            foreach (var blueprint in this.Blueprints.Where(blueprint => blueprint.Blueprint.ParentId != null))
+            {
+                try
+                {
+                    this.ReparentBlueprint(blueprint.BlueprintId, blueprint.Blueprint.ParentId);
+                }
+                catch (InvalidOperationException e)
+                {
+                    errors.Add(e);
+                }
+            }
+
+            if (errors.Count > 0)
+            {
+                throw new AggregateException(errors);
             }
         }
 
