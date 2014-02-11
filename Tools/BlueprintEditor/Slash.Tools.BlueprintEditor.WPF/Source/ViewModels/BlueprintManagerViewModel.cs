@@ -177,18 +177,25 @@ namespace BlueprintEditor.ViewModels
                    && !this.blueprintManager.ContainsBlueprint(this.newBlueprintId);
         }
 
-        public void ChangeBlueprintId(BlueprintViewModel blueprintViewModel, string blueprintId)
+        public void ChangeBlueprintId(BlueprintViewModel blueprintViewModel, string newBlueprintId)
         {
             if (this.blueprintManager == null)
             {
                 return;
             }
 
-            this.blueprintManager.ChangeBlueprintId(blueprintViewModel.BlueprintId, blueprintId);
-            blueprintViewModel.BlueprintId = blueprintId;
+            var oldBlueprintId = blueprintViewModel.BlueprintId;
+            this.blueprintManager.ChangeBlueprintId(oldBlueprintId, newBlueprintId);
+            blueprintViewModel.BlueprintId = newBlueprintId;
 
             // Validate new blueprint id again as it may be valid/invalid now.
             this.OnPropertyChanged("NewBlueprintId");
+
+            // Update parents.
+            foreach (var viewModel in this.Blueprints.Where(viewModel => oldBlueprintId.Equals(viewModel.Blueprint.ParentId)))
+            {
+                viewModel.Blueprint.ParentId = newBlueprintId;
+            }
         }
 
         public void CreateNewBlueprint()
