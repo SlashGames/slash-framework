@@ -6,7 +6,7 @@
                              xmlns:inspectors = "clr-namespace:BlueprintEditor.Inspectors"
                              xmlns:converters="clr-namespace:BlueprintEditor.Converters"
                              mc:Ignorable = "d"
-                             d:DesignWidth = "400" Height = "26"
+                             d:DesignWidth = "400" d:DesignHeight = "26"
                              d:DataContext = "{d:DesignInstance inspectors:InspectorPropertyData}">
     <inspectors:InspectorControl.Resources>
         <ResourceDictionary>
@@ -16,20 +16,14 @@
             <converters:ListToStringConverter x:Key = "ListToStringConverter" />
         </ResourceDictionary>
     </inspectors:InspectorControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width = "200"></ColumnDefinition>
-            <ColumnDefinition Width = "*"></ColumnDefinition>
-            <ColumnDefinition Width = "40"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Label Name = "LbName" Grid.Column = "0">
-            <Binding Path = "PropertyName"></Binding>
-        </Label>
-        <Label Name = "LbValue" Grid.Column = "1">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Name="Items"></StackPanel>
+        <Button Name = "BtAdd" Click = "BtAdd_OnClick" Width="26" Height="26">+</Button>
+        <!--<Label Name = "LbValue" Grid.Column = "1">
             <Binding Path="StringValue" Converter="{StaticResource ListToStringConverter}" />
         </Label>
         <Button Name = "BtEdit" Grid.Column = "2" Click = "BtEdit_OnClick">
             ...
-        </Button>
-    </Grid>
+        </Button>-->
+    </StackPanel>
 </inspectors:InspectorControl>

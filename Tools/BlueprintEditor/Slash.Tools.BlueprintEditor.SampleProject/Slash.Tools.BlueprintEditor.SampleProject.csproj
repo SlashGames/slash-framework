@@ -43,6 +43,7 @@
     <Compile Include="Source\EntityComponents\EnumComponent.cs" />
     <Compile Include="Source\EntityComponents\FloatComponent.cs" />
     <Compile Include="Source\EntityComponents\IntegerComponent.cs" />
+    <Compile Include="Source\EntityComponents\ListIntComponent.cs" />
     <Compile Include="Source\EntityComponents\StringComponent.cs" />
   </ItemGroup>
   <ItemGroup>
