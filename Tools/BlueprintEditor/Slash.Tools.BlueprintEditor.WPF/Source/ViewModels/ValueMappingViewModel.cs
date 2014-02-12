@@ -19,6 +19,8 @@ namespace BlueprintEditor.ViewModels
 
         public string MappingSource { get; set; }
 
+        public string MappingTarget { get; set; }
+
         #endregion
     }
 }

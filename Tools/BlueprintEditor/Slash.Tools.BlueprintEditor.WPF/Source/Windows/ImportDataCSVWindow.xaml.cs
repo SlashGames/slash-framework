@@ -9,11 +9,11 @@ namespace BlueprintEditor.Windows
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Windows;
 
     using BlueprintEditor.Controls;
     using BlueprintEditor.ViewModels;
 
-    using Slash.GameBase.Inspector.Data;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public partial class ImportDataCSVWindow
@@ -22,7 +22,7 @@ namespace BlueprintEditor.Windows
 
         private readonly IEnumerable<string> csvColumns;
 
-        private EditorContext context;
+        private readonly List<ValueMappingViewModel> valueMappings = new List<ValueMappingViewModel>();
 
         #endregion
 
@@ -32,11 +32,22 @@ namespace BlueprintEditor.Windows
         {
             this.InitializeComponent();
 
-            this.context = context;
             this.CbBlueprints.DataContext = context;
             this.CbBlueprints.PropertyChanged += this.OnSelectedParentBlueprintChanged;
 
             this.csvColumns = csvColumns;
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public ReadOnlyCollection<ValueMappingViewModel> ValueMappings
+        {
+            get
+            {
+                return new ReadOnlyCollection<ValueMappingViewModel>(this.valueMappings);
+            }
         }
 
         #endregion
@@ -73,9 +84,17 @@ namespace BlueprintEditor.Windows
                     ValueMappingControl valueMappingControl = new ValueMappingControl(valueMapping);
 
                     // Add to panel.
+                    this.valueMappings.Add(valueMapping);
                     this.SpAttributeMapping.Children.Add(valueMappingControl);
                 }
             }
+        }
+
+        private void ImportData_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+
+            // TODO(np): Provide Cancel button.
         }
 
         private void OnSelectedParentBlueprintChanged(object sender, PropertyChangedEventArgs e)
@@ -86,6 +105,7 @@ namespace BlueprintEditor.Windows
         private void UpdateAttributeMapping()
         {
             // Clear attribute mapping controls.
+            this.valueMappings.Clear();
             this.SpAttributeMapping.Children.Clear();
 
             // Add new attribute mapping controls.

@@ -70,6 +70,7 @@ namespace BlueprintEditor.Controls
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            this.valueMapping.MappingTarget = (string)this.CbMappingTarget.SelectedItem;
             this.OnPropertyChanged("ValueMapping");
         }
 

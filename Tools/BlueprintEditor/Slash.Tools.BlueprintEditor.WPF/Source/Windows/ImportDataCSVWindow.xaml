@@ -21,5 +21,7 @@
         <ScrollViewer>
             <StackPanel Name = "SpAttributeMapping" />
         </ScrollViewer>
+        
+        <Button Click="ImportData_OnClick">Import Data</Button>
     </StackPanel>
 </Window>

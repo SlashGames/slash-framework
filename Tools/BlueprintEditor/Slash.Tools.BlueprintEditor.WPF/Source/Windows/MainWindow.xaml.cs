@@ -243,10 +243,17 @@ namespace BlueprintEditor.Windows
 
         private void ExecutedFileImportData(object sender, ExecutedRoutedEventArgs e)
         {
+            // TODO(np): Parse CSV file.
             var csvColumns = new List<string> { "one", "two", "three" };
 
-            ImportDataCSVWindow dlg = new ImportDataCSVWindow(this.Context, csvColumns) { Owner = this };
-            dlg.ShowDialog();
+            var importDataCsvWindow = new ImportDataCSVWindow(this.Context, csvColumns) { Owner = this };
+            importDataCsvWindow.ShowDialog();
+
+            foreach (var valueMapping in importDataCsvWindow.ValueMappings)
+            {
+                // TODO(np): Create actual blueprints.
+                // TODO(np): Parent blueprints.
+            }
         }
 
         private void ExecutedFileOpen(object sender, RoutedEventArgs e)
