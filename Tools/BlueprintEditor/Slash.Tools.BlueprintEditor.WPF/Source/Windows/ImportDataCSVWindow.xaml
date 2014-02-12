@@ -1,0 +1,27 @@
+﻿<Window x:Class = "BlueprintEditor.Windows.ImportDataCSVWindow"
+        xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
+        Title = "Import Data (CSV)" Height = "480" Width = "640">
+    <StackPanel>
+        <TextBlock FontWeight = "Bold" Height = "25">Parent Blueprint</TextBlock>
+
+        <Grid Height = "25">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "150" />
+                <ColumnDefinition Width = "*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column = "0">Parent Blueprint:</TextBlock>
+            <controls:BlueprintComboBox Grid.Column = "1" x:Name = "CbBlueprints" />
+        </Grid>
+
+        <TextBlock FontWeight = "Bold" Height = "25">Attribute Mapping</TextBlock>
+
+        <ScrollViewer>
+            <StackPanel Name = "SpAttributeMapping" />
+        </ScrollViewer>
+        
+        <Button Click="ImportData_OnClick">Import Data</Button>
+    </StackPanel>
+</Window>

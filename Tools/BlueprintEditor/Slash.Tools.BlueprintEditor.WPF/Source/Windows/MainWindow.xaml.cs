@@ -6,6 +6,7 @@
 
 namespace BlueprintEditor.Windows
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
     using System.Runtime.Serialization;
@@ -130,7 +131,7 @@ namespace BlueprintEditor.Windows
                 catch (AggregateException exception)
                 {
                     var stringBuilder = new StringBuilder();
-                    
+
                     foreach (var innerException in exception.InnerExceptions)
                     {
                         stringBuilder.AppendLine(innerException.Message);
@@ -176,6 +177,11 @@ namespace BlueprintEditor.Windows
         private void CanExecuteFileExit(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }
+
+        private void CanExecuteFileImportData(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.Context.BlueprintManagerViewModel != null;
         }
 
         private void CanExecuteFileOpen(object sender, CanExecuteRoutedEventArgs e)
@@ -233,6 +239,21 @@ namespace BlueprintEditor.Windows
         private void ExecutedFileExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ExecutedFileImportData(object sender, ExecutedRoutedEventArgs e)
+        {
+            // TODO(np): Parse CSV file.
+            var csvColumns = new List<string> { "one", "two", "three" };
+
+            var importDataCsvWindow = new ImportDataCSVWindow(this.Context, csvColumns) { Owner = this };
+            importDataCsvWindow.ShowDialog();
+
+            foreach (var valueMapping in importDataCsvWindow.ValueMappings)
+            {
+                // TODO(np): Create actual blueprints.
+                // TODO(np): Parent blueprints.
+            }
         }
 
         private void ExecutedFileOpen(object sender, RoutedEventArgs e)
