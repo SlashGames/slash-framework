@@ -87,9 +87,7 @@ namespace BlueprintEditor.Inspectors
                 this.SetValue(ControlProperty, value);
             }
         }
-
-        public int ItemIndex { get; set; }
-
+        
         #endregion
 
         #region Public Methods and Operators
