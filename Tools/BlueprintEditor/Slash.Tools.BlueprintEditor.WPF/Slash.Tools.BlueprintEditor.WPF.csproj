@@ -42,6 +42,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -68,6 +70,9 @@
     <Compile Include="Source\Commands\MenuCommands.cs" />
     <Compile Include="Source\Controls\BlueprintComboBox.xaml.cs">
       <DependentUpon>BlueprintComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Controls\ValueMappingControl.xaml.cs">
+      <DependentUpon>ValueMappingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Converters\ComponentToolTipConverter.cs" />
     <Compile Include="Source\Controls\EditorDialog.cs" />
@@ -116,6 +121,7 @@
     <Compile Include="Source\ViewModels\BlueprintManagerViewModel.cs" />
     <Compile Include="Source\ViewModels\BlueprintViewModel.cs" />
     <Compile Include="Source\ViewModels\EditorContext.cs" />
+    <Compile Include="Source\ViewModels\ValueMappingViewModel.cs" />
     <Compile Include="Source\Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -144,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Controls\ProjectSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Controls\ValueMappingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

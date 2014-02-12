@@ -6,6 +6,7 @@
 
 namespace BlueprintEditor.Windows
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
     using System.Runtime.Serialization;
@@ -242,8 +243,9 @@ namespace BlueprintEditor.Windows
 
         private void ExecutedFileImportData(object sender, ExecutedRoutedEventArgs e)
         {
-            ImportDataCSVWindow dlg = new ImportDataCSVWindow { Owner = this };
-            dlg.Init(this.Context);
+            var csvColumns = new List<string> { "one", "two", "three" };
+
+            ImportDataCSVWindow dlg = new ImportDataCSVWindow(this.Context, csvColumns) { Owner = this };
             dlg.ShowDialog();
         }
 
