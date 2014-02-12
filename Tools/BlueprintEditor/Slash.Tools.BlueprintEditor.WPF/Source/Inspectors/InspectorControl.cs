@@ -32,21 +32,6 @@ namespace BlueprintEditor.Inspectors
 
         #region Public Properties
 
-        /// <summary>
-        ///   Tooltip to set for the control.
-        /// </summary>
-        public new string ToolTip
-        {
-            get
-            {
-                return (string)base.ToolTip;
-            }
-            set
-            {
-                base.ToolTip = value;
-            }
-        }
-
         #endregion
 
         #region Public Methods and Operators

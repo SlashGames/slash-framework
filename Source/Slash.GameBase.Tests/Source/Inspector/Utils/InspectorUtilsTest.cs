@@ -19,6 +19,8 @@ namespace Slash.GameBase.Tests.Inspector.Utils
 
         private InspectorType inspectorType;
 
+        private Game testGame;
+
         #endregion
 
         #region Public Methods and Operators
@@ -27,6 +29,7 @@ namespace Slash.GameBase.Tests.Inspector.Utils
         public void SetUp()
         {
             this.inspectorType = InspectorType.GetInspectorType(typeof(TestInspectorType));
+            this.testGame = new Game();
         }
 
         [Test]
@@ -38,8 +41,9 @@ namespace Slash.GameBase.Tests.Inspector.Utils
             attributeTable.SetValue(TestInspectorType.AttributeString1, TestValueString1);
             attributeTable.SetValue(TestInspectorType.AttributeString2, TestValueString2);
 
-            TestInspectorType testInspectorType = InspectorUtils.CreateFromAttributeTable<TestInspectorType>(
-                this.inspectorType, attributeTable);
+            TestInspectorType testInspectorType =
+                InspectorUtils.CreateFromAttributeTable<TestInspectorType>(
+                    this.testGame, this.inspectorType, attributeTable);
             Assert.AreEqual(testInspectorType.String1, TestValueString1);
             Assert.AreEqual(testInspectorType.String2, TestValueString2);
         }

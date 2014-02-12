@@ -10,16 +10,69 @@ namespace BlueprintEditor.Inspectors
     using System.Windows;
     using System.Windows.Controls;
 
-    using BlueprintEditor.ViewModels;
-
     using Slash.GameBase.Inspector.Attributes;
     using Slash.GameBase.Inspector.Data;
     using Slash.SystemExt.Utils;
-    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public class InspectorFactory
     {
         #region Public Methods and Operators
+
+        public void AddInspectorControls(
+            InspectorType typeInfo,
+            Panel panel,
+            Func<InspectorPropertyAttribute, object> getPropertyValue,
+            InspectorControlValueChangedDelegate onValueChanged,
+            bool addNameLabel = true)
+        {
+            if (addNameLabel)
+            {
+                // Add label for component name.
+                var componentName = typeInfo.Type.Name;
+                componentName = componentName.Replace("Component", string.Empty);
+                componentName = componentName.SplitByCapitalLetters();
+
+                Label componentLabel = new Label
+                    {
+                        Content = componentName,
+                        ToolTip = typeInfo.Description,
+                        FontWeight = FontWeights.Bold
+                    };
+                panel.Children.Add(componentLabel);
+            }
+
+            // Add inspectors for component properties.
+            foreach (var inspectorProperty in typeInfo.Properties)
+            {
+                // Get current value.
+                var propertyValue = getPropertyValue != null
+                                        ? getPropertyValue(inspectorProperty)
+                                        : inspectorProperty.Default;
+
+                // Create control for inspector property.
+                IInspectorControl propertyControl = this.CreateInspectorControlFor(inspectorProperty, propertyValue);
+                if (propertyControl == null)
+                {
+                    continue;
+                }
+
+                if (onValueChanged != null)
+                {
+                    // Subscribe for change of value.
+                    propertyControl.ValueChanged += onValueChanged;
+                }
+
+                // Create wrapper.
+                InspectorWithLabel inspectorWrapper = new InspectorWithLabel
+                    {
+                        DataContext = ((FrameworkElement)propertyControl).DataContext,
+                        Control = propertyControl
+                    };
+
+                // Add to panel.
+                panel.Children.Add(inspectorWrapper);
+            }
+        }
 
         /// <summary>
         ///   Creates and positions a new inspector control for the passed property.
@@ -78,52 +131,5 @@ namespace BlueprintEditor.Inspectors
         }
 
         #endregion
-
-        public void AddInspectorControls(InspectorType typeInfo, Panel panel, Func<InspectorPropertyAttribute, object> getPropertyValue, InspectorControlValueChangedDelegate onValueChanged, bool addNameLabel = true)
-        {
-            if (addNameLabel)
-            {
-                // Add label for component name.
-                var componentName = typeInfo.Type.Name;
-                componentName = componentName.Replace("Component", string.Empty);
-                componentName = componentName.SplitByCapitalLetters();
-
-                Label componentLabel = new Label
-                    {
-                        Content = componentName,
-                        ToolTip = typeInfo.Description,
-                        FontWeight = FontWeights.Bold
-                    };
-                panel.Children.Add(componentLabel);
-            }
-
-            // Add inspectors for component properties.
-            foreach (var inspectorProperty in typeInfo.Properties)
-            {
-                // Get current value.
-                var propertyValue = getPropertyValue != null
-                                        ? getPropertyValue(inspectorProperty)
-                                        : inspectorProperty.Default;
-
-                // Create control for inspector property.
-                var propertyControl = this.CreateInspectorControlFor(inspectorProperty, propertyValue);
-                if (propertyControl == null)
-                {
-                    continue;
-                }
-
-                // Setup control.
-                propertyControl.ToolTip = inspectorProperty.Description;
-
-                if (onValueChanged != null)
-                {
-                    // Subscribe for change of value.
-                    propertyControl.ValueChanged += onValueChanged;
-                }
-
-                // Add to panel.
-                panel.Children.Add((UIElement)propertyControl);
-            }
-        }
     }
 }

@@ -17,6 +17,7 @@ namespace Slash.GameBase.Inspector.Attributes
     ///   Exposes the property to the inspector.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
+    [Serializable]
     public abstract class InspectorPropertyAttribute : Attribute
     {
         #region Constants
@@ -98,7 +99,15 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <returns>
         ///   Value of the correct type for this property, if the conversion was successful, and <c>null</c> otherwise.
         /// </returns>
-        public abstract object ConvertStringToValue(string text);
+        public virtual object ConvertStringToValue(string text)
+        {
+            object value;
+            if (!this.TryConvertStringToValue(text, out value))
+            {
+                throw new ArgumentException("Can't convert string to value", "text");
+            }
+            return value;
+        }
 
         /// <summary>
         ///   Converts the passed value or list to a string that can be converted back to a value or list of the correct type for this property.
@@ -133,13 +142,24 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <param name="value">Value to convert.</param>
         /// <returns>String that can be converted back to a value of the correct type for this property.</returns>
         /// <see cref="ConvertStringToValue" />
-        public abstract string ConvertValueToString(object value);
+        public virtual string ConvertValueToString(object value)
+        {
+            string text;
+            if (!this.TryConvertValueToString(value, out text))
+            {
+                throw new ArgumentException("Can't convert value to string", "value");
+            }
+            return text;
+        }
 
         /// <summary>
         ///   Gets an empty list for elements of the type of the property the attribute is attached to.
         /// </summary>
         /// <returns>Empty list of matching type.</returns>
-        public abstract IList GetEmptyList();
+        public virtual IList GetEmptyList()
+        {
+            return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(this.PropertyType));
+        }
 
         /// <summary>
         ///   Indicates if the specified value is allowed for the property.
@@ -149,6 +169,17 @@ namespace Slash.GameBase.Inspector.Attributes
         public virtual bool IsAllowed(object value)
         {
             return true;
+        }
+
+        /// <summary>
+        ///   Initializes the specified object via reflection with the specified property value.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="obj">Object to set property value for.</param>
+        /// <param name="propertyValue">Property value to set.</param>
+        public virtual void SetPropertyValue(Game game, object obj, object propertyValue)
+        {
+            obj.GetType().GetProperty(this.PropertyName).SetValue(obj, propertyValue, null);
         }
 
         public override string ToString()
@@ -204,7 +235,11 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <returns>
         ///   True if the conversion was successful; otherwise, false.
         /// </returns>
-        public abstract bool TryConvertStringToValue(string text, out object value);
+        public virtual bool TryConvertStringToValue(string text, out object value)
+        {
+            value = null;
+            return false;
+        }
 
         /// <summary>
         ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this property.
@@ -215,7 +250,11 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <returns>
         ///   True if the conversion was successful; otherwise, false.
         /// </returns>
-        public abstract bool TryConvertValueToString(object value, out string text);
+        public virtual bool TryConvertValueToString(object value, out string text)
+        {
+            text = this.ConvertValueToString(value);
+            return true;
+        }
 
         /// <summary>
         ///   Checks whether the passed value is valid for this property.
@@ -225,7 +264,20 @@ namespace Slash.GameBase.Inspector.Attributes
         ///   <c>null</c>, if the passed value is valid for this property,
         ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
         /// </returns>
-        public abstract ValidationError Validate(object value);
+        public virtual ValidationError Validate(object value)
+        {
+            if (value == null)
+            {
+                return ValidationError.Null;
+            }
+
+            if (value.GetType() != this.PropertyType)
+            {
+                return ValidationError.WrongType;
+            }
+
+            return null;
+        }
 
         #endregion
     }

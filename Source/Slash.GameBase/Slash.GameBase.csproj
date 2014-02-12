@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Source\Inspector\Attributes\ConditionalFlagsCheck.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorDataAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorEntityAttribute.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorTypeAttribute.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorComponentAttribute.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorConditionalFlagsPropertyAttribute.cs" />

@@ -8,25 +8,16 @@
                              d:DesignWidth = "400" Height = "26"
                              d:DataContext = "{d:DesignInstance inspectors:InspectorPropertyData}">
     <inspectors:InspectorControl.Resources>
-        <ResourceDictionary Source="..\Controls\Templates\TextBoxErrorTemplate.xaml" />
+        <ResourceDictionary Source = "..\Controls\Templates\TextBoxErrorTemplate.xaml" />
     </inspectors:InspectorControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width = "200"></ColumnDefinition>
-            <ColumnDefinition Width = "*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Label Name = "LbName" Grid.Column = "0">
-            <Binding Path = "PropertyName"></Binding>
-        </Label>
-        <TextBox Name = "TbValue" Grid.Column = "1"
-                 Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}">
-            <TextBox.Text>
-                <Binding Path = "StringValue" UpdateSourceTrigger = "PropertyChanged">
-                    <Binding.ValidationRules>
-                        <DataErrorValidationRule />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-    </Grid>
+    <TextBox Name = "TbValue"
+             Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}">
+        <TextBox.Text>
+            <Binding Path = "StringValue" UpdateSourceTrigger = "PropertyChanged">
+                <Binding.ValidationRules>
+                    <DataErrorValidationRule />
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox.Text>
+    </TextBox>
 </inspectors:InspectorControl>
