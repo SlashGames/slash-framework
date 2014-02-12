@@ -130,7 +130,7 @@ namespace BlueprintEditor.Windows
                 catch (AggregateException exception)
                 {
                     var stringBuilder = new StringBuilder();
-                    
+
                     foreach (var innerException in exception.InnerExceptions)
                     {
                         stringBuilder.AppendLine(innerException.Message);
@@ -176,6 +176,11 @@ namespace BlueprintEditor.Windows
         private void CanExecuteFileExit(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }
+
+        private void CanExecuteFileImportData(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.Context.BlueprintManagerViewModel != null;
         }
 
         private void CanExecuteFileOpen(object sender, CanExecuteRoutedEventArgs e)
@@ -233,6 +238,13 @@ namespace BlueprintEditor.Windows
         private void ExecutedFileExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ExecutedFileImportData(object sender, ExecutedRoutedEventArgs e)
+        {
+            ImportDataCSVWindow dlg = new ImportDataCSVWindow { Owner = this };
+            dlg.Init(this.Context);
+            dlg.ShowDialog();
         }
 
         private void ExecutedFileOpen(object sender, RoutedEventArgs e)

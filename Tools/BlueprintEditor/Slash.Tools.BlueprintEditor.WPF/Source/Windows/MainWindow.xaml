@@ -51,6 +51,8 @@
                         CanExecute = "CanExecuteEditUndo" />
         <CommandBinding Command = "ApplicationCommands.Redo" Executed = "ExecutedEditRedo"
                         CanExecute = "CanExecuteEditRedo" />
+        <CommandBinding Command = "commands:MenuCommands.ImportData" Executed = "ExecutedFileImportData"
+                        CanExecute = "CanExecuteFileImportData" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -85,6 +87,9 @@
                 </MenuItem>
                 <MenuItem x:Name = "MenuFileSaveAs" Header = "Save Project _As..."
                           Command = "ApplicationCommands.SaveAs" />
+                <Separator />
+                <MenuItem x:Name = "MenuFileImportData" Header = "_Import Data (CSV)..."
+                          Command = "commands:MenuCommands.ImportData" />
                 <Separator />
                 <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Command = "commands:MenuCommands.Exit">
                     <MenuItem.Icon>
@@ -151,14 +156,14 @@
                 <Button Command = "ApplicationCommands.Undo" Style = "{StaticResource ButtonActivityStyle}">
                     <Image Source = "/Resources/Images/Icons/Undo_16x.png" />
                     <Button.ToolTip>
-                        <TextBlock Text="Undo" />
+                        <TextBlock Text = "Undo" />
                     </Button.ToolTip>
                 </Button>
 
                 <Button Command = "ApplicationCommands.Redo" Style = "{StaticResource ButtonActivityStyle}">
                     <Image Source = "/Resources/Images/Icons/Redo_16x.png" />
                     <Button.ToolTip>
-                        <TextBlock Text="Redo" />
+                        <TextBlock Text = "Redo" />
                     </Button.ToolTip>
                 </Button>
             </ToolBar>
