@@ -30,10 +30,6 @@ namespace BlueprintEditor.Inspectors
 
         #endregion
 
-        #region Public Properties
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
@@ -53,12 +49,17 @@ namespace BlueprintEditor.Inspectors
 
         #region Methods
 
-        private void OnValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue, object oldValue)
+        protected void OnValueChanged()
+        {
+            this.OnValueChanged(this.dataContext.InspectorProperty, this.dataContext.Value);
+        }
+
+        protected void OnValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)
         {
             InspectorControlValueChangedDelegate handler = this.ValueChanged;
             if (handler != null)
             {
-                handler(inspectorProperty, newValue, oldValue);
+                handler(inspectorProperty, newValue);
             }
         }
 

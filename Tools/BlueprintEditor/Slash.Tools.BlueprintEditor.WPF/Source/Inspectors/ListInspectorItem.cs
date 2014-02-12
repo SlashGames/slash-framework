@@ -132,7 +132,7 @@ namespace BlueprintEditor.Inspectors
             this.RaiseEvent(new RoutedEventArgs(DeleteClickedEvent));
         }
 
-        private void OnValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue, object oldValue)
+        private void OnValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)
         {
             this.RaiseEvent(new ValueChangedEventArgs { RoutedEvent = ValueChangedEvent, NewValue = newValue });
         }

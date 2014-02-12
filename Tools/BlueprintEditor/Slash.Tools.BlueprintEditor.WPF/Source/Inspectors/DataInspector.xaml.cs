@@ -58,7 +58,7 @@ namespace BlueprintEditor.Inspectors
             return this.value.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default);
         }
 
-        private void OnPropertyValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue, object oldvalue)
+        private void OnPropertyValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)
         {
             if (this.value == null)
             {

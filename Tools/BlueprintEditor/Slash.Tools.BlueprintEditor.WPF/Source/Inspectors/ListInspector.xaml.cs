@@ -27,11 +27,11 @@ namespace BlueprintEditor.Inspectors
 
         private readonly List<ListInspectorItem> itemControls = new List<ListInspectorItem>();
 
+        private InspectorPropertyAttribute itemInspectorProperty;
+
         private Type itemType;
 
         private IList value;
-
-        private InspectorPropertyAttribute itemInspectorProperty;
 
         #endregion
 
@@ -49,7 +49,8 @@ namespace BlueprintEditor.Inspectors
 
         private void AddItemControl(int index, object item)
         {
-            IInspectorControl propertyControl = this.inspectorFactory.CreateInspectorControlFor(this.itemInspectorProperty, item);
+            IInspectorControl propertyControl =
+                this.inspectorFactory.CreateInspectorControlFor(this.itemInspectorProperty, item);
 
             // Create item wrapper.
             ListInspectorItem itemWrapperControl = new ListInspectorItem
@@ -64,48 +65,6 @@ namespace BlueprintEditor.Inspectors
 
             this.Items.Children.Add(itemWrapperControl);
         }
-
-        private void DeleteItemControl(int itemIndex)
-        {
-            // Check if item exists.
-            if (itemIndex >= this.itemControls.Count)
-            {
-                return;
-            }
-
-            // Get control.
-            ListInspectorItem itemControl = this.itemControls[itemIndex];
-
-            // Unregister from events.
-            itemControl.DeleteClicked -= this.OnItemDeleteClicked;
-            itemControl.ValueChanged -= this.OnItemValueChanged;
-
-            // Remove.
-            this.itemControls.RemoveAt(itemIndex);
-            this.Items.Children.Remove(itemControl);
-
-            // Adjust index of following controls.
-            for (int index = itemIndex; index < this.itemControls.Count; index++)
-            {
-                this.itemControls[index].ItemIndex = index;
-            }
-        }
-
-        private void OnItemDeleteClicked(object sender, RoutedEventArgs e)
-        {
-            ListInspectorItem listInspectorItem = (ListInspectorItem)sender;
-
-            // Delete control at index.
-            this.DeleteItemControl(listInspectorItem.ItemIndex);
-
-            // Delete item from list.
-            this.value.RemoveAt(listInspectorItem.ItemIndex);
-
-            // List changed.
-            InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
-            dataContext.Value = this.value;
-        }
-
 
         private void BtAdd_OnClick(object sender, RoutedEventArgs e)
         {
@@ -137,6 +96,32 @@ namespace BlueprintEditor.Inspectors
             propertyData.Value = dlg.GetPropertyValue();
         }
 
+        private void DeleteItemControl(int itemIndex)
+        {
+            // Check if item exists.
+            if (itemIndex >= this.itemControls.Count)
+            {
+                return;
+            }
+
+            // Get control.
+            ListInspectorItem itemControl = this.itemControls[itemIndex];
+
+            // Unregister from events.
+            itemControl.DeleteClicked -= this.OnItemDeleteClicked;
+            itemControl.ValueChanged -= this.OnItemValueChanged;
+
+            // Remove.
+            this.itemControls.RemoveAt(itemIndex);
+            this.Items.Children.Remove(itemControl);
+
+            // Adjust index of following controls.
+            for (int index = itemIndex; index < this.itemControls.Count; index++)
+            {
+                this.itemControls[index].ItemIndex = index;
+            }
+        }
+
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
@@ -157,6 +142,20 @@ namespace BlueprintEditor.Inspectors
             }
         }
 
+        private void OnItemDeleteClicked(object sender, RoutedEventArgs e)
+        {
+            ListInspectorItem listInspectorItem = (ListInspectorItem)sender;
+
+            // Delete control at index.
+            this.DeleteItemControl(listInspectorItem.ItemIndex);
+
+            // Delete item from list.
+            this.value.RemoveAt(listInspectorItem.ItemIndex);
+
+            // List changed.
+            this.OnValueChanged();
+        }
+
         private void OnItemValueChanged(object sender, RoutedEventArgs routedEventArgs)
         {
             ListInspectorItem.ValueChangedEventArgs eventArgs = (ListInspectorItem.ValueChangedEventArgs)routedEventArgs;
@@ -164,8 +163,8 @@ namespace BlueprintEditor.Inspectors
             ListInspectorItem itemControl = (ListInspectorItem)sender;
             this.value[itemControl.ItemIndex] = eventArgs.NewValue;
 
-            InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
-            dataContext.Value = this.value;
+            // List changed.
+            this.OnValueChanged();
         }
 
         #endregion
