@@ -4,16 +4,23 @@
         xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
         Title = "Import Data (CSV)" Height = "480" Width = "640">
     <StackPanel>
-        <TextBlock FontWeight = "Bold" Height = "25">Parent Blueprint</TextBlock>
+        <TextBlock FontWeight = "Bold" Height = "25">Blueprint Properties</TextBlock>
 
-        <Grid Height = "25">
+        <Grid Height = "50">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width = "150" />
+                <ColumnDefinition Width = "100" />
                 <ColumnDefinition Width = "*" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height = "25" />
+                <RowDefinition Height = "25" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column = "0" Grid.Row="0">Parent Blueprint:</TextBlock>
+            <controls:BlueprintComboBox Grid.Row="0" Grid.Column = "1" x:Name = "CbParentBlueprint" />
 
-            <TextBlock Grid.Column = "0">Parent Blueprint:</TextBlock>
-            <controls:BlueprintComboBox Grid.Column = "1" x:Name = "CbBlueprints" />
+            <TextBlock Grid.Column = "0" Grid.Row="1">Blueprint Id:</TextBlock>
+            <ComboBox Name = "CbBlueprintIdMapping" IsEditable = "True" IsReadOnly = "True"
+                  ItemsSource = "{Binding CSVColumnHeaders}" Grid.Column = "1" Grid.Row="1" />
         </Grid>
 
         <TextBlock FontWeight = "Bold" Height = "25">Attribute Mapping</TextBlock>
@@ -21,7 +28,10 @@
         <ScrollViewer>
             <StackPanel Name = "SpAttributeMapping" />
         </ScrollViewer>
-        
-        <Button Click="ImportData_OnClick">Import Data</Button>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button DockPanel.Dock="Left" Click="ImportData_OnClick" Width="100" Margin="10">Import Data</Button>
+            <Button DockPanel.Dock="Right" Click="Cancel_OnClick" Width="100" Margin="10">Cancel</Button>
+        </StackPanel>
     </StackPanel>
 </Window>

@@ -26,6 +26,16 @@ namespace BlueprintEditor.Controls
         }
 
         /// <summary>
+        ///   Shows an info dialog with the specified title and text.
+        /// </summary>
+        /// <param name="title">Title of the info.</param>
+        /// <param name="text">Text of the info.</param>
+        public static void Info(string title, string text)
+        {
+            MessageBox.Show(text, title, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+        }
+
+        /// <summary>
         ///   Shows a warning with the specified title and text.
         /// </summary>
         /// <param name="title">Title of the warning.</param>

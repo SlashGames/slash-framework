@@ -9,6 +9,7 @@ namespace BlueprintEditor.Windows
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Linq;
     using System.Windows;
 
     using BlueprintEditor.Controls;
@@ -20,28 +21,60 @@ namespace BlueprintEditor.Windows
     {
         #region Fields
 
-        private readonly IEnumerable<string> csvColumns;
-
         private readonly List<ValueMappingViewModel> valueMappings = new List<ValueMappingViewModel>();
 
         #endregion
 
         #region Constructors and Destructors
 
-        public ImportDataCSVWindow(EditorContext context, IEnumerable<string> csvColumns)
+        public ImportDataCSVWindow(EditorContext context, IEnumerable<string> csvColumnHeaders)
         {
             this.InitializeComponent();
 
-            this.CbBlueprints.DataContext = context;
-            this.CbBlueprints.PropertyChanged += this.OnSelectedParentBlueprintChanged;
+            this.CSVColumnHeaders = csvColumnHeaders;
 
-            this.csvColumns = csvColumns;
+            this.CbParentBlueprint.DataContext = context;
+            this.CbParentBlueprint.PropertyChanged += this.OnSelectedParentBlueprintChanged;
+            this.CbParentBlueprint.Filter = blueprint => blueprint.Parent == null;
+
+            this.CbBlueprintIdMapping.DataContext = this;
+            this.CbBlueprintIdMapping.SelectedIndex = 0;
         }
 
         #endregion
 
         #region Public Properties
 
+        /// <summary>
+        ///   CSV column that contains the blueprint ids for the blueprints to create.
+        /// </summary>
+        public string BlueprintIdColumn
+        {
+            get
+            {
+                return (string)this.CbBlueprintIdMapping.SelectedItem;
+            }
+        }
+
+        /// <summary>
+        ///   Parent blueprint of the blueprints to create.
+        /// </summary>
+        public BlueprintViewModel BlueprintParent
+        {
+            get
+            {
+                return this.CbParentBlueprint.SelectedItem;
+            }
+        }
+
+        /// <summary>
+        ///   Headers of the columns of the imported CSV file.
+        /// </summary>
+        public IEnumerable<string> CSVColumnHeaders { get; private set; }
+
+        /// <summary>
+        ///   Maps attribute table keys to CSV columns.
+        /// </summary>
         public ReadOnlyCollection<ValueMappingViewModel> ValueMappings
         {
             get
@@ -77,8 +110,8 @@ namespace BlueprintEditor.Windows
                     // Create attribute mapping control.
                     ValueMappingViewModel valueMapping = new ValueMappingViewModel
                         {
-                            MappingSource = inspectorProperty.PropertyName,
-                            AvailableMappingTargets = new ObservableCollection<string>(this.csvColumns)
+                            MappingSource = inspectorProperty.Name,
+                            AvailableMappingTargets = new ObservableCollection<string>(this.CSVColumnHeaders)
                         };
 
                     ValueMappingControl valueMappingControl = new ValueMappingControl(valueMapping);
@@ -90,11 +123,57 @@ namespace BlueprintEditor.Windows
             }
         }
 
+        private void Cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
+        }
+
+        /// <summary>
+        ///   Checks whether any CSV column is used for multiple attribute table keys.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c>, if no CSV column is used for multiple attribute table keys, and
+        ///   <c>false</c> otherwise.
+        /// </returns>
+        private bool CheckDuplicateMappings()
+        {
+            var mappedColumns = new HashSet<string>();
+            mappedColumns.Add(this.BlueprintIdColumn);
+
+            foreach (var mapping in this.ValueMappings.Where(mapping => mapping.MappingTarget != null))
+            {
+                if (mappedColumns.Contains(mapping.MappingTarget))
+                {
+                    return false;
+                }
+
+                mappedColumns.Add(mapping.MappingTarget);
+            }
+
+            return true;
+        }
+
         private void ImportData_OnClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (!this.CheckDuplicateMappings())
+            {
+                var result =
+                    MessageBox.Show(
+                        "Some attribute table keys are mapped to the same CSV column. Continue anyway?",
+                        "Duplicate Mappings",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question,
+                        MessageBoxResult.No);
 
-            // TODO(np): Provide Cancel button.
+                if (result != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+            }
+
+            this.DialogResult = true;
+            this.Close();
         }
 
         private void OnSelectedParentBlueprintChanged(object sender, PropertyChangedEventArgs e)
@@ -109,7 +188,7 @@ namespace BlueprintEditor.Windows
             this.SpAttributeMapping.Children.Clear();
 
             // Add new attribute mapping controls.
-            this.AddAttributeMappingsRecursively(this.CbBlueprints.SelectedItem);
+            this.AddAttributeMappingsRecursively(this.CbParentBlueprint.SelectedItem);
         }
 
         #endregion

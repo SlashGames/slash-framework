@@ -7,5 +7,5 @@
              mc:Ignorable = "d"
              d:DesignHeight = "20" d:DesignWidth = "300" d:DataContext = "{d:DesignInstance viewModels:EditorContext}">
     <ComboBox Name = "CbParentBlueprint" ComboBox.DisplayMemberPath = "BlueprintId" IsEditable = "True"
-              IsReadOnly = "True" ItemsSource = "{Binding BlueprintManagerViewModel.Blueprints}" />
+              IsReadOnly = "True" ItemsSource = "{Binding Blueprints}" />
 </UserControl>
