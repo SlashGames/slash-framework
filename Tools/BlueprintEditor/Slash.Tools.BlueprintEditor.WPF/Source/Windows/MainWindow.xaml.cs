@@ -17,6 +17,8 @@ namespace BlueprintEditor.Windows
     using BlueprintEditor.Controls;
     using BlueprintEditor.ViewModels;
 
+    using CsvHelper;
+
     using Microsoft.Win32;
 
     using Slash.SystemExt.Exceptions;
@@ -243,16 +245,40 @@ namespace BlueprintEditor.Windows
 
         private void ExecutedFileImportData(object sender, ExecutedRoutedEventArgs e)
         {
-            // TODO(np): Parse CSV file.
-            var csvColumns = new List<string> { "one", "two", "three" };
-
-            var importDataCsvWindow = new ImportDataCSVWindow(this.Context, csvColumns) { Owner = this };
-            importDataCsvWindow.ShowDialog();
-
-            foreach (var valueMapping in importDataCsvWindow.ValueMappings)
+            // Show open file dialog box.
+            OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                // TODO(np): Create actual blueprints.
-                // TODO(np): Parent blueprints.
+                AddExtension = true,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                DefaultExt = ".csv",
+                Filter = "Comma-separated values (.csv)|*.csv",
+                ValidateNames = true
+            };
+
+            var result = openFileDialog.ShowDialog();
+
+            if (result != true)
+            {
+                return;
+            }
+
+            // Open CSV file.
+            using (var stream = openFileDialog.OpenFile())
+            {
+                var streamReader = new StreamReader(stream);
+                var csvReader = new CsvReader(streamReader);
+
+                csvReader.Read();
+
+                var importDataCsvWindow = new ImportDataCSVWindow(this.Context, csvReader.FieldHeaders) { Owner = this };
+                importDataCsvWindow.ShowDialog();
+
+                foreach (var valueMapping in importDataCsvWindow.ValueMappings)
+                {
+                    // TODO(np): Create actual blueprints.
+                    // TODO(np): Parent blueprints.
+                }
             }
         }
 
