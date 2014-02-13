@@ -47,7 +47,7 @@ namespace Slash.GameBase.Tests.Inspector.Attributes
         public void TestDeserializationFromAttributeTable()
         {
             IAttributeTable attributeTable = new AttributeTable();
-            IAttributeTable entityAttributeTable = new AttributeTable();
+            AttributeTable entityAttributeTable = new AttributeTable();
             const string TestValueString = "Test";
             entityAttributeTable.SetValue(TestComponent.AttributeTestString, TestValueString);
             EntityConfiguration entityConfiguration = new EntityConfiguration
