@@ -11,7 +11,7 @@
     <inspectors:InspectorControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source = "../Controls/Templates/TextBoxErrorTemplate.xaml"></ResourceDictionary>
+                <ResourceDictionary Source = "../../Controls/Templates/TextBoxErrorTemplate.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
             <converters:ListToStringConverter x:Key = "ListToStringConverter" />
         </ResourceDictionary>

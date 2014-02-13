@@ -118,6 +118,10 @@ namespace BlueprintEditor.Inspectors
             {
                 inspectorControl = new DataInspector();
             }
+            else if (inspectorProperty is InspectorEntityAttribute)
+            {
+                inspectorControl = new EntityInspector();
+            }
             else
             {
                 inspectorControl = null;

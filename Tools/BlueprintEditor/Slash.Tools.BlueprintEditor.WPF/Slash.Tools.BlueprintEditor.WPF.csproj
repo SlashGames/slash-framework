@@ -83,6 +83,9 @@
     <Compile Include="Source\Inspectors\Controls\DataInspector.xaml.cs">
       <DependentUpon>DataInspector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Inspectors\Controls\EntityInspector.xaml.cs">
+      <DependentUpon>EntityInspector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Inspectors\InspectorWithLabel.xaml.cs">
       <DependentUpon>InspectorWithLabel.xaml</DependentUpon>
     </Compile>
@@ -93,7 +96,7 @@
     <Compile Include="Source\Inspectors\Controls\SingleUpDownInspector.xaml.cs">
       <DependentUpon>SingleUpDownInspector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Inspectors\IntegerUpDownInspector.xaml.cs">
+    <Compile Include="Source\Inspectors\Controls\IntegerUpDownInspector.xaml.cs">
       <DependentUpon>IntegerUpDownInspector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Controls\ProjectSettingsControl.xaml.cs">
@@ -128,9 +131,6 @@
     </Compile>
     <Compile Include="Source\Windows\ImportDataCSVWindow.xaml.cs">
       <DependentUpon>ImportDataCSVWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Windows\ListInspectorWindow.xaml.cs">
-      <DependentUpon>ListInspectorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Windows\ProgressWindow.xaml.cs">
       <DependentUpon>ProgressWindow.xaml</DependentUpon>
@@ -170,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Source\Inspectors\Controls\EntityInspector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Inspectors\InspectorWithLabel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -182,7 +186,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Source\Inspectors\IntegerUpDownInspector.xaml">
+    <Page Include="Source\Inspectors\Controls\IntegerUpDownInspector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -199,10 +203,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Windows\ImportDataCSVWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Source\Windows\ListInspectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
