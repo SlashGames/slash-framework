@@ -23,7 +23,7 @@ namespace BlueprintEditor.Windows
 
     using Microsoft.Win32;
 
-    using Slash.SystemExt.Exceptions;
+    using AggregateException = Slash.SystemExt.Exceptions.AggregateException;
 
     /// <summary>
     ///   Interaction logic for MainWindow.xaml
@@ -149,7 +149,7 @@ namespace BlueprintEditor.Windows
                 {
                     this.Context.BlueprintManagerViewModel.SetupBlueprintHierarchy();
                 }
-                catch (Slash.SystemExt.Exceptions.AggregateException exception)
+                catch (AggregateException exception)
                 {
                     ShowExceptionsAsWarning("Blueprint hierarchy not properly set up", exception.InnerExceptions);
                 }
@@ -296,33 +296,79 @@ namespace BlueprintEditor.Windows
 
                 // Create a blueprint for each CSV row.
                 var blueprintManagerViewModel = this.Context.BlueprintManagerViewModel;
+                var processedBlueprints = new HashSet<string>();
                 var errors = new List<Exception>();
 
                 var newBlueprints = 0;
+                var updatedBlueprints = 0;
                 var skippedBlueprints = 0;
 
                 while (csvReader.CurrentRecord != null)
                 {
                     try
                     {
-                        // Create new blueprint.
-                        blueprintManagerViewModel.NewBlueprintId = csvReader[importDataCsvWindow.BlueprintIdColumn];
-                        var blueprintViewModel = blueprintManagerViewModel.CreateNewBlueprint();
+                        // Get id of the blueprint to create or update.
+                        var blueprintId = csvReader[importDataCsvWindow.BlueprintIdColumn];
 
-                        // Map attribute table keys to CSV value.
-                        foreach (var valueMapping in
-                            importDataCsvWindow.ValueMappings.Where(
-                                mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
+                        // Check for duplicate blueprints in the CSV file.
+                        if (processedBlueprints.Contains(blueprintId))
                         {
-                            blueprintViewModel.Blueprint.AttributeTable.Add(
-                                valueMapping.MappingSource, csvReader[valueMapping.MappingTarget]);
+                            throw new InvalidOperationException(
+                                string.Format("Duplicate blueprint id: {0}", blueprintId));
                         }
 
-                        // Reparent new blueprint.
-                        blueprintManagerViewModel.ReparentBlueprint(
-                            blueprintViewModel.BlueprintId, importDataCsvWindow.BlueprintParent.BlueprintId);
+                        processedBlueprints.Add(blueprintId);
 
-                        newBlueprints++;
+                        // Check whether blueprint already exists.
+                        var existingBlueprint =
+                            blueprintManagerViewModel.Blueprints.FirstOrDefault(
+                                blueprint => blueprint.BlueprintId == blueprintId);
+
+                        if (existingBlueprint == null)
+                        {
+                            // Create new blueprint.
+                            blueprintManagerViewModel.NewBlueprintId = blueprintId;
+                            var blueprintViewModel = blueprintManagerViewModel.CreateNewBlueprint();
+
+                            // Map attribute table keys to CSV values.
+                            foreach (var valueMapping in
+                                importDataCsvWindow.ValueMappings.Where(
+                                    mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
+                            {
+                                blueprintViewModel.Blueprint.AttributeTable.Add(
+                                    valueMapping.MappingSource, csvReader[valueMapping.MappingTarget]);
+                            }
+
+                            // Reparent new blueprint.
+                            blueprintManagerViewModel.ReparentBlueprint(
+                                blueprintViewModel.BlueprintId, importDataCsvWindow.BlueprintParent.BlueprintId);
+
+                            newBlueprints++;
+                        }
+                        else
+                        {
+                            // Check parent of existing blueprint.
+                            if (existingBlueprint.Parent != importDataCsvWindow.BlueprintParent)
+                            {
+                                throw new InvalidOperationException(
+                                    string.Format(
+                                        "Blueprint {0} is child of {1} but should be child of {2}.",
+                                        existingBlueprint.BlueprintId,
+                                        existingBlueprint.Parent.BlueprintId,
+                                        importDataCsvWindow.BlueprintParent.BlueprintId));
+                            }
+
+                            // Map attribute table keys to CSV values.
+                            foreach (var valueMapping in
+                                importDataCsvWindow.ValueMappings.Where(
+                                    mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
+                            {
+                                existingBlueprint.Blueprint.AttributeTable[valueMapping.MappingSource] =
+                                    csvReader[valueMapping.MappingTarget];
+                            }
+
+                            updatedBlueprints++;
+                        }
                     }
                     catch (Exception exception)
                     {
@@ -342,6 +388,7 @@ namespace BlueprintEditor.Windows
 
                 var importInfoBuilder = new StringBuilder();
                 importInfoBuilder.AppendLine(string.Format("{0} blueprint(s) imported.", newBlueprints));
+                importInfoBuilder.AppendLine(string.Format("{0} blueprint(s) updated.", updatedBlueprints));
                 importInfoBuilder.AppendLine(string.Format("{0} blueprint(s) skipped.", skippedBlueprints));
                 var importInfo = importInfoBuilder.ToString();
 
