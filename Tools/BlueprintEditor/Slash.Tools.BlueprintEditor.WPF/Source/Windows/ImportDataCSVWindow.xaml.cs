@@ -20,7 +20,7 @@ namespace BlueprintEditor.Windows
     {
         #region Fields
 
-        private readonly IEnumerable<string> csvColumns;
+        private readonly IEnumerable<string> csvColumnHeaders;
 
         private readonly List<ValueMappingViewModel> valueMappings = new List<ValueMappingViewModel>();
 
@@ -28,20 +28,58 @@ namespace BlueprintEditor.Windows
 
         #region Constructors and Destructors
 
-        public ImportDataCSVWindow(EditorContext context, IEnumerable<string> csvColumns)
+        public ImportDataCSVWindow(EditorContext context, IEnumerable<string> csvColumnHeaders)
         {
             this.InitializeComponent();
+
+            this.CbBlueprintIdMapping.DataContext = this;
 
             this.CbBlueprints.DataContext = context;
             this.CbBlueprints.PropertyChanged += this.OnSelectedParentBlueprintChanged;
 
-            this.csvColumns = csvColumns;
+            this.csvColumnHeaders = csvColumnHeaders;
         }
 
         #endregion
 
         #region Public Properties
 
+        /// <summary>
+        ///   CSV column that contains the blueprint ids for the blueprints to create.
+        /// </summary>
+        public string BlueprintIdColumn
+        {
+            get
+            {
+                return (string)this.CbBlueprintIdMapping.SelectedItem;
+            }
+        }
+
+        /// <summary>
+        ///   Parent blueprint of the blueprints to create.
+        /// </summary>
+        public BlueprintViewModel BlueprintParent
+        {
+            get
+            {
+                return this.CbBlueprints.SelectedItem;
+            }
+        }
+
+        /// <summary>
+        ///   Headers of the columns of the imported CSV file.
+        /// </summary>
+        public ObservableCollection<string> CSVColumnHeaders
+        {
+            get
+            {
+                return new ObservableCollection<string>(this.csvColumnHeaders);
+            }
+        }
+
+        /// <summary>
+        ///   Maps attribute table keys to CSV columns.
+        /// </summary>
         public ReadOnlyCollection<ValueMappingViewModel> ValueMappings
         {
             get
@@ -77,8 +115,8 @@ namespace BlueprintEditor.Windows
                     // Create attribute mapping control.
                     ValueMappingViewModel valueMapping = new ValueMappingViewModel
                         {
-                            MappingSource = inspectorProperty.PropertyName,
-                            AvailableMappingTargets = new ObservableCollection<string>(this.csvColumns)
+                            MappingSource = inspectorProperty.Name,
+                            AvailableMappingTargets = new ObservableCollection<string>(this.csvColumnHeaders)
                         };
 
                     ValueMappingControl valueMappingControl = new ValueMappingControl(valueMapping);

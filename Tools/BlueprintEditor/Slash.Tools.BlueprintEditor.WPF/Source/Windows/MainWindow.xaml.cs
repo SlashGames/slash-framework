@@ -6,9 +6,9 @@
 
 namespace BlueprintEditor.Windows
 {
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
+    using System.Linq;
     using System.Runtime.Serialization;
     using System.Text;
     using System.Windows;
@@ -269,15 +269,36 @@ namespace BlueprintEditor.Windows
                 var streamReader = new StreamReader(stream);
                 var csvReader = new CsvReader(streamReader);
 
+                // Read column headers and first row.
                 csvReader.Read();
 
+                // Allow user to specify which attribute table keys are mapped to which CSV columns.
                 var importDataCsvWindow = new ImportDataCSVWindow(this.Context, csvReader.FieldHeaders) { Owner = this };
                 importDataCsvWindow.ShowDialog();
 
-                foreach (var valueMapping in importDataCsvWindow.ValueMappings)
+                // Create a blueprint for each CSV row.
+                while (csvReader.CurrentRecord != null)
                 {
-                    // TODO(np): Create actual blueprints.
-                    // TODO(np): Parent blueprints.
+                    // Create new blueprint.
+                    var blueprintManagerViewModel = this.Context.BlueprintManagerViewModel;
+                    blueprintManagerViewModel.NewBlueprintId = csvReader[importDataCsvWindow.BlueprintIdColumn];
+                    var blueprintViewModel = blueprintManagerViewModel.CreateNewBlueprint();
+
+                    // Map attribute table keys to CSV value.
+                    foreach (var valueMapping in
+                        importDataCsvWindow.ValueMappings.Where(
+                            mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
+                    {
+                        blueprintViewModel.Blueprint.AttributeTable.Add(
+                            valueMapping.MappingSource, csvReader[valueMapping.MappingTarget]);
+                    }
+
+                    // Reparent new blueprint.
+                    blueprintManagerViewModel.ReparentBlueprint(
+                        blueprintViewModel.BlueprintId, importDataCsvWindow.BlueprintParent.BlueprintId);
+
+                    // Read next record.
+                    csvReader.Read();
                 }
             }
         }

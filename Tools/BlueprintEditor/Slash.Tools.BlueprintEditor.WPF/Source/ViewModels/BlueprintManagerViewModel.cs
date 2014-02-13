@@ -198,17 +198,19 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
-        public void CreateNewBlueprint()
+        public BlueprintViewModel CreateNewBlueprint()
         {
             // Update blueprint view models.
-            this.Blueprints.Add(
-                new BlueprintViewModel(this.newBlueprintId, new Blueprint())
-                    {
-                        AssemblyComponents = this.assemblyComponents
-                    });
+            var newBlueprint = new BlueprintViewModel(this.newBlueprintId, new Blueprint())
+                {
+                    AssemblyComponents = this.assemblyComponents
+                };
+            this.Blueprints.Add(newBlueprint);
 
             // Clear blueprint id.
             this.NewBlueprintId = String.Empty;
+
+            return newBlueprint;
         }
 
         public object GetUndoRoot()
