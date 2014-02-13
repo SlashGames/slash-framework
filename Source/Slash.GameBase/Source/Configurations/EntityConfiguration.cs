@@ -32,7 +32,7 @@ namespace Slash.GameBase.Configurations
         /// <summary>
         ///   Configuration for the entity.
         /// </summary>
-        private IAttributeTable configuration;
+        private AttributeTable configuration;
 
         #endregion
 
@@ -85,11 +85,11 @@ namespace Slash.GameBase.Configurations
         /// </summary>
         public string BlueprintId { get; set; }
 
+        
         /// <summary>
         ///   Configuration for the entity.
         /// </summary>
-        [XmlIgnore]
-        public IAttributeTable Configuration
+        public AttributeTable Configuration
         {
             get
             {

@@ -6,16 +6,124 @@
 
 namespace BlueprintEditor.Inspectors.Controls
 {
+    using System.ComponentModel;
+    using System.Windows;
+
+    using BlueprintEditor.ViewModels;
+
+    using Slash.Collections.AttributeTables;
+    using Slash.GameBase.Configurations;
+    using Slash.GameBase.Inspector.Attributes;
+
     /// <summary>
     ///   Interaction logic for EntityInspector.xaml
     /// </summary>
     public partial class EntityInspector
     {
+        #region Fields
+
+        private readonly InspectorFactory inspectorFactory = new InspectorFactory();
+
+        private BlueprintViewModel selectedBlueprint;
+
+        #endregion
+
         #region Constructors and Destructors
 
         public EntityInspector()
         {
             this.InitializeComponent();
+            this.DataContextChanged += this.OnDataContextChanged;
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void BlueprintComboBox_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.OnBlueprintChanged(this.CbBlueprint.SelectedItem);
+        }
+
+        private object GetCurrentAttributeValue(InspectorPropertyAttribute inspectorProperty)
+        {
+            object value = inspectorProperty.Default;
+            EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value;
+            if (entityConfiguration != null)
+            {
+                value = entityConfiguration.Configuration.GetValueOrDefault(
+                    inspectorProperty.Name, inspectorProperty.Default);
+            }
+            return value;
+        }
+
+        private object GetDefaultValue(InspectorPropertyAttribute inspectorProperty)
+        {
+            return this.selectedBlueprint != null
+                       ? this.selectedBlueprint.Blueprint.GetAttributeTable()
+                             .GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default)
+                       : null;
+        }
+
+        private void OnBlueprintChanged(BlueprintViewModel newBlueprint)
+        {
+            this.selectedBlueprint = newBlueprint;
+
+            // Update attribute table.
+            this.UpdateAttributeTable();
+
+            // Set value.
+            EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value ?? new EntityConfiguration();
+            entityConfiguration.BlueprintId = newBlueprint != null ? newBlueprint.BlueprintId : string.Empty;
+
+            this.OnValueChanged();
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value;
+            if (entityConfiguration != null)
+            {
+                // TODO(co): Select correct blueprint view model.
+            }
+
+            this.UpdateAttributeTable();
+        }
+
+        private void OnPropertyControlValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)
+        {
+            EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value ?? new EntityConfiguration();
+
+            // Remove value if default value or inherited from blueprint. Otherwise set it.
+            object defaultValue = this.GetDefaultValue(inspectorProperty);
+            if (Equals(newValue, defaultValue))
+            {
+                entityConfiguration.Configuration.RemoveValue(inspectorProperty.Name);
+            }
+            else
+            {
+                entityConfiguration.Configuration.SetValue(inspectorProperty.Name, newValue);
+            }
+
+            this.OnValueChanged();
+        }
+
+        private void UpdateAttributeTable()
+        {
+            // Clear old attributes.
+            this.AttributesPanel.Children.Clear();
+
+            if (this.selectedBlueprint == null)
+            {
+                return;
+            }
+
+            // Add inspectors for blueprint components.
+            this.inspectorFactory.AddComponentInspectorsRecursively(
+                this.selectedBlueprint,
+                this.AttributesPanel,
+                this.GetCurrentAttributeValue,
+                this.OnPropertyControlValueChanged);
         }
 
         #endregion

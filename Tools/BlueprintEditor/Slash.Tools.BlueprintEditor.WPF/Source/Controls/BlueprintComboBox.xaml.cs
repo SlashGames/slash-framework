@@ -9,6 +9,7 @@ namespace BlueprintEditor.Controls
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
 
@@ -29,8 +30,15 @@ namespace BlueprintEditor.Controls
         {
             this.InitializeComponent();
 
+            this.DataContextChanged += this.OnDataContextChanged;
+
             this.CbParentBlueprint.DataContext = this;
             this.CbParentBlueprint.SelectionChanged += this.OnSelectionChanged;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            this.Blueprints = this.CreateBlueprintsView();
         }
 
         #endregion
@@ -50,20 +58,33 @@ namespace BlueprintEditor.Controls
         {
             get
             {
-                if (this.blueprintsView == null)
-                {
-                    var editorContext = (EditorContext)this.DataContext;
-                    this.blueprintsView = new ListCollectionView(editorContext.BlueprintManagerViewModel.Blueprints);
-                    this.blueprintsView.SortDescriptions.Add(
-                        new SortDescription("BlueprintId", ListSortDirection.Ascending));
-
-                    if (this.Filter != null)
-                    {
-                        this.blueprintsView.Filter = blueprint => this.Filter((BlueprintViewModel)blueprint);
-                    }
-                }
-                return this.blueprintsView;
+                return this.blueprintsView ?? (this.blueprintsView = this.CreateBlueprintsView());
             }
+            set
+            {
+                this.blueprintsView = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private ListCollectionView CreateBlueprintsView()
+        {
+            BlueprintManagerViewModel dataContext = (BlueprintManagerViewModel)this.DataContext;
+            if (dataContext == null)
+            {
+                return null;
+            }
+
+            ListCollectionView newBlueprintsView = new ListCollectionView(dataContext.Blueprints);
+            newBlueprintsView.SortDescriptions.Add(
+                new SortDescription("BlueprintId", ListSortDirection.Ascending));
+
+            if (this.Filter != null)
+            {
+                newBlueprintsView.Filter = blueprint => this.Filter((BlueprintViewModel)blueprint);
+            }
+
+            return newBlueprintsView;
         }
 
         /// <summary>

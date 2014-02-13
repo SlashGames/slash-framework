@@ -16,8 +16,6 @@ namespace BlueprintEditor.Controls
     using BlueprintEditor.ViewModels;
 
     using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Data;
-    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
     ///   Interaction logic for BlueprintControl.xaml
@@ -45,36 +43,6 @@ namespace BlueprintEditor.Controls
         #endregion
 
         #region Methods
-
-        /// <summary>
-        ///   Adds inspectors for the components of the specified blueprint and its parents.
-        /// </summary>
-        /// <param name="viewModel">Blueprint to add component inspectors for.</param>
-        private void AddComponentInspectorsRecursively(BlueprintViewModel viewModel)
-        {
-            // Add inspectors for parent blueprints.
-            if (viewModel.Parent != null)
-            {
-                this.AddComponentInspectorsRecursively(viewModel.Parent);
-            }
-
-            // Add inspectors for specified blueprint.
-            foreach (var componentType in viewModel.AddedComponents)
-            {
-                // Get attributes.
-                InspectorType componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
-                if (componentInfo == null)
-                {
-                    continue;
-                }
-
-                this.inspectorFactory.AddInspectorControls(
-                    componentInfo,
-                    this.AttributesPanel,
-                    this.GetCurrentAttributeValue,
-                    this.OnPropertyControlValueChanged);
-            }
-        }
 
         private void CanExecuteAddComponent(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -200,8 +168,7 @@ namespace BlueprintEditor.Controls
             this.UpdateInspectors();
         }
 
-        private void OnPropertyControlValueChanged(
-            InspectorPropertyAttribute inspectorProperty, object newValue)
+        private void OnPropertyControlValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)
         {
             BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
             Console.WriteLine("Property value {0} changed to {1}", inspectorProperty, newValue);
@@ -245,7 +212,8 @@ namespace BlueprintEditor.Controls
             }
 
             // Add inspectors for blueprint components.
-            this.AddComponentInspectorsRecursively(viewModel);
+            this.inspectorFactory.AddComponentInspectorsRecursively(
+                viewModel, this.AttributesPanel, this.GetCurrentAttributeValue, this.OnPropertyControlValueChanged);
         }
 
         #endregion

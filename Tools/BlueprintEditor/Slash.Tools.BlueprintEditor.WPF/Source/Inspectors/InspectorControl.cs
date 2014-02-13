@@ -30,6 +30,25 @@ namespace BlueprintEditor.Inspectors
 
         #endregion
 
+        #region Public Properties
+
+        /// <summary>
+        ///   Current value of inspector control.
+        /// </summary>
+        public object Value
+        {
+            get
+            {
+                return this.dataContext.Value;
+            }
+            set
+            {
+                this.dataContext.Value = value;
+            }
+        }
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>

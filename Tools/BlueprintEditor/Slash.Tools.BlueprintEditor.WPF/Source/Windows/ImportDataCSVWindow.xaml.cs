@@ -33,7 +33,7 @@ namespace BlueprintEditor.Windows
 
             this.CSVColumnHeaders = csvColumnHeaders;
 
-            this.CbParentBlueprint.DataContext = context;
+            this.CbParentBlueprint.DataContext = context.BlueprintManagerViewModel;
             this.CbParentBlueprint.PropertyChanged += this.OnSelectedParentBlueprintChanged;
             this.CbParentBlueprint.Filter = blueprint => blueprint.Parent == null;
 
