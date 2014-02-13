@@ -1,4 +1,4 @@
-﻿<inspectors:InspectorControl x:Class = "BlueprintEditor.Inspectors.SingleUpDownInspector"
+﻿<inspectors:InspectorControl x:Class = "BlueprintEditor.Inspectors.Controls.SingleUpDownInspector"
                              xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                              xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
                              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"

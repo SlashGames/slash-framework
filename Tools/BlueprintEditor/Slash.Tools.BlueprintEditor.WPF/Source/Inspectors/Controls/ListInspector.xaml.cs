@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor.Inspectors
+namespace BlueprintEditor.Inspectors.Controls
 {
     using System;
     using System.Collections;
@@ -64,7 +64,7 @@ namespace BlueprintEditor.Inspectors
                 dataContext.Value = this.value;
             }
 
-            object item = itemType == typeof(string) ? string.Empty : Activator.CreateInstance(this.itemType);
+            object item = this.itemType == typeof(string) ? string.Empty : Activator.CreateInstance(this.itemType);
             this.value.Add(item);
 
             dataContext.Value = this.value;

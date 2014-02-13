@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor.Inspectors
+namespace BlueprintEditor.Inspectors.Controls
 {
     using System.Windows;
     using System.Windows.Controls;

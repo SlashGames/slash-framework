@@ -80,17 +80,17 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Source\Converters\ListToStringConverter.cs" />
     <Compile Include="Source\Converters\TypeToComponentNameConverter.cs" />
-    <Compile Include="Source\Inspectors\DataInspector.xaml.cs">
+    <Compile Include="Source\Inspectors\Controls\DataInspector.xaml.cs">
       <DependentUpon>DataInspector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Inspectors\InspectorWithLabel.xaml.cs">
       <DependentUpon>InspectorWithLabel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Inspectors\ListInspector.xaml.cs">
+    <Compile Include="Source\Inspectors\Controls\ListInspector.xaml.cs">
       <DependentUpon>ListInspector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Inspectors\ListInspectorItem.cs" />
-    <Compile Include="Source\Inspectors\SingleUpDownInspector.xaml.cs">
+    <Compile Include="Source\Inspectors\Controls\ListInspectorItem.cs" />
+    <Compile Include="Source\Inspectors\Controls\SingleUpDownInspector.xaml.cs">
       <DependentUpon>SingleUpDownInspector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Inspectors\IntegerUpDownInspector.xaml.cs">
@@ -109,10 +109,10 @@
     <Compile Include="Source\Controls\BlueprintTreeView.xaml.cs">
       <DependentUpon>BlueprintTreeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Inspectors\CheckBoxInspector.xaml.cs">
+    <Compile Include="Source\Inspectors\Controls\CheckBoxInspector.xaml.cs">
       <DependentUpon>CheckBoxInspector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Inspectors\ComboBoxInspector.xaml.cs">
+    <Compile Include="Source\Inspectors\Controls\ComboBoxInspector.xaml.cs">
       <DependentUpon>ComboBoxInspector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Inspectors\InspectorControl.cs">
@@ -158,15 +158,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Inspectors\CheckBoxInspector.xaml">
+    <Page Include="Source\Inspectors\Controls\CheckBoxInspector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Inspectors\ComboBoxInspector.xaml">
+    <Page Include="Source\Inspectors\Controls\ComboBoxInspector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Source\Inspectors\DataInspector.xaml">
+    <Page Include="Source\Inspectors\Controls\DataInspector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -174,11 +174,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Inspectors\ListInspector.xaml">
+    <Page Include="Source\Inspectors\Controls\ListInspector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Inspectors\SingleUpDownInspector.xaml">
+    <Page Include="Source\Inspectors\Controls\SingleUpDownInspector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -186,7 +186,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Source\Inspectors\TextBoxInspector.xaml">
+    <Page Include="Source\Inspectors\Controls\TextBoxInspector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -214,7 +214,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Source\Inspectors\TextBoxInspector.xaml.cs">
+    <Compile Include="Source\Inspectors\Controls\TextBoxInspector.xaml.cs">
       <DependentUpon>TextBoxInspector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Inspectors\IInspectorControl.cs" />

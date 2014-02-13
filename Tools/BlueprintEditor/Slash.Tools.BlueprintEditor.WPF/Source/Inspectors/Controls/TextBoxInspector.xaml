@@ -1,4 +1,4 @@
-﻿<inspectors:InspectorControl x:Class = "BlueprintEditor.Inspectors.TextBoxInspector"
+﻿<inspectors:InspectorControl x:Class = "BlueprintEditor.Inspectors.Controls.TextBoxInspector"
                              xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                              xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
                              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"

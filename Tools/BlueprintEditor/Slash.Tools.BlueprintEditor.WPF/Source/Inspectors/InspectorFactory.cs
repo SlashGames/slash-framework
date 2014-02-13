@@ -10,6 +10,8 @@ namespace BlueprintEditor.Inspectors
     using System.Windows;
     using System.Windows.Controls;
 
+    using BlueprintEditor.Inspectors.Controls;
+
     using Slash.GameBase.Inspector.Attributes;
     using Slash.GameBase.Inspector.Data;
     using Slash.SystemExt.Utils;

@@ -1,19 +1,22 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CheckBoxInspector.xaml.cs" company="Slash Games">
+// <copyright file="TextBoxInspector.xaml.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor.Inspectors
+namespace BlueprintEditor.Inspectors.Controls
 {
     /// <summary>
-    ///   Inspector to edit a value in a combo box.
+    ///   Inspector to edit a value in a single up down control.
     /// </summary>
-    public partial class ComboBoxInspector
+    public partial class SingleUpDownInspector
     {
         #region Constructors and Destructors
 
-        public ComboBoxInspector()
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
+        public SingleUpDownInspector()
         {
             this.InitializeComponent();
         }
