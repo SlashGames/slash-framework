@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ListIntComponent.cs" company="Slash Games">
+// <copyright file="ListComponent.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -13,27 +13,37 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
     using Slash.GameBase.Inspector.Attributes;
 
     [InspectorComponent]
-    public class ListIntComponent : IEntityComponent
+    public class ListComponent : IEntityComponent
     {
         #region Constants
 
         /// <summary>
-        ///   Attribute: List
+        ///   Attribute: ListInt
         /// </summary>
-        public const string AttributeList = "ListIntComponent.List";
+        public const string AttributeListInt = "ListComponent.ListInt";
 
         /// <summary>
-        ///   Attribute default: List
+        ///   Attribute: ListString
         /// </summary>
-        public const List<int> DefaultList = null;
+        public const string AttributeListString = "ListComponent.ListString";
+
+        /// <summary>
+        ///   Attribute default: ListInt
+        /// </summary>
+        public const List<int> DefaultListInt = null;
+
+        /// <summary>
+        ///   Attribute default: ListString
+        /// </summary>
+        public const List<string> DefaultListString = null;
 
         #endregion
 
         #region Constructors and Destructors
 
-        public ListIntComponent()
+        public ListComponent()
         {
-            this.List = DefaultList;
+            this.ListInt = DefaultListInt;
         }
 
         #endregion
@@ -41,10 +51,16 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         #region Public Properties
 
         /// <summary>
-        ///   List
+        ///   ListInt
         /// </summary>
-        [InspectorInt(AttributeList, Default = DefaultList, Description = "List", List = true)]
-        public List<int> List { get; set; }
+        [InspectorInt(AttributeListInt, Default = DefaultListInt, Description = "ListInt Int", List = true)]
+        public List<int> ListInt { get; set; }
+
+        /// <summary>
+        ///   ListString
+        /// </summary>
+        [InspectorString(AttributeListString, Description = "ListString", Default = DefaultListString, List = true)]
+        public List<string> ListString { get; set; }
 
         #endregion
 
@@ -57,7 +73,7 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <param name="attributeTable">Component data.</param>
         public void InitComponent(IAttributeTable attributeTable)
         {
-            this.List = attributeTable.GetValueOrDefault(AttributeList, DefaultList);
+            this.ListInt = attributeTable.GetValueOrDefault(AttributeListInt, DefaultListInt);
         }
 
         #endregion

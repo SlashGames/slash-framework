@@ -61,15 +61,19 @@ namespace BlueprintEditor.Inspectors
             if (this.value == null)
             {
                 this.value = (IList)Activator.CreateInstance(dataContext.InspectorProperty.PropertyType);
+                dataContext.Value = this.value;
             }
 
-            object item = Activator.CreateInstance(this.itemType);
+            object item = itemType == typeof(string) ? string.Empty : Activator.CreateInstance(this.itemType);
             this.value.Add(item);
 
             dataContext.Value = this.value;
 
             // Create item control.
             this.AddItemControl(item);
+
+            // Value changed.
+            this.OnValueChanged();
         }
 
         private void ClearItemControls()

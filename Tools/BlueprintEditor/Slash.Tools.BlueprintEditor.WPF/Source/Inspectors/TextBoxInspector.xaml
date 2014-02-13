@@ -11,7 +11,7 @@
         <ResourceDictionary Source = "..\Controls\Templates\TextBoxErrorTemplate.xaml" />
     </inspectors:InspectorControl.Resources>
     <TextBox Name = "TbValue"
-             Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}">
+             Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}" MinWidth="200">
         <TextBox.Text>
             <Binding Path = "StringValue" UpdateSourceTrigger = "PropertyChanged">
                 <Binding.ValidationRules>
