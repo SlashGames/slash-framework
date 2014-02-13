@@ -8,10 +8,7 @@ namespace BlueprintEditor.Inspectors
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Windows;
-
-    using BlueprintEditor.Windows;
 
     using Slash.GameBase.Inspector.Attributes;
     using Slash.SystemExt.Utils;
@@ -25,13 +22,11 @@ namespace BlueprintEditor.Inspectors
 
         private readonly InspectorFactory inspectorFactory = new InspectorFactory();
 
-        private readonly List<ItemControl> itemControls = new List<ItemControl>();
+        private InspectorPropertyAttribute itemInspectorProperty;
 
         private Type itemType;
 
         private IList value;
-
-        private InspectorPropertyAttribute itemInspectorProperty;
 
         #endregion
 
@@ -47,15 +42,17 @@ namespace BlueprintEditor.Inspectors
 
         #region Methods
 
-        private void AddItemControl(int index, object item)
+        private void AddItemControl(object item)
         {
-            IInspectorControl propertyControl = this.inspectorFactory.CreateInspectorControlFor(this.itemInspectorProperty, item);
+            IInspectorControl propertyControl =
+                this.inspectorFactory.CreateInspectorControlFor(this.itemInspectorProperty, item);
 
-            ItemControl itemControl = ItemControl.Create(propertyControl, index);
-            itemControl.ValueChanged += this.OnItemValueChanged;
-            this.itemControls.Add(itemControl);
+            // Create item wrapper.
+            ListInspectorItem itemWrapperControl = new ListInspectorItem { Control = (InspectorControl)propertyControl };
+            itemWrapperControl.DeleteClicked += this.OnItemDeleteClicked;
+            itemWrapperControl.ValueChanged += this.OnItemValueChanged;
 
-            this.Items.Children.Add((UIElement)propertyControl);
+            this.Items.Children.Add(itemWrapperControl);
         }
 
         private void BtAdd_OnClick(object sender, RoutedEventArgs e)
@@ -67,25 +64,27 @@ namespace BlueprintEditor.Inspectors
             }
 
             object item = Activator.CreateInstance(this.itemType);
-            int itemIndex = this.value.Count;
             this.value.Add(item);
 
             dataContext.Value = this.value;
 
             // Create item control.
-            this.AddItemControl(itemIndex, item);
+            this.AddItemControl(item);
         }
 
-        private void BtEdit_OnClick(object sender, RoutedEventArgs e)
+        private void ClearItemControls()
         {
-            // Show window for editing the list.
-            ListInspectorWindow dlg = new ListInspectorWindow();
-            var propertyData = (InspectorPropertyData)this.DataContext;
-            dlg.Init(propertyData);
-            dlg.ShowDialog();
+            this.Items.Children.Clear();
+        }
 
-            // Store edited list.
-            propertyData.Value = dlg.GetPropertyValue();
+        private void DeleteItemControl(ListInspectorItem itemControl)
+        {
+            // Unregister from events.
+            itemControl.DeleteClicked -= this.OnItemDeleteClicked;
+            itemControl.ValueChanged -= this.OnItemValueChanged;
+
+            // Remove.
+            this.Items.Children.Remove(itemControl);
         }
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -98,73 +97,48 @@ namespace BlueprintEditor.Inspectors
             this.itemInspectorProperty.List = false;
 
             // Set items.
+            this.ClearItemControls();
             if (this.value != null)
             {
-                for (int index = 0; index < this.value.Count; index++)
+                foreach (var item in this.value)
                 {
-                    var item = this.value[index];
-                    this.AddItemControl(index, item);
+                    this.AddItemControl(item);
                 }
             }
         }
 
-        private void OnItemValueChanged(ItemControl itemControl, object newValue, object oldValue)
+        private void OnItemDeleteClicked(object sender, RoutedEventArgs e)
         {
-            this.value[itemControl.Index] = newValue;
+            ListInspectorItem itemControl = (ListInspectorItem)sender;
 
-            InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
-            dataContext.Value = this.value;
+            // Get control index.
+            int itemIndex = this.Items.Children.IndexOf(itemControl);
+
+            // Delete control.
+            this.DeleteItemControl(itemControl);
+
+            // Delete item from list.
+            this.value.RemoveAt(itemIndex);
+
+            // List changed.
+            this.OnValueChanged();
+        }
+
+        private void OnItemValueChanged(object sender, RoutedEventArgs routedEventArgs)
+        {
+            ListInspectorItem.ValueChangedEventArgs eventArgs = (ListInspectorItem.ValueChangedEventArgs)routedEventArgs;
+
+            ListInspectorItem itemControl = (ListInspectorItem)sender;
+
+            // Get control index.
+            int itemIndex = this.Items.Children.IndexOf(itemControl);
+
+            this.value[itemIndex] = eventArgs.NewValue;
+
+            // List changed.
+            this.OnValueChanged();
         }
 
         #endregion
-
-        private class ItemControl
-        {
-            #region Public Events
-
-            public event Action<ItemControl, object, object> ValueChanged;
-
-            #endregion
-
-            #region Public Properties
-
-            public IInspectorControl Control { get; set; }
-
-            public int Index { get; set; }
-
-            #endregion
-
-            #region Public Methods and Operators
-
-            public static ItemControl Create(IInspectorControl propertyControl, int index)
-            {
-                ItemControl itemControl = new ItemControl();
-                itemControl.Index = index;
-                itemControl.Control = propertyControl;
-                itemControl.Control.ValueChanged += itemControl.OnValueChanged;
-
-                return itemControl;
-            }
-
-            public static void Destroy(ItemControl itemControl)
-            {
-                itemControl.Control.ValueChanged -= itemControl.OnValueChanged;
-            }
-
-            #endregion
-
-            #region Methods
-
-            private void OnValueChanged(InspectorPropertyAttribute inspectorproperty, object newValue, object oldValue)
-            {
-                var handler = this.ValueChanged;
-                if (handler != null)
-                {
-                    handler(this, newValue, oldValue);
-                }
-            }
-
-            #endregion
-        }
     }
 }

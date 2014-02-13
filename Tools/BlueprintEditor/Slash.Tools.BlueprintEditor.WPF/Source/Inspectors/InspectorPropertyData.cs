@@ -172,13 +172,14 @@ namespace BlueprintEditor.Inspectors
             }
         }
 
-        private void OnValueChanged(object newValue, object oldValue)
+        private void OnValueChanged(object newValue)
         {
             InspectorControlValueChangedDelegate handler = this.ValueChanged;
             if (handler != null)
             {
-                handler(this.inspectorProperty, newValue, oldValue);
+                handler(this.inspectorProperty, newValue);
             }
+            this.OnPropertyChanged("Value");
         }
 
         private void SetValue(object newValue, bool updateStringValue)
@@ -188,7 +189,6 @@ namespace BlueprintEditor.Inspectors
                 return;
             }
 
-            object oldValue = this.value;
             this.value = newValue;
 
             if (updateStringValue)
@@ -198,8 +198,7 @@ namespace BlueprintEditor.Inspectors
             }
 
             // Raise event.
-            this.OnValueChanged(this.value, oldValue);
-            this.OnPropertyChanged("Value");
+            this.OnValueChanged(this.value);
         }
 
         #endregion

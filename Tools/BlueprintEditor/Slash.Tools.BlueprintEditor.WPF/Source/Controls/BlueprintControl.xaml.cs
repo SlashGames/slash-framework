@@ -201,10 +201,10 @@ namespace BlueprintEditor.Controls
         }
 
         private void OnPropertyControlValueChanged(
-            InspectorPropertyAttribute inspectorProperty, object newValue, object oldValue)
+            InspectorPropertyAttribute inspectorProperty, object newValue)
         {
             BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-            Console.WriteLine("Property value {0} changed from {1} to {2}", inspectorProperty, oldValue, newValue);
+            Console.WriteLine("Property value {0} changed to {1}", inspectorProperty, newValue);
 
             // Update blueprint configuration.
             if (viewModel.Parent == null)

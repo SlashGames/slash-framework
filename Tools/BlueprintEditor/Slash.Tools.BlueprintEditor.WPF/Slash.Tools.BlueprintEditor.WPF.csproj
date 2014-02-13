@@ -89,6 +89,7 @@
     <Compile Include="Source\Inspectors\ListInspector.xaml.cs">
       <DependentUpon>ListInspector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Inspectors\ListInspectorItem.cs" />
     <Compile Include="Source\Inspectors\SingleUpDownInspector.xaml.cs">
       <DependentUpon>SingleUpDownInspector.xaml</DependentUpon>
     </Compile>
@@ -228,6 +229,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Windows\ProjectSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
