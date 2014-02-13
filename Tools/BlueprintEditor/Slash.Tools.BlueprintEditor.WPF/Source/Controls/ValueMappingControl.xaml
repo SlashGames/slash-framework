@@ -9,7 +9,7 @@
              d:DataContext = "{d:DesignInstance viewModels:ValueMappingViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width = "150" />
+            <ColumnDefinition Width = "*" />
             <ColumnDefinition Width = "150" />
         </Grid.ColumnDefinitions>
 

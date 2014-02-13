@@ -6,23 +6,30 @@
 
 namespace BlueprintEditor.Controls
 {
-    using System.Collections.ObjectModel;
+    using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows.Controls;
+    using System.Windows.Data;
 
     using BlueprintEditor.Annotations;
     using BlueprintEditor.ViewModels;
 
-
     public partial class BlueprintComboBox : INotifyPropertyChanged
     {
+        #region Fields
+
+        private ListCollectionView blueprintsView;
+
+        #endregion
+
         #region Constructors and Destructors
 
         public BlueprintComboBox()
         {
             this.InitializeComponent();
 
+            this.CbParentBlueprint.DataContext = this;
             this.CbParentBlueprint.SelectionChanged += this.OnSelectionChanged;
         }
 
@@ -36,7 +43,33 @@ namespace BlueprintEditor.Controls
 
         #region Public Properties
 
-        public ObservableCollection<BlueprintViewModel> Blueprints { get; set; }
+        /// <summary>
+        ///   Blueprints shown in the combo box.
+        /// </summary>
+        public ListCollectionView Blueprints
+        {
+            get
+            {
+                if (this.blueprintsView == null)
+                {
+                    var editorContext = (EditorContext)this.DataContext;
+                    this.blueprintsView = new ListCollectionView(editorContext.BlueprintManagerViewModel.Blueprints);
+                    this.blueprintsView.SortDescriptions.Add(
+                        new SortDescription("BlueprintId", ListSortDirection.Ascending));
+
+                    if (this.Filter != null)
+                    {
+                        this.blueprintsView.Filter = blueprint => this.Filter((BlueprintViewModel)blueprint);
+                    }
+                }
+                return this.blueprintsView;
+            }
+        }
+
+        /// <summary>
+        ///   Method used to determine whether a blueprint is shown in this combo box.
+        /// </summary>
+        public Predicate<BlueprintViewModel> Filter { get; set; }
 
         public BlueprintViewModel SelectedItem
         {

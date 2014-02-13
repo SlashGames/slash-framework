@@ -34,8 +34,9 @@ namespace BlueprintEditor.Windows
 
             this.CbBlueprintIdMapping.DataContext = this;
 
-            this.CbBlueprints.DataContext = context;
-            this.CbBlueprints.PropertyChanged += this.OnSelectedParentBlueprintChanged;
+            this.CbParentBlueprint.DataContext = context;
+            this.CbParentBlueprint.PropertyChanged += this.OnSelectedParentBlueprintChanged;
+            this.CbParentBlueprint.Filter = blueprint => blueprint.Parent == null;
 
             this.csvColumnHeaders = csvColumnHeaders;
         }
@@ -62,7 +63,7 @@ namespace BlueprintEditor.Windows
         {
             get
             {
-                return this.CbBlueprints.SelectedItem;
+                return this.CbParentBlueprint.SelectedItem;
             }
         }
 
@@ -152,7 +153,7 @@ namespace BlueprintEditor.Windows
             this.SpAttributeMapping.Children.Clear();
 
             // Add new attribute mapping controls.
-            this.AddAttributeMappingsRecursively(this.CbBlueprints.SelectedItem);
+            this.AddAttributeMappingsRecursively(this.CbParentBlueprint.SelectedItem);
         }
 
         #endregion
