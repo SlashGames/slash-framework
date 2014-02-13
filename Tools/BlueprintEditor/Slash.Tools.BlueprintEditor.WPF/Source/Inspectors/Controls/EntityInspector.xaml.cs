@@ -6,9 +6,11 @@
 
 namespace BlueprintEditor.Inspectors.Controls
 {
+    using System;
     using System.ComponentModel;
     using System.Windows;
 
+    using BlueprintEditor.Controls;
     using BlueprintEditor.ViewModels;
 
     using Slash.Collections.AttributeTables;
@@ -34,16 +36,16 @@ namespace BlueprintEditor.Inspectors.Controls
         {
             this.InitializeComponent();
             this.DataContextChanged += this.OnDataContextChanged;
+
+            DependencyPropertyDescriptor dpd =
+                DependencyPropertyDescriptor.FromProperty(
+                    BlueprintComboBox.SelectedBlueprintProperty, typeof(BlueprintComboBox));
+            dpd.AddValueChanged(this.CbBlueprint, this.OnSelectedBlueprintChanged);
         }
 
         #endregion
 
         #region Methods
-
-        private void BlueprintComboBox_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            this.OnBlueprintChanged(this.CbBlueprint.SelectedBlueprint);
-        }
 
         private object GetCurrentAttributeValue(InspectorPropertyAttribute inspectorProperty)
         {
@@ -84,7 +86,8 @@ namespace BlueprintEditor.Inspectors.Controls
             EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value;
             if (entityConfiguration != null)
             {
-                // TODO(co): Select correct blueprint view model.
+                // Select correct blueprint view model.
+                this.CbBlueprint.SelectedBlueprintId = entityConfiguration.BlueprintId;
             }
 
             this.UpdateAttributeTable();
@@ -106,6 +109,11 @@ namespace BlueprintEditor.Inspectors.Controls
             }
 
             this.OnValueChanged();
+        }
+
+        private void OnSelectedBlueprintChanged(object sender, EventArgs e)
+        {
+            this.OnBlueprintChanged(this.CbBlueprint.SelectedBlueprint);
         }
 
         private void UpdateAttributeTable()

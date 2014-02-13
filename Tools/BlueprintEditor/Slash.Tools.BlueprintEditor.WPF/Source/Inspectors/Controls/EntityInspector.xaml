@@ -4,14 +4,14 @@
                              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
                              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
                              xmlns:inspectors = "clr-namespace:BlueprintEditor.Inspectors"
-                             xmlns:controls="clr-namespace:BlueprintEditor.Controls"
-                             xmlns:windows="clr-namespace:BlueprintEditor.Windows"
+                             xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
+                             xmlns:windows = "clr-namespace:BlueprintEditor.Windows"
                              mc:Ignorable = "d"
                              d:DesignHeight = "300" d:DesignWidth = "300">
     <StackPanel>
         <DockPanel>
-        <Label>Blueprint:</Label>
-            <controls:BlueprintComboBox x:Name="CbBlueprint" PropertyChanged="BlueprintComboBox_OnPropertyChanged">
+            <Label>Blueprint:</Label>
+            <controls:BlueprintComboBox x:Name = "CbBlueprint">
                 <controls:BlueprintComboBox.DataContext>
                     <Binding Path = "DataContext.BlueprintManagerViewModel"
                              RelativeSource = "{RelativeSource Mode=FindAncestor, AncestorType=windows:MainWindow}" />
@@ -20,7 +20,7 @@
         </DockPanel>
         <DockPanel>
             <Label>Attributes:</Label>
-            <StackPanel Name="AttributesPanel"></StackPanel>
+            <StackPanel Name = "AttributesPanel"></StackPanel>
         </DockPanel>
     </StackPanel>
 </inspectors:InspectorControl>

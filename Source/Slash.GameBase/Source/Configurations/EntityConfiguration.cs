@@ -8,7 +8,6 @@ namespace Slash.GameBase.Configurations
 {
     using System;
     using System.Collections.Generic;
-    using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
@@ -16,7 +15,7 @@ namespace Slash.GameBase.Configurations
     /// <summary>
     ///   Contains all data to create and initialize an entity.
     /// </summary>
-#if !WINDOWS_STORE    
+#if !WINDOWS_STORE
     public class EntityConfiguration : ICloneable
 #else
     public class EntityConfiguration
@@ -85,7 +84,6 @@ namespace Slash.GameBase.Configurations
         /// </summary>
         public string BlueprintId { get; set; }
 
-        
         /// <summary>
         ///   Configuration for the entity.
         /// </summary>
@@ -146,6 +144,15 @@ namespace Slash.GameBase.Configurations
                 hashCode = (hashCode * 397) ^ (this.BlueprintId != null ? this.BlueprintId.GetHashCode() : 0);
                 return hashCode;
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "BlueprintId: {0}, Configuration: {1}, AdditionalComponentTypes: {2}",
+                this.BlueprintId,
+                this.Configuration,
+                this.AdditionalComponentTypes);
         }
 
         #endregion

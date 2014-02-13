@@ -8,6 +8,7 @@ namespace BlueprintEditor.Controls
 {
     using System;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Controls;
@@ -32,6 +33,8 @@ namespace BlueprintEditor.Controls
         #region Fields
 
         private ListCollectionView blueprintsView;
+
+        private string selectedBlueprintId;
 
         #endregion
 
@@ -93,6 +96,28 @@ namespace BlueprintEditor.Controls
             }
         }
 
+        /// <summary>
+        ///   Current selected blueprint id.
+        /// </summary>
+        public string SelectedBlueprintId
+        {
+            get
+            {
+                return this.selectedBlueprintId;
+            }
+            set
+            {
+                if (value == this.selectedBlueprintId)
+                {
+                    return;
+                }
+
+                this.selectedBlueprintId = value;
+
+                this.UpdateSelectedBlueprint();
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -134,12 +159,28 @@ namespace BlueprintEditor.Controls
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            this.Blueprints = this.CreateBlueprintsView();
+            ListCollectionView newBlueprints = this.CreateBlueprintsView();
+            string newSelectedBlueprintId = this.selectedBlueprintId;
+
+            this.Blueprints = newBlueprints;
+            this.SelectedBlueprintId = newSelectedBlueprintId;
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.SelectedBlueprint = (BlueprintViewModel)this.ComboBox.SelectedItem;
+            BlueprintViewModel newSelectedBlueprint = (BlueprintViewModel)this.ComboBox.SelectedItem;
+            this.SelectedBlueprint = newSelectedBlueprint;
+            this.SelectedBlueprintId = newSelectedBlueprint != null ? newSelectedBlueprint.BlueprintId : null;
+        }
+
+        private void UpdateSelectedBlueprint()
+        {
+            // Search for view model in current blueprints.
+            BlueprintManagerViewModel dataContext = (BlueprintManagerViewModel)this.DataContext;
+            this.ComboBox.SelectedItem = dataContext != null
+                                         ? dataContext.Blueprints.FirstOrDefault(
+                                             blueprint => blueprint.BlueprintId == this.selectedBlueprintId)
+                                         : null;
         }
 
         #endregion
