@@ -9,36 +9,71 @@
              d:DesignHeight = "400" d:DesignWidth = "600" d:DataContext = "{d:DesignInstance context:ProjectSettings}">
     <UserControl.Resources>
         <converters:AssemblyToNameConverter x:Key = "AssemblyToNameConverter" />
+        <converters:LanguageFileToNameConverter x:Key = "LanguageFileToNameConverter" />
     </UserControl.Resources>
     <Grid>
         <StackPanel>
             <DockPanel>
-                <Label Width = "100" ToolTip="Project name">Name</Label>
+                <Label Width = "100" ToolTip = "Project name">Name</Label>
                 <TextBox Name = "TbName" Text = "{Binding Name}"></TextBox>
             </DockPanel>
             <DockPanel>
-                <Label Width = "100" ToolTip="Project description">Description</Label>
+                <Label Width = "100" ToolTip = "Project description">Description</Label>
                 <TextBox Name = "TbDescription" Text = "{Binding Description}" TextWrapping = "Wrap"
                          AcceptsReturn = "True" Height = "78">
                 </TextBox>
             </DockPanel>
             <DockPanel>
-                <Label Width = "100" ToolTip="Project assemblies which contain components that can be added to blueprints">Assemblies</Label>
+                <Label Width = "100"
+                       ToolTip = "Project assemblies which contain components that can be added to blueprints">
+                    Assemblies
+                </Label>
                 <StackPanel>
                     <DataGrid Name = "AssembliesList" ItemsSource = "{Binding ProjectAssemblies}"
                               AutoGenerateColumns = "False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header = "Assembly" Width="*"
+                            <DataGridTextColumn Header = "Assembly" Width = "*"
                                                 Binding = "{Binding Converter={StaticResource AssemblyToNameConverter}}">
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Click = "AddAssembly_OnClick" ToolTip="Add new assembly">Add</Button>
-                    <Button Click = "RemoveAssemblies_OnClick" Content = "Remove" ToolTip="Remove selected assemblies">
+                    <Button Click = "AddAssembly_OnClick" ToolTip = "Add new assembly">Add</Button>
+                    <Button Click = "RemoveAssemblies_OnClick" Content = "Remove"
+                            ToolTip = "Remove selected assemblies">
                         <Button.Style>
                             <Style TargetType = "Button">
                                 <Style.Triggers>
                                     <DataTrigger Binding = "{Binding SelectedItem, ElementName=AssembliesList}"
+                                                 Value = "{x:Null}">
+                                        <Setter Property = "IsEnabled" Value = "False"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+            <DockPanel>
+                <Label Width = "100" ToolTip = "Localization files that are used to localize attribute strings">
+                    Language
+                    Files
+                </Label>
+                <StackPanel>
+                    <DataGrid Name = "LanguageFileList" ItemsSource = "{Binding LanguageFiles}"
+                              AutoGenerateColumns = "False" IsReadOnly = "True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header = "Language File" Width = "*"
+                                                Binding = "{Binding Converter={StaticResource LanguageFileToNameConverter}}">
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Click = "AddLanguageFile_OnClick" ToolTip = "Add new language file">Add</Button>
+                    <Button Click = "RemoveLanguageFiles_OnClick" Content = "Remove"
+                            ToolTip = "Remove selected language files">
+                        <Button.Style>
+                            <Style TargetType = "Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding = "{Binding SelectedItem, ElementName=LanguageFileList}"
                                                  Value = "{x:Null}">
                                         <Setter Property = "IsEnabled" Value = "False"></Setter>
                                     </DataTrigger>
