@@ -6,6 +6,7 @@
 
 namespace BlueprintEditor.Windows
 {
+    using System.Reflection;
     using System.Windows;
 
     /// <summary>
@@ -18,6 +19,20 @@ namespace BlueprintEditor.Windows
         public AboutWindow()
         {
             this.InitializeComponent();
+            this.DataContext = this;
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public string Version
+        {
+            get
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                return string.Format("Version {0}", assembly.GetName().Version);
+            }
         }
 
         #endregion
