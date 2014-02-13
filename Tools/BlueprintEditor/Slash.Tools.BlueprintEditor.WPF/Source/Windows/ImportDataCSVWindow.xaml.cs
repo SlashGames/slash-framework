@@ -9,6 +9,7 @@ namespace BlueprintEditor.Windows
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Linq;
     using System.Windows;
 
     using BlueprintEditor.Controls;
@@ -20,8 +21,6 @@ namespace BlueprintEditor.Windows
     {
         #region Fields
 
-        private readonly IEnumerable<string> csvColumnHeaders;
-
         private readonly List<ValueMappingViewModel> valueMappings = new List<ValueMappingViewModel>();
 
         #endregion
@@ -32,13 +31,14 @@ namespace BlueprintEditor.Windows
         {
             this.InitializeComponent();
 
-            this.CbBlueprintIdMapping.DataContext = this;
+            this.CSVColumnHeaders = csvColumnHeaders;
 
             this.CbParentBlueprint.DataContext = context;
             this.CbParentBlueprint.PropertyChanged += this.OnSelectedParentBlueprintChanged;
             this.CbParentBlueprint.Filter = blueprint => blueprint.Parent == null;
 
-            this.csvColumnHeaders = csvColumnHeaders;
+            this.CbBlueprintIdMapping.DataContext = this;
+            this.CbBlueprintIdMapping.SelectedIndex = 0;
         }
 
         #endregion
@@ -70,13 +70,7 @@ namespace BlueprintEditor.Windows
         /// <summary>
         ///   Headers of the columns of the imported CSV file.
         /// </summary>
-        public ObservableCollection<string> CSVColumnHeaders
-        {
-            get
-            {
-                return new ObservableCollection<string>(this.csvColumnHeaders);
-            }
-        }
+        public IEnumerable<string> CSVColumnHeaders { get; private set; }
 
         /// <summary>
         ///   Maps attribute table keys to CSV columns.
@@ -117,7 +111,7 @@ namespace BlueprintEditor.Windows
                     ValueMappingViewModel valueMapping = new ValueMappingViewModel
                         {
                             MappingSource = inspectorProperty.Name,
-                            AvailableMappingTargets = new ObservableCollection<string>(this.csvColumnHeaders)
+                            AvailableMappingTargets = new ObservableCollection<string>(this.CSVColumnHeaders)
                         };
 
                     ValueMappingControl valueMappingControl = new ValueMappingControl(valueMapping);
@@ -135,8 +129,49 @@ namespace BlueprintEditor.Windows
             this.Close();
         }
 
+        /// <summary>
+        ///   Checks whether any CSV column is used for multiple attribute table keys.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c>, if no CSV column is used for multiple attribute table keys, and
+        ///   <c>false</c> otherwise.
+        /// </returns>
+        private bool CheckDuplicateMappings()
+        {
+            var mappedColumns = new HashSet<string>();
+            mappedColumns.Add(this.BlueprintIdColumn);
+
+            foreach (var mapping in this.ValueMappings.Where(mapping => mapping.MappingTarget != null))
+            {
+                if (mappedColumns.Contains(mapping.MappingTarget))
+                {
+                    return false;
+                }
+
+                mappedColumns.Add(mapping.MappingTarget);
+            }
+
+            return true;
+        }
+
         private void ImportData_OnClick(object sender, RoutedEventArgs e)
         {
+            if (!this.CheckDuplicateMappings())
+            {
+                var result =
+                    MessageBox.Show(
+                        "Some attribute table keys are mapped to the same CSV column. Continue anyway?",
+                        "Duplicate Mappings",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question,
+                        MessageBoxResult.No);
+
+                if (result != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+            }
+
             this.DialogResult = true;
             this.Close();
         }

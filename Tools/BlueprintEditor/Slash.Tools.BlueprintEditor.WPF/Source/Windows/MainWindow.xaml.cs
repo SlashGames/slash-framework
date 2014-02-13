@@ -6,6 +6,8 @@
 
 namespace BlueprintEditor.Windows
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
     using System.Linq;
@@ -104,6 +106,23 @@ namespace BlueprintEditor.Windows
 
         #region Methods
 
+        /// <summary>
+        ///   Shows the messages of the passed exceptions as aggregated warning with the specified title.
+        /// </summary>
+        /// <param name="title">Title of the warning to show.</param>
+        /// <param name="exceptions">Exceptions to include in the warning.</param>
+        private static void ShowExceptionsAsWarning(string title, IEnumerable<Exception> exceptions)
+        {
+            var stringBuilder = new StringBuilder();
+
+            foreach (var exception in exceptions)
+            {
+                stringBuilder.AppendLine(exception.Message);
+            }
+
+            EditorDialog.Warning(title, stringBuilder.ToString());
+        }
+
         private void BackgroundLoadContext(object sender, DoWorkEventArgs e)
         {
             try
@@ -130,16 +149,9 @@ namespace BlueprintEditor.Windows
                 {
                     this.Context.BlueprintManagerViewModel.SetupBlueprintHierarchy();
                 }
-                catch (AggregateException exception)
+                catch (Slash.SystemExt.Exceptions.AggregateException exception)
                 {
-                    var stringBuilder = new StringBuilder();
-
-                    foreach (var innerException in exception.InnerExceptions)
-                    {
-                        stringBuilder.AppendLine(innerException.Message);
-                    }
-
-                    EditorDialog.Warning("Blueprint hierarchy not properly set up", stringBuilder.ToString());
+                    ShowExceptionsAsWarning("Blueprint hierarchy not properly set up", exception.InnerExceptions);
                 }
             }
 
@@ -257,7 +269,7 @@ namespace BlueprintEditor.Windows
             };
 
             var result = openFileDialog.ShowDialog();
-            
+
             if (result != true)
             {
                 return;
@@ -278,33 +290,62 @@ namespace BlueprintEditor.Windows
 
                 if (result != true)
                 {
+                    EditorDialog.Info("CSV Import Cancelled", "No data imported.");
                     return;
                 }
 
                 // Create a blueprint for each CSV row.
+                var blueprintManagerViewModel = this.Context.BlueprintManagerViewModel;
+                var errors = new List<Exception>();
+
+                var newBlueprints = 0;
+                var skippedBlueprints = 0;
+
                 while (csvReader.CurrentRecord != null)
                 {
-                    // Create new blueprint.
-                    var blueprintManagerViewModel = this.Context.BlueprintManagerViewModel;
-                    blueprintManagerViewModel.NewBlueprintId = csvReader[importDataCsvWindow.BlueprintIdColumn];
-                    var blueprintViewModel = blueprintManagerViewModel.CreateNewBlueprint();
-
-                    // Map attribute table keys to CSV value.
-                    foreach (var valueMapping in
-                        importDataCsvWindow.ValueMappings.Where(
-                            mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
+                    try
                     {
-                        blueprintViewModel.Blueprint.AttributeTable.Add(
-                            valueMapping.MappingSource, csvReader[valueMapping.MappingTarget]);
-                    }
+                        // Create new blueprint.
+                        blueprintManagerViewModel.NewBlueprintId = csvReader[importDataCsvWindow.BlueprintIdColumn];
+                        var blueprintViewModel = blueprintManagerViewModel.CreateNewBlueprint();
 
-                    // Reparent new blueprint.
-                    blueprintManagerViewModel.ReparentBlueprint(
-                        blueprintViewModel.BlueprintId, importDataCsvWindow.BlueprintParent.BlueprintId);
+                        // Map attribute table keys to CSV value.
+                        foreach (var valueMapping in
+                            importDataCsvWindow.ValueMappings.Where(
+                                mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
+                        {
+                            blueprintViewModel.Blueprint.AttributeTable.Add(
+                                valueMapping.MappingSource, csvReader[valueMapping.MappingTarget]);
+                        }
+
+                        // Reparent new blueprint.
+                        blueprintManagerViewModel.ReparentBlueprint(
+                            blueprintViewModel.BlueprintId, importDataCsvWindow.BlueprintParent.BlueprintId);
+
+                        newBlueprints++;
+                    }
+                    catch (Exception exception)
+                    {
+                        errors.Add(exception);
+                        skippedBlueprints++;
+                    }
 
                     // Read next record.
                     csvReader.Read();
                 }
+
+                // Show import results.
+                if (errors.Count > 0)
+                {
+                    ShowExceptionsAsWarning("Some data could not be imported", errors);
+                }
+
+                var importInfoBuilder = new StringBuilder();
+                importInfoBuilder.AppendLine(string.Format("{0} blueprint(s) imported.", newBlueprints));
+                importInfoBuilder.AppendLine(string.Format("{0} blueprint(s) skipped.", skippedBlueprints));
+                var importInfo = importInfoBuilder.ToString();
+
+                EditorDialog.Info("CSV Import Complete", importInfo);
             }
         }
 

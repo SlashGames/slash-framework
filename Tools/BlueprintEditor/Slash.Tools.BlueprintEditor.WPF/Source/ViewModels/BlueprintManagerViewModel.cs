@@ -208,7 +208,7 @@ namespace BlueprintEditor.ViewModels
             this.Blueprints.Add(newBlueprint);
 
             // Clear blueprint id.
-            this.NewBlueprintId = String.Empty;
+            this.NewBlueprintId = string.Empty;
 
             return newBlueprint;
         }
