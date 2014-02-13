@@ -6,8 +6,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type inspectors:ListInspectorItem}">
                     <DockPanel>
-                        <Button Name="PART_BtDelete" Width="25" Height="25">-</Button>
-                        <ContentPresenter ContentSource="Control" />
+                        <Button Name="PART_BtDelete" Width="25" Height="25" DockPanel.Dock="Left">-</Button>
+                        <ContentPresenter ContentSource="Control" DockPanel.Dock="Right" />
                     </DockPanel>
                 </ControlTemplate>
             </Setter.Value>

@@ -16,14 +16,8 @@
             <converters:ListToStringConverter x:Key = "ListToStringConverter" />
         </ResourceDictionary>
     </inspectors:InspectorControl.Resources>
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Vertical">
         <StackPanel Name="Items"></StackPanel>
-        <Button Name = "BtAdd" Click = "BtAdd_OnClick" Width="26" Height="26">+</Button>
-        <!--<Label Name = "LbValue" Grid.Column = "1">
-            <Binding Path="StringValue" Converter="{StaticResource ListToStringConverter}" />
-        </Label>
-        <Button Name = "BtEdit" Grid.Column = "2" Click = "BtEdit_OnClick">
-            ...
-        </Button>-->
+        <Button Name = "BtAdd" Click = "BtAdd_OnClick" Width="26" Height="26" HorizontalAlignment="Left">+</Button>
     </StackPanel>
 </inspectors:InspectorControl>
