@@ -237,12 +237,17 @@ namespace BlueprintEditor.ViewModels
 
             fileStream.Close();
 
-            // Convert project assembly paths.
+            // Convert file paths.
             newProjectSettings.ProjectAssemblies =
                 newProjectSettings.ProjectAssembliesSerialized.Select(
                     assemblyPath =>
                     ReflectionUtils.FindAssembly(string.Format("{0}\\{1}", Path.GetDirectoryName(path), assemblyPath)))
                                   .ToList();
+
+            newProjectSettings.LanguageFiles =
+                newProjectSettings.LanguageFilesSerialized.Select(
+                    languageFilePath =>
+                        new LanguageFile { Path = new FileInfo(string.Format("{0}\\{1}", Path.GetDirectoryName(path), languageFilePath)).FullName }).ToList();
 
             // Load blueprint files.
             foreach (var blueprintFile in newProjectSettings.BlueprintFiles)
@@ -329,10 +334,14 @@ namespace BlueprintEditor.ViewModels
             // Save project.
             var fileStream = new FileStream(this.SerializationPath, FileMode.Create);
 
-            // Convert project assembly paths.
+            // Convert file paths.
             this.ProjectSettings.ProjectAssembliesSerialized =
                 this.ProjectSettings.ProjectAssemblies.Select(
                     projectAssembly => GetRelativePath(projectAssembly.CodeBase, this.SerializationPath)).ToArray();
+
+            this.ProjectSettings.LanguageFilesSerialized =
+                this.ProjectSettings.LanguageFiles.Select(
+                    languageFile => GetRelativePath(languageFile.Path, this.SerializationPath)).ToArray();
 
             this.projectSettingsSerializer.Serialize(fileStream, this.ProjectSettings);
             fileStream.Close();

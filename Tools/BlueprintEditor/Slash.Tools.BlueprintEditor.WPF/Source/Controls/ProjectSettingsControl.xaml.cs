@@ -55,9 +55,32 @@ namespace BlueprintEditor.Controls
             this.AssembliesList.Items.Refresh();
         }
 
+        private void AddLanguageFile_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Configure open file dialog box.
+            OpenFileDialog dlg = new OpenFileDialog { DefaultExt = ".txt", Filter = "Language Files (.txt)|*.txt" };
+
+            // Show open file dialog box.
+            bool? result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result != true)
+            {
+                return;
+            }
+
+            // Add language file to project.
+            ProjectSettings projectSettings = (ProjectSettings)this.DataContext;
+            LanguageFile languageFile = new LanguageFile { Path = dlg.FileName };
+            projectSettings.AddLanguageFile(languageFile);
+
+            // Refresh list.
+            this.LanguageFileList.Items.Refresh();
+        }
+
         private void RemoveAssemblies_OnClick(object sender, RoutedEventArgs e)
         {
-            // Get selected assembly.
+            // Get selected assemblies.
             IEnumerable<Assembly> selectedAssemblies = this.AssembliesList.SelectedItems.Cast<Assembly>().ToList();
             if (!selectedAssemblies.Any())
             {
@@ -73,10 +96,11 @@ namespace BlueprintEditor.Controls
                 IEnumerable<Type> usedTypesList = usedTypes as IList<Type> ?? usedTypes.ToList();
                 if (usedTypesList.Any())
                 {
-                    string message = string.Format(
-                        "Can't remove assembly '{0}', {1} types are still used by the project:\n",
-                        selectedAssembly.GetName().Name,
-                        usedTypesList.Count());
+                    string message =
+                        string.Format(
+                            "Can't remove assembly '{0}', {1} types are still used by the project:\n",
+                            selectedAssembly.GetName().Name,
+                            usedTypesList.Count());
                     const int MaxShownTypes = 5;
                     foreach (Type usedType in usedTypesList.Take(MaxShownTypes))
                     {
@@ -96,6 +120,28 @@ namespace BlueprintEditor.Controls
 
             // Refresh list.
             this.AssembliesList.Items.Refresh();
+        }
+
+        private void RemoveLanguageFiles_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Get selected language files.
+            IEnumerable<LanguageFile> selectedLanguageFiles =
+                this.LanguageFileList.SelectedItems.Cast<LanguageFile>().ToList();
+            if (!selectedLanguageFiles.Any())
+            {
+                return;
+            }
+
+            ProjectSettings projectSettings = (ProjectSettings)this.DataContext;
+
+            foreach (var selectedLanguageFile in selectedLanguageFiles)
+            {
+                // Remove selected assembly.
+                projectSettings.RemoveLanguageFile(selectedLanguageFile);
+            }
+
+            // Refresh list.
+            this.LanguageFileList.Items.Refresh();
         }
 
         #endregion

@@ -16,6 +16,46 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
     using Slash.GameBase.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
+    public sealed class LanguageFile
+    {
+        #region Public Properties
+
+        public string Path { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            return obj is LanguageFile && this.Equals((LanguageFile)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (this.Path != null ? this.Path.GetHashCode() : 0);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private bool Equals(LanguageFile other)
+        {
+            return string.Equals(this.Path, other.Path);
+        }
+
+        #endregion
+    }
+
     /// <summary>
     ///   Blueprint file which belongs to a project.
     /// </summary>
@@ -59,6 +99,11 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         private IEnumerable<Type> entityComponentTypes;
 
         /// <summary>
+        ///   Language files which belong to the project.
+        /// </summary>
+        private IList<LanguageFile> languageFiles;
+
+        /// <summary>
         ///   Assemblies which belong to the project.
         /// </summary>
         private IList<Assembly> projectAssemblies;
@@ -73,6 +118,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         public ProjectSettings()
         {
             this.ProjectAssemblies = new List<Assembly>();
+            this.LanguageFiles = new List<LanguageFile>();
             this.BlueprintFiles = new List<BlueprintFile>();
 
             this.Name = DefaultProjectName;
@@ -84,11 +130,15 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
 
         public delegate void EntityComponentTypesChangedDelegate();
 
+        public delegate void LanguageFilesChangedDelegate();
+
         #endregion
 
         #region Public Events
 
         public event EntityComponentTypesChangedDelegate EntityComponentTypesChanged;
+
+        public event LanguageFilesChangedDelegate LanguageFilesChanged;
 
         #endregion
 
@@ -134,6 +184,32 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         }
 
         /// <summary>
+        ///   Language files which belong to the project.
+        /// </summary>
+        [XmlIgnore]
+        public IList<LanguageFile> LanguageFiles
+        {
+            get
+            {
+                return this.languageFiles;
+            }
+            set
+            {
+                this.languageFiles = value;
+                this.OnLanguageFilesChanged();
+            }
+        }
+
+        /// <summary>
+        ///   Wrapper for LanguageFiles property for XML serialization.
+        /// </summary>
+        [XmlArray("LanguageFiles", Order = 4)]
+        [XmlArrayItem("LanguageFile")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string[] LanguageFilesSerialized { get; set; }
+
+        /// <summary>
         ///   Project name.
         /// </summary>
         [XmlElement(Order = 0)]
@@ -158,7 +234,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         }
 
         /// <summary>
-        ///   Wrapper for ProjectAssemblies property for xml serialization.
+        ///   Wrapper for ProjectAssemblies property for XML serialization.
         /// </summary>
         [XmlArray("ProjectAssemblies", Order = 2)]
         [XmlArrayItem("ProjectAssembly")]
@@ -185,6 +261,18 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             this.ProjectAssemblies.Add(assembly);
             this.entityComponentTypes = null;
             this.OnEntityComponentTypesChanged();
+        }
+
+        public void AddLanguageFile(LanguageFile languageFile)
+        {
+            // Check if language file already exists in project.
+            if (this.LanguageFiles.Contains(languageFile))
+            {
+                return;
+            }
+
+            this.LanguageFiles.Add(languageFile);
+            this.OnLanguageFilesChanged();
         }
 
         /// <summary>
@@ -263,6 +351,22 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             return true;
         }
 
+        public bool RemoveLanguageFile(LanguageFile languageFile)
+        {
+            // Check if project contains language file.
+            if (!this.LanguageFiles.Contains(languageFile))
+            {
+                return false;
+            }
+
+            // Remove from project.
+            this.LanguageFiles.Remove(languageFile);
+
+            this.OnLanguageFilesChanged();
+
+            return true;
+        }
+
         #endregion
 
         #region Methods
@@ -279,6 +383,15 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         private void OnEntityComponentTypesChanged()
         {
             EntityComponentTypesChangedDelegate handler = this.EntityComponentTypesChanged;
+            if (handler != null)
+            {
+                handler();
+            }
+        }
+
+        private void OnLanguageFilesChanged()
+        {
+            var handler = this.LanguageFilesChanged;
             if (handler != null)
             {
                 handler();
