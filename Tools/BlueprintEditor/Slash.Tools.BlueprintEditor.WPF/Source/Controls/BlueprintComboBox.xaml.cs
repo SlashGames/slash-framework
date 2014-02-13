@@ -18,6 +18,17 @@ namespace BlueprintEditor.Controls
 
     public partial class BlueprintComboBox : INotifyPropertyChanged
     {
+        #region Static Fields
+
+        public static readonly DependencyProperty SelectedBlueprintProperty =
+            DependencyProperty.Register(
+                "SelectedBlueprint",
+                typeof(BlueprintViewModel),
+                typeof(BlueprintComboBox),
+                new PropertyMetadata(null) { PropertyChangedCallback = OnSelectedBlueprintChanged });
+
+        #endregion
+
         #region Fields
 
         private ListCollectionView blueprintsView;
@@ -32,13 +43,8 @@ namespace BlueprintEditor.Controls
 
             this.DataContextChanged += this.OnDataContextChanged;
 
-            this.CbParentBlueprint.DataContext = this;
-            this.CbParentBlueprint.SelectionChanged += this.OnSelectionChanged;
-        }
-
-        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            this.Blueprints = this.CreateBlueprintsView();
+            this.ComboBox.DataContext = this;
+            this.ComboBox.SelectionChanged += this.OnSelectionChanged;
         }
 
         #endregion
@@ -67,36 +73,23 @@ namespace BlueprintEditor.Controls
             }
         }
 
-        private ListCollectionView CreateBlueprintsView()
-        {
-            BlueprintManagerViewModel dataContext = (BlueprintManagerViewModel)this.DataContext;
-            if (dataContext == null)
-            {
-                return null;
-            }
-
-            ListCollectionView newBlueprintsView = new ListCollectionView(dataContext.Blueprints);
-            newBlueprintsView.SortDescriptions.Add(
-                new SortDescription("BlueprintId", ListSortDirection.Ascending));
-
-            if (this.Filter != null)
-            {
-                newBlueprintsView.Filter = blueprint => this.Filter((BlueprintViewModel)blueprint);
-            }
-
-            return newBlueprintsView;
-        }
-
         /// <summary>
         ///   Method used to determine whether a blueprint is shown in this combo box.
         /// </summary>
         public Predicate<BlueprintViewModel> Filter { get; set; }
 
-        public BlueprintViewModel SelectedItem
+        /// <summary>
+        ///   Current selected blueprint.
+        /// </summary>
+        public BlueprintViewModel SelectedBlueprint
         {
             get
             {
-                return (BlueprintViewModel)this.CbParentBlueprint.SelectedItem;
+                return (BlueprintViewModel)this.GetValue(SelectedBlueprintProperty);
+            }
+            set
+            {
+                this.SetValue(SelectedBlueprintProperty, value);
             }
         }
 
@@ -114,9 +107,39 @@ namespace BlueprintEditor.Controls
             }
         }
 
+        private static void OnSelectedBlueprintChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            BlueprintComboBox comboBox = (BlueprintComboBox)d;
+            comboBox.OnPropertyChanged("SelectedBlueprint");
+        }
+
+        private ListCollectionView CreateBlueprintsView()
+        {
+            BlueprintManagerViewModel dataContext = (BlueprintManagerViewModel)this.DataContext;
+            if (dataContext == null)
+            {
+                return null;
+            }
+
+            ListCollectionView newBlueprintsView = new ListCollectionView(dataContext.Blueprints);
+            newBlueprintsView.SortDescriptions.Add(new SortDescription("BlueprintId", ListSortDirection.Ascending));
+
+            if (this.Filter != null)
+            {
+                newBlueprintsView.Filter = blueprint => this.Filter((BlueprintViewModel)blueprint);
+            }
+
+            return newBlueprintsView;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            this.Blueprints = this.CreateBlueprintsView();
+        }
+
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.OnPropertyChanged("SelectedItem");
+            this.SelectedBlueprint = (BlueprintViewModel)this.ComboBox.SelectedItem;
         }
 
         #endregion

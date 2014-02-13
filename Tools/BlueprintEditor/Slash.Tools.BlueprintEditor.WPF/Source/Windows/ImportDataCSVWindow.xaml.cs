@@ -63,7 +63,7 @@ namespace BlueprintEditor.Windows
         {
             get
             {
-                return this.CbParentBlueprint.SelectedItem;
+                return this.CbParentBlueprint.SelectedBlueprint;
             }
         }
 
@@ -188,7 +188,7 @@ namespace BlueprintEditor.Windows
             this.SpAttributeMapping.Children.Clear();
 
             // Add new attribute mapping controls.
-            this.AddAttributeMappingsRecursively(this.CbParentBlueprint.SelectedItem);
+            this.AddAttributeMappingsRecursively(this.CbParentBlueprint.SelectedBlueprint);
         }
 
         #endregion

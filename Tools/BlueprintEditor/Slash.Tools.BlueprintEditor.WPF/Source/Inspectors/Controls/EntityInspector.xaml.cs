@@ -42,7 +42,7 @@ namespace BlueprintEditor.Inspectors.Controls
 
         private void BlueprintComboBox_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            this.OnBlueprintChanged(this.CbBlueprint.SelectedItem);
+            this.OnBlueprintChanged(this.CbBlueprint.SelectedBlueprint);
         }
 
         private object GetCurrentAttributeValue(InspectorPropertyAttribute inspectorProperty)
