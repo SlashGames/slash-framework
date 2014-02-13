@@ -28,7 +28,10 @@
         <ScrollViewer>
             <StackPanel Name = "SpAttributeMapping" />
         </ScrollViewer>
-        
-        <Button Click="ImportData_OnClick">Import Data</Button>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button DockPanel.Dock="Left" Click="ImportData_OnClick" Width="100" Margin="10">Import Data</Button>
+            <Button DockPanel.Dock="Right" Click="Cancel_OnClick" Width="100" Margin="10">Cancel</Button>
+        </StackPanel>
     </StackPanel>
 </Window>

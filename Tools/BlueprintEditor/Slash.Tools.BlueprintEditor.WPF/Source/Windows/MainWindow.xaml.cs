@@ -257,7 +257,7 @@ namespace BlueprintEditor.Windows
             };
 
             var result = openFileDialog.ShowDialog();
-
+            
             if (result != true)
             {
                 return;
@@ -274,7 +274,12 @@ namespace BlueprintEditor.Windows
 
                 // Allow user to specify which attribute table keys are mapped to which CSV columns.
                 var importDataCsvWindow = new ImportDataCSVWindow(this.Context, csvReader.FieldHeaders) { Owner = this };
-                importDataCsvWindow.ShowDialog();
+                result = importDataCsvWindow.ShowDialog();
+
+                if (result != true)
+                {
+                    return;
+                }
 
                 // Create a blueprint for each CSV row.
                 while (csvReader.CurrentRecord != null)

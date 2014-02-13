@@ -128,11 +128,16 @@ namespace BlueprintEditor.Windows
             }
         }
 
+        private void Cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
+        }
+
         private void ImportData_OnClick(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = true;
             this.Close();
-
-            // TODO(np): Provide Cancel button.
         }
 
         private void OnSelectedParentBlueprintChanged(object sender, PropertyChangedEventArgs e)
