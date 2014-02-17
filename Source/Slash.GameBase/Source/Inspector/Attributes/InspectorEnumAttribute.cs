@@ -7,11 +7,8 @@
 namespace Slash.GameBase.Inspector.Attributes
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-
-    using Slash.GameBase.Inspector.Validation;
 
     /// <summary>
     ///   Exposes the property to the inspector.
@@ -26,11 +23,23 @@ namespace Slash.GameBase.Inspector.Attributes
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
         /// <param name="enumType">Type of the enum this attribute is attached to.</param>
+        [Obsolete(
+            "Enum type doesn't have to be specified anymore as the property type is available to all inspector properties now. So use the normal constructor and set the Default value manually."
+            )]
         public InspectorEnumAttribute(string name, Type enumType)
             : base(name)
         {
-            this.EnumType = enumType;
+            this.PropertyType = enumType;
             this.Default = Enum.GetValues(enumType).GetValue(0);
+        }
+
+        /// <summary>
+        ///   Exposes the property to the inspector.
+        /// </summary>
+        /// <param name="name">Property name to be shown in the inspector.</param>
+        public InspectorEnumAttribute(string name)
+            : base(name)
+        {
         }
 
         #endregion
@@ -41,11 +50,6 @@ namespace Slash.GameBase.Inspector.Attributes
         ///   Allowed enum values. If not set, all values are allowed.
         /// </summary>
         public object[] AllowedValues { get; set; }
-
-        /// <summary>
-        ///   Type of the enum this attribute is attached to.
-        /// </summary>
-        public Type EnumType { get; private set; }
 
         /// <summary>
         ///   Indicates if the enum has a Flags attribute.
@@ -71,7 +75,7 @@ namespace Slash.GameBase.Inspector.Attributes
                 }
 
                 // Collect all values and skip forbidden ones.
-                IEnumerable<object> values = Enum.GetValues(this.EnumType).Cast<object>();
+                IEnumerable<object> values = Enum.GetValues(this.PropertyType).Cast<object>();
                 IEnumerable<object> allowedValues = this.ForbiddenValues == null
                                                         ? values
                                                         : values.Where(
@@ -83,40 +87,6 @@ namespace Slash.GameBase.Inspector.Attributes
         #endregion
 
         #region Public Methods and Operators
-
-        /// <summary>
-        ///   Converts the passed text to a value of the correct type for this property.
-        /// </summary>
-        /// <param name="text">Text to convert.</param>
-        /// <returns>
-        ///   Value of the correct type for this property, if the conversion was successful, and <c>null</c> otherwise.
-        /// </returns>
-        public override object ConvertStringToValue(string text)
-        {
-            return Enum.Parse(this.EnumType, text);
-        }
-
-        /// <summary>
-        ///   Converts the passed value to a string that can be converted back to a value of the correct type for this property.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <returns>String that can be converted back to a value of the correct type for this property.</returns>
-        /// <see cref="InspectorPropertyAttribute.ConvertStringToValue" />
-        public override string ConvertValueToString(object value)
-        {
-            return value.ToString();
-        }
-
-        /// <summary>
-        ///   Gets an empty list for elements of the type of the property the attribute is attached to.
-        /// </summary>
-        /// <returns>Empty list of matching type.</returns>
-        public override IList GetEmptyList()
-        {
-            var listType = typeof(List<>);
-            var constructedListType = listType.MakeGenericType(this.EnumType);
-            return (IList)Activator.CreateInstance(constructedListType);
-        }
 
         /// <summary>
         ///   Indicates if the specified value is allowed for the property.
@@ -135,11 +105,6 @@ namespace Slash.GameBase.Inspector.Attributes
             return this.AllowedValues == null || Array.IndexOf(this.AllowedValues, value) != -1;
         }
 
-        public override string ToString()
-        {
-            return string.Format("Name: {0}, Enum: {1}, Default: {2}", this.Name, this.EnumType.Name, this.Default);
-        }
-
         /// <summary>
         ///   Tries to convert the specified text to a value of the correct type for this property.
         /// </summary>
@@ -152,7 +117,7 @@ namespace Slash.GameBase.Inspector.Attributes
         {
             try
             {
-                value = Enum.Parse(this.EnumType, text);
+                value = Enum.Parse(this.PropertyType, text);
                 return true;
             }
             catch (Exception)
@@ -175,29 +140,6 @@ namespace Slash.GameBase.Inspector.Attributes
         {
             text = value.ToString();
             return true;
-        }
-
-        /// <summary>
-        ///   Checks whether the passed value is valid for this property.
-        /// </summary>
-        /// <param name="value">Value to check.</param>
-        /// <returns>
-        ///   <c>null</c>, if the passed value is valid for this property,
-        ///   and <see cref="ValidationError" /> which contains information about the error otherwise.
-        /// </returns>
-        public override ValidationError Validate(object value)
-        {
-            if (value == null)
-            {
-                return ValidationError.Null;
-            }
-
-            if (value.GetType() != this.EnumType)
-            {
-                return ValidationError.Default;
-            }
-
-            return null;
         }
 
         #endregion
