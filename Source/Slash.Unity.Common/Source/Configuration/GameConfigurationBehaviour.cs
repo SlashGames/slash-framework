@@ -40,13 +40,7 @@ namespace Slash.Unity.Common.Configuration
         /// <summary>
         ///   Load blueprint manager from asset.
         /// </summary>
-        public BlueprintManager BlueprintManager
-        {
-            get
-            {
-                return this.LoadBlueprints();
-            }
-        }
+        public BlueprintManager BlueprintManager { get; private set; }
 
         public IAttributeTable Configuration
         {
@@ -133,6 +127,11 @@ namespace Slash.Unity.Common.Configuration
             if (this.Configuration == null)
             {
                 this.Load();
+            }
+
+            if (this.BlueprintManager == null)
+            {
+                this.LoadBlueprints();
             }
         }
 
