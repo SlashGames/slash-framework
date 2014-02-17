@@ -65,6 +65,7 @@
     <Compile Include="Source\Configuration\GameConfigurationBehaviour.cs" />
     <Compile Include="Source\Core\EntityGameObjectsBehaviour.cs" />
     <Compile Include="Source\Core\EntityObjectPool.cs" />
+    <Compile Include="Source\Core\GameBehaviour.cs" />
     <Compile Include="Source\Core\LogicToVisualDelegate.cs" />
     <Compile Include="Source\Core\LogicToVisualDelegateAttribute.cs" />
     <Compile Include="Source\Core\LogicToVisualMapping.cs" />
