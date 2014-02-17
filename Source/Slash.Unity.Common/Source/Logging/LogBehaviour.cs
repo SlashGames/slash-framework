@@ -30,7 +30,9 @@ namespace Slash.Unity.Common.Logging
         /// </summary>
         [SerializeField]
         [HideInInspector]
-        private readonly List<string> disabledEventTypes = new List<string>();
+// ReSharper disable FieldCanBeMadeReadOnly.Local
+        private List<string> disabledEventTypes = new List<string>();
+// ReSharper restore FieldCanBeMadeReadOnly.Local
 
         /// <summary>
         ///   Game to log events of.
