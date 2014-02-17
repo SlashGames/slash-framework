@@ -10,6 +10,7 @@ namespace Slash.GameBase
     using Slash.GameBase.Blueprints;
     using Slash.GameBase.Components;
     using Slash.GameBase.Events;
+    using Slash.GameBase.Logging;
     using Slash.GameBase.Systems;
 
     /// <summary>
@@ -92,6 +93,11 @@ namespace Slash.GameBase
         ///   Name of this game.
         /// </summary>
         public string GameName { get; set; }
+
+        /// <summary>
+        ///   Logger for logic events.
+        /// </summary>
+        public GameLogger Log { get; set; }
 
         /// <summary>
         ///   Whether this game is running, or not (e.g. not yet started,

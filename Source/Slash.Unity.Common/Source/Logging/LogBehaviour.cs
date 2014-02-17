@@ -42,6 +42,30 @@ namespace Slash.Unity.Common.Logging
         #region Public Methods and Operators
 
         /// <summary>
+        ///   Logs the passed message as error.
+        /// </summary>
+        /// <param name="s">Error to log.</param>
+        public void Error(string s)
+        {
+            if (!this.Disabled)
+            {
+                Debug.LogError(s);
+            }
+        }
+
+        /// <summary>
+        ///   Logs the passed message.
+        /// </summary>
+        /// <param name="s">Message to log.</param>
+        public void Info(string s)
+        {
+            if (!this.Disabled)
+            {
+                Debug.Log(s);
+            }
+        }
+
+        /// <summary>
         ///   Checks whether the specified event type is being logged, or not.
         /// </summary>
         /// <param name="eventType">Event type to check.</param>
@@ -71,6 +95,18 @@ namespace Slash.Unity.Common.Logging
             }
         }
 
+        /// <summary>
+        ///   Logs the passed message as warning.
+        /// </summary>
+        /// <param name="s">Warning to log.</param>
+        public void Warning(string s)
+        {
+            if (!this.Disabled)
+            {
+                Debug.LogWarning(s);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -93,6 +129,11 @@ namespace Slash.Unity.Common.Logging
             }
         }
 
+        private void OnErrorLogged(string message)
+        {
+            this.Error(UnityUtils.WithTimestamp(message));
+        }
+
         private void OnEvent(Event e)
         {
             if (this.Disabled)
@@ -102,7 +143,7 @@ namespace Slash.Unity.Common.Logging
 
             if (!this.disabledEventTypes.Contains(e.EventType.ToString()))
             {
-                Debug.Log(UnityUtils.WithTimestamp(string.Format("{0}: {1}", e.EventType, e.EventData)));
+                this.Info(UnityUtils.WithTimestamp(string.Format("{0}: {1}", e.EventType, e.EventData)));
             }
         }
 
@@ -111,12 +152,30 @@ namespace Slash.Unity.Common.Logging
             if (oldGame != null)
             {
                 oldGame.EventManager.RemoveListener(this.OnEvent);
+
+                oldGame.Log.InfoLogged -= this.OnInfoLogged;
+                oldGame.Log.WarningLogged -= this.OnWarningLogged;
+                oldGame.Log.ErrorLogged -= this.OnErrorLogged;
             }
 
             if (newGame != null)
             {
                 newGame.EventManager.RegisterListener(this.OnEvent);
+
+                newGame.Log.InfoLogged += this.OnInfoLogged;
+                newGame.Log.WarningLogged += this.OnWarningLogged;
+                newGame.Log.ErrorLogged += this.OnErrorLogged;
             }
+        }
+
+        private void OnInfoLogged(string message)
+        {
+            this.Info(UnityUtils.WithTimestamp(message));
+        }
+
+        private void OnWarningLogged(string message)
+        {
+            this.Warning(UnityUtils.WithTimestamp(message));
         }
 
         #endregion
