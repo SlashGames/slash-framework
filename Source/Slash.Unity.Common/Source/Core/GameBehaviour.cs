@@ -16,6 +16,15 @@ namespace Slash.Unity.Common.Core
     /// </summary>
     public class GameBehaviour : MonoBehaviour
     {
+        #region Fields
+
+        /// <summary>
+        ///   Current game instance.
+        /// </summary>
+        private Game game;
+
+        #endregion
+
         #region Delegates
 
         /// <summary>
@@ -41,7 +50,25 @@ namespace Slash.Unity.Common.Core
         /// <summary>
         ///   Current game instance.
         /// </summary>
-        public Game Game { get; set; }
+        public Game Game
+        {
+            get
+            {
+                return this.game;
+            }
+            set
+            {
+                if (this.game == value)
+                {
+                    return;
+                }
+
+                var oldGame = this.game;
+                this.game = value;
+
+                this.OnGameChanged(this.game, oldGame);
+            }
+        }
 
         /// <summary>
         ///   Behaviour to manage game configuration.
