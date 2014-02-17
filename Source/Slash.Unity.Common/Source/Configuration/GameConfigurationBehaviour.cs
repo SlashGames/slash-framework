@@ -7,6 +7,7 @@
 namespace Slash.Unity.Common.Configuration
 {
     using System.IO;
+    using System.Linq;
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
@@ -131,7 +132,9 @@ namespace Slash.Unity.Common.Configuration
 
             if (this.BlueprintManager == null)
             {
-                this.LoadBlueprints();
+                this.BlueprintManager = this.LoadBlueprints();
+
+                Debug.Log(string.Format("{0} blueprints loaded.", this.BlueprintManager.Blueprints.Count()));
             }
         }
 
