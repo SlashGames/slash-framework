@@ -77,6 +77,7 @@
     <Compile Include="Source\Inspector\Data\InspectorTypeTable.cs" />
     <Compile Include="Source\Inspector\Utils\InspectorUtils.cs" />
     <Compile Include="Source\Inspector\Validation\ValidationError.cs" />
+    <Compile Include="Source\Logging\GameLogger.cs" />
     <Compile Include="Source\Systems\ISystem.cs" />
     <Compile Include="Source\Systems\SystemBase.cs" />
     <Compile Include="Source\Systems\SystemManager.cs" />

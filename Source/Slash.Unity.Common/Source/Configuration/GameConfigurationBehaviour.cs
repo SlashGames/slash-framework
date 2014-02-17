@@ -7,6 +7,7 @@
 namespace Slash.Unity.Common.Configuration
 {
     using System.IO;
+    using System.Linq;
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
@@ -40,13 +41,7 @@ namespace Slash.Unity.Common.Configuration
         /// <summary>
         ///   Load blueprint manager from asset.
         /// </summary>
-        public BlueprintManager BlueprintManager
-        {
-            get
-            {
-                return this.LoadBlueprints();
-            }
-        }
+        public BlueprintManager BlueprintManager { get; private set; }
 
         public IAttributeTable Configuration
         {
@@ -133,6 +128,13 @@ namespace Slash.Unity.Common.Configuration
             if (this.Configuration == null)
             {
                 this.Load();
+            }
+
+            if (this.BlueprintManager == null)
+            {
+                this.BlueprintManager = this.LoadBlueprints();
+
+                Debug.Log(string.Format("{0} blueprints loaded.", this.BlueprintManager.Blueprints.Count()));
             }
         }
 
