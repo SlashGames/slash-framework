@@ -90,6 +90,7 @@
     <Compile Include="Source\GUI\SwitchFullscreenBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneBehaviour.cs" />
     <Compile Include="Source\Logging\ConsoleAppender.cs" />
+    <Compile Include="Source\Logging\LogBehaviour.cs" />
     <Compile Include="Source\Logging\LoggerExtensions.cs" />
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />

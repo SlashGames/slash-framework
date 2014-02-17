@@ -53,6 +53,16 @@ namespace Slash.Unity.Common.Utils
             }
         }
 
+        /// <summary>
+        ///   Adds a timestamp to the specified string.
+        /// </summary>
+        /// <param name="message">String to add a timestamp to.</param>
+        /// <returns>Timestamped message.</returns>
+        public static string WithTimestamp(string message)
+        {
+            return string.Format("[{0:000.000}] {1}", Time.realtimeSinceStartup, message);
+        }
+
         #endregion
     }
 }
