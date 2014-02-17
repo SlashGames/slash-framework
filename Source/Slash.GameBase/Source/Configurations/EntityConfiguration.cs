@@ -15,6 +15,7 @@ namespace Slash.GameBase.Configurations
     /// <summary>
     ///   Contains all data to create and initialize an entity.
     /// </summary>
+    [Serializable]
 #if !WINDOWS_STORE
     public class EntityConfiguration : ICloneable
 #else

@@ -117,6 +117,11 @@ namespace BlueprintEditor.Inspectors
             }
         }
 
+        /// <summary>
+        ///   Indicates if the current value was inherited.
+        /// </summary>
+        public bool ValueInherited { get; set; }
+
         #endregion
 
         #region Public Indexers
@@ -190,6 +195,7 @@ namespace BlueprintEditor.Inspectors
             }
 
             this.value = newValue;
+            this.ValueInherited = false;
 
             if (updateStringValue)
             {

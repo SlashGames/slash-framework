@@ -56,10 +56,11 @@ namespace BlueprintEditor.Inspectors
         /// </summary>
         /// <param name="inspectorProperty">Inspector property the control is for.</param>
         /// <param name="currentValue">Current value.</param>
-        public void Init(InspectorPropertyAttribute inspectorProperty, object currentValue)
+        /// <param name="valueInherited">Indicates if the current value was inherited.</param>
+        public void Init(InspectorPropertyAttribute inspectorProperty, object currentValue, bool valueInherited)
         {
             // Setup data context of control.
-            this.dataContext = new InspectorPropertyData { InspectorProperty = inspectorProperty, Value = currentValue };
+            this.dataContext = new InspectorPropertyData { InspectorProperty = inspectorProperty, Value = currentValue, ValueInherited = valueInherited};
             this.dataContext.ValueChanged += this.OnValueChanged;
             this.DataContext = this.dataContext;
         }

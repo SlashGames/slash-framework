@@ -33,7 +33,8 @@ namespace BlueprintEditor.Inspectors
         /// </summary>
         /// <param name="inspectorProperty">Inspector property the control is for.</param>
         /// <param name="currentValue">Current value.</param>
-        void Init(InspectorPropertyAttribute inspectorProperty, object currentValue);
+        /// <param name="valueInherited">Indicates if the current value was inherited.</param>
+        void Init(InspectorPropertyAttribute inspectorProperty, object currentValue, bool valueInherited);
 
         #endregion
     }
