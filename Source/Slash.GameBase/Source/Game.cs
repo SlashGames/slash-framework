@@ -56,6 +56,7 @@ namespace Slash.GameBase
             this.eventManager = new EventManager();
             this.Running = false;
             this.TimeElapsed = 0.0f;
+            this.Log = new GameLogger();
         }
 
         #endregion
