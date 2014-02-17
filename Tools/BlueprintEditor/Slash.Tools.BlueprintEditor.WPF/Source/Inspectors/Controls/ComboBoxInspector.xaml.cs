@@ -4,16 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor.Inspectors
+namespace BlueprintEditor.Inspectors.Controls
 {
     /// <summary>
-    ///   Inspector to edit a value in a checkbox.
+    ///   Inspector to edit a value in a combo box.
     /// </summary>
-    public partial class CheckBoxInspector
+    public partial class ComboBoxInspector
     {
         #region Constructors and Destructors
 
-        public CheckBoxInspector()
+        public ComboBoxInspector()
         {
             this.InitializeComponent();
         }

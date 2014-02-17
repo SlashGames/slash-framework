@@ -1,24 +1,27 @@
-﻿<inspectors:InspectorControl x:Class = "BlueprintEditor.Inspectors.IntegerUpDownInspector"
+﻿<inspectors:InspectorControl x:Class = "BlueprintEditor.Inspectors.Controls.SingleUpDownInspector"
                              xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                              xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
                              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
                              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
                              xmlns:inspectors = "clr-namespace:BlueprintEditor.Inspectors"
                              xmlns:xctk = "http://schemas.xceed.com/wpf/xaml/toolkit"
+                             xmlns:globalization = "clr-namespace:System.Globalization;assembly=mscorlib"
                              mc:Ignorable = "d"
                              d:DesignWidth = "400" Height = "26"
                              d:DataContext = "{d:DesignInstance inspectors:InspectorPropertyData}">
     <inspectors:InspectorControl.Resources>
-        <ResourceDictionary Source = "..\Controls\Templates\TextBoxErrorTemplate.xaml" />
+        <ResourceDictionary Source = "../../Controls/Templates/TextBoxErrorTemplate.xaml" />
     </inspectors:InspectorControl.Resources>
 
-    <xctk:IntegerUpDown Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}">
-        <xctk:IntegerUpDown.Value>
+    <xctk:SingleUpDown
+        Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}"
+        CultureInfo = "{x:Static globalization:CultureInfo.InvariantCulture}">
+        <xctk:SingleUpDown.Value>
             <Binding Path = "Value" UpdateSourceTrigger = "PropertyChanged">
                 <Binding.ValidationRules>
                     <DataErrorValidationRule />
                 </Binding.ValidationRules>
             </Binding>
-        </xctk:IntegerUpDown.Value>
-    </xctk:IntegerUpDown>
+        </xctk:SingleUpDown.Value>
+    </xctk:SingleUpDown>
 </inspectors:InspectorControl>

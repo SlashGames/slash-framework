@@ -4,10 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace BlueprintEditor.Inspectors
+namespace BlueprintEditor.Inspectors.Controls
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Windows;
 
     using Slash.GameBase.Inspector.Attributes;
@@ -60,16 +61,20 @@ namespace BlueprintEditor.Inspectors
             InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
             if (this.value == null)
             {
-                this.value = (IList)Activator.CreateInstance(dataContext.InspectorProperty.PropertyType);
+                this.value = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(this.itemType));
+                dataContext.Value = this.value;
             }
 
-            object item = Activator.CreateInstance(this.itemType);
+            object item = this.itemType == typeof(string) ? string.Empty : Activator.CreateInstance(this.itemType);
             this.value.Add(item);
 
             dataContext.Value = this.value;
 
             // Create item control.
             this.AddItemControl(item);
+
+            // Value changed.
+            this.OnValueChanged();
         }
 
         private void ClearItemControls()
@@ -92,8 +97,9 @@ namespace BlueprintEditor.Inspectors
             InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
 
             this.value = (IList)dataContext.Value;
-            this.itemType = dataContext.InspectorProperty.PropertyType.GetGenericArguments()[0];
-            this.itemInspectorProperty = dataContext.InspectorProperty.Clone();
+            InspectorPropertyAttribute inspectorProperty = dataContext.InspectorProperty;
+            this.itemType = inspectorProperty.AttributeType ?? inspectorProperty.PropertyType.GetGenericArguments()[0];
+            this.itemInspectorProperty = inspectorProperty.Clone();
             this.itemInspectorProperty.List = false;
 
             // Set items.

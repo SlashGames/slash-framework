@@ -45,6 +45,11 @@ namespace Slash.GameBase.Inspector.Attributes
         #region Public Properties
 
         /// <summary>
+        ///   Type of value in attribute table. If null, the property type is used.
+        /// </summary>
+        public Type AttributeType { get; set; }
+
+        /// <summary>
         ///   Default property value.
         /// </summary>
         public object Default { get; set; }
@@ -252,7 +257,7 @@ namespace Slash.GameBase.Inspector.Attributes
         /// </returns>
         public virtual bool TryConvertValueToString(object value, out string text)
         {
-            text = this.ConvertValueToString(value);
+            text = value != null ? value.ToString() : string.Empty;
             return true;
         }
 

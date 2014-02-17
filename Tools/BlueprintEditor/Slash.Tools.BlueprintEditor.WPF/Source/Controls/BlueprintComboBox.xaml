@@ -4,8 +4,10 @@
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels = "clr-namespace:BlueprintEditor.ViewModels"
+             xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
              mc:Ignorable = "d"
              d:DesignHeight = "20" d:DesignWidth = "300" d:DataContext = "{d:DesignInstance viewModels:EditorContext}">
-    <ComboBox Name = "CbParentBlueprint" ComboBox.DisplayMemberPath = "BlueprintId" IsEditable = "True"
-              IsReadOnly = "True" ItemsSource = "{Binding Blueprints}" />
+    <ComboBox Name = "ComboBox" ComboBox.DisplayMemberPath = "BlueprintId" IsEditable = "True"
+              IsReadOnly = "True"
+              ItemsSource = "{Binding Blueprints, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=controls:BlueprintComboBox}}" />
 </UserControl>

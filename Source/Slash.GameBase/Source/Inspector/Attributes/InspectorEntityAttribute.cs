@@ -20,6 +20,7 @@ namespace Slash.GameBase.Inspector.Attributes
         public InspectorEntityAttribute(string name)
             : base(name)
         {
+            this.AttributeType = typeof(EntityConfiguration);
         }
 
         #endregion

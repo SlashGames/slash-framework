@@ -8,7 +8,9 @@ namespace BlueprintEditor.Controls
 {
     using System;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
 
@@ -17,9 +19,22 @@ namespace BlueprintEditor.Controls
 
     public partial class BlueprintComboBox : INotifyPropertyChanged
     {
+        #region Static Fields
+
+        public static readonly DependencyProperty SelectedBlueprintProperty =
+            DependencyProperty.Register(
+                "SelectedBlueprint",
+                typeof(BlueprintViewModel),
+                typeof(BlueprintComboBox),
+                new PropertyMetadata(null) { PropertyChangedCallback = OnSelectedBlueprintChanged });
+
+        #endregion
+
         #region Fields
 
         private ListCollectionView blueprintsView;
+
+        private string selectedBlueprintId;
 
         #endregion
 
@@ -29,8 +44,10 @@ namespace BlueprintEditor.Controls
         {
             this.InitializeComponent();
 
-            this.CbParentBlueprint.DataContext = this;
-            this.CbParentBlueprint.SelectionChanged += this.OnSelectionChanged;
+            this.DataContextChanged += this.OnDataContextChanged;
+
+            this.ComboBox.DataContext = this;
+            this.ComboBox.SelectionChanged += this.OnSelectionChanged;
         }
 
         #endregion
@@ -50,19 +67,12 @@ namespace BlueprintEditor.Controls
         {
             get
             {
-                if (this.blueprintsView == null)
-                {
-                    var editorContext = (EditorContext)this.DataContext;
-                    this.blueprintsView = new ListCollectionView(editorContext.BlueprintManagerViewModel.Blueprints);
-                    this.blueprintsView.SortDescriptions.Add(
-                        new SortDescription("BlueprintId", ListSortDirection.Ascending));
-
-                    if (this.Filter != null)
-                    {
-                        this.blueprintsView.Filter = blueprint => this.Filter((BlueprintViewModel)blueprint);
-                    }
-                }
-                return this.blueprintsView;
+                return this.blueprintsView ?? (this.blueprintsView = this.CreateBlueprintsView());
+            }
+            set
+            {
+                this.blueprintsView = value;
+                this.OnPropertyChanged();
             }
         }
 
@@ -71,11 +81,40 @@ namespace BlueprintEditor.Controls
         /// </summary>
         public Predicate<BlueprintViewModel> Filter { get; set; }
 
-        public BlueprintViewModel SelectedItem
+        /// <summary>
+        ///   Current selected blueprint.
+        /// </summary>
+        public BlueprintViewModel SelectedBlueprint
         {
             get
             {
-                return (BlueprintViewModel)this.CbParentBlueprint.SelectedItem;
+                return (BlueprintViewModel)this.GetValue(SelectedBlueprintProperty);
+            }
+            set
+            {
+                this.SetValue(SelectedBlueprintProperty, value);
+            }
+        }
+
+        /// <summary>
+        ///   Current selected blueprint id.
+        /// </summary>
+        public string SelectedBlueprintId
+        {
+            get
+            {
+                return this.selectedBlueprintId;
+            }
+            set
+            {
+                if (value == this.selectedBlueprintId)
+                {
+                    return;
+                }
+
+                this.selectedBlueprintId = value;
+
+                this.UpdateSelectedBlueprint();
             }
         }
 
@@ -93,9 +132,55 @@ namespace BlueprintEditor.Controls
             }
         }
 
+        private static void OnSelectedBlueprintChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            BlueprintComboBox comboBox = (BlueprintComboBox)d;
+            comboBox.OnPropertyChanged("SelectedBlueprint");
+        }
+
+        private ListCollectionView CreateBlueprintsView()
+        {
+            BlueprintManagerViewModel dataContext = (BlueprintManagerViewModel)this.DataContext;
+            if (dataContext == null)
+            {
+                return null;
+            }
+
+            ListCollectionView newBlueprintsView = new ListCollectionView(dataContext.Blueprints);
+            newBlueprintsView.SortDescriptions.Add(new SortDescription("BlueprintId", ListSortDirection.Ascending));
+
+            if (this.Filter != null)
+            {
+                newBlueprintsView.Filter = blueprint => this.Filter((BlueprintViewModel)blueprint);
+            }
+
+            return newBlueprintsView;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ListCollectionView newBlueprints = this.CreateBlueprintsView();
+            string newSelectedBlueprintId = this.selectedBlueprintId;
+
+            this.Blueprints = newBlueprints;
+            this.SelectedBlueprintId = newSelectedBlueprintId;
+        }
+
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.OnPropertyChanged("SelectedItem");
+            BlueprintViewModel newSelectedBlueprint = (BlueprintViewModel)this.ComboBox.SelectedItem;
+            this.SelectedBlueprint = newSelectedBlueprint;
+            this.SelectedBlueprintId = newSelectedBlueprint != null ? newSelectedBlueprint.BlueprintId : null;
+        }
+
+        private void UpdateSelectedBlueprint()
+        {
+            // Search for view model in current blueprints.
+            BlueprintManagerViewModel dataContext = (BlueprintManagerViewModel)this.DataContext;
+            this.ComboBox.SelectedItem = dataContext != null
+                                         ? dataContext.Blueprints.FirstOrDefault(
+                                             blueprint => blueprint.BlueprintId == this.selectedBlueprintId)
+                                         : null;
         }
 
         #endregion
