@@ -82,6 +82,8 @@ namespace BlueprintEditor.Inspectors.Controls
             EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value ?? new EntityConfiguration();
             entityConfiguration.BlueprintId = newBlueprint != null ? newBlueprint.BlueprintId : string.Empty;
 
+            this.Value = entityConfiguration;
+
             this.OnValueChanged();
         }
 
