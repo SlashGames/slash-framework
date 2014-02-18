@@ -16,6 +16,7 @@ namespace Slash.Collections.AttributeTables
     using Slash.Collections.Utils;
     using Slash.Reflection.Utils;
     using Slash.Serialization.Utils;
+    using Slash.SystemExt.Utils;
 
     /// <summary>
     ///   Table that allows storing and looking up attributes and their
@@ -409,10 +410,10 @@ namespace Slash.Collections.AttributeTables
         private void WriteAttributeXml(XmlWriter writer, KeyValuePair<object, object> attributePair)
         {
             writer.WriteStartElement(ItemElementName);
-            writer.WriteAttributeString(KeyTypeAttributeName, attributePair.Key.GetType().FullName);
+            writer.WriteAttributeString(KeyTypeAttributeName, attributePair.Key.GetType().FullNameWithoutAssemblyInfo());
             if (attributePair.Value != null)
             {
-                writer.WriteAttributeString(ValueTypeAttributeName, attributePair.Value.GetType().FullName);
+                writer.WriteAttributeString(ValueTypeAttributeName, attributePair.Value.GetType().FullNameWithoutAssemblyInfo());
             }
 
             SerializationUtils.WriteXml(writer, attributePair.Key, KeyElementName);

@@ -52,6 +52,20 @@ namespace Slash.SystemExt.Utils
         }
 
         /// <summary>
+        ///   Returns the full name of the specified type without any assembly version info.
+        ///   The reason why this method is needed is that a generic type's FullName contains
+        ///   the full AssemblyQualifiedName of its item type.
+        /// </summary>
+        /// <param name="type">Type to get full name for.</param>
+        /// <returns>Full name of specified type without additional info of the assembly.</returns>
+        public static string FullNameWithoutAssemblyInfo(this Type type)
+        {
+            return !type.IsGenericType
+                       ? type.FullName
+                       : Regex.Replace(type.FullName, @"(\[[^,]*?,\s*[^,]*?)(,[^\]]*?)(\])", "$1$3");
+        }
+
+        /// <summary>
         ///   Checks if the specified value is between the specified lower and higher bound (exclusive).
         /// </summary>
         /// <typeparam name="T"> Type of objects to compare. </typeparam>
