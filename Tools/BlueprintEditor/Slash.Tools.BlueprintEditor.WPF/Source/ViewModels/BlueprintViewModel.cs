@@ -273,6 +273,11 @@ namespace BlueprintEditor.ViewModels
             return this.AddedComponents.Remove(componentType);
         }
 
+        public override string ToString()
+        {
+            return string.Format("{0}", this.BlueprintId);
+        }
+
         /// <summary>
         ///   Adds the specified component to the avaliable components,
         ///   proceeding recursively with all deriving blueprints.

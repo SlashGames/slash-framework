@@ -15,6 +15,7 @@ namespace BlueprintEditor.Windows
     using System.Runtime.Serialization;
     using System.Text;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
 
     using BlueprintEditor.Controls;
@@ -23,6 +24,8 @@ namespace BlueprintEditor.Windows
     using CsvHelper;
 
     using Microsoft.Win32;
+
+    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     using AggregateException = Slash.SystemExt.Exceptions.AggregateException;
 
@@ -158,10 +161,31 @@ namespace BlueprintEditor.Windows
                 }
             }
 
+            // Update custom imports.
+            this.MenuFileCustomImport.Items.Clear();
+
+            foreach (var customImport in this.Context.ProjectSettings.CustomImports)
+            {
+                var menuItem = new MenuItem();
+
+                menuItem.Header = string.Format("Import {0}...", customImport.BlueprintParentId);
+                menuItem.Tag = customImport;
+                menuItem.Click += this.ExecutedCustomImport;
+
+                this.MenuFileCustomImport.Items.Add(menuItem);
+            }
+
             // Hide progress bar.
             this.progressWindow.Close();
 
             this.UpdateWindowTitle();
+        }
+
+        private void ExecutedCustomImport(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            var customImport = (CsvImportData)menuItem.Tag;
+            this.ImportCSVData(customImport);
         }
 
         private void BackgroundSaveContext(object sender, DoWorkEventArgs e)
@@ -271,8 +295,10 @@ namespace BlueprintEditor.Windows
             Application.Current.Shutdown();
         }
 
-        private void ExecutedFileImportData(object sender, ExecutedRoutedEventArgs e)
+        private void ImportCSVData(CsvImportData importData)
         {
+            // TODO(np): Move into own controller.
+
             // Show open file dialog box.
             OpenFileDialog openFileDialog = new OpenFileDialog
                 {
@@ -301,7 +327,7 @@ namespace BlueprintEditor.Windows
                 csvReader.Read();
 
                 // Allow user to specify which attribute table keys are mapped to which CSV columns.
-                var importDataCsvWindow = new ImportDataCSVWindow(this.Context, csvReader.FieldHeaders) { Owner = this };
+                var importDataCsvWindow = new ImportDataCSVWindow(this.Context, csvReader.FieldHeaders, importData) { Owner = this };
                 result = importDataCsvWindow.ShowDialog();
 
                 if (result != true)
@@ -416,7 +442,36 @@ namespace BlueprintEditor.Windows
                 var importInfo = importInfoBuilder.ToString();
 
                 EditorDialog.Info("CSV Import Complete", importInfo);
+
+                if (importDataCsvWindow.SaveSettingsForFutureImports)
+                {
+                    // Save import settings.
+                    if (importData == null)
+                    {
+                        importData = new CsvImportData();
+                        this.Context.ProjectSettings.CustomImports.Add(importData);
+                    }
+
+                    importData.BlueprintIdColumn = importDataCsvWindow.BlueprintIdColumn;
+                    importData.BlueprintParentId = importDataCsvWindow.BlueprintParent.BlueprintId;
+                    importData.IgnoredBlueprintId = importDataCsvWindow.IgnoredBlueprintId;
+                    importData.Mappings = new List<ValueMapping>();
+
+                    foreach (var mapping in importDataCsvWindow.ValueMappings)
+                    {
+                        importData.Mappings.Add(
+                            new ValueMapping
+                            {
+                                MappingSource = mapping.MappingSource,
+                                MappingTarget = mapping.MappingTarget
+                            });
+                    }
+                }
             }
+        }
+        private void ExecutedFileImportData(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.ImportCSVData(null);
         }
 
         private void ExecutedFileOpen(object sender, RoutedEventArgs e)
@@ -565,6 +620,11 @@ namespace BlueprintEditor.Windows
             public string Filename { get; set; }
 
             #endregion
+        }
+
+        private void CanExecuteFileCustomImport(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.Context != null && this.Context.ProjectSettings != null && this.Context.ProjectSettings.CustomImports.Count > 0;
         }
     }
 }

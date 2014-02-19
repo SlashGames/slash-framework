@@ -38,6 +38,10 @@
             <StackPanel Name = "SpAttributeMapping" />
         </ScrollViewer>
 
+        <TextBlock FontWeight = "Bold" Height = "25">Import Settings</TextBlock>
+        
+        <CheckBox Name="CbSaveSettings">Save import settings for future imports</CheckBox>
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button DockPanel.Dock="Left" Click="ImportData_OnClick" Width="100" Margin="10">Import Data</Button>
             <Button DockPanel.Dock="Right" Click="Cancel_OnClick" Width="100" Margin="10">Cancel</Button>

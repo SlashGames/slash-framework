@@ -19,7 +19,11 @@ namespace BlueprintEditor.Windows
 
     public partial class ImportDataCSVWindow
     {
+        #region Constants
+
         private const string DefaultIgnoredBlueprintId = "_NOTE";
+
+        #endregion
 
         #region Fields
 
@@ -29,7 +33,8 @@ namespace BlueprintEditor.Windows
 
         #region Constructors and Destructors
 
-        public ImportDataCSVWindow(EditorContext context, IEnumerable<string> csvColumnHeaders)
+        public ImportDataCSVWindow(
+            EditorContext context, IEnumerable<string> csvColumnHeaders, CsvImportData importData)
         {
             this.InitializeComponent();
 
@@ -38,12 +43,42 @@ namespace BlueprintEditor.Windows
             this.CbParentBlueprint.DataContext = context.BlueprintManagerViewModel;
             this.CbParentBlueprint.PropertyChanged += this.OnSelectedParentBlueprintChanged;
             this.CbParentBlueprint.Filter = blueprint => blueprint.Parent == null;
+            this.CbParentBlueprint.Refresh();
 
             this.CbBlueprintIdMapping.DataContext = this;
+            // TODO(np): Why is this not automatically updated by the binding upon setting the context?
+            this.CbBlueprintIdMapping.ItemsSource = this.CSVColumnHeaders;
             this.CbBlueprintIdMapping.SelectedIndex = 0;
 
             this.TbIgnoredBlueprintId.DataContext = this;
             this.TbIgnoredBlueprintId.Text = DefaultIgnoredBlueprintId;
+
+            if (importData != null)
+            {
+                // Load custom CSV import.
+                this.CbParentBlueprint.SelectedBlueprintId = importData.BlueprintParentId;
+                this.CbBlueprintIdMapping.SelectedValue = importData.BlueprintIdColumn;
+                this.TbIgnoredBlueprintId.Text = importData.IgnoredBlueprintId;
+
+                this.UpdateAttributeMapping();
+
+                foreach (var importMapping in importData.Mappings)
+                {
+                    var existingMapping =
+                        this.ValueMappings.FirstOrDefault(
+                            mapping => mapping.MappingSource == importMapping.MappingSource);
+
+                    if (existingMapping != null)
+                    {
+                        existingMapping.MappingTarget = importMapping.MappingTarget;
+                    }
+                }
+
+                foreach (ValueMappingControl control in this.SpAttributeMapping.Children)
+                {
+                    control.Refresh();
+                }
+            }
         }
 
         #endregion
@@ -77,6 +112,22 @@ namespace BlueprintEditor.Windows
         /// </summary>
         public IEnumerable<string> CSVColumnHeaders { get; private set; }
 
+        public string IgnoredBlueprintId
+        {
+            get
+            {
+                return this.TbIgnoredBlueprintId.Text;
+            }
+        }
+
+        public bool SaveSettingsForFutureImports
+        {
+            get
+            {
+                return this.CbSaveSettings.IsChecked.GetValueOrDefault();
+            }
+        }
+
         /// <summary>
         ///   Maps attribute table keys to CSV columns.
         /// </summary>
@@ -85,14 +136,6 @@ namespace BlueprintEditor.Windows
             get
             {
                 return new ReadOnlyCollection<PropertyValueMappingViewModel>(this.valueMappings);
-            }
-        }
-
-        public string IgnoredBlueprintId
-        {
-            get
-            {
-                return this.TbIgnoredBlueprintId.Text;
             }
         }
 

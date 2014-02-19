@@ -35,7 +35,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Context\ProjectSettings.cs" />
     <Compile Include="Source\Data\ComponentUtils.cs" />
+    <Compile Include="Source\Data\CsvImportData.cs" />
     <Compile Include="Source\Data\InspectorComponentTable.cs" />
+    <Compile Include="Source\Data\ValueMapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Slash.GameBase\Slash.GameBase.csproj">

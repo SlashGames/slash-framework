@@ -120,6 +120,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             this.ProjectAssemblies = new List<Assembly>();
             this.LanguageFiles = new List<LanguageFile>();
             this.BlueprintFiles = new List<BlueprintFile>();
+            this.CustomImports = new List<CsvImportData>();
 
             this.Name = DefaultProjectName;
         }
@@ -165,6 +166,13 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
                 this.BlueprintFiles = value.Select(path => new BlueprintFile { Path = path }).ToList();
             }
         }
+
+        /// <summary>
+        ///   Templates for custom CSV imports specific to this project.
+        /// </summary>
+        [XmlArray("CustomImports", Order = 5)]
+        [XmlArrayItem("CustomImport")]
+        public List<CsvImportData> CustomImports { get; set; }
 
         /// <summary>
         ///   Description of project.
