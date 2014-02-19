@@ -326,6 +326,13 @@ namespace BlueprintEditor.Windows
                         // Get id of the blueprint to create or update.
                         var blueprintId = csvReader[importDataCsvWindow.BlueprintIdColumn];
 
+                        // Skip ignored records, such as notes.
+                        if (blueprintId == importDataCsvWindow.IgnoredBlueprintId)
+                        {
+                            csvReader.Read();
+                            continue;
+                        }
+
                         // Check for duplicate blueprints in the CSV file.
                         if (processedBlueprints.Contains(blueprintId))
                         {
@@ -336,53 +343,53 @@ namespace BlueprintEditor.Windows
                         processedBlueprints.Add(blueprintId);
 
                         // Check whether blueprint already exists.
-                        var existingBlueprint =
+                        var dataBlueprint =
                             blueprintManagerViewModel.Blueprints.FirstOrDefault(
                                 blueprint => blueprint.BlueprintId == blueprintId);
+                        var newBlueprint = dataBlueprint == null;
 
-                        if (existingBlueprint == null)
+                        if (newBlueprint)
                         {
                             // Create new blueprint.
                             blueprintManagerViewModel.NewBlueprintId = blueprintId;
-                            var blueprintViewModel = blueprintManagerViewModel.CreateNewBlueprint();
-
-                            // Map attribute table keys to CSV values.
-                            foreach (var valueMapping in
-                                importDataCsvWindow.ValueMappings.Where(
-                                    mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
-                            {
-                                blueprintViewModel.Blueprint.AttributeTable.Add(
-                                    valueMapping.MappingSource, csvReader[valueMapping.MappingTarget]);
-                            }
+                            dataBlueprint = blueprintManagerViewModel.CreateNewBlueprint();
 
                             // Reparent new blueprint.
                             blueprintManagerViewModel.ReparentBlueprint(
-                                blueprintViewModel.BlueprintId, importDataCsvWindow.BlueprintParent.BlueprintId);
-
-                            newBlueprints++;
+                                dataBlueprint.BlueprintId, importDataCsvWindow.BlueprintParent.BlueprintId);
                         }
                         else
                         {
                             // Check parent of existing blueprint.
-                            if (existingBlueprint.Parent != importDataCsvWindow.BlueprintParent)
+                            if (dataBlueprint.Parent != importDataCsvWindow.BlueprintParent)
                             {
                                 throw new InvalidOperationException(
                                     string.Format(
                                         "Blueprint {0} is child of {1} but should be child of {2}.",
-                                        existingBlueprint.BlueprintId,
-                                        existingBlueprint.Parent.BlueprintId,
+                                        dataBlueprint.BlueprintId,
+                                        dataBlueprint.Parent.BlueprintId,
                                         importDataCsvWindow.BlueprintParent.BlueprintId));
                             }
+                        }
 
-                            // Map attribute table keys to CSV values.
-                            foreach (var valueMapping in
-                                importDataCsvWindow.ValueMappings.Where(
-                                    mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
-                            {
-                                existingBlueprint.Blueprint.AttributeTable[valueMapping.MappingSource] =
-                                    csvReader[valueMapping.MappingTarget];
-                            }
+                        // Map attribute table keys to CSV values.
+                        foreach (var valueMapping in
+                            importDataCsvWindow.ValueMappings.Where(
+                                mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
+                        {
+                            object convertedValue;
+                            valueMapping.InspectorProperty.TryConvertStringToListOrValue(
+                                csvReader[valueMapping.MappingTarget], out convertedValue);
+                            dataBlueprint.Blueprint.AttributeTable[valueMapping.MappingSource] = convertedValue;
+                        }
 
+                        // Increase counter.
+                        if (newBlueprint)
+                        {
+                            newBlueprints++;
+                        }
+                        else
+                        {
                             updatedBlueprints++;
                         }
                     }
