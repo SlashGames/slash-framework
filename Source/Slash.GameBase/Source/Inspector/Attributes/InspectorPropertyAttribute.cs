@@ -25,7 +25,7 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <summary>
         ///   Delimiter of list elements in strings.
         /// </summary>
-        public const char ListDelimiter = ';';
+        public const char ListDelimiter = ',';
 
         #endregion
 

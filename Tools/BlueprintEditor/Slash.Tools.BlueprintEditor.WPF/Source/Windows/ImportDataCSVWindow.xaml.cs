@@ -21,7 +21,7 @@ namespace BlueprintEditor.Windows
     {
         #region Fields
 
-        private readonly List<ValueMappingViewModel> valueMappings = new List<ValueMappingViewModel>();
+        private readonly List<PropertyValueMappingViewModel> valueMappings = new List<PropertyValueMappingViewModel>();
 
         #endregion
 
@@ -75,11 +75,11 @@ namespace BlueprintEditor.Windows
         /// <summary>
         ///   Maps attribute table keys to CSV columns.
         /// </summary>
-        public ReadOnlyCollection<ValueMappingViewModel> ValueMappings
+        public ReadOnlyCollection<PropertyValueMappingViewModel> ValueMappings
         {
             get
             {
-                return new ReadOnlyCollection<ValueMappingViewModel>(this.valueMappings);
+                return new ReadOnlyCollection<PropertyValueMappingViewModel>(this.valueMappings);
             }
         }
 
@@ -108,10 +108,11 @@ namespace BlueprintEditor.Windows
                 foreach (var inspectorProperty in componentInfo.Properties)
                 {
                     // Create attribute mapping control.
-                    ValueMappingViewModel valueMapping = new ValueMappingViewModel
+                    PropertyValueMappingViewModel valueMapping = new PropertyValueMappingViewModel
                         {
                             MappingSource = inspectorProperty.Name,
-                            AvailableMappingTargets = new ObservableCollection<string>(this.CSVColumnHeaders)
+                            AvailableMappingTargets = new ObservableCollection<string>(this.CSVColumnHeaders),
+                            InspectorProperty = inspectorProperty
                         };
 
                     ValueMappingControl valueMappingControl = new ValueMappingControl(valueMapping);
