@@ -6,7 +6,6 @@
 
 namespace BlueprintEditor.Inspectors
 {
-    using System;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -20,6 +19,13 @@ namespace BlueprintEditor.Inspectors
 
     public class InspectorFactory
     {
+        #region Delegates
+
+        public delegate object GetPropertyValueDelegate(InspectorPropertyAttribute inspectorProperty, out bool inherited
+            );
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
@@ -32,7 +38,7 @@ namespace BlueprintEditor.Inspectors
         public void AddComponentInspectorsRecursively(
             BlueprintViewModel viewModel,
             Panel panel,
-            Func<InspectorPropertyAttribute, object> getPropertyValue,
+            GetPropertyValueDelegate getPropertyValue,
             InspectorControlValueChangedDelegate onValueChanged)
         {
             // Add inspectors for parent blueprints.
@@ -58,7 +64,7 @@ namespace BlueprintEditor.Inspectors
         public void AddInspectorControls(
             InspectorType typeInfo,
             Panel panel,
-            Func<InspectorPropertyAttribute, object> getPropertyValue,
+            GetPropertyValueDelegate getPropertyValue,
             InspectorControlValueChangedDelegate onValueChanged,
             bool addNameLabel = true)
         {
@@ -82,12 +88,14 @@ namespace BlueprintEditor.Inspectors
             foreach (var inspectorProperty in typeInfo.Properties)
             {
                 // Get current value.
+                bool inherited = true;
                 var propertyValue = getPropertyValue != null
-                                        ? getPropertyValue(inspectorProperty)
+                                        ? getPropertyValue(inspectorProperty, out inherited)
                                         : inspectorProperty.Default;
 
                 // Create control for inspector property.
-                IInspectorControl propertyControl = this.CreateInspectorControlFor(inspectorProperty, propertyValue);
+                IInspectorControl propertyControl = this.CreateInspectorControlFor(
+                    inspectorProperty, propertyValue, inherited);
                 if (propertyControl == null)
                 {
                     continue;
@@ -116,8 +124,9 @@ namespace BlueprintEditor.Inspectors
         /// </summary>
         /// <param name="inspectorProperty">Property to create an inspector control for.</param>
         /// <param name="currentValue">Current value of the observed property.</param>
+        /// <param name="valueInherited">Indicates if the current value was inherited.</param>
         public IInspectorControl CreateInspectorControlFor(
-            InspectorPropertyAttribute inspectorProperty, object currentValue)
+            InspectorPropertyAttribute inspectorProperty, object currentValue, bool valueInherited)
         {
             // Create inspector control.
             IInspectorControl inspectorControl;
@@ -165,7 +174,7 @@ namespace BlueprintEditor.Inspectors
             // Setup control.
             if (inspectorControl != null)
             {
-                inspectorControl.Init(inspectorProperty, currentValue);
+                inspectorControl.Init(inspectorProperty, currentValue, valueInherited);
             }
 
             return inspectorControl;

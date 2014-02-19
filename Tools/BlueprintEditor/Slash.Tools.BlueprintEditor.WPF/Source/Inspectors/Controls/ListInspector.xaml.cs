@@ -46,7 +46,7 @@ namespace BlueprintEditor.Inspectors.Controls
         private void AddItemControl(object item)
         {
             IInspectorControl propertyControl =
-                this.inspectorFactory.CreateInspectorControlFor(this.itemInspectorProperty, item);
+                this.inspectorFactory.CreateInspectorControlFor(this.itemInspectorProperty, item, false);
 
             // Create item wrapper.
             ListInspectorItem itemWrapperControl = new ListInspectorItem { Control = (InspectorControl)propertyControl };
@@ -59,16 +59,15 @@ namespace BlueprintEditor.Inspectors.Controls
         private void BtAdd_OnClick(object sender, RoutedEventArgs e)
         {
             InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
-            if (this.value == null)
+            if (this.value == null || dataContext.ValueInherited)
             {
-                this.value = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(this.itemType));
+                this.value = this.CopyInheritedValue(this.value);
+                dataContext.ValueInherited = false;
                 dataContext.Value = this.value;
             }
 
             object item = this.itemType == typeof(string) ? string.Empty : Activator.CreateInstance(this.itemType);
             this.value.Add(item);
-
-            dataContext.Value = this.value;
 
             // Create item control.
             this.AddItemControl(item);
@@ -80,6 +79,20 @@ namespace BlueprintEditor.Inspectors.Controls
         private void ClearItemControls()
         {
             this.Items.Children.Clear();
+        }
+
+        private IList CopyInheritedValue(IEnumerable inheritedList)
+        {
+            IList newList = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(this.itemType));
+            if (inheritedList != null)
+            {
+                // Copy inherited items.
+                foreach (var inheritedItem in inheritedList)
+                {
+                    newList.Add(inheritedItem.Clone());
+                }
+            }
+            return newList;
         }
 
         private void DeleteItemControl(ListInspectorItem itemControl)
@@ -122,6 +135,15 @@ namespace BlueprintEditor.Inspectors.Controls
 
             // Delete control.
             this.DeleteItemControl(itemControl);
+
+            // Copy inherited value if necessary.
+            InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
+            if (dataContext.ValueInherited)
+            {
+                this.value = this.CopyInheritedValue(this.value);
+                dataContext.ValueInherited = false;
+                dataContext.Value = this.value;
+            }
 
             // Delete item from list.
             this.value.RemoveAt(itemIndex);

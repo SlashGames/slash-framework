@@ -117,7 +117,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
             if (enumInspectorProperty != null)
             {
                 return EditorGUILayout.EnumPopup(
-                    label, (Enum)Convert.ChangeType(currentValue, enumInspectorProperty.EnumType));
+                    label, (Enum)Convert.ChangeType(currentValue, enumInspectorProperty.PropertyType));
             }
 
             EditorGUILayout.HelpBox(

@@ -52,6 +52,18 @@ namespace Slash.SystemExt.Utils
         }
 
         /// <summary>
+        ///   Returns the full name of the specified type without any assembly version info.
+        ///   The reason why this method is needed is that a generic type's FullName contains
+        ///   the full AssemblyQualifiedName of its item type.
+        /// </summary>
+        /// <param name="type">Type to get full name for.</param>
+        /// <returns>Full name of specified type without additional info of the assembly.</returns>
+        public static string FullNameWithoutAssemblyInfo(this Type type)
+        {
+            return !type.IsGenericType ? type.FullName : RemoveAssemblyInfo(type.FullName);
+        }
+
+        /// <summary>
         ///   Checks if the specified value is between the specified lower and higher bound (exclusive).
         /// </summary>
         /// <typeparam name="T"> Type of objects to compare. </typeparam>
@@ -62,6 +74,22 @@ namespace Slash.SystemExt.Utils
         public static bool IsBetween<T>(this T value, T low, T high) where T : IComparable<T>
         {
             return value.CompareTo(low) >= 0 && value.CompareTo(high) < 0;
+        }
+
+        /// <summary>
+        ///   Removes all assembly info from the specified type name.
+        /// </summary>
+        /// <param name="typeName">Type name to remove assembly info from.</param>
+        /// <returns>Type name without assembly info.</returns>
+        public static string RemoveAssemblyInfo(string typeName)
+        {
+            typeName = Regex.Replace(typeName, @", Version=\d+.\d+.\d+.\d+", string.Empty);
+
+            typeName = Regex.Replace(typeName, @", Culture=\w+", string.Empty);
+
+            typeName = Regex.Replace(typeName, @", PublicKeyToken=\w+", string.Empty);
+
+            return typeName;
         }
 
         /// <summary>

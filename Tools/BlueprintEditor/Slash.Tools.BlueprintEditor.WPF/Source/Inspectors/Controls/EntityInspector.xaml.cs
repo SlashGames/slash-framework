@@ -47,14 +47,18 @@ namespace BlueprintEditor.Inspectors.Controls
 
         #region Methods
 
-        private object GetCurrentAttributeValue(InspectorPropertyAttribute inspectorProperty)
+        private object GetCurrentAttributeValue(InspectorPropertyAttribute inspectorProperty, out bool inherited)
         {
-            object value = inspectorProperty.Default;
-            EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value;
-            if (entityConfiguration != null)
+            object value;
+            EntityConfiguration entityConfiguration =(EntityConfiguration)this.Value;
+            if (entityConfiguration != null && entityConfiguration.Configuration.TryGetValue(inspectorProperty.Name, out value))
             {
-                value = entityConfiguration.Configuration.GetValueOrDefault(
-                    inspectorProperty.Name, inspectorProperty.Default);
+                inherited = false;
+            }
+            else
+            {
+                inherited = true;
+                value = this.GetDefaultValue(inspectorProperty);
             }
             return value;
         }
@@ -77,6 +81,8 @@ namespace BlueprintEditor.Inspectors.Controls
             // Set value.
             EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value ?? new EntityConfiguration();
             entityConfiguration.BlueprintId = newBlueprint != null ? newBlueprint.BlueprintId : string.Empty;
+
+            this.Value = entityConfiguration;
 
             this.OnValueChanged();
         }

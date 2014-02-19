@@ -48,14 +48,18 @@ namespace BlueprintEditor.Inspectors.Controls
             this.inspectorFactory.AddInspectorControls(typeInfo, this.Controls, this.GetPropertyValue, this.OnPropertyValueChanged, false);
         }
 
-        private object GetPropertyValue(InspectorPropertyAttribute inspectorProperty)
+        private object GetPropertyValue(InspectorPropertyAttribute inspectorProperty, out bool inherited)
         {
-            if (this.value == null)
+            object propertyValue;
+            if (this.value != null &&
+                this.value.TryGetValue(inspectorProperty.Name, out propertyValue))
             {
-                return inspectorProperty.Default;
+                inherited = false;
+                return propertyValue;
             }
 
-            return this.value.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default);
+            inherited = true;
+            return inspectorProperty.Default;
         }
 
         private void OnPropertyValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)

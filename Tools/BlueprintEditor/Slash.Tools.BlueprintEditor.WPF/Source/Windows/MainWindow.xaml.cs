@@ -11,6 +11,7 @@ namespace BlueprintEditor.Windows
     using System.ComponentModel;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.Serialization;
     using System.Text;
     using System.Windows;
@@ -65,6 +66,8 @@ namespace BlueprintEditor.Windows
             this.InitializeComponent();
 
             this.DataContext = this.Context;
+
+            AppDomain.CurrentDomain.AssemblyResolve += this.DynamicAssemblyResolve;
         }
 
         #endregion
@@ -229,6 +232,19 @@ namespace BlueprintEditor.Windows
             return true;
         }
 
+        private Assembly DynamicAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            // Search in context.
+            if (this.Context == null)
+            {
+                return null;
+            }
+
+            return
+                this.Context.ProjectSettings.ProjectAssemblies.FirstOrDefault(
+                    assembly => assembly.FullName == args.Name);
+        }
+
         private void ExecutedEditRedo(object sender, ExecutedRoutedEventArgs e)
         {
             this.Context.Redo();
@@ -259,14 +275,14 @@ namespace BlueprintEditor.Windows
         {
             // Show open file dialog box.
             OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                AddExtension = true,
-                CheckFileExists = true,
-                CheckPathExists = true,
-                DefaultExt = ".csv",
-                Filter = "Comma-separated values (.csv)|*.csv",
-                ValidateNames = true
-            };
+                {
+                    AddExtension = true,
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+                    DefaultExt = ".csv",
+                    Filter = "Comma-separated values (.csv)|*.csv",
+                    ValidateNames = true
+                };
 
             var result = openFileDialog.ShowDialog();
 
