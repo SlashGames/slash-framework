@@ -326,6 +326,13 @@ namespace BlueprintEditor.Windows
                         // Get id of the blueprint to create or update.
                         var blueprintId = csvReader[importDataCsvWindow.BlueprintIdColumn];
 
+                        // Skip ignored records, such as notes.
+                        if (blueprintId == importDataCsvWindow.IgnoredBlueprintId)
+                        {
+                            csvReader.Read();
+                            continue;
+                        }
+
                         // Check for duplicate blueprints in the CSV file.
                         if (processedBlueprints.Contains(blueprintId))
                         {

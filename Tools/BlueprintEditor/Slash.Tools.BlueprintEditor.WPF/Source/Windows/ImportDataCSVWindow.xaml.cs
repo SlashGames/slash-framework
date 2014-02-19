@@ -19,6 +19,8 @@ namespace BlueprintEditor.Windows
 
     public partial class ImportDataCSVWindow
     {
+        private const string DefaultIgnoredBlueprintId = "_NOTE";
+
         #region Fields
 
         private readonly List<PropertyValueMappingViewModel> valueMappings = new List<PropertyValueMappingViewModel>();
@@ -39,6 +41,9 @@ namespace BlueprintEditor.Windows
 
             this.CbBlueprintIdMapping.DataContext = this;
             this.CbBlueprintIdMapping.SelectedIndex = 0;
+
+            this.TbIgnoredBlueprintId.DataContext = this;
+            this.TbIgnoredBlueprintId.Text = DefaultIgnoredBlueprintId;
         }
 
         #endregion
@@ -80,6 +85,14 @@ namespace BlueprintEditor.Windows
             get
             {
                 return new ReadOnlyCollection<PropertyValueMappingViewModel>(this.valueMappings);
+            }
+        }
+
+        public string IgnoredBlueprintId
+        {
+            get
+            {
+                return this.TbIgnoredBlueprintId.Text;
             }
         }
 
