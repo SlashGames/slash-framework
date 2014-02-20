@@ -149,7 +149,7 @@ namespace BlueprintEditor.Windows
             {
                 var menuItem = new MenuItem();
 
-                menuItem.Header = string.Format("Import {0}...", customImport.BlueprintParentId);
+                menuItem.Header = string.Format("Import _{0}...", customImport.BlueprintParentId);
                 menuItem.Tag = customImport;
                 menuItem.Click += this.ExecutedCustomImport;
 
