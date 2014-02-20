@@ -8,6 +8,7 @@ namespace BlueprintEditor.ViewModels
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.IO;
     using System.Linq;
@@ -23,6 +24,12 @@ namespace BlueprintEditor.ViewModels
 
     public sealed class EditorContext : INotifyPropertyChanged
     {
+        #region Constants
+
+        private const string EditorSettingsSerializationPath = "BlueprintEditor.settings.xml";
+
+        #endregion
+
         #region Static Fields
 
         /// <summary>
@@ -41,9 +48,13 @@ namespace BlueprintEditor.ViewModels
 
         private readonly XmlSerializer blueprintManagerSerializer;
 
+        private readonly XmlSerializer editorSettingsSerializer;
+
         private readonly XmlSerializer projectSettingsSerializer;
 
         private BlueprintManagerViewModel blueprintManagerViewModel;
+
+        private EditorSettings editorSettings;
 
         #endregion
 
@@ -56,11 +67,21 @@ namespace BlueprintEditor.ViewModels
         {
             this.blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
             this.projectSettingsSerializer = new XmlSerializer(typeof(ProjectSettings));
+            this.editorSettingsSerializer = new XmlSerializer(typeof(EditorSettings));
+
+            this.AvailableLanguages = new ObservableCollection<string>();
+            this.editorSettings = new EditorSettings();
+
+            this.SetAvailableLanguages(new List<string>());
+
+            this.LoadEditorSettings();
         }
 
         #endregion
 
         #region Delegates
+
+        public delegate void AvailableLanguagesChangedDelegate();
 
         public delegate void BlueprintManagerChangedDelegate(
             BlueprintManager newBlueprintManager, BlueprintManager oldBlueprintManager);
@@ -68,6 +89,8 @@ namespace BlueprintEditor.ViewModels
         #endregion
 
         #region Public Events
+
+        public event AvailableLanguagesChangedDelegate AvailableLanguagesChanged;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -82,6 +105,8 @@ namespace BlueprintEditor.ViewModels
                 return this.ProjectSettings != null ? this.ProjectSettings.EntityComponentTypes : null;
             }
         }
+
+        public ObservableCollection<string> AvailableLanguages { get; private set; }
 
         public BlueprintManagerViewModel BlueprintManagerViewModel
         {
@@ -114,6 +139,28 @@ namespace BlueprintEditor.ViewModels
                 }
 
                 this.OnPropertyChanged("BlueprintManagerViewModel");
+            }
+        }
+
+        public string ProjectLanguage
+        {
+            get
+            {
+                return this.editorSettings.ProjectLanguage;
+            }
+
+            set
+            {
+                if (this.editorSettings.ProjectLanguage == value)
+                {
+                    return;
+                }
+
+                this.editorSettings.ProjectLanguage = value;
+
+                this.OnPropertyChanged("ProjectLanguage");
+
+                this.SaveEditorSettings();
             }
         }
 
@@ -255,7 +302,7 @@ namespace BlueprintEditor.ViewModels
                 var absoluteBlueprintFilePath = string.Format(
                     "{0}\\{1}", Path.GetDirectoryName(path), blueprintFile.Path);
                 var fileInfo = new FileInfo(absoluteBlueprintFilePath);
-                
+
                 if (!fileInfo.Exists)
                 {
                     throw new FileNotFoundException(string.Format("Blueprint file not found: {0}.", path));
@@ -299,6 +346,7 @@ namespace BlueprintEditor.ViewModels
 
             // Set new project.
             this.SetProject(newProjectSettings);
+            this.SetAvailableLanguages(new List<string>());
         }
 
         public void Redo()
@@ -347,6 +395,19 @@ namespace BlueprintEditor.ViewModels
             fileStream.Close();
         }
 
+        public void SetAvailableLanguages(IEnumerable<string> languageTags)
+        {
+            this.AvailableLanguages.Clear();
+            this.AvailableLanguages.Add(EditorSettings.LanguageTagRawLocalizationKeys);
+
+            foreach (var language in languageTags)
+            {
+                this.AvailableLanguages.Add(language);
+            }
+
+            this.OnAvailableLanguagesChanged();
+        }
+
         public void Undo()
         {
             UndoService.Current[this.BlueprintManagerViewModel].Undo();
@@ -363,6 +424,25 @@ namespace BlueprintEditor.ViewModels
                 Path.Combine(Path.GetDirectoryName(projectPath), Path.GetFileNameWithoutExtension(projectPath)),
                 fileIndex == 0 ? string.Empty : string.Format("({0})", fileIndex),
                 ProjectBlueprintExtension);
+        }
+
+        private void LoadEditorSettings()
+        {
+            var fileInfo = new FileInfo(EditorSettingsSerializationPath);
+
+            using (var fileStream = fileInfo.OpenRead())
+            {
+                this.editorSettings = (EditorSettings)this.editorSettingsSerializer.Deserialize(fileStream);
+            }
+        }
+
+        private void OnAvailableLanguagesChanged()
+        {
+            var handler = this.AvailableLanguagesChanged;
+            if (handler != null)
+            {
+                handler();
+            }
         }
 
         private void OnEntityComponentTypesChanged()
@@ -391,6 +471,16 @@ namespace BlueprintEditor.ViewModels
         private void OnUndoStackChanged(object sender, EventArgs eventArgs)
         {
             this.OnPropertyChanged("UndoDescription");
+        }
+
+        private void SaveEditorSettings()
+        {
+            var fileInfo = new FileInfo(EditorSettingsSerializationPath);
+
+            using (var fileStream = fileInfo.Create())
+            {
+                this.editorSettingsSerializer.Serialize(fileStream, this.editorSettings);
+            }
         }
 
         private void SetProject(ProjectSettings projectSettings, string serializationPath = null)

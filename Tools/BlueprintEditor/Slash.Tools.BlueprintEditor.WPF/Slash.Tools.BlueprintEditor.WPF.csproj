@@ -69,6 +69,9 @@
     <Compile Include="Source\Controls\BlueprintComboBox.xaml.cs">
       <DependentUpon>BlueprintComboBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Controls\LanguageComboBox.xaml.cs">
+      <DependentUpon>LanguageComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Controls\ValueMappingControl.xaml.cs">
       <DependentUpon>ValueMappingControl.xaml</DependentUpon>
     </Compile>
@@ -129,8 +132,8 @@
     <Compile Include="Source\Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Windows\ImportDataCSVWindow.xaml.cs">
-      <DependentUpon>ImportDataCSVWindow.xaml</DependentUpon>
+    <Compile Include="Source\Windows\ImportCsvDataWindow.xaml.cs">
+      <DependentUpon>ImportCsvDataWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Windows\ProgressWindow.xaml.cs">
       <DependentUpon>ProgressWindow.xaml</DependentUpon>
@@ -147,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Controls\BlueprintTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Controls\LanguageComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,7 +209,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Windows\ImportDataCSVWindow.xaml">
+    <Page Include="Source\Windows\ImportCsvDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
