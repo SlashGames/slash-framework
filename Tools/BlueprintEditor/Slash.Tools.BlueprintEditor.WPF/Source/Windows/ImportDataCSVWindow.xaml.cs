@@ -46,8 +46,6 @@ namespace BlueprintEditor.Windows
             this.CbParentBlueprint.Refresh();
 
             this.CbBlueprintIdMapping.DataContext = this;
-            // TODO(np): Why is this not automatically updated by the binding upon setting the context?
-            this.CbBlueprintIdMapping.ItemsSource = this.CSVColumnHeaders;
             this.CbBlueprintIdMapping.SelectedIndex = 0;
 
             this.TbIgnoredBlueprintId.DataContext = this;
