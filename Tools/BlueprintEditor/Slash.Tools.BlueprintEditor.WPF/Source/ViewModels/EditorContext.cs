@@ -21,6 +21,7 @@ namespace BlueprintEditor.ViewModels
     using Slash.Reflection.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
     using Slash.Tools.BlueprintEditor.Logic.Context;
+    using Slash.Tools.BlueprintEditor.Logic.Localization;
 
     public sealed class EditorContext : INotifyPropertyChanged
     {
@@ -50,6 +51,10 @@ namespace BlueprintEditor.ViewModels
 
         private readonly XmlSerializer editorSettingsSerializer;
 
+        private readonly Dictionary<string, ILocalizationTable> languages;
+
+        private readonly ILocalizationTableSerializer localizationTableSerializer;
+
         private readonly XmlSerializer projectSettingsSerializer;
 
         private BlueprintManagerViewModel blueprintManagerViewModel;
@@ -68,8 +73,10 @@ namespace BlueprintEditor.ViewModels
             this.blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
             this.projectSettingsSerializer = new XmlSerializer(typeof(ProjectSettings));
             this.editorSettingsSerializer = new XmlSerializer(typeof(EditorSettings));
+            this.localizationTableSerializer = new LocalizationTableNGUISerializer();
 
             this.AvailableLanguages = new ObservableCollection<string>();
+            this.languages = new Dictionary<string, ILocalizationTable>();
             this.editorSettings = new EditorSettings();
 
             this.SetAvailableLanguages(new List<string>());
@@ -437,6 +444,24 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
+        private void LoadLanguages()
+        {
+            this.languages.Clear();
+
+            foreach (var languageFile in this.ProjectSettings.LanguageFiles)
+            {
+                var fileInfo = new FileInfo(languageFile.Path);
+
+                using (var stream = fileInfo.OpenRead())
+                {
+                    var languageTag = Path.GetFileNameWithoutExtension(languageFile.Path);
+                    var localizationTable = this.localizationTableSerializer.Deserialize(stream);
+
+                    this.languages.Add(languageTag, localizationTable);
+                }
+            }
+        }
+
         private void OnAvailableLanguagesChanged()
         {
             var handler = this.AvailableLanguagesChanged;
@@ -510,6 +535,9 @@ namespace BlueprintEditor.ViewModels
             {
                 this.BlueprintManagerViewModel = null;
             }
+
+            // Load localization data.
+            this.LoadLanguages();
 
             // Raise events.
             this.OnPropertyChanged("ProjectSettings");
