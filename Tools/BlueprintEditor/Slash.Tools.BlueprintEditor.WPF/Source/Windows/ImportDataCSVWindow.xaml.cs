@@ -73,11 +73,6 @@ namespace BlueprintEditor.Windows
                         existingMapping.MappingTarget = importMapping.MappingTarget;
                     }
                 }
-
-                foreach (ValueMappingControl control in this.SpAttributeMapping.Children)
-                {
-                    control.Refresh();
-                }
             }
         }
 

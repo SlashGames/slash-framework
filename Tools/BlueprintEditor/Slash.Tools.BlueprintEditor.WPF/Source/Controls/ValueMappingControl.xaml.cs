@@ -74,12 +74,6 @@ namespace BlueprintEditor.Controls
             this.OnPropertyChanged("ValueMapping");
         }
 
-        public void Refresh()
-        {
-            // TODO(np): Use proper binding instead of this method.
-            this.CbMappingTarget.SelectedItem = this.valueMapping.MappingTarget;
-        }
-
         #endregion
     }
 }
