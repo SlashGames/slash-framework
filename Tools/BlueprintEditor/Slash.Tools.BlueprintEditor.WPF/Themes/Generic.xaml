@@ -9,7 +9,11 @@
                     <StackPanel Orientation = "Vertical">
                         <DockPanel>
                             <Button Name = "PART_BtDelete" Width = "25" Height = "25" DockPanel.Dock = "Left">-</Button>
-                            <ContentPresenter ContentSource = "Control" DockPanel.Dock = "Right" />
+                            <StackPanel Orientation="Vertical" Width="40" DockPanel.Dock="Right">
+                                <Button Name="PART_BtUp" Width="25" Height="25">^</Button>
+                                <Button Name="PART_BtDown" Width="25" Height="25">v</Button>
+                            </StackPanel>
+                            <ContentPresenter ContentSource = "Control" />
                         </DockPanel>
                         <Separator Margin="0, 10, 0, 20" />
                     </StackPanel>

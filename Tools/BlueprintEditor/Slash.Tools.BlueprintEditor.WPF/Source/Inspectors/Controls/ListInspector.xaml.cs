@@ -26,9 +26,7 @@ namespace BlueprintEditor.Inspectors.Controls
         private InspectorPropertyAttribute itemInspectorProperty;
 
         private Type itemType;
-
-        private IList value;
-
+        
         #endregion
 
         #region Constructors and Destructors
@@ -51,6 +49,8 @@ namespace BlueprintEditor.Inspectors.Controls
             // Create item wrapper.
             ListInspectorItem itemWrapperControl = new ListInspectorItem { Control = (InspectorControl)propertyControl };
             itemWrapperControl.DeleteClicked += this.OnItemDeleteClicked;
+            itemWrapperControl.DownClicked += this.OnItemDownClicked;
+            itemWrapperControl.UpClicked += this.OnItemUpClicked;
             itemWrapperControl.ValueChanged += this.OnItemValueChanged;
 
             this.Items.Children.Add(itemWrapperControl);
@@ -58,16 +58,10 @@ namespace BlueprintEditor.Inspectors.Controls
 
         private void BtAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
-            if (this.value == null || dataContext.ValueInherited)
-            {
-                this.value = this.CopyInheritedValue(this.value);
-                dataContext.ValueInherited = false;
-                dataContext.Value = this.value;
-            }
+            IList items = this.GetListToModify();
 
             object item = this.itemType == typeof(string) ? string.Empty : Activator.CreateInstance(this.itemType);
-            this.value.Add(item);
+            items.Add(item);
 
             // Create item control.
             this.AddItemControl(item);
@@ -99,17 +93,66 @@ namespace BlueprintEditor.Inspectors.Controls
         {
             // Unregister from events.
             itemControl.DeleteClicked -= this.OnItemDeleteClicked;
+            itemControl.DownClicked -= this.OnItemDownClicked;
+            itemControl.UpClicked -= this.OnItemUpClicked;
             itemControl.ValueChanged -= this.OnItemValueChanged;
 
             // Remove.
             this.Items.Children.Remove(itemControl);
         }
 
+        private void MoveItem(ListInspectorItem itemControl, int deltaMove)
+        {
+            if (deltaMove == 0)
+            {
+                return;
+            }
+
+            // Get control index.
+            int itemIndex = this.Items.Children.IndexOf(itemControl);
+
+            int newItemIndex = itemIndex + deltaMove;
+
+            // Check range.
+            if (newItemIndex < 0 || newItemIndex >= this.Items.Children.Count)
+            {
+                return;
+            }
+
+            var items = this.GetListToModify();
+            var item = items[itemIndex];
+
+            // Remove from old index.
+            this.Items.Children.RemoveAt(itemIndex);
+            items.RemoveAt(itemIndex);
+            
+            // Add to new index.
+            this.Items.Children.Insert(newItemIndex, itemControl);
+            items.Insert(newItemIndex, item);
+        }
+
+        private IList GetListToModify()
+        {
+            // Copy inherited value if necessary.
+            IList list;
+            InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
+            if (dataContext.Value == null || dataContext.ValueInherited)
+            {
+                list = this.CopyInheritedValue((IList)dataContext.Value);
+                dataContext.ValueInherited = false;
+                dataContext.Value = list;
+            }
+            else
+            {
+                list = (IList)dataContext.Value;
+            }
+            return list;
+        }
+
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
 
-            this.value = (IList)dataContext.Value;
             InspectorPropertyAttribute inspectorProperty = dataContext.InspectorProperty;
             this.itemType = inspectorProperty.AttributeType ?? inspectorProperty.PropertyType.GetGenericArguments()[0];
             this.itemInspectorProperty = inspectorProperty.Clone();
@@ -117,9 +160,10 @@ namespace BlueprintEditor.Inspectors.Controls
 
             // Set items.
             this.ClearItemControls();
-            if (this.value != null)
+            IList items = (IList)dataContext.Value;
+            if (items != null)
             {
-                foreach (var item in this.value)
+                foreach (var item in items)
                 {
                     this.AddItemControl(item);
                 }
@@ -136,20 +180,25 @@ namespace BlueprintEditor.Inspectors.Controls
             // Delete control.
             this.DeleteItemControl(itemControl);
 
-            // Copy inherited value if necessary.
-            InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
-            if (dataContext.ValueInherited)
-            {
-                this.value = this.CopyInheritedValue(this.value);
-                dataContext.ValueInherited = false;
-                dataContext.Value = this.value;
-            }
+            IList items = this.GetListToModify();
 
             // Delete item from list.
-            this.value.RemoveAt(itemIndex);
+            items.RemoveAt(itemIndex);
 
             // List changed.
             this.OnValueChanged();
+        }
+
+        private void OnItemDownClicked(object sender, RoutedEventArgs e)
+        {
+            ListInspectorItem itemControl = (ListInspectorItem)sender;
+            this.MoveItem(itemControl, +1);
+        }
+
+        private void OnItemUpClicked(object sender, RoutedEventArgs e)
+        {
+            ListInspectorItem itemControl = (ListInspectorItem)sender;
+            this.MoveItem(itemControl, -1);
         }
 
         private void OnItemValueChanged(object sender, RoutedEventArgs routedEventArgs)
@@ -161,7 +210,8 @@ namespace BlueprintEditor.Inspectors.Controls
             // Get control index.
             int itemIndex = this.Items.Children.IndexOf(itemControl);
 
-            this.value[itemIndex] = eventArgs.NewValue;
+            IList items = this.GetListToModify();
+            items[itemIndex] = eventArgs.NewValue;
 
             // List changed.
             this.OnValueChanged();

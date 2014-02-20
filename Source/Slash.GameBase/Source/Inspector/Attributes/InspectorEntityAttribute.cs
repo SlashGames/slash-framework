@@ -67,7 +67,7 @@ namespace Slash.GameBase.Inspector.Attributes
 
         private static int CreateEntity(Game game, EntityConfiguration entityConfiguration)
         {
-            int entityId = -1;
+            int entityId = 0;
             if (entityConfiguration != null)
             {
                 if (entityConfiguration.BlueprintId != null)
