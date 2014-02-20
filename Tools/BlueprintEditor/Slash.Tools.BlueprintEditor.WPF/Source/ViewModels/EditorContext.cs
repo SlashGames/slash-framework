@@ -400,6 +400,7 @@ namespace BlueprintEditor.ViewModels
                     languageFile => GetRelativePath(languageFile.Path, this.SerializationPath)).ToArray();
 
             this.projectSettingsSerializer.Serialize(fileStream, this.ProjectSettings);
+            this.SaveLanguages();
             fileStream.Close();
         }
 
@@ -414,6 +415,16 @@ namespace BlueprintEditor.ViewModels
             }
 
             this.OnAvailableLanguagesChanged();
+        }
+
+        public void SetLocalizedString(string key, string value)
+        {
+            if (this.ProjectLanguage == EditorSettings.LanguageTagRawLocalizationKeys)
+            {
+                return;
+            }
+
+            this.languages[this.ProjectLanguage][key] = value;
         }
 
         public void Undo()
@@ -506,6 +517,22 @@ namespace BlueprintEditor.ViewModels
             using (var fileStream = fileInfo.Create())
             {
                 this.editorSettingsSerializer.Serialize(fileStream, this.editorSettings);
+            }
+        }
+
+        private void SaveLanguages()
+        {
+            foreach (var languageFile in this.ProjectSettings.LanguageFiles)
+            {
+                var fileInfo = new FileInfo(languageFile.Path);
+
+                using (var stream = fileInfo.Create())
+                {
+                    var languageTag = Path.GetFileNameWithoutExtension(languageFile.Path);
+                    var localizationTable = this.languages[languageTag];
+
+                    this.localizationTableSerializer.Serialize(stream, localizationTable);
+                }
             }
         }
 

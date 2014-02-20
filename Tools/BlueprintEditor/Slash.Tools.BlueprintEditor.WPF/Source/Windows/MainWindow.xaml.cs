@@ -23,6 +23,7 @@ namespace BlueprintEditor.Windows
 
     using Microsoft.Win32;
 
+    using Slash.GameBase.Inspector.Attributes;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     using AggregateException = Slash.SystemExt.Exceptions.AggregateException;
@@ -69,6 +70,8 @@ namespace BlueprintEditor.Windows
             this.DataContext = this.Context;
 
             AppDomain.CurrentDomain.AssemblyResolve += this.DynamicAssemblyResolve;
+
+            this.BlueprintControl.LocalizedStringPropertyValueChanged += this.OnLocalizedStringPropertyValueChanged;
         }
 
         #endregion
@@ -402,6 +405,13 @@ namespace BlueprintEditor.Windows
 
             // Update window title as soon as settings window is closed by the user.
             this.UpdateWindowTitle();
+        }
+
+        private void OnLocalizedStringPropertyValueChanged(
+            BlueprintViewModel blueprint, InspectorPropertyAttribute inspectorProperty, object newvalue)
+        {
+            this.Context.SetLocalizedString(
+                string.Format("{0}.{1}", blueprint.BlueprintId, inspectorProperty.Name), (string)newvalue);
         }
 
         private void SaveContext(string path)
