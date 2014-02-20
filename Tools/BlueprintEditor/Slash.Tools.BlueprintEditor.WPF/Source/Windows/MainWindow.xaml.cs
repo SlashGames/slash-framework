@@ -337,8 +337,6 @@ namespace BlueprintEditor.Windows
 
         private void ImportCSVData(CsvImportData importData)
         {
-            // TODO(np): Move into own controller.
-
             // Show open file dialog box.
             OpenFileDialog openFileDialog = new OpenFileDialog
                 {
@@ -362,8 +360,8 @@ namespace BlueprintEditor.Windows
             {
                 var streamReader = new StreamReader(stream);
                 var csvReader = new CsvReader(streamReader);
-                var importDataCsvWindow = new ImportDataCSVWindow(this.Context, csvReader, importData) { Owner = this };
-                importDataCsvWindow.ShowDialog();
+                var importCsvDataWindow = new ImportCsvDataWindow(this.Context, csvReader, importData) { Owner = this };
+                importCsvDataWindow.ShowDialog();
             }
         }
 

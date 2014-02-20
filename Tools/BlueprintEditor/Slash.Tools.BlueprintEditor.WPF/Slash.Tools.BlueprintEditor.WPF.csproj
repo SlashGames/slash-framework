@@ -129,8 +129,8 @@
     <Compile Include="Source\Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Windows\ImportDataCSVWindow.xaml.cs">
-      <DependentUpon>ImportDataCSVWindow.xaml</DependentUpon>
+    <Compile Include="Source\Windows\ImportCsvDataWindow.xaml.cs">
+      <DependentUpon>ImportCsvDataWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Windows\ProgressWindow.xaml.cs">
       <DependentUpon>ProgressWindow.xaml</DependentUpon>
@@ -202,7 +202,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Windows\ImportDataCSVWindow.xaml">
+    <Page Include="Source\Windows\ImportCsvDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

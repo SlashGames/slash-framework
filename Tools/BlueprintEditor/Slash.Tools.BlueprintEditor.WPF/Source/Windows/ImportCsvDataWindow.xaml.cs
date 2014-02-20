@@ -24,7 +24,7 @@ namespace BlueprintEditor.Windows
     /// <summary>
     ///   Window that allows importing CSV data into the current project.
     /// </summary>
-    public partial class ImportDataCSVWindow
+    public partial class ImportCsvDataWindow
     {
         #region Constants
 
@@ -70,7 +70,7 @@ namespace BlueprintEditor.Windows
         /// <exception cref="ArgumentNullException">
         ///   <paramref name="context" /> or <paramref name="csvReader" /> is null.
         /// </exception>
-        public ImportDataCSVWindow(EditorContext context, ICsvReader csvReader, CsvImportData importData)
+        public ImportCsvDataWindow(EditorContext context, ICsvReader csvReader, CsvImportData importData)
         {
             this.InitializeComponent();
 

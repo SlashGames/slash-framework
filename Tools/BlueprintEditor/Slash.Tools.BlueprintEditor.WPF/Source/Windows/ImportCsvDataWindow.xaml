@@ -1,4 +1,4 @@
-﻿<Window x:Class = "BlueprintEditor.Windows.ImportDataCSVWindow"
+﻿<Window x:Class = "BlueprintEditor.Windows.ImportCsvDataWindow"
         xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:windows = "clr-namespace:BlueprintEditor.Windows"
         xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
         mc:Ignorable = "d"
-        d:DataContext = "{d:DesignInstance windows:ImportDataCSVWindow}"
+        d:DataContext = "{d:DesignInstance windows:ImportCsvDataWindow}"
         Title = "Import Data (CSV)" Height = "480" Width = "640">
     <StackPanel>
         <TextBlock FontWeight = "Bold" Height = "25">Blueprint Properties</TextBlock>
