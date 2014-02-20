@@ -156,6 +156,13 @@ namespace BlueprintEditor.Windows
                 this.MenuFileCustomImport.Items.Add(menuItem);
             }
 
+            // Update available languages.
+            var languageTags =
+                this.Context.ProjectSettings.LanguageFiles.Select(
+                    languageFile => Path.GetFileNameWithoutExtension(languageFile.Path));
+
+            this.Context.SetAvailableLanguages(languageTags);
+
             // Hide progress bar.
             this.progressWindow.Close();
 

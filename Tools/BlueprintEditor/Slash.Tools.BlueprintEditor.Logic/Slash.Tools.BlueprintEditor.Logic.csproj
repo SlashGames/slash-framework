@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Context\EditorSettings.cs" />
     <Compile Include="Source\Context\ProjectSettings.cs" />
     <Compile Include="Source\Data\ComponentUtils.cs" />
     <Compile Include="Source\Data\CsvImportData.cs" />

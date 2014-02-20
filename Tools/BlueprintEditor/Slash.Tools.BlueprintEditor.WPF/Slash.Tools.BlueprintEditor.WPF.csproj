@@ -69,6 +69,9 @@
     <Compile Include="Source\Controls\BlueprintComboBox.xaml.cs">
       <DependentUpon>BlueprintComboBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Controls\LanguageComboBox.xaml.cs">
+      <DependentUpon>LanguageComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Controls\ValueMappingControl.xaml.cs">
       <DependentUpon>ValueMappingControl.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Controls\BlueprintTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Controls\LanguageComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

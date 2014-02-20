@@ -172,6 +172,10 @@
                         <TextBlock Text = "Redo" />
                     </Button.ToolTip>
                 </Button>
+
+                <Separator />
+                
+                <controls:LanguageComboBox />
             </ToolBar>
         </ToolBarTray>
 

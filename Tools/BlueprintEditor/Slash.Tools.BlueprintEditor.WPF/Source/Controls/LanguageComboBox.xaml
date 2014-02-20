@@ -1,0 +1,12 @@
+﻿<UserControl x:Class = "BlueprintEditor.Controls.LanguageComboBox"
+             xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels = "clr-namespace:BlueprintEditor.ViewModels"
+             mc:Ignorable = "d"
+             d:DesignHeight = "20" d:DesignWidth = "100" d:DataContext = "{d:DesignInstance viewModels:EditorContext}">
+    <ComboBox Name = "ComboBox" IsEditable = "True"
+              IsReadOnly = "True"
+              ItemsSource = "{Binding AvailableLanguages}" SelectedItem = "{Binding ProjectLanguage}" Width = "100" />
+</UserControl>

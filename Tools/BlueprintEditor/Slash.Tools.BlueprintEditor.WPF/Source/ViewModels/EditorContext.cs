@@ -8,6 +8,7 @@ namespace BlueprintEditor.ViewModels
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.IO;
     using System.Linq;
@@ -23,6 +24,12 @@ namespace BlueprintEditor.ViewModels
 
     public sealed class EditorContext : INotifyPropertyChanged
     {
+        #region Constants
+
+        private const string EditorSettingsSerializationPath = "BlueprintEditor.settings.xml";
+
+        #endregion
+
         #region Static Fields
 
         /// <summary>
@@ -41,6 +48,10 @@ namespace BlueprintEditor.ViewModels
 
         private readonly XmlSerializer blueprintManagerSerializer;
 
+        private readonly EditorSettings editorSettings;
+
+        private readonly XmlSerializer editorSettingsSerializer;
+
         private readonly XmlSerializer projectSettingsSerializer;
 
         private BlueprintManagerViewModel blueprintManagerViewModel;
@@ -56,6 +67,10 @@ namespace BlueprintEditor.ViewModels
         {
             this.blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
             this.projectSettingsSerializer = new XmlSerializer(typeof(ProjectSettings));
+            this.editorSettingsSerializer = new XmlSerializer(typeof(EditorSettings));
+
+            this.AvailableLanguages = new ObservableCollection<string> { null };
+            this.editorSettings = new EditorSettings();
         }
 
         #endregion
@@ -82,6 +97,8 @@ namespace BlueprintEditor.ViewModels
                 return this.ProjectSettings != null ? this.ProjectSettings.EntityComponentTypes : null;
             }
         }
+
+        public ObservableCollection<string> AvailableLanguages { get; private set; }
 
         public BlueprintManagerViewModel BlueprintManagerViewModel
         {
@@ -114,6 +131,28 @@ namespace BlueprintEditor.ViewModels
                 }
 
                 this.OnPropertyChanged("BlueprintManagerViewModel");
+            }
+        }
+
+        public string ProjectLanguage
+        {
+            get
+            {
+                return this.editorSettings.ProjectLanguage;
+            }
+
+            set
+            {
+                if (this.editorSettings.ProjectLanguage == value)
+                {
+                    return;
+                }
+
+                this.editorSettings.ProjectLanguage = value;
+
+                this.OnPropertyChanged("ProjectLanguage");
+
+                this.SaveEditorSettings();
             }
         }
 
@@ -255,7 +294,7 @@ namespace BlueprintEditor.ViewModels
                 var absoluteBlueprintFilePath = string.Format(
                     "{0}\\{1}", Path.GetDirectoryName(path), blueprintFile.Path);
                 var fileInfo = new FileInfo(absoluteBlueprintFilePath);
-                
+
                 if (!fileInfo.Exists)
                 {
                     throw new FileNotFoundException(string.Format("Blueprint file not found: {0}.", path));
@@ -299,6 +338,7 @@ namespace BlueprintEditor.ViewModels
 
             // Set new project.
             this.SetProject(newProjectSettings);
+            this.SetAvailableLanguages(new List<string>());
         }
 
         public void Redo()
@@ -347,6 +387,17 @@ namespace BlueprintEditor.ViewModels
             fileStream.Close();
         }
 
+        public void SetAvailableLanguages(IEnumerable<string> languageTags)
+        {
+            this.AvailableLanguages.Clear();
+            this.AvailableLanguages.Add(null);
+
+            foreach (var language in languageTags)
+            {
+                this.AvailableLanguages.Add(language);
+            }
+        }
+
         public void Undo()
         {
             UndoService.Current[this.BlueprintManagerViewModel].Undo();
@@ -391,6 +442,17 @@ namespace BlueprintEditor.ViewModels
         private void OnUndoStackChanged(object sender, EventArgs eventArgs)
         {
             this.OnPropertyChanged("UndoDescription");
+        }
+
+        private void SaveEditorSettings()
+        {
+            var fileInfo = new FileInfo(EditorSettingsSerializationPath);
+
+            using (var fileStream = fileInfo.Create())
+            {
+                this.editorSettingsSerializer.Serialize(fileStream, this.editorSettings);
+                fileStream.Close();
+            }
         }
 
         private void SetProject(ProjectSettings projectSettings, string serializationPath = null)
