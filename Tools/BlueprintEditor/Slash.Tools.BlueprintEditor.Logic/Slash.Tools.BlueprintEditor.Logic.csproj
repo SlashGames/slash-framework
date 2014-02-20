@@ -39,6 +39,10 @@
     <Compile Include="Source\Data\CsvImportData.cs" />
     <Compile Include="Source\Data\InspectorComponentTable.cs" />
     <Compile Include="Source\Data\ValueMapping.cs" />
+    <Compile Include="Source\Localization\ILocalizationTable.cs" />
+    <Compile Include="Source\Localization\ILocalizationTableSerializer.cs" />
+    <Compile Include="Source\Localization\LocalizationTable.cs" />
+    <Compile Include="Source\Localization\LocalizationTableNGUISerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Slash.GameBase\Slash.GameBase.csproj">
