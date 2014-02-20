@@ -6,7 +6,6 @@
 
 namespace BlueprintEditor.Controls
 {
-    using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows;
@@ -38,6 +37,7 @@ namespace BlueprintEditor.Controls
             this.InitializeComponent();
 
             this.DataContextChanged += this.OnDataContextChanged;
+
             this.ComboBox.SelectionChanged += this.OnSelectionChanged;
         }
 
@@ -83,15 +83,28 @@ namespace BlueprintEditor.Controls
             comboBox.OnPropertyChanged("SelectedLanguage");
         }
 
-        private void OnAvailableLanguagesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnAvailableLanguagesChanged()
         {
-            this.ComboBox.SelectedIndex = 0;
+            if (this.ComboBox.SelectedItem == null)
+            {
+                this.ComboBox.SelectedIndex = 0;
+            }
         }
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var editorContext = (EditorContext)e.NewValue;
-            editorContext.AvailableLanguages.CollectionChanged += this.OnAvailableLanguagesChanged;
+            var oldContext = (EditorContext)e.OldValue;
+            var newContext = (EditorContext)e.NewValue;
+
+            if (oldContext != null)
+            {
+                oldContext.AvailableLanguagesChanged -= this.OnAvailableLanguagesChanged;
+            }
+
+            if (newContext != null)
+            {
+                newContext.AvailableLanguagesChanged += this.OnAvailableLanguagesChanged;
+            }
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)

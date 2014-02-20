@@ -48,13 +48,13 @@ namespace BlueprintEditor.ViewModels
 
         private readonly XmlSerializer blueprintManagerSerializer;
 
-        private readonly EditorSettings editorSettings;
-
         private readonly XmlSerializer editorSettingsSerializer;
 
         private readonly XmlSerializer projectSettingsSerializer;
 
         private BlueprintManagerViewModel blueprintManagerViewModel;
+
+        private EditorSettings editorSettings;
 
         #endregion
 
@@ -73,11 +73,15 @@ namespace BlueprintEditor.ViewModels
             this.editorSettings = new EditorSettings();
 
             this.SetAvailableLanguages(new List<string>());
+
+            this.LoadEditorSettings();
         }
 
         #endregion
 
         #region Delegates
+
+        public delegate void AvailableLanguagesChangedDelegate();
 
         public delegate void BlueprintManagerChangedDelegate(
             BlueprintManager newBlueprintManager, BlueprintManager oldBlueprintManager);
@@ -85,6 +89,8 @@ namespace BlueprintEditor.ViewModels
         #endregion
 
         #region Public Events
+
+        public event AvailableLanguagesChangedDelegate AvailableLanguagesChanged;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -398,6 +404,8 @@ namespace BlueprintEditor.ViewModels
             {
                 this.AvailableLanguages.Add(language);
             }
+
+            this.OnAvailableLanguagesChanged();
         }
 
         public void Undo()
@@ -416,6 +424,25 @@ namespace BlueprintEditor.ViewModels
                 Path.Combine(Path.GetDirectoryName(projectPath), Path.GetFileNameWithoutExtension(projectPath)),
                 fileIndex == 0 ? string.Empty : string.Format("({0})", fileIndex),
                 ProjectBlueprintExtension);
+        }
+
+        private void LoadEditorSettings()
+        {
+            var fileInfo = new FileInfo(EditorSettingsSerializationPath);
+
+            using (var fileStream = fileInfo.OpenRead())
+            {
+                this.editorSettings = (EditorSettings)this.editorSettingsSerializer.Deserialize(fileStream);
+            }
+        }
+
+        private void OnAvailableLanguagesChanged()
+        {
+            var handler = this.AvailableLanguagesChanged;
+            if (handler != null)
+            {
+                handler();
+            }
         }
 
         private void OnEntityComponentTypesChanged()
@@ -453,7 +480,6 @@ namespace BlueprintEditor.ViewModels
             using (var fileStream = fileInfo.Create())
             {
                 this.editorSettingsSerializer.Serialize(fileStream, this.editorSettings);
-                fileStream.Close();
             }
         }
 
