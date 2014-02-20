@@ -11,10 +11,19 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
     [Serializable]
     public class EditorSettings
     {
+        #region Constants
+
+        /// <summary>
+        ///   Language tag that shows raw localization keys.
+        /// </summary>
+        public const string LanguageTagRawLocalizationKeys = "RAW";
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
-        ///   Normalized BCP-47 language tag for the language to show all localized strings in. <c>null</c> shows raw localization keys.
+        ///   Normalized BCP-47 language tag for the language to show all localized strings in.
         /// </summary>
         public string ProjectLanguage { get; set; }
 

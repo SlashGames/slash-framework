@@ -69,8 +69,10 @@ namespace BlueprintEditor.ViewModels
             this.projectSettingsSerializer = new XmlSerializer(typeof(ProjectSettings));
             this.editorSettingsSerializer = new XmlSerializer(typeof(EditorSettings));
 
-            this.AvailableLanguages = new ObservableCollection<string> { null };
+            this.AvailableLanguages = new ObservableCollection<string>();
             this.editorSettings = new EditorSettings();
+
+            this.SetAvailableLanguages(new List<string>());
         }
 
         #endregion
@@ -390,7 +392,7 @@ namespace BlueprintEditor.ViewModels
         public void SetAvailableLanguages(IEnumerable<string> languageTags)
         {
             this.AvailableLanguages.Clear();
-            this.AvailableLanguages.Add(null);
+            this.AvailableLanguages.Add(EditorSettings.LanguageTagRawLocalizationKeys);
 
             foreach (var language in languageTags)
             {

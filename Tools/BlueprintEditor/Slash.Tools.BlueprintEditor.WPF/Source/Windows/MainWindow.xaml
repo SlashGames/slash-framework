@@ -174,8 +174,8 @@
                 </Button>
 
                 <Separator />
-                
-                <controls:LanguageComboBox />
+
+                <controls:LanguageComboBox Style = "{StaticResource DataContextDependentStyle}" />
             </ToolBar>
         </ToolBarTray>
 
