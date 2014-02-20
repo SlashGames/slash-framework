@@ -6,6 +6,9 @@
 
 namespace BlueprintEditor.Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     using System.Windows;
 
     /// <summary>
@@ -43,6 +46,23 @@ namespace BlueprintEditor.Controls
         public static void Warning(string title, string text)
         {
             MessageBox.Show(text, title, MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+        }
+
+        /// <summary>
+        ///   Shows the messages of the passed exceptions as aggregated warning with the specified title.
+        /// </summary>
+        /// <param name="title">Title of the warning to show.</param>
+        /// <param name="exceptions">Exceptions to include in the warning.</param>
+        public static void Warning(string title, IEnumerable<Exception> exceptions)
+        {
+            var stringBuilder = new StringBuilder();
+
+            foreach (var exception in exceptions)
+            {
+                stringBuilder.AppendLine(exception.Message);
+            }
+
+            Warning(title, stringBuilder.ToString());
         }
 
         #endregion
