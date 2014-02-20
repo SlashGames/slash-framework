@@ -16,6 +16,7 @@ namespace Slash.GameBase.Blueprints
 
     using Slash.Collections.Utils;
     using Slash.Diagnostics.Contracts;
+    using Slash.GameBase.Inspector.Attributes;
     using Slash.Serialization.Xml;
 
     /// <summary>
@@ -211,6 +212,16 @@ namespace Slash.GameBase.Blueprints
         }
 
         /// <summary>
+        ///   Gets the list of components of the specified blueprint and all of its parents.
+        /// </summary>
+        /// <param name="blueprint">Blueprint to get the inherited components of.</param>
+        /// <returns>list of components of the specified blueprint and all of its parents.</returns>
+        public List<Type> GetDerivedBlueprintComponents(Blueprint blueprint)
+        {
+            return this.GetDerivedBlueprintComponentsRecursively(blueprint, new List<Type>());
+        }
+
+        /// <summary>
         ///   Gets an enumerator over all registered blueprints.
         /// </summary>
         /// <returns>All registered blueprints.</returns>
@@ -275,6 +286,39 @@ namespace Slash.GameBase.Blueprints
             return this.blueprints.TryGetValue(blueprintId, out blueprint);
         }
 
+        /// <summary>
+        ///   Overwrites the values of all localized string attributes of all blueprints with auto-generated values of the form BlueprintId.AttributeKey.
+        /// </summary>
+        public void UpdateLocalizationKeys()
+        {
+            foreach (var blueprintWithName in this.blueprints)
+            {
+                var blueprintName = blueprintWithName.Key;
+                var blueprint = blueprintWithName.Value;
+                var blueprintComponents = this.GetDerivedBlueprintComponents(blueprint);
+
+                foreach (var componentType in blueprintComponents)
+                {
+                    var properties = componentType.GetProperties();
+
+                    foreach (var property in properties)
+                    {
+                        var stringAttribute =
+                            (InspectorStringAttribute)
+                            Attribute.GetCustomAttribute(property, typeof(InspectorStringAttribute));
+
+                        if (stringAttribute != null && stringAttribute.Localized)
+                        {
+                            var attributeKey = stringAttribute.Name;
+                            var attributeValue = string.Format("{0}.{1}", blueprintName, attributeKey);
+
+                            blueprint.AttributeTable[attributeKey] = attributeValue;
+                        }
+                    }
+                }
+            }
+        }
+
         public void WriteXml(XmlWriter writer)
         {
             this.blueprints.WriteXml(writer);
@@ -296,6 +340,19 @@ namespace Slash.GameBase.Blueprints
         private bool Equals(BlueprintManager other)
         {
             return CollectionUtils.SequenceEqual(this.blueprints, other.blueprints);
+        }
+
+        private List<Type> GetDerivedBlueprintComponentsRecursively(Blueprint blueprint, List<Type> componentTypes)
+        {
+            componentTypes.AddRange(blueprint.ComponentTypes);
+
+            if (blueprint.ParentId != null)
+            {
+                var parentBlueprint = this.GetBlueprint(blueprint.ParentId);
+                this.GetDerivedBlueprintComponentsRecursively(parentBlueprint, componentTypes);
+            }
+
+            return componentTypes;
         }
 
         private void OnBlueprintsChanged()

@@ -365,6 +365,7 @@ namespace BlueprintEditor.ViewModels
             for (int index = 0; index < this.ProjectSettings.BlueprintFiles.Count; index++)
             {
                 var blueprintFile = this.ProjectSettings.BlueprintFiles[index];
+                blueprintFile.BlueprintManager.UpdateLocalizationKeys();
 
                 // Set generic blueprint file path if not set.
                 if (blueprintFile.Path == null)
