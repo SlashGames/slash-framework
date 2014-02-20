@@ -12,6 +12,8 @@ namespace BlueprintEditor.Inspectors.Controls
     using Slash.GameBase.Inspector.Attributes;
 
     [TemplatePart(Name = "PART_BtDelete", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_BtUp", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_BtDown", Type = typeof(Button))]
     public class ListInspectorItem : Control
     {
         #region Static Fields
@@ -25,6 +27,12 @@ namespace BlueprintEditor.Inspectors.Controls
         public static readonly RoutedEvent DeleteClickedEvent = EventManager.RegisterRoutedEvent(
             "DeleteClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ListInspectorItem));
 
+        public static readonly RoutedEvent DownClickedEvent = EventManager.RegisterRoutedEvent(
+            "DownClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ListInspectorItem));
+
+        public static readonly RoutedEvent UpClickedEvent = EventManager.RegisterRoutedEvent(
+            "UpClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ListInspectorItem));
+
         public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent(
             "ValueChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ListInspectorItem));
 
@@ -32,7 +40,20 @@ namespace BlueprintEditor.Inspectors.Controls
 
         #region Fields
 
+        /// <summary>
+        ///   Button to delete item from list.
+        /// </summary>
         private Button buttonDelete;
+
+        /// <summary>
+        ///   Button to move item down in list.
+        /// </summary>
+        private Button buttonDown;
+
+        /// <summary>
+        ///   Button to move button up in list.
+        /// </summary>
+        private Button buttonUp;
 
         #endregion
 
@@ -57,6 +78,30 @@ namespace BlueprintEditor.Inspectors.Controls
             remove
             {
                 this.RemoveHandler(DeleteClickedEvent, value);
+            }
+        }
+
+        public event RoutedEventHandler DownClicked
+        {
+            add
+            {
+                this.AddHandler(DownClickedEvent, value);
+            }
+            remove
+            {
+                this.RemoveHandler(DownClickedEvent, value);
+            }
+        }
+
+        public event RoutedEventHandler UpClicked
+        {
+            add
+            {
+                this.AddHandler(UpClickedEvent, value);
+            }
+            remove
+            {
+                this.RemoveHandler(UpClickedEvent, value);
             }
         }
 
@@ -87,7 +132,7 @@ namespace BlueprintEditor.Inspectors.Controls
                 this.SetValue(ControlProperty, value);
             }
         }
-        
+
         #endregion
 
         #region Public Methods and Operators
@@ -100,6 +145,18 @@ namespace BlueprintEditor.Inspectors.Controls
             if (this.buttonDelete != null)
             {
                 this.buttonDelete.Click += this.ButtonDeleteOnClick;
+            }
+
+            this.buttonDown = this.GetTemplateChild("PART_BtDown") as Button;
+            if (this.buttonDown != null)
+            {
+                this.buttonDown.Click += this.ButtonDownOnClick;
+            }
+
+            this.buttonUp = this.GetTemplateChild("PART_BtUp") as Button;
+            if (this.buttonUp != null)
+            {
+                this.buttonUp.Click += this.ButtonUpOnClick;
             }
         }
 
@@ -128,6 +185,16 @@ namespace BlueprintEditor.Inspectors.Controls
         private void ButtonDeleteOnClick(object sender, RoutedEventArgs routedEventArgs)
         {
             this.RaiseEvent(new RoutedEventArgs(DeleteClickedEvent));
+        }
+
+        private void ButtonDownOnClick(object sender, RoutedEventArgs e)
+        {
+            this.RaiseEvent(new RoutedEventArgs(DownClickedEvent));
+        }
+
+        private void ButtonUpOnClick(object sender, RoutedEventArgs e)
+        {
+            this.RaiseEvent(new RoutedEventArgs(UpClickedEvent));
         }
 
         private void OnValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)
