@@ -48,6 +48,11 @@ namespace Slash.GameBase.Inspector.Attributes
         /// </summary>
         public int MaxLength { get; set; }
 
+        /// <summary>
+        ///   Whether this string should be localized to different languages and just represents a localization id.
+        /// </summary>
+        public bool Localized { get; set; }
+
         #endregion
 
         #region Public Methods and Operators

@@ -120,6 +120,19 @@ namespace BlueprintEditor.Controls
 
         #endregion
 
+        #region Public Methods and Operators
+
+        /// <summary>
+        ///   Updates the item collection of this combo box from the context.
+        /// </summary>
+        public void Refresh()
+        {
+            // TODO(np): Why is this not automatically updated by the binding upon setting the context?
+            this.ComboBox.ItemsSource = this.Blueprints;
+        }
+
+        #endregion
+
         #region Methods
 
         [NotifyPropertyChangedInvocator]
@@ -177,10 +190,12 @@ namespace BlueprintEditor.Controls
         {
             // Search for view model in current blueprints.
             BlueprintManagerViewModel dataContext = (BlueprintManagerViewModel)this.DataContext;
-            this.ComboBox.SelectedItem = dataContext != null
-                                         ? dataContext.Blueprints.FirstOrDefault(
-                                             blueprint => blueprint.BlueprintId == this.selectedBlueprintId)
-                                         : null;
+            var selectedBlueprint = dataContext != null
+                                        ? dataContext.Blueprints.FirstOrDefault(
+                                            blueprint => blueprint.BlueprintId == this.selectedBlueprintId)
+                                        : null;
+
+            this.ComboBox.SelectedItem = selectedBlueprint;
         }
 
         #endregion

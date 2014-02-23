@@ -33,9 +33,16 @@
   <ItemGroup>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Context\EditorSettings.cs" />
     <Compile Include="Source\Context\ProjectSettings.cs" />
     <Compile Include="Source\Data\ComponentUtils.cs" />
+    <Compile Include="Source\Data\CsvImportData.cs" />
     <Compile Include="Source\Data\InspectorComponentTable.cs" />
+    <Compile Include="Source\Data\ValueMapping.cs" />
+    <Compile Include="Source\Localization\ILocalizationTable.cs" />
+    <Compile Include="Source\Localization\ILocalizationTableSerializer.cs" />
+    <Compile Include="Source\Localization\LocalizationTable.cs" />
+    <Compile Include="Source\Localization\LocalizationTableNGUISerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Source\Slash.GameBase\Slash.GameBase.csproj">

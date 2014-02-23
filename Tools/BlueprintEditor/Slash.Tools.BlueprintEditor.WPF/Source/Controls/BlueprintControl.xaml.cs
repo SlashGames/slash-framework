@@ -42,6 +42,19 @@ namespace BlueprintEditor.Controls
 
         #endregion
 
+        #region Delegates
+
+        public delegate void LocalizedStringPropertyValueChangedDelegate(
+            BlueprintViewModel blueprint, InspectorPropertyAttribute inspectorProperty, object newValue);
+
+        #endregion
+
+        #region Public Events
+
+        public event LocalizedStringPropertyValueChangedDelegate LocalizedStringPropertyValueChanged;
+
+        #endregion
+
         #region Methods
 
         private void CanExecuteAddComponent(object sender, CanExecuteRoutedEventArgs e)
@@ -114,7 +127,8 @@ namespace BlueprintEditor.Controls
         /// <param name="property">Property to get the current value of.</param>
         /// <param name="inherited"></param>
         /// <returns>Current value of the specified property for the passed blueprint.</returns>
-        private object GetCurrentAttributeValue(BlueprintViewModel viewModel, InspectorPropertyAttribute property, out bool inherited)
+        private object GetCurrentAttributeValue(
+            BlueprintViewModel viewModel, InspectorPropertyAttribute property, out bool inherited)
         {
             object propertyValue;
 
@@ -173,11 +187,28 @@ namespace BlueprintEditor.Controls
             this.UpdateInspectors();
         }
 
+        private void OnLocalizedStringPropertyValueChanged(
+            BlueprintViewModel blueprint, InspectorPropertyAttribute inspectorProperty, object newValue)
+        {
+            var handler = this.LocalizedStringPropertyValueChanged;
+            if (handler != null)
+            {
+                handler(blueprint, inspectorProperty, newValue);
+            }
+        }
+
         private void OnPropertyControlValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)
         {
             BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-            Console.WriteLine(
-                "Blueprint {0}: Property value {1} changed to {2}", viewModel.BlueprintId, inspectorProperty, newValue);
+
+            // Check for localized attribute changes.
+            var stringProperty = inspectorProperty as InspectorStringAttribute;
+
+            if (stringProperty != null && stringProperty.Localized)
+            {
+                this.OnLocalizedStringPropertyValueChanged(viewModel, inspectorProperty, newValue);
+                return;
+            }
 
             // Update blueprint configuration.
             object defaultValue = inspectorProperty.Default;

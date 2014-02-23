@@ -13,6 +13,11 @@ namespace BlueprintEditor.Commands
         #region Static Fields
 
         /// <summary>
+        ///   Command to run a custom CSV import.
+        /// </summary>
+        public static ICommand CustomImport = new RoutedCommand("Custom Import", typeof(MenuCommands));
+
+        /// <summary>
         ///   Command to exit the application.
         /// </summary>
         public static ICommand Exit = new RoutedCommand("Exit", typeof(MenuCommands));

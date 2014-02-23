@@ -53,6 +53,8 @@
                         CanExecute = "CanExecuteEditRedo" />
         <CommandBinding Command = "commands:MenuCommands.ImportData" Executed = "ExecutedFileImportData"
                         CanExecute = "CanExecuteFileImportData" />
+        <CommandBinding Command = "commands:MenuCommands.CustomImport"
+                        CanExecute = "CanExecuteFileCustomImport" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -90,6 +92,10 @@
                 <Separator />
                 <MenuItem x:Name = "MenuFileImportData" Header = "_Import Data (CSV)..."
                           Command = "commands:MenuCommands.ImportData" />
+                <MenuItem x:Name = "MenuFileCustomImport" Header = "_Custom Import (CSV)..."
+                          Command = "commands:MenuCommands.CustomImport">
+                    <MenuItem x:Name = "Aaa" Header = "aaaa" />
+                </MenuItem>
                 <Separator />
                 <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Command = "commands:MenuCommands.Exit">
                     <MenuItem.Icon>
@@ -166,6 +172,10 @@
                         <TextBlock Text = "Redo" />
                     </Button.ToolTip>
                 </Button>
+
+                <Separator />
+
+                <controls:LanguageComboBox Style = "{StaticResource DataContextDependentStyle}" />
             </ToolBar>
         </ToolBarTray>
 

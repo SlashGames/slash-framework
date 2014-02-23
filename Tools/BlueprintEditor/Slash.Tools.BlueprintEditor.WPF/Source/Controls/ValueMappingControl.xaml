@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text = "{Binding MappingSource}" Grid.Column = "0" />
-        <ComboBox Name = "CbMappingTarget" IsEditable = "True" IsReadOnly = "True"
+        <ComboBox Name = "CbMappingTarget" IsEditable = "True" SelectedValue="{Binding MappingTarget}" IsReadOnly = "True"
                   ItemsSource = "{Binding AvailableMappingTargets}" Grid.Column = "1" />
     </Grid>
 </UserControl>
