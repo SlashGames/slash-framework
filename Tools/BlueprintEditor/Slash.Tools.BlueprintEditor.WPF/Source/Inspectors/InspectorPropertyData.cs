@@ -17,20 +17,9 @@ namespace BlueprintEditor.Inspectors
 
     public class InspectorPropertyData : IDataErrorInfo, INotifyPropertyChanged
     {
-        #region Constants
-
-        /// <summary>
-        ///   Validation message when provided string can't be converted to value.
-        /// </summary>
-        public const string ValidationMessageConversionFailed = "String can't be converted to value.";
-
-        #endregion
-
         #region Fields
 
         private readonly InspectorPropertyAttribute inspectorProperty;
-
-        private string stringValue;
 
         private object value;
 
@@ -79,25 +68,6 @@ namespace BlueprintEditor.Inspectors
             }
         }
 
-        public string StringValue
-        {
-            get
-            {
-                return this.stringValue;
-            }
-            set
-            {
-                if (value == this.stringValue)
-                {
-                    return;
-                }
-
-                this.stringValue = value;
-
-                this.OnPropertyChanged();
-            }
-        }
-
         public object Value
         {
             get
@@ -125,25 +95,6 @@ namespace BlueprintEditor.Inspectors
             {
                 // Implements IDataErrorInfo indexer for returning validation error messages.
                 string result = null;
-                if (columnName == "StringValue")
-                {
-                    object convertedValue;
-                    bool isValid = this.InspectorProperty.TryConvertStringToListOrValue(
-                        this.StringValue, out convertedValue);
-                    if (!isValid)
-                    {
-                        result = ValidationMessageConversionFailed;
-                    }
-                    else
-                    {
-                        // Validate value itself.
-                        ValidationError validationError = this.inspectorProperty.Validate(this.value);
-                        if (validationError != null)
-                        {
-                            result = validationError.Message;
-                        }
-                    }
-                }
                 if (columnName == "Value")
                 {
                     ValidationError validationError = this.inspectorProperty.Validate(this.value);
@@ -189,9 +140,6 @@ namespace BlueprintEditor.Inspectors
 
             this.value = newValue;
             this.ValueInherited = false;
-
-            // Update string value.
-            this.StringValue = this.inspectorProperty.ConvertValueOrListToString(this.value);
 
             // Raise event.
             this.OnValueChanged(this.value);
