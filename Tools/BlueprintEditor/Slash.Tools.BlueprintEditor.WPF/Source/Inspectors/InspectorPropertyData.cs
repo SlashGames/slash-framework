@@ -28,11 +28,20 @@ namespace BlueprintEditor.Inspectors
 
         #region Fields
 
-        private InspectorPropertyAttribute inspectorProperty;
+        private readonly InspectorPropertyAttribute inspectorProperty;
 
         private string stringValue;
 
         private object value;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public InspectorPropertyData(InspectorPropertyAttribute inspectorProperty)
+        {
+            this.inspectorProperty = inspectorProperty;
+        }
 
         #endregion
 
@@ -53,16 +62,6 @@ namespace BlueprintEditor.Inspectors
             get
             {
                 return this.inspectorProperty;
-            }
-            set
-            {
-                this.inspectorProperty = value;
-                this.OnPropertyChanged();
-
-                // Update string value.
-                this.StringValue = this.value != null
-                                       ? this.inspectorProperty.ConvertValueOrListToString(this.value)
-                                       : null;
             }
         }
 
@@ -95,12 +94,6 @@ namespace BlueprintEditor.Inspectors
 
                 this.stringValue = value;
 
-                object newValue;
-                if (this.InspectorProperty.TryConvertStringToListOrValue(this.StringValue, out newValue))
-                {
-                    this.SetValue(newValue, false);
-                }
-
                 this.OnPropertyChanged();
             }
         }
@@ -113,7 +106,7 @@ namespace BlueprintEditor.Inspectors
             }
             set
             {
-                this.SetValue(value, true);
+                this.SetValue(value);
             }
         }
 
@@ -187,7 +180,7 @@ namespace BlueprintEditor.Inspectors
             this.OnPropertyChanged("Value");
         }
 
-        private void SetValue(object newValue, bool updateStringValue)
+        private void SetValue(object newValue)
         {
             if (Equals(newValue, this.value))
             {
@@ -197,11 +190,8 @@ namespace BlueprintEditor.Inspectors
             this.value = newValue;
             this.ValueInherited = false;
 
-            if (updateStringValue)
-            {
-                // Update string value.
-                this.StringValue = this.inspectorProperty.ConvertValueOrListToString(this.value);
-            }
+            // Update string value.
+            this.StringValue = this.inspectorProperty.ConvertValueOrListToString(this.value);
 
             // Raise event.
             this.OnValueChanged(this.value);

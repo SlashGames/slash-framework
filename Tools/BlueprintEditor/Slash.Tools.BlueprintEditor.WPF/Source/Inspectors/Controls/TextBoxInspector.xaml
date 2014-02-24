@@ -13,7 +13,7 @@
     <TextBox Name = "TbValue"
              Validation.ErrorTemplate = "{StaticResource ErrorTemplateSilverlightStyle}" MinWidth="200">
         <TextBox.Text>
-            <Binding Path = "StringValue" UpdateSourceTrigger = "PropertyChanged">
+            <Binding Path = "Value" UpdateSourceTrigger = "PropertyChanged">
                 <Binding.ValidationRules>
                     <DataErrorValidationRule />
                 </Binding.ValidationRules>

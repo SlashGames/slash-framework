@@ -60,7 +60,7 @@ namespace BlueprintEditor.Inspectors
         public void Init(InspectorPropertyAttribute inspectorProperty, object currentValue, bool valueInherited)
         {
             // Setup data context of control.
-            this.dataContext = new InspectorPropertyData { InspectorProperty = inspectorProperty, Value = currentValue, ValueInherited = valueInherited};
+            this.dataContext = new InspectorPropertyData(inspectorProperty) { Value = currentValue, ValueInherited = valueInherited };
             this.dataContext.ValueChanged += this.OnValueChanged;
             this.DataContext = this.dataContext;
         }
