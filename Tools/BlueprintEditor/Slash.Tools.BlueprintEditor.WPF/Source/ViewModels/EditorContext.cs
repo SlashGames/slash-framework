@@ -21,7 +21,6 @@ namespace BlueprintEditor.ViewModels
     using Slash.Reflection.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
     using Slash.Tools.BlueprintEditor.Logic.Context;
-    using Slash.Tools.BlueprintEditor.Logic.Localization;
 
     public sealed class EditorContext : INotifyPropertyChanged
     {
@@ -51,9 +50,7 @@ namespace BlueprintEditor.ViewModels
 
         private readonly XmlSerializer editorSettingsSerializer;
 
-        private readonly Dictionary<string, ILocalizationTable> languages;
-
-        private readonly ILocalizationTableSerializer localizationTableSerializer;
+        private readonly LocalizationContext localizationContext;
 
         private readonly XmlSerializer projectSettingsSerializer;
 
@@ -73,10 +70,9 @@ namespace BlueprintEditor.ViewModels
             this.blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
             this.projectSettingsSerializer = new XmlSerializer(typeof(ProjectSettings));
             this.editorSettingsSerializer = new XmlSerializer(typeof(EditorSettings));
-            this.localizationTableSerializer = new LocalizationTableNGUISerializer();
 
+            this.localizationContext = new LocalizationContext(this);
             this.AvailableLanguages = new ObservableCollection<string>();
-            this.languages = new Dictionary<string, ILocalizationTable>();
             this.editorSettings = new EditorSettings();
 
             this.SetAvailableLanguages(new List<string>());
@@ -149,6 +145,14 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
+        public LocalizationContext LocalizationContext
+        {
+            get
+            {
+                return this.localizationContext;
+            }
+        }
+
         public string ProjectLanguage
         {
             get
@@ -199,6 +203,8 @@ namespace BlueprintEditor.ViewModels
                 return lastChange != null ? string.Format("_Redo '{0}'", lastChange.Description) : "_Redo";
             }
         }
+
+        public BlueprintViewModel SelectedBlueprint { get; set; }
 
         /// <summary>
         ///   File path to store project xml at.
@@ -400,7 +406,7 @@ namespace BlueprintEditor.ViewModels
                     languageFile => GetRelativePath(languageFile.Path, this.SerializationPath)).ToArray();
 
             this.projectSettingsSerializer.Serialize(fileStream, this.ProjectSettings);
-            this.SaveLanguages();
+            this.localizationContext.SaveLanguages();
             fileStream.Close();
         }
 
@@ -415,16 +421,6 @@ namespace BlueprintEditor.ViewModels
             }
 
             this.OnAvailableLanguagesChanged();
-        }
-
-        public void SetLocalizedString(string key, string value)
-        {
-            if (this.ProjectLanguage == EditorSettings.LanguageTagRawLocalizationKeys)
-            {
-                return;
-            }
-
-            this.languages[this.ProjectLanguage][key] = value;
         }
 
         public void Undo()
@@ -452,24 +448,6 @@ namespace BlueprintEditor.ViewModels
             using (var fileStream = fileInfo.OpenRead())
             {
                 this.editorSettings = (EditorSettings)this.editorSettingsSerializer.Deserialize(fileStream);
-            }
-        }
-
-        private void LoadLanguages()
-        {
-            this.languages.Clear();
-
-            foreach (var languageFile in this.ProjectSettings.LanguageFiles)
-            {
-                var fileInfo = new FileInfo(languageFile.Path);
-
-                using (var stream = fileInfo.OpenRead())
-                {
-                    var languageTag = Path.GetFileNameWithoutExtension(languageFile.Path);
-                    var localizationTable = this.localizationTableSerializer.Deserialize(stream);
-
-                    this.languages.Add(languageTag, localizationTable);
-                }
             }
         }
 
@@ -520,22 +498,6 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
-        private void SaveLanguages()
-        {
-            foreach (var languageFile in this.ProjectSettings.LanguageFiles)
-            {
-                var fileInfo = new FileInfo(languageFile.Path);
-
-                using (var stream = fileInfo.Create())
-                {
-                    var languageTag = Path.GetFileNameWithoutExtension(languageFile.Path);
-                    var localizationTable = this.languages[languageTag];
-
-                    this.localizationTableSerializer.Serialize(stream, localizationTable);
-                }
-            }
-        }
-
         private void SetProject(ProjectSettings projectSettings, string serializationPath = null)
         {
             this.ProjectSettings = projectSettings;
@@ -564,7 +526,7 @@ namespace BlueprintEditor.ViewModels
             }
 
             // Load localization data.
-            this.LoadLanguages();
+            this.localizationContext.LoadLanguages();
 
             // Raise events.
             this.OnPropertyChanged("ProjectSettings");

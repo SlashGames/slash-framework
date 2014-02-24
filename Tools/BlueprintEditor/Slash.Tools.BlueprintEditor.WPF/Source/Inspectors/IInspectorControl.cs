@@ -6,6 +6,8 @@
 
 namespace BlueprintEditor.Inspectors
 {
+    using BlueprintEditor.ViewModels;
+
     using Slash.GameBase.Inspector.Attributes;
 
     public delegate void InspectorControlValueChangedDelegate(
@@ -32,9 +34,10 @@ namespace BlueprintEditor.Inspectors
         ///   Initializes the control with the inspector property it is for and the current value.
         /// </summary>
         /// <param name="inspectorProperty">Inspector property the control is for.</param>
+        /// <param name="localizationContext">Context used for showing and changing localized attribute values.</param>
         /// <param name="currentValue">Current value.</param>
         /// <param name="valueInherited">Indicates if the current value was inherited.</param>
-        void Init(InspectorPropertyAttribute inspectorProperty, object currentValue, bool valueInherited);
+        void Init(InspectorPropertyAttribute inspectorProperty, LocalizationContext localizationContext, object currentValue, bool valueInherited);
 
         #endregion
     }

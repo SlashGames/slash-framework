@@ -68,10 +68,15 @@ namespace BlueprintEditor.Windows
             this.InitializeComponent();
 
             this.DataContext = this.Context;
+            this.BlueprintControl.LocalizationContext = this.Context.LocalizationContext;
+            this.BlueprintControl.SelectedBlueprintChaged += this.OnSelectedBlueprintChanged;
 
             AppDomain.CurrentDomain.AssemblyResolve += this.DynamicAssemblyResolve;
+        }
 
-            this.BlueprintControl.LocalizedStringPropertyValueChanged += this.OnLocalizedStringPropertyValueChanged;
+        private void OnSelectedBlueprintChanged(BlueprintViewModel newBlueprint, BlueprintViewModel oldBlueprint)
+        {
+            this.Context.SelectedBlueprint = newBlueprint;
         }
 
         #endregion
@@ -405,13 +410,6 @@ namespace BlueprintEditor.Windows
 
             // Update window title as soon as settings window is closed by the user.
             this.UpdateWindowTitle();
-        }
-
-        private void OnLocalizedStringPropertyValueChanged(
-            BlueprintViewModel blueprint, InspectorPropertyAttribute inspectorProperty, object newvalue)
-        {
-            this.Context.SetLocalizedString(
-                string.Format("{0}.{1}", blueprint.BlueprintId, inspectorProperty.Name), (string)newvalue);
         }
 
         private void SaveContext(string path)

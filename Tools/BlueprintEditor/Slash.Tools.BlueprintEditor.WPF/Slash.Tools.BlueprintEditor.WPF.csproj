@@ -127,6 +127,7 @@
     <Compile Include="Source\ViewModels\BlueprintManagerViewModel.cs" />
     <Compile Include="Source\ViewModels\BlueprintViewModel.cs" />
     <Compile Include="Source\ViewModels\EditorContext.cs" />
+    <Compile Include="Source\ViewModels\LocalizationContext.cs" />
     <Compile Include="Source\ViewModels\PropertyValueMappingViewModel.cs" />
     <Compile Include="Source\ViewModels\ValueMappingViewModel.cs" />
     <Compile Include="Source\Windows\AboutWindow.xaml.cs">

@@ -10,6 +10,7 @@ namespace BlueprintEditor.Inspectors
     using System.Runtime.CompilerServices;
 
     using BlueprintEditor.Annotations;
+    using BlueprintEditor.ViewModels;
 
     using Slash.GameBase.Inspector.Attributes;
     using Slash.GameBase.Inspector.Validation;
@@ -21,15 +22,31 @@ namespace BlueprintEditor.Inspectors
 
         private readonly InspectorPropertyAttribute inspectorProperty;
 
+        private readonly LocalizationContext localizationContext;
+
         private object value;
 
         #endregion
 
         #region Constructors and Destructors
 
-        public InspectorPropertyData(InspectorPropertyAttribute inspectorProperty)
+        public InspectorPropertyData(
+            InspectorPropertyAttribute inspectorProperty, LocalizationContext localizationContext)
         {
             this.inspectorProperty = inspectorProperty;
+            
+            // Check for localized attribute.
+            var stringProperty = this.inspectorProperty as InspectorStringAttribute;
+
+            if (stringProperty != null && stringProperty.Localized)
+            {
+                this.localizationContext = localizationContext;
+
+                if (this.localizationContext != null)
+                {
+                    this.localizationContext.ProjectLanguageChanged += this.OnProjectLanguageChanged;
+                }
+            }
         }
 
         #endregion
@@ -72,11 +89,31 @@ namespace BlueprintEditor.Inspectors
         {
             get
             {
+                if (this.localizationContext != null)
+                {
+                    return this.localizationContext.GetLocalizedString(this.inspectorProperty.Name);
+                }
+
                 return this.value;
             }
             set
             {
-                this.SetValue(value);
+                if (Equals(value, this.value))
+                {
+                    return;
+                }
+
+                // Don't change localization keys via inspector.
+                if (this.localizationContext != null)
+                {
+                    return;
+                }
+
+                this.value = value;
+                this.ValueInherited = false;
+
+                // Raise event.
+                this.OnValueChanged(this.value);
             }
         }
 
@@ -93,6 +130,12 @@ namespace BlueprintEditor.Inspectors
         {
             get
             {
+                if (this.localizationContext != null)
+                {
+                    // Don't validate localized strings.
+                    return null;
+                }
+
                 // Implements IDataErrorInfo indexer for returning validation error messages.
                 string result = null;
                 if (columnName == "Value")
@@ -121,6 +164,15 @@ namespace BlueprintEditor.Inspectors
             }
         }
 
+        private void OnProjectLanguageChanged(string newLanguage)
+        {
+            if (this.localizationContext != null)
+            {
+                // Update inspector controls, showing value for the current language.
+                this.OnPropertyChanged("Value");
+            }
+        }
+
         private void OnValueChanged(object newValue)
         {
             InspectorControlValueChangedDelegate handler = this.ValueChanged;
@@ -128,21 +180,6 @@ namespace BlueprintEditor.Inspectors
             {
                 handler(this.inspectorProperty, newValue);
             }
-            this.OnPropertyChanged("Value");
-        }
-
-        private void SetValue(object newValue)
-        {
-            if (Equals(newValue, this.value))
-            {
-                return;
-            }
-
-            this.value = newValue;
-            this.ValueInherited = false;
-
-            // Raise event.
-            this.OnValueChanged(this.value);
         }
 
         #endregion
