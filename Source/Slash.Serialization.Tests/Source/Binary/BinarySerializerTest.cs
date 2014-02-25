@@ -6,6 +6,7 @@
 
 namespace Slash.Serialization.Tests.Source.Binary
 {
+    using System.Collections.Generic;
     using System.IO;
 
     using NUnit.Framework;
@@ -120,6 +121,13 @@ namespace Slash.Serialization.Tests.Source.Binary
         {
             const ushort S = 42;
             this.AssertSerializable(S);
+        }
+
+        [Test]
+        public void TestSerializeStringList()
+        {
+            var stringList = new List<string> { "first", "second" };
+            this.AssertSerializable(stringList);
         }
 
         #endregion
