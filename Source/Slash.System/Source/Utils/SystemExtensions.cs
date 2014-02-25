@@ -19,6 +19,7 @@ namespace Slash.SystemExt.Utils
     {
         #region Public Methods and Operators
 
+#if !WINDOWS_STORE
         /// <summary>
         ///   Perform a deep Copy of the object.
         ///   Reference Article http://www.codeproject.com/KB/tips/SerializedObjectCloner.aspx
@@ -50,6 +51,7 @@ namespace Slash.SystemExt.Utils
                 return (T)formatter.Deserialize(stream);
             }
         }
+#endif
 
         /// <summary>
         ///   Returns the full name of the specified type without any assembly version info.

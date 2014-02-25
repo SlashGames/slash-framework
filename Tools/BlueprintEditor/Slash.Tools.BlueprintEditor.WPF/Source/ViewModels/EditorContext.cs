@@ -445,9 +445,17 @@ namespace BlueprintEditor.ViewModels
         {
             var fileInfo = new FileInfo(EditorSettingsSerializationPath);
 
-            using (var fileStream = fileInfo.OpenRead())
+            if (fileInfo.Exists)
             {
-                this.editorSettings = (EditorSettings)this.editorSettingsSerializer.Deserialize(fileStream);
+                using (var fileStream = fileInfo.OpenRead())
+                {
+                    this.editorSettings = (EditorSettings)this.editorSettingsSerializer.Deserialize(fileStream);
+                }
+            }
+            else
+            {
+                this.editorSettings = new EditorSettings();
+                this.SaveEditorSettings();
             }
         }
 
