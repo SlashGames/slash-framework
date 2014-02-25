@@ -23,7 +23,6 @@ namespace BlueprintEditor.Windows
 
     using Microsoft.Win32;
 
-    using Slash.GameBase.Inspector.Attributes;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     using AggregateException = Slash.SystemExt.Exceptions.AggregateException;
@@ -72,11 +71,6 @@ namespace BlueprintEditor.Windows
             this.BlueprintControl.SelectedBlueprintChaged += this.OnSelectedBlueprintChanged;
 
             AppDomain.CurrentDomain.AssemblyResolve += this.DynamicAssemblyResolve;
-        }
-
-        private void OnSelectedBlueprintChanged(BlueprintViewModel newBlueprint, BlueprintViewModel oldBlueprint)
-        {
-            this.Context.SelectedBlueprint = newBlueprint;
         }
 
         #endregion
@@ -151,7 +145,7 @@ namespace BlueprintEditor.Windows
             }
 
             // Update custom imports.
-            this.MenuFileCustomImport.Items.Clear();
+            this.MenuDataCustomImport.Items.Clear();
 
             foreach (var customImport in this.Context.ProjectSettings.CustomImports)
             {
@@ -161,7 +155,7 @@ namespace BlueprintEditor.Windows
                 menuItem.Tag = customImport;
                 menuItem.Click += this.ExecutedCustomImport;
 
-                this.MenuFileCustomImport.Items.Add(menuItem);
+                this.MenuDataCustomImport.Items.Add(menuItem);
             }
 
             // Update available languages.
@@ -189,6 +183,21 @@ namespace BlueprintEditor.Windows
             this.progressWindow.Close();
         }
 
+        private void CanExecuteDataCustomImport(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.ProjectActive && this.Context.ProjectSettings.CustomImports.Count > 0;
+        }
+
+        private void CanExecuteDataExportLocalization(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.ProjectActive;
+        }
+
+        private void CanExecuteDataImportData(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.ProjectActive;
+        }
+
         private void CanExecuteEditRedo(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.Context.CanExecuteRedo();
@@ -204,20 +213,9 @@ namespace BlueprintEditor.Windows
             e.CanExecute = this.ProjectActive;
         }
 
-        private void CanExecuteFileCustomImport(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = this.Context != null && this.Context.ProjectSettings != null
-                           && this.Context.ProjectSettings.CustomImports.Count > 0;
-        }
-
         private void CanExecuteFileExit(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
-        }
-
-        private void CanExecuteFileImportData(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = this.Context.BlueprintManagerViewModel != null;
         }
 
         private void CanExecuteFileOpen(object sender, CanExecuteRoutedEventArgs e)
@@ -271,6 +269,37 @@ namespace BlueprintEditor.Windows
             this.ImportCSVData(customImport);
         }
 
+        private void ExecutedDataExportLocalization(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Configure save file dialog box.
+            SaveFileDialog dlg = new SaveFileDialog
+                {
+                    FileName = this.Context.ProjectSettings.Name,
+                    DefaultExt = LocalizationContext.LocalizationExportExtension,
+                    Filter = string.Format("Localization Files|*.{0}", LocalizationContext.LocalizationExportExtension)
+                };
+
+            // Show save file dialog box.
+            var result = dlg.ShowDialog();
+
+            // Process save file dialog box results.
+            if (result == false)
+            {
+                return;
+            }
+
+            // Save document.
+            using (var stream = dlg.OpenFile())
+            {
+                this.Context.LocalizationContext.ExportLocalizationData(stream);
+            }
+        }
+
+        private void ExecutedDataImportData(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.ImportCSVData(null);
+        }
+
         private void ExecutedEditRedo(object sender, ExecutedRoutedEventArgs e)
         {
             this.Context.Redo();
@@ -295,11 +324,6 @@ namespace BlueprintEditor.Windows
         private void ExecutedFileExit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
-
-        private void ExecutedFileImportData(object sender, ExecutedRoutedEventArgs e)
-        {
-            this.ImportCSVData(null);
         }
 
         private void ExecutedFileOpen(object sender, RoutedEventArgs e)
@@ -410,6 +434,11 @@ namespace BlueprintEditor.Windows
 
             // Update window title as soon as settings window is closed by the user.
             this.UpdateWindowTitle();
+        }
+
+        private void OnSelectedBlueprintChanged(BlueprintViewModel newBlueprint, BlueprintViewModel oldBlueprint)
+        {
+            this.Context.SelectedBlueprint = newBlueprint;
         }
 
         private void SaveContext(string path)

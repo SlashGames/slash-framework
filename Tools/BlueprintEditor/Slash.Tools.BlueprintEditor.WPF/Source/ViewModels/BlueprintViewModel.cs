@@ -225,6 +225,15 @@ namespace BlueprintEditor.ViewModels
         }
 
         /// <summary>
+        ///   Gets all components of this blueprint and its ancestors.
+        /// </summary>
+        /// <returns>Components of this blueprint and its parents.</returns>
+        public IEnumerable<Type> GetComponents()
+        {
+            return this.AddedComponents.Union(this.GetParentComponents());
+        }
+
+        /// <summary>
         ///   Gets all components of the ancestors of this blueprint.
         /// </summary>
         /// <returns>Components of the parent of this blueprint and its parents.</returns>

@@ -9,12 +9,23 @@ namespace BlueprintEditor.ViewModels
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
+    using System.Linq;
 
+    using CsvHelper;
+
+    using Slash.GameBase.Inspector.Attributes;
     using Slash.Tools.BlueprintEditor.Logic.Context;
+    using Slash.Tools.BlueprintEditor.Logic.Data;
     using Slash.Tools.BlueprintEditor.Logic.Localization;
 
     public class LocalizationContext
     {
+        #region Constants
+
+        public const string LocalizationExportExtension = "csv";
+
+        #endregion
+
         #region Fields
 
         private readonly EditorContext context;
@@ -109,6 +120,70 @@ namespace BlueprintEditor.ViewModels
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Exports all localized strings as CSV to the specified stream.
+        /// </summary>
+        /// <param name="stream">Stream to write all localized strings to.</param>
+        public void ExportLocalizationData(Stream stream)
+        {
+            using (var streamWriter = new StreamWriter(stream))
+            {
+                using (var csvWriter = new CsvWriter(streamWriter))
+                {
+                    // Write header.
+                    csvWriter.WriteField("ID");
+
+                    foreach (var language in this.languages.Keys)
+                    {
+                        csvWriter.WriteField(language);
+                    }
+
+                    csvWriter.NextRecord();
+
+                    // Write records.
+                    var blueprintManager = this.context.BlueprintManagerViewModel;
+
+                    foreach (
+                        var blueprint in
+                            blueprintManager.Blueprints.Where(
+                                blueprintViewModel => blueprintViewModel.DerivedBlueprints.Count == 0))
+                    {
+                        foreach (var componentType in blueprint.GetComponents())
+                        {
+                            var componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
+                            if (componentInfo == null)
+                            {
+                                continue;
+                            }
+
+                            foreach (var inspectorProperty in componentInfo.Properties)
+                            {
+                                var stringProperty = inspectorProperty as InspectorStringAttribute;
+
+                                if (stringProperty != null && stringProperty.Localized)
+                                {
+                                    // Write localization key.
+                                    var localizationKey = this.GetLocalizationKey(
+                                        blueprint.BlueprintId, stringProperty.Name);
+                                    csvWriter.WriteField(localizationKey);
+
+                                    // Write localized strings.
+                                    foreach (var language in this.languages.Values)
+                                    {
+                                        var localizedValue = language[localizationKey];
+                                        csvWriter.WriteField(
+                                            localizationKey == localizedValue ? string.Empty : localizedValue);
+                                    }
+
+                                    csvWriter.NextRecord();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         public string GetLocalizedStringForBlueprint(string blueprintId, string key)
         {
