@@ -8,6 +8,8 @@ namespace BlueprintEditor.Inspectors
 {
     using System.Windows.Controls;
 
+    using BlueprintEditor.ViewModels;
+
     using Slash.GameBase.Inspector.Attributes;
 
     public class InspectorControl : UserControl, IInspectorControl
@@ -55,12 +57,13 @@ namespace BlueprintEditor.Inspectors
         ///   Initializes the control with the inspector property it is for and the current value.
         /// </summary>
         /// <param name="inspectorProperty">Inspector property the control is for.</param>
+        /// <param name="localizationContext">Context used for showing and changing localized attribute values.</param>
         /// <param name="currentValue">Current value.</param>
         /// <param name="valueInherited">Indicates if the current value was inherited.</param>
-        public void Init(InspectorPropertyAttribute inspectorProperty, object currentValue, bool valueInherited)
+        public virtual void Init(InspectorPropertyAttribute inspectorProperty, LocalizationContext localizationContext, object currentValue, bool valueInherited)
         {
             // Setup data context of control.
-            this.dataContext = new InspectorPropertyData { InspectorProperty = inspectorProperty, Value = currentValue, ValueInherited = valueInherited};
+            this.dataContext = new InspectorPropertyData(inspectorProperty, localizationContext) { Value = currentValue, ValueInherited = valueInherited };
             this.dataContext.ValueChanged += this.OnValueChanged;
             this.DataContext = this.dataContext;
         }

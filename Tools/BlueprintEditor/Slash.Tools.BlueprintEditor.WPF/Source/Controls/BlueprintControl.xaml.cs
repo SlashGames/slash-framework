@@ -24,7 +24,9 @@ namespace BlueprintEditor.Controls
     {
         #region Fields
 
-        private readonly InspectorFactory inspectorFactory = new InspectorFactory();
+        private InspectorFactory inspectorFactory;
+
+        private LocalizationContext localizationContext;
 
         #endregion
 
@@ -44,14 +46,31 @@ namespace BlueprintEditor.Controls
 
         #region Delegates
 
-        public delegate void LocalizedStringPropertyValueChangedDelegate(
-            BlueprintViewModel blueprint, InspectorPropertyAttribute inspectorProperty, object newValue);
+        public delegate void SelectedBlueprintChangedDelegate(
+            BlueprintViewModel newBlueprint, BlueprintViewModel oldBlueprint);
 
         #endregion
 
         #region Public Events
 
-        public event LocalizedStringPropertyValueChangedDelegate LocalizedStringPropertyValueChanged;
+        public event SelectedBlueprintChangedDelegate SelectedBlueprintChaged;
+
+        #endregion
+
+        #region Public Properties
+
+        public LocalizationContext LocalizationContext
+        {
+            get
+            {
+                return this.localizationContext;
+            }
+            set
+            {
+                this.localizationContext = value;
+                this.inspectorFactory = new InspectorFactory(value);
+            }
+        }
 
         #endregion
 
@@ -185,30 +204,13 @@ namespace BlueprintEditor.Controls
             }
 
             this.UpdateInspectors();
-        }
 
-        private void OnLocalizedStringPropertyValueChanged(
-            BlueprintViewModel blueprint, InspectorPropertyAttribute inspectorProperty, object newValue)
-        {
-            var handler = this.LocalizedStringPropertyValueChanged;
-            if (handler != null)
-            {
-                handler(blueprint, inspectorProperty, newValue);
-            }
+            this.OnSelectedBlueprintChanged(newViewModel, oldViewModel);
         }
 
         private void OnPropertyControlValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)
         {
             BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-
-            // Check for localized attribute changes.
-            var stringProperty = inspectorProperty as InspectorStringAttribute;
-
-            if (stringProperty != null && stringProperty.Localized)
-            {
-                this.OnLocalizedStringPropertyValueChanged(viewModel, inspectorProperty, newValue);
-                return;
-            }
 
             // Update blueprint configuration.
             object defaultValue = inspectorProperty.Default;
@@ -226,6 +228,15 @@ namespace BlueprintEditor.Controls
             else
             {
                 viewModel.Blueprint.AttributeTable.SetValue(inspectorProperty.Name, newValue);
+            }
+        }
+
+        private void OnSelectedBlueprintChanged(BlueprintViewModel newBlueprint, BlueprintViewModel oldBlueprint)
+        {
+            var handler = this.SelectedBlueprintChaged;
+            if (handler != null)
+            {
+                handler(newBlueprint, oldBlueprint);
             }
         }
 

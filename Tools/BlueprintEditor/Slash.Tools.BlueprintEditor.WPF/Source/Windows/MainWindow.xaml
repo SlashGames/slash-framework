@@ -51,10 +51,13 @@
                         CanExecute = "CanExecuteEditUndo" />
         <CommandBinding Command = "ApplicationCommands.Redo" Executed = "ExecutedEditRedo"
                         CanExecute = "CanExecuteEditRedo" />
-        <CommandBinding Command = "commands:MenuCommands.ImportData" Executed = "ExecutedFileImportData"
-                        CanExecute = "CanExecuteFileImportData" />
+        <CommandBinding Command = "commands:MenuCommands.ImportData" Executed = "ExecutedDataImportData"
+                        CanExecute = "CanExecuteDataImportData" />
         <CommandBinding Command = "commands:MenuCommands.CustomImport"
-                        CanExecute = "CanExecuteFileCustomImport" />
+                        CanExecute = "CanExecuteDataCustomImport" />
+        <CommandBinding Command = "commands:MenuCommands.ExportLocalization"
+                        Executed = "ExecutedDataExportLocalization"
+                        CanExecute = "CanExecuteDataExportLocalization" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -90,13 +93,6 @@
                 <MenuItem x:Name = "MenuFileSaveAs" Header = "Save Project _As..."
                           Command = "ApplicationCommands.SaveAs" />
                 <Separator />
-                <MenuItem x:Name = "MenuFileImportData" Header = "_Import Data (CSV)..."
-                          Command = "commands:MenuCommands.ImportData" />
-                <MenuItem x:Name = "MenuFileCustomImport" Header = "_Custom Import (CSV)..."
-                          Command = "commands:MenuCommands.CustomImport">
-                    <MenuItem x:Name = "Aaa" Header = "aaaa" />
-                </MenuItem>
-                <Separator />
                 <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Command = "commands:MenuCommands.Exit">
                     <MenuItem.Icon>
                         <Image Source = "/Resources/Images/Icons/Close_16xLG.png" />
@@ -114,6 +110,16 @@
                         <Image Source = "/Resources/Images/Icons/Redo_16x.png" />
                     </MenuItem.Icon>
                 </MenuItem>
+            </MenuItem>
+            <MenuItem Header = "_DATA" Style = "{StaticResource ProjectDependentStyle}">
+                <MenuItem x:Name = "MenuDataImportData" Header = "_Import Data (CSV)..."
+                          Command = "commands:MenuCommands.ImportData" />
+                <MenuItem x:Name = "MenuDataCustomImport" Header = "_Custom Import (CSV)..."
+                          Command = "commands:MenuCommands.CustomImport">
+                </MenuItem>
+                <Separator />
+                <MenuItem x:Name = "MenuDataExportLocalizationFile" Header = "_Export Localization File (CSV)..."
+                          Command = "commands:MenuCommands.ExportLocalization" />
             </MenuItem>
             <MenuItem Header = "_PROJECT" Style = "{StaticResource ProjectDependentStyle}">
                 <MenuItem Header = "_Settings..." Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick">

@@ -23,7 +23,15 @@ namespace Slash.Tools.BlueprintEditor.Logic.Localization
         {
             get
             {
-                return this.localizationTable[key];
+                string localizedValue;
+
+                if (this.localizationTable.TryGetValue(key, out localizedValue))
+                {
+                    return localizedValue;
+                }
+
+                // Return localization key for easier debugging.
+                return key;
             }
 
             set

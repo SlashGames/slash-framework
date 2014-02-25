@@ -10,6 +10,7 @@ namespace BlueprintEditor.Inspectors
     using System.Runtime.CompilerServices;
 
     using BlueprintEditor.Annotations;
+    using BlueprintEditor.ViewModels;
 
     using Slash.GameBase.Inspector.Attributes;
     using Slash.GameBase.Inspector.Validation;
@@ -17,22 +18,36 @@ namespace BlueprintEditor.Inspectors
 
     public class InspectorPropertyData : IDataErrorInfo, INotifyPropertyChanged
     {
-        #region Constants
+        #region Fields
 
-        /// <summary>
-        ///   Validation message when provided string can't be converted to value.
-        /// </summary>
-        public const string ValidationMessageConversionFailed = "String can't be converted to value.";
+        private readonly InspectorPropertyAttribute inspectorProperty;
+
+        private readonly LocalizationContext localizationContext;
+
+        private object value;
 
         #endregion
 
-        #region Fields
+        #region Constructors and Destructors
 
-        private InspectorPropertyAttribute inspectorProperty;
+        public InspectorPropertyData(
+            InspectorPropertyAttribute inspectorProperty, LocalizationContext localizationContext)
+        {
+            this.inspectorProperty = inspectorProperty;
+            
+            // Check for localized attribute.
+            var stringProperty = this.inspectorProperty as InspectorStringAttribute;
 
-        private string stringValue;
+            if (stringProperty != null && stringProperty.Localized)
+            {
+                this.localizationContext = localizationContext;
 
-        private object value;
+                if (this.localizationContext != null)
+                {
+                    this.localizationContext.ProjectLanguageChanged += this.OnProjectLanguageChanged;
+                }
+            }
+        }
 
         #endregion
 
@@ -54,16 +69,6 @@ namespace BlueprintEditor.Inspectors
             {
                 return this.inspectorProperty;
             }
-            set
-            {
-                this.inspectorProperty = value;
-                this.OnPropertyChanged();
-
-                // Update string value.
-                this.StringValue = this.value != null
-                                       ? this.inspectorProperty.ConvertValueOrListToString(this.value)
-                                       : null;
-            }
         }
 
         public string PropertyName
@@ -80,40 +85,36 @@ namespace BlueprintEditor.Inspectors
             }
         }
 
-        public string StringValue
-        {
-            get
-            {
-                return this.stringValue;
-            }
-            set
-            {
-                if (value == this.stringValue)
-                {
-                    return;
-                }
-
-                this.stringValue = value;
-
-                object newValue;
-                if (this.InspectorProperty.TryConvertStringToListOrValue(this.StringValue, out newValue))
-                {
-                    this.SetValue(newValue, false);
-                }
-
-                this.OnPropertyChanged();
-            }
-        }
-
         public object Value
         {
             get
             {
+                if (this.localizationContext != null)
+                {
+                    var localizedValue = this.localizationContext.GetLocalizedStringForCurrentBlueprint(this.inspectorProperty.Name);
+                    return localizedValue;
+                }
+
                 return this.value;
             }
             set
             {
-                this.SetValue(value, true);
+                if (Equals(value, this.value))
+                {
+                    return;
+                }
+
+                // Don't change localization keys via inspector.
+                if (this.localizationContext != null)
+                {
+                    return;
+                }
+
+                this.value = value;
+                this.ValueInherited = false;
+
+                // Raise event.
+                this.OnValueChanged(this.value);
             }
         }
 
@@ -130,27 +131,14 @@ namespace BlueprintEditor.Inspectors
         {
             get
             {
+                if (this.localizationContext != null)
+                {
+                    // Don't validate localized strings.
+                    return null;
+                }
+
                 // Implements IDataErrorInfo indexer for returning validation error messages.
                 string result = null;
-                if (columnName == "StringValue")
-                {
-                    object convertedValue;
-                    bool isValid = this.InspectorProperty.TryConvertStringToListOrValue(
-                        this.StringValue, out convertedValue);
-                    if (!isValid)
-                    {
-                        result = ValidationMessageConversionFailed;
-                    }
-                    else
-                    {
-                        // Validate value itself.
-                        ValidationError validationError = this.inspectorProperty.Validate(this.value);
-                        if (validationError != null)
-                        {
-                            result = validationError.Message;
-                        }
-                    }
-                }
                 if (columnName == "Value")
                 {
                     ValidationError validationError = this.inspectorProperty.Validate(this.value);
@@ -177,6 +165,15 @@ namespace BlueprintEditor.Inspectors
             }
         }
 
+        private void OnProjectLanguageChanged(string newLanguage)
+        {
+            if (this.localizationContext != null)
+            {
+                // Update inspector controls, showing value for the current language.
+                this.OnPropertyChanged("Value");
+            }
+        }
+
         private void OnValueChanged(object newValue)
         {
             InspectorControlValueChangedDelegate handler = this.ValueChanged;
@@ -184,27 +181,6 @@ namespace BlueprintEditor.Inspectors
             {
                 handler(this.inspectorProperty, newValue);
             }
-            this.OnPropertyChanged("Value");
-        }
-
-        private void SetValue(object newValue, bool updateStringValue)
-        {
-            if (Equals(newValue, this.value))
-            {
-                return;
-            }
-
-            this.value = newValue;
-            this.ValueInherited = false;
-
-            if (updateStringValue)
-            {
-                // Update string value.
-                this.StringValue = this.inspectorProperty.ConvertValueOrListToString(this.value);
-            }
-
-            // Raise event.
-            this.OnValueChanged(this.value);
         }
 
         #endregion

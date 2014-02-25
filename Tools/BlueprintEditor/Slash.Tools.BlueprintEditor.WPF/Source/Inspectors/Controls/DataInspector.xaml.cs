@@ -19,7 +19,7 @@ namespace BlueprintEditor.Inspectors.Controls
     {
         #region Fields
 
-        private readonly InspectorFactory inspectorFactory = new InspectorFactory();
+        private readonly InspectorFactory inspectorFactory = new InspectorFactory(null);
 
         private IAttributeTable value;
 
