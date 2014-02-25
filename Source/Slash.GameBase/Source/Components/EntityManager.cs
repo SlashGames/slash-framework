@@ -593,6 +593,11 @@ namespace Slash.GameBase.Components
         public void InitEntity(
             int entityId, Blueprint blueprint, IAttributeTable configuration, List<Type> additionalComponents)
         {
+            if (blueprint == null)
+            {
+                throw new ArgumentNullException("blueprint", "Blueprint is null.");
+            }
+
             // Setup attribute table.
             HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
             if (configuration != null)

@@ -181,14 +181,13 @@ namespace Slash.Collections.Utils
 
             return copy;
         }
-
         /// <summary>
         ///   Returns a comma-seperated list of the elements of the passed sequence.
         /// </summary>
         /// <typeparam name="T">Type of the elements of the sequence.</typeparam>
         /// <param name="sequence">Sequence to get a comma-seperated list of.</param>
         /// <returns>Comma-seperated list of the elements of the passed sequence.</returns>
-        public static string ToString<T>(IEnumerable<T> sequence)
+        public static string ToString(IEnumerable sequence)
         {
             if (sequence == null)
             {
@@ -199,9 +198,20 @@ namespace Slash.Collections.Utils
 
             stringBuilder.Append("[");
 
-            foreach (T element in sequence)
+            foreach (var element in sequence)
             {
-                stringBuilder.AppendFormat("{0}, ", element);
+                string elementString;
+                IEnumerable elementEnumerable = element as IEnumerable;
+                if (elementEnumerable != null)
+                {
+                    elementString = ToString(elementEnumerable);
+                }
+                else
+                {
+                    elementString = element.ToString();
+                }
+
+                stringBuilder.AppendFormat("{0}, ", elementString);
             }
 
             if (stringBuilder.Length > 1)
