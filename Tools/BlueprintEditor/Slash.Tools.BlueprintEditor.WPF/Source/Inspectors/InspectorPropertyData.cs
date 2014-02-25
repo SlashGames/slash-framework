@@ -91,7 +91,8 @@ namespace BlueprintEditor.Inspectors
             {
                 if (this.localizationContext != null)
                 {
-                    return this.localizationContext.GetLocalizedString(this.inspectorProperty.Name);
+                    var localizedValue = this.localizationContext.GetLocalizedStringForCurrentBlueprint(this.inspectorProperty.Name);
+                    return localizedValue;
                 }
 
                 return this.value;

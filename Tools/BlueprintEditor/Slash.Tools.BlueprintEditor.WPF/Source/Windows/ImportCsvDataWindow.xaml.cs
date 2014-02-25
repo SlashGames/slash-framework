@@ -19,6 +19,7 @@ namespace BlueprintEditor.Windows
 
     using CsvHelper;
 
+    using Slash.GameBase.Inspector.Attributes;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>
@@ -305,7 +306,19 @@ namespace BlueprintEditor.Windows
                         object convertedValue;
                         valueMapping.InspectorProperty.TryConvertStringToListOrValue(
                             this.csvReader[valueMapping.MappingTarget], out convertedValue);
-                        dataBlueprint.Blueprint.AttributeTable[valueMapping.MappingSource] = convertedValue;
+
+                        // Check for localized values.
+                        var stringProperty = valueMapping.InspectorProperty as InspectorStringAttribute;
+
+                        if (stringProperty != null && stringProperty.Localized)
+                        {
+                            this.context.LocalizationContext.SetLocalizedStringForBlueprint(
+                                blueprintId, valueMapping.MappingSource, (string)convertedValue);
+                        }
+                        else
+                        {
+                            dataBlueprint.Blueprint.AttributeTable[valueMapping.MappingSource] = convertedValue;
+                        }
                     }
 
                     // Increase counter.
@@ -396,6 +409,9 @@ namespace BlueprintEditor.Windows
             // Fill Ignored Blueprint Id text box.
             this.TbIgnoredBlueprintId.DataContext = this;
             this.TbIgnoredBlueprintId.Text = DefaultIgnoredBlueprintId;
+
+            // Fill language combo box.
+            this.CbLanguage.DataContext = this.context;
 
             if (this.importData == null)
             {

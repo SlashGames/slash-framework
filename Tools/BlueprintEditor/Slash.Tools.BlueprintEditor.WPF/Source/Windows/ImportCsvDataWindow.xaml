@@ -38,6 +38,21 @@
             <StackPanel Name = "SpAttributeMapping" />
         </ScrollViewer>
 
+        <TextBlock FontWeight = "Bold" Height = "25">Localization Settings</TextBlock>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "150" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height = "25" />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0">Import localized strings as:</TextBlock>
+            <controls:LanguageComboBox x:Name="CbLanguage" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"/>
+        </Grid>
+
         <TextBlock FontWeight = "Bold" Height = "25">Import Settings</TextBlock>
         
         <CheckBox Name="CbSaveSettings">Save import settings for future imports</CheckBox>

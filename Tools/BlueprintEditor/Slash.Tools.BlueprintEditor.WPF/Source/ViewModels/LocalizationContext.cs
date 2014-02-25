@@ -69,18 +69,58 @@ namespace BlueprintEditor.ViewModels
 
         #endregion
 
-        #region Public Methods and Operators
+        #region Properties
 
-        public object GetLocalizedString(string key)
+        private string CurrentBlueprintId
         {
-            var localizationKey = this.GetLocalizationKey(key);
-
-            if (this.ProjectLanguage == EditorSettings.LanguageTagRawLocalizationKeys)
+            get
             {
-                return localizationKey;
+                return this.context.SelectedBlueprint.BlueprintId;
+            }
+        }
+
+        #endregion
+
+        #region Indexers
+
+        private string this[string localizationKey]
+        {
+            get
+            {
+                if (this.ProjectLanguage == EditorSettings.LanguageTagRawLocalizationKeys)
+                {
+                    return localizationKey;
+                }
+
+                return this.languages[this.ProjectLanguage][localizationKey];
             }
 
-            return this.languages[this.ProjectLanguage][localizationKey];
+            set
+            {
+                if (this.RawLocalizationKeys)
+                {
+                    return;
+                }
+
+                this.languages[this.ProjectLanguage][localizationKey] = value;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public string GetLocalizedStringForBlueprint(string blueprintId, string key)
+        {
+            var localizationKey = this.GetLocalizationKey(blueprintId, key);
+            return this[localizationKey];
+        }
+
+        public string GetLocalizedStringForCurrentBlueprint(string key)
+        {
+            var localizationKey = this.GetLocalizationKey(this.CurrentBlueprintId, key);
+            var localizedValue = this[localizationKey];
+            return localizedValue;
         }
 
         public void LoadLanguages()
@@ -117,24 +157,25 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
-        public void SetLocalizedString(string key, string value)
+        public void SetLocalizedStringForBlueprint(string blueprintId, string key, string value)
         {
-            if (this.RawLocalizationKeys)
-            {
-                return;
-            }
+            var localizationKey = this.GetLocalizationKey(blueprintId, key);
+            this[localizationKey] = value;
+        }
 
-            var localizationKey = this.GetLocalizationKey(key);
-            this.languages[this.ProjectLanguage][localizationKey] = value;
+        public void SetLocalizedStringForCurrentBlueprint(string key, string value)
+        {
+            var localizationKey = this.GetLocalizationKey(this.CurrentBlueprintId, key);
+            this[localizationKey] = value;
         }
 
         #endregion
 
         #region Methods
 
-        private string GetLocalizationKey(string key)
+        private string GetLocalizationKey(string blueprintId, string key)
         {
-            return string.Format("{0}.{1}", this.context.SelectedBlueprint.BlueprintId, key);
+            return string.Format("{0}.{1}", blueprintId, key);
         }
 
         private void OnContextPropertyChanged(object sender, PropertyChangedEventArgs e)
