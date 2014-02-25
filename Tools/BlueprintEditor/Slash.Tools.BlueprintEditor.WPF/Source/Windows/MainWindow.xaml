@@ -58,6 +58,9 @@
         <CommandBinding Command = "commands:MenuCommands.ExportLocalization"
                         Executed = "ExecutedDataExportLocalization"
                         CanExecute = "CanExecuteDataExportLocalization" />
+        <CommandBinding Command = "commands:MenuCommands.ImportLocalization"
+                        Executed = "ExecutedDataImportLocalization"
+                        CanExecute = "CanExecuteDataImportLocalization" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -120,6 +123,8 @@
                 <Separator />
                 <MenuItem x:Name = "MenuDataExportLocalizationFile" Header = "_Export Localization File (CSV)..."
                           Command = "commands:MenuCommands.ExportLocalization" />
+                <MenuItem x:Name = "MenuDataImportLocalizationFile" Header = "_Import Localization File (CSV)..."
+                          Command = "commands:MenuCommands.ImportLocalization" />
             </MenuItem>
             <MenuItem Header = "_PROJECT" Style = "{StaticResource ProjectDependentStyle}">
                 <MenuItem Header = "_Settings..." Name = "MenuProjectSettings" Click = "MenuProjectSettings_OnClick">

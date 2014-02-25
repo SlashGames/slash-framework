@@ -32,6 +32,11 @@ namespace BlueprintEditor.Commands
         /// </summary>
         public static ICommand ImportData = new RoutedCommand("Import Data", typeof(MenuCommands));
 
+        /// <summary>
+        ///   Command to import localization data.
+        /// </summary>
+        public static ICommand ImportLocalization = new RoutedCommand("Export Localization", typeof(MenuCommands));
+
         #endregion
     }
 }

@@ -198,6 +198,11 @@ namespace BlueprintEditor.Windows
             e.CanExecute = this.ProjectActive;
         }
 
+        private void CanExecuteDataImportLocalization(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.ProjectActive;
+        }
+
         private void CanExecuteEditRedo(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.Context.CanExecuteRedo();
@@ -298,6 +303,32 @@ namespace BlueprintEditor.Windows
         private void ExecutedDataImportData(object sender, ExecutedRoutedEventArgs e)
         {
             this.ImportCSVData(null);
+        }
+
+        private void ExecutedDataImportLocalization(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Configure open file dialog box.
+            OpenFileDialog dlg = new OpenFileDialog
+                {
+                    FileName = this.Context.ProjectSettings.Name,
+                    DefaultExt = LocalizationContext.LocalizationExportExtension,
+                    Filter = string.Format("Localization Files|*.{0}", LocalizationContext.LocalizationExportExtension)
+                };
+
+            // Show open file dialog box.
+            var result = dlg.ShowDialog();
+
+            // Process open file dialog box results.
+            if (result == false)
+            {
+                return;
+            }
+
+            // Open document.
+            using (var stream = dlg.OpenFile())
+            {
+                this.Context.LocalizationContext.ImportLocalizationData(stream);
+            }
         }
 
         private void ExecutedEditRedo(object sender, ExecutedRoutedEventArgs e)
