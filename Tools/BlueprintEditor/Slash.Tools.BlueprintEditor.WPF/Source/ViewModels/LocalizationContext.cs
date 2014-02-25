@@ -131,8 +131,11 @@ namespace BlueprintEditor.ViewModels
             {
                 using (var csvWriter = new CsvWriter(streamWriter))
                 {
+                    // Configure writer.
+                    csvWriter.Configuration.QuoteAllFields = true;
+
                     // Write header.
-                    csvWriter.WriteField("ID");
+                    csvWriter.WriteField(EditorSettings.LanguageTagRawLocalizationKeys);
 
                     foreach (var language in this.languages.Keys)
                     {
@@ -144,10 +147,9 @@ namespace BlueprintEditor.ViewModels
                     // Write records.
                     var blueprintManager = this.context.BlueprintManagerViewModel;
 
-                    foreach (
-                        var blueprint in
-                            blueprintManager.Blueprints.Where(
-                                blueprintViewModel => blueprintViewModel.DerivedBlueprints.Count == 0))
+                    foreach (var blueprint in
+                        blueprintManager.Blueprints.Where(
+                            blueprintViewModel => blueprintViewModel.DerivedBlueprints.Count == 0))
                     {
                         foreach (var componentType in blueprint.GetComponents())
                         {
@@ -196,6 +198,42 @@ namespace BlueprintEditor.ViewModels
             var localizationKey = this.GetLocalizationKey(this.CurrentBlueprintId, key);
             var localizedValue = this[localizationKey];
             return localizedValue;
+        }
+
+        /// <summary>
+        ///   Imports all localized strings as CSV from the specified stream.
+        /// </summary>
+        /// <param name="stream">Stream to read all localized strings from.</param>
+        public void ImportLocalizationData(Stream stream)
+        {
+            using (var streamReader = new StreamReader(stream))
+            {
+                using (var csvReader = new CsvReader(streamReader))
+                {
+                    // Read column headers and first row.
+                    csvReader.Read();
+
+                    while (csvReader.CurrentRecord != null)
+                    {
+                        var localizationId = csvReader[0];
+
+                        for (var i = 1; i < csvReader.FieldHeaders.Length; i++)
+                        {
+                            var localizationLanguageId = csvReader.FieldHeaders[i];
+                            var localizationTable = this.languages[localizationLanguageId];
+                            var localizedValue = csvReader[i];
+
+                            if (!string.IsNullOrEmpty(localizedValue))
+                            {
+                                localizationTable[localizationId] = localizedValue;
+                            }
+                        }
+
+                        // Read next record.
+                        csvReader.Read();
+                    }
+                }
+            }
         }
 
         public void LoadLanguages()
