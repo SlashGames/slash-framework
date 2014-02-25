@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Binary\BinarySerializer.cs" />
     <Compile Include="Source\Dictionary\DictionaryDictionarySerializer.cs" />
     <Compile Include="Source\Dictionary\DictionarySerializableAttribute.cs" />
     <Compile Include="Source\Dictionary\DictionarySerializationContext.cs" />

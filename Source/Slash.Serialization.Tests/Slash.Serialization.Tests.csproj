@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Binary\BinarySerializerTest.cs" />
     <Compile Include="Source\Xml\TypeCollectionSerializationTest.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -50,6 +51,10 @@
     <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
       <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>
       <Name>Slash.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
+      <Name>Slash.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.Tests\Slash.Tests.csproj">
       <Project>{8E13A2AF-DA04-44F3-A097-4D69ADB0592E}</Project>
