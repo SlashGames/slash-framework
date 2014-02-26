@@ -49,10 +49,7 @@ namespace Slash.Reflection.Utils
             }
 
             // Split type name from .dll version.
-            if (!fullName.Contains("["))
-            {
-                fullName = fullName.Split(new[] { ',' })[0];
-            }
+            fullName = SystemExt.Utils.SystemExtensions.RemoveAssemblyInfo(fullName);
 
             Type t = Type.GetType(fullName);
 

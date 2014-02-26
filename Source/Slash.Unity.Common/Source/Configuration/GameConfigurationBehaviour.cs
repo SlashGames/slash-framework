@@ -6,12 +6,14 @@
 
 namespace Slash.Unity.Common.Configuration
 {
+    using System;
     using System.IO;
     using System.Linq;
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
     using Slash.GameBase.Blueprints;
+    using Slash.Serialization.Binary;
 
     using UnityEngine;
 
@@ -31,6 +33,11 @@ namespace Slash.Unity.Common.Configuration
         ///   Path to configuration file asset.
         /// </summary>
         public string ConfigurationFilePath = "Configuration/GameConfiguration";
+
+        /// <summary>
+        ///   Whether to load blueprint data in binary format or XML.
+        /// </summary>
+        public bool LoadBinaryBlueprints;
 
         private IAttributeTable configuration;
 
@@ -82,7 +89,7 @@ namespace Slash.Unity.Common.Configuration
         public void Save()
         {
 #if WINDOWS_STORE
-            throw new System.NotImplementedException("Not implemented for Windows Store build target.");
+            throw new NotImplementedException("Not implemented for Windows Store build target.");
 #else
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
             string filePath = "Assets/Resources/" + this.ConfigurationFilePath + ".xml";
@@ -107,10 +114,19 @@ namespace Slash.Unity.Common.Configuration
             BlueprintManager blueprintManager = null;
             if (blueprintAsset != null)
             {
-                // Load blueprints.
-                var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
                 var blueprintStream = new MemoryStream(blueprintAsset.bytes);
-                blueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+
+                // Load blueprints.
+                if (this.LoadBinaryBlueprints)
+                {
+                    var binarySerializer = new BinarySerializer();
+                    blueprintManager = binarySerializer.Deserialize<BlueprintManager>(blueprintStream);
+                }
+                else
+                {
+                    var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
+                    blueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+                }
 
                 // Resolve parents.
                 BlueprintUtils.ResolveParents(blueprintManager, blueprintManager);

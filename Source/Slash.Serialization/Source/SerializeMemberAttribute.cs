@@ -12,7 +12,7 @@ namespace Slash.Serialization
     ///   Member should be serialized with reflection.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public class SerializeMember : Attribute
+    public class SerializeMemberAttribute : Attribute
     {
     }
 }

@@ -326,7 +326,7 @@ namespace Slash.Serialization.Binary
 
             foreach (FieldInfo field in fields)
             {
-                if (Attribute.IsDefined(field, typeof(SerializeMember)))
+                if (Attribute.IsDefined(field, typeof(SerializeMemberAttribute)))
                 {
                     yield return field;
                 }
@@ -343,7 +343,7 @@ namespace Slash.Serialization.Binary
 
             foreach (PropertyInfo property in properties)
             {
-                if (Attribute.IsDefined(property, typeof(SerializeMember)))
+                if (Attribute.IsDefined(property, typeof(SerializeMemberAttribute)))
                 {
                     yield return property;
                 }
