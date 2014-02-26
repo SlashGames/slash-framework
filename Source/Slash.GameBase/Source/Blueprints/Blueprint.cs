@@ -15,6 +15,7 @@ namespace Slash.GameBase.Blueprints
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
     using Slash.Reflection.Utils;
+    using Slash.Serialization;
 
     /// <summary>
     ///   Blueprint for creating an entity with a specific set of components
@@ -63,6 +64,7 @@ namespace Slash.GameBase.Blueprints
         [Browsable(false)]
 #endif
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [SerializeMember]
         public AttributeTable AttributeTableSerialized
         {
             get
@@ -91,6 +93,7 @@ namespace Slash.GameBase.Blueprints
         [Browsable(false)]
 #endif
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [SerializeMember]
         public string[] ComponentTypesSerialized
         {
             get
@@ -113,6 +116,7 @@ namespace Slash.GameBase.Blueprints
         /// <summary>
         ///   Id of parent blueprint. Used for serialization/deserialization.
         /// </summary>
+        [SerializeMember]
         public string ParentId { get; set; }
 
         #endregion

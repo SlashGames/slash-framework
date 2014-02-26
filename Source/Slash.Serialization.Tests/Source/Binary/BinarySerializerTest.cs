@@ -12,6 +12,7 @@ namespace Slash.Serialization.Tests.Source.Binary
     using NUnit.Framework;
 
     using Slash.Serialization.Binary;
+    using Slash.Serialization.Xml;
 
     public class BinarySerializerTest
     {
@@ -188,6 +189,15 @@ namespace Slash.Serialization.Tests.Source.Binary
             this.AssertSerializable(valueWithType);
         }
 
+        [Test]
+        public void TestSerializeDerivedDictionary()
+        {
+            SerializableDictionary<string, string> dictionary = new SerializableDictionary<string, string>();
+            dictionary.Add("22335", "Hamburg");
+            dictionary.Add("24118", "Kiel");
+
+            this.AssertSerializable(dictionary);
+        }
         #endregion
 
         #region Methods

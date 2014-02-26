@@ -17,6 +17,7 @@ namespace Slash.GameBase.Blueprints
     using Slash.Collections.Utils;
     using Slash.Diagnostics.Contracts;
     using Slash.GameBase.Inspector.Attributes;
+    using Slash.Serialization;
     using Slash.Serialization.Xml;
 
     /// <summary>
@@ -30,6 +31,7 @@ namespace Slash.GameBase.Blueprints
         /// <summary>
         ///   All registered blueprints.
         /// </summary>
+        [SerializeMember]
         private readonly SerializableDictionary<string, Blueprint> blueprints =
             new SerializableDictionary<string, Blueprint>
                 {
@@ -346,7 +348,7 @@ namespace Slash.GameBase.Blueprints
         {
             componentTypes.AddRange(blueprint.ComponentTypes);
 
-            if (blueprint.ParentId != null)
+            if (!string.IsNullOrEmpty(blueprint.ParentId))
             {
                 var parentBlueprint = this.GetBlueprint(blueprint.ParentId);
                 this.GetDerivedBlueprintComponentsRecursively(parentBlueprint, componentTypes);

@@ -14,6 +14,7 @@ namespace Slash.Serialization.Binary
     using System.Runtime.Serialization;
 
     using Slash.Reflection.Utils;
+    using Slash.Serialization.Xml;
 
     public class BinarySerializer
     {
@@ -107,7 +108,7 @@ namespace Slash.Serialization.Binary
                 throw new SerializationException(string.Format("Item type '{0}' not found", itemTypeString));
             }
 
-            var array = Array.CreateInstance(itemType, count);
+            Array array = Array.CreateInstance(itemType, count);
 
             for (int i = 0; i < count; i++)
             {
@@ -136,7 +137,8 @@ namespace Slash.Serialization.Binary
             Type keyType = ReflectionUtils.FindType(keyTypeName);
             Type valueType = ReflectionUtils.FindType(valueTypeName);
 
-            Type dictionaryType = typeof(Dictionary<,>).MakeGenericType(keyType, valueType);
+            // TODO(np): Deserialize arbitrary dictionary types.
+            Type dictionaryType = typeof(SerializableDictionary<,>).MakeGenericType(keyType, valueType);
             IDictionary dictionary = (IDictionary)Activator.CreateInstance(dictionaryType);
 
             // Read data.
@@ -333,7 +335,8 @@ namespace Slash.Serialization.Binary
 
         private IEnumerable<PropertyInfo> ReflectProperties(Type type)
         {
-            PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            PropertyInfo[] properties =
+                type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             // Sort properties by name to prevent re-ordering members from being a breaking change.
             Array.Sort(properties, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
@@ -451,8 +454,8 @@ namespace Slash.Serialization.Binary
 
         private void SerializeList(BinaryWriter writer, IList list)
         {
-            var listType = list.GetType();
-            var itemType = listType.IsArray ? listType.GetElementType() : listType.GetGenericArguments()[0];
+            Type listType = list.GetType();
+            Type itemType = listType.IsArray ? listType.GetElementType() : listType.GetGenericArguments()[0];
 
             writer.Write(list.Count);
             writer.Write(itemType.FullName);
