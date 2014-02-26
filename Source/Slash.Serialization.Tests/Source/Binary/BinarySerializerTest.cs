@@ -23,6 +23,19 @@ namespace Slash.Serialization.Tests.Source.Binary
 
         #endregion
 
+        #region Enums
+
+        private enum TestEnum
+        {
+            Blue,
+
+            Red,
+
+            Green
+        }
+
+        #endregion
+
         #region Public Methods and Operators
 
         [SetUp]
@@ -54,10 +67,27 @@ namespace Slash.Serialization.Tests.Source.Binary
         }
 
         [Test]
+        public void TestSerializeDictionary()
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            dictionary.Add("22335", "Hamburg");
+            dictionary.Add("24118", "Kiel");
+
+            this.AssertSerializable(dictionary);
+        }
+
+        [Test]
         public void TestSerializeDouble()
         {
             const double D = 42;
             this.AssertSerializable(D);
+        }
+
+        [Test]
+        public void TestSerializeEnum()
+        {
+            const TestEnum EnumValue = TestEnum.Green;
+            this.AssertSerializable(EnumValue);
         }
 
         [Test]
@@ -82,6 +112,13 @@ namespace Slash.Serialization.Tests.Source.Binary
         }
 
         [Test]
+        public void TestSerializeReflection()
+        {
+            TestClass o = new TestClass { Color = TestEnum.Red, Name = "test" };
+            this.AssertSerializable(o);
+        }
+
+        [Test]
         public void TestSerializeSByte()
         {
             const sbyte B = 42;
@@ -100,6 +137,13 @@ namespace Slash.Serialization.Tests.Source.Binary
         {
             const string S = "Test";
             this.AssertSerializable(S);
+        }
+
+        [Test]
+        public void TestSerializeStringList()
+        {
+            List<string> stringList = new List<string> { "first", "second" };
+            this.AssertSerializable(stringList);
         }
 
         [Test]
@@ -124,34 +168,10 @@ namespace Slash.Serialization.Tests.Source.Binary
         }
 
         [Test]
-        public void TestSerializeStringList()
-        {
-            var stringList = new List<string> { "first", "second" };
-            this.AssertSerializable(stringList);
-        }
-
-        [Test]
         public void TestSerializeValueWithType()
         {
-            var valueWithType = new ValueWithType("test");
+            ValueWithType valueWithType = new ValueWithType("test");
             this.AssertSerializable(valueWithType);
-        }
-
-        [Test]
-        public void TestSerializeDictionary()
-        {
-            var dictionary = new Dictionary<string, string>();
-            dictionary.Add("22335", "Hamburg");
-            dictionary.Add("24118", "Kiel");
-
-            this.AssertSerializable(dictionary);
-        }
-
-        [Test]
-        public void TestSerializeEnum()
-        {
-            const TestEnum EnumValue = TestEnum.Green;
-            this.AssertSerializable(EnumValue);
         }
 
         #endregion
@@ -167,11 +187,57 @@ namespace Slash.Serialization.Tests.Source.Binary
 
         #endregion
 
-        private enum TestEnum
+        private class TestClass
         {
-            Blue,
-            Red,
-            Green
+            #region Fields
+
+            public TestEnum Color;
+
+            #endregion
+
+            #region Public Properties
+
+            public string Name { get; set; }
+
+            #endregion
+
+            #region Public Methods and Operators
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+                if (ReferenceEquals(this, obj))
+                {
+                    return true;
+                }
+                if (obj.GetType() != this.GetType())
+                {
+                    return false;
+                }
+                return this.Equals((TestClass)obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return ((int)this.Color * 397) ^ (this.Name != null ? this.Name.GetHashCode() : 0);
+                }
+            }
+
+            #endregion
+
+            #region Methods
+
+            protected bool Equals(TestClass other)
+            {
+                return this.Color == other.Color && string.Equals(this.Name, other.Name);
+            }
+
+            #endregion
         }
     }
 }

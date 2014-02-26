@@ -10,6 +10,7 @@ namespace Slash.Serialization.Binary
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
+    using System.Reflection;
     using System.Runtime.Serialization;
 
     using Slash.Reflection.Utils;
@@ -83,7 +84,15 @@ namespace Slash.Serialization.Binary
                 return Enum.Parse(type, reader.ReadString());
             }
 
-            throw new SerializationException(string.Format("Unsupported type: {0}", type.Name));
+            // Deserialize with reflection.
+            try
+            {
+                return this.DeserializeReflection(type, reader);
+            }
+            catch (Exception e)
+            {
+                throw new SerializationException(string.Format("Unsupported type: {0}", type.Name), e);
+            }
         }
 
         private IDictionary DeserializeDictionary(BinaryReader reader)
@@ -228,6 +237,48 @@ namespace Slash.Serialization.Binary
             throw new ArgumentException(string.Format("Unsupported primitive type: {0}", type.Name));
         }
 
+        private object DeserializeReflection(Type type, BinaryReader reader)
+        {
+            // Create object instance.
+            object o = Activator.CreateInstance(type);
+
+            // Deserialize fields.
+            FieldInfo[] fields = this.ReflectFields(type);
+
+            foreach (FieldInfo field in fields)
+            {
+                try
+                {
+                    object fieldValue = this.Deserialize(field.FieldType, reader);
+                    field.SetValue(o, fieldValue);
+                }
+                catch (Exception e)
+                {
+                    throw new SerializationException(
+                        string.Format("Unable to deserialize field {0}.{1}.", type.FullName, field.Name), e);
+                }
+            }
+
+            // Deserialize properties.
+            PropertyInfo[] properties = this.ReflectProperties(type);
+
+            foreach (PropertyInfo property in properties)
+            {
+                try
+                {
+                    object propertyValue = this.Deserialize(property.PropertyType, reader);
+                    property.SetValue(o, propertyValue, null);
+                }
+                catch (Exception e)
+                {
+                    throw new SerializationException(
+                        string.Format("Unable to deserialize property {0}.{1}.", type.FullName, property.Name), e);
+                }
+            }
+
+            return o;
+        }
+
         private ValueWithType DeserializeValueWithType(BinaryReader reader)
         {
             ValueWithType valueWithType = new ValueWithType();
@@ -236,6 +287,20 @@ namespace Slash.Serialization.Binary
             valueWithType.Value = this.Deserialize(valueWithType.Type, reader);
 
             return valueWithType;
+        }
+
+        private FieldInfo[] ReflectFields(Type type)
+        {
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            Array.Sort(fields, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
+            return fields;
+        }
+
+        private PropertyInfo[] ReflectProperties(Type type)
+        {
+            PropertyInfo[] properties = type.GetProperties();
+            Array.Sort(properties, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
+            return properties;
         }
 
         private void Serialize(BinaryWriter writer, object o)
@@ -291,7 +356,15 @@ namespace Slash.Serialization.Binary
                 return;
             }
 
-            throw new SerializationException(string.Format("Unsupported type: {0}", type.Name));
+            // Serialize with reflection.
+            try
+            {
+                this.SerializeReflection(writer, o);
+            }
+            catch (Exception e)
+            {
+                throw new SerializationException(string.Format("Unsupported type: {0}", type.Name), e);
+            }
         }
 
         private void SerializeDictionary(BinaryWriter writer, IDictionary dictionary)
@@ -383,6 +456,29 @@ namespace Slash.Serialization.Binary
             else
             {
                 throw new ArgumentException(string.Format("Unsupported primitive type: {0}", o.GetType().Name));
+            }
+        }
+
+        private void SerializeReflection(BinaryWriter writer, object o)
+        {
+            Type type = o.GetType();
+
+            // Serialize fields.
+            FieldInfo[] fields = this.ReflectFields(type);
+
+            foreach (FieldInfo field in fields)
+            {
+                object fieldValue = field.GetValue(o);
+                this.Serialize(writer, fieldValue);
+            }
+
+            // Serialize properties.
+            PropertyInfo[] properties = this.ReflectProperties(type);
+
+            foreach (PropertyInfo property in properties)
+            {
+                object propertyValue = property.GetGetMethod().Invoke(o, null);
+                this.Serialize(writer, propertyValue);
             }
         }
 
