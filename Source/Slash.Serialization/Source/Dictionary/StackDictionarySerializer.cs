@@ -60,7 +60,7 @@ namespace Slash.Serialization.Dictionary
                 else
                 {
                     ValueWithType valueWithType = context.deserialize(typeof(ValueWithType), valueData) as ValueWithType;
-                    value = valueWithType.value;
+                    value = valueWithType.Value;
                 }
 
                 pushMethod.Invoke(stack, new[] { value });
@@ -127,15 +127,15 @@ namespace Slash.Serialization.Dictionary
                 else
                 {
                     ValueWithType valueWithType = context.deserialize(typeof(ValueWithType), valueData) as ValueWithType;
-                    if (!(valueWithType.value is T))
+                    if (!(valueWithType.Value is T))
                     {
                         throw new SerializationException(
                             string.Format(
                                 "Expected type {0}, but value type was of type {1}",
                                 typeof(T),
-                                valueWithType.value.GetType()));
+                                valueWithType.Value.GetType()));
                     }
-                    value = (T)valueWithType.value;
+                    value = (T)valueWithType.Value;
                 }
                 stack.Push(value);
             }

@@ -130,6 +130,13 @@ namespace Slash.Serialization.Tests.Source.Binary
             this.AssertSerializable(stringList);
         }
 
+        [Test]
+        public void TestSerializeValueWithType()
+        {
+            var valueWithType = new ValueWithType("test");
+            this.AssertSerializable(valueWithType);
+        }
+
         #endregion
 
         #region Methods

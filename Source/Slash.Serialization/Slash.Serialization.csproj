@@ -49,7 +49,7 @@
     <Compile Include="Source\Dictionary\IDictionarySerializer.cs" />
     <Compile Include="Source\Dictionary\ListDictionarySerializer.cs" />
     <Compile Include="Source\Dictionary\StackDictionarySerializer.cs" />
-    <Compile Include="Source\Dictionary\ValueWithType.cs" />
+    <Compile Include="Source\ValueWithType.cs" />
     <Compile Include="Source\Dictionary\ValueWithTypeDictionarySerializer.cs" />
     <Compile Include="Source\Utils\SerializationUtils.cs" />
     <Compile Include="Source\Xml\SerializableDictionary.cs" />

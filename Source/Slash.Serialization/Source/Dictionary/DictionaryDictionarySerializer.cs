@@ -57,7 +57,7 @@ namespace Slash.Serialization.Dictionary
                 else
                 {
                     ValueWithType valueWithType = context.deserialize(typeof(ValueWithType), valueData) as ValueWithType;
-                    value = valueWithType.value;
+                    value = valueWithType.Value;
                 }
 
                 dictionary.Add(pair.Key, value);
