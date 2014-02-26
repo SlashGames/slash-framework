@@ -60,21 +60,75 @@ namespace Slash.Serialization.Binary
                 return this.DeserializeValueWithType(reader);
             }
 
-            // Check for list.
             if (type.IsGenericType)
             {
                 Type genericTypeDefinition = type.GetGenericTypeDefinition();
 
+                // Check for list.
                 if (genericTypeDefinition == typeof(List<>))
                 {
                     return this.DeserializeList(reader);
+                }
+
+                // Check for dictionary.
+                if (genericTypeDefinition == typeof(Dictionary<,>))
+                {
+                    return this.DeserializeDictionary(reader);
                 }
             }
 
             throw new SerializationException(string.Format("Unsupported type: {0}", type.Name));
         }
 
-        private object DeserializeList(BinaryReader reader)
+        private IDictionary DeserializeDictionary(BinaryReader reader)
+        {
+            int count = reader.ReadInt32();
+
+            // Create dictionary.
+            string keyTypeName = reader.ReadString();
+            string valueTypeName = reader.ReadString();
+
+            Type keyType = ReflectionUtils.FindType(keyTypeName);
+            Type valueType = ReflectionUtils.FindType(valueTypeName);
+
+            Type dictionaryType = typeof(Dictionary<,>).MakeGenericType(keyType, valueType);
+            IDictionary dictionary = (IDictionary)Activator.CreateInstance(dictionaryType);
+
+            // Read data.
+            for (int i = 0; i < count; i++)
+            {
+                object key;
+                object value;
+
+                // Read key.
+                if (keyType.IsSealed)
+                {
+                    key = this.Deserialize(keyType, reader);
+                }
+                else
+                {
+                    ValueWithType valueWithType = this.DeserializeValueWithType(reader);
+                    key = valueWithType.Value;
+                }
+
+                // Read value.
+                if (valueType.IsSealed)
+                {
+                    value = this.Deserialize(valueType, reader);
+                }
+                else
+                {
+                    ValueWithType valueWithType = this.DeserializeValueWithType(reader);
+                    value = valueWithType.Value;
+                }
+
+                dictionary.Add(key, value);
+            }
+
+            return dictionary;
+        }
+
+        private IList DeserializeList(BinaryReader reader)
         {
             int count = reader.ReadInt32();
             string itemTypeString = reader.ReadString();
@@ -95,7 +149,7 @@ namespace Slash.Serialization.Binary
                 }
                 else
                 {
-                    ValueWithType valueWithType = (ValueWithType)this.Deserialize(typeof(ValueWithType), reader);
+                    ValueWithType valueWithType = this.DeserializeValueWithType(reader);
                     list.Add(valueWithType.Value);
                 }
             }
@@ -168,7 +222,7 @@ namespace Slash.Serialization.Binary
             throw new ArgumentException(string.Format("Unsupported primitive type: {0}", type.Name));
         }
 
-        private object DeserializeValueWithType(BinaryReader reader)
+        private ValueWithType DeserializeValueWithType(BinaryReader reader)
         {
             ValueWithType valueWithType = new ValueWithType();
 
@@ -205,19 +259,48 @@ namespace Slash.Serialization.Binary
                 return;
             }
 
-            // Check for list.
             if (type.IsGenericType)
             {
                 Type genericTypeDefinition = type.GetGenericTypeDefinition();
 
+                // Check for list.
                 if (genericTypeDefinition == typeof(List<>))
                 {
                     this.SerializeList(writer, (IList)o);
                     return;
                 }
+
+                // Check for dictionary.
+                if (genericTypeDefinition == typeof(Dictionary<,>))
+                {
+                    this.SerializeDictionary(writer, (IDictionary)o);
+                    return;
+                }
             }
 
             throw new SerializationException(string.Format("Unsupported type: {0}", type.Name));
+        }
+
+        private void SerializeDictionary(BinaryWriter writer, IDictionary dictionary)
+        {
+            Type keyType = dictionary.GetType().GetGenericArguments()[0];
+            Type valueType = dictionary.GetType().GetGenericArguments()[1];
+
+            writer.Write(dictionary.Count);
+            writer.Write(keyType.FullName);
+            writer.Write(valueType.FullName);
+
+            foreach (object key in dictionary.Keys)
+            {
+                // Write key.
+                object keyData = keyType.IsSealed || key == null ? key : new ValueWithType(key);
+                this.Serialize(writer, keyData);
+
+                // Write value.
+                object value = dictionary[key];
+                object valueData = valueType.IsSealed || value == null ? value : new ValueWithType(value);
+                this.Serialize(writer, valueData);
+            }
         }
 
         private void SerializeList(BinaryWriter writer, IList list)

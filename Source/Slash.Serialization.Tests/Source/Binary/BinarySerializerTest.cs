@@ -137,6 +137,16 @@ namespace Slash.Serialization.Tests.Source.Binary
             this.AssertSerializable(valueWithType);
         }
 
+        [Test]
+        public void TestSerializeDictionary()
+        {
+            var dictionary = new Dictionary<string, string>();
+            dictionary.Add("22335", "Hamburg");
+            dictionary.Add("24118", "Kiel");
+
+            this.AssertSerializable(dictionary);
+        }
+
         #endregion
 
         #region Methods
