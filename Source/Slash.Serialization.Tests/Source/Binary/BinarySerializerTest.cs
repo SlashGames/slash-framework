@@ -191,12 +191,14 @@ namespace Slash.Serialization.Tests.Source.Binary
         {
             #region Fields
 
+            [SerializeMember]
             public TestEnum Color;
 
             #endregion
 
             #region Public Properties
 
+            [SerializeMember]
             public string Name { get; set; }
 
             #endregion
@@ -226,6 +228,11 @@ namespace Slash.Serialization.Tests.Source.Binary
                 {
                     return ((int)this.Color * 397) ^ (this.Name != null ? this.Name.GetHashCode() : 0);
                 }
+            }
+
+            public override string ToString()
+            {
+                return string.Format("Color: {0}, Name: {1}", this.Color, this.Name);
             }
 
             #endregion

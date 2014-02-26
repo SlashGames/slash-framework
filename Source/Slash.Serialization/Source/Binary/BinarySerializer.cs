@@ -243,9 +243,7 @@ namespace Slash.Serialization.Binary
             object o = Activator.CreateInstance(type);
 
             // Deserialize fields.
-            FieldInfo[] fields = this.ReflectFields(type);
-
-            foreach (FieldInfo field in fields)
+            foreach (FieldInfo field in this.ReflectFields(type))
             {
                 try
                 {
@@ -260,9 +258,7 @@ namespace Slash.Serialization.Binary
             }
 
             // Deserialize properties.
-            PropertyInfo[] properties = this.ReflectProperties(type);
-
-            foreach (PropertyInfo property in properties)
+            foreach (PropertyInfo property in this.ReflectProperties(type))
             {
                 try
                 {
@@ -289,18 +285,36 @@ namespace Slash.Serialization.Binary
             return valueWithType;
         }
 
-        private FieldInfo[] ReflectFields(Type type)
+        private IEnumerable<FieldInfo> ReflectFields(Type type)
         {
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+
+            // Sort fields by name to prevent re-ordering members from being a breaking change.
             Array.Sort(fields, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
-            return fields;
+
+            foreach (FieldInfo field in fields)
+            {
+                if (Attribute.IsDefined(field, typeof(SerializeMember)))
+                {
+                    yield return field;
+                }
+            }
         }
 
-        private PropertyInfo[] ReflectProperties(Type type)
+        private IEnumerable<PropertyInfo> ReflectProperties(Type type)
         {
             PropertyInfo[] properties = type.GetProperties();
+
+            // Sort properties by name to prevent re-ordering members from being a breaking change.
             Array.Sort(properties, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
-            return properties;
+
+            foreach (PropertyInfo property in properties)
+            {
+                if (Attribute.IsDefined(property, typeof(SerializeMember)))
+                {
+                    yield return property;
+                }
+            }
         }
 
         private void Serialize(BinaryWriter writer, object o)
@@ -331,7 +345,7 @@ namespace Slash.Serialization.Binary
             }
 
             // Check for list.
-            var list = o as IList;
+            IList list = o as IList;
             if (list != null)
             {
                 this.SerializeList(writer, list);
@@ -339,7 +353,7 @@ namespace Slash.Serialization.Binary
             }
 
             // Check for dictionary.
-            var dictionary = o as IDictionary;
+            IDictionary dictionary = o as IDictionary;
             if (dictionary != null)
             {
                 this.SerializeDictionary(writer, dictionary);
@@ -461,18 +475,14 @@ namespace Slash.Serialization.Binary
             Type type = o.GetType();
 
             // Serialize fields.
-            FieldInfo[] fields = this.ReflectFields(type);
-
-            foreach (FieldInfo field in fields)
+            foreach (FieldInfo field in this.ReflectFields(type))
             {
                 object fieldValue = field.GetValue(o);
                 this.Serialize(writer, fieldValue);
             }
 
             // Serialize properties.
-            PropertyInfo[] properties = this.ReflectProperties(type);
-
-            foreach (PropertyInfo property in properties)
+            foreach (PropertyInfo property in this.ReflectProperties(type))
             {
                 object propertyValue = property.GetGetMethod().Invoke(o, null);
                 this.Serialize(writer, propertyValue);
