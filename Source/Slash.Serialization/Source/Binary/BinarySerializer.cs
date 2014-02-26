@@ -61,21 +61,22 @@ namespace Slash.Serialization.Binary
                 return this.DeserializeValueWithType(reader);
             }
 
-            if (type.IsGenericType)
+            // Check for array.
+            if (type.IsArray)
             {
-                Type genericTypeDefinition = type.GetGenericTypeDefinition();
+                return this.DeserializeArray(reader);
+            }
 
-                // Check for list.
-                if (genericTypeDefinition == typeof(List<>))
-                {
-                    return this.DeserializeList(reader);
-                }
+            // Check for list.
+            if (typeof(IList).IsAssignableFrom(type))
+            {
+                return this.DeserializeList(reader);
+            }
 
-                // Check for dictionary.
-                if (genericTypeDefinition == typeof(Dictionary<,>))
-                {
-                    return this.DeserializeDictionary(reader);
-                }
+            // Check for dictionary.
+            if (typeof(IDictionary).IsAssignableFrom(type))
+            {
+                return this.DeserializeDictionary(reader);
             }
 
             // Check for enum.
@@ -93,6 +94,35 @@ namespace Slash.Serialization.Binary
             {
                 throw new SerializationException(string.Format("Unsupported type: {0}", type.Name), e);
             }
+        }
+
+        private object DeserializeArray(BinaryReader reader)
+        {
+            int count = reader.ReadInt32();
+            string itemTypeString = reader.ReadString();
+            Type itemType = ReflectionUtils.FindType(itemTypeString);
+
+            if (itemType == null)
+            {
+                throw new SerializationException(string.Format("Item type '{0}' not found", itemTypeString));
+            }
+
+            var array = Array.CreateInstance(itemType, count);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (itemType.IsSealed)
+                {
+                    array.SetValue(this.Deserialize(itemType, reader), i);
+                }
+                else
+                {
+                    ValueWithType valueWithType = this.DeserializeValueWithType(reader);
+                    array.SetValue(valueWithType.Value, i);
+                }
+            }
+
+            return array;
         }
 
         private IDictionary DeserializeDictionary(BinaryReader reader)
@@ -287,7 +317,7 @@ namespace Slash.Serialization.Binary
 
         private IEnumerable<FieldInfo> ReflectFields(Type type)
         {
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             // Sort fields by name to prevent re-ordering members from being a breaking change.
             Array.Sort(fields, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
@@ -303,7 +333,7 @@ namespace Slash.Serialization.Binary
 
         private IEnumerable<PropertyInfo> ReflectProperties(Type type)
         {
-            PropertyInfo[] properties = type.GetProperties();
+            PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             // Sort properties by name to prevent re-ordering members from being a breaking change.
             Array.Sort(properties, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
@@ -319,8 +349,17 @@ namespace Slash.Serialization.Binary
 
         private void Serialize(BinaryWriter writer, object o)
         {
-            Type type = o.GetType();
+            if (o == null)
+            {
+                throw new ArgumentNullException("o");
+            }
 
+            Type type = o.GetType();
+            this.Serialize(writer, o, type);
+        }
+
+        private void Serialize(BinaryWriter writer, object o, Type type)
+        {
             // Check for primitive types.
             if (type.IsPrimitive)
             {
@@ -329,34 +368,31 @@ namespace Slash.Serialization.Binary
             }
 
             // Check for string.
-            string s = o as string;
-
-            if (s != null)
+            if (type == typeof(string))
             {
-                writer.Write(s);
+                string s = (string)o;
+                writer.Write(string.IsNullOrEmpty((string)o) ? string.Empty : s);
                 return;
             }
 
             // Check for derived types.
-            if (o is ValueWithType)
+            if (type == typeof(ValueWithType))
             {
-                this.SerializeValueWithType(writer, o);
+                this.SerializeValueWithType(writer, (ValueWithType)o);
                 return;
             }
 
             // Check for list.
-            IList list = o as IList;
-            if (list != null)
+            if (typeof(IList).IsAssignableFrom(type))
             {
-                this.SerializeList(writer, list);
+                this.SerializeList(writer, (IList)o);
                 return;
             }
 
             // Check for dictionary.
-            IDictionary dictionary = o as IDictionary;
-            if (dictionary != null)
+            if (typeof(IDictionary).IsAssignableFrom(type))
             {
-                this.SerializeDictionary(writer, dictionary);
+                this.SerializeDictionary(writer, (IDictionary)o);
                 return;
             }
 
@@ -390,27 +426,47 @@ namespace Slash.Serialization.Binary
             foreach (object key in dictionary.Keys)
             {
                 // Write key.
-                object keyData = keyType.IsSealed || key == null ? key : new ValueWithType(key);
-                this.Serialize(writer, keyData);
+                if (keyType.IsSealed || key == null)
+                {
+                    this.Serialize(writer, key, keyType);
+                }
+                else
+                {
+                    this.SerializeValueWithType(writer, new ValueWithType(key));
+                }
 
                 // Write value.
                 object value = dictionary[key];
-                object valueData = valueType.IsSealed || value == null ? value : new ValueWithType(value);
-                this.Serialize(writer, valueData);
+
+                if (valueType.IsSealed || value == null)
+                {
+                    this.Serialize(writer, value, valueType);
+                }
+                else
+                {
+                    this.SerializeValueWithType(writer, new ValueWithType(value));
+                }
             }
         }
 
         private void SerializeList(BinaryWriter writer, IList list)
         {
-            Type itemType = list.GetType().GetGenericArguments()[0];
+            var listType = list.GetType();
+            var itemType = listType.IsArray ? listType.GetElementType() : listType.GetGenericArguments()[0];
 
             writer.Write(list.Count);
             writer.Write(itemType.FullName);
 
             foreach (object item in list)
             {
-                object itemData = itemType.IsSealed || item == null ? item : new ValueWithType(item);
-                this.Serialize(writer, itemData);
+                if (itemType.IsSealed || item == null)
+                {
+                    this.Serialize(writer, item, itemType);
+                }
+                else
+                {
+                    this.SerializeValueWithType(writer, new ValueWithType(item));
+                }
             }
         }
 
@@ -478,23 +534,21 @@ namespace Slash.Serialization.Binary
             foreach (FieldInfo field in this.ReflectFields(type))
             {
                 object fieldValue = field.GetValue(o);
-                this.Serialize(writer, fieldValue);
+                this.Serialize(writer, fieldValue, field.FieldType);
             }
 
             // Serialize properties.
             foreach (PropertyInfo property in this.ReflectProperties(type))
             {
                 object propertyValue = property.GetGetMethod().Invoke(o, null);
-                this.Serialize(writer, propertyValue);
+                this.Serialize(writer, propertyValue, property.PropertyType);
             }
         }
 
-        private void SerializeValueWithType(BinaryWriter writer, object o)
+        private void SerializeValueWithType(BinaryWriter writer, ValueWithType valueWithType)
         {
-            ValueWithType valueWithType = (ValueWithType)o;
-
             writer.Write(valueWithType.TypeFullName);
-            this.Serialize(writer, valueWithType.Value);
+            this.Serialize(writer, valueWithType.Value, valueWithType.Type);
         }
 
         #endregion

@@ -46,6 +46,13 @@ namespace Slash.Serialization.Tests.Source.Binary
         }
 
         [Test]
+        public void TestSerializeArray()
+        {
+            string[] array = new[] { "first", "second" };
+            this.AssertSerializable(array);
+        }
+
+        [Test]
         public void TestSerializeBool()
         {
             const bool B = true;
@@ -112,9 +119,16 @@ namespace Slash.Serialization.Tests.Source.Binary
         }
 
         [Test]
+        public void TestSerializeNull()
+        {
+            TestClass o = new TestClass(TestEnum.Red, string.Empty);
+            this.AssertSerializable(o);
+        }
+
+        [Test]
         public void TestSerializeReflection()
         {
-            TestClass o = new TestClass { Color = TestEnum.Red, Name = "test" };
+            TestClass o = new TestClass(TestEnum.Red, "test");
             this.AssertSerializable(o);
         }
 
@@ -192,7 +206,21 @@ namespace Slash.Serialization.Tests.Source.Binary
             #region Fields
 
             [SerializeMember]
-            public TestEnum Color;
+            private readonly TestEnum Color;
+
+            #endregion
+
+            #region Constructors and Destructors
+
+            public TestClass()
+            {
+            }
+
+            public TestClass(TestEnum color, string name)
+            {
+                this.Color = color;
+                this.Name = name;
+            }
 
             #endregion
 
