@@ -330,23 +330,20 @@ namespace Slash.Serialization.Binary
                 return;
             }
 
-            if (type.IsGenericType)
+            // Check for list.
+            var list = o as IList;
+            if (list != null)
             {
-                Type genericTypeDefinition = type.GetGenericTypeDefinition();
+                this.SerializeList(writer, list);
+                return;
+            }
 
-                // Check for list.
-                if (genericTypeDefinition == typeof(List<>))
-                {
-                    this.SerializeList(writer, (IList)o);
-                    return;
-                }
-
-                // Check for dictionary.
-                if (genericTypeDefinition == typeof(Dictionary<,>))
-                {
-                    this.SerializeDictionary(writer, (IDictionary)o);
-                    return;
-                }
+            // Check for dictionary.
+            var dictionary = o as IDictionary;
+            if (dictionary != null)
+            {
+                this.SerializeDictionary(writer, dictionary);
+                return;
             }
 
             // Check for enum.
