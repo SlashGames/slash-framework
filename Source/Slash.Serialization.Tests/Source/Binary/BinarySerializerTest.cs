@@ -147,6 +147,13 @@ namespace Slash.Serialization.Tests.Source.Binary
             this.AssertSerializable(dictionary);
         }
 
+        [Test]
+        public void TestSerializeEnum()
+        {
+            const TestEnum EnumValue = TestEnum.Green;
+            this.AssertSerializable(EnumValue);
+        }
+
         #endregion
 
         #region Methods
@@ -159,5 +166,12 @@ namespace Slash.Serialization.Tests.Source.Binary
         }
 
         #endregion
+
+        private enum TestEnum
+        {
+            Blue,
+            Red,
+            Green
+        }
     }
 }

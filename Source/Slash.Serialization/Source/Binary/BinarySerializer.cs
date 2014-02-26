@@ -77,6 +77,12 @@ namespace Slash.Serialization.Binary
                 }
             }
 
+            // Check for enum.
+            if (type.IsEnum)
+            {
+                return Enum.Parse(type, reader.ReadString());
+            }
+
             throw new SerializationException(string.Format("Unsupported type: {0}", type.Name));
         }
 
@@ -276,6 +282,13 @@ namespace Slash.Serialization.Binary
                     this.SerializeDictionary(writer, (IDictionary)o);
                     return;
                 }
+            }
+
+            // Check for enum.
+            if (type.IsEnum)
+            {
+                writer.Write(o.ToString());
+                return;
             }
 
             throw new SerializationException(string.Format("Unsupported type: {0}", type.Name));
