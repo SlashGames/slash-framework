@@ -41,6 +41,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
             this.gameConfiguration.ConfigurationFilePath = EditorGUILayout.TextField(
                 "Configuration File", this.gameConfiguration.ConfigurationFilePath);
 
+            this.gameConfiguration.LoadBinaryBlueprints = EditorGUILayout.Toggle(
+                "Load Blueprints From Binary", this.gameConfiguration.LoadBinaryBlueprints);
+
             // Collect system types.
             if (this.inspectorSystemTypes == null)
             {

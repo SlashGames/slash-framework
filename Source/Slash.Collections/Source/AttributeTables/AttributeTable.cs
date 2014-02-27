@@ -15,6 +15,7 @@ namespace Slash.Collections.AttributeTables
 
     using Slash.Collections.Utils;
     using Slash.Reflection.Utils;
+    using Slash.Serialization;
     using Slash.Serialization.Utils;
     using Slash.SystemExt.Utils;
 
@@ -44,6 +45,7 @@ namespace Slash.Collections.AttributeTables
         /// <summary>
         ///   Dictionary to store attributes.
         /// </summary>
+        [SerializeMember]
         private readonly Dictionary<object, object> attributes;
 
         #endregion

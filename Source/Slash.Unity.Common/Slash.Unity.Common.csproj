@@ -135,6 +135,10 @@
       <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>
       <Name>Slash.Reflection</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
+      <Name>Slash.Serialization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

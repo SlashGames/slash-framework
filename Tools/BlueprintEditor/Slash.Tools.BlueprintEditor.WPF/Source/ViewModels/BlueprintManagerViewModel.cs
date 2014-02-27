@@ -295,7 +295,7 @@ namespace BlueprintEditor.ViewModels
         {
             var errors = new List<Exception>();
 
-            foreach (var blueprint in this.Blueprints.Where(blueprint => blueprint.Blueprint.ParentId != null))
+            foreach (var blueprint in this.Blueprints.Where(blueprint => !string.IsNullOrEmpty(blueprint.Blueprint.ParentId)))
             {
                 try
                 {
