@@ -16,6 +16,7 @@ namespace Slash.Collections.AttributeTables
     using Slash.Collections.Utils;
     using Slash.Reflection.Utils;
     using Slash.Serialization;
+    using Slash.Serialization.Binary;
     using Slash.Serialization.Utils;
     using Slash.SystemExt.Utils;
 
@@ -24,7 +25,7 @@ namespace Slash.Collections.AttributeTables
     ///   respective values.
     /// </summary>
     [Serializable]
-    public class AttributeTable : IAttributeTable, IXmlSerializable
+    public class AttributeTable : IAttributeTable, IXmlSerializable, IBinarySerializable
     {
         #region Constants
 
@@ -198,6 +199,15 @@ namespace Slash.Collections.AttributeTables
             return this.attributes.ContainsKey(key);
         }
 
+        public void Deserialize(BinaryDeserializer serializer)
+        {
+            Dictionary<object, object> attributeTable = serializer.Deserialize<Dictionary<object, object>>();
+            foreach (KeyValuePair<object, object> keyValuePair in attributeTable)
+            {
+                this.attributes[keyValuePair.Key] = keyValuePair.Value;
+            }
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -329,6 +339,11 @@ namespace Slash.Collections.AttributeTables
         public bool RemoveValue(object key)
         {
             return this.attributes.Remove(key);
+        }
+
+        public void Serialize(BinarySerializer serializer)
+        {
+            serializer.Serialize(this.attributes);
         }
 
         /// <summary>

@@ -119,8 +119,8 @@ namespace Slash.Unity.Common.Configuration
                 // Load blueprints.
                 if (this.LoadBinaryBlueprints)
                 {
-                    var binarySerializer = new BinarySerializer();
-                    blueprintManager = binarySerializer.Deserialize<BlueprintManager>(blueprintStream);
+                    var binaryDeserializer = new BinaryDeserializer(blueprintStream);
+                    blueprintManager = binaryDeserializer.Deserialize<BlueprintManager>();
                 }
                 else
                 {

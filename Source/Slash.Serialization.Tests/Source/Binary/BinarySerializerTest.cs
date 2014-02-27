@@ -18,8 +18,6 @@ namespace Slash.Serialization.Tests.Source.Binary
     {
         #region Fields
 
-        private BinarySerializer binarySerializer;
-
         private MemoryStream memoryStream;
 
         #endregion
@@ -42,7 +40,6 @@ namespace Slash.Serialization.Tests.Source.Binary
         [SetUp]
         public void SetUp()
         {
-            this.binarySerializer = new BinarySerializer();
             this.memoryStream = new MemoryStream();
         }
 
@@ -72,6 +69,16 @@ namespace Slash.Serialization.Tests.Source.Binary
         {
             const char C = '.';
             this.AssertSerializable(C);
+        }
+
+        [Test]
+        public void TestSerializeDerivedDictionary()
+        {
+            SerializableDictionary<string, string> dictionary = new SerializableDictionary<string, string>();
+            dictionary.Add("22335", "Hamburg");
+            dictionary.Add("24118", "Kiel");
+
+            this.AssertSerializable(dictionary);
         }
 
         [Test]
@@ -189,24 +196,19 @@ namespace Slash.Serialization.Tests.Source.Binary
             this.AssertSerializable(valueWithType);
         }
 
-        [Test]
-        public void TestSerializeDerivedDictionary()
-        {
-            SerializableDictionary<string, string> dictionary = new SerializableDictionary<string, string>();
-            dictionary.Add("22335", "Hamburg");
-            dictionary.Add("24118", "Kiel");
-
-            this.AssertSerializable(dictionary);
-        }
         #endregion
 
         #region Methods
 
         private void AssertSerializable<T>(T o)
         {
-            this.binarySerializer.Serialize(this.memoryStream, o);
+            BinarySerializer binarySerializer = new BinarySerializer(this.memoryStream);
+            binarySerializer.Serialize(o);
+
             this.memoryStream.Seek(0, SeekOrigin.Begin);
-            Assert.AreEqual(o, this.binarySerializer.Deserialize<T>(this.memoryStream));
+
+            BinaryDeserializer binaryDeserializer = new BinaryDeserializer(this.memoryStream);
+            Assert.AreEqual(o, binaryDeserializer.Deserialize<T>());
         }
 
         #endregion

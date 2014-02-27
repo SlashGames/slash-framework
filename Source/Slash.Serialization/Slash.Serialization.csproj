@@ -42,7 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Binary\BinaryDeserializer.cs" />
+    <Compile Include="Source\Binary\BinarySerializationReflectionUtils.cs" />
     <Compile Include="Source\Binary\BinarySerializer.cs" />
+    <Compile Include="Source\Binary\IBinarySerializable.cs" />
     <Compile Include="Source\SerializeMemberAttribute.cs" />
     <Compile Include="Source\Dictionary\DictionaryDictionarySerializer.cs" />
     <Compile Include="Source\Dictionary\DictionarySerializableAttribute.cs" />
@@ -60,6 +63,10 @@
     <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
       <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>
       <Name>Slash.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.System\Slash.System.csproj">
+      <Project>{2929b671-2bb6-4ff7-bad8-aa296c4f6e0c}</Project>
+      <Name>Slash.System</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
