@@ -10,8 +10,6 @@ namespace Slash.Unity.Common.Triggers.Actions
 
     using UnityEngine;
 
-    using Object = UnityEngine.Object;
-
     public class DelegateAction : MonoBehaviour, IAction
     {
         #region Fields
@@ -26,7 +24,7 @@ namespace Slash.Unity.Common.Triggers.Actions
         {
             if (this.Delegate != null)
             {
-                this.Delegate.Invoke(actionArgs);
+                this.Delegate.Invoke();
             }
         }
 
