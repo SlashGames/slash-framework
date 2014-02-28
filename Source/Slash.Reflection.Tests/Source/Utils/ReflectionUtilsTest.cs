@@ -35,7 +35,7 @@ namespace Slash.Reflection.Tests.Utils
             string assemblyQualifiedName = type.AssemblyQualifiedName;
 
             // Replace version number to check if type is found anyway.
-            assemblyQualifiedName = Regex.Replace(assemblyQualifiedName, @"Version=\d+.\d+.\d+.\d+", "Version=-1.2.3.4");
+            assemblyQualifiedName = Regex.Replace(assemblyQualifiedName, @"Version=\d+.\d+.\d+.\d+", "Version=1.2.3.4");
 
             this.TestFindType(assemblyQualifiedName, type);
         }

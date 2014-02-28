@@ -10,20 +10,35 @@ namespace Slash.GameBase.Blueprints
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using System.Xml;
+    using System.Xml.Schema;
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
     using Slash.Reflection.Utils;
     using Slash.Serialization;
+    using Slash.Serialization.Binary;
 
     /// <summary>
     ///   Blueprint for creating an entity with a specific set of components
     ///   and initial attribute values.
     /// </summary>
     [Serializable]
-    public class Blueprint
+    public sealed class Blueprint : IXmlSerializable, IBinarySerializable
     {
+        #region Constants
+
+        private const string AttributeTableElementName = "AttributeTable";
+
+        private const string ComponentTypeElementName = "ComponentType";
+
+        private const string ComponentTypesElementName = "ComponentTypes";
+
+        private const string ParentIdElementName = "ParentId";
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -123,6 +138,13 @@ namespace Slash.GameBase.Blueprints
 
         #region Public Methods and Operators
 
+        public void Deserialize(BinaryDeserializer deserializer)
+        {
+            this.AttributeTableSerialized = deserializer.Deserialize<AttributeTable>();
+            this.ComponentTypesSerialized = deserializer.Deserialize<string[]>();
+            this.ParentId = deserializer.Deserialize<string>();
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -188,6 +210,78 @@ namespace Slash.GameBase.Blueprints
             }
         }
 
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            reader.MoveToContent();
+            bool isEmpty = reader.IsEmptyElement;
+            reader.ReadStartElement();
+            if (isEmpty)
+            {
+                return;
+            }
+
+            if (reader.Name == AttributeTableElementName)
+            {
+                AttributeTable attributeTable = new AttributeTable();
+                attributeTable.ReadXml(reader);
+                this.AttributeTableSerialized = attributeTable;
+            }
+
+            if (reader.Name == ComponentTypesElementName)
+            {
+                List<string> componentTypes = new List<string>();
+                reader.MoveToContent();
+                isEmpty = reader.IsEmptyElement;
+                reader.ReadStartElement();
+
+                if (!isEmpty)
+                {
+                    while (reader.NodeType != XmlNodeType.EndElement)
+                    {
+                        if (reader.NodeType == XmlNodeType.Element)
+                        {
+                            string elementName = reader.Name;
+                            if (elementName == ComponentTypeElementName)
+                            {
+                                string componentType = reader.ReadElementContentAsString();
+                                componentTypes.Add(componentType);
+                            }
+                            else
+                            {
+                                reader.ReadStartElement();
+                            }
+                        }
+                        else
+                        {
+                            reader.Read();
+                        }
+                    }
+                }
+                reader.ReadEndElement();
+
+                this.ComponentTypesSerialized = componentTypes.ToArray();
+            }
+
+            if (reader.Name == ParentIdElementName)
+            {
+                this.ParentId = reader.ReadElementContentAsString();
+            }
+
+            reader.ReadEndElement();
+        }
+
+        public void Serialize(BinarySerializer serializer)
+        {
+            serializer.Serialize(this.AttributeTableSerialized);
+            serializer.Serialize(this.ComponentTypesSerialized);
+            serializer.Serialize(string.IsNullOrEmpty(this.ParentId) ? string.Empty : this.ParentId);
+        }
+
         /// <summary>
         ///   Indicates if the AttributeTableSerialized property should be serialized via Xml.
         /// </summary>
@@ -233,6 +327,31 @@ namespace Slash.GameBase.Blueprints
             }
 
             return false;
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            if (this.AttributeTable.Count > 0)
+            {
+                writer.WriteStartElement(AttributeTableElementName);
+                this.AttributeTableSerialized.WriteXml(writer);
+                writer.WriteEndElement();
+            }
+
+            if (this.ComponentTypes.Count > 0)
+            {
+                writer.WriteStartElement(ComponentTypesElementName);
+                foreach (string componentType in this.ComponentTypesSerialized)
+                {
+                    writer.WriteElementString(ComponentTypeElementName, componentType);
+                }
+                writer.WriteEndElement();
+            }
+
+            if (!string.IsNullOrEmpty(this.ParentId))
+            {
+                writer.WriteElementString(ParentIdElementName, this.ParentId);
+            }
         }
 
         #endregion

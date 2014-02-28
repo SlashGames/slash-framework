@@ -34,11 +34,6 @@ namespace Slash.Unity.Common.Configuration
         /// </summary>
         public string ConfigurationFilePath = "Configuration/GameConfiguration";
 
-        /// <summary>
-        ///   Whether to load blueprint data in binary format or XML.
-        /// </summary>
-        public bool LoadBinaryBlueprints;
-
         private IAttributeTable configuration;
 
         #endregion
@@ -117,15 +112,15 @@ namespace Slash.Unity.Common.Configuration
                 var blueprintStream = new MemoryStream(blueprintAsset.bytes);
 
                 // Load blueprints.
-                if (this.LoadBinaryBlueprints)
-                {
-                    var binarySerializer = new BinarySerializer();
-                    blueprintManager = binarySerializer.Deserialize<BlueprintManager>(blueprintStream);
-                }
-                else
+                if (Application.isEditor)
                 {
                     var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
                     blueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+                }
+                else
+                {
+                    var binaryDeserializer = new BinaryDeserializer(blueprintStream);
+                    blueprintManager = binaryDeserializer.Deserialize<BlueprintManager>();
                 }
 
                 // Resolve parents.

@@ -55,8 +55,6 @@ namespace BlueprintEditor.ViewModels
 
         private readonly XmlSerializer projectSettingsSerializer;
 
-        private readonly BinarySerializer binarySerializer;
-
         private BlueprintManagerViewModel blueprintManagerViewModel;
 
         private EditorSettings editorSettings;
@@ -73,7 +71,6 @@ namespace BlueprintEditor.ViewModels
             this.blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
             this.projectSettingsSerializer = new XmlSerializer(typeof(ProjectSettings));
             this.editorSettingsSerializer = new XmlSerializer(typeof(EditorSettings));
-            this.binarySerializer = new BinarySerializer();
 
             this.localizationContext = new LocalizationContext(this);
             this.AvailableLanguages = new ObservableCollection<string>();
@@ -395,12 +392,6 @@ namespace BlueprintEditor.ViewModels
                 var absoluteBlueprintFilePath = string.Format("{0}\\{1}", this.ProjectPath, blueprintFile.Path);
                 var blueprintFileStream = new FileStream(absoluteBlueprintFilePath, FileMode.Create);
                 this.blueprintManagerSerializer.Serialize(blueprintFileStream, blueprintFile.BlueprintManager);
-                blueprintFileStream.Close();
-
-                // Write binary.
-                var absoluteBlueprintBinaryFilePath = string.Format("{0}\\{1}", this.ProjectPath, Path.ChangeExtension(blueprintFile.Path, "binary"));
-                blueprintFileStream = new FileStream(absoluteBlueprintBinaryFilePath, FileMode.Create);
-                this.binarySerializer.Serialize(blueprintFileStream, blueprintFile.BlueprintManager);
                 blueprintFileStream.Close();
             }
 

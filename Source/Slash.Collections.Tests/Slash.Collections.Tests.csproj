@@ -53,6 +53,14 @@
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>Slash.Collections</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{c92c88b0-5268-443b-b32f-cc2a6d686c51}</Project>
+      <Name>Slash.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.System\Slash.System.csproj">
+      <Project>{2929b671-2bb6-4ff7-bad8-aa296c4f6e0c}</Project>
+      <Name>Slash.System</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Slash.Tests\Slash.Tests.csproj">
       <Project>{8E13A2AF-DA04-44F3-A097-4D69ADB0592E}</Project>
       <Name>Slash.Tests</Name>
