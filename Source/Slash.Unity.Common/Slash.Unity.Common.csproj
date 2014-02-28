@@ -94,6 +94,12 @@
     <Compile Include="Source\Logging\LoggerExtensions.cs" />
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
+    <Compile Include="Source\Triggers\Actions\DelegateAction.cs" />
+    <Compile Include="Source\Triggers\Actions\IAction.cs" />
+    <Compile Include="Source\Triggers\Conditions\Condition.cs" />
+    <Compile Include="Source\Triggers\Conditions\ICondition.cs" />
+    <Compile Include="Source\Triggers\Conditions\EventCondition.cs" />
+    <Compile Include="Source\Triggers\Trigger.cs" />
     <Compile Include="Source\Utils\GarbageCollectionBehaviour.cs" />
     <Compile Include="Source\Utils\GLUtils.cs" />
     <Compile Include="Source\Utils\UnityUtils.cs" />
@@ -140,6 +146,7 @@
       <Name>Slash.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -44,6 +44,9 @@
     <Compile Include="Source\Inspectors\Diagnostics\DebugInputEditor.cs" />
     <Compile Include="Source\Inspectors\ExposeProperties.cs" />
     <Compile Include="Source\Inspectors\PropertyField.cs" />
+    <Compile Include="Source\Inspectors\Triggers\TriggerEditor.cs" />
+    <Compile Include="Source\Inspectors\Utils\MemberReferenceDrawer.cs" />
+    <Compile Include="Source\Inspectors\Triggers\MethodDelegateDrawer.cs" />
     <Compile Include="Source\Inspectors\ViewModels\ViewEventDelegateDrawer.cs" />
     <Compile Include="Source\MenuItems\Util\FindMonoBehaviourUsages.cs" />
   </ItemGroup>
