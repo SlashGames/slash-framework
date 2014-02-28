@@ -87,6 +87,23 @@ namespace Slash.Reflection.Utils
         }
 
         /// <summary>
+        ///   Searches all loaded assemblies and returns the types which have the specified attribute.
+        /// </summary>
+        /// <returns>List of found types.</returns>
+        /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
+        public static IEnumerable<Type> FindTypesWithBase<T>() where T : class
+        {
+            List<Type> types = new List<Type>();
+            Type baseType = typeof(T);
+            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
+            {
+                types.AddRange(assembly.GetTypes().Where(baseType.IsAssignableFrom));
+            }
+
+            return types;
+        }
+
+        /// <summary>
         ///   Searches all loaded assemblies and returns the types which have the specified attribute
         ///   and executes the specified action for those.
         /// </summary>
