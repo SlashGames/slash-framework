@@ -358,7 +358,7 @@ namespace Slash.GameBase.Blueprints
 
         #region Methods
 
-        protected bool Equals(Blueprint other)
+        private bool Equals(Blueprint other)
         {
             return this.AttributeTable.Equals(other.AttributeTable)
                    && CollectionUtils.SequenceEqual(this.ComponentTypes, other.ComponentTypes);
