@@ -393,13 +393,6 @@ namespace BlueprintEditor.ViewModels
                 var blueprintFileStream = new FileStream(absoluteBlueprintFilePath, FileMode.Create);
                 this.blueprintManagerSerializer.Serialize(blueprintFileStream, blueprintFile.BlueprintManager);
                 blueprintFileStream.Close();
-
-                // Write binary.
-                var absoluteBlueprintBinaryFilePath = string.Format("{0}\\{1}", this.ProjectPath, Path.ChangeExtension(blueprintFile.Path, "binary"));
-                blueprintFileStream = new FileStream(absoluteBlueprintBinaryFilePath, FileMode.Create);
-                var binarySerializer = new BinarySerializer(blueprintFileStream);
-                binarySerializer.Serialize(blueprintFile.BlueprintManager);
-                blueprintFileStream.Close();
             }
 
             // Save project.

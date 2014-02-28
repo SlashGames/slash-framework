@@ -55,6 +55,10 @@
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
       <Name>Slash.GameBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{c92c88b0-5268-443b-b32f-cc2a6d686c51}</Project>
+      <Name>Slash.Serialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Slash.Tools.BlueprintEditor.Logic\Slash.Tools.BlueprintEditor.Logic.csproj">
       <Project>{57bdcc2e-453d-4593-9467-39fc5c90141e}</Project>
       <Name>Slash.Tools.BlueprintEditor.Logic</Name>
