@@ -303,9 +303,14 @@ namespace BlueprintEditor.Windows
                     foreach (var valueMapping in
                         this.ValueMappings.Where(mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
                     {
+                        var rawValue = this.csvReader[valueMapping.MappingTarget];
                         object convertedValue;
-                        valueMapping.InspectorProperty.TryConvertStringToListOrValue(
-                            this.csvReader[valueMapping.MappingTarget], out convertedValue);
+
+                        if (!valueMapping.InspectorProperty.TryConvertStringToListOrValue(rawValue, out convertedValue))
+                        {
+                            throw new CsvParserException(
+                                string.Format("Unable to convert {0} to {1} ({2}).", rawValue, valueMapping.MappingSource, valueMapping.InspectorProperty.PropertyType));
+                        }
 
                         // Check for localized values.
                         var stringProperty = valueMapping.InspectorProperty as InspectorStringAttribute;
