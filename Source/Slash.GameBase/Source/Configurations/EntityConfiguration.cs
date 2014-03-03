@@ -8,18 +8,21 @@ namespace Slash.GameBase.Configurations
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
+    using Slash.Reflection.Utils;
+    using Slash.Serialization.Binary;
 
     /// <summary>
     ///   Contains all data to create and initialize an entity.
     /// </summary>
     [Serializable]
 #if !WINDOWS_STORE
-    public class EntityConfiguration : ICloneable
+    public class EntityConfiguration : ICloneable, IBinarySerializable
 #else
-    public class EntityConfiguration
+    public class EntityConfiguration : IBinarySerializable
 #endif
     {
         #region Fields
@@ -168,5 +171,20 @@ namespace Slash.GameBase.Configurations
         }
 
         #endregion
+
+        public void Deserialize(BinaryDeserializer serializer)
+        {
+            this.AdditionalComponentTypes = serializer.Deserialize<string[]>().Select(ReflectionUtils.FindType).ToList();
+            this.BlueprintId = serializer.Deserialize<string>();
+            this.Configuration = serializer.Deserialize<AttributeTable>();
+        }
+
+        public void Serialize(BinarySerializer serializer)
+        {
+            serializer.Serialize(
+                this.AdditionalComponentTypes.Select(componentType => componentType.FullName).ToArray());
+            serializer.Serialize(string.IsNullOrEmpty(this.BlueprintId) ? string.Empty : this.BlueprintId);
+            serializer.Serialize(this.Configuration);
+        }
     }
 }
