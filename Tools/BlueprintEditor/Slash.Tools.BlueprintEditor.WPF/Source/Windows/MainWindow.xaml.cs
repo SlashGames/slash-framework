@@ -426,12 +426,24 @@ namespace BlueprintEditor.Windows
             }
 
             // Open CSV file.
-            using (var stream = openFileDialog.OpenFile())
+            try
             {
-                var streamReader = new StreamReader(stream);
-                var csvReader = new CsvReader(streamReader);
-                var importCsvDataWindow = new ImportCsvDataWindow(this.Context, csvReader, importData) { Owner = this };
-                importCsvDataWindow.ShowDialog();
+
+                using (var stream = openFileDialog.OpenFile())
+                {
+                    var streamReader = new StreamReader(stream);
+                    var csvReader = new CsvReader(streamReader);
+                    var importCsvDataWindow = new ImportCsvDataWindow(this.Context, csvReader, importData)
+                        {
+                            Owner = this
+                        };
+                    importCsvDataWindow.ShowDialog();
+                }
+
+            }
+            catch (IOException e)
+            {
+                EditorDialog.Error("Unable to open CSV file", e.Message);
             }
         }
 
