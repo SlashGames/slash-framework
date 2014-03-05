@@ -25,7 +25,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.ViewModels
         {
             get
             {
-                return "source";
+                return "field";
             }
         }
 
@@ -33,7 +33,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.ViewModels
         {
             get
             {
-                return "field";
+                return "source";
             }
         }
 
