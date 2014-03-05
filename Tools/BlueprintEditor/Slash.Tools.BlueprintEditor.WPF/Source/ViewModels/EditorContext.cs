@@ -55,6 +55,10 @@ namespace BlueprintEditor.ViewModels
 
         private readonly XmlSerializer projectSettingsSerializer;
 
+        private bool ReadBlueprintsAsBinary = false;
+
+        private bool WriteBlueprintsAsBinary = false;
+
         private BlueprintManagerViewModel blueprintManagerViewModel;
 
         private EditorSettings editorSettings;
@@ -313,8 +317,13 @@ namespace BlueprintEditor.ViewModels
             // Load blueprint files.
             foreach (var blueprintFile in newProjectSettings.BlueprintFiles)
             {
+                var blueprintFileName = this.ReadBlueprintsAsBinary
+                                            ? Path.ChangeExtension(blueprintFile.Path, "bytes")
+                                            : blueprintFile.Path;
+
                 var absoluteBlueprintFilePath = string.Format(
-                    "{0}\\{1}", Path.GetDirectoryName(path), blueprintFile.Path);
+                    "{0}\\{1}", Path.GetDirectoryName(path), blueprintFileName);
+
                 var fileInfo = new FileInfo(absoluteBlueprintFilePath);
 
                 if (!fileInfo.Exists)
@@ -326,8 +335,18 @@ namespace BlueprintEditor.ViewModels
                 {
                     try
                     {
-                        var newBlueprintManager =
-                            (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
+                        BlueprintManager newBlueprintManager;
+
+                        if (this.ReadBlueprintsAsBinary)
+                        {
+                            var binaryDeserializer = new BinaryDeserializer(blueprintFileStream);
+                            newBlueprintManager = binaryDeserializer.Deserialize<BlueprintManager>();
+                        }
+                        else
+                        {
+                            newBlueprintManager =
+                                (BlueprintManager)this.blueprintManagerSerializer.Deserialize(blueprintFileStream);
+                        }
 
                         if (newBlueprintManager == null)
                         {
@@ -393,6 +412,17 @@ namespace BlueprintEditor.ViewModels
                 var blueprintFileStream = new FileStream(absoluteBlueprintFilePath, FileMode.Create);
                 this.blueprintManagerSerializer.Serialize(blueprintFileStream, blueprintFile.BlueprintManager);
                 blueprintFileStream.Close();
+
+                if (this.WriteBlueprintsAsBinary)
+                {
+                    // Write binary.
+                    var blueprintFilePath = string.Format(
+                        "{0}\\{1}", this.ProjectPath, Path.ChangeExtension(blueprintFile.Path, "bytes"));
+                    blueprintFileStream = new FileStream(blueprintFilePath, FileMode.Create);
+                    var binarySerializer = new BinarySerializer(blueprintFileStream);
+                    binarySerializer.Serialize(blueprintFile.BlueprintManager);
+                    blueprintFileStream.Close();
+                }
             }
 
             // Save project.

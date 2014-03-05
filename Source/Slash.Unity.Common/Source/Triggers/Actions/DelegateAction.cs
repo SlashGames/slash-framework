@@ -50,7 +50,10 @@ namespace Slash.Unity.Common.Triggers.Actions
         {
             if (this.action == null)
             {
-                this.action = Delegate.CreateDelegate(typeof(Action), this.Target, this.Method);
+                // TODO: Not availabe on Windows Store targets. Find another way to create delegate (or dynamically invoke method with doing so) and create Unity.Common library for Windows Store targets.
+                throw new NotImplementedException();
+
+                // this.action = Delegate.CreateDelegate(typeof(Action), this.Target, this.Method);
             }
             this.action.DynamicInvoke(args);
         }

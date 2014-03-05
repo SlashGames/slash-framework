@@ -10,6 +10,7 @@ namespace Slash.Reflection.Utils
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     ///   Provides utility methods for reflecting types and members.
@@ -39,10 +40,9 @@ namespace Slash.Reflection.Utils
             }
 
             // Split type name from .dll version.
-            if (!fullName.Contains("["))
-            {
-                fullName = fullName.Split(new[] { ',' })[0];
-            }
+            fullName = Regex.Replace(fullName, @", Version=\d+.\d+.\d+.\d+", string.Empty);
+            fullName = Regex.Replace(fullName, @", Culture=\w+", string.Empty);
+            fullName = Regex.Replace(fullName, @", PublicKeyToken=\w+", string.Empty);
 
             Type t = Type.GetType(fullName);
 
