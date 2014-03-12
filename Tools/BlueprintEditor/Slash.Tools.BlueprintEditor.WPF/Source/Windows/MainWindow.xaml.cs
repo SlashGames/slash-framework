@@ -67,7 +67,7 @@ namespace BlueprintEditor.Windows
             this.InitializeComponent();
 
             this.DataContext = this.Context;
-            this.BlueprintControl.LocalizationContext = this.Context.LocalizationContext;
+            this.BlueprintControl.EditorContext = this.Context;
             this.BlueprintControl.SelectedBlueprintChaged += this.OnSelectedBlueprintChanged;
 
             AppDomain.CurrentDomain.AssemblyResolve += this.DynamicAssemblyResolve;

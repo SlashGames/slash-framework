@@ -7,6 +7,7 @@
 namespace BlueprintEditor.Controls
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -16,6 +17,8 @@ namespace BlueprintEditor.Controls
 
     using BlueprintEditor.Annotations;
     using BlueprintEditor.ViewModels;
+
+    using Slash.GameBase.Blueprints;
 
     public partial class BlueprintComboBox : INotifyPropertyChanged
     {
@@ -170,17 +173,28 @@ namespace BlueprintEditor.Controls
             return newBlueprintsView;
         }
 
+        private bool ignoreSelectionChange;
+
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ListCollectionView newBlueprints = this.CreateBlueprintsView();
-            string newSelectedBlueprintId = this.selectedBlueprintId;
 
+            // The selected item of the combo box may change if the available items change.
+            // This change is ignored and the combo box's selected item is updated afterwards,
+            // so the data and the view are consistent.
+            this.ignoreSelectionChange = true;
             this.Blueprints = newBlueprints;
-            this.SelectedBlueprintId = newSelectedBlueprintId;
+            this.ignoreSelectionChange = false;
+            this.UpdateSelectedBlueprint();
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (this.ignoreSelectionChange)
+            {
+                return;
+            }
+
             BlueprintViewModel newSelectedBlueprint = (BlueprintViewModel)this.ComboBox.SelectedItem;
             this.SelectedBlueprint = newSelectedBlueprint;
             this.SelectedBlueprintId = newSelectedBlueprint != null ? newSelectedBlueprint.BlueprintId : null;

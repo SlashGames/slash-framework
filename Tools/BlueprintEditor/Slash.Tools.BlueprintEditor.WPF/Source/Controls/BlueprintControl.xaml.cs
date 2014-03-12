@@ -25,9 +25,7 @@ namespace BlueprintEditor.Controls
         #region Fields
 
         private InspectorFactory inspectorFactory;
-
-        private LocalizationContext localizationContext;
-
+        
         #endregion
 
         #region Constructors and Destructors
@@ -59,16 +57,11 @@ namespace BlueprintEditor.Controls
 
         #region Public Properties
 
-        public LocalizationContext LocalizationContext
+        public EditorContext EditorContext
         {
-            get
-            {
-                return this.localizationContext;
-            }
             set
             {
-                this.localizationContext = value;
-                this.inspectorFactory = new InspectorFactory(value);
+                this.inspectorFactory = new InspectorFactory(value, value != null ? value.LocalizationContext : null);
             }
         }
 

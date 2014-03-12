@@ -21,7 +21,7 @@ namespace BlueprintEditor.Inspectors.Controls
     {
         #region Fields
 
-        private readonly InspectorFactory inspectorFactory = new InspectorFactory(null);
+        private InspectorFactory inspectorFactory;
 
         private InspectorPropertyAttribute itemInspectorProperty;
 
@@ -43,8 +43,12 @@ namespace BlueprintEditor.Inspectors.Controls
 
         private void AddItemControl(object item)
         {
+            Console.WriteLine("Creating item control");
+
             IInspectorControl propertyControl =
                 this.inspectorFactory.CreateInspectorControlFor(this.itemInspectorProperty, item, false);
+
+            Console.WriteLine("Creating new list inspector item");
 
             // Create item wrapper.
             ListInspectorItem itemWrapperControl = new ListInspectorItem { Control = (InspectorControl)propertyControl };
@@ -53,7 +57,9 @@ namespace BlueprintEditor.Inspectors.Controls
             itemWrapperControl.UpClicked += this.OnItemUpClicked;
             itemWrapperControl.ValueChanged += this.OnItemValueChanged;
 
+            Console.WriteLine("Adding new list inspector item");
             this.Items.Children.Add(itemWrapperControl);
+            Console.WriteLine("Added new list inspector item");
         }
 
         private void BtAdd_OnClick(object sender, RoutedEventArgs e)
@@ -152,6 +158,10 @@ namespace BlueprintEditor.Inspectors.Controls
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
+
+            this.inspectorFactory = new InspectorFactory(
+                dataContext.EditorContext,
+                dataContext.EditorContext != null ? dataContext.EditorContext.LocalizationContext : null);
 
             InspectorPropertyAttribute inspectorProperty = dataContext.InspectorProperty;
             this.itemType = inspectorProperty.AttributeType ?? inspectorProperty.PropertyType.GetGenericArguments()[0];

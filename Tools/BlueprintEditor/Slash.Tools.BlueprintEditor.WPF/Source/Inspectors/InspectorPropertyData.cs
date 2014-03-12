@@ -63,6 +63,8 @@ namespace BlueprintEditor.Inspectors
 
         public string Error { get; private set; }
 
+        public EditorContext EditorContext { get; set; }
+
         public InspectorPropertyAttribute InspectorProperty
         {
             get
