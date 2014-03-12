@@ -18,6 +18,8 @@ namespace Slash.Unity.Common.Diagnostics
 
         public Rect ButtonRect = new Rect(0, 0, 10, 10);
 
+        public string[] QuickCheats;
+
         private readonly Rect dragRect = new Rect(0, 0, 10000, 20);
 
         private string cheat = string.Empty;
@@ -46,6 +48,15 @@ namespace Slash.Unity.Common.Diagnostics
                 if (!string.IsNullOrEmpty(this.cheat) && GUILayout.Button("Submit"))
                 {
                     this.game.EventManager.QueueEvent(FrameworkEventType.Cheat, this.cheat);
+                }
+
+                GUILayout.Label("Quick Cheats:");
+                foreach (var quickCheat in this.QuickCheats)
+                {
+                    if (GUILayout.Button(quickCheat))
+                    {
+                        this.game.EventManager.QueueEvent(FrameworkEventType.Cheat, quickCheat);
+                    }
                 }
             }
             else
