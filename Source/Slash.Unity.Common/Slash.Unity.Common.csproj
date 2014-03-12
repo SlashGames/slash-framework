@@ -70,6 +70,7 @@
     <Compile Include="Source\Core\LogicToVisualDelegateAttribute.cs" />
     <Compile Include="Source\Core\LogicToVisualMapping.cs" />
     <Compile Include="Source\Core\LogicToVisualMappingAttribute.cs" />
+    <Compile Include="Source\Diagnostics\CatchExceptionsBehaviour.cs" />
     <Compile Include="Source\Diagnostics\DebugInput.cs" />
     <Compile Include="Source\Diagnostics\FPSDisplay.cs" />
     <Compile Include="Source\GUI\GuiExt.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Source\Logging\LoggerExtensions.cs" />
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
+    <Compile Include="Source\Scenes\SceneManager.cs" />
     <Compile Include="Source\Triggers\Actions\DelegateAction.cs" />
     <Compile Include="Source\Triggers\Actions\IAction.cs" />
     <Compile Include="Source\Triggers\Conditions\Condition.cs" />
