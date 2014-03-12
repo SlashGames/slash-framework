@@ -132,5 +132,15 @@ namespace Slash.GameBase.Events
         ///   </para>
         /// </summary>
         Logging,
+
+        /// <summary>
+        ///   <para>
+        ///     Action to submit a cheat code into the game.
+        ///   </para>
+        ///   <para>
+        ///     Event data: <see cref="string"/> (Cheat code).
+        ///   </para>
+        /// </summary>
+        Cheat,
     }
 }
