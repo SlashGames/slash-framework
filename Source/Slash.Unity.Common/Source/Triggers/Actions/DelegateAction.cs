@@ -22,10 +22,24 @@ namespace Slash.Unity.Common.Triggers.Actions
 
         public void Execute(object actionArgs)
         {
-            if (this.Delegate != null)
+            if (this.Delegate == null)
             {
-                this.Delegate.Invoke();
+                return;
             }
+
+            if (this.Delegate.Target == null)
+            {
+                Debug.LogWarning("No target for delegate action.", this);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.Delegate.Method))
+            {
+                Debug.LogWarning("No method for delegate action.", this);
+                return;
+            }
+
+            this.Delegate.Invoke();
         }
 
         #endregion
@@ -50,10 +64,7 @@ namespace Slash.Unity.Common.Triggers.Actions
         {
             if (this.action == null)
             {
-                // TODO: Not availabe on Windows Store targets. Find another way to create delegate (or dynamically invoke method with doing so) and create Unity.Common library for Windows Store targets.
-                throw new NotImplementedException();
-
-                // this.action = Delegate.CreateDelegate(typeof(Action), this.Target, this.Method);
+                this.action = Delegate.CreateDelegate(typeof(Action), this.Target, this.Method);
             }
             this.action.DynamicInvoke(args);
         }
