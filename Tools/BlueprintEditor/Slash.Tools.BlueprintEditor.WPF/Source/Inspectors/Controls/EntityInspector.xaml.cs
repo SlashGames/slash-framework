@@ -24,7 +24,7 @@ namespace BlueprintEditor.Inspectors.Controls
     {
         #region Fields
 
-        private readonly InspectorFactory inspectorFactory = new InspectorFactory(null);
+        private InspectorFactory inspectorFactory;
 
         private BlueprintViewModel selectedBlueprint;
 
@@ -89,6 +89,12 @@ namespace BlueprintEditor.Inspectors.Controls
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            InspectorPropertyData dataContext = (InspectorPropertyData)this.DataContext;
+
+            this.inspectorFactory = new InspectorFactory(
+                dataContext.EditorContext,
+                dataContext.EditorContext != null ? dataContext.EditorContext.LocalizationContext : null);
+
             EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value;
             if (entityConfiguration != null)
             {

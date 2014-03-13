@@ -23,6 +23,8 @@ namespace BlueprintEditor.Inspectors
 
         private readonly LocalizationContext localizationContext;
 
+        private EditorContext editorContext;
+
         #endregion
 
         #region Constructors and Destructors
@@ -30,9 +32,11 @@ namespace BlueprintEditor.Inspectors
         /// <summary>
         ///   Constructs a new factory for creating inspector controls.
         /// </summary>
+        /// <param name="editorContext">Editor context the controls live in.</param>
         /// <param name="localizationContext">Context for localizing inspector values. <c>null</c> renders created controls unable to localize values.</param>
-        public InspectorFactory(LocalizationContext localizationContext)
+        public InspectorFactory(EditorContext editorContext, LocalizationContext localizationContext)
         {
+            this.editorContext = editorContext;
             this.localizationContext = localizationContext;
         }
 
@@ -193,7 +197,7 @@ namespace BlueprintEditor.Inspectors
             // Setup control.
             if (inspectorControl != null)
             {
-                inspectorControl.Init(inspectorProperty, this.localizationContext, currentValue, valueInherited);
+                inspectorControl.Init(inspectorProperty, this.editorContext, this.localizationContext, currentValue, valueInherited);
             }
 
             return inspectorControl;

@@ -7,14 +7,14 @@
                              xmlns:controls = "clr-namespace:BlueprintEditor.Controls"
                              xmlns:windows = "clr-namespace:BlueprintEditor.Windows"
                              mc:Ignorable = "d"
-                             d:DesignHeight = "300" d:DesignWidth = "300">
+                             d:DesignHeight = "300" d:DesignWidth = "300"
+                             d:DataContext = "{d:DesignInstance inspectors:InspectorPropertyData}">
     <StackPanel>
         <DockPanel>
             <Label>Blueprint:</Label>
             <controls:BlueprintComboBox x:Name = "CbBlueprint">
                 <controls:BlueprintComboBox.DataContext>
-                    <Binding Path = "DataContext.BlueprintManagerViewModel"
-                             RelativeSource = "{RelativeSource Mode=FindAncestor, AncestorType=windows:MainWindow}" />
+                    <Binding Path = "EditorContext.BlueprintManagerViewModel" />
                 </controls:BlueprintComboBox.DataContext>
             </controls:BlueprintComboBox>
         </DockPanel>

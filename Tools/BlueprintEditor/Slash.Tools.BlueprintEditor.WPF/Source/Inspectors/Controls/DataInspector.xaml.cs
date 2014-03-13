@@ -19,7 +19,7 @@ namespace BlueprintEditor.Inspectors.Controls
     {
         #region Fields
 
-        private readonly InspectorFactory inspectorFactory = new InspectorFactory(null);
+        private InspectorFactory inspectorFactory;
 
         private IAttributeTable value;
 
@@ -43,6 +43,7 @@ namespace BlueprintEditor.Inspectors.Controls
             InspectorDataAttribute inspectorDataAttribute = (InspectorDataAttribute)dataContext.InspectorProperty;
 
             this.value = (IAttributeTable)dataContext.Value;
+            this.inspectorFactory = new InspectorFactory(dataContext.EditorContext, null);
 
             InspectorType typeInfo = InspectorType.GetInspectorType(inspectorDataAttribute.PropertyType);
             this.inspectorFactory.AddInspectorControls(typeInfo, this.Controls, this.GetPropertyValue, this.OnPropertyValueChanged, false);

@@ -31,11 +31,11 @@ namespace BlueprintEditor.Inspectors.Controls
 
         public override void Init(
             InspectorPropertyAttribute inspectorProperty,
+            EditorContext editorContext,
             LocalizationContext localizationContext,
-            object currentValue,
-            bool valueInherited)
+            object currentValue, bool valueInherited)
         {
-            base.Init(inspectorProperty, localizationContext, currentValue, valueInherited);
+            base.Init(inspectorProperty, editorContext, localizationContext, currentValue, valueInherited);
 
             // Disable for localized strings.
             // TODO(np): Enable editing while not showing RAW values.
