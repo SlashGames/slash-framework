@@ -97,7 +97,6 @@
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
     <Compile Include="Source\Scenes\SceneManager.cs" />
-    <Compile Include="Source\Triggers\Actions\DelegateAction.cs" />
     <Compile Include="Source\Triggers\Actions\IAction.cs" />
     <Compile Include="Source\Triggers\Conditions\Condition.cs" />
     <Compile Include="Source\Triggers\Conditions\ICondition.cs" />
