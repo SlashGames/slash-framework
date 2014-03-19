@@ -8,7 +8,6 @@ namespace Slash.Unity.Common.Utils
 {
     using UnityEngine;
 
-    [RequireComponent(typeof(GUIText))]
     public class VersionNumberBehaviour : MonoBehaviour
     {
         #region Fields
@@ -18,14 +17,16 @@ namespace Slash.Unity.Common.Utils
         /// </summary>
         public string VersionFilePath = "Misc/Version";
 
+        public string Version { get; private set; }
+
         #endregion
 
         #region Methods
 
-        private void Start()
+        private void Awake()
         {
             var versionAsset = (TextAsset)Resources.Load(this.VersionFilePath);
-            this.guiText.text = string.Format("Version {0}", versionAsset.text);
+            this.Version = versionAsset.text;
         }
 
         #endregion
