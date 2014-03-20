@@ -27,7 +27,7 @@ namespace Slash.GameBase.Tests.Blueprints
 
         private Blueprint blueprint;
 
-        private string parentId = "ParentBlueprint";
+        private const string ParentId = "ParentBlueprint";
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace Slash.GameBase.Tests.Blueprints
         [SetUp]
         public void SetUp()
         {
-            this.blueprint = new Blueprint { ParentId = this.parentId };
+            this.blueprint = new Blueprint { ParentId = ParentId };
         }
 
         [Test]
@@ -59,6 +59,16 @@ namespace Slash.GameBase.Tests.Blueprints
             this.blueprint.AttributeTable.Add(AttributeKey, AttributeValue);
             this.blueprint.ComponentTypes.Add(typeof(TestComponent));
             SerializationTestUtils.TestXmlSerialization(this.blueprint);
+        }
+
+        [Test]
+        public void TestCopyConstructorParentId()
+        {
+            // Try to copy blueprint.
+            var newBlueprint = new Blueprint(this.blueprint);
+
+            // Check that parent id was copied.
+            Assert.AreEqual(newBlueprint.ParentId, ParentId);
         }
 
         #endregion

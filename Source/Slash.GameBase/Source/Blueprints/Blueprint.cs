@@ -58,6 +58,8 @@ namespace Slash.GameBase.Blueprints
         {
             this.AttributeTable = new AttributeTable(original.AttributeTable);
             this.ComponentTypes = new List<Type>(original.ComponentTypes);
+            this.Parent = original.Parent;
+            this.ParentId = original.ParentId;
         }
 
         #endregion
