@@ -265,6 +265,11 @@ namespace BlueprintEditor.ViewModels
             return Uri.UnescapeDataString(relativePathUri.ToString());
         }
 
+        public bool CanExecuteCopyBlueprint()
+        {
+            return this.SelectedBlueprint != null;
+        }
+
         public bool CanExecuteRedo()
         {
             var undoRoot = UndoService.Current[this.BlueprintManagerViewModel];
@@ -287,6 +292,12 @@ namespace BlueprintEditor.ViewModels
             // TODO(co): Check for changes and ask user if to save before closing.
 
             this.SetProject(null);
+        }
+
+        public void CopyBlueprint()
+        {
+            this.BlueprintManagerViewModel.CreateNewBlueprint(
+                "Copy of " + this.SelectedBlueprint.BlueprintId, this.SelectedBlueprint);
         }
 
         public void Load(string path)
@@ -312,7 +323,12 @@ namespace BlueprintEditor.ViewModels
             newProjectSettings.LanguageFiles =
                 newProjectSettings.LanguageFilesSerialized.Select(
                     languageFilePath =>
-                        new LanguageFile { Path = new FileInfo(string.Format("{0}\\{1}", Path.GetDirectoryName(path), languageFilePath)).FullName }).ToList();
+                    new LanguageFile
+                        {
+                            Path =
+                                new FileInfo(string.Format("{0}\\{1}", Path.GetDirectoryName(path), languageFilePath))
+                        .FullName
+                        }).ToList();
 
             // Load blueprint files.
             foreach (var blueprintFile in newProjectSettings.BlueprintFiles)

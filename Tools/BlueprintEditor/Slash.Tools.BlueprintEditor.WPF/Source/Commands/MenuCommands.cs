@@ -13,6 +13,11 @@ namespace BlueprintEditor.Commands
         #region Static Fields
 
         /// <summary>
+        ///   Command to copy selected blueprint.
+        /// </summary>
+        public static ICommand CopyBlueprint = new RoutedCommand("Copy blueprint", typeof(MenuCommands));
+
+        /// <summary>
         ///   Command to run a custom CSV import.
         /// </summary>
         public static ICommand CustomImport = new RoutedCommand("Custom Import", typeof(MenuCommands));

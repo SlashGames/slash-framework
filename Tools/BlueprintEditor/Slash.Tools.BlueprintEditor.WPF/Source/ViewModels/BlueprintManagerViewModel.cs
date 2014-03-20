@@ -192,24 +192,52 @@ namespace BlueprintEditor.ViewModels
             this.OnPropertyChanged("NewBlueprintId");
 
             // Update parents.
-            foreach (var viewModel in this.Blueprints.Where(viewModel => oldBlueprintId.Equals(viewModel.Blueprint.ParentId)))
+            foreach (
+                var viewModel in this.Blueprints.Where(viewModel => oldBlueprintId.Equals(viewModel.Blueprint.ParentId))
+                )
             {
                 viewModel.Blueprint.ParentId = newBlueprintId;
             }
         }
 
+        /// <summary>
+        ///   Creates a new blueprint. Uses the NewBlueprintId as the id for the new blueprint.
+        /// </summary>
+        /// <returns>New blueprint view model.</returns>
         public BlueprintViewModel CreateNewBlueprint()
         {
             // Update blueprint view models.
-            var newBlueprint = new BlueprintViewModel(this.newBlueprintId, new Blueprint())
-                {
-                    AssemblyComponents = this.assemblyComponents
-                };
-            this.Blueprints.Add(newBlueprint);
+            var newBlueprint = this.CreateNewBlueprint(this.NewBlueprintId);
 
             // Clear blueprint id.
             this.NewBlueprintId = string.Empty;
 
+            return newBlueprint;
+        }
+
+        /// <summary>
+        ///   Creates a new blueprint.
+        /// </summary>
+        /// <param name="blueprintId">Id for new blueprint.</param>
+        /// <param name="original">Original blueprint to copy. Null if to create an empty blueprint.</param>
+        /// <returns>New blueprint view model.</returns>
+        public BlueprintViewModel CreateNewBlueprint(string blueprintId, BlueprintViewModel original = null)
+        {
+            // Update blueprint view models.
+            var newBlueprint = new BlueprintViewModel(
+                blueprintId, original != null ? new Blueprint(original.Blueprint) : new Blueprint())
+                {
+                    AssemblyComponents = this.assemblyComponents
+                };
+
+            // Parent under same blueprint.
+            if (original != null)
+            {
+                newBlueprint.Parent = original.Parent;
+            }
+            
+            this.Blueprints.Add(newBlueprint);
+            
             return newBlueprint;
         }
 
@@ -295,7 +323,9 @@ namespace BlueprintEditor.ViewModels
         {
             var errors = new List<Exception>();
 
-            foreach (var blueprint in this.Blueprints.Where(blueprint => !string.IsNullOrEmpty(blueprint.Blueprint.ParentId)))
+            foreach (
+                var blueprint in this.Blueprints.Where(blueprint => !string.IsNullOrEmpty(blueprint.Blueprint.ParentId))
+                )
             {
                 try
                 {
@@ -355,7 +385,7 @@ namespace BlueprintEditor.ViewModels
                     // Setup correct parent hierarchy.
                     if (item.Parent != null)
                     {
-                        this.ReparentBlueprint(item.BlueprintId, item.Blueprint.ParentId);
+                        this.ReparentBlueprint(item.BlueprintId, item.Parent.BlueprintId);
                     }
                 }
             }

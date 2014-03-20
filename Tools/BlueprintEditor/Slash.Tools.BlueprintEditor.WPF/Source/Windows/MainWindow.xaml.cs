@@ -213,6 +213,11 @@ namespace BlueprintEditor.Windows
             e.CanExecute = this.Context.CanExecuteUndo();
         }
 
+        private void CanExecuteEditCopyBlueprint(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.Context.CanExecuteCopyBlueprint();
+        }
+
         private void CanExecuteFileClose(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.ProjectActive;
@@ -339,6 +344,11 @@ namespace BlueprintEditor.Windows
         private void ExecutedEditUndo(object sender, ExecutedRoutedEventArgs e)
         {
             this.Context.Undo();
+        }
+
+        private void ExecutedEditCopyBlueprint(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Context.CopyBlueprint();
         }
 
         private void ExecutedFileAbout(object sender, RoutedEventArgs e)
