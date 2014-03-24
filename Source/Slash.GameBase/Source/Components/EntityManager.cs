@@ -279,7 +279,7 @@ namespace Slash.GameBase.Components
         /// <returns>Unique id of the new entity.</returns>
         public int CreateEntity(Blueprint blueprint)
         {
-            return this.CreateEntity(blueprint, new AttributeTable());
+            return this.CreateEntity(blueprint, null);
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace Slash.GameBase.Components
         /// <returns> Unique id of the new entity. </returns>
         public int CreateEntity(Blueprint blueprint, IAttributeTable configuration)
         {
-            return this.CreateEntity(blueprint, configuration, new List<Type>());
+            return this.CreateEntity(blueprint, configuration, null);
         }
 
         /// <summary>
@@ -591,7 +591,7 @@ namespace Slash.GameBase.Components
         /// <param name="configuration"> Data for initializing the entity. </param>
         /// <param name="additionalComponents">Components to add to the entity, in addition to the ones specified by the blueprint.</param>
         public void InitEntity(
-            int entityId, Blueprint blueprint, IAttributeTable configuration, List<Type> additionalComponents)
+            int entityId, Blueprint blueprint, IAttributeTable configuration, IEnumerable<Type> additionalComponents)
         {
             if (blueprint == null)
             {
@@ -614,7 +614,9 @@ namespace Slash.GameBase.Components
 
             // Build list of components to add.
             IEnumerable<Type> blueprintComponentTypes = blueprint.GetAllComponentTypes();
-            IEnumerable<Type> componentTypes = blueprintComponentTypes.Union(additionalComponents);
+            IEnumerable<Type> componentTypes = additionalComponents != null
+                                                   ? blueprintComponentTypes.Union(additionalComponents)
+                                                   : blueprintComponentTypes;
 
             // Add components.
             foreach (Type type in componentTypes)
