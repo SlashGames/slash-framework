@@ -16,9 +16,9 @@ namespace Slash.Unity.Common.Utils
         #region Public Methods and Operators
 
         /// <summary>
-        ///     Instantiates a new game object from the specified prefab and adds it
-        ///     to the game object.
-        ///     Makes sure the position/rotation/scale are initialized correctly.
+        ///   Instantiates a new game object from the specified prefab and adds it
+        ///   to the game object.
+        ///   Makes sure the position/rotation/scale are initialized correctly.
         /// </summary>
         /// <param name="parent">Game object to add child to.</param>
         /// <param name="prefab">Prefab to instantiate new child from.</param>
@@ -39,9 +39,9 @@ namespace Slash.Unity.Common.Utils
         }
 
         /// <summary>
-        ///     Creates a unity color from integer RGB values.
-        ///     The constructor of the Unity Color class takes float values from
-        ///     0 to 1 by default.
+        ///   Creates a unity color from integer RGB values.
+        ///   The constructor of the Unity Color class takes float values from
+        ///   0 to 1 by default.
         /// </summary>
         /// <param name="r">Red value (0-255).</param>
         /// <param name="g">Green value (0-255).</param>
@@ -53,12 +53,12 @@ namespace Slash.Unity.Common.Utils
         }
 
         /// <summary>
-        ///     Destroys all children from the specified game object.
+        ///   Destroys all children from the specified game object.
         /// </summary>
         /// <param name="gameObject">Game object to destroy children.</param>
         public static void DestroyChildren(this GameObject gameObject)
         {
-            List<GameObject> children = (from Transform child in gameObject.transform select child.gameObject).ToList();
+            List<GameObject> children = gameObject.GetChildren().ToList();
             foreach (GameObject child in children)
             {
                 // Set inactive to hide immediatly. The destruction is just performed after the next update.
@@ -68,7 +68,17 @@ namespace Slash.Unity.Common.Utils
         }
 
         /// <summary>
-        ///     Adds a timestamp to the specified string.
+        ///   Collects all children from the specified game object.
+        /// </summary>
+        /// <param name="gameObject">Game object to collect children from.</param>
+        /// <returns>Enumeration of all children of the specified game object.</returns>
+        public static IEnumerable<GameObject> GetChildren(this GameObject gameObject)
+        {
+            return (from Transform child in gameObject.transform select child.gameObject);
+        }
+
+        /// <summary>
+        ///   Adds a timestamp to the specified string.
         /// </summary>
         /// <param name="message">String to add a timestamp to.</param>
         /// <returns>Timestamped message.</returns>
