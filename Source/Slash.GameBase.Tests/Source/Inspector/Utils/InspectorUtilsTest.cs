@@ -48,6 +48,35 @@ namespace Slash.GameBase.Tests.Inspector.Utils
             Assert.AreEqual(testInspectorType.String2, TestValueString2);
         }
 
+        [Test]
+        public void TestCreateFromNullAttributeTable()
+        {
+            TestInspectorType testInspectorType = null;
+            Assert.DoesNotThrow(
+                () =>
+                    {
+                        testInspectorType = InspectorUtils.CreateFromAttributeTable<TestInspectorType>(
+                            this.testGame, this.inspectorType, null);
+                    });
+
+            Assert.NotNull(testInspectorType);
+        }
+
+        [Test]
+        public void TestInitFromNullAttributeTable()
+        {
+            TestInspectorType testInspectorType = new TestInspectorType();
+            Assert.DoesNotThrow(() => InspectorUtils.InitFromAttributeTable(this.testGame, testInspectorType, null));
+        }
+
+        [Test]
+        public void TestInitFromNullAttributeTableAndInspectorType()
+        {
+            TestInspectorType testInspectorType = new TestInspectorType();
+            Assert.DoesNotThrow(
+                () => InspectorUtils.InitFromAttributeTable(this.testGame, this.inspectorType, testInspectorType, null));
+        }
+
         #endregion
 
         [InspectorType]

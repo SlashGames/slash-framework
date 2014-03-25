@@ -84,6 +84,11 @@ namespace Slash.GameBase.Inspector.Utils
         /// <param name="attributeTable">Attribute table to initialize from.</param>
         public static void InitFromAttributeTable(Game game, object obj, IAttributeTable attributeTable)
         {
+            if (attributeTable == null)
+            {
+                return;
+            }
+
             InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
             InitFromAttributeTable(game, inspectorType, obj, attributeTable);
         }
@@ -98,6 +103,11 @@ namespace Slash.GameBase.Inspector.Utils
         public static void InitFromAttributeTable(Game game,
             InspectorType inspectorType, object obj, IAttributeTable attributeTable)
         {
+            if (attributeTable == null)
+            {
+                return;
+            }
+
             // Set values for all properties.
             foreach (var inspectorProperty in inspectorType.Properties)
             {
