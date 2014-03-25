@@ -104,6 +104,7 @@
     <Compile Include="Source\Triggers\Trigger.cs" />
     <Compile Include="Source\Utils\GarbageCollectionBehaviour.cs" />
     <Compile Include="Source\Utils\GLUtils.cs" />
+    <Compile Include="Source\Utils\Tooltip.cs" />
     <Compile Include="Source\Utils\UnityUtils.cs" />
     <Compile Include="Source\Utils\VersionNumberBehaviour.cs" />
     <Compile Include="Source\ViewModels\ViewEventDelegate.cs" />
