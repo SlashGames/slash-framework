@@ -8,6 +8,7 @@ namespace Slash.Tests.ECS
 {
     using NUnit.Framework;
 
+    using Slash.Collections.AttributeTables;
     using Slash.GameBase;
     using Slash.GameBase.Systems;
 
@@ -16,7 +17,20 @@ namespace Slash.Tests.ECS
     {
         #region Fields
 
+        protected AttributeTable GameConfiguration;
+
         protected Game TestGame;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public SystemTest()
+        {
+            this.GameConfiguration = new AttributeTable();
+            this.TestGame = new Game();
+            this.TestGame.AddSystem<T>();
+        }
 
         #endregion
 
@@ -25,12 +39,16 @@ namespace Slash.Tests.ECS
         [SetUp]
         public virtual void SetUp()
         {
-            this.TestGame = new Game();
+            this.StartGame();
+        }
 
-            this.TestGame.AddSystem<T>();
+        #endregion
 
-            this.TestGame.InitGame();
-            this.TestGame.StartGame(null);
+        #region Methods
+
+        protected void StartGame()
+        {
+            this.TestGame.StartGame(this.GameConfiguration);
         }
 
         #endregion

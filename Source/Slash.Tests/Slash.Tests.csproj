@@ -52,6 +52,10 @@
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
       <Name>Slash.GameBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
+      <Name>Slash.Serialization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
