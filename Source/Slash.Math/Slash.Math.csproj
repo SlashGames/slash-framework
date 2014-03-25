@@ -51,6 +51,7 @@
     <Compile Include="Source\Geometry\Lines\LineSegment2F.cs" />
     <Compile Include="Source\Utils\CircularMotion.cs" />
     <Compile Include="Source\Utils\Direction.cs" />
+    <Compile Include="Source\Utils\RandomUtils.cs" />
     <Compile Include="Source\Utils\Side.cs" />
     <Compile Include="Source\Geometry\Rectangles\RectangleI.cs" />
     <Compile Include="Source\Geometry\Rectangles\RectangleF.cs" />
