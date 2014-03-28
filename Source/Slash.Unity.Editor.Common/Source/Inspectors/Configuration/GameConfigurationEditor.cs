@@ -101,7 +101,8 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
             {
                 return EditorGUILayout.Toggle(label, Convert.ToBoolean(currentValue));
             }
-            if (inspectorProperty is InspectorStringAttribute)
+            if (inspectorProperty is InspectorStringAttribute ||
+                inspectorProperty is InspectorBlueprintAttribute)
             {
                 return EditorGUILayout.TextField(label, Convert.ToString(currentValue));
             }
