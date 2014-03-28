@@ -62,8 +62,14 @@ namespace Slash.GameBase.Inspector.Data
             List<InspectorPropertyAttribute> inspectorProperties = InspectorUtils.CollectInspectorProperties(
                 type, ref conditionalInspectors);
 
-            InspectorTypeAttribute inspectorTypeAttribute =
-                (InspectorTypeAttribute)type.GetCustomAttributes(typeof(InspectorTypeAttribute), false)[0];
+            InspectorTypeAttribute[] inspectorTypeAttributes =
+                (InspectorTypeAttribute[])type.GetCustomAttributes(typeof(InspectorTypeAttribute), false);
+            if (inspectorTypeAttributes.Length == 0)
+            {
+                return null;
+            }
+
+            InspectorTypeAttribute inspectorTypeAttribute = inspectorTypeAttributes[0];
             var inspectorTypeData = new InspectorType
                 {
                     Attribute = inspectorTypeAttribute,

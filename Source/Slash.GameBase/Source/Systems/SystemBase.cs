@@ -7,6 +7,7 @@
 namespace Slash.GameBase.Systems
 {
     using Slash.Collections.AttributeTables;
+    using Slash.GameBase.Inspector.Utils;
 
     /// <summary>
     ///   Base system class.
@@ -31,6 +32,8 @@ namespace Slash.GameBase.Systems
         /// <param name="configuration">System configuration data.</param>
         public virtual void Init(IAttributeTable configuration)
         {
+            // Initialize from configuration.
+            InspectorUtils.InitFromAttributeTable(this.Game, this, configuration);
         }
 
         /// <summary>

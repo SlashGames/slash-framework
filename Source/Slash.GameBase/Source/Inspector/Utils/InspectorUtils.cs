@@ -90,6 +90,11 @@ namespace Slash.GameBase.Inspector.Utils
             }
 
             InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
+            if (inspectorType == null)
+            {
+                return;
+            }
+
             InitFromAttributeTable(game, inspectorType, obj, attributeTable);
         }
 
