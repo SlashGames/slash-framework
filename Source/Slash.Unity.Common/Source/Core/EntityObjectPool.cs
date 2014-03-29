@@ -6,6 +6,8 @@
 
 using System.Collections.Generic;
 
+using Slash.Unity.Common.Utils;
+
 using UnityEngine;
 
 /// <summary>
@@ -91,7 +93,7 @@ public class EntityObjectPool : MonoBehaviour
         else
         {
             Profiler.BeginSample("Instantiate EntityPrefab");
-            entityObject = (GameObject)Instantiate(this.entityPrefab);
+            entityObject = this.gameObject.AddChild(this.entityPrefab);
             Profiler.EndSample();
         }
 
@@ -141,7 +143,7 @@ public class EntityObjectPool : MonoBehaviour
 
     private void AddPoolObject()
     {
-        GameObject entityObject = (GameObject)Instantiate(this.entityPrefab);
+        GameObject entityObject = this.gameObject.AddChild(this.entityPrefab);
         this.PushPoolObject(entityObject);
     }
 

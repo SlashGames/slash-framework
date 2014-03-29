@@ -228,6 +228,11 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (this.entities == null)
+        {
+            return;
+        }
+
         foreach (KeyValuePair<int, GameObject> entityPair in this.entities)
         {
             GameObject entityObject = entityPair.Value;
@@ -392,6 +397,14 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
         entityObject.transform.parent = this.entitiesRoot.transform;
         Profiler.EndSample();
 #endif
+
+        // Check for entity behaviour to set entity id.
+        EntityBehaviour entityBehaviour = entityObject.GetComponent<EntityBehaviour>();
+        if (entityBehaviour != null)
+        {
+            entityBehaviour.EntityId = entityId;
+            entityBehaviour.Game = this.game;
+        }
 
         this.entities.Add(entityId, entityObject);
 

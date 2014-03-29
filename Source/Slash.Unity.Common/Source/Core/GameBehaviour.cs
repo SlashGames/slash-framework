@@ -6,7 +6,9 @@
 
 namespace Slash.Unity.Common.Core
 {
+    using Slash.Collections.AttributeTables;
     using Slash.GameBase;
+    using Slash.GameBase.Blueprints;
     using Slash.Unity.Common.Configuration;
 
     using UnityEngine;
@@ -74,6 +76,35 @@ namespace Slash.Unity.Common.Core
         ///   Behaviour to manage game configuration.
         /// </summary>
         public GameConfigurationBehaviour GameConfiguration { get; private set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public void StartGame(Game newGame)
+        {
+            // Create game.
+            this.Game = newGame;
+
+            // Get game configuration.
+            var gameConfiguration = this.GameConfiguration != null
+                                        ? new AttributeTable(this.GameConfiguration.Configuration)
+                                        : null;
+
+            // Load game data.
+            if (this.GameConfiguration != null)
+            {
+                this.Game.BlueprintManager = this.GameConfiguration.BlueprintManager;
+            }
+            else
+            {
+                Debug.LogError("No game configuration set.");
+                this.Game.BlueprintManager = new BlueprintManager();
+            }
+
+            // Start game.
+            this.Game.StartGame(gameConfiguration);
+        }
 
         #endregion
 

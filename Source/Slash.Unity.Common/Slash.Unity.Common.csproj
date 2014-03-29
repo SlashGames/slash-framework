@@ -64,6 +64,7 @@
     <Compile Include="Source\Animations\AnimationExtensions.cs" />
     <Compile Include="Source\Attributes\ExposePropertyAttribute.cs" />
     <Compile Include="Source\Configuration\GameConfigurationBehaviour.cs" />
+    <Compile Include="Source\Core\EntityBehaviour.cs" />
     <Compile Include="Source\Core\EntityGameObjectsBehaviour.cs" />
     <Compile Include="Source\Core\EntityObjectPool.cs" />
     <Compile Include="Source\Core\GameBehaviour.cs" />
