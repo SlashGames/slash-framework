@@ -48,6 +48,11 @@ namespace Slash.Unity.Common.Math
             return new Vector2F(vector.x, vector.y);
         }
 
+        public static Vector2F ToVector2F(this Vector3 vector)
+        {
+            return new Vector2F(vector.x, vector.y);
+        }
+
         public static Vector2I ToVector2I(this Vector2 vector)
         {
             return new Vector2I((int)vector.x, (int)vector.y);
