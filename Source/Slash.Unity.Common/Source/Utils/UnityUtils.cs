@@ -78,6 +78,22 @@ namespace Slash.Unity.Common.Utils
         }
 
         /// <summary>
+        ///   Returns the full path (i.e. names of all ancestors and self) to the game object.
+        /// </summary>
+        /// <param name="gameObject">Game object to get path for.</param>
+        /// <returns>Full path of the specified game object.</returns>
+        public static string GetPath(this GameObject gameObject)
+        {
+            string path = string.Empty;
+            if (gameObject.transform.parent != null)
+            {
+                path = gameObject.transform.parent.gameObject.GetPath() + "/";
+            }
+            path += gameObject.name;
+            return path;
+        }
+
+        /// <summary>
         ///   Adds a timestamp to the specified string.
         /// </summary>
         /// <param name="message">String to add a timestamp to.</param>
