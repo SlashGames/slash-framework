@@ -6,6 +6,8 @@
 
 namespace BlueprintEditor.Inspectors
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -153,7 +155,7 @@ namespace BlueprintEditor.Inspectors
         {
             // Create inspector control.
             IInspectorControl inspectorControl;
-            if (inspectorProperty.List)
+            if (inspectorProperty.IsList)
             {
                 inspectorControl = new ListInspector();
             }

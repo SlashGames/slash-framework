@@ -150,7 +150,15 @@ namespace BlueprintEditor.Inspectors.Controls
             }
             else
             {
-                list = (IList)dataContext.Value;
+                // Convert value to list if necessary for backwards compatibility.
+                list = dataContext.Value as IList;
+                if (list == null)
+                {
+                    IList newList = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(this.itemType));
+                    newList.Add(dataContext.Value);
+                    list = newList;
+                    dataContext.Value = list;
+                }
             }
             return list;
         }
@@ -166,16 +174,26 @@ namespace BlueprintEditor.Inspectors.Controls
             InspectorPropertyAttribute inspectorProperty = dataContext.InspectorProperty;
             this.itemType = inspectorProperty.AttributeType ?? inspectorProperty.PropertyType.GetGenericArguments()[0];
             this.itemInspectorProperty = inspectorProperty.Clone();
-            this.itemInspectorProperty.List = false;
+            this.itemInspectorProperty.PropertyType = this.itemType;
 
             // Set items.
             this.ClearItemControls();
-            IList items = (IList)dataContext.Value;
-            if (items != null)
+
+            if (dataContext.Value != null)
             {
-                foreach (var item in items)
+                // Backwards compatibility if the attribute was a single item first and 
+                // changed to a list now.
+                IList items = dataContext.Value as IList;
+                if (items != null)
                 {
-                    this.AddItemControl(item);
+                    foreach (var item in items)
+                    {
+                        this.AddItemControl(item);
+                    }
+                }
+                else
+                {
+                    this.AddItemControl(dataContext.Value);
                 }
             }
         }
