@@ -66,7 +66,7 @@ namespace Slash.GameBase.Inspector.Attributes
         {
             get
             {
-                return this.List || typeof(IList).IsAssignableFrom(this.PropertyType);
+                return typeof(IList).IsAssignableFrom(this.PropertyType);
             }
         }
 
