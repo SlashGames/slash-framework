@@ -53,13 +53,13 @@ namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
         /// <summary>
         ///   ListInt
         /// </summary>
-        [InspectorInt(AttributeListInt, Default = DefaultListInt, Description = "ListInt Int", List = true)]
+        [InspectorInt(AttributeListInt, Default = DefaultListInt, Description = "ListInt Int")]
         public List<int> ListInt { get; set; }
 
         /// <summary>
         ///   ListString
         /// </summary>
-        [InspectorString(AttributeListString, Description = "ListString", Default = DefaultListString, List = true)]
+        [InspectorString(AttributeListString, Description = "ListString", Default = DefaultListString)]
         public List<string> ListString { get; set; }
 
         #endregion

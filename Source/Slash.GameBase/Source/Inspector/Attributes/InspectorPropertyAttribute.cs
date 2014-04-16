@@ -62,6 +62,18 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <summary>
         ///   Whether the property is of a list type, or not.
         /// </summary>
+        public bool IsList
+        {
+            get
+            {
+                return this.List || typeof(IList).IsAssignableFrom(this.PropertyType);
+            }
+        }
+
+        /// <summary>
+        ///   Whether the property is of a list type, or not.
+        /// </summary>
+        [Obsolete("Not required any more, determined by property type. Use IsList to check if property is a list.")]
         public bool List { get; set; }
 
         /// <summary>
@@ -122,7 +134,7 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <see cref="ConvertStringToValue" />
         public string ConvertValueOrListToString(object value)
         {
-            if (this.List)
+            if (this.IsList)
             {
                 var list = (IEnumerable)value;
                 var stringBuilder = new StringBuilder();
@@ -204,7 +216,7 @@ namespace Slash.GameBase.Inspector.Attributes
         {
             var success = true;
 
-            if (this.List)
+            if (this.IsList)
             {
                 // Split string into list items.
                 var array = text.Split(ListDelimiter);

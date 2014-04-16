@@ -175,7 +175,6 @@ namespace BlueprintEditor.Inspectors.Controls
             this.itemType = inspectorProperty.AttributeType ?? inspectorProperty.PropertyType.GetGenericArguments()[0];
             this.itemInspectorProperty = inspectorProperty.Clone();
             this.itemInspectorProperty.PropertyType = this.itemType;
-            this.itemInspectorProperty.List = false;
 
             // Set items.
             this.ClearItemControls();

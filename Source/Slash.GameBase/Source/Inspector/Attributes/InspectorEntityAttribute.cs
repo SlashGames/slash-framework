@@ -35,7 +35,7 @@ namespace Slash.GameBase.Inspector.Attributes
         /// <param name="propertyValue">Property value to set.</param>
         public override void SetPropertyValue(Game game, object obj, object propertyValue)
         {
-            if (this.List)
+            if (this.IsList)
             {
                 List<int> entityIds = null;
                 IList<EntityConfiguration> entityConfigurations = (IList<EntityConfiguration>)propertyValue;

@@ -155,7 +155,7 @@ namespace BlueprintEditor.Inspectors
         {
             // Create inspector control.
             IInspectorControl inspectorControl;
-            if (inspectorProperty.List || typeof(IList).IsAssignableFrom(inspectorProperty.PropertyType))
+            if (inspectorProperty.IsList)
             {
                 inspectorControl = new ListInspector();
             }
