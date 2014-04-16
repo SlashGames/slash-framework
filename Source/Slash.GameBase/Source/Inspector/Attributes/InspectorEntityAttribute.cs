@@ -38,13 +38,23 @@ namespace Slash.GameBase.Inspector.Attributes
             if (this.IsList)
             {
                 List<int> entityIds = null;
-                IList<EntityConfiguration> entityConfigurations = (IList<EntityConfiguration>)propertyValue;
+                IList<EntityConfiguration> entityConfigurations = propertyValue as IList<EntityConfiguration>;
                 if (entityConfigurations != null)
                 {
                     entityIds = new List<int>();
                     entityIds.AddRange(
                         entityConfigurations.Select(entityConfiguration => CreateEntity(game, entityConfiguration))
-                                            .Where(entityId => entityId != -1));
+                                            .Where(entityId => entityId != 0));
+                }
+                else
+                {
+                    // Create entity from value (backwards compatibility).
+                    EntityConfiguration entityConfiguration = (EntityConfiguration)propertyValue;
+                    if (entityConfiguration != null)
+                    {
+                        int entityId = CreateEntity(game, entityConfiguration);
+                        entityIds = new List<int> { entityId };
+                    }
                 }
 
                 propertyValue = entityIds;
