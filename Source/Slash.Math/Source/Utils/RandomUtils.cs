@@ -27,7 +27,7 @@ namespace Slash.Math.Utils
         /// <summary>
         ///   Random number generator singleton.
         /// </summary>
-        private static Random Random
+        public static Random Random
         {
             get
             {
@@ -49,11 +49,11 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
-        ///   Returns a random double number between the specified minimum and maximum (inclusive).
+        ///   Returns a random double number between the specified minimum and maximum (exclusive).
         /// </summary>
         /// <param name="min">Minimum value.</param>
-        /// <param name="max">Maximum value (inclusive).</param>
-        /// <returns>Random double number between the specified minimum and maximum (inclusive).</returns>
+        /// <param name="max">Maximum value (exclusive).</param>
+        /// <returns>Random double number between the specified minimum and maximum (exclusive).</returns>
         public static double RangeDouble(double min, double max)
         {
             if (min > max)

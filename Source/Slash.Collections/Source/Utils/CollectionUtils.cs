@@ -86,6 +86,61 @@ namespace Slash.Collections.Utils
         }
 
         /// <summary>
+        ///   Returns a random item from the specified sequence.
+        /// </summary>
+        /// <typeparam name="T">Type of sequence items.</typeparam>
+        /// <param name="sequence">Sequence to get item from.</param>
+        /// <returns>Time-dependent random item.</returns>
+        public static T RandomItem<T>(this IEnumerable<T> sequence)
+        {
+            Random random = new Random();
+
+            T current = default(T);
+            int count = 0;
+            foreach (T element in sequence)
+            {
+                count++;
+                if (random.Next(count) == 0)
+                {
+                    current = element;
+                }
+            }
+            if (count == 0)
+            {
+                throw new InvalidOperationException("Sequence was empty");
+            }
+            return current;
+        }
+
+        /// <summary>
+        ///   Returns a random weighted item from the specified sequence.
+        ///   Uses the specified function to get the weight of an item.
+        ///   Idea was taken from http://stackoverflow.com/questions/17912005/quick-way-of-selecting-a-random-item-from-a-list-with-varying-probabilities-ba
+        /// </summary>
+        /// <typeparam name="T">Type of sequence items.</typeparam>
+        /// <param name="sequence">Sequence to get item from.</param>
+        /// <param name="getWeight">Function to get weight of an item.</param>
+        /// <param name="random">Random number generator.</param>
+        /// <returns>Time-dependent random item.</returns>
+        public static T RandomWeightedItem<T>(this ICollection<T> sequence, Func<T, float> getWeight, Random random)
+        {
+            float totalProbabilities = sequence.Sum(getWeight);
+            float probabilityPick = (float)(random.NextDouble() * totalProbabilities);
+            foreach (var item in sequence)
+            {
+                float weight = getWeight(item);
+                if (weight < probabilityPick)
+                {
+                    return item;
+                }
+
+                probabilityPick -= weight;
+            }
+
+            throw new InvalidOperationException("Not supposed to reach this point, random picking went wrong.");
+        }
+
+        /// <summary>
         ///   Compares two sequences by comparing their items instead of their references. Also checks the case that
         ///   both sequences are null. In this case the method returns true.
         /// </summary>
@@ -134,33 +189,6 @@ namespace Slash.Collections.Utils
         }
 
         /// <summary>
-        ///   Returns a random item from the specified sequence.
-        /// </summary>
-        /// <typeparam name="T">Type of sequence items.</typeparam>
-        /// <param name="sequence">Sequence to get item from.</param>
-        /// <returns>Time-dependent random item.</returns>
-        public static T RandomItem<T>(this IEnumerable<T> sequence)
-        {
-            Random random = new Random();
-
-            T current = default(T);
-            int count = 0;
-            foreach (T element in sequence)
-            {
-                count++;
-                if (random.Next(count) == 0)
-                {
-                    current = element;
-                }
-            }
-            if (count == 0)
-            {
-                throw new InvalidOperationException("Sequence was empty");
-            }
-            return current;
-        }
-
-        /// <summary>
         ///   Enumerates the elements of the specified list in random order.
         /// </summary>
         /// <typeparam name="T">Type of list to enumerate the items of.</typeparam>
@@ -181,6 +209,7 @@ namespace Slash.Collections.Utils
 
             return copy;
         }
+
         /// <summary>
         ///   Returns a comma-seperated list of the elements of the passed sequence.
         /// </summary>
@@ -193,7 +222,7 @@ namespace Slash.Collections.Utils
             {
                 return "null";
             }
-            
+
             StringBuilder stringBuilder = new StringBuilder();
 
             stringBuilder.Append("[");
@@ -219,7 +248,7 @@ namespace Slash.Collections.Utils
                 stringBuilder[stringBuilder.Length - 2] = ']';
                 return stringBuilder.ToString().Substring(0, stringBuilder.Length - 1);
             }
-            
+
             return "[]";
         }
 
