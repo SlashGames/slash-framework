@@ -47,7 +47,7 @@ namespace Slash.SystemExt.Utils
 
             if (toUri.Scheme.ToUpperInvariant() == "FILE")
             {
-                relativePath = relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+                relativePath = relativePath.Replace('/', '\\');
             }
 
             return relativePath;
