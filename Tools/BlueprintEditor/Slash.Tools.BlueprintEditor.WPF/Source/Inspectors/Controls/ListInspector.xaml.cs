@@ -241,6 +241,9 @@ namespace BlueprintEditor.Inspectors.Controls
             IList items = this.GetListToModify();
             items[itemIndex] = eventArgs.NewValue;
 
+            // Mark as handled to not bubble up any more.
+            eventArgs.Handled = true;
+
             // List changed.
             this.OnValueChanged();
         }

@@ -44,6 +44,8 @@
     <Compile Include="Source\Inspectors\Diagnostics\DebugInputEditor.cs" />
     <Compile Include="Source\Inspectors\ExposeProperties.cs" />
     <Compile Include="Source\Inspectors\PropertyField.cs" />
+    <Compile Include="Source\Inspectors\Rendering\MeshRendererSortingEditor.cs" />
+    <Compile Include="Source\Inspectors\Utils\EditorGUIUtils.cs" />
     <Compile Include="Source\Inspectors\Utils\MemberReferenceDrawer.cs" />
     <Compile Include="Source\Inspectors\Utils\TooltipDrawer.cs" />
     <Compile Include="Source\Inspectors\ViewModels\ViewEventDelegateDrawer.cs" />
