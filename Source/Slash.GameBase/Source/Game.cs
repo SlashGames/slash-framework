@@ -261,7 +261,11 @@ namespace Slash.GameBase
         {
             this.systemManager.Update(dt);
             this.eventManager.ProcessEvents(dt);
+
             this.entityManager.CleanUpEntities();
+            this.eventManager.ProcessEvents();
+
+            this.systemManager.LateUpdate(dt);
             this.eventManager.ProcessEvents();
         }
 

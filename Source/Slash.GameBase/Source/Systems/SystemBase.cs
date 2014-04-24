@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="System.cs" company="Slash Games">
+// <copyright file="SystemBase.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -34,6 +34,17 @@ namespace Slash.GameBase.Systems
         {
             // Initialize from configuration.
             InspectorUtils.InitFromAttributeTable(this.Game, this, configuration);
+        }
+
+        /// <summary>
+        ///   Late update of this system. The late update is performed after
+        ///   all events of the tick were processed.
+        /// </summary>
+        /// <param name="dt">
+        ///   Time passed since the last tick (in s).
+        /// </param>
+        public virtual void LateUpdate(float dt)
+        {
         }
 
         /// <summary>

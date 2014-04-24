@@ -141,6 +141,20 @@ namespace Slash.GameBase.Systems
         }
 
         /// <summary>
+        ///   Late update of all systems.
+        /// </summary>
+        /// <param name="dt">
+        ///   Time passed since the last tick (in s).
+        /// </param>
+        public void LateUpdate(float dt)
+        {
+            foreach (ISystem system in this.systems)
+            {
+                system.LateUpdate(dt);
+            }
+        }
+
+        /// <summary>
         ///   Ticks all systems.
         /// </summary>
         /// <param name="dt">
