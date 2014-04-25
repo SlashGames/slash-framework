@@ -6,8 +6,6 @@
 
 namespace Slash.GameBase.Inspector.Attributes
 {
-    using Slash.SystemExt.Utils;
-
     using System;
 
     /// <summary>

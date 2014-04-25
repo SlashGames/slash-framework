@@ -55,10 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Slash.Math\Slash.Math.csproj">
-      <Project>{834E18DE-A529-4F17-A838-92B1EF259FE3}</Project>
-      <Name>Slash.Math</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
       <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>
       <Name>Slash.Reflection</Name>

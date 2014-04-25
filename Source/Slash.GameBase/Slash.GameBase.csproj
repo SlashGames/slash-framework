@@ -105,10 +105,6 @@
       <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
       <Name>Slash.Serialization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Slash.System\Slash.System.csproj">
-      <Project>{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}</Project>
-      <Name>Slash.System</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
