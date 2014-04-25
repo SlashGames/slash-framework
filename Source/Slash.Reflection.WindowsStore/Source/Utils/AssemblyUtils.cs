@@ -8,7 +8,6 @@ namespace Slash.Reflection.Utils
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Reflection;
 
     using Windows.ApplicationModel;
@@ -17,17 +16,33 @@ namespace Slash.Reflection.Utils
 
     public class AssemblyUtils
     {
+        #region Static Fields
+
+        /// <summary>
+        ///   Cached list of loaded assemblies.
+        /// </summary>
+        private static List<Assembly> loadedAssemblies;
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
-        /// Gets all assemblies that are loaded in the current application domain.
+        ///   Gets all assemblies that are loaded in the current application domain.
         /// </summary>
         /// <returns>All loaded assemblies.</returns>
         public static IEnumerable<Assembly> GetLoadedAssemblies()
         {
+            // Check if cached.
+            if (loadedAssemblies != null)
+            {
+                return loadedAssemblies;
+            }
+
+            // Find assemblies.
             StorageFolder folder = Package.Current.InstalledLocation;
 
-            List<Assembly> assemblies = new List<Assembly>();
+            loadedAssemblies = new List<Assembly>();
 
             IAsyncOperation<IReadOnlyList<StorageFile>> folderFilesAsync = folder.GetFilesAsync();
             folderFilesAsync.AsTask().Wait();
@@ -41,7 +56,7 @@ namespace Slash.Reflection.Utils
                         var filename = file.Name.Substring(0, file.Name.Length - file.FileType.Length);
                         AssemblyName name = new AssemblyName { Name = filename };
                         Assembly asm = Assembly.Load(name);
-                        assemblies.Add(asm);
+                        loadedAssemblies.Add(asm);
                     }
                     catch (BadImageFormatException)
                     {
@@ -54,7 +69,7 @@ namespace Slash.Reflection.Utils
                 }
             }
 
-            return assemblies;
+            return loadedAssemblies;
         }
 
         #endregion
