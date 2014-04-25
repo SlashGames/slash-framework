@@ -85,11 +85,20 @@ namespace Slash.SystemExt.Utils
         /// <returns>Type name without assembly info.</returns>
         public static string RemoveAssemblyInfo(string typeName)
         {
-            typeName = Regex.Replace(typeName, @", Version=\d+.\d+.\d+.\d+", string.Empty);
+            // Get start of "Version=..., Culture=..., PublicKeyToken=..." string.
+            int versionIndex = typeName.IndexOf("Version", StringComparison.Ordinal);
 
-            typeName = Regex.Replace(typeName, @", Culture=\w+", string.Empty);
+            if (versionIndex >= 0)
+            {
+                // Get end of "Version=..., Culture=..., PublicKeyToken=..." string for generics.
+                int endIndex = typeName.IndexOf(']', versionIndex);
 
-            typeName = Regex.Replace(typeName, @", PublicKeyToken=\w+", string.Empty);
+                // Get end of "Version=..., Culture=..., PublicKeyToken=..." string for non-generics.
+                endIndex = endIndex >= 0 ? endIndex : typeName.Length;
+
+                // Remove version info.
+                typeName = typeName.Remove(versionIndex - 2, endIndex - versionIndex + 2);
+            }
 
             return typeName;
         }

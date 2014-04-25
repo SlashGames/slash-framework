@@ -39,10 +39,21 @@ namespace Slash.Reflection.Utils
                 return null;
             }
 
-            // Split type name from .dll version.
-            fullName = Regex.Replace(fullName, @", Version=\d+.\d+.\d+.\d+", string.Empty);
-            fullName = Regex.Replace(fullName, @", Culture=\w+", string.Empty);
-            fullName = Regex.Replace(fullName, @", PublicKeyToken=\w+", string.Empty);
+            // Split type name from .dll version:
+            // Get start of "Version=..., Culture=..., PublicKeyToken=..." string.
+            int versionIndex = fullName.IndexOf("Version", StringComparison.Ordinal);
+
+            if (versionIndex >= 0)
+            {
+                // Get end of "Version=..., Culture=..., PublicKeyToken=..." string for generics.
+                int endIndex = fullName.IndexOf(']', versionIndex);
+
+                // Get end of "Version=..., Culture=..., PublicKeyToken=..." string for non-generics.
+                endIndex = endIndex >= 0 ? endIndex : fullName.Length;
+
+                // Remove version info.
+                fullName = fullName.Remove(versionIndex - 2, endIndex - versionIndex + 2);
+            }
 
             Type t = Type.GetType(fullName);
 
