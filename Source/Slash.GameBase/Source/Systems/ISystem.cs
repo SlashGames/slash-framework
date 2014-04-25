@@ -33,6 +33,15 @@ namespace Slash.GameBase.Systems
         void Init(IAttributeTable configuration);
 
         /// <summary>
+        ///   Late update of this system. The late update is performed after
+        ///   all events of the tick were processed.
+        /// </summary>
+        /// <param name="dt">
+        ///   Time passed since the last tick (in s).
+        /// </param>
+        void LateUpdate(float dt);
+
+        /// <summary>
         ///   Ticks this system.
         /// </summary>
         /// <param name="dt">

@@ -629,6 +629,23 @@ namespace Slash.GameBase.Components
         }
 
         /// <summary>
+        ///   Initializes the specified entity, adding the specified components.
+        /// </summary>
+        /// <param name="entityId">Id of the entity to initialize.</param>
+        /// <param name="components">Initialized components to add to the entity.</param>
+        public void InitEntity(int entityId, IEnumerable<IEntityComponent> components)
+        {
+            // Add components.
+            foreach (IEntityComponent component in components)
+            {
+                this.AddComponent(entityId, component);
+            }
+
+            // Raise event.
+            this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
+        }
+
+        /// <summary>
         ///   Removes a component of the passed type from the entity with the specified id.
         /// </summary>
         /// <param name="entityId"> Id of the entity to remove the component from. </param>

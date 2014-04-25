@@ -22,24 +22,15 @@ namespace Slash.Tests.ECS
         protected Game TestGame;
 
         #endregion
-
-        #region Constructors and Destructors
-
-        public SystemTest()
-        {
-            this.GameConfiguration = new AttributeTable();
-            this.TestGame = new Game();
-            this.TestGame.AddSystem<T>();
-        }
-
-        #endregion
-
+        
         #region Public Methods and Operators
 
         [SetUp]
         public virtual void SetUp()
         {
-            this.StartGame();
+            this.GameConfiguration = new AttributeTable();
+            this.TestGame = new Game();
+            this.TestGame.AddSystem<T>();
         }
 
         #endregion
