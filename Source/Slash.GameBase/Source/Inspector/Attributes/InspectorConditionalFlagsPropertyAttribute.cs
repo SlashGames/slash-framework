@@ -8,6 +8,8 @@ namespace Slash.GameBase.Inspector.Attributes
 {
     using System;
 
+    using Slash.SystemExt.Utils;
+
     /// <summary>
     ///   Property inspector should only be shown if condition is met.
     /// </summary>
