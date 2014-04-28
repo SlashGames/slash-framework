@@ -113,7 +113,7 @@ namespace Slash.SystemExt.Utils
 #if WINDOWS_STORE
             var enumType = enumValue.GetType();
 
-            return (enumType == typeof(byte) || enumType == typeof(ushort) || enumType == typeof(uint)
+            return !(enumType == typeof(byte) || enumType == typeof(ushort) || enumType == typeof(uint)
                     || enumType == typeof(ulong));
 #else
             switch (enumValue.GetTypeCode())
