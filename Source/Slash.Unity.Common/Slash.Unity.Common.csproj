@@ -114,6 +114,12 @@
     <Compile Include="Source\ViewModels\ViewEventDelegate.cs" />
     <Compile Include="Source\ViewModels\ViewEvent.cs" />
   </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' != 'Debug NoLog4Net' And '$(Configuration)' != 'Release NoLog4Net'">
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Ext\log4net-1.2.11\bin\net\3.5\release\log4net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
