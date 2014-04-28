@@ -152,9 +152,10 @@ namespace Slash.GameBase.Events
         ///   Passes all queued events on to interested listeners and clears the
         ///   event queue.
         /// </summary>
-        public void ProcessEvents()
+        /// <returns>Number of processed events.</returns>
+        public int ProcessEvents()
         {
-            this.ProcessEvents(0.0f);
+            return this.ProcessEvents(0.0f);
         }
 
         /// <summary>
@@ -162,7 +163,8 @@ namespace Slash.GameBase.Events
         ///   event queue.
         /// </summary>
         /// <param name="dt">Time passed since the last tick, in seconds.</param>
-        public void ProcessEvents(float dt)
+        /// <returns>Number of processed events.</returns>
+        public int ProcessEvents(float dt)
         {
             // Add passed time.
             this.accumulatedPassedTime += dt;
@@ -171,10 +173,12 @@ namespace Slash.GameBase.Events
             // otherwise processed in the wrong order.
             if (this.isProcessing)
             {
-                return;
+                return 0;
             }
 
             this.isProcessing = true;
+            
+            int processedEvents = 0;
 
             // Process queues events.
             while (this.newEvents.Count > 0)
@@ -185,6 +189,7 @@ namespace Slash.GameBase.Events
                 foreach (Event e in this.currentEvents)
                 {
                     this.ProcessEvent(e);
+                    ++processedEvents;
                 }
                 this.currentEvents.Clear();
             }
@@ -211,12 +216,15 @@ namespace Slash.GameBase.Events
                 {
                     this.ProcessEvent(e.Event);
                     this.delayedEvents.Remove(e);
+                    ++processedEvents;
                 }
 
                 this.accumulatedPassedTime -= passedTime;
             }
 
             this.isProcessing = false;
+
+            return processedEvents;
         }
 
         /// <summary>

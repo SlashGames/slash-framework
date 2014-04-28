@@ -265,8 +265,13 @@ namespace Slash.GameBase
             this.entityManager.CleanUpEntities();
             this.eventManager.ProcessEvents();
 
-            this.systemManager.LateUpdate(dt);
-            this.eventManager.ProcessEvents();
+            int processedEvents;
+            do
+            {
+                this.systemManager.LateUpdate(dt);
+                processedEvents = this.eventManager.ProcessEvents();
+            }
+            while (processedEvents > 0);
         }
 
         #endregion
