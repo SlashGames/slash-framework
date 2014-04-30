@@ -63,6 +63,8 @@ namespace BlueprintEditor.ViewModels
 
         private EditorSettings editorSettings;
 
+        private ProjectExplorerViewModel projectExplorerViewModel;
+
         #endregion
 
         #region Constructors and Destructors
@@ -155,6 +157,25 @@ namespace BlueprintEditor.ViewModels
             get
             {
                 return this.localizationContext;
+            }
+        }
+
+        public ProjectExplorerViewModel ProjectExplorerViewModel
+        {
+            get
+            {
+                return this.projectExplorerViewModel;
+            }
+            set
+            {
+                if (value == this.projectExplorerViewModel)
+                {
+                    return;
+                }
+
+                this.projectExplorerViewModel = value;
+
+                this.OnPropertyChanged("ProjectExplorerViewModel");
             }
         }
 
@@ -575,6 +596,12 @@ namespace BlueprintEditor.ViewModels
                                                              AssemblyComponents = this.AvailableComponentTypes
                                                          }
                                                      : null;
+
+                // Setup project explorer
+                var projectFileViewModel = new ProjectFileViewModel { ProjectFileName = firstBlueprintFile.Path };
+
+                this.ProjectExplorerViewModel = new ProjectExplorerViewModel();
+                this.ProjectExplorerViewModel.ProjectFiles.Add(projectFileViewModel);
             }
             else
             {
