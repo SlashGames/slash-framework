@@ -235,15 +235,23 @@ namespace BlueprintEditor.ViewModels
             {
                 newBlueprint.Parent = original.Parent;
             }
-            
+
             this.Blueprints.Add(newBlueprint);
-            
+
             return newBlueprint;
         }
 
         public object GetUndoRoot()
         {
             return this;
+        }
+
+        public void RefreshBlueprintView()
+        {
+            if (this.blueprintsView != null)
+            {
+                this.blueprintsView.Refresh();
+            }
         }
 
         public void RemoveBlueprint(string blueprintId)
@@ -273,7 +281,7 @@ namespace BlueprintEditor.ViewModels
         /// </summary>
         /// <param name="childId">Id of the blueprint whose parent to change.</param>
         /// <param name="newParentId">Id of the new parent blueprint.</param>
-        public void ReparentBlueprint(string childId, string newParentId)
+        public void ReparentBlueprint(string childId, string newParentId, bool refreshBlueprintView = true)
         {
             // Find blueprints.
             var childBlueprint = this.Blueprints.First(blueprint => blueprint.BlueprintId.Equals(childId));
@@ -310,9 +318,9 @@ namespace BlueprintEditor.ViewModels
             }
 
             // Update blueprints view.
-            if (this.blueprintsView != null)
+            if (refreshBlueprintView)
             {
-                this.blueprintsView.Refresh();
+                this.RefreshBlueprintView();
             }
         }
 
@@ -329,7 +337,7 @@ namespace BlueprintEditor.ViewModels
             {
                 try
                 {
-                    this.ReparentBlueprint(blueprint.BlueprintId, blueprint.Blueprint.ParentId);
+                    this.ReparentBlueprint(blueprint.BlueprintId, blueprint.Blueprint.ParentId, false);
                 }
                 catch (InvalidOperationException e)
                 {
@@ -341,6 +349,8 @@ namespace BlueprintEditor.ViewModels
             {
                 throw new AggregateException(errors);
             }
+
+            this.RefreshBlueprintView();
         }
 
         #endregion
@@ -385,7 +395,7 @@ namespace BlueprintEditor.ViewModels
                     // Setup correct parent hierarchy.
                     if (item.Parent != null)
                     {
-                        this.ReparentBlueprint(item.BlueprintId, item.Parent.BlueprintId);
+                        this.ReparentBlueprint(item.BlueprintId, item.Parent.BlueprintId, false);
                     }
                 }
             }
@@ -425,6 +435,8 @@ namespace BlueprintEditor.ViewModels
 
             // Validate new blueprint id again as it may be valid/invalid now.
             this.OnPropertyChanged("NewBlueprintId");
+
+            this.RefreshBlueprintView();
         }
 
         #endregion
