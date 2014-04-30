@@ -194,15 +194,25 @@
         </ToolBarTray>
 
         <Grid Grid.Row = "2" Style = "{StaticResource ProjectDependentStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height = "220"></RowDefinition>
+                <RowDefinition Height = "*"></RowDefinition>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width = "Auto"></ColumnDefinition>
                 <ColumnDefinition Width = "*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <controls:BlueprintTreeView x:Name = "TreeBlueprints"
-                                        Grid.Column = "0" Margin = "10, 0, 10, 0"
-                                        DataContext = "{Binding BlueprintManagerViewModel}" />
+            <GroupBox Header = "Project Explorer" Grid.Row = "0" Grid.Column = "0" Margin = "10, 0, 10, 0">
+                <controls:ProjectExplorer x:Name = "ProjectExplorer" DataContext = "{Binding ProjectExplorerViewModel}" />
+            </GroupBox>
 
-            <GroupBox Header = "Blueprint" Grid.Column = "1">
+            <GroupBox Header = "Blueprint Tree" Grid.Row = "1" Grid.Column = "0" Margin = "10, 0, 10, 0">
+                <controls:BlueprintTreeView x:Name = "TreeBlueprints"
+
+                                            DataContext = "{Binding BlueprintManagerViewModel}" />
+            </GroupBox>
+
+            <GroupBox Header = "Blueprint Details" Grid.Column = "1" Grid.RowSpan = "2">
                 <controls:BlueprintControl x:Name = "BlueprintControl"
                                            DataContext = "{Binding SelectedItem, ElementName=TreeBlueprints}"
                                            Style = "{StaticResource DataContextDependentStyle}" />

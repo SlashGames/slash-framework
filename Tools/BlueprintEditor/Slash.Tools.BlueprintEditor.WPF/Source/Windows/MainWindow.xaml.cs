@@ -67,6 +67,9 @@ namespace BlueprintEditor.Windows
             this.InitializeComponent();
 
             this.DataContext = this.Context;
+
+            this.ProjectExplorer.PropertyChanged += this.OnProjectExplorerPropertyChanged;
+
             this.BlueprintControl.EditorContext = this.Context;
             this.BlueprintControl.SelectedBlueprintChaged += this.OnSelectedBlueprintChanged;
 
@@ -131,19 +134,6 @@ namespace BlueprintEditor.Windows
 
         private void BackgroundLoadContextCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            // Setup correct blueprint parent hierarchy.
-            if (this.Context.BlueprintManagerViewModel != null)
-            {
-                try
-                {
-                    this.Context.BlueprintManagerViewModel.SetupBlueprintHierarchy();
-                }
-                catch (AggregateException exception)
-                {
-                    EditorDialog.Warning("Blueprint hierarchy not properly set up", exception.InnerExceptions);
-                }
-            }
-
             // Update custom imports.
             this.MenuDataCustomImport.Items.Clear();
 
@@ -203,6 +193,11 @@ namespace BlueprintEditor.Windows
             e.CanExecute = this.ProjectActive;
         }
 
+        private void CanExecuteEditCopyBlueprint(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.Context.CanExecuteCopyBlueprint();
+        }
+
         private void CanExecuteEditRedo(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.Context.CanExecuteRedo();
@@ -211,11 +206,6 @@ namespace BlueprintEditor.Windows
         private void CanExecuteEditUndo(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = this.Context.CanExecuteUndo();
-        }
-
-        private void CanExecuteEditCopyBlueprint(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = this.Context.CanExecuteCopyBlueprint();
         }
 
         private void CanExecuteFileClose(object sender, CanExecuteRoutedEventArgs e)
@@ -336,6 +326,11 @@ namespace BlueprintEditor.Windows
             }
         }
 
+        private void ExecutedEditCopyBlueprint(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Context.CopyBlueprint();
+        }
+
         private void ExecutedEditRedo(object sender, ExecutedRoutedEventArgs e)
         {
             this.Context.Redo();
@@ -344,11 +339,6 @@ namespace BlueprintEditor.Windows
         private void ExecutedEditUndo(object sender, ExecutedRoutedEventArgs e)
         {
             this.Context.Undo();
-        }
-
-        private void ExecutedEditCopyBlueprint(object sender, ExecutedRoutedEventArgs e)
-        {
-            this.Context.CopyBlueprint();
         }
 
         private void ExecutedFileAbout(object sender, RoutedEventArgs e)
@@ -438,7 +428,6 @@ namespace BlueprintEditor.Windows
             // Open CSV file.
             try
             {
-
                 using (var stream = openFileDialog.OpenFile())
                 {
                     var streamReader = new StreamReader(stream);
@@ -449,7 +438,6 @@ namespace BlueprintEditor.Windows
                         };
                     importCsvDataWindow.ShowDialog();
                 }
-
             }
             catch (IOException e)
             {
@@ -487,6 +475,15 @@ namespace BlueprintEditor.Windows
 
             // Update window title as soon as settings window is closed by the user.
             this.UpdateWindowTitle();
+        }
+
+        private void OnProjectExplorerPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("SelectedItem"))
+            {
+                this.Context.SelectedProjectFile = this.ProjectExplorer.SelectedItem;
+                this.UpdateWindowTitle();
+            }
         }
 
         private void OnSelectedBlueprintChanged(BlueprintViewModel newBlueprint, BlueprintViewModel oldBlueprint)
@@ -538,15 +535,21 @@ namespace BlueprintEditor.Windows
         /// </summary>
         private void UpdateWindowTitle()
         {
+            var newTitle = MainWindowTitle;
+
             if (this.Context != null && this.Context.ProjectSettings != null
                 && !string.IsNullOrEmpty(this.Context.ProjectSettings.Name))
             {
-                this.Title = string.Format("{0} - {1}", MainWindowTitle, this.Context.ProjectSettings.Name);
+                newTitle += string.Format(" - {0}", this.Context.ProjectSettings.Name);
             }
-            else
+
+            if (this.Context != null && this.Context.SelectedProjectFile != null
+                && !string.IsNullOrEmpty(this.Context.SelectedProjectFile.ProjectFileName))
             {
-                this.Title = MainWindowTitle;
+                newTitle += string.Format(" - {0}", this.Context.SelectedProjectFile.ProjectFileName);
             }
+
+            this.Title = newTitle;
         }
 
         #endregion

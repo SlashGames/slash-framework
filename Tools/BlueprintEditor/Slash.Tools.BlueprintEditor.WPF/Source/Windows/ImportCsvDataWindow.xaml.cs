@@ -283,7 +283,7 @@ namespace BlueprintEditor.Windows
 
                         // Reparent new blueprint.
                         blueprintManagerViewModel.ReparentBlueprint(
-                            dataBlueprint.BlueprintId, this.BlueprintParent.BlueprintId);
+                            dataBlueprint.BlueprintId, this.BlueprintParent.BlueprintId, false);
                     }
                     else
                     {
@@ -364,6 +364,8 @@ namespace BlueprintEditor.Windows
             {
                 this.SaveImportSettings();
             }
+
+            blueprintManagerViewModel.RefreshBlueprintView();
         }
 
         private void ImportData_OnClick(object sender, RoutedEventArgs e)

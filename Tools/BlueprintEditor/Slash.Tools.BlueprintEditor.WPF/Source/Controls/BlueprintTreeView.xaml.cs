@@ -16,24 +16,6 @@ namespace BlueprintEditor.Controls
     using BlueprintEditor.Annotations;
     using BlueprintEditor.ViewModels;
 
-    public class BlueprintSelectionChangedEventArgs : RoutedEventArgs
-    {
-        #region Constructors and Destructors
-
-        public BlueprintSelectionChangedEventArgs(RoutedEvent routedEvent, object source)
-            : base(routedEvent, source)
-        {
-        }
-
-        #endregion
-
-        #region Public Properties
-
-        public BlueprintViewModel Blueprint { get; set; }
-
-        #endregion
-    }
-
     /// <summary>
     ///   Interaction logic for BlueprintTreeView.xaml
     /// </summary>
