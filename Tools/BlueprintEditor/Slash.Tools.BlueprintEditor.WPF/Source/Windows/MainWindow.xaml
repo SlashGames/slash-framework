@@ -203,7 +203,7 @@
                 <ColumnDefinition Width = "*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <GroupBox Header = "Project Explorer" Grid.Row = "0" Grid.Column = "0" Margin = "10, 0, 10, 0">
-                <controls:ProjectExplorer DataContext = "{Binding ProjectExplorerViewModel}" />
+                <controls:ProjectExplorer x:Name = "ProjectExplorer" DataContext = "{Binding ProjectExplorerViewModel}" />
             </GroupBox>
 
             <GroupBox Header = "Blueprint Tree" Grid.Row = "1" Grid.Column = "0" Margin = "10, 0, 10, 0">

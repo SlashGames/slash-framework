@@ -9,7 +9,7 @@
              d:DesignHeight = "220" d:DesignWidth = "200"
              d:DataContext = "{d:DesignInstance viewModels:ProjectExplorerViewModel}">
     <Grid>
-        <ListView ItemsSource = "{Binding ProjectFilesView}">
+        <ListView Name = "ProjectFilesListView" ItemsSource = "{Binding ProjectFilesView}" SelectionMode = "Single">
             <ListView.ItemTemplate>
                 <DataTemplate DataType = "viewModels:ProjectFileViewModel">
                     <TextBlock Text = "{Binding Path=ProjectFileName}" />

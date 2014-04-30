@@ -232,6 +232,8 @@ namespace BlueprintEditor.ViewModels
 
         public BlueprintViewModel SelectedBlueprint { get; set; }
 
+        public ProjectFileViewModel SelectedProjectFile { get; set; }
+
         /// <summary>
         ///   File path to store project xml at.
         /// </summary>
