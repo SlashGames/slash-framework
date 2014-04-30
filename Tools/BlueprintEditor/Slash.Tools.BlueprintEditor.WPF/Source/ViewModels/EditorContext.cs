@@ -65,6 +65,8 @@ namespace BlueprintEditor.ViewModels
 
         private ProjectExplorerViewModel projectExplorerViewModel;
 
+        private ProjectFileViewModel selectedProjectFile;
+
         #endregion
 
         #region Constructors and Destructors
@@ -232,7 +234,24 @@ namespace BlueprintEditor.ViewModels
 
         public BlueprintViewModel SelectedBlueprint { get; set; }
 
-        public ProjectFileViewModel SelectedProjectFile { get; set; }
+        public ProjectFileViewModel SelectedProjectFile
+        {
+            get
+            {
+                return this.selectedProjectFile;
+            }
+            set
+            {
+                if (this.selectedProjectFile == value)
+                {
+                    return;
+                }
+
+                this.selectedProjectFile = value;
+
+                this.OnSelectedProjectFileChanged();
+            }
+        }
 
         /// <summary>
         ///   File path to store project xml at.
@@ -562,6 +581,20 @@ namespace BlueprintEditor.ViewModels
             this.OnPropertyChanged("RedoDescription");
         }
 
+        private void OnSelectedProjectFileChanged()
+        {
+            BlueprintManager blueprintManager = this.SelectedProjectFile != null
+                                                    ? this.SelectedProjectFile.BlueprintManager
+                                                    : null;
+
+            this.BlueprintManagerViewModel = blueprintManager != null
+                                                 ? new BlueprintManagerViewModel(blueprintManager)
+                                                     {
+                                                         AssemblyComponents = this.AvailableComponentTypes
+                                                     }
+                                                 : null;
+        }
+
         private void OnUndoStackChanged(object sender, EventArgs eventArgs)
         {
             this.OnPropertyChanged("UndoDescription");
@@ -586,24 +619,14 @@ namespace BlueprintEditor.ViewModels
             {
                 this.ProjectSettings.EntityComponentTypesChanged += this.OnEntityComponentTypesChanged;
 
-                // Set first blueprint file as active blueprint manager.
-                BlueprintFile firstBlueprintFile = this.ProjectSettings.BlueprintFiles.FirstOrDefault();
-                BlueprintManager blueprintManager = firstBlueprintFile != null
-                                                        ? firstBlueprintFile.BlueprintManager
-                                                        : null;
-
-                this.BlueprintManagerViewModel = blueprintManager != null
-                                                     ? new BlueprintManagerViewModel(blueprintManager)
-                                                         {
-                                                             AssemblyComponents = this.AvailableComponentTypes
-                                                         }
-                                                     : null;
-
                 // Setup project explorer
-                var projectFileViewModel = new ProjectFileViewModel { ProjectFileName = firstBlueprintFile.Path };
-
                 this.ProjectExplorerViewModel = new ProjectExplorerViewModel();
-                this.ProjectExplorerViewModel.ProjectFiles.Add(projectFileViewModel);
+
+                foreach (var blueprintFile in this.ProjectSettings.BlueprintFiles)
+                {
+                    var projectFileViewModel = new ProjectFileViewModel(blueprintFile);
+                    this.ProjectExplorerViewModel.ProjectFiles.Add(projectFileViewModel);
+                }
             }
             else
             {

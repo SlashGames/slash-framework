@@ -11,11 +11,24 @@ namespace BlueprintEditor.ViewModels
 
     using BlueprintEditor.Annotations;
 
+    using Slash.GameBase.Blueprints;
+    using Slash.Tools.BlueprintEditor.Logic.Context;
+
     public class ProjectFileViewModel : INotifyPropertyChanged
     {
         #region Fields
 
         private string projectFileName;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public ProjectFileViewModel(BlueprintFile blueprintFile)
+        {
+            this.ProjectFileName = blueprintFile.Path;
+            this.BlueprintManager = blueprintFile.BlueprintManager;
+        }
 
         #endregion
 
@@ -26,6 +39,8 @@ namespace BlueprintEditor.ViewModels
         #endregion
 
         #region Public Properties
+
+        public BlueprintManager BlueprintManager { get; private set; }
 
         public string ProjectFileName
         {
