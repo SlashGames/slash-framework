@@ -134,19 +134,6 @@ namespace BlueprintEditor.Windows
 
         private void BackgroundLoadContextCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            // Setup correct blueprint parent hierarchy.
-            if (this.Context.BlueprintManagerViewModel != null)
-            {
-                try
-                {
-                    this.Context.BlueprintManagerViewModel.SetupBlueprintHierarchy();
-                }
-                catch (AggregateException exception)
-                {
-                    EditorDialog.Warning("Blueprint hierarchy not properly set up", exception.InnerExceptions);
-                }
-            }
-
             // Update custom imports.
             this.MenuDataCustomImport.Items.Clear();
 

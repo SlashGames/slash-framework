@@ -15,6 +15,8 @@ namespace BlueprintEditor.ViewModels
     using System.Runtime.Serialization;
     using System.Xml.Serialization;
 
+    using BlueprintEditor.Controls;
+
     using MonitoredUndo;
 
     using Slash.GameBase.Blueprints;
@@ -593,6 +595,19 @@ namespace BlueprintEditor.ViewModels
                                                          AssemblyComponents = this.AvailableComponentTypes
                                                      }
                                                  : null;
+
+            // Setup correct blueprint parent hierarchy.
+            if (this.BlueprintManagerViewModel != null)
+            {
+                try
+                {
+                    this.BlueprintManagerViewModel.SetupBlueprintHierarchy();
+                }
+                catch (Slash.SystemExt.Exceptions.AggregateException exception)
+                {
+                    EditorDialog.Warning("Blueprint hierarchy not properly set up", exception.InnerExceptions);
+                }
+            }
         }
 
         private void OnUndoStackChanged(object sender, EventArgs eventArgs)
