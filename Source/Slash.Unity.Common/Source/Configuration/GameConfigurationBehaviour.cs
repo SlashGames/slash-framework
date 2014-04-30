@@ -128,9 +128,6 @@ namespace Slash.Unity.Common.Configuration
                         subBlueprintManager = binaryDeserializer.Deserialize<BlueprintManager>();
                     }
 
-                    // Resolve parents.
-                    BlueprintUtils.ResolveParents(subBlueprintManager, subBlueprintManager);
-
                     blueprintManager.AddBlueprints(subBlueprintManager);
                 }
                 else
@@ -138,6 +135,9 @@ namespace Slash.Unity.Common.Configuration
                     Debug.LogError(string.Format("Blueprint asset not found: {0}", blueprintAssetPath));
                 }
             }
+
+            // Resolve parents.
+            BlueprintUtils.ResolveParents(blueprintManager, blueprintManager);
 
             return blueprintManager;
         }
