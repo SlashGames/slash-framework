@@ -14,6 +14,14 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 
     public abstract class MemberReferenceDrawer : PropertyDrawer
     {
+        #region Properties
+
+        protected abstract string MemberProperty { get; }
+
+        protected abstract string SourceProperty { get; }
+
+        #endregion
+
         #region Public Methods and Operators
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -44,18 +52,14 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
                 List<Entry> entries = this.GetApplicableMembers(source.gameObject);
 
                 int index;
-                string selectedName = MakeEntryName(source, fieldName);
-                string[] names = GetEntryNames(entries, selectedName, out index);
+                string[] names = GetEntryNames(entries, source, fieldName, out index);
 
                 int choice = EditorGUI.Popup(position, null, index, names);
                 if (choice > 0)
                 {
-                    if (choice != index)
-                    {
-                        Entry entry = entries[choice - 1];
-                        sourceProperty.objectReferenceValue = entry.Target;
-                        memberProperty.stringValue = entry.MemberName;
-                    }
+                    Entry entry = entries[choice - 1];
+                    sourceProperty.objectReferenceValue = entry.Target;
+                    memberProperty.stringValue = entry.MemberName;
                 }
             }
             else
@@ -76,38 +80,68 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 
         protected SerializedProperty GetMemberProperty(SerializedProperty property)
         {
-            return property.FindPropertyRelative(MemberProperty);
+            return property.FindPropertyRelative(this.MemberProperty);
         }
 
         protected SerializedProperty GetSourceProperty(SerializedProperty property)
         {
-            return property.FindPropertyRelative(SourceProperty);
+            return property.FindPropertyRelative(this.SourceProperty);
         }
-
-        protected abstract string SourceProperty { get; }
-
-        protected abstract string MemberProperty { get; }
 
         /// <summary>
         ///   Convert the specified list of delegate entries into a string array.
         /// </summary>
-        private static string[] GetEntryNames(List<Entry> list, string choice, out int index)
+        private static string[] GetEntryNames(
+            List<Entry> list, MonoBehaviour selectedSource, string selectedField, out int index)
         {
-            index = 0;
+            int selectedEntry = -1;
+
+            // Fallback is used if no entry matches selected one exactly. 
+            // Fallback has same member name and same MonoBehaviour type.
+            int fallbackSelectedEntry = -1;
+
             string[] names = new string[list.Count + 1];
-            names[0] = string.IsNullOrEmpty(choice) ? "<Choose>" : choice;
 
-            for (int i = 0; i < list.Count;)
+            for (int i = 0; i < list.Count; ++i)
             {
-                Entry ent = list[i];
-                string del = MakeEntryName(ent.Target, ent.MemberName);
-                names[++i] = del;
+                Entry entry = list[i];
+                string entryName = MakeEntryName(entry.Target, entry.MemberName);
+                names[i + 1] = entryName;
 
-                if (index == 0 && string.Equals(del, choice))
+                if (selectedEntry == -1 && selectedSource != null)
                 {
-                    index = i;
+                    if (entry.MemberName == selectedField)
+                    {
+                        if (entry.Target == selectedSource)
+                        {
+                            selectedEntry = i;
+                        }
+                        else if (entry.Target.GetType() == selectedSource.GetType())
+                        {
+                            fallbackSelectedEntry = i;
+                        }
+                    }
                 }
             }
+
+            if (selectedEntry != -1)
+            {
+                Entry entry = list[selectedEntry];
+                names[0] = MakeEntryName(entry.Target, entry.MemberName);
+                index = selectedEntry + 1;
+            }
+            else if (fallbackSelectedEntry != -1)
+            {
+                Entry entry = list[fallbackSelectedEntry];
+                names[0] = MakeEntryName(entry.Target, entry.MemberName);
+                index = fallbackSelectedEntry + 1;
+            }
+            else
+            {
+                names[0] = "<Choose>";
+                index = 0;
+            }
+
             return names;
         }
 
