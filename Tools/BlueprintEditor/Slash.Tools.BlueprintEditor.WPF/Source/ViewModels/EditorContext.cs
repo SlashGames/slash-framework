@@ -25,6 +25,8 @@ namespace BlueprintEditor.ViewModels
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
     using Slash.Tools.BlueprintEditor.Logic.Context;
 
+    using AggregateException = Slash.SystemExt.Exceptions.AggregateException;
+
     public sealed class EditorContext : INotifyPropertyChanged
     {
         #region Constants
@@ -432,6 +434,38 @@ namespace BlueprintEditor.ViewModels
             this.SetProject(newProjectSettings, path);
         }
 
+        /// <summary>
+        ///   Loads the blueprints of all files of the current project..
+        /// </summary>
+        public void LoadBlueprints()
+        {
+            var blueprintManager = new BlueprintManager();
+
+            foreach (var blueprintFile in this.ProjectSettings.BlueprintFiles)
+            {
+                blueprintManager.AddBlueprints(blueprintFile.BlueprintManager);
+            }
+
+            // Load all blueprints.
+            this.BlueprintManagerViewModel = new BlueprintManagerViewModel(blueprintManager)
+                {
+                    AssemblyComponents = this.AvailableComponentTypes
+                };
+
+            // Setup blueprint parent hierarchy.
+            if (this.BlueprintManagerViewModel != null)
+            {
+                try
+                {
+                    this.BlueprintManagerViewModel.SetupBlueprintHierarchy();
+                }
+                catch (AggregateException exception)
+                {
+                    EditorDialog.Warning("Blueprint hierarchy not properly set up", exception.InnerExceptions);
+                }
+            }
+        }
+
         public void New()
         {
             ProjectSettings newProjectSettings = new ProjectSettings();
@@ -585,29 +619,6 @@ namespace BlueprintEditor.ViewModels
 
         private void OnSelectedProjectFileChanged()
         {
-            BlueprintManager blueprintManager = this.SelectedProjectFile != null
-                                                    ? this.SelectedProjectFile.BlueprintManager
-                                                    : null;
-
-            this.BlueprintManagerViewModel = blueprintManager != null
-                                                 ? new BlueprintManagerViewModel(blueprintManager)
-                                                     {
-                                                         AssemblyComponents = this.AvailableComponentTypes
-                                                     }
-                                                 : null;
-
-            // Setup correct blueprint parent hierarchy.
-            if (this.BlueprintManagerViewModel != null)
-            {
-                try
-                {
-                    this.BlueprintManagerViewModel.SetupBlueprintHierarchy();
-                }
-                catch (Slash.SystemExt.Exceptions.AggregateException exception)
-                {
-                    EditorDialog.Warning("Blueprint hierarchy not properly set up", exception.InnerExceptions);
-                }
-            }
         }
 
         private void OnUndoStackChanged(object sender, EventArgs eventArgs)
@@ -639,6 +650,7 @@ namespace BlueprintEditor.ViewModels
 
                 foreach (var blueprintFile in this.ProjectSettings.BlueprintFiles)
                 {
+                    // Add project file.
                     var projectFileViewModel = new ProjectFileViewModel(blueprintFile);
                     this.ProjectExplorerViewModel.ProjectFiles.Add(projectFileViewModel);
                 }

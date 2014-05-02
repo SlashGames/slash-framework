@@ -25,8 +25,6 @@ namespace BlueprintEditor.Windows
 
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
-    using AggregateException = Slash.SystemExt.Exceptions.AggregateException;
-
     /// <summary>
     ///   Interaction logic for MainWindow.xaml
     /// </summary>
@@ -154,6 +152,9 @@ namespace BlueprintEditor.Windows
                     languageFile => Path.GetFileNameWithoutExtension(languageFile.Path));
 
             this.Context.SetAvailableLanguages(languageTags);
+
+            // Load blueprints.
+            this.Context.LoadBlueprints();
 
             // Hide progress bar.
             this.progressWindow.Close();
