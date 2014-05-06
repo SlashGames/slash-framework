@@ -43,7 +43,7 @@ namespace Slash.Unity.Common.Diagnostics
 
         private GameBehaviour gameBehaviour;
 
-        private bool showConsole;
+        private bool showConsole = true;
 
         private Rect windowRect = new Rect(10, 10, 300, 200);
 
@@ -54,11 +54,36 @@ namespace Slash.Unity.Common.Diagnostics
         public void DisableConsole()
         {
             this.showConsole = false;
+
+            // Disable collider if available (blocks input for other UI).
+            if (this.collider != null)
+            {
+                this.collider.enabled = false;
+            }
+            if (this.collider2D != null)
+            {
+                this.collider2D.enabled = false;
+            }
         }
 
         public void EnableConsole()
         {
             this.showConsole = true;
+
+            // Enable collider if available (blocks input for other UI).
+            if (this.collider != null)
+            {
+                this.collider.enabled = true;
+            }
+            if (this.collider2D != null)
+            {
+                this.collider2D.enabled = true;
+            }
+        }
+
+        public void Start()
+        {
+            this.DisableConsole();
         }
 
         #endregion
