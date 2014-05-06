@@ -6,7 +6,6 @@
 
 namespace Slash.Unity.Common.Configuration
 {
-    using System;
     using System.IO;
     using System.Linq;
     using System.Xml.Serialization;
@@ -25,9 +24,9 @@ namespace Slash.Unity.Common.Configuration
         #region Fields
 
         /// <summary>
-        ///   Path to blueprint manager assets.
+        ///   Folder to blueprint manager assets.
         /// </summary>
-        public string[] BlueprintAssetPaths;
+        public string BlueprintAssetsFolder;
 
         /// <summary>
         ///   Path to configuration file asset.
@@ -105,10 +104,14 @@ namespace Slash.Unity.Common.Configuration
         private BlueprintManager LoadBlueprints()
         {
             var blueprintManager = new BlueprintManager();
+            XmlSerializer blueprintManagerSerializer = null;
+            BinaryDeserializer binaryDeserializer = null;
 
-            foreach (var blueprintAssetPath in this.BlueprintAssetPaths)
+            Object[] blueprintAssets = Resources.LoadAll(this.BlueprintAssetsFolder);
+
+            foreach (var blueprintObjectAsset in blueprintAssets)
             {
-                var blueprintAsset = Resources.Load(blueprintAssetPath) as TextAsset;
+                var blueprintAsset = blueprintObjectAsset as TextAsset;
 
                 if (blueprintAsset != null)
                 {
@@ -119,12 +122,18 @@ namespace Slash.Unity.Common.Configuration
 
                     if (Application.isEditor)
                     {
-                        var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
+                        if (blueprintManagerSerializer == null)
+                        {
+                            blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
+                        }
                         subBlueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
                     }
                     else
                     {
-                        var binaryDeserializer = new BinaryDeserializer(blueprintStream);
+                        if (binaryDeserializer == null)
+                        {
+                            binaryDeserializer = new BinaryDeserializer(blueprintStream);
+                        }
                         subBlueprintManager = binaryDeserializer.Deserialize<BlueprintManager>();
                     }
 
@@ -132,7 +141,7 @@ namespace Slash.Unity.Common.Configuration
                 }
                 else
                 {
-                    Debug.LogError(string.Format("Blueprint asset not found: {0}", blueprintAssetPath));
+                    Debug.LogError(string.Format("Blueprint asset is no text asset: {0}", blueprintObjectAsset.name));
                 }
             }
 
