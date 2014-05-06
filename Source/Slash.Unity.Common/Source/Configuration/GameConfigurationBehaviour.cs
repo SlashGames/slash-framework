@@ -6,8 +6,10 @@
 
 namespace Slash.Unity.Common.Configuration
 {
+    using System;
     using System.IO;
     using System.Linq;
+    using System.Xml;
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
@@ -15,6 +17,8 @@ namespace Slash.Unity.Common.Configuration
     using Slash.Serialization.Binary;
 
     using UnityEngine;
+
+    using Object = UnityEngine.Object;
 
     /// <summary>
     ///   Behaviour to edit the game configuration inside Unity.
@@ -118,7 +122,7 @@ namespace Slash.Unity.Common.Configuration
                     var blueprintStream = new MemoryStream(blueprintAsset.bytes);
 
                     // Load blueprints.
-                    BlueprintManager subBlueprintManager;
+                    BlueprintManager subBlueprintManager = null;
 
                     if (Application.isEditor)
                     {
@@ -126,7 +130,15 @@ namespace Slash.Unity.Common.Configuration
                         {
                             blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
                         }
-                        subBlueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+                        try
+                        {
+                            subBlueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+                        }
+                        catch (XmlException e)
+                        {
+                            Debug.LogError(
+                                string.Format("Exception deserializing blueprint xml '{0}': {1}", blueprintAsset.name, e.Message));
+                        }
                     }
                     else
                     {
@@ -137,7 +149,10 @@ namespace Slash.Unity.Common.Configuration
                         subBlueprintManager = binaryDeserializer.Deserialize<BlueprintManager>();
                     }
 
-                    blueprintManager.AddBlueprints(subBlueprintManager);
+                    if (subBlueprintManager != null)
+                    {
+                        blueprintManager.AddBlueprints(subBlueprintManager);
+                    }
                 }
                 else
                 {
