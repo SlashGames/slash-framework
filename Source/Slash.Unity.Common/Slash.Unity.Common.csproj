@@ -106,6 +106,7 @@
     <Compile Include="Source\Triggers\Conditions\ICondition.cs" />
     <Compile Include="Source\Triggers\Conditions\EventCondition.cs" />
     <Compile Include="Source\Triggers\Trigger.cs" />
+    <Compile Include="Source\Utils\UnityPathUtils.cs" />
     <Compile Include="Source\Utils\GarbageCollectionBehaviour.cs" />
     <Compile Include="Source\Utils\GLUtils.cs" />
     <Compile Include="Source\Utils\Tooltip.cs" />
