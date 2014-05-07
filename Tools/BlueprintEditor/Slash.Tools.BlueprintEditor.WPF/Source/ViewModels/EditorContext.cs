@@ -660,6 +660,7 @@ namespace BlueprintEditor.ViewModels
             }
             else
             {
+                this.ProjectExplorerViewModel = new ProjectExplorerViewModel();
                 this.BlueprintManagerViewModel = null;
             }
 

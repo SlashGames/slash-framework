@@ -240,6 +240,11 @@ namespace BlueprintEditor.ViewModels
         {
             this.languages.Clear();
 
+            if (this.context.ProjectSettings == null)
+            {
+                return;
+            }
+
             foreach (var languageFile in this.context.ProjectSettings.LanguageFiles)
             {
                 var fileInfo = new FileInfo(languageFile.Path);
