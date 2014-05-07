@@ -353,6 +353,11 @@ namespace BlueprintEditor.ViewModels
             this.RefreshBlueprintView();
         }
 
+        public void UpdateLocalizationKeys()
+        {
+            this.blueprintManager.UpdateLocalizationKeys();
+        }
+
         #endregion
 
         #region Methods
