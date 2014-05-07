@@ -469,11 +469,13 @@ namespace BlueprintEditor.ViewModels
         public void New()
         {
             ProjectSettings newProjectSettings = new ProjectSettings();
-            newProjectSettings.BlueprintFiles.Add(new BlueprintFile { BlueprintManager = new BlueprintManager() });
 
             // Set new project.
             this.SetProject(newProjectSettings);
             this.SetAvailableLanguages(new List<string>());
+
+            // Update blueprint view model.
+            this.LoadBlueprints();
         }
 
         public void Redo()

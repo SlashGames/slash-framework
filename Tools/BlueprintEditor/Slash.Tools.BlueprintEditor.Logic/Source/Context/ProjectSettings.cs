@@ -122,6 +122,12 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
             this.BlueprintFiles = new List<BlueprintFile>();
             this.CustomImports = new List<CsvImportData>();
 
+            this.BlueprintFiles.Add(
+                new BlueprintFile
+                    {
+                        BlueprintManager = new BlueprintManager(),
+                        Path = string.Format("{0}.xml", DefaultProjectName)
+                    });
             this.Name = DefaultProjectName;
         }
 
