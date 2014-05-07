@@ -9,6 +9,7 @@ namespace Slash.Unity.Common.Configuration
     using System;
     using System.IO;
     using System.Linq;
+    using System.Xml;
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
@@ -16,6 +17,8 @@ namespace Slash.Unity.Common.Configuration
     using Slash.Serialization.Binary;
 
     using UnityEngine;
+
+    using Object = UnityEngine.Object;
 
     /// <summary>
     ///   Behaviour to edit the game configuration inside Unity.
@@ -25,9 +28,9 @@ namespace Slash.Unity.Common.Configuration
         #region Fields
 
         /// <summary>
-        ///   Path to blueprint manager assets.
+        ///   Folder to blueprint manager assets.
         /// </summary>
-        public string[] BlueprintAssetPaths;
+        public string BlueprintAssetsFolder;
 
         /// <summary>
         ///   Path to configuration file asset.
@@ -105,34 +108,55 @@ namespace Slash.Unity.Common.Configuration
         private BlueprintManager LoadBlueprints()
         {
             var blueprintManager = new BlueprintManager();
+            XmlSerializer blueprintManagerSerializer = null;
+            BinaryDeserializer binaryDeserializer = null;
 
-            foreach (var blueprintAssetPath in this.BlueprintAssetPaths)
+            Object[] blueprintAssets = Resources.LoadAll(this.BlueprintAssetsFolder);
+
+            foreach (var blueprintObjectAsset in blueprintAssets)
             {
-                var blueprintAsset = Resources.Load(blueprintAssetPath) as TextAsset;
+                var blueprintAsset = blueprintObjectAsset as TextAsset;
 
                 if (blueprintAsset != null)
                 {
                     var blueprintStream = new MemoryStream(blueprintAsset.bytes);
 
                     // Load blueprints.
-                    BlueprintManager subBlueprintManager;
+                    BlueprintManager subBlueprintManager = null;
 
                     if (Application.isEditor)
                     {
-                        var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
-                        subBlueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+                        if (blueprintManagerSerializer == null)
+                        {
+                            blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
+                        }
+                        try
+                        {
+                            subBlueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+                        }
+                        catch (XmlException e)
+                        {
+                            Debug.LogError(
+                                string.Format("Exception deserializing blueprint xml '{0}': {1}", blueprintAsset.name, e.Message));
+                        }
                     }
                     else
                     {
-                        var binaryDeserializer = new BinaryDeserializer(blueprintStream);
+                        if (binaryDeserializer == null)
+                        {
+                            binaryDeserializer = new BinaryDeserializer(blueprintStream);
+                        }
                         subBlueprintManager = binaryDeserializer.Deserialize<BlueprintManager>();
                     }
 
-                    blueprintManager.AddBlueprints(subBlueprintManager);
+                    if (subBlueprintManager != null)
+                    {
+                        blueprintManager.AddBlueprints(subBlueprintManager);
+                    }
                 }
                 else
                 {
-                    Debug.LogError(string.Format("Blueprint asset not found: {0}", blueprintAssetPath));
+                    Debug.LogError(string.Format("Blueprint asset is no text asset: {0}", blueprintObjectAsset.name));
                 }
             }
 
