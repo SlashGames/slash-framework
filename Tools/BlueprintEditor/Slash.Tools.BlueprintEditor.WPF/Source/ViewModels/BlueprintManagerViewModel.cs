@@ -26,7 +26,7 @@ namespace BlueprintEditor.ViewModels
     {
         #region Fields
 
-        private readonly BlueprintManager blueprintManager;
+        private readonly HierarchicalBlueprintManager blueprintManager;
 
         private IEnumerable<Type> assemblyComponents;
 
@@ -38,7 +38,7 @@ namespace BlueprintEditor.ViewModels
 
         #region Constructors and Destructors
 
-        public BlueprintManagerViewModel(BlueprintManager blueprintManager)
+        public BlueprintManagerViewModel(HierarchicalBlueprintManager blueprintManager)
         {
             this.blueprintManager = blueprintManager;
 

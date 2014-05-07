@@ -439,11 +439,11 @@ namespace BlueprintEditor.ViewModels
         /// </summary>
         public void LoadBlueprints()
         {
-            var blueprintManager = new BlueprintManager();
+            var blueprintManager = new HierarchicalBlueprintManager();
 
             foreach (var blueprintFile in this.ProjectSettings.BlueprintFiles)
             {
-                blueprintManager.AddBlueprints(blueprintFile.BlueprintManager);
+                blueprintManager.AddParent(blueprintFile.BlueprintManager);
             }
 
             // Load all blueprints.

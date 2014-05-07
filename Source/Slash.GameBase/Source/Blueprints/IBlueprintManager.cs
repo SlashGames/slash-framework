@@ -10,7 +10,31 @@ namespace Slash.GameBase.Blueprints
 
     public interface IBlueprintManager : IEnumerable<Blueprint>
     {
+        #region Public Properties
+
+        /// <summary>
+        ///   All registered blueprints.
+        /// </summary>
+        IEnumerable<KeyValuePair<string, Blueprint>> Blueprints { get; }
+
+        #endregion
+
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Adds the blueprint with the specified id to the manager.
+        /// </summary>
+        /// <param name="blueprintId">Blueprint id of new blueprint.</param>
+        /// <param name="blueprint">Blueprint to add.</param>
+        void AddBlueprint(string blueprintId, Blueprint blueprint);
+
+
+        /// <summary>
+        ///   Changes the id under which a blueprint is stored.
+        /// </summary>
+        /// <param name="oldBlueprintId">Old blueprint id.</param>
+        /// <param name="newBlueprintId">New blueprint id.</param>
+        void ChangeBlueprintId(string oldBlueprintId, string newBlueprintId);
 
         /// <summary>
         ///   Checks if the blueprint manager contains the blueprint with the specified id.
@@ -26,6 +50,13 @@ namespace Slash.GameBase.Blueprints
         /// <returns>Blueprint with the specified id.</returns>
         /// <exception cref="KeyNotFoundException">Thrown if no blueprint with the specified id exists.</exception>
         Blueprint GetBlueprint(string blueprintId);
+
+        /// <summary>
+        ///   Removes the blueprint with the specified id. Returns if the blueprint was removed.
+        /// </summary>
+        /// <param name="blueprintId">Id of blueprint to search for.</param>
+        /// <returns>True if the blueprint was removed; otherwise, false.</returns>
+        bool RemoveBlueprint(string blueprintId);
 
         /// <summary>
         ///   Searches for the blueprint with the specified id. Returns if the blueprint was found.
