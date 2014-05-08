@@ -166,6 +166,11 @@ namespace BlueprintEditor.Windows
         /// <param name="viewModel">Blueprint to add mapping controls for.</param>
         private void AddAttributeMappingsRecursively(BlueprintViewModel viewModel)
         {
+            if (viewModel == null)
+            {
+                return;
+            }
+
             // Add mapping controls for parent blueprints.
             if (viewModel.Parent != null)
             {
@@ -391,7 +396,7 @@ namespace BlueprintEditor.Windows
 
             this.ImportData();
         }
-
+        
         /// <summary>
         ///   Initializes all controls of this window.
         /// </summary>
@@ -443,7 +448,7 @@ namespace BlueprintEditor.Windows
                 }
             }
         }
-
+        
         private void OnSelectedParentBlueprintChanged(object sender, PropertyChangedEventArgs e)
         {
             this.UpdateAttributeMapping();
@@ -459,7 +464,7 @@ namespace BlueprintEditor.Windows
                 this.importData = new CsvImportData();
                 this.context.ProjectSettings.CustomImports.Add(this.importData);
             }
-
+            
             this.importData.BlueprintIdColumn = this.BlueprintIdColumn;
             this.importData.BlueprintParentId = this.BlueprintParent.BlueprintId;
             this.importData.IgnoredBlueprintId = this.IgnoredBlueprintId;

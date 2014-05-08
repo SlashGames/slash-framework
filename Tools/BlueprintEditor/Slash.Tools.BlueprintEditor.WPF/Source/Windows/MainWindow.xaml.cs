@@ -433,6 +433,9 @@ namespace BlueprintEditor.Windows
                 {
                     var streamReader = new StreamReader(stream);
                     var csvReader = new CsvReader(streamReader);
+                    csvReader.Configuration.Delimiter = importData != null
+                                                            ? importData.Delimiter
+                                                            : CsvImportData.DefaultDelimiter;
                     var importCsvDataWindow = new ImportCsvDataWindow(this.Context, csvReader, importData)
                         {
                             Owner = this
