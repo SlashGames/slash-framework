@@ -71,6 +71,20 @@ namespace Slash.GameBase.Inspector.Attributes
             base.SetPropertyValue(game, obj, propertyValue);
         }
 
+        public override bool TryConvertStringToValue(string text, out object value)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                value = null;
+            }
+            else
+            {
+                EntityConfiguration entityConfiguration = new EntityConfiguration { BlueprintId = text };
+                value = entityConfiguration;
+            }
+            return true;
+        }
+
         #endregion
 
         #region Methods
