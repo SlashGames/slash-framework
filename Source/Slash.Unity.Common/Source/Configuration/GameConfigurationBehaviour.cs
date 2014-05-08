@@ -109,7 +109,6 @@ namespace Slash.Unity.Common.Configuration
         {
             var blueprintManager = new BlueprintManager();
             XmlSerializer blueprintManagerSerializer = null;
-            BinaryDeserializer binaryDeserializer = null;
 
             Object[] blueprintAssets = Resources.LoadAll(this.BlueprintAssetsFolder);
 
@@ -142,10 +141,7 @@ namespace Slash.Unity.Common.Configuration
                     }
                     else
                     {
-                        if (binaryDeserializer == null)
-                        {
-                            binaryDeserializer = new BinaryDeserializer(blueprintStream);
-                        }
+                        BinaryDeserializer binaryDeserializer = new BinaryDeserializer(blueprintStream);
                         subBlueprintManager = binaryDeserializer.Deserialize<BlueprintManager>();
                     }
 
