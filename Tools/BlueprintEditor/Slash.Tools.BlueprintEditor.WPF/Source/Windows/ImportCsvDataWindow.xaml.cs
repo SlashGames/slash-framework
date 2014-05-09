@@ -311,10 +311,16 @@ namespace BlueprintEditor.Windows
                         var rawValue = this.csvReader[valueMapping.MappingTarget];
                         object convertedValue;
 
-                        if (!valueMapping.InspectorProperty.TryConvertStringToListOrValue(rawValue, out convertedValue))
+                        if (!valueMapping.InspectorProperty.TryConvertStringToListOrValue(rawValue, out convertedValue)
+                            || convertedValue == null)
                         {
                             throw new CsvParserException(
-                                string.Format("Unable to convert {0} to {1} ({2}).", rawValue, valueMapping.MappingSource, valueMapping.InspectorProperty.PropertyType));
+                                string.Format(
+                                    "{0}: Unable to convert '{1}' to '{2}' ({3}).",
+                                    blueprintId,
+                                    rawValue,
+                                    valueMapping.MappingSource,
+                                    valueMapping.InspectorProperty.PropertyType));
                         }
 
                         // Check for localized values.
