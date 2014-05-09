@@ -9,6 +9,13 @@
         d:DataContext = "{d:DesignInstance windows:ImportCsvDataWindow}"
         Title = "Import Data (CSV)" Height = "480" Width = "640">
     <StackPanel>
+        <!--<TextBlock FontWeight = "Bold" Height = "25">CSV settings</TextBlock>
+
+        <DockPanel Height="25">
+            <TextBlock Width = "120">Field Delimiter:</TextBlock>
+            <TextBox Name = "TbDelimiter" Text="{Binding CSVDelimiter}" />
+        </DockPanel>-->
+
         <TextBlock FontWeight = "Bold" Height = "25">Blueprint Properties</TextBlock>
 
         <Grid Height = "75">
