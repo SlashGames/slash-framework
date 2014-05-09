@@ -8,65 +8,69 @@
         mc:Ignorable = "d"
         d:DataContext = "{d:DesignInstance windows:ImportCsvDataWindow}"
         Title = "Import Data (CSV)" Height = "480" Width = "640">
-    <StackPanel>
-        <!--<TextBlock FontWeight = "Bold" Height = "25">CSV settings</TextBlock>
+    <ScrollViewer>
+        <StackPanel>
+
+            <!--<TextBlock FontWeight = "Bold" Height = "25">CSV settings</TextBlock>
 
         <DockPanel Height="25">
             <TextBlock Width = "120">Field Delimiter:</TextBlock>
             <TextBox Name = "TbDelimiter" Text="{Binding CSVDelimiter}" />
         </DockPanel>-->
 
-        <TextBlock FontWeight = "Bold" Height = "25">Blueprint Properties</TextBlock>
+            <TextBlock FontWeight = "Bold" Height = "25">Blueprint Properties</TextBlock>
 
-        <Grid Height = "75">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width = "120" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height = "25" />
-                <RowDefinition Height = "25" />
-                <RowDefinition Height = "25" />
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Column = "0" Grid.Row="0">Parent Blueprint:</TextBlock>
-            <controls:BlueprintComboBox Grid.Row="0" Grid.Column = "1" x:Name = "CbParentBlueprint" />
+            <Grid Height = "75">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width = "120" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height = "25" />
+                    <RowDefinition Height = "25" />
+                    <RowDefinition Height = "25" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column = "0" Grid.Row = "0">Parent Blueprint:</TextBlock>
+                <controls:BlueprintComboBox Grid.Row = "0" Grid.Column = "1" x:Name = "CbParentBlueprint" />
 
-            <TextBlock Grid.Column = "0" Grid.Row="1">Blueprint Id Column:</TextBlock>
-            <ComboBox Name = "CbBlueprintIdMapping" IsEditable = "True" IsReadOnly = "True"
-                  ItemsSource = "{Binding CSVColumnHeaders}" Grid.Column = "1" Grid.Row="1" />
+                <TextBlock Grid.Column = "0" Grid.Row = "1">Blueprint Id Column:</TextBlock>
+                <ComboBox Name = "CbBlueprintIdMapping" IsEditable = "True" IsReadOnly = "True"
+                          ItemsSource = "{Binding CSVColumnHeaders}" Grid.Column = "1" Grid.Row = "1" />
 
-            <TextBlock Grid.Column = "0" Grid.Row="2">Ignored Blueprint Id:</TextBlock>
-            <TextBox Name = "TbIgnoredBlueprintId" Grid.Column = "1" Grid.Row="2" />
-        </Grid>
+                <TextBlock Grid.Column = "0" Grid.Row = "2">Ignored Blueprint Id:</TextBlock>
+                <TextBox Name = "TbIgnoredBlueprintId" Grid.Column = "1" Grid.Row = "2" />
+            </Grid>
 
-        <TextBlock FontWeight = "Bold" Height = "25">Attribute Mapping</TextBlock>
+            <TextBlock FontWeight = "Bold" Height = "25">Attribute Mapping</TextBlock>
 
-        <ScrollViewer>
-            <StackPanel Name = "SpAttributeMapping" />
-        </ScrollViewer>
+            <ScrollViewer>
+                <StackPanel Name = "SpAttributeMapping" />
+            </ScrollViewer>
 
-        <TextBlock FontWeight = "Bold" Height = "25">Localization Settings</TextBlock>
+            <TextBlock FontWeight = "Bold" Height = "25">Localization Settings</TextBlock>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width = "150" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height = "25" />
-            </Grid.RowDefinitions>
-            
-            <TextBlock Grid.Row="0" Grid.Column="0">Import localized strings as:</TextBlock>
-            <controls:LanguageComboBox x:Name="CbLanguage" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"/>
-        </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width = "150" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height = "25" />
+                </Grid.RowDefinitions>
 
-        <TextBlock FontWeight = "Bold" Height = "25">Import Settings</TextBlock>
-        
-        <CheckBox Name="CbSaveSettings">Save import settings for future imports</CheckBox>
-        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button DockPanel.Dock="Left" Click="ImportData_OnClick" Width="100" Margin="10">Import Data</Button>
-            <Button DockPanel.Dock="Right" Click="Cancel_OnClick" Width="100" Margin="10">Cancel</Button>
+                <TextBlock Grid.Row = "0" Grid.Column = "0">Import localized strings as:</TextBlock>
+                <controls:LanguageComboBox x:Name = "CbLanguage" Grid.Row = "0" Grid.Column = "1"
+                                           HorizontalAlignment = "Left" />
+            </Grid>
+
+            <TextBlock FontWeight = "Bold" Height = "25">Import Settings</TextBlock>
+
+            <CheckBox Name = "CbSaveSettings">Save import settings for future imports</CheckBox>
+
+            <StackPanel Orientation = "Horizontal" HorizontalAlignment = "Center">
+                <Button DockPanel.Dock = "Left" Click = "ImportData_OnClick" Width = "100" Margin = "10">Import Data</Button>
+                <Button DockPanel.Dock = "Right" Click = "Cancel_OnClick" Width = "100" Margin = "10">Cancel</Button>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </ScrollViewer>
 </Window>
