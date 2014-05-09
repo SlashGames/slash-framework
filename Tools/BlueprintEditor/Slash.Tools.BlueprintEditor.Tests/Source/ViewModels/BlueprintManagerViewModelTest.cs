@@ -20,7 +20,7 @@ namespace Slash.Tools.BlueprintEditor.Tests.Source.ViewModels
     {
         #region Fields
 
-        private BlueprintManager testBlueprintManager;
+        private HierarchicalBlueprintManager testBlueprintManager;
 
         private BlueprintManagerViewModel testViewModel;
 
@@ -31,7 +31,8 @@ namespace Slash.Tools.BlueprintEditor.Tests.Source.ViewModels
         [SetUp]
         public void SetUp()
         {
-            this.testBlueprintManager = new BlueprintManager();
+            this.testBlueprintManager = new HierarchicalBlueprintManager();
+            this.testBlueprintManager.AddParent(new BlueprintManager());
             this.testViewModel = new BlueprintManagerViewModel(this.testBlueprintManager);
 
             UndoService.Current.Clear();
