@@ -11,9 +11,12 @@ namespace BlueprintEditor.ViewModels
     using System.IO;
     using System.Linq;
 
+    using BlueprintEditor.Controls;
+
     using CsvHelper;
 
     using Slash.GameBase.Inspector.Attributes;
+    using Slash.SystemExt.Exceptions;
     using Slash.Tools.BlueprintEditor.Logic.Context;
     using Slash.Tools.BlueprintEditor.Logic.Data;
     using Slash.Tools.BlueprintEditor.Logic.Localization;
@@ -249,12 +252,24 @@ namespace BlueprintEditor.ViewModels
             {
                 var fileInfo = new FileInfo(languageFile.Path);
 
-                using (var stream = fileInfo.OpenRead())
+                try
                 {
-                    var languageTag = Path.GetFileNameWithoutExtension(languageFile.Path);
-                    var localizationTable = this.localizationTableSerializer.Deserialize(stream);
+                    using (var stream = fileInfo.OpenRead())
+                    {
+                        var languageTag = Path.GetFileNameWithoutExtension(languageFile.Path);
+                        var localizationTable = this.localizationTableSerializer.Deserialize(stream);
 
-                    this.languages.Add(languageTag, localizationTable);
+                        this.languages.Add(languageTag, localizationTable);
+                    }
+                }
+                catch (AggregateException e)
+                {
+                    EditorDialog.Error(
+                        "Loading localization data failed",
+                        string.Format(
+                            "Please fix the following errors in {0} and re-load the project:\r\n\r\n{1}",
+                            fileInfo.Name,
+                            e.Messages));
                 }
             }
         }

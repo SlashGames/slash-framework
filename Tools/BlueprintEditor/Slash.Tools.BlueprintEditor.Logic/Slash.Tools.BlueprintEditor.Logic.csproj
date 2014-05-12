@@ -57,6 +57,10 @@
       <Project>{c92c88b0-5268-443b-b32f-cc2a6d686c51}</Project>
       <Name>Slash.Serialization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\Slash.System\Slash.System.csproj">
+      <Project>{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}</Project>
+      <Name>Slash.System</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonitoredUndo35">

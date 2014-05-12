@@ -6,7 +6,11 @@
 
 namespace Slash.Tools.BlueprintEditor.Logic.Localization
 {
+    using System;
+    using System.Collections.Generic;
     using System.IO;
+
+    using Slash.SystemExt.Exceptions;
 
     public class LocalizationTableNGUISerializer : ILocalizationTableSerializer
     {
@@ -15,6 +19,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Localization
         public ILocalizationTable Deserialize(Stream stream)
         {
             LocalizationTable table = new LocalizationTable();
+            List<Exception> errors = new List<Exception>();
 
             using (TextReader reader = new StreamReader(stream))
             {
@@ -27,8 +32,18 @@ namespace Slash.Tools.BlueprintEditor.Logic.Localization
                     var key = keyValuePair[0];
                     var value = keyValuePair[1];
 
+                    if (table.ContainsKey(key))
+                    {
+                        errors.Add(new ArgumentException(string.Format("Duplicate localization key: {0}", key)));
+                    }
+
                     table[key] = value;
                 }
+            }
+
+            if (errors.Count > 0)
+            {
+                throw new AggregateException(errors);
             }
 
             return table;

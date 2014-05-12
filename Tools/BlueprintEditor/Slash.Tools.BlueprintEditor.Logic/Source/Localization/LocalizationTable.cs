@@ -44,6 +44,11 @@ namespace Slash.Tools.BlueprintEditor.Logic.Localization
 
         #region Public Methods and Operators
 
+        public bool ContainsKey(string key)
+        {
+            return this.localizationTable.ContainsKey(key);
+        }
+
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
         {
             return this.localizationTable.GetEnumerator();
