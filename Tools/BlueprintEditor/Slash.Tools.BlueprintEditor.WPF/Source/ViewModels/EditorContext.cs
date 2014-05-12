@@ -390,7 +390,7 @@ namespace BlueprintEditor.ViewModels
 
                 if (!fileInfo.Exists)
                 {
-                    throw new FileNotFoundException(string.Format("Blueprint file not found: {0}.", path));
+                    throw new FileNotFoundException(string.Format("Blueprint file not found: {0}.", blueprintFileName));
                 }
 
                 using (var blueprintFileStream = fileInfo.OpenRead())

@@ -123,43 +123,48 @@ namespace BlueprintEditor.Windows
             catch (SerializationException exception)
             {
                 EditorDialog.Error("Unable to load project", exception.Message);
+                e.Cancel = true;
             }
             catch (FileNotFoundException exception)
             {
                 EditorDialog.Error("Unable to load project", exception.Message);
+                e.Cancel = true;
             }
         }
 
         private void BackgroundLoadContextCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            // Update custom imports.
-            this.MenuDataCustomImport.Items.Clear();
-
-            foreach (var customImport in this.Context.ProjectSettings.CustomImports)
+            if (!e.Cancelled)
             {
-                var menuItem = new MenuItem();
+                // Update custom imports.
+                this.MenuDataCustomImport.Items.Clear();
 
-                menuItem.Header = string.Format("Import _{0}...", customImport.BlueprintParentId);
-                menuItem.Tag = customImport;
-                menuItem.Click += this.ExecutedCustomImport;
+                foreach (var customImport in this.Context.ProjectSettings.CustomImports)
+                {
+                    var menuItem = new MenuItem();
 
-                this.MenuDataCustomImport.Items.Add(menuItem);
+                    menuItem.Header = string.Format("Import _{0}...", customImport.BlueprintParentId);
+                    menuItem.Tag = customImport;
+                    menuItem.Click += this.ExecutedCustomImport;
+
+                    this.MenuDataCustomImport.Items.Add(menuItem);
+                }
+
+                // Update available languages.
+                var languageTags =
+                    this.Context.ProjectSettings.LanguageFiles.Select(
+                        languageFile => Path.GetFileNameWithoutExtension(languageFile.Path));
+
+                this.Context.SetAvailableLanguages(languageTags);
+
+                // Load blueprints.
+                this.Context.LoadBlueprints();
+
+                this.UpdateWindowTitle();
             }
-
-            // Update available languages.
-            var languageTags =
-                this.Context.ProjectSettings.LanguageFiles.Select(
-                    languageFile => Path.GetFileNameWithoutExtension(languageFile.Path));
-
-            this.Context.SetAvailableLanguages(languageTags);
-
-            // Load blueprints.
-            this.Context.LoadBlueprints();
-
+            
             // Hide progress bar.
             this.progressWindow.Close();
-
-            this.UpdateWindowTitle();
         }
 
         private void BackgroundSaveContext(object sender, DoWorkEventArgs e)
