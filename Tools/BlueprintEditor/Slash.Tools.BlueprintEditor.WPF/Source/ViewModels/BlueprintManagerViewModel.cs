@@ -118,6 +118,11 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
+        /// <summary>
+        ///   Actual blueprint manager in the hiearchy to add new blueprints to.
+        /// </summary>
+        public BlueprintManager CurrentBlueprintManager { get; set; }
+
         public string Error
         {
             get
@@ -380,7 +385,7 @@ namespace BlueprintEditor.ViewModels
                 // Update blueprints in blueprint manager.
                 foreach (BlueprintViewModel item in e.NewItems)
                 {
-                    this.blueprintManager.AddBlueprint(item.BlueprintId, item.Blueprint);
+                    this.CurrentBlueprintManager.AddBlueprint(item.BlueprintId, item.Blueprint);
                 }
 
                 if (e.NewItems.Count == 1)
