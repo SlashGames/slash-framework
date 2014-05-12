@@ -11,6 +11,7 @@ namespace Slash.SystemExt.Exceptions
     using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.Linq;
+    using System.Text;
 
     /// <summary>
     ///   Wraps multiple inner exceptions.
@@ -67,6 +68,7 @@ namespace Slash.SystemExt.Exceptions
             : base(message, innerExceptions.FirstOrDefault())
         {
             this.innerExceptions = innerExceptions.ToList();
+            this.Messages = this.GetMessages();
         }
 
         #endregion
@@ -79,6 +81,27 @@ namespace Slash.SystemExt.Exceptions
             {
                 return new ReadOnlyCollection<Exception>(this.innerExceptions);
             }
+        }
+
+        /// <summary>
+        ///   Get the messages describing the inner exceptions, one per line.
+        /// </summary>
+        public string Messages { get; private set; }
+
+        #endregion
+
+        #region Methods
+
+        private string GetMessages()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (var exception in this.innerExceptions)
+            {
+                stringBuilder.AppendLine(exception.Message);
+            }
+
+            return stringBuilder.ToString();
         }
 
         #endregion
