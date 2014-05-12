@@ -7,6 +7,7 @@
 namespace BlueprintEditor.Inspectors.Controls
 {
     using System;
+    using System.Collections;
     using System.ComponentModel;
     using System.Windows;
 
@@ -14,6 +15,7 @@ namespace BlueprintEditor.Inspectors.Controls
     using BlueprintEditor.ViewModels;
 
     using Slash.Collections.AttributeTables;
+    using Slash.Collections.Utils;
     using Slash.GameBase.Configurations;
     using Slash.GameBase.Inspector.Attributes;
 
@@ -50,8 +52,9 @@ namespace BlueprintEditor.Inspectors.Controls
         private object GetCurrentAttributeValue(InspectorPropertyAttribute inspectorProperty, out bool inherited)
         {
             object value;
-            EntityConfiguration entityConfiguration =(EntityConfiguration)this.Value;
-            if (entityConfiguration != null && entityConfiguration.Configuration.TryGetValue(inspectorProperty.Name, out value))
+            EntityConfiguration entityConfiguration = (EntityConfiguration)this.Value;
+            if (entityConfiguration != null
+                && entityConfiguration.Configuration.TryGetValue(inspectorProperty.Name, out value))
             {
                 inherited = false;
             }
@@ -73,6 +76,11 @@ namespace BlueprintEditor.Inspectors.Controls
 
         private void OnBlueprintChanged(BlueprintViewModel newBlueprint)
         {
+            if (Equals(this.selectedBlueprint, newBlueprint))
+            {
+                return;
+            }
+
             this.selectedBlueprint = newBlueprint;
 
             // Update attribute table.
@@ -111,7 +119,15 @@ namespace BlueprintEditor.Inspectors.Controls
 
             // Remove value if default value or inherited from blueprint. Otherwise set it.
             object defaultValue = this.GetDefaultValue(inspectorProperty);
-            if (Equals(newValue, defaultValue))
+
+            var defaultList = defaultValue as IList;
+            var newList = newValue as IList;
+
+            if (defaultList != null && newList != null && CollectionUtils.ListEqual(defaultList, newList))
+            {
+                entityConfiguration.Configuration.RemoveValue(inspectorProperty.Name);
+            }
+            else if (Equals(newValue, defaultValue))
             {
                 entityConfiguration.Configuration.RemoveValue(inspectorProperty.Name);
             }

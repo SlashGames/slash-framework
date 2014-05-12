@@ -20,7 +20,10 @@ namespace BlueprintEditor.ViewModels
 
     using Slash.GameBase.Blueprints;
 
-    public class BlueprintViewModel : INotifyPropertyChanged, ISupportsUndo, IDataErrorInfo
+    public class BlueprintViewModel : INotifyPropertyChanged,
+                                      ISupportsUndo,
+                                      IDataErrorInfo,
+                                      IEquatable<BlueprintViewModel>
     {
         #region Fields
 
@@ -224,6 +227,36 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
+        public bool Equals(BlueprintViewModel other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            return string.Equals(this.blueprintId, other.blueprintId);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+            return this.Equals((BlueprintViewModel)obj);
+        }
+
         /// <summary>
         ///   Gets all components of this blueprint and its ancestors.
         /// </summary>
@@ -231,6 +264,11 @@ namespace BlueprintEditor.ViewModels
         public IEnumerable<Type> GetComponents()
         {
             return this.AddedComponents.Union(this.GetParentComponents());
+        }
+
+        public override int GetHashCode()
+        {
+            return (this.blueprintId != null ? this.blueprintId.GetHashCode() : 0);
         }
 
         /// <summary>

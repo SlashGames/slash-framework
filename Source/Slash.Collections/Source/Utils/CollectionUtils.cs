@@ -86,6 +86,43 @@ namespace Slash.Collections.Utils
         }
 
         /// <summary>
+        ///   Compares the two passed lists for equality. Two lists are considered equal, if they contain equal elements in the same order.
+        /// </summary>
+        /// <param name="list1">First list to compare.</param>
+        /// <param name="list2">Second list to compare.</param>
+        /// <returns>
+        ///   <c>true</c>, if either both or no list is <c>null</c>, both lists contain the same number of elements, and all elements are equal and in the same order.
+        /// </returns>
+        public static bool ListEqual(IList list1, IList list2)
+        {
+            if (list1 == list2)
+            {
+                return true;
+            }
+
+            if (list1 != null && list2 != null)
+            {
+                if (list1.Count != list2.Count)
+                {
+                    return false;
+                }
+
+                for (var i = 0; i < list1.Count; i++)
+                {
+                    if (!Equals(list1[i], list2[i]))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            // One list is null.
+            return false;
+        }
+
+        /// <summary>
         ///   Returns a random item from the specified sequence.
         /// </summary>
         /// <typeparam name="T">Type of sequence items.</typeparam>
