@@ -93,12 +93,10 @@ namespace Slash.GameBase.Blueprints
 
         public void ChangeBlueprintId(string oldBlueprintId, string newBlueprintId)
         {
-            foreach (var parent in this.parents)
+            foreach (var parent in this.parents.Where(parent => parent.ContainsBlueprint(oldBlueprintId)))
             {
-                if (parent.ContainsBlueprint(oldBlueprintId))
-                {
-                    parent.ChangeBlueprintId(oldBlueprintId, newBlueprintId);
-                }
+                parent.ChangeBlueprintId(oldBlueprintId, newBlueprintId);
+                return;
             }
 
             throw new ArgumentException(
