@@ -309,6 +309,19 @@ namespace BlueprintEditor.Windows
                         this.ValueMappings.Where(mapping => !string.IsNullOrWhiteSpace(mapping.MappingTarget)))
                     {
                         var rawValue = this.csvReader[valueMapping.MappingTarget];
+
+                        // Skip empty entries.
+                        if (string.IsNullOrWhiteSpace(rawValue))
+                        {
+                            if (!newBlueprint)
+                            {
+                                // Reset entry to parent value.
+                                dataBlueprint.Blueprint.AttributeTable.RemoveValue(valueMapping.MappingSource);
+                            }
+
+                            continue;
+                        }
+
                         object convertedValue;
 
                         if (!valueMapping.InspectorProperty.TryConvertStringToListOrValue(rawValue, out convertedValue)
