@@ -19,6 +19,8 @@ namespace BlueprintEditor.ViewModels
     using MonitoredUndo;
 
     using Slash.GameBase.Blueprints;
+    using Slash.GameBase.Inspector.Data;
+    using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public class BlueprintViewModel : INotifyPropertyChanged,
                                       ISupportsUndo,
@@ -29,6 +31,8 @@ namespace BlueprintEditor.ViewModels
 
         private IEnumerable<Type> assemblyComponents;
 
+        private ObservableCollection<BlueprintAttributeViewModel> blueprintAttributeViewModels;
+
         /// <summary>
         ///   Id of the blueprint.
         /// </summary>
@@ -38,6 +42,8 @@ namespace BlueprintEditor.ViewModels
         ///   New blueprint id.
         /// </summary>
         private string newBlueprintId;
+
+        private BlueprintViewModel parent;
 
         #endregion
 
@@ -62,6 +68,8 @@ namespace BlueprintEditor.ViewModels
             // Set available components.
             this.AvailableComponents = new ObservableCollection<Type>();
             this.AvailableComponents.CollectionChanged += this.OnAvailableComponentsChanged;
+
+            this.UpdateAttributeViewModels();
         }
 
         #endregion
@@ -166,7 +174,24 @@ namespace BlueprintEditor.ViewModels
         /// <summary>
         ///   Parent of this blueprint.
         /// </summary>
-        public BlueprintViewModel Parent { get; set; }
+        public BlueprintViewModel Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+            set
+            {
+                if (this.parent == value)
+                {
+                    return;
+                }
+
+                this.parent = value;
+
+                this.UpdateAttributeViewModels();
+            }
+        }
 
         /// <summary>
         ///   Root view model.
@@ -266,6 +291,21 @@ namespace BlueprintEditor.ViewModels
             return this.AddedComponents.Union(this.GetParentComponents());
         }
 
+        /// <summary>
+        ///   Gets the current value of the specified property for the passed blueprint,
+        ///   taking into account, in order: Blueprint attribute table, parents, default value.
+        /// </summary>
+        /// <param name="propertyName">Property to get the current value of.</param>
+        /// <param name="inherited"></param>
+        /// <returns>Current value of the specified property for the passed blueprint.</returns>
+        public object GetCurrentAttributeValue(string propertyName, out bool inherited)
+        {
+            // Check own attribute table.
+            var attribute = this.blueprintAttributeViewModels.First(viewModel => viewModel.Key.Equals(propertyName));
+            inherited = attribute.Inherited;
+            return attribute.Value;
+        }
+
         public override int GetHashCode()
         {
             return (this.blueprintId != null ? this.blueprintId.GetHashCode() : 0);
@@ -318,6 +358,12 @@ namespace BlueprintEditor.ViewModels
             }
 
             return this.AddedComponents.Remove(componentType);
+        }
+
+        public void SetAttributeValue(string key, object value)
+        {
+            var attribute = this.blueprintAttributeViewModels.First(viewModel => viewModel.Key.Equals(key));
+            attribute.Value = value;
         }
 
         public override string ToString()
@@ -435,6 +481,30 @@ namespace BlueprintEditor.ViewModels
         private void OnAvailableComponentsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("AvailableComponents");
+        }
+
+        private void UpdateAttributeViewModels()
+        {
+            this.blueprintAttributeViewModels = new ObservableCollection<BlueprintAttributeViewModel>();
+
+            foreach (var componentType in this.GetComponents())
+            {
+                InspectorType componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
+
+                foreach (var property in componentInfo.Properties)
+                {
+                    object value;
+                    this.Blueprint.TryGetValue(property.Name, out value);
+
+                    var viewModel = new BlueprintAttributeViewModel(value);
+                    viewModel.Blueprint = this;
+                    viewModel.DefaultValue = property.Default;
+                    viewModel.Key = property.Name;
+                    viewModel.Root = this.Root;
+
+                    this.blueprintAttributeViewModels.Add(viewModel);
+                }
+            }
         }
 
         #endregion

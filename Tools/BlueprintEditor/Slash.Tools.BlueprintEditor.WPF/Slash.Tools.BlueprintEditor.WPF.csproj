@@ -110,7 +110,6 @@
     <Compile Include="Source\Converters\BooleanOrConverter.cs" />
     <Compile Include="Source\Converters\StringNullOrEmptyConverter.cs" />
     <Compile Include="Source\Converters\TypeToClassNameConverter.cs" />
-    <Compile Include="Source\Data\BlueprintManagerData.cs" />
     <Compile Include="Source\Controls\BlueprintControl.xaml.cs">
       <DependentUpon>BlueprintControl.xaml</DependentUpon>
     </Compile>
@@ -127,6 +126,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Source\Inspectors\InspectorPropertyData.cs" />
+    <Compile Include="Source\ViewModels\BlueprintAttributeViewModel.cs" />
     <Compile Include="Source\ViewModels\BlueprintManagerViewModel.cs" />
     <Compile Include="Source\ViewModels\ProjectExplorerViewModel.cs" />
     <Compile Include="Source\ViewModels\BlueprintViewModel.cs" />

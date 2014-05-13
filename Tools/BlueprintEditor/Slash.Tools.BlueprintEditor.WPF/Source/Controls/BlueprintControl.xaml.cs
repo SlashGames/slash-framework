@@ -128,40 +128,7 @@ namespace BlueprintEditor.Controls
         private object GetCurrentAttributeValue(InspectorPropertyAttribute property, out bool inherited)
         {
             BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-            return this.GetCurrentAttributeValue(viewModel, property, out inherited);
-        }
-
-        /// <summary>
-        ///   Gets the current value of the specified property for the passed blueprint,
-        ///   taking into account, in order: Blueprint attribute table, parents, default value.
-        /// </summary>
-        /// <param name="viewModel">Blueprint to get the attribute value for.</param>
-        /// <param name="property">Property to get the current value of.</param>
-        /// <param name="inherited"></param>
-        /// <returns>Current value of the specified property for the passed blueprint.</returns>
-        private object GetCurrentAttributeValue(
-            BlueprintViewModel viewModel, InspectorPropertyAttribute property, out bool inherited)
-        {
-            object propertyValue;
-
-            // Check own attribute table.
-            if (viewModel.Blueprint.AttributeTable.TryGetValue(property.Name, out propertyValue))
-            {
-                inherited = false;
-                return propertyValue;
-            }
-
-            inherited = true;
-
-            // Search in parents.
-            if (viewModel.Parent != null)
-            {
-                bool tmp;
-                return this.GetCurrentAttributeValue(viewModel.Parent, property, out tmp);
-            }
-
-            // Return default value.
-            return property.Default;
+            return viewModel.GetCurrentAttributeValue(property.Name, out inherited);
         }
 
         private void LbComponentsAdded_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -204,24 +171,7 @@ namespace BlueprintEditor.Controls
         private void OnPropertyControlValueChanged(InspectorPropertyAttribute inspectorProperty, object newValue)
         {
             BlueprintViewModel viewModel = (BlueprintViewModel)this.DataContext;
-
-            // Update blueprint configuration.
-            object defaultValue = inspectorProperty.Default;
-            if (viewModel.Parent != null)
-            {
-                bool inherited;
-                defaultValue = this.GetCurrentAttributeValue(viewModel.Parent, inspectorProperty, out inherited);
-            }
-
-            // Check if property is set to default/inherited value.
-            if (Equals(newValue, defaultValue))
-            {
-                viewModel.Blueprint.AttributeTable.RemoveValue(inspectorProperty.Name);
-            }
-            else
-            {
-                viewModel.Blueprint.AttributeTable.SetValue(inspectorProperty.Name, newValue);
-            }
+            viewModel.SetAttributeValue(inspectorProperty.Name, newValue);
         }
 
         private void OnSelectedBlueprintChanged(BlueprintViewModel newBlueprint, BlueprintViewModel oldBlueprint)

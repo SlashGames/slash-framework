@@ -38,8 +38,9 @@ namespace BlueprintEditor.ViewModels
 
         #region Constructors and Destructors
 
-        public BlueprintManagerViewModel(HierarchicalBlueprintManager blueprintManager)
+        public BlueprintManagerViewModel(IEnumerable<Type> assemblyComponents, HierarchicalBlueprintManager blueprintManager)
         {
+            this.AssemblyComponents = assemblyComponents;
             this.blueprintManager = blueprintManager;
 
             this.Blueprints = new ObservableCollection<BlueprintViewModel>();
@@ -84,9 +85,12 @@ namespace BlueprintEditor.ViewModels
                 // Update component table.
                 InspectorComponentTable.LoadComponents();
 
-                foreach (var blueprintViewModel in this.Blueprints)
+                if (this.Blueprints != null)
                 {
-                    blueprintViewModel.AssemblyComponents = value;
+                    foreach (var blueprintViewModel in this.Blueprints)
+                    {
+                        blueprintViewModel.AssemblyComponents = value;
+                    }
                 }
             }
         }

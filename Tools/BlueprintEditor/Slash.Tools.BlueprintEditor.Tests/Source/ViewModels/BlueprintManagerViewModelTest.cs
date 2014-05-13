@@ -6,6 +6,8 @@
 
 namespace Slash.Tools.BlueprintEditor.Tests.Source.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using MonitoredUndo;
@@ -33,7 +35,8 @@ namespace Slash.Tools.BlueprintEditor.Tests.Source.ViewModels
         {
             this.testBlueprintManager = new HierarchicalBlueprintManager();
             this.testBlueprintManager.AddParent(new BlueprintManager());
-            this.testViewModel = new BlueprintManagerViewModel(this.testBlueprintManager);
+            this.testViewModel = new BlueprintManagerViewModel(new List<Type>(), this.testBlueprintManager);
+            this.testViewModel.CurrentBlueprintManager = (BlueprintManager)this.testBlueprintManager.Parents.First();
 
             UndoService.Current.Clear();
         }

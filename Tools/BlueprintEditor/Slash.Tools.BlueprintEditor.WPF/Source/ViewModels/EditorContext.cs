@@ -452,10 +452,8 @@ namespace BlueprintEditor.ViewModels
             }
 
             // Load all blueprints.
-            this.BlueprintManagerViewModel = new BlueprintManagerViewModel(blueprintManager)
-                {
-                    AssemblyComponents = this.AvailableComponentTypes
-                };
+            this.BlueprintManagerViewModel = new BlueprintManagerViewModel(
+                this.AvailableComponentTypes, blueprintManager);
 
             // Setup blueprint parent hierarchy.
             if (this.BlueprintManagerViewModel != null)
