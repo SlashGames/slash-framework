@@ -50,6 +50,7 @@
     <Compile Include="Source\Inspectors\Utils\TooltipDrawer.cs" />
     <Compile Include="Source\Inspectors\ViewModels\ViewEventDelegateDrawer.cs" />
     <Compile Include="Source\MenuItems\Util\FindMonoBehaviourUsages.cs" />
+    <Compile Include="Source\MenuItems\Util\CheckTextureAssets.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
