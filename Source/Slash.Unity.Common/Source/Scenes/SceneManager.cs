@@ -21,6 +21,18 @@ namespace Slash.Unity.Common.Scenes
 
         #endregion
 
+        #region Delegates
+
+        public delegate void SceneChangingDelegate(string newScene);
+
+        #endregion
+
+        #region Public Events
+
+        public event SceneChangingDelegate SceneChanging;
+
+        #endregion
+
         #region Public Properties
 
         public object InitParams { get; set; }
@@ -35,6 +47,7 @@ namespace Slash.Unity.Common.Scenes
         /// <param name="scene">Scene to change to.</param>
         public void ChangeScene(string scene)
         {
+            this.OnSceneChanging(scene);
             this.StartCoroutine(this.ChangeSceneWithLoadingScreen(scene));
         }
 
@@ -85,6 +98,15 @@ namespace Slash.Unity.Common.Scenes
             {
                 // Hide loading screen.
                 Destroy(loadingScreen);
+            }
+        }
+
+        private void OnSceneChanging(string newScene)
+        {
+            var handler = this.SceneChanging;
+            if (handler != null)
+            {
+                handler(newScene);
             }
         }
 
