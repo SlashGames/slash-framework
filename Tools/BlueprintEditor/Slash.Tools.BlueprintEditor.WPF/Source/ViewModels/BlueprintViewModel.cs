@@ -243,6 +243,7 @@ namespace BlueprintEditor.ViewModels
             }
 
             // Add to blueprint component types.
+            this.AddAttributeViewModels(componentType);
             this.AddedComponents.Add(componentType);
 
             // Make children inherit component.
@@ -357,7 +358,15 @@ namespace BlueprintEditor.ViewModels
                 child.UninheritComponent(componentType);
             }
 
-            return this.AddedComponents.Remove(componentType);
+            var removed = this.AddedComponents.Remove(componentType);
+
+            if (removed)
+            {
+                this.RemoveAttributeViewModels(componentType);
+                return true;
+            }
+
+            return false;
         }
 
         public void SetAttributeValue(string key, object value)
@@ -422,6 +431,25 @@ namespace BlueprintEditor.ViewModels
             }
         }
 
+        private void AddAttributeViewModels(Type componentType)
+        {
+            InspectorType componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
+
+            foreach (var property in componentInfo.Properties)
+            {
+                object value;
+                this.Blueprint.TryGetValue(property.Name, out value);
+
+                var viewModel = new BlueprintAttributeViewModel(value);
+                viewModel.Blueprint = this;
+                viewModel.DefaultValue = property.Default;
+                viewModel.Key = property.Name;
+                viewModel.Root = this.Root;
+
+                this.blueprintAttributeViewModels.Add(viewModel);
+            }
+        }
+
         private void OnAddedComponentsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             string undoMessage = null;
@@ -483,27 +511,27 @@ namespace BlueprintEditor.ViewModels
             this.OnPropertyChanged("AvailableComponents");
         }
 
+        private void RemoveAttributeViewModels(Type componentType)
+        {
+            InspectorType componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
+
+            var viewModelsToRemove =
+                this.blueprintAttributeViewModels.Where(
+                    viewModel => componentInfo.Properties.Any(property => property.Name.Equals(viewModel.Key))).ToList();
+
+            foreach (var viewModelToRemove in viewModelsToRemove)
+            {
+                this.blueprintAttributeViewModels.Remove(viewModelToRemove);
+            }
+        }
+
         private void UpdateAttributeViewModels()
         {
             this.blueprintAttributeViewModels = new ObservableCollection<BlueprintAttributeViewModel>();
 
             foreach (var componentType in this.GetComponents())
             {
-                InspectorType componentInfo = InspectorComponentTable.Instance.GetInspectorType(componentType);
-
-                foreach (var property in componentInfo.Properties)
-                {
-                    object value;
-                    this.Blueprint.TryGetValue(property.Name, out value);
-
-                    var viewModel = new BlueprintAttributeViewModel(value);
-                    viewModel.Blueprint = this;
-                    viewModel.DefaultValue = property.Default;
-                    viewModel.Key = property.Name;
-                    viewModel.Root = this.Root;
-
-                    this.blueprintAttributeViewModels.Add(viewModel);
-                }
+                this.AddAttributeViewModels(componentType);
             }
         }
 
