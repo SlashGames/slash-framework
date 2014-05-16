@@ -261,7 +261,7 @@ namespace BlueprintEditor.ViewModels
 
                 this.selectedProjectFile = value;
 
-                if (this.blueprintManagerViewModel != null)
+                if (this.selectedProjectFile != null && this.blueprintManagerViewModel != null)
                 {
                     this.blueprintManagerViewModel.CurrentBlueprintManager = this.selectedProjectFile.BlueprintManager;
                 }
