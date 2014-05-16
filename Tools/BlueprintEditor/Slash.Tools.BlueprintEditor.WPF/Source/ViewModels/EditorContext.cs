@@ -223,6 +223,14 @@ namespace BlueprintEditor.ViewModels
         /// </summary>
         public ProjectSettings ProjectSettings { get; set; }
 
+        public ReadOnlyCollection<string> RecentProjects
+        {
+            get
+            {
+                return new ReadOnlyCollection<string>(this.editorSettings.RecentProjects);
+            }
+        }
+
         /// <summary>
         ///   Dynamic description for redo action.
         /// </summary>
@@ -353,6 +361,16 @@ namespace BlueprintEditor.ViewModels
 
         public void Load(string path)
         {
+            FileInfo file = new FileInfo(path);
+
+            if (!file.Exists)
+            {
+                this.editorSettings.RecentProjects.Remove(path);
+                this.SaveEditorSettings();
+
+                throw new FileNotFoundException(string.Format("Project file not found: {0}", path), path);
+            }
+
             // Load project.
             FileStream fileStream = new FileStream(path, FileMode.Open);
             ProjectSettings newProjectSettings = (ProjectSettings)this.projectSettingsSerializer.Deserialize(fileStream);
@@ -437,6 +455,10 @@ namespace BlueprintEditor.ViewModels
 
             // Set new project.
             this.SetProject(newProjectSettings, path);
+
+            // Save to recent projects.
+            this.editorSettings.AddRecentProject(path);
+            this.SaveEditorSettings();
         }
 
         /// <summary>

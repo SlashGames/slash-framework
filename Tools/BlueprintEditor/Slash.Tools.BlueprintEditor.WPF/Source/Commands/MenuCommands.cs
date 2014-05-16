@@ -42,6 +42,11 @@ namespace BlueprintEditor.Commands
         /// </summary>
         public static ICommand ImportLocalization = new RoutedCommand("Export Localization", typeof(MenuCommands));
 
+        /// <summary>
+        ///   Command to access recently loaded projects.
+        /// </summary>
+        public static ICommand RecentProjects = new RoutedCommand("Recent Projects", typeof(MenuCommands));
+
         #endregion
     }
 }

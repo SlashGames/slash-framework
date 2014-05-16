@@ -72,6 +72,8 @@ namespace BlueprintEditor.Windows
             this.BlueprintControl.SelectedBlueprintChaged += this.OnSelectedBlueprintChanged;
 
             AppDomain.CurrentDomain.AssemblyResolve += this.DynamicAssemblyResolve;
+
+            this.UpdateRecentProjects();
         }
 
         #endregion
@@ -162,9 +164,12 @@ namespace BlueprintEditor.Windows
 
                 this.UpdateWindowTitle();
             }
-            
+
             // Hide progress bar.
             this.progressWindow.Close();
+
+            // Update recent projects.
+            this.UpdateRecentProjects();
         }
 
         private void BackgroundSaveContext(object sender, DoWorkEventArgs e)
@@ -227,6 +232,11 @@ namespace BlueprintEditor.Windows
         private void CanExecuteFileOpen(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }
+
+        private void CanExecuteFileRecentProjects(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = this.Context.RecentProjects != null && this.Context.RecentProjects.Count > 0;
         }
 
         private void CanExecuteFileSave(object sender, CanExecuteRoutedEventArgs e)
@@ -390,20 +400,18 @@ namespace BlueprintEditor.Windows
             // If file was chosen, try to load.
             string filename = dlg.FileName;
 
-            // Show progress bar.
-            this.progressWindow = new ProgressWindow();
-            this.progressWindow.Show("Loading project...");
-
-            // Load data.
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += this.BackgroundLoadContext;
-            worker.RunWorkerCompleted += this.BackgroundLoadContextCompleted;
-            worker.RunWorkerAsync(new BackgroundLoadContextData { Context = this.Context, Filename = filename });
+            this.LoadProject(filename);
         }
 
         private void ExecutedFileSave(object sender, RoutedEventArgs e)
         {
             this.SaveContext(this.Context.SerializationPath);
+        }
+
+        private void ExecutedRecentProject(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            this.LoadProject((string)menuItem.Header);
         }
 
         private void ExecutedSaveAs(object sender, RoutedEventArgs e)
@@ -452,6 +460,19 @@ namespace BlueprintEditor.Windows
             {
                 EditorDialog.Error("Unable to open CSV file", e.Message);
             }
+        }
+
+        private void LoadProject(string filename)
+        {
+            // Show progress bar.
+            this.progressWindow = new ProgressWindow();
+            this.progressWindow.Show("Loading project...");
+
+            // Load data.
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += this.BackgroundLoadContext;
+            worker.RunWorkerCompleted += this.BackgroundLoadContextCompleted;
+            worker.RunWorkerAsync(new BackgroundLoadContextData { Context = this.Context, Filename = filename });
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -537,6 +558,21 @@ namespace BlueprintEditor.Windows
             worker.DoWork += this.BackgroundSaveContext;
             worker.RunWorkerCompleted += this.BackgroundSaveContextCompleted;
             worker.RunWorkerAsync(this.Context);
+        }
+
+        private void UpdateRecentProjects()
+        {
+            this.MenuFileRecentProjects.Items.Clear();
+
+            foreach (var recentProject in this.Context.RecentProjects)
+            {
+                var menuItem = new MenuItem();
+
+                menuItem.Header = recentProject;
+                menuItem.Click += this.ExecutedRecentProject;
+
+                this.MenuFileRecentProjects.Items.Add(menuItem);
+            }
         }
 
         /// <summary>

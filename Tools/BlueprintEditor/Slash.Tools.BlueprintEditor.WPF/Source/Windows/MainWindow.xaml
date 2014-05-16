@@ -43,6 +43,8 @@
                         CanExecute = "CanExecuteFileSave" />
         <CommandBinding Command = "ApplicationCommands.SaveAs" Executed = "ExecutedSaveAs"
                         CanExecute = "CanExecuteFileSaveAs" />
+        <CommandBinding Command = "commands:MenuCommands.RecentProjects"
+                        CanExecute = "CanExecuteFileRecentProjects" />
         <CommandBinding Command = "commands:MenuCommands.Exit" Executed = "ExecutedFileExit"
                         CanExecute = "CanExecuteFileExit" />
         <CommandBinding Command = "ApplicationCommands.Help" Executed = "ExecutedFileAbout"
@@ -97,6 +99,8 @@
                 </MenuItem>
                 <MenuItem x:Name = "MenuFileSaveAs" Header = "Save Project _As..."
                           Command = "ApplicationCommands.SaveAs" />
+                <Separator />
+                <MenuItem x:Name = "MenuFileRecentProjects" Header = "Recent Projects" Command = "commands:MenuCommands.RecentProjects" />
                 <Separator />
                 <MenuItem x:Name = "MenuFileExit" Header = "_Exit" Command = "commands:MenuCommands.Exit">
                     <MenuItem.Icon>
