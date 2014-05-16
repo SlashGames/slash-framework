@@ -498,6 +498,7 @@ namespace BlueprintEditor.ViewModels
             // Set new project.
             this.SetProject(newProjectSettings);
             this.SetAvailableLanguages(new List<string>());
+            this.SelectedProjectFile = this.ProjectExplorerViewModel.ProjectFiles[0];
 
             // Update blueprint view model.
             this.LoadBlueprints();

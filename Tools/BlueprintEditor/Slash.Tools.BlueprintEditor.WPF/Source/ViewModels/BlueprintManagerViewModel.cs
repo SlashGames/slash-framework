@@ -56,6 +56,8 @@ namespace BlueprintEditor.ViewModels
                         });
             }
 
+            this.CurrentBlueprintManager = (BlueprintManager)this.blueprintManager.Parents.First();
+
             this.Blueprints.CollectionChanged += this.OnBlueprintsChanged;
         }
 
@@ -215,6 +217,11 @@ namespace BlueprintEditor.ViewModels
         /// <returns>New blueprint view model.</returns>
         public BlueprintViewModel CreateNewBlueprint()
         {
+            if (this.CurrentBlueprintManager == null)
+            {
+                throw new InvalidOperationException("No blueprint file selected. Please select a blueprint file to add the new blueprint to!");
+            }
+
             // Update blueprint view models.
             var newBlueprint = this.CreateNewBlueprint(this.NewBlueprintId);
 
@@ -232,6 +239,11 @@ namespace BlueprintEditor.ViewModels
         /// <returns>New blueprint view model.</returns>
         public BlueprintViewModel CreateNewBlueprint(string blueprintId, BlueprintViewModel original = null)
         {
+            if (this.CurrentBlueprintManager == null)
+            {
+                throw new InvalidOperationException("No blueprint file selected. Please select a blueprint file to add the new blueprint to!");
+            }
+
             // Update blueprint view models.
             var newBlueprint = new BlueprintViewModel(
                 blueprintId, original != null ? new Blueprint(original.Blueprint) : new Blueprint())
