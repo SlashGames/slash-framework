@@ -453,7 +453,7 @@ namespace BlueprintEditor.Windows
 
             // Load custom CSV import.
             this.CbParentBlueprint.SelectedBlueprintId = this.importData.BlueprintParentId;
-            this.CbBlueprintIdMapping.SelectedValue = this.importData.BlueprintIdColumn;
+            this.CbBlueprintIdMapping.SelectedIndex = headers.IndexOf(this.importData.BlueprintIdColumn);
             this.TbIgnoredBlueprintId.Text = this.importData.IgnoredBlueprintId;
 
             this.UpdateAttributeMapping();
