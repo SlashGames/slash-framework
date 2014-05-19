@@ -147,6 +147,9 @@
     <Compile Include="Source\Windows\ProjectSettingsWindow.xaml.cs">
       <DependentUpon>ProjectSettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Windows\TextBoxWindow.xaml.cs">
+      <DependentUpon>TextBoxWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Source\Controls\BlueprintComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -246,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Windows\ProjectSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Windows\TextBoxWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
