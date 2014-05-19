@@ -425,7 +425,9 @@ namespace BlueprintEditor.Windows
             this.csvReader.Read();
 
             // Store column headers for access via combo boxes.
-            this.CSVColumnHeaders = this.csvReader.FieldHeaders;
+            var headers = this.csvReader.FieldHeaders.ToList();
+            headers.Sort((first, second) => string.Compare(first, second, StringComparison.Ordinal));
+            this.CSVColumnHeaders = headers;
 
             // Fill Parent Blueprint combo box.
             this.CbParentBlueprint.DataContext = this.context.BlueprintManagerViewModel;
