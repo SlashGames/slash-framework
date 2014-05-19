@@ -350,6 +350,8 @@ namespace BlueprintEditor.ViewModels
             this.AddedComponents.Remove(componentType);
             this.AvailableComponents.Remove(componentType);
 
+            this.AddAttributeViewModels(componentType);
+
             foreach (var child in this.DerivedBlueprints)
             {
                 child.InheritComponent(componentType);
@@ -394,6 +396,8 @@ namespace BlueprintEditor.ViewModels
         public void UninheritComponent(Type componentType)
         {
             this.AvailableComponents.Add(componentType);
+
+            this.RemoveAttributeViewModels(componentType);
 
             foreach (var child in this.DerivedBlueprints)
             {
