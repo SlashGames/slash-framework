@@ -53,7 +53,7 @@ namespace BlueprintEditor.ViewModels
                 }
 
                 // Search in parents.
-                if (this.Blueprint.Parent != null)
+                if (this.Blueprint.Parent != null && this.Blueprint.Parent.HasAttribute(this.Key))
                 {
                     bool tmp;
                     return this.Blueprint.Parent.GetCurrentAttributeValue(this.Key, out tmp);

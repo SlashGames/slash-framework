@@ -334,6 +334,12 @@ namespace BlueprintEditor.ViewModels
             return this.Root;
         }
 
+        public bool HasAttribute(string propertyName)
+        {
+            return this.blueprintAttributeViewModels.FirstOrDefault(viewModel => viewModel.Key.Equals(propertyName))
+                   != null;
+        }
+
         /// <summary>
         ///   Removes the specified component from the current and avaliable components,
         ///   proceeding recursively with all deriving blueprints.
