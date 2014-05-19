@@ -9,6 +9,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Localization
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     using Slash.SystemExt.Exceptions;
 
@@ -51,11 +52,16 @@ namespace Slash.Tools.BlueprintEditor.Logic.Localization
 
         public void Serialize(Stream stream, ILocalizationTable table)
         {
+            // Sort localization table entries by key before writing to the file.
+            List<KeyValuePair<string, string>> data = table.ToList();
+            data.Sort((first, second) => string.Compare(first.Key, second.Key, StringComparison.Ordinal));
+
+            // Write data to file.
             using (TextWriter writer = new StreamWriter(stream))
             {
-                foreach (var keyValuePair in table)
+                foreach (var keyValuePair in data)
                 {
-                    writer.WriteLine(string.Format("{0}={1}", keyValuePair.Key, keyValuePair.Value));
+                    writer.WriteLine("{0}={1}", keyValuePair.Key, keyValuePair.Value);
                 }
             }
         }
