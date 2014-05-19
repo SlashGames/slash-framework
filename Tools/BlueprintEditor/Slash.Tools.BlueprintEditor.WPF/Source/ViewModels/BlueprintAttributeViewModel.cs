@@ -101,6 +101,11 @@ namespace BlueprintEditor.ViewModels
             return this.Root;
         }
 
+        public override string ToString()
+        {
+            return string.Format("Key: {0}", this.Key);
+        }
+
         #endregion
     }
 }

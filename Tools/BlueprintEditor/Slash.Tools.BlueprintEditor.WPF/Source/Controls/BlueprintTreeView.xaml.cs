@@ -114,6 +114,10 @@ namespace BlueprintEditor.Controls
                 return;
             }
 
+            // Select other blueprint.
+            var node = (TreeViewItem)this.TvTree.ItemContainerGenerator.ContainerFromIndex(0);
+            node.IsSelected = true;
+
             // Delete current selected blueprint.
             try
             {
