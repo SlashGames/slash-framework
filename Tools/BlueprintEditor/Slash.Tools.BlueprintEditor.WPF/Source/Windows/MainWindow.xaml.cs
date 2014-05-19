@@ -154,8 +154,7 @@ namespace BlueprintEditor.Windows
 
                 // Update available languages.
                 var languageTags =
-                    this.Context.ProjectSettings.LanguageFiles.Select(
-                        languageFile => Path.GetFileNameWithoutExtension(languageFile.Path));
+                    this.Context.ProjectSettings.LanguageFiles.Select(languageFile => languageFile.LanguageTag);
 
                 this.Context.SetAvailableLanguages(languageTags);
 

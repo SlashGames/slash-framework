@@ -399,6 +399,11 @@ namespace BlueprintEditor.ViewModels
                         .FullName
                         }).ToList();
 
+            for (int i = 0; i < newProjectSettings.LanguageFiles.Count; i++)
+            {
+                newProjectSettings.LanguageFiles[i].LanguageTag = newProjectSettings.LanguageNamesSerialized[i];
+            }
+
             // Load blueprint files.
             foreach (var blueprintFile in newProjectSettings.BlueprintFiles)
             {
@@ -559,6 +564,10 @@ namespace BlueprintEditor.ViewModels
             this.ProjectSettings.LanguageFilesSerialized =
                 this.ProjectSettings.LanguageFiles.Select(
                     languageFile => GetRelativePath(languageFile.Path, this.SerializationPath)).ToArray();
+
+            this.ProjectSettings.LanguageNamesSerialized =
+                this.ProjectSettings.LanguageFiles.Select(
+                    languageFile => languageFile.LanguageTag).ToArray();
 
             this.projectSettingsSerializer.Serialize(fileStream, this.ProjectSettings);
             this.localizationContext.SaveLanguages();

@@ -20,6 +20,8 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
     {
         #region Public Properties
 
+        public string LanguageTag { get; set; }
+
         public string Path { get; set; }
 
         #endregion
@@ -176,7 +178,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         /// <summary>
         ///   Templates for custom CSV imports specific to this project.
         /// </summary>
-        [XmlArray("CustomImports", Order = 5)]
+        [XmlArray("CustomImports", Order = 6)]
         [XmlArrayItem("CustomImport")]
         public List<CsvImportData> CustomImports { get; set; }
 
@@ -222,6 +224,12 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string[] LanguageFilesSerialized { get; set; }
+
+        [XmlArray("Languages", Order = 5)]
+        [XmlArrayItem("Language")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string[] LanguageNamesSerialized { get; set; }
 
         /// <summary>
         ///   Project name.

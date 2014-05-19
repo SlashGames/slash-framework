@@ -19,7 +19,7 @@ namespace BlueprintEditor.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             LanguageFile languageFile = (LanguageFile)value;
-            return languageFile.Path;
+            return string.Format("{0}: {1}", languageFile.LanguageTag, languageFile.Path);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -256,7 +256,7 @@ namespace BlueprintEditor.ViewModels
                 {
                     using (var stream = fileInfo.OpenRead())
                     {
-                        var languageTag = Path.GetFileNameWithoutExtension(languageFile.Path);
+                        var languageTag = languageFile.LanguageTag;
                         var localizationTable = this.localizationTableSerializer.Deserialize(stream);
 
                         this.languages.Add(languageTag, localizationTable);
@@ -282,7 +282,7 @@ namespace BlueprintEditor.ViewModels
 
                 using (var stream = fileInfo.Create())
                 {
-                    var languageTag = Path.GetFileNameWithoutExtension(languageFile.Path);
+                    var languageTag = languageFile.LanguageTag;
                     var localizationTable = this.languages[languageTag];
 
                     this.localizationTableSerializer.Serialize(stream, localizationTable);

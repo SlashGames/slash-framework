@@ -12,6 +12,8 @@ namespace BlueprintEditor.Controls
     using System.Reflection;
     using System.Windows;
 
+    using BlueprintEditor.Windows;
+
     using Microsoft.Win32;
 
     using Slash.Tools.BlueprintEditor.Logic.Context;
@@ -69,9 +71,18 @@ namespace BlueprintEditor.Controls
                 return;
             }
 
+            // Show language name dialog box.
+            TextBoxWindow textboxDlg = new TextBoxWindow();
+            result = textboxDlg.ShowDialog("Add Language", "Please enter the name of the language!");
+
+            if (result != true)
+            {
+                return;
+            }
+
             // Add language file to project.
             ProjectSettings projectSettings = (ProjectSettings)this.DataContext;
-            LanguageFile languageFile = new LanguageFile { Path = dlg.FileName };
+            LanguageFile languageFile = new LanguageFile { LanguageTag = textboxDlg.Text, Path = dlg.FileName };
             projectSettings.AddLanguageFile(languageFile);
 
             // Refresh list.
