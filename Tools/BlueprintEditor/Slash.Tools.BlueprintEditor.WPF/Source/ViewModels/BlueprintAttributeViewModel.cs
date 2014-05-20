@@ -67,7 +67,7 @@ namespace BlueprintEditor.ViewModels
                 var defaultValue = this.DefaultValue;
 
                 // Check parent for values.
-                if (this.Blueprint.Parent != null)
+                if (this.Blueprint.Parent != null && this.Blueprint.Parent.HasAttribute(this.Key))
                 {
                     bool tmp;
                     defaultValue = this.Blueprint.Parent.GetCurrentAttributeValue(this.Key, out tmp);
