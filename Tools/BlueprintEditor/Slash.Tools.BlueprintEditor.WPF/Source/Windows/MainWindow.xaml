@@ -10,7 +10,8 @@
     x:Class = "BlueprintEditor.Windows.MainWindow"
     Title = "MainWindow" Height = "600" Width = "800" Name = "Main"
     d:DataContext = "{d:DesignInstance viewModels:EditorContext}"
-    Loaded = "MainWindow_OnLoaded">
+    Loaded = "MainWindow_OnLoaded"
+    WindowState="Maximized">
     <Window.Resources>
         <Style TargetType = "FrameworkElement" x:Key = "ProjectDependentStyle">
             <Style.Triggers>
