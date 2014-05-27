@@ -7,6 +7,7 @@
 namespace Slash.Math.Utils
 {
     using System;
+    using System.Linq;
 
     /// <summary>
     ///   Contains little math utils that are often used. If there are long methods or multiple methods of the same
@@ -109,6 +110,17 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
+        ///   Returns the maximum value of the specified values.
+        /// </summary>
+        /// <typeparam name="T">Type of values.</typeparam>
+        /// <param name="values">Values to compare.</param>
+        /// <returns>Maximum value of the specified values.</returns>
+        public static T Max<T>(params T[] values)
+        {
+            return values.Max();
+        }
+
+        /// <summary>
         ///   Returns the minimum value of the two passed values.
         /// </summary>
         /// <param name="a"> First value. </param>
@@ -117,6 +129,17 @@ namespace Slash.Math.Utils
         public static T Min<T>(T a, T b) where T : IComparable<T>
         {
             return a.CompareTo(b) < 0 ? a : b;
+        }
+
+        /// <summary>
+        ///   Returns the minimum value of the specified values.
+        /// </summary>
+        /// <typeparam name="T">Type of values.</typeparam>
+        /// <param name="values">Values to compare.</param>
+        /// <returns>Minimum value of the specified values.</returns>
+        public static T Min<T>(params T[] values)
+        {
+            return values.Min();
         }
 
         public static void Swap<T>(ref T value1, ref T value2)

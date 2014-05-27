@@ -7,12 +7,16 @@
 namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     using Slash.Collections.AttributeTables;
+    using Slash.Collections.Utils;
     using Slash.GameBase.Inspector.Attributes;
     using Slash.GameBase.Inspector.Data;
     using Slash.GameBase.Systems;
     using Slash.Unity.Common.Configuration;
+    using Slash.Unity.Editor.Common.Inspectors.Utils;
 
     using UnityEditor;
 
@@ -22,6 +26,8 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
     public class GameConfigurationEditor : Editor
     {
         #region Fields
+
+        private readonly Dictionary<object, bool> foldoutProperty = new Dictionary<object, bool>();
 
         private GameConfigurationBehaviour gameConfiguration;
 
@@ -76,27 +82,59 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
                 // Get current value.
                 object currentValue = configuration.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default);
 
-                // Draw inspector property.
-                object newValue = this.DrawInspectorProperty(inspectorProperty, currentValue);
-
-                // Set new value if changed.
-                if (!Equals(newValue, currentValue))
+                if (inspectorProperty.IsList)
                 {
-                    configuration.SetValue(inspectorProperty.Name, newValue);
+                    // Build array.
+                    IList currentList = currentValue as IList;
+                    InspectorPropertyAttribute localInspectorProperty = inspectorProperty;
+                    IList newList;
+                    this.foldoutProperty[inspectorProperty] =
+                        EditorGUIUtils.ArrayField(
+                            this.foldoutProperty.GetValueOrDefault(inspectorProperty, false),
+                            new GUIContent(inspectorProperty.Name),
+                            currentList,
+                            count =>
+                                {
+                                    IList list = localInspectorProperty.GetEmptyList();
+                                    for (int idx = 0; idx < count; idx++)
+                                    {
+                                        list.Add(null);
+                                    }
+                                    return list;
+                                },
+                            (obj, index) =>
+                            this.DrawInspectorProperty(localInspectorProperty, new GUIContent("Item " + index), obj),
+                            out newList);
+
+                    // Set new value if changed.
+                    if (!Equals(newList, currentList))
+                    {
+                        configuration.SetValue(inspectorProperty.Name, newList);
+                    }
+                }
+                else
+                {
+                    // Draw inspector property.
+                    object newValue = this.DrawInspectorProperty(inspectorProperty, currentValue);
+
+                    // Set new value if changed.
+                    if (!Equals(newValue, currentValue))
+                    {
+                        configuration.SetValue(inspectorProperty.Name, newValue);
+                    }
                 }
             }
         }
 
-        private object DrawInspectorProperty(InspectorPropertyAttribute inspectorProperty, object currentValue)
+        private object DrawInspectorProperty(
+            InspectorPropertyAttribute inspectorProperty, GUIContent label, object currentValue)
         {
             // Draw inspector control.
-            GUIContent label = new GUIContent(inspectorProperty.Name, inspectorProperty.Description);
             if (inspectorProperty is InspectorBoolAttribute)
             {
                 return EditorGUILayout.Toggle(label, Convert.ToBoolean(currentValue));
             }
-            if (inspectorProperty is InspectorStringAttribute ||
-                inspectorProperty is InspectorBlueprintAttribute)
+            if (inspectorProperty is InspectorStringAttribute || inspectorProperty is InspectorBlueprintAttribute)
             {
                 return EditorGUILayout.TextField(label, Convert.ToString(currentValue));
             }
@@ -119,6 +157,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
                 string.Format("No inspector found for property type '{0}'.", inspectorProperty.GetType().Name),
                 MessageType.Warning);
             return currentValue;
+        }
+
+        private object DrawInspectorProperty(InspectorPropertyAttribute inspectorProperty, object currentValue)
+        {
+            return this.DrawInspectorProperty(
+                inspectorProperty, new GUIContent(inspectorProperty.Name, inspectorProperty.Description), currentValue);
         }
 
         private void OnEnable()
