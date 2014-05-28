@@ -78,6 +78,16 @@ namespace Slash.Unity.Common.Utils
         }
 
         /// <summary>
+        ///   Returns all children of the specified game object, ordered by name.
+        /// </summary>
+        /// <param name="gameObject">Game object to get the children of.</param>
+        /// <returns>Enumeration of all children of the specified game object.</returns>
+        public static IEnumerable<GameObject> GetOrderedChildren(this GameObject gameObject)
+        {
+            return gameObject.GetChildren().OrderBy(go => go.name);
+        }
+
+        /// <summary>
         ///   Returns the full path (i.e. names of all ancestors and self) to the game object.
         /// </summary>
         /// <param name="gameObject">Game object to get path for.</param>
