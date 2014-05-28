@@ -9,18 +9,17 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
     using System;
     using System.Reflection;
 
-    using Slash.Unity.Common.Utils;
-
     using UnityEditor;
 
     using UnityEngine;
 
     using Object = UnityEngine.Object;
+    using Tooltip = Slash.Unity.Common.Utils.TooltipAttribute;
 
     /// <summary>
     ///   Found in Unity forum: http://forum.unity3d.com/threads/182621-Inspector-Tooltips.
     /// </summary>
-    [CustomPropertyDrawer(typeof(TooltipAttribute))]
+    [CustomPropertyDrawer(typeof(Tooltip))]
     public class TooltipDrawer : PropertyDrawer
     {
         #region Static Fields
@@ -96,7 +95,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             {
                 if (this.label == null)
                 {
-                    TooltipAttribute labelAttribute = (TooltipAttribute)this.attribute;
+                    Tooltip labelAttribute = (Tooltip)this.attribute;
 
                     this.label = new GUIContent(this.oldlabel.text, labelAttribute.Text);
                 }
