@@ -11,7 +11,7 @@ namespace Slash.Unity.Common.Utils
     /// <summary>
     ///   Found in Unity forum: http://forum.unity3d.com/threads/182621-Inspector-Tooltips.
     /// </summary>
-    public class TooltipAttribute : PropertyAttribute
+    public class InspectorTooltipAttribute : PropertyAttribute
     {
         #region Constructors and Destructors
 
@@ -19,7 +19,7 @@ namespace Slash.Unity.Common.Utils
         ///   Constructor.
         /// </summary>
         /// <param name="text">Tooltip text.</param>
-        public TooltipAttribute(string text)
+        public InspectorTooltipAttribute(string text)
         {
             this.Text = text;
         }
