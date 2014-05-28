@@ -109,7 +109,7 @@
     <Compile Include="Source\Utils\UnityPathUtils.cs" />
     <Compile Include="Source\Utils\GarbageCollectionBehaviour.cs" />
     <Compile Include="Source\Utils\GLUtils.cs" />
-    <Compile Include="Source\Utils\Tooltip.cs" />
+    <Compile Include="Source\Utils\TooltipAttribute.cs" />
     <Compile Include="Source\Utils\UnityUtils.cs" />
     <Compile Include="Source\Utils\VersionNumberBehaviour.cs" />
     <Compile Include="Source\ViewModels\ViewEventDelegate.cs" />

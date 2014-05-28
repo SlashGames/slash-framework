@@ -20,7 +20,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
     /// <summary>
     ///   Found in Unity forum: http://forum.unity3d.com/threads/182621-Inspector-Tooltips.
     /// </summary>
-    [CustomPropertyDrawer(typeof(Tooltip))]
+    [CustomPropertyDrawer(typeof(TooltipAttribute))]
     public class TooltipDrawer : PropertyDrawer
     {
         #region Static Fields
@@ -96,7 +96,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             {
                 if (this.label == null)
                 {
-                    Tooltip labelAttribute = (Tooltip)this.attribute;
+                    TooltipAttribute labelAttribute = (TooltipAttribute)this.attribute;
 
                     this.label = new GUIContent(this.oldlabel.text, labelAttribute.Text);
                 }
