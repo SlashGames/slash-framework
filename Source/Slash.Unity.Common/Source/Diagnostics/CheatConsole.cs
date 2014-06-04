@@ -18,6 +18,12 @@ namespace Slash.Unity.Common.Diagnostics
 
         public Rect ButtonRect = new Rect(0, 0, 10, 10);
 
+        /// <summary>
+        ///   Reference to a game specific cheat behaviour which implements a
+        ///   "DrawCheats" method to render the controls to execute cheats.
+        /// </summary>
+        public GameCheatBehaviour GameSpecific;
+
         public string[] QuickCheats;
 
         /// <summary>
@@ -116,6 +122,12 @@ namespace Slash.Unity.Common.Diagnostics
             else
             {
                 GUILayout.Label("No running game.");
+            }
+
+            // Draw game specific cheats.
+            if (this.GameSpecific != null)
+            {
+                this.GameSpecific.DrawCheats();
             }
         }
 

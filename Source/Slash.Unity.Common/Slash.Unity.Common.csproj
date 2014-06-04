@@ -78,6 +78,7 @@
     <Compile Include="Source\Diagnostics\DisableWithSceneManager.cs" />
     <Compile Include="Source\Diagnostics\FPSDisplay.cs" />
     <Compile Include="Source\Core\GameEventBehaviour.cs" />
+    <Compile Include="Source\Diagnostics\GameCheatBehaviour.cs" />
     <Compile Include="Source\GUI\GuiExt.cs" />
     <Compile Include="Source\GUI\GUILayoutExt.cs" />
     <Compile Include="Source\GUI\ValueEditors\EnumValueEditor.cs" />
