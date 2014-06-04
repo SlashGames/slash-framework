@@ -164,6 +164,37 @@ namespace Slash.Collections.Utils
         }
 
         /// <summary>
+        ///   Returns a random item from the specified sequence or the specified default value if
+        ///   the sequence is null or empty.
+        /// </summary>
+        /// <typeparam name="T">Type of sequence items.</typeparam>
+        /// <param name="sequence">Sequence to get item from.</param>
+        /// <param name="defaultValue">Default value to use if the sequence is null or empty.</param>
+        /// <returns>Time-dependent random item.</returns>
+        public static T RandomItemOrDefault<T>(this IEnumerable<T> sequence, T defaultValue)
+        {
+            IEnumerable<T> list = sequence as IList<T> ?? sequence.ToList();
+            if (sequence == null || !list.Any())
+            {
+                return defaultValue;
+            }
+
+            return list.RandomItem();
+        }
+
+        /// <summary>
+        ///   Returns a random item from the specified sequence or the default value of the
+        ///   specified type if the sequence is null or empty.
+        /// </summary>
+        /// <typeparam name="T">Type of sequence items.</typeparam>
+        /// <param name="sequence">Sequence to get item from.</param>
+        /// <returns>Time-dependent random item.</returns>
+        public static T RandomItemOrDefault<T>(this IEnumerable<T> sequence)
+        {
+            return sequence.RandomItemOrDefault(default(T));
+        }
+
+        /// <summary>
         ///   Returns a random weighted item from the specified sequence.
         ///   Uses the specified function to get the weight of an item.
         ///   Idea was taken from http://stackoverflow.com/questions/17912005/quick-way-of-selecting-a-random-item-from-a-list-with-varying-probabilities-ba
