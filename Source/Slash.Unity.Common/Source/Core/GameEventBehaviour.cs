@@ -55,6 +55,15 @@ namespace Slash.Unity.Common.Core
             this.RegisterListeners();
         }
 
+        protected virtual void OnDestroy()
+        {
+            if (this.gameBehaviour != null)
+            {
+                this.OnGameChanged(null, this.gameBehaviour.Game);
+                this.gameBehaviour.GameChanged -= this.OnGameChanged;
+            }
+        }
+
         protected void OnGameChanged(Game newGame, Game oldGame)
         {
             if (oldGame != null)
