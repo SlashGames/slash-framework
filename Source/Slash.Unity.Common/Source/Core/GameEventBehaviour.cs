@@ -53,6 +53,8 @@ namespace Slash.Unity.Common.Core
             }
 
             this.RegisterListeners();
+
+            this.OnGameChanged(this.gameBehaviour.Game, null);
         }
 
         protected virtual void OnDestroy()
