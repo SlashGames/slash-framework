@@ -41,6 +41,8 @@ namespace Slash.Unity.Common.Diagnostics
         /// </summary>
         public bool UseButton = true;
 
+        public Rect WindowRect = new Rect(10, 10, 300, 400);
+
         private readonly Rect dragRect = new Rect(0, 0, 10000, 20);
 
         private string cheat = string.Empty;
@@ -49,9 +51,11 @@ namespace Slash.Unity.Common.Diagnostics
 
         private GameBehaviour gameBehaviour;
 
+        private Vector2 scrollPositionGameSpecific;
+
         private bool showConsole = true;
 
-        private Rect windowRect = new Rect(10, 10, 300, 200);
+        private Vector2 scrollPositionQuickCheats;
 
         #endregion
 
@@ -111,6 +115,7 @@ namespace Slash.Unity.Common.Diagnostics
                 }
 
                 GUILayout.Label("Quick Cheats:");
+                this.scrollPositionQuickCheats = GUILayout.BeginScrollView(this.scrollPositionQuickCheats);
                 foreach (var quickCheat in this.QuickCheats)
                 {
                     if (GUILayout.Button(quickCheat))
@@ -118,6 +123,7 @@ namespace Slash.Unity.Common.Diagnostics
                         this.game.EventManager.QueueEvent(FrameworkEventType.Cheat, quickCheat);
                     }
                 }
+                GUILayout.EndScrollView();
             }
             else
             {
@@ -127,7 +133,10 @@ namespace Slash.Unity.Common.Diagnostics
             // Draw game specific cheats.
             if (this.GameSpecific != null)
             {
+                GUILayout.Label("Game Specific: ");
+                this.scrollPositionGameSpecific = GUILayout.BeginScrollView(this.scrollPositionGameSpecific);
                 this.GameSpecific.DrawCheats();
+                GUILayout.EndScrollView();
             }
         }
 
@@ -147,7 +156,7 @@ namespace Slash.Unity.Common.Diagnostics
             if (this.showConsole)
             {
                 var currentMatrix = this.ScaleGUI();
-                this.windowRect = GUI.Window(0, this.windowRect, this.DrawCheatConsole, "Cheat Console");
+                this.WindowRect = GUI.Window(0, this.WindowRect, this.DrawCheatConsole, "Cheat Console");
                 GUI.matrix = currentMatrix;
             }
         }
