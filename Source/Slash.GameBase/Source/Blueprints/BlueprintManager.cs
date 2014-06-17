@@ -108,13 +108,23 @@ namespace Slash.GameBase.Blueprints
         /// <exception cref="ArgumentException">Thrown if a blueprint with the specified id already exists.</exception>
         public void AddBlueprint(string blueprintId, Blueprint blueprint)
         {
-            Contract.RequiresNotNull(new { blueprintId }, "No blueprint id provided.");
-            Contract.Requires<ArgumentException>(blueprintId != string.Empty, "No blueprint id provided.");
-            Contract.RequiresNotNull(new { blueprint }, "No blueprint provided.");
-            Contract.Requires<ArgumentException>(
-                !this.blueprints.ContainsKey(blueprintId),
-                string.Format("A blueprint with this id already exists: {0}", blueprintId),
+            if (blueprintId == null)
+            {
+                throw new ArgumentNullException("blueprintId", "No blueprint id provided.");
+            }
+            if (string.IsNullOrEmpty(blueprintId))
+            {
+                throw new ArgumentException("No blueprint id provided.", "blueprintId");
+            }
+            if (blueprint == null)
+            {
+                throw new ArgumentNullException("blueprint", "No blueprint provided.");
+            }
+            if (this.ContainsBlueprint(blueprintId))
+            {
+                throw new ArgumentException(string.Format("A blueprint with this id already exists: {0}", blueprintId),
                 "blueprintId");
+            }
 
             this.blueprints.Add(blueprintId, blueprint);
             this.OnBlueprintsChanged();
