@@ -74,14 +74,6 @@ namespace Slash.GameBase.Blueprints
 
         public void AddBlueprint(string blueprintId, Blueprint blueprint)
         {
-            Contract.RequiresNotNull(new { blueprintId }, "No blueprint id provided.");
-            Contract.Requires<ArgumentException>(blueprintId != string.Empty, "No blueprint id provided.");
-            Contract.RequiresNotNull(new { blueprint }, "No blueprint provided.");
-            Contract.Requires<ArgumentException>(
-                !this.ContainsBlueprint(blueprintId),
-                string.Format("A blueprint with this id already exists: {0}", blueprintId),
-                "blueprintId");
-
             // TODO(np): Specify which blueprint manager to add to.
             this.parents.FirstOrDefault().AddBlueprint(blueprintId, blueprint);
         }
