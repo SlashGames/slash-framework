@@ -276,10 +276,21 @@ namespace Slash.Collections.Utils
         /// <typeparam name="T">Type of list to enumerate the items of.</typeparam>
         /// <param name="list">List to enumerate the items of.</param>
         /// <returns>List with the same items in random order.</returns>
-        public static List<T> ToRandomOrder<T>(IList<T> list)
+        public static List<T> ToRandomOrder<T>(this IList<T> list)
+        {
+            return ToRandomOrder(list, new Random());
+        }
+
+        /// <summary>
+        ///   Enumerates the elements of the specified list in random order.
+        /// </summary>
+        /// <typeparam name="T">Type of list to enumerate the items of.</typeparam>
+        /// <param name="list">List to enumerate the items of.</param>
+        /// <param name="random">Random number generator to use.</param>
+        /// <returns>List with the same items in random order.</returns>
+        public static List<T> ToRandomOrder<T>(this IList<T> list, Random random)
         {
             List<T> copy = new List<T>(list);
-            Random random = new Random();
             int count = copy.Count;
 
             while (count > 0)
