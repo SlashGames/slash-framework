@@ -46,7 +46,7 @@ namespace BlueprintEditor.ViewModels
             this.Blueprints = new ObservableCollection<BlueprintViewModel>();
 
             IEnumerable<KeyValuePair<string, Blueprint>> blueprints = this.blueprintManager.Blueprints;
-            foreach (var blueprintPair in blueprints)
+            foreach (var blueprintPair in blueprints.OrderBy(blueprint => blueprint.Key))
             {
                 this.Blueprints.Add(
                     new BlueprintViewModel(blueprintPair.Key, blueprintPair.Value)
