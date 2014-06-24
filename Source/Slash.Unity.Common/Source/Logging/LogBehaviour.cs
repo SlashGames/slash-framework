@@ -30,9 +30,10 @@ namespace Slash.Unity.Common.Logging
         /// </summary>
         [SerializeField]
         [HideInInspector]
-// ReSharper disable FieldCanBeMadeReadOnly.Local
+        // ReSharper disable FieldCanBeMadeReadOnly.Local
         private List<string> disabledEventTypes = new List<string>();
-// ReSharper restore FieldCanBeMadeReadOnly.Local
+
+        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         /// <summary>
         ///   Game to log events of.
@@ -145,7 +146,10 @@ namespace Slash.Unity.Common.Logging
 
             if (!this.disabledEventTypes.Contains(e.EventType.ToString()))
             {
-                this.Info(UnityUtils.WithTimestamp(string.Format("{0}: {1}", e.EventType, e.EventData)));
+                this.Info(
+                    UnityUtils.WithTimestamp(
+                        string.Format(
+                            "{0}: {1} (Frame: {2})", e.EventType, e.EventData, this.gameBehaviour.FrameCounter)));
             }
         }
 

@@ -21,6 +21,11 @@ namespace Slash.Unity.Common.Core
         #region Fields
 
         /// <summary>
+        ///   Number of frames till behaviour was enabled.
+        /// </summary>
+        public int FrameCounter;
+
+        /// <summary>
         ///   Current game instance.
         /// </summary>
         private Game game;
@@ -134,6 +139,8 @@ namespace Slash.Unity.Common.Core
             {
                 this.Game.Update(Time.deltaTime);
             }
+
+            ++this.FrameCounter;
         }
 
         #endregion
