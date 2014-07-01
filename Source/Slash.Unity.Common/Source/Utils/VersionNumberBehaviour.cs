@@ -27,6 +27,8 @@ namespace Slash.Unity.Common.Utils
         {
             var versionAsset = (TextAsset)Resources.Load(this.VersionFilePath);
             this.Version = versionAsset.text;
+
+            Debug.Log(string.Format("Game Version {0}", this.Version));
         }
 
         #endregion
