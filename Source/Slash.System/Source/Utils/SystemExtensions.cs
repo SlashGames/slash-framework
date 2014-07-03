@@ -12,6 +12,8 @@ namespace Slash.SystemExt.Utils
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text.RegularExpressions;
 
+    using Slash.Diagnostics.ReSharper.Annotations;
+
     /// <summary>
     ///   Extension methods for classes of the System namespace.
     /// </summary>
@@ -108,12 +110,34 @@ namespace Slash.SystemExt.Utils
         /// </summary>
         /// <param name="s">String to split.</param>
         /// <returns>Split string.</returns>
+        [Pure]
         public static string SplitByCapitalLetters(this string s)
         {
-            var r = new Regex(@"(?<=[A-Z])(?=[A-Z][a-z]) |
+            Regex r = new Regex(@"(?<=[A-Z])(?=[A-Z][a-z]) |
                  (?<=[^A-Z])(?=[A-Z]) |
                  (?<=[A-Za-z])(?=[^A-Za-z])", RegexOptions.IgnorePatternWhitespace);
             return r.Replace(s, " ");
+        }
+
+        /// <summary>
+        ///   Returns the specified string, converting the first letter to upper case.
+        /// </summary>
+        /// <param name="s">String to convert the first letter of.</param>
+        /// <returns>Specified string with first letter in upper case.</returns>
+        [Pure]
+        public static string FirstLetterToUpper(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return s;
+            }
+
+            if (s.Length > 1)
+            {
+                return char.ToUpper(s[0]) + s.Substring(1);
+            }
+
+            return s.ToUpper();
         }
 
         #endregion
