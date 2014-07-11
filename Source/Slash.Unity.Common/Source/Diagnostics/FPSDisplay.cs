@@ -37,6 +37,14 @@ public class FPSDisplay : MonoBehaviour
 
     #region Methods
 
+    private void Awake()
+    {
+        if (!Debug.isDebugBuild)
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
+
     private void Update()
     {
         ++this.frameCount;
