@@ -74,6 +74,7 @@
     <Compile Include="Source\Core\LogicToVisualMappingAttribute.cs" />
     <Compile Include="Source\Diagnostics\CatchExceptionsBehaviour.cs" />
     <Compile Include="Source\Diagnostics\CheatConsole.cs" />
+    <Compile Include="Source\Diagnostics\DebugBuildBehaviour.cs" />
     <Compile Include="Source\Diagnostics\DebugInput.cs" />
     <Compile Include="Source\Diagnostics\DisableWithSceneManager.cs" />
     <Compile Include="Source\Diagnostics\FPSDisplay.cs" />
