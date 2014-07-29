@@ -82,6 +82,7 @@
     <Compile Include="Source\Diagnostics\GameCheatBehaviour.cs" />
     <Compile Include="Source\GUI\GuiExt.cs" />
     <Compile Include="Source\GUI\GUILayoutExt.cs" />
+    <Compile Include="Source\GUI\SleepTimeoutBehaviour.cs" />
     <Compile Include="Source\GUI\ValueEditors\EnumValueEditor.cs" />
     <Compile Include="Source\GUI\ValueEditors\FloatValueEditor.cs" />
     <Compile Include="Source\GUI\ValueEditors\IntegerValueEditor.cs" />
