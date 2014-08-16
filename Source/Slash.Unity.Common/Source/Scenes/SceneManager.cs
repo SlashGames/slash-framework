@@ -66,8 +66,18 @@ namespace Slash.Unity.Common.Scenes
         /// <param name="scene">Scene to change to.</param>
         public void ChangeScene(string scene)
         {
+            ChangeScene(scene, 0);
+        }
+
+        /// <summary>
+        ///   Changes to the specified scene.
+        /// </summary>
+        /// <param name="scene">Scene to change to.</param>
+        /// <param name="delay">Delay before scene change (e.g. to play animations) (in s).</param>
+        public void ChangeScene(string scene, float delay)
+        {
             this.OnSceneChanging(scene);
-            this.StartCoroutine(this.ChangeSceneWithLoadingScreen(scene));
+            this.StartCoroutine(this.ChangeSceneWithLoadingScreen(scene, delay));
         }
 
         public void LoadScene(string scene, object initParams)
@@ -103,8 +113,11 @@ namespace Slash.Unity.Common.Scenes
             }
         }
 
-        private IEnumerator ChangeSceneWithLoadingScreen(string scene)
+        private IEnumerator ChangeSceneWithLoadingScreen(string scene, float delay)
         {
+            // Delay changing.
+            yield return new WaitForSeconds(delay);
+
             GameObject loadingScreen = null;
 
             if (this.LoadingScreenPrefab != null)
