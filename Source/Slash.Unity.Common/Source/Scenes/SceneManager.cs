@@ -12,6 +12,12 @@ namespace Slash.Unity.Common.Scenes
 
     public class SceneManager : MonoBehaviour
     {
+        #region Static Fields
+
+        private static SceneManager instance;
+
+        #endregion
+
         #region Fields
 
         /// <summary>
@@ -34,6 +40,19 @@ namespace Slash.Unity.Common.Scenes
         #endregion
 
         #region Public Properties
+
+        public static SceneManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    GameObject newGameObject = new GameObject();
+                    instance = newGameObject.AddComponent<SceneManager>();
+                }
+                return instance;
+            }
+        }
 
         public object InitParams { get; set; }
 
@@ -75,6 +94,14 @@ namespace Slash.Unity.Common.Scenes
         #endregion
 
         #region Methods
+
+        private void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+        }
 
         private IEnumerator ChangeSceneWithLoadingScreen(string scene)
         {
