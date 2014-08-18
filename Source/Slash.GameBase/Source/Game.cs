@@ -11,6 +11,7 @@ namespace Slash.GameBase
     using Slash.GameBase.Components;
     using Slash.GameBase.Events;
     using Slash.GameBase.Logging;
+    using Slash.GameBase.Processes;
     using Slash.GameBase.Systems;
 
     /// <summary>
@@ -31,6 +32,11 @@ namespace Slash.GameBase
         ///   Manager allowing listeners to register for game-related events.
         /// </summary>
         private readonly EventManager eventManager;
+
+        /// <summary>
+        ///   Manager allowing ticking and queueing timed processes.
+        /// </summary>
+        private readonly ProcessManager processManager;
 
         /// <summary>
         ///   Manager responsible for updating all game systems in each tick.
@@ -54,6 +60,7 @@ namespace Slash.GameBase
             this.entityManager = new EntityManager(this);
             this.systemManager = new SystemManager(this);
             this.eventManager = new EventManager();
+            this.processManager = new ProcessManager();
             this.Running = false;
             this.TimeElapsed = 0.0f;
             this.Log = new GameLogger();
@@ -99,6 +106,17 @@ namespace Slash.GameBase
         ///   Logger for logic events.
         /// </summary>
         public GameLogger Log { get; set; }
+
+        /// <summary>
+        ///   Manager allowing ticking and queueing timed processes.
+        /// </summary>
+        public ProcessManager ProcessManager
+        {
+            get
+            {
+                return this.processManager;
+            }
+        }
 
         /// <summary>
         ///   Whether this game is running, or not (e.g. not yet started,
@@ -184,6 +202,14 @@ namespace Slash.GameBase
         /// <summary>
         ///   Starts this game, beginning to tick all systems.
         /// </summary>
+        public void StartGame()
+        {
+            this.StartGame(new AttributeTable());
+        }
+
+        /// <summary>
+        ///   Starts this game, beginning to tick all systems.
+        /// </summary>
         /// <param name="gameConfiguration">Configuration for game systems.</param>
         public void StartGame(IAttributeTable gameConfiguration)
         {
@@ -261,6 +287,9 @@ namespace Slash.GameBase
         {
             this.systemManager.Update(dt);
             this.eventManager.ProcessEvents(dt);
+
+            this.processManager.UpdateProcesses(dt);
+            this.eventManager.ProcessEvents();
 
             this.entityManager.CleanUpEntities();
             this.eventManager.ProcessEvents();
