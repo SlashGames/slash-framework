@@ -71,6 +71,7 @@
     <Compile Include="Source\Inspector\Attributes\InspectorDataAttributeTest.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorEntityAttributeTest.cs" />
     <Compile Include="Source\Inspector\Utils\InspectorUtilsTest.cs" />
+    <Compile Include="Source\ProcessManagerTest.cs" />
     <Compile Include="Source\SystemManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
