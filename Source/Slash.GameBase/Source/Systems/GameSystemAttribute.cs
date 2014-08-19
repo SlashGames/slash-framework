@@ -11,5 +11,11 @@ namespace Slash.GameBase.Systems
     [AttributeUsage(AttributeTargets.Class)]
     public class GameSystemAttribute : Attribute
     {
+        public GameSystemAttribute()
+        {
+            this.Enabled = true;
+        }
+
+        public bool Enabled { get; set; }
     }
 }

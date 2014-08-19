@@ -176,14 +176,19 @@ namespace Slash.GameBase
                     assembly.GetTypes()
                             .Where(
                                 type =>
-                                typeof(ISystem).IsAssignableFrom(type)
-                                && Attribute.IsDefined(type, typeof(GameSystemAttribute)));
+                                typeof(ISystem).IsAssignableFrom(type));
 
                 foreach (var systemType in systemTypes)
                 {
-                    var system = (ISystem)Activator.CreateInstance(systemType);
-                    this.SystemManager.AddSystem(system);
-                    system.Game = this;
+                    var systemAttribute = (GameSystemAttribute)Attribute.GetCustomAttribute(systemType, typeof(GameSystemAttribute));
+
+                    // Check if enabled.
+                    if (systemAttribute != null && systemAttribute.Enabled)
+                    {
+                        var system = (ISystem)Activator.CreateInstance(systemType);
+                        this.SystemManager.AddSystem(system);
+                        system.Game = this;
+                    }
                 }
             }
         }
