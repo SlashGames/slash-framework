@@ -7,6 +7,7 @@
 namespace Slash.GameBase
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Slash.Collections.AttributeTables;
@@ -172,23 +173,23 @@ namespace Slash.GameBase
             // Add game systems using reflection.
             foreach (var assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-                var systemTypes =
-                    assembly.GetTypes()
-                            .Where(
-                                type =>
-                                typeof(ISystem).IsAssignableFrom(type));
+                var systemTypes = assembly.GetTypes().Where(type => typeof(ISystem).IsAssignableFrom(type));
 
-                foreach (var systemType in systemTypes)
+                // Check if enabled and order by index.
+                var gameSystemTypes = from systemType in systemTypes
+                                      let systemTypeAttribute =
+                                          (GameSystemAttribute)
+                                          Attribute.GetCustomAttribute(systemType, typeof(GameSystemAttribute))
+                                      where systemTypeAttribute != null && systemTypeAttribute.Enabled
+                                      orderby systemTypeAttribute.Order
+                                      select systemType;
+
+                // Attach systems.
+                foreach (var gameSystemType in gameSystemTypes)
                 {
-                    var systemAttribute = (GameSystemAttribute)Attribute.GetCustomAttribute(systemType, typeof(GameSystemAttribute));
-
-                    // Check if enabled.
-                    if (systemAttribute != null && systemAttribute.Enabled)
-                    {
-                        var system = (ISystem)Activator.CreateInstance(systemType);
-                        this.SystemManager.AddSystem(system);
-                        system.Game = this;
-                    }
+                    var system = (ISystem)Activator.CreateInstance(gameSystemType);
+                    this.SystemManager.AddSystem(system);
+                    system.Game = this;
                 }
             }
         }
