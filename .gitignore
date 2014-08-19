@@ -19,3 +19,10 @@ TestResults
 /Source/Unity/Assets/Editor/Plugins/PostBuildLibrariesEditor.dll.meta
 /Source/Unity/Assets/Plugins/PostBuildLibraries.dll
 /Source/Unity/Assets/Plugins/PostBuildLibraries.dll.meta
+Source/Slash.Unity.NGUI/Source/Unity/Assembly-CSharp-Editor-vs.csproj
+Source/Slash.Unity.NGUI/Source/Unity/Assembly-CSharp-Editor.csproj
+Source/Slash.Unity.NGUI/Source/Unity/Assembly-CSharp-vs.csproj
+Source/Slash.Unity.NGUI/Source/Unity/Assembly-CSharp.csproj
+Source/Slash.Unity.NGUI/Source/Unity/Library/
+Source/Slash.Unity.NGUI/Source/Unity/Unity-csharp.sln
+Source/Slash.Unity.NGUI/Source/Unity/Unity.sln
