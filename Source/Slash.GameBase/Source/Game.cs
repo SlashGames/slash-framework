@@ -6,6 +6,9 @@
 
 namespace Slash.GameBase
 {
+    using System;
+    using System.Linq;
+
     using Slash.Collections.AttributeTables;
     using Slash.GameBase.Blueprints;
     using Slash.GameBase.Components;
@@ -13,6 +16,7 @@ namespace Slash.GameBase
     using Slash.GameBase.Logging;
     using Slash.GameBase.Processes;
     using Slash.GameBase.Systems;
+    using Slash.Reflection.Utils;
 
     /// <summary>
     ///   Base game class. Provides default functionality
@@ -165,6 +169,23 @@ namespace Slash.GameBase
         /// </summary>
         public virtual void InitGame()
         {
+            // Add game systems using reflection.
+            foreach (var assembly in AssemblyUtils.GetLoadedAssemblies())
+            {
+                var systemTypes =
+                    assembly.GetTypes()
+                            .Where(
+                                type =>
+                                typeof(ISystem).IsAssignableFrom(type)
+                                && Attribute.IsDefined(type, typeof(GameSystemAttribute)));
+
+                foreach (var systemType in systemTypes)
+                {
+                    var system = (ISystem)Activator.CreateInstance(systemType);
+                    this.SystemManager.AddSystem(system);
+                    system.Game = this;
+                }
+            }
         }
 
         /// <summary>
