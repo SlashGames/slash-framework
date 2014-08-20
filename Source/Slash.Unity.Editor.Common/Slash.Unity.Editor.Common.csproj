@@ -34,6 +34,7 @@
     <Reference Include="UnityEngine">
       <HintPath>$(UNITY_PATH)Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
     <Reference Include="UnityEditor">
       <HintPath>$(UNITY_PATH)Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
@@ -41,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Inspectors\Configuration\GameConfigurationEditor.cs" />
+    <Compile Include="Source\Inspectors\Core\EntityConfigurationEditor.cs" />
     <Compile Include="Source\Inspectors\Diagnostics\DebugInputEditor.cs" />
     <Compile Include="Source\Inspectors\ExposeProperties.cs" />
     <Compile Include="Source\Inspectors\PropertyField.cs" />
@@ -66,6 +68,10 @@
     <ProjectReference Include="..\Slash.Math\Slash.Math.csproj">
       <Project>{834E18DE-A529-4F17-A838-92B1EF259FE3}</Project>
       <Name>Slash.Math</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
+      <Name>Slash.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.Unity.Common\Slash.Unity.Common.csproj">
       <Project>{AA429D02-6020-44F3-8B62-6A5C1AD4FE7D}</Project>
