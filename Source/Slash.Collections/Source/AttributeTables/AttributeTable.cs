@@ -25,7 +25,10 @@ namespace Slash.Collections.AttributeTables
     ///   respective values.
     /// </summary>
     [Serializable]
-    public class AttributeTable : IAttributeTable, IXmlSerializable, IBinarySerializable
+    public class AttributeTable : IAttributeTable,
+                                  IXmlSerializable,
+                                  IBinarySerializable,
+                                  IEnumerable<KeyValuePair<object, object>>
     {
         #region Constants
 
@@ -384,6 +387,15 @@ namespace Slash.Collections.AttributeTables
 
         #endregion
 
+        #region Explicit Interface Methods
+
+        IEnumerator<KeyValuePair<object, object>> IEnumerable<KeyValuePair<object, object>>.GetEnumerator()
+        {
+            return this.attributes.GetEnumerator();
+        }
+
+        #endregion
+
         #region Methods
 
         protected bool Equals(AttributeTable other)
@@ -430,7 +442,8 @@ namespace Slash.Collections.AttributeTables
             writer.WriteAttributeString(KeyTypeAttributeName, attributePair.Key.GetType().FullNameWithoutAssemblyInfo());
             if (attributePair.Value != null)
             {
-                writer.WriteAttributeString(ValueTypeAttributeName, attributePair.Value.GetType().FullNameWithoutAssemblyInfo());
+                writer.WriteAttributeString(
+                    ValueTypeAttributeName, attributePair.Value.GetType().FullNameWithoutAssemblyInfo());
             }
 
             SerializationUtils.WriteXml(writer, attributePair.Key, KeyElementName);
