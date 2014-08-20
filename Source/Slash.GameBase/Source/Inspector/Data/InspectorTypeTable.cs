@@ -12,7 +12,6 @@ namespace Slash.GameBase.Inspector.Data
     using System.Linq;
 
     using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Utils;
     using Slash.Reflection.Utils;
 
     /// <summary>
@@ -24,14 +23,15 @@ namespace Slash.GameBase.Inspector.Data
         #region Fields
 
         /// <summary>
+        ///   Attributes whose inspectors are shown only if a certain condition is satisfied.
+        /// </summary>
+        private readonly Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute>
+            conditionalInspectors;
+
+        /// <summary>
         ///   Components accessible to the user in the landscape designer.
         /// </summary>
         private readonly Dictionary<Type, InspectorType> inspectorTypes;
-
-        /// <summary>
-        ///   Attributes whose inspectors are shown only if a certain condition is satisfied.
-        /// </summary>
-        private Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute> conditionalInspectors;
 
         #endregion
 
@@ -42,6 +42,18 @@ namespace Slash.GameBase.Inspector.Data
             this.inspectorTypes = new Dictionary<Type, InspectorType>();
             this.conditionalInspectors =
                 new Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute>();
+        }
+
+        #endregion
+
+        #region Public Indexers
+
+        public InspectorType this[Type type]
+        {
+            get
+            {
+                return this.GetInspectorType(type);
+            }
         }
 
         #endregion
@@ -60,7 +72,12 @@ namespace Slash.GameBase.Inspector.Data
             foreach (var assembly in AssemblyUtils.GetLoadedAssemblies())
             {
                 var inspectorTypes =
-                    assembly.GetTypes().Where(type => baseType == null || baseType.IsAssignableFrom(type) && Attribute.IsDefined(type, typeof(InspectorTypeAttribute)));
+                    assembly.GetTypes()
+                            .Where(
+                                type =>
+                                baseType == null
+                                || baseType.IsAssignableFrom(type)
+                                && Attribute.IsDefined(type, typeof(InspectorTypeAttribute)));
 
                 foreach (var inspectorType in inspectorTypes)
                 {
@@ -71,25 +88,6 @@ namespace Slash.GameBase.Inspector.Data
             }
 
             return inspectorTypeTable;
-        }
-
-        /// <summary>
-        ///   Types accessible to the user in the landscape designer.
-        /// </summary>
-        /// <returns>All types accessible to the user in the landscape designer.</returns>
-        public IEnumerable<Type> Types()
-        {
-            return this.inspectorTypes.Keys;
-        }
-
-        /// <summary>
-        ///   Gets the inspector type for the specified type.
-        /// </summary>
-        /// <param name="type">Type to get the inspector type for.</param>
-        /// <returns>Inspector type for the specified type.</returns>
-        public InspectorType GetInspectorType(Type type)
-        {
-            return this.inspectorTypes[type];
         }
 
         /// <summary>
@@ -108,6 +106,21 @@ namespace Slash.GameBase.Inspector.Data
             return condition;
         }
 
+        public IEnumerator<InspectorType> GetEnumerator()
+        {
+            return this.inspectorTypes.Values.GetEnumerator();
+        }
+
+        /// <summary>
+        ///   Gets the inspector type for the specified type.
+        /// </summary>
+        /// <param name="type">Type to get the inspector type for.</param>
+        /// <returns>Inspector type for the specified type.</returns>
+        public InspectorType GetInspectorType(Type type)
+        {
+            return this.inspectorTypes[type];
+        }
+
         /// <summary>
         ///   Whether the specified type is accessible to the user in the inspector.
         /// </summary>
@@ -121,16 +134,24 @@ namespace Slash.GameBase.Inspector.Data
             return this.inspectorTypes.ContainsKey(type);
         }
 
+        /// <summary>
+        ///   Types accessible to the user in the landscape designer.
+        /// </summary>
+        /// <returns>All types accessible to the user in the landscape designer.</returns>
+        public IEnumerable<Type> Types()
+        {
+            return this.inspectorTypes.Keys;
+        }
+
         #endregion
 
-        public IEnumerator<InspectorType> GetEnumerator()
-        {
-            return this.inspectorTypes.Values.GetEnumerator();
-        }
+        #region Explicit Interface Methods
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
+
+        #endregion
     }
 }
