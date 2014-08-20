@@ -6,7 +6,6 @@
 
 namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
 
@@ -103,7 +102,8 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
                                     return list;
                                 },
                             (obj, index) =>
-                            this.DrawInspectorProperty(localInspectorProperty, new GUIContent("Item " + index), obj),
+                            EditorGUIUtils.LogicInspectorPropertyField(
+                                localInspectorProperty, obj, new GUIContent("Item " + index)),
                             out newList);
 
                     // Set new value if changed.
@@ -115,7 +115,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
                 else
                 {
                     // Draw inspector property.
-                    object newValue = this.DrawInspectorProperty(inspectorProperty, currentValue);
+                    object newValue = EditorGUIUtils.LogicInspectorPropertyField(inspectorProperty, currentValue);
 
                     // Set new value if changed.
                     if (!Equals(newValue, currentValue))
@@ -124,45 +124,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
                     }
                 }
             }
-        }
-
-        private object DrawInspectorProperty(
-            InspectorPropertyAttribute inspectorProperty, GUIContent label, object currentValue)
-        {
-            // Draw inspector control.
-            if (inspectorProperty is InspectorBoolAttribute)
-            {
-                return EditorGUILayout.Toggle(label, Convert.ToBoolean(currentValue));
-            }
-            if (inspectorProperty is InspectorStringAttribute || inspectorProperty is InspectorBlueprintAttribute)
-            {
-                return EditorGUILayout.TextField(label, Convert.ToString(currentValue));
-            }
-            if (inspectorProperty is InspectorFloatAttribute)
-            {
-                return EditorGUILayout.FloatField(label, Convert.ToSingle(currentValue));
-            }
-            if (inspectorProperty is InspectorIntAttribute)
-            {
-                return EditorGUILayout.IntField(label, Convert.ToInt32(currentValue));
-            }
-            InspectorEnumAttribute enumInspectorProperty = inspectorProperty as InspectorEnumAttribute;
-            if (enumInspectorProperty != null)
-            {
-                return EditorGUILayout.EnumPopup(
-                    label, (Enum)Convert.ChangeType(currentValue, enumInspectorProperty.PropertyType));
-            }
-
-            EditorGUILayout.HelpBox(
-                string.Format("No inspector found for property type '{0}'.", inspectorProperty.GetType().Name),
-                MessageType.Warning);
-            return currentValue;
-        }
-
-        private object DrawInspectorProperty(InspectorPropertyAttribute inspectorProperty, object currentValue)
-        {
-            return this.DrawInspectorProperty(
-                inspectorProperty, new GUIContent(inspectorProperty.Name, inspectorProperty.Description), currentValue);
         }
 
         private void OnEnable()

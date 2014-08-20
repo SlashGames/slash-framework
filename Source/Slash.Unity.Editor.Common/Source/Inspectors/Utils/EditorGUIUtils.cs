@@ -9,6 +9,8 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
     using System;
     using System.Collections;
 
+    using Slash.GameBase.Inspector.Attributes;
+
     using UnityEditor;
 
     using UnityEditorInternal;
@@ -100,6 +102,46 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             bool newFoldout = ArrayField(foldout, content, array, createArray, typeof(T), out newArray);
             array = newArray;
             return newFoldout;
+        }
+
+        public static object LogicInspectorPropertyField(
+            InspectorPropertyAttribute inspectorProperty, object currentValue, GUIContent label)
+        {
+            // Draw inspector control.
+            if (inspectorProperty is InspectorBoolAttribute)
+            {
+                return EditorGUILayout.Toggle(label, Convert.ToBoolean(currentValue));
+            }
+            if (inspectorProperty is InspectorStringAttribute || inspectorProperty is InspectorBlueprintAttribute)
+            {
+                return EditorGUILayout.TextField(label, Convert.ToString(currentValue));
+            }
+            if (inspectorProperty is InspectorFloatAttribute)
+            {
+                return EditorGUILayout.FloatField(label, Convert.ToSingle(currentValue));
+            }
+            if (inspectorProperty is InspectorIntAttribute)
+            {
+                return EditorGUILayout.IntField(label, Convert.ToInt32(currentValue));
+            }
+            InspectorEnumAttribute enumInspectorProperty = inspectorProperty as InspectorEnumAttribute;
+            if (enumInspectorProperty != null)
+            {
+                return EditorGUILayout.EnumPopup(
+                    label, (Enum)Convert.ChangeType(currentValue, enumInspectorProperty.PropertyType));
+            }
+
+            EditorGUILayout.HelpBox(
+                string.Format("No inspector found for property type '{0}'.", inspectorProperty.GetType().Name),
+                MessageType.Warning);
+            return currentValue;
+        }
+
+        public static object LogicInspectorPropertyField(
+            InspectorPropertyAttribute inspectorProperty, object currentValue)
+        {
+            return LogicInspectorPropertyField(
+                inspectorProperty, currentValue, new GUIContent(inspectorProperty.Name, inspectorProperty.Description));
         }
 
         public static string ShaderField(ShaderContext shaderContext, string label)
