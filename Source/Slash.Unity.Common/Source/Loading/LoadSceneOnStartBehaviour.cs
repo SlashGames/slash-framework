@@ -8,7 +8,7 @@ namespace Slash.Unity.Common.Loading
 {
     using UnityEngine;
 
-    public class LoadSceneBehaviour : MonoBehaviour
+    public class LoadSceneOnStartBehaviour : MonoBehaviour
     {
         #region Fields
 

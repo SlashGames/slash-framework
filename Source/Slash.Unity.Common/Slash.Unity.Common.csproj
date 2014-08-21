@@ -99,7 +99,7 @@
     <Compile Include="Source\GUI\ValueEditors\Vector2IValueEditor.cs" />
     <Compile Include="Source\Input\InputUtils.cs" />
     <Compile Include="Source\GUI\SwitchFullscreenBehaviour.cs" />
-    <Compile Include="Source\Loading\LoadSceneBehaviour.cs" />
+    <Compile Include="Source\Loading\LoadSceneOnStartBehaviour.cs" />
     <Compile Include="Source\Logging\ConsoleAppender.cs" />
     <Compile Include="Source\Logging\LogBehaviour.cs" />
     <Compile Include="Source\Logging\LoggerExtensions.cs" />
@@ -118,8 +118,11 @@
     <Compile Include="Source\Triggers\Conditions\ICondition.cs" />
     <Compile Include="Source\Triggers\Conditions\EventCondition.cs" />
     <Compile Include="Source\Triggers\Trigger.cs" />
+    <Compile Include="Source\Utils\ActiveOnPlatformBehaviour.cs" />
+    <Compile Include="Source\Loading\LoadSceneOnClickBehaviour.cs" />
+    <Compile Include="Source\Loading\LoadSceneOnEscBehaviour.cs" />
+    <Compile Include="Source\Utils\LogDeviceIdBehaviour.cs" />
     <Compile Include="Source\Utils\UnityPathUtils.cs" />
-    <Compile Include="Source\Utils\GarbageCollectionBehaviour.cs" />
     <Compile Include="Source\Utils\GLUtils.cs" />
     <Compile Include="Source\Utils\InspectorTooltipAttribute.cs" />
     <Compile Include="Source\Utils\UnityUtils.cs" />
