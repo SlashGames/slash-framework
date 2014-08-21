@@ -106,6 +106,13 @@
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
     <Compile Include="Source\Scenes\SceneManager.cs" />
+    <Compile Include="Source\Sound\AudioChannel.cs" />
+    <Compile Include="Source\Sound\AudioChannelType.cs" />
+    <Compile Include="Source\Sound\AudioPlayerPrefs.cs" />
+    <Compile Include="Source\Sound\FadingAudioSource.cs" />
+    <Compile Include="Source\Sound\PlayAudioBehaviour.cs" />
+    <Compile Include="Source\Sound\PlaySoundOnClickBehaviour.cs" />
+    <Compile Include="Source\Sound\SoundInterfaceBehaviour.cs" />
     <Compile Include="Source\Triggers\Actions\IAction.cs" />
     <Compile Include="Source\Triggers\Conditions\Condition.cs" />
     <Compile Include="Source\Triggers\Conditions\ICondition.cs" />
