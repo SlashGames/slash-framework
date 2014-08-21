@@ -115,8 +115,11 @@ namespace Slash.Unity.Common.Scenes
 
         private IEnumerator ChangeSceneWithLoadingScreen(string scene, float delay)
         {
-            // Delay changing.
-            yield return new WaitForSeconds(delay);
+            if (delay > 0)
+            {
+                // Delay changing.
+                yield return new WaitForSeconds(delay);
+            }
 
             GameObject loadingScreen = null;
 
