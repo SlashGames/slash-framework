@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="UnityEngine">
       <HintPath>$(UNITY_PATH)Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -51,10 +52,18 @@
     <Compile Include="Source\Inspectors\Utils\MemberReferenceDrawer.cs" />
     <Compile Include="Source\Inspectors\Utils\TooltipDrawer.cs" />
     <Compile Include="Source\Inspectors\ViewModels\ViewEventDelegateDrawer.cs" />
+    <Compile Include="Source\MenuItems\Build\BuildBlueprints.cs" />
+    <Compile Include="Source\MenuItems\Build\BuildConfiguration.cs" />
+    <Compile Include="Source\MenuItems\Build\BuildManager.cs" />
+    <Compile Include="Source\MenuItems\Build\BuildOptionSet.cs" />
+    <Compile Include="Source\MenuItems\Build\BuildSettings.cs" />
+    <Compile Include="Source\MenuItems\Build\BuildSettingsAndroid.cs" />
+    <Compile Include="Source\MenuItems\Build\BuildType.cs" />
     <Compile Include="Source\MenuItems\Util\PlayerPrefsDeleteAll.cs" />
     <Compile Include="Source\MenuItems\Util\FindMonoBehaviourUsages.cs" />
     <Compile Include="Source\MenuItems\Util\CheckTextureAssets.cs" />
     <Compile Include="Source\MenuItems\Windows\OpenSceneWindow.cs" />
+    <Compile Include="Source\Utils\Options.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
