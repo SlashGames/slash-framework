@@ -6,6 +6,8 @@
 
 namespace Slash.Unity.NGUIExt.Floating
 {
+    using Slash.Unity.NGUIExt.Util;
+
     using UnityEngine;
 
     public class UIFloatingWidget : MonoBehaviour
@@ -65,11 +67,7 @@ namespace Slash.Unity.NGUIExt.Floating
                 this.transform.localPosition += new Vector3(0.0f, this.FloatingSpeed * Time.deltaTime, 0.0f);
 
                 // Fade.
-                this.Widget.color = new Color(
-                    this.Widget.color.r,
-                    this.Widget.color.g,
-                    this.Widget.color.b,
-                    this.Widget.color.a - this.FadeSpeed * Time.deltaTime);
+                this.Widget.SetAlpha(this.Widget.color.a - this.FadeSpeed * Time.deltaTime);
             }
         }
 
