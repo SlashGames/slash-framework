@@ -757,6 +757,36 @@ namespace Slash.ECS.Components
             this.removedEntities.Add(entityId);
         }
 
+        /// <summary>
+        ///   Tries to get a component of the passed type attached to the entity with the specified id.
+        /// </summary>
+        /// <param name="entityId">Id of the entity to get the component of.</param>
+        /// <param name="componentType">Type of the component to get.</param>
+        /// <param name="entityComponent">Retrieved entity component, or null, if no component could be found.</param>
+        /// <returns>
+        ///   <c>true</c>, if a component could be found, and <c>false</c> otherwise.
+        /// </returns>
+        public bool TryGetComponent(int entityId, Type componentType, out IEntityComponent entityComponent)
+        {
+            entityComponent = this.GetComponent(entityId, componentType);
+            return entityComponent != null;
+        }
+
+        /// <summary>
+        ///   Tries to get a component of the passed type attached to the entity with the specified id.
+        /// </summary>
+        /// <typeparam name="T">Type of the component to get.</typeparam>
+        /// <param name="entityId">Id of the entity to get the component of.</param>
+        /// <param name="entityComponent">Retrieved entity component, or null, if no component could be found.</param>
+        /// <returns>
+        ///   <c>true</c>, if a component could be found, and <c>false</c> otherwise.
+        /// </returns>
+        public bool TryGetComponent<T>(int entityId, out T entityComponent) where T : IEntityComponent
+        {
+            entityComponent = this.GetComponent<T>(entityId);
+            return !Equals(entityComponent, default(T));
+        }
+
         #endregion
 
         #region Methods
