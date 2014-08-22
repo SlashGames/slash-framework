@@ -45,9 +45,7 @@
     <Compile Include="Source\AttributeTables\AttributeTableTest.cs" />
     <Compile Include="Source\Extensions\EnumerableExtensionMethodsTest.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Source\Utils\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
