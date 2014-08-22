@@ -205,7 +205,7 @@ namespace Slash.GameBase
             }
 
             this.Running = false;
-            this.eventManager.QueueEvent(FrameworkEventType.GamePaused);
+            this.eventManager.QueueEvent(FrameworkEvent.GamePaused);
 
             // Process events till the paused event before stopping the game.
             // TODO(co): Introduce a SendEvent method for event manager and handle both cases: Currently inside event handling and not inside.
@@ -223,7 +223,7 @@ namespace Slash.GameBase
             }
 
             this.Running = true;
-            this.eventManager.QueueEvent(FrameworkEventType.GameResumed);
+            this.eventManager.QueueEvent(FrameworkEvent.GameResumed);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Slash.GameBase
 
             // Send event.
             this.Running = true;
-            this.eventManager.QueueEvent(FrameworkEventType.GameStarted);
+            this.eventManager.QueueEvent(FrameworkEvent.GameStarted);
 
             // Give the derived game the chance to do game start things.
             this.OnGameStarted();

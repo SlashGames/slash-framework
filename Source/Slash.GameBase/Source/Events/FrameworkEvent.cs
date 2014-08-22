@@ -11,7 +11,7 @@ namespace Slash.GameBase.Events
     /// <summary>
     ///   Type of an event that occurred within the entity system.
     /// </summary>
-    public enum FrameworkEventType
+    public enum FrameworkEvent
     {
         /// <summary>
         ///   <para>

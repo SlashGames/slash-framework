@@ -61,13 +61,13 @@
     <Compile Include="Source\Blueprints\HierarchicalBlueprintManager.cs" />
     <Compile Include="Source\Blueprints\IBlueprintManager.cs" />
     <Compile Include="Source\Configurations\EntityConfiguration.cs" />
-    <Compile Include="Source\Events\Event.cs" />
+    <Compile Include="Source\Events\GameEvent.cs" />
     <Compile Include="Source\Events\ComponentStatusChangedEventData.cs" />
     <Compile Include="Source\Events\Entity2Data.cs" />
     <Compile Include="Source\Events\EntityComponentData.cs" />
     <Compile Include="Source\Events\EntityEventData.cs" />
     <Compile Include="Source\Events\EventManager.cs" />
-    <Compile Include="Source\Events\FrameworkEventType.cs" />
+    <Compile Include="Source\Events\FrameworkEvent.cs" />
     <Compile Include="Source\Components\IEntityComponent.cs" />
     <Compile Include="Source\Components\ComponentManager.cs" />
     <Compile Include="Source\Components\EntityManager.cs" />

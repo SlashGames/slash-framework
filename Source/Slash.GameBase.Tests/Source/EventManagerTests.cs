@@ -69,7 +69,7 @@ namespace Slash.GameBase.Tests
         [Test]
         public void TestComponentAddedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEventType.ComponentAdded, this.OnComponentAdded);
+            this.game.EventManager.RegisterListener(FrameworkEvent.ComponentAdded, this.OnComponentAdded);
             this.testEntityId = this.game.EntityManager.CreateEntity();
             this.game.EntityManager.AddComponent(this.testEntityId, this.entityComponent);
             this.CheckTestPassed();
@@ -81,7 +81,7 @@ namespace Slash.GameBase.Tests
         [Test]
         public void TestComponentRemovedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEventType.ComponentRemoved, this.OnComponentRemoved);
+            this.game.EventManager.RegisterListener(FrameworkEvent.ComponentRemoved, this.OnComponentRemoved);
             this.testEntityId = this.game.EntityManager.CreateEntity();
             this.game.EntityManager.AddComponent(this.testEntityId, this.entityComponent);
             this.game.EntityManager.RemoveComponent(this.testEntityId, typeof(TestEntityComponent));
@@ -94,7 +94,7 @@ namespace Slash.GameBase.Tests
         [Test]
         public void TestEntityCreatedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEventType.EntityCreated, this.OnEntityCreated);
+            this.game.EventManager.RegisterListener(FrameworkEvent.EntityCreated, this.OnEntityCreated);
             this.testEntityId = this.game.EntityManager.CreateEntity();
             this.CheckTestPassed();
         }
@@ -105,7 +105,7 @@ namespace Slash.GameBase.Tests
         [Test]
         public void TestEntityRemovedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEventType.EntityRemoved, this.OnEntityRemoved);
+            this.game.EventManager.RegisterListener(FrameworkEvent.EntityRemoved, this.OnEntityRemoved);
             this.testEntityId = this.game.EntityManager.CreateEntity();
             this.game.EntityManager.RemoveEntity(this.testEntityId);
             this.CheckTestPassed();
@@ -117,7 +117,7 @@ namespace Slash.GameBase.Tests
         [Test]
         public void TestGamePausedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEventType.GamePaused, this.OnGamePaused);
+            this.game.EventManager.RegisterListener(FrameworkEvent.GamePaused, this.OnGamePaused);
             this.game.StartGame(null);
             this.game.PauseGame();
             this.CheckTestPassed();
@@ -129,7 +129,7 @@ namespace Slash.GameBase.Tests
         [Test]
         public void TestGameResumedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEventType.GameResumed, this.OnGameResumed);
+            this.game.EventManager.RegisterListener(FrameworkEvent.GameResumed, this.OnGameResumed);
             this.game.StartGame(null);
             this.game.PauseGame();
             this.game.ResumeGame();
@@ -142,7 +142,7 @@ namespace Slash.GameBase.Tests
         [Test]
         public void TestGameStartedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEventType.GameStarted, this.OnGameStarted);
+            this.game.EventManager.RegisterListener(FrameworkEvent.GameStarted, this.OnGameStarted);
             this.game.StartGame(null);
             this.CheckTestPassed();
         }
@@ -155,7 +155,7 @@ namespace Slash.GameBase.Tests
         {
             object testEvent = new object();
             this.game.EventManager.RegisterListener(delegate { this.testPassed = true; });
-            this.game.EventManager.QueueEvent(new Event(testEvent));
+            this.game.EventManager.QueueEvent(new GameEvent(testEvent));
             this.CheckTestPassed();
         }
 
@@ -165,8 +165,8 @@ namespace Slash.GameBase.Tests
         [Test]
         public void TestRemoveListener()
         {
-            this.game.EventManager.RegisterListener(FrameworkEventType.EntityCreated, this.OnEntityCreated);
-            this.game.EventManager.RemoveListener(FrameworkEventType.EntityCreated, this.OnEntityCreated);
+            this.game.EventManager.RegisterListener(FrameworkEvent.EntityCreated, this.OnEntityCreated);
+            this.game.EventManager.RemoveListener(FrameworkEvent.EntityCreated, this.OnEntityCreated);
             this.game.EntityManager.CreateEntity();
             this.game.EventManager.ProcessEvents();
             Assert.IsFalse(this.testPassed);
@@ -178,7 +178,7 @@ namespace Slash.GameBase.Tests
         [Test]
         public void TestSystemAddedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEventType.SystemAdded, this.OnSystemAdded);
+            this.game.EventManager.RegisterListener(FrameworkEvent.SystemAdded, this.OnSystemAdded);
             this.game.SystemManager.AddSystem(this.system);
             this.CheckTestPassed();
         }
@@ -264,7 +264,7 @@ namespace Slash.GameBase.Tests
         ///   Called when a new component has been added.
         /// </summary>
         /// <param name="e"> Event that has occurred within the framework. </param>
-        private void OnComponentAdded(Event e)
+        private void OnComponentAdded(GameEvent e)
         {
             EntityComponentData data = (EntityComponentData)e.EventData;
             this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.Component);
@@ -274,7 +274,7 @@ namespace Slash.GameBase.Tests
         ///   Called when a component has been removed.
         /// </summary>
         /// <param name="e"> Event that has occurred within the framework. </param>
-        private void OnComponentRemoved(Event e)
+        private void OnComponentRemoved(GameEvent e)
         {
             EntityComponentData data = (EntityComponentData)e.EventData;
             this.testPassed = data.EntityId == this.testEntityId && this.entityComponent.Equals(data.Component);
@@ -284,7 +284,7 @@ namespace Slash.GameBase.Tests
         ///   Called when a new entity has been created.
         /// </summary>
         /// <param name="e"> Event that has occurred within the framework. </param>
-        private void OnEntityCreated(Event e)
+        private void OnEntityCreated(GameEvent e)
         {
             int entityId = (int)e.EventData;
             this.testPassed = entityId == this.testEntityId;
@@ -294,7 +294,7 @@ namespace Slash.GameBase.Tests
         ///   Called when an entity has been removed.
         /// </summary>
         /// <param name="e"> Event that has occurred within the framework. </param>
-        private void OnEntityRemoved(Event e)
+        private void OnEntityRemoved(GameEvent e)
         {
             int entityId = (int)e.EventData;
             this.testPassed = entityId == this.testEntityId;
@@ -304,7 +304,7 @@ namespace Slash.GameBase.Tests
         ///   Called when the game has been paused.
         /// </summary>
         /// <param name="e"> Event that has occurred within the framework. </param>
-        private void OnGamePaused(Event e)
+        private void OnGamePaused(GameEvent e)
         {
             this.testPassed = true;
         }
@@ -313,7 +313,7 @@ namespace Slash.GameBase.Tests
         ///   Called when the game has been resumed.
         /// </summary>
         /// <param name="e"> Event that has occurred within the framework. </param>
-        private void OnGameResumed(Event e)
+        private void OnGameResumed(GameEvent e)
         {
             this.testPassed = true;
         }
@@ -322,7 +322,7 @@ namespace Slash.GameBase.Tests
         ///   Called when the game starts.
         /// </summary>
         /// <param name="e"> Event that has occurred within the framework. </param>
-        private void OnGameStarted(Event e)
+        private void OnGameStarted(GameEvent e)
         {
             this.testPassed = true;
         }
@@ -331,7 +331,7 @@ namespace Slash.GameBase.Tests
         ///   Called when a new system has been added.
         /// </summary>
         /// <param name="e"> Event that has occurred within the framework. </param>
-        private void OnSystemAdded(Event e)
+        private void OnSystemAdded(GameEvent e)
         {
             this.testPassed = this.system.Equals(e.EventData);
         }

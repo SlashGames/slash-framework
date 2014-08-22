@@ -134,7 +134,7 @@ namespace Slash.GameBase.Components
             }
 
             // Raise event.
-            this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
+            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
 
             // Remove from list of inactive entities.
             this.inactiveEntities.Remove(entityId);
@@ -182,7 +182,7 @@ namespace Slash.GameBase.Components
             if (sendEvent)
             {
                 this.game.EventManager.QueueEvent(
-                    FrameworkEventType.ComponentAdded, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentAdded, new EntityComponentData(entityId, component));
             }
         }
 
@@ -250,7 +250,7 @@ namespace Slash.GameBase.Components
         public int CreateEntity(int id)
         {
             this.entities.Add(id);
-            this.game.EventManager.QueueEvent(FrameworkEventType.EntityCreated, id);
+            this.game.EventManager.QueueEvent(FrameworkEvent.EntityCreated, id);
             return id;
         }
 
@@ -323,7 +323,7 @@ namespace Slash.GameBase.Components
                 components.Add(component);
 
                 this.game.EventManager.QueueEvent(
-                    FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
             }
 
             // Remove entity.
@@ -625,7 +625,7 @@ namespace Slash.GameBase.Components
             }
 
             // Raise event.
-            this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
+            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
         }
 
         /// <summary>
@@ -642,7 +642,7 @@ namespace Slash.GameBase.Components
             }
 
             // Raise event.
-            this.game.EventManager.QueueEvent(FrameworkEventType.EntityInitialized, entityId);
+            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
         }
 
         /// <summary>
@@ -679,7 +679,7 @@ namespace Slash.GameBase.Components
             if (removed)
             {
                 this.game.EventManager.QueueEvent(
-                    FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
             }
 
             return removed;
@@ -693,7 +693,7 @@ namespace Slash.GameBase.Components
             IEnumerable<int> aliveEntities = this.entities.Except(this.removedEntities);
             foreach (int entityId in aliveEntities)
             {
-                this.game.EventManager.QueueEvent(FrameworkEventType.EntityRemoved, entityId);
+                this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
 
                 // Remove components.
                 foreach (ComponentManager manager in this.componentManagers.Values)
@@ -702,7 +702,7 @@ namespace Slash.GameBase.Components
                     if (manager.RemoveComponent(entityId, out component))
                     {
                         this.game.EventManager.QueueEvent(
-                            FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, component));
+                            FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
                     }
                 }
 
@@ -749,10 +749,10 @@ namespace Slash.GameBase.Components
                 }
 
                 this.game.EventManager.QueueEvent(
-                    FrameworkEventType.ComponentRemoved, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
             }
 
-            this.game.EventManager.QueueEvent(FrameworkEventType.EntityRemoved, entityId);
+            this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
 
             this.removedEntities.Add(entityId);
         }

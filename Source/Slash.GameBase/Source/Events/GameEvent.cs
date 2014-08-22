@@ -12,7 +12,7 @@ namespace Slash.GameBase.Events
     ///   Event that has occurred within the entity system. May contain
     ///   additional data listeners might be interested in.
     /// </summary>
-    public class Event
+    public class GameEvent
     {
         #region Constructors and Destructors
 
@@ -22,7 +22,7 @@ namespace Slash.GameBase.Events
         /// <param name="eventType">
         ///   Type of the new event.
         /// </param>
-        public Event(object eventType)
+        public GameEvent(object eventType)
             : this(eventType, null)
         {
         }
@@ -40,7 +40,7 @@ namespace Slash.GameBase.Events
         /// <exception cref="ArgumentNullException">
         ///   Specified event type is null.
         /// </exception>
-        public Event(object eventType, object eventData)
+        public GameEvent(object eventType, object eventData)
         {
             if (eventType == null)
             {

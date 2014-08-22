@@ -20,7 +20,7 @@ namespace Slash.GameBase.Events
         /// <summary>
         ///   Queue of events that are currently being processed.
         /// </summary>
-        private readonly List<Event> currentEvents;
+        private readonly List<GameEvent> currentEvents;
 
         /// <summary>
         ///   Events to be fired later.
@@ -40,7 +40,7 @@ namespace Slash.GameBase.Events
         /// <summary>
         ///   Queue of events to be processed.
         /// </summary>
-        private readonly List<Event> newEvents;
+        private readonly List<GameEvent> newEvents;
 
         /// <summary>
         ///   Accumulated passed time to use for delayed events (in s).
@@ -67,8 +67,8 @@ namespace Slash.GameBase.Events
         /// </summary>
         public EventManager()
         {
-            this.newEvents = new List<Event>();
-            this.currentEvents = new List<Event>();
+            this.newEvents = new List<GameEvent>();
+            this.currentEvents = new List<GameEvent>();
             this.listeners = new Dictionary<object, EventDelegate>();
         }
 
@@ -80,7 +80,7 @@ namespace Slash.GameBase.Events
         ///   Signature of the event callbacks.
         /// </summary>
         /// <param name="e"> Event which occurred. </param>
-        public delegate void EventDelegate(Event e);
+        public delegate void EventDelegate(GameEvent e);
 
         #endregion
 
@@ -109,7 +109,7 @@ namespace Slash.GameBase.Events
         /// <param name="eventData"> Data any listeners might be interested in. </param>
         public void FireDelayed(float delay, object eventType, object eventData = null)
         {
-            this.FireDelayed(delay, new Event(eventType, eventData));
+            this.FireDelayed(delay, new GameEvent(eventType, eventData));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Slash.GameBase.Events
         /// </summary>
         /// <param name="delay">Time to wait before firing the event, in seconds.</param>
         /// <param name="e">Event to fire.</param>
-        public void FireDelayed(float delay, Event e)
+        public void FireDelayed(float delay, GameEvent e)
         {
             if (delay > 0)
             {
@@ -136,14 +136,14 @@ namespace Slash.GameBase.Events
         /// <param name="eventData"> Data any listeners might be interested in. </param>
         public void FireImmediately(object eventType, object eventData = null)
         {
-            this.FireImmediately(new Event(eventType, eventData));
+            this.FireImmediately(new GameEvent(eventType, eventData));
         }
 
         /// <summary>
         ///   Fires the passed event immediately, notifying all listeners.
         /// </summary>
         /// <param name="e"> Event to fire. </param>
-        public void FireImmediately(Event e)
+        public void FireImmediately(GameEvent e)
         {
             this.ProcessEvent(e);
         }
@@ -186,7 +186,7 @@ namespace Slash.GameBase.Events
                 this.currentEvents.AddRange(this.newEvents);
                 this.newEvents.Clear();
 
-                foreach (Event e in this.currentEvents)
+                foreach (GameEvent e in this.currentEvents)
                 {
                     this.ProcessEvent(e);
                     ++processedEvents;
@@ -244,14 +244,14 @@ namespace Slash.GameBase.Events
         /// <param name="eventData"> Data any listeners might be interested in. </param>
         public void QueueEvent(object eventType, object eventData)
         {
-            this.QueueEvent(new Event(eventType, eventData));
+            this.QueueEvent(new GameEvent(eventType, eventData));
         }
 
         /// <summary>
         ///   Queues the passed event to be processed later.
         /// </summary>
         /// <param name="e"> Event to queue. </param>
-        public void QueueEvent(Event e)
+        public void QueueEvent(GameEvent e)
         {
             this.newEvents.Add(e);
         }
@@ -356,7 +356,7 @@ namespace Slash.GameBase.Events
         ///   Notifies all interested listeners of the specified event.
         /// </summary>
         /// <param name="e">Event to pass to listeners.</param>
-        private void ProcessEvent(Event e)
+        private void ProcessEvent(GameEvent e)
         {
             // Check for listeners to all events.
             EventDelegate eventListeners = this.allEventListeners;
@@ -386,7 +386,7 @@ namespace Slash.GameBase.Events
             /// <summary>
             ///   Event to be fired later.
             /// </summary>
-            public Event Event { get; set; }
+            public GameEvent Event { get; set; }
 
             /// <summary>
             ///   Time remaining before this event is to be fired, in seconds.

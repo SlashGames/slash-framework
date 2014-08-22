@@ -9,12 +9,11 @@ namespace Slash.Unity.Common.Logging
     using System.Collections.Generic;
 
     using Slash.GameBase;
+    using Slash.GameBase.Events;
     using Slash.Unity.Common.Core;
     using Slash.Unity.Common.Utils;
 
     using UnityEngine;
-
-    using Event = Slash.GameBase.Events.Event;
 
     public class LogBehaviour : MonoBehaviour
     {
@@ -137,7 +136,7 @@ namespace Slash.Unity.Common.Logging
             this.Error(UnityUtils.WithTimestamp(message));
         }
 
-        private void OnEvent(Event e)
+        private void OnEvent(GameEvent e)
         {
             if (this.Disabled)
             {

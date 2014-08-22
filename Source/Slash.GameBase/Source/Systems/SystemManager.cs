@@ -85,7 +85,7 @@ namespace Slash.GameBase.Systems
             this.systems.Add(system);
             this.systemsByType.Add(system.GetType(), system);
 
-            this.game.EventManager.QueueEvent(FrameworkEventType.SystemAdded, system);
+            this.game.EventManager.QueueEvent(FrameworkEvent.SystemAdded, system);
         }
 
         public IEnumerator<ISystem> GetEnumerator()
