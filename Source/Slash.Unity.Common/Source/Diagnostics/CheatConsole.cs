@@ -8,7 +8,7 @@ namespace Slash.Unity.Common.Diagnostics
 {
     using Slash.ECS;
     using Slash.ECS.Events;
-    using Slash.Unity.Common.Core;
+    using Slash.Unity.Common.ECS;
 
     using UnityEngine;
 
