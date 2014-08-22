@@ -156,6 +156,19 @@ namespace Slash.ECS.Components
         }
 
         /// <summary>
+        ///   Attaches a new component of the passed type to the entity with the specified id.
+        /// </summary>
+        /// <typeparam name="T">Type of the component to add.</typeparam>
+        /// <param name="entityId">Id of the entity to attach the component to.</param>
+        /// <returns>Attached component.</returns>
+        public T AddComponent<T>(int entityId) where T : IEntityComponent, new()
+        {
+            T component = new T();
+            this.AddComponent(entityId, component, true);
+            return component;
+        }
+
+        /// <summary>
         ///   Attaches the passed component to the entity with the specified id.
         /// </summary>
         /// <param name="entityId"> Id of the entity to attach the component to. </param>
