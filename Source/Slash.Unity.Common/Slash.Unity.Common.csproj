@@ -153,7 +153,7 @@
       <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
       <Name>Slash.Diagnostics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Slash.GameBase\Slash.ECS.csproj">
+    <ProjectReference Include="..\Slash.ECS\Slash.ECS.csproj">
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
       <Name>Slash.ECS</Name>
     </ProjectReference>
