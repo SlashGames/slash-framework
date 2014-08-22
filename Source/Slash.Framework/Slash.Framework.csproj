@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C973E24C-185A-49B3-8A2B-AB76BB939E52}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Slash.Framework</RootNamespace>
+    <AssemblyName>Slash.Framework</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Release\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Release\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
+      <Project>{03f9a6f7-f402-4581-b748-fa51bf3b1b82}</Project>
+      <Name>Slash.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.ECS\Slash.ECS.csproj">
+      <Project>{8a6e1d65-c56c-4f71-9991-6ae99e8d5080}</Project>
+      <Name>Slash.ECS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Math\Slash.Math.csproj">
+      <Project>{834e18de-a529-4f17-a838-92b1ef259fe3}</Project>
+      <Name>Slash.Math</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
+      <Project>{49a6d476-f045-42b3-8ffc-a67b3f9bb073}</Project>
+      <Name>Slash.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{c92c88b0-5268-443b-b32f-cc2a6d686c51}</Project>
+      <Name>Slash.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.System\Slash.System.csproj">
+      <Project>{2929b671-2bb6-4ff7-bad8-aa296c4f6e0c}</Project>
+      <Name>Slash.System</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Unity.Common\Slash.Unity.Common.csproj">
+      <Project>{aa429d02-6020-44f3-8b62-6a5c1ad4fe7d}</Project>
+      <Name>Slash.Unity.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Unity.Editor.Common\Slash.Unity.Editor.Common.csproj">
+      <Project>{1a55d911-697c-4e3b-8fbc-55388c32f20f}</Project>
+      <Name>Slash.Unity.Editor.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
