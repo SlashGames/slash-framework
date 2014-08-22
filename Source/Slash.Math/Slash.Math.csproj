@@ -42,22 +42,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\Algebra\Integers\BigInteger.cs" />
     <Compile Include="Source\Algebra\Vectors\Vector2I.cs" />
     <Compile Include="Source\Algebra\Vectors\Vector3I.cs" />
     <Compile Include="Source\Algebra\Vectors\VectorExtensions.cs" />
-    <Compile Include="Source\Geometry\Lines\LineDrawing.cs" />
-    <Compile Include="Source\Geometry\Lines\LineSegment2I.cs" />
-    <Compile Include="Source\Geometry\Lines\LineSegment2F.cs" />
-    <Compile Include="Source\Utils\CircularMotion.cs" />
     <Compile Include="Source\Utils\Direction.cs" />
     <Compile Include="Source\Utils\RandomUtils.cs" />
-    <Compile Include="Source\Utils\Side.cs" />
     <Compile Include="Source\Geometry\Rectangles\RectangleI.cs" />
     <Compile Include="Source\Geometry\Rectangles\RectangleF.cs" />
     <Compile Include="Source\Utils\Angles.cs" />
-    <Compile Include="Source\Utils\MathI.cs" />
-    <Compile Include="Source\Utils\MathF.cs" />
     <Compile Include="Source\Utils\MathUtils.cs">
       <SubType>Code</SubType>
     </Compile>

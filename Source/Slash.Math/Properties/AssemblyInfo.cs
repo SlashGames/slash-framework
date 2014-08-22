@@ -11,12 +11,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("SlashGames.Math")]
+[assembly: AssemblyTitle("Slash.Math")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("Utility math data types and mehods.")]
 [assembly: AssemblyCompany("Slash Games")]
-[assembly: AssemblyProduct("SlashGames.Math")]
-[assembly: AssemblyCopyright("Copyright 2012 Slash Games")]
+[assembly: AssemblyProduct("Slash.Math")]
+[assembly: AssemblyCopyright("Copyright 2012-2014 Slash Games")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

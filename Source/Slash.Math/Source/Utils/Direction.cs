@@ -109,22 +109,22 @@ namespace Slash.Math.Utils
         public static DirectionType ComputeCardinalDirection(float angle)
         {
             // Wrap angle.
-            angle = MathF.WrapValue(angle, MathF.TwoPi);
+            angle = MathUtils.WrapValue(angle, MathUtils.TwoPi);
 
             // Compute direction.
-            if (angle < MathF.PiOver4)
+            if (angle < MathUtils.PiOver4)
             {
                 return DirectionType.North;
             }
-            if (angle < 0.25f * MathF.TwoPi + MathF.PiOver4)
+            if (angle < 0.25f * MathUtils.TwoPi + MathUtils.PiOver4)
             {
                 return DirectionType.West;
             }
-            if (angle < 0.5f * MathF.TwoPi + MathF.PiOver4)
+            if (angle < 0.5f * MathUtils.TwoPi + MathUtils.PiOver4)
             {
                 return DirectionType.South;
             }
-            if (angle < 0.75f * MathF.TwoPi + MathF.PiOver4)
+            if (angle < 0.75f * MathUtils.TwoPi + MathUtils.PiOver4)
             {
                 return DirectionType.East;
             }
