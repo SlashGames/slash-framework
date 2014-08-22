@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder" version="2014.5.31.0" projectFile="D:\Dev\SCM\SlashFramework\Source\Slash.Framework.shfbproj" started="8/22/2014 3:40:44 PM">
+<shfbBuild product="Sandcastle Help File Builder" version="2014.5.31.0" projectFile="D:\Dev\SCM\SlashFramework\Source\Slash.Framework.shfbproj" started="8/22/2014 3:50:09 PM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\Sandcastle Help File Builder\&#39;
@@ -51,16 +51,16 @@ Copying XML comments files
 <buildStep step="GenerateSharedContent">
 Generating shared content files (en-US, English (United States))...
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
-</plugIn>    Last step completed in 00:00:00.0030
+</plugIn>    Last step completed in 00:00:00.0040
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00.0080
+    Last step completed in 00:00:00.0100
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/22/2014 3:40:45 PM.
+Build started 8/22/2014 3:50:10 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateRefInfo.proj&quot; on node 1 (default targets).
 PrepareForBuild:
   Creating directory &quot;obj\Debug\&quot;.
@@ -69,7 +69,7 @@ GenerateRefInfo:
   Copyright &#184; 2006-2014, Microsoft Corporation, All Rights Reserved.
   Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
   Loaded 8 assemblies for reflection and 1 dependency assemblies.
-  Wrote information on 58 namespaces, 192 types, and 1295 members
+  Wrote information on 56 namespaces, 176 types, and 1189 members
   Copying file from &quot;reflection.org&quot; to &quot;reflection.all&quot;.
   XslTransform (v2014.5.31.0)
   Copyright &#184; 2006-2014, Microsoft Corporation, All Rights Reserved.
@@ -79,13 +79,13 @@ Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateRe
 
 Build succeeded.
 
-Time Elapsed 00:00:01.81
-    Last step completed in 00:00:02.0303
+Time Elapsed 00:00:01.37
+    Last step completed in 00:00:01.5968
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/22/2014 3:40:47 PM.
+Build started 8/22/2014 3:50:12 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\TransformManifest.proj&quot; on node 1 (default targets).
 TransformManifest:
   XslTransform (v2014.5.31.0)
@@ -96,24 +96,12 @@ TransformManifest:
   AddNamespaceGroups (v2014.5.31.0)
   Copyright &#184; 2006-2014, Microsoft Corporation, All Rights Reserved.
   Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
-  Added 7 namespace group entries
+  Added 6 namespace group entries
   Copying file from &quot;reflection.xml&quot; to &quot;reflection.nofilenames&quot;.
   XslTransform (v2014.5.31.0)
   Copyright &#184; 2006-2014, Microsoft Corporation, All Rights Reserved.
   Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
   Applying XSL transformation &#39;C:\Program Files (x86)\Sandcastle Help File Builder\ProductionTransforms\AddFilenames.xsl&#39;.
-    Unique name M_NDesk_Options_Option__ctor_1 generated for M:NDesk.Options.Option.#ctor(System.String,System.String,System.Int32)
-    Unique name M_NDesk_Options_OptionException__ctor_1 generated for M:NDesk.Options.OptionException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)
-    Unique name M_NDesk_Options_OptionException__ctor_2 generated for M:NDesk.Options.OptionException.#ctor(System.String,System.String)
-    Unique name M_NDesk_Options_OptionException__ctor_3 generated for M:NDesk.Options.OptionException.#ctor(System.String,System.String,System.Exception)
-    Unique name M_NDesk_Options_OptionSet__ctor_1 generated for M:NDesk.Options.OptionSet.#ctor(System.Converter{System.String,System.String})
-    Unique name M_NDesk_Options_OptionSet_Add_1 generated for M:NDesk.Options.OptionSet.Add(System.String,NDesk.Options.OptionAction{System.String,System.String})
-    Unique name M_NDesk_Options_OptionSet_Add_2 generated for M:NDesk.Options.OptionSet.Add(System.String,System.Action{System.String})
-    Unique name M_NDesk_Options_OptionSet_Add_3 generated for M:NDesk.Options.OptionSet.Add(System.String,System.String,NDesk.Options.OptionAction{System.String,System.String})
-    Unique name M_NDesk_Options_OptionSet_Add__2_1 generated for M:NDesk.Options.OptionSet.Add``2(System.String,System.String,NDesk.Options.OptionAction{``0,``1})
-    Unique name M_NDesk_Options_OptionSet_Add_4 generated for M:NDesk.Options.OptionSet.Add(System.String,System.String,System.Action{System.String})
-    Unique name M_NDesk_Options_OptionSet_Add__1_1 generated for M:NDesk.Options.OptionSet.Add``1(System.String,System.String,System.Action{``0})
-    Unique name M_NDesk_Options_OptionSet_Parse_1 generated for M:NDesk.Options.OptionSet.Parse(System.String,NDesk.Options.OptionContext)
     Unique name M_Slash_Collections_AttributeTables_AttributeTable__ctor_1 generated for M:Slash.Collections.AttributeTables.AttributeTable.#ctor(Slash.Collections.AttributeTables.IAttributeTable)
     Unique name M_Slash_Collections_AttributeTables_AttributeTable_Add_1 generated for M:Slash.Collections.AttributeTables.AttributeTable.Add(System.Object)
     Unique name M_Slash_Collections_AttributeTables_AttributeTable_Add_2 generated for M:Slash.Collections.AttributeTables.AttributeTable.Add(System.Object,System.Object)
@@ -241,8 +229,6 @@ TransformManifest:
     Unique name M_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_ArrayField_1 generated for M:Slash.Unity.Editor.Common.Inspectors.Utils.EditorGUIUtils.ArrayField(System.Boolean,UnityEngine.GUIContent,System.Collections.IList,System.Func{System.Int32,System.Collections.IList},System.Type,System.Collections.IList@)
     Unique name M_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_ArrayField__1_1 generated for M:Slash.Unity.Editor.Common.Inspectors.Utils.EditorGUIUtils.ArrayField``1(System.Boolean,UnityEngine.GUIContent,``0[]@)
     Unique name M_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_LogicInspectorPropertyField_1 generated for M:Slash.Unity.Editor.Common.Inspectors.Utils.EditorGUIUtils.LogicInspectorPropertyField(Slash.ECS.Inspector.Attributes.InspectorPropertyAttribute,System.Object,UnityEngine.GUIContent)
-    Unique name M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PerformBuild_1 generated for M:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PerformBuild(Slash.Unity.Editor.Common.MenuItems.Build.BuildSettings)
-    Unique name M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PerformBuild_2 generated for M:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PerformBuild(UnityEditor.BuildTarget,Slash.Unity.Editor.Common.MenuItems.Build.BuildType)
   XslTransform (v2014.5.31.0)
   Copyright &#184; 2006-2014, Microsoft Corporation, All Rights Reserved.
   Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
@@ -251,17 +237,17 @@ Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\TransformM
 
 Build succeeded.
 
-Time Elapsed 00:00:02.10
-    Last step completed in 00:00:02.4792
+Time Elapsed 00:00:02.13
+    Last step completed in 00:00:02.4309
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
-    Last step completed in 00:00:00.1141
+    Last step completed in 00:00:00.0991
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
 No additional content to copy
-    Last step completed in 00:00:00.0040
+    Last step completed in 00:00:00.0050
 </buildStep>
 <buildStep step="MergeTablesOfContents">
 Merging conceptual and additional tables of contents...
@@ -270,7 +256,7 @@ Merging conceptual and additional tables of contents...
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/22/2014 3:40:49 PM.
+Build started 8/22/2014 3:50:14 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
 GenerateIntermediateTOC:
   XslTransform (v2014.5.31.0)
@@ -281,14 +267,14 @@ Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateIn
 
 Build succeeded.
 
-Time Elapsed 00:00:00.29
+Time Elapsed 00:00:00.28
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00.5394
+    Last step completed in 00:00:00.5003
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
     sandcastle.config
-    Last step completed in 00:00:00.2802
+    Last step completed in 00:00:00.2528
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
@@ -298,7 +284,7 @@ D:\Dev\SCM\SlashFramework\Doc\API\Working\sandcastle.config
 <buildStep step="BuildReferenceTopics">
 Building reference help topics...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/22/2014 3:40:50 PM.
+Build started 8/22/2014 3:50:15 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj&quot; on node 1 (default targets).
 BuildReferenceTopics:
   BuildAssembler (v2014.5.31.0)
@@ -306,176 +292,6 @@ BuildReferenceTopics:
   Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
   Loading configuration...
   Processing topics...
-BuildAssembler : warning : ShowMissingComponent: [N:NDesk.Options] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:NDesk.Options.Option] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.#ctor(System.String,System.String)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.#ctor(System.String,System.String)] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.#ctor(System.String,System.String)] Missing &lt;param name=&quot;description&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.#ctor(System.String,System.String,System.Int32)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.#ctor(System.String,System.String,System.Int32)] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.#ctor(System.String,System.String,System.Int32)] Missing &lt;param name=&quot;description&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.#ctor(System.String,System.String,System.Int32)] Missing &lt;param name=&quot;maxValueCount&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.Option.Description] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.GetNames] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.GetNames] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.GetValueSeparators] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.GetValueSeparators] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.Invoke(NDesk.Options.OptionContext)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.Invoke(NDesk.Options.OptionContext)] Missing &lt;param name=&quot;c&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.Option.MaxValueCount] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.OnParseComplete(NDesk.Options.OptionContext)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.OnParseComplete(NDesk.Options.OptionContext)] Missing &lt;param name=&quot;c&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.Option.OptionValueType] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.Parse``1(System.String,NDesk.Options.OptionContext)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.Parse``1(System.String,NDesk.Options.OptionContext)] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.Parse``1(System.String,NDesk.Options.OptionContext)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.Parse``1(System.String,NDesk.Options.OptionContext)] Missing &lt;param name=&quot;value&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.Parse``1(System.String,NDesk.Options.OptionContext)] Missing &lt;param name=&quot;c&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.Option.Prototype] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.ToString] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.Option.ToString] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:NDesk.Options.OptionAction`2] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:NDesk.Options.OptionAction`2] Missing &lt;typeparam name=&quot;TKey&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:NDesk.Options.OptionAction`2] Missing &lt;typeparam name=&quot;TValue&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:NDesk.Options.OptionContext] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionContext.#ctor(NDesk.Options.OptionSet)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionContext.#ctor(NDesk.Options.OptionSet)] Missing &lt;param name=&quot;set&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionContext.Option] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionContext.OptionIndex] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionContext.OptionName] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionContext.OptionSet] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionContext.OptionValues] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:NDesk.Options.OptionException] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)] Missing &lt;param name=&quot;info&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)] Missing &lt;param name=&quot;context&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.String,System.String)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.String,System.String)] Missing &lt;param name=&quot;message&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.String,System.String)] Missing &lt;param name=&quot;optionName&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.String,System.String,System.Exception)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.String,System.String,System.Exception)] Missing &lt;param name=&quot;message&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.String,System.String,System.Exception)] Missing &lt;param name=&quot;optionName&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.#ctor(System.String,System.String,System.Exception)] Missing &lt;param name=&quot;innerException&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)] Missing &lt;param name=&quot;info&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)] Missing &lt;param name=&quot;context&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionException.OptionName] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:NDesk.Options.OptionSet] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.#ctor(System.Converter{System.String,System.String})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.#ctor(System.Converter{System.String,System.String})] Missing &lt;param name=&quot;localizer&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(NDesk.Options.Option)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(NDesk.Options.Option)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(NDesk.Options.Option)] Missing &lt;param name=&quot;option&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,NDesk.Options.OptionAction{System.String,System.String})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,NDesk.Options.OptionAction{System.String,System.String})] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,NDesk.Options.OptionAction{System.String,System.String})] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,NDesk.Options.OptionAction{System.String,System.String})] Missing &lt;param name=&quot;action&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;typeparam name=&quot;TKey&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;typeparam name=&quot;TValue&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;param name=&quot;action&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.Action{System.String})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.Action{System.String})] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.Action{System.String})] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.Action{System.String})] Missing &lt;param name=&quot;action&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.Action{``0})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.Action{``0})] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.Action{``0})] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.Action{``0})] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.Action{``0})] Missing &lt;param name=&quot;action&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,NDesk.Options.OptionAction{System.String,System.String})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,NDesk.Options.OptionAction{System.String,System.String})] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,NDesk.Options.OptionAction{System.String,System.String})] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,NDesk.Options.OptionAction{System.String,System.String})] Missing &lt;param name=&quot;description&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,NDesk.Options.OptionAction{System.String,System.String})] Missing &lt;param name=&quot;action&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;typeparam name=&quot;TKey&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;typeparam name=&quot;TValue&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;param name=&quot;description&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``2(System.String,System.String,NDesk.Options.OptionAction{``0,``1})] Missing &lt;param name=&quot;action&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,System.Action{System.String})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,System.Action{System.String})] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,System.Action{System.String})] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,System.Action{System.String})] Missing &lt;param name=&quot;description&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add(System.String,System.String,System.Action{System.String})] Missing &lt;param name=&quot;action&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.String,System.Action{``0})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.String,System.Action{``0})] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.String,System.Action{``0})] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.String,System.Action{``0})] Missing &lt;param name=&quot;prototype&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.String,System.Action{``0})] Missing &lt;param name=&quot;description&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Add``1(System.String,System.String,System.Action{``0})] Missing &lt;param name=&quot;action&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.CreateOptionContext] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.CreateOptionContext] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetKeyForItem(NDesk.Options.Option)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetKeyForItem(NDesk.Options.Option)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetKeyForItem(NDesk.Options.Option)] Missing &lt;param name=&quot;item&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionForName(System.String)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionForName(System.String)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionForName(System.String)] Missing &lt;param name=&quot;option&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionParts(System.String,System.String@,System.String@,System.String@,System.String@)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionParts(System.String,System.String@,System.String@,System.String@,System.String@)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionParts(System.String,System.String@,System.String@,System.String@,System.String@)] Missing &lt;param name=&quot;argument&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionParts(System.String,System.String@,System.String@,System.String@,System.String@)] Missing &lt;param name=&quot;flag&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionParts(System.String,System.String@,System.String@,System.String@,System.String@)] Missing &lt;param name=&quot;name&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionParts(System.String,System.String@,System.String@,System.String@,System.String@)] Missing &lt;param name=&quot;sep&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.GetOptionParts(System.String,System.String@,System.String@,System.String@,System.String@)] Missing &lt;param name=&quot;value&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.InsertItem(System.Int32,NDesk.Options.Option)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.InsertItem(System.Int32,NDesk.Options.Option)] Missing &lt;param name=&quot;index&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.InsertItem(System.Int32,NDesk.Options.Option)] Missing &lt;param name=&quot;item&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionSet.MessageLocalizer] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Parse(System.Collections.Generic.IEnumerable{System.String})] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Parse(System.Collections.Generic.IEnumerable{System.String})] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Parse(System.Collections.Generic.IEnumerable{System.String})] Missing &lt;param name=&quot;arguments&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Parse(System.String,NDesk.Options.OptionContext)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Parse(System.String,NDesk.Options.OptionContext)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Parse(System.String,NDesk.Options.OptionContext)] Missing &lt;param name=&quot;argument&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.Parse(System.String,NDesk.Options.OptionContext)] Missing &lt;param name=&quot;c&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.RemoveItem(System.Int32)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.RemoveItem(System.Int32)] Missing &lt;param name=&quot;index&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.SetItem(System.Int32,NDesk.Options.Option)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.SetItem(System.Int32,NDesk.Options.Option)] Missing &lt;param name=&quot;index&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.SetItem(System.Int32,NDesk.Options.Option)] Missing &lt;param name=&quot;item&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.WriteOptionDescriptions(System.IO.TextWriter)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionSet.WriteOptionDescriptions(System.IO.TextWriter)] Missing &lt;param name=&quot;o&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:NDesk.Options.OptionValueCollection] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Add(System.String)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Add(System.String)] Missing &lt;param name=&quot;item&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Clear] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Contains(System.String)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Contains(System.String)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Contains(System.String)] Missing &lt;param name=&quot;item&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.CopyTo(System.String[],System.Int32)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.CopyTo(System.String[],System.Int32)] Missing &lt;param name=&quot;array&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.CopyTo(System.String[],System.Int32)] Missing &lt;param name=&quot;arrayIndex&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionValueCollection.Count] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.GetEnumerator] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.GetEnumerator] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.IndexOf(System.String)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.IndexOf(System.String)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.IndexOf(System.String)] Missing &lt;param name=&quot;item&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Insert(System.Int32,System.String)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Insert(System.Int32,System.String)] Missing &lt;param name=&quot;index&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Insert(System.Int32,System.String)] Missing &lt;param name=&quot;item&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionValueCollection.IsReadOnly] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:NDesk.Options.OptionValueCollection.Item(System.Int32)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Remove(System.String)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Remove(System.String)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.Remove(System.String)] Missing &lt;param name=&quot;item&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.RemoveAt(System.Int32)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.RemoveAt(System.Int32)] Missing &lt;param name=&quot;index&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.ToArray] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.ToArray] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.ToList] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.ToList] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.ToString] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:NDesk.Options.OptionValueCollection.ToString] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:NDesk.Options.OptionValueType] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [N:Slash.Collections.AttributeTables] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.AttributeTables.AttributeTable.Deserialize(Slash.Serialization.Binary.BinaryDeserializer)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.AttributeTables.AttributeTable.Deserialize(Slash.Serialization.Binary.BinaryDeserializer)] Missing &lt;param name=&quot;serializer&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -11174,48 +10990,6 @@ BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.In
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer.GetApplicableMembers(UnityEngine.GameObject)] Unknown reference link target &#39;T:UnityEngine.GameObject&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer.MemberProperty] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer.SourceProperty] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Unity.Editor.Common.MenuItems.Build] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints.AbsoluteBlueprintsFolderPath] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [F:Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints.BlueprintFileExtensionBinary] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [F:Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints.BlueprintFileExtensionTemp] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [F:Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints.BlueprintFileExtensionXml] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [F:Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints.RelativeBlueprintsFolderPath] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints.RestoreXmlBlueprints] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints.SwitchToBinaryBlueprints] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:Slash.Unity.Editor.Common.MenuItems.Build.BuildConfiguration] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildConfiguration.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [F:Slash.Unity.Editor.Common.MenuItems.Build.BuildConfiguration.AndroidBundleIdentifier] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [F:Slash.Unity.Editor.Common.MenuItems.Build.BuildConfiguration.ProductName] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.AndroidKeyaliasPass] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.AndroidKeystorePass] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.BuildConfigurationDebug] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.BuildConfigurationEditor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.BuildConfigurationRelease] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.DefaultBuildFolder] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.GetDefaultBuildPath(UnityEditor.BuildTarget)] Unknown reference link target &#39;T:UnityEditor.BuildTarget&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PerformBuild(Slash.Unity.Editor.Common.MenuItems.Build.BuildSettings)] Missing &lt;param name=&quot;buildSettings&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PerformBuild(UnityEditor.BuildTarget,Slash.Unity.Editor.Common.MenuItems.Build.BuildType)] Unknown reference link target &#39;T:UnityEditor.BuildTarget&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [E:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PostBuild] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [E:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PreBuild] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PrepareBuild(Slash.Unity.Editor.Common.MenuItems.Build.BuildSettings)] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PrepareBuild(Slash.Unity.Editor.Common.MenuItems.Build.BuildSettings)] Missing &lt;param name=&quot;buildSettings&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [P:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.ProjectName] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.RestoreEditor(Slash.Unity.Editor.Common.MenuItems.Build.BuildSettings)] Missing &lt;param name=&quot;buildSettings&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PostBuildDelegate] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PreBuildDelegate] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildOptionSet.Parse(System.String[])] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildOptionSet.Parse(System.String[])] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildOptionSet.Parse(System.String[])] Missing &lt;param name=&quot;args&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ResolveReferenceLinksComponent: [P:Slash.Unity.Editor.Common.MenuItems.Build.BuildSettings.BuildTarget] Unknown reference link target &#39;T:UnityEditor.BuildTarget&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildSettings.ToString] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildSettings.ToString] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildSettingsAndroid.ToString] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Build.BuildSettingsAndroid.ToString] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [T:Slash.Unity.Editor.Common.MenuItems.Build.BuildType] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [N:Slash.Unity.Editor.Common.MenuItems.Util] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [T:Slash.Unity.Editor.Common.MenuItems.Util.CheckTextureAssets] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Util.CheckTextureAssets.CheckTextures] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -11482,27 +11256,25 @@ BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.Me
 BuildAssembler : warning : ShowMissingComponent: [G:Slash.Unity] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [G:Slash.SystemExt] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [G:Slash.Serialization] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [G:Slash] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [G:Slash.Math] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [G:Slash.ECS] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [G:Slash.Collections] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-  Processed 1947 topic(s)
-  11180 warning(s)
-  CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 13 of 15.
+  Processed 1798 topic(s)
+  10967 warning(s)
+  CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 11 of 15.
   CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 9 of 30.
-  ResolveReferenceLinksComponent: New MSDN content ID cache size: 140 entries
 Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj&quot; (default targets).
 
 Build succeeded.
 
-Time Elapsed 00:01:30.49
-    Last step completed in 00:01:30.9137
+Time Elapsed 00:00:36.31
+    Last step completed in 00:00:36.5097
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
 
 Clearing any prior web output
-    Last step completed in 00:00:00.0901
+    Last step completed in 00:00:00.6124
 </buildStep>
 <buildStep step="ExtractingHtmlInfo">
 Extracting HTML info for HTML Help 1 and/or website...
@@ -11514,11 +11286,11 @@ E-Mail: Eric@EWoodruff.us
 Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
 
 Processing website files in D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website
-Processed 1947 HTML files
+Processed 1798 HTML files
 Sorting keywords and generating See Also indices
 Saving website keyword index to D:\Dev\SCM\SlashFramework\Doc\API\Working\WebKI.xml
 Saving website table of contents to D:\Dev\SCM\SlashFramework\Doc\API\Working\WebTOC.xml
-    Last step completed in 00:00:01.1568
+    Last step completed in 00:00:01.1077
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -11598,18 +11370,18 @@ C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\We
 C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocOpen.gif -&gt; D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website\icons\TocOpen.gif
 C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website\scripts\branding-Website.js
 C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website\scripts\jquery-1.11.0.min.js
-    Last step completed in 00:00:00.1971
+    Last step completed in 00:00:00.2051
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating website table of contents file...
-    Last step completed in 00:00:00.0030
+    Last step completed in 00:00:00.0020
 </buildStep>
 <buildStep step="GenerateFullTextIndex">
 Generating full-text index for the website...
 
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
 Adding lightweight search and TOC elements to each topic...
-</plugIn>    Last step completed in 00:00:12.7228
+</plugIn>    Last step completed in 00:00:08.2761
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
@@ -11638,18 +11410,16 @@ Copied 2100 files
 Copied 2200 files
 Copied 2300 files
 Copied 2400 files
-Copied 2500 files
-Copied 2600 files
-Copied 2653 files for the website content
-    Last step completed in 00:00:21.9590
+Copied 2461 files for the website content
+    Last step completed in 00:00:11.6675
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:00.5274
+    Last step completed in 00:00:01.4169
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 08/22/2014 03:42 PM.  Total time: 00:02:13.5636
+Build completed successfully at 08/22/2014 03:51 PM.  Total time: 00:01:05.2783
 
 </buildStep>
 </shfbBuild>

@@ -5,7 +5,6 @@
     <HelpKINode Title="Vector2F.Abs Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_Abs.htm" />
     <HelpKINode Title="Vector2I.Abs Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_Abs.htm" />
   </HelpKINode>
-  <HelpKINode Title="AbsoluteBlueprintsFolderPath property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_AbsoluteBlueprintsFolderPath.htm" />
   <HelpKINode Title="ACos method" Url="html/M_Slash_Math_Utils_MathUtils_ACos.htm" />
   <HelpKINode Title="Actions field" Url="html/F_Slash_Unity_Common_Triggers_Trigger_Actions.htm" />
   <HelpKINode Title="ActivateEntity method" Url="html/M_Slash_ECS_Components_EntityManager_ActivateEntity.htm" />
@@ -26,8 +25,6 @@
     <HelpKINode Title="AttributeTable.Add Method " Url="html/Overload_Slash_Collections_AttributeTables_AttributeTable_Add.htm" />
     <HelpKINode Title="HierarchicalAttributeTable.Add Method " Url="html/M_Slash_Collections_AttributeTables_HierarchicalAttributeTable_Add.htm" />
     <HelpKINode Title="IAttributeTable.Add Method " Url="html/M_Slash_Collections_AttributeTables_IAttributeTable_Add.htm" />
-    <HelpKINode Title="OptionSet.Add Method " Url="html/Overload_NDesk_Options_OptionSet_Add.htm" />
-    <HelpKINode Title="OptionValueCollection.Add Method " Url="html/M_NDesk_Options_OptionValueCollection_Add.htm" />
     <HelpKINode Title="ReadOnlyCollection(T).Add Method " Url="html/M_Slash_Collections_ObjectModel_ReadOnlyCollection_1_Add.htm" />
     <HelpKINode Title="Vector2F.Add Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_Add.htm" />
     <HelpKINode Title="Vector2I.Add Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_Add.htm" />
@@ -85,10 +82,6 @@
   <HelpKINode Title="Ambient enumeration member" Url="html/T_Slash_Unity_Common_Sound_AudioChannelType.htm" />
   <HelpKINode Title="AndComplementOption method" Url="html/M_Slash_SystemExt_Utils_EnumExtensions_AndComplementOption.htm" />
   <HelpKINode Title="AndOption method" Url="html/M_Slash_SystemExt_Utils_EnumExtensions_AndOption.htm" />
-  <HelpKINode Title="Android property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_Android.htm" />
-  <HelpKINode Title="AndroidBundleIdentifier field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration_AndroidBundleIdentifier.htm" />
-  <HelpKINode Title="AndroidKeyaliasPass property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_AndroidKeyaliasPass.htm" />
-  <HelpKINode Title="AndroidKeystorePass property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_AndroidKeystorePass.htm" />
   <HelpKINode Title="AngleDiff method" Url="html/M_Slash_Math_Utils_Angles_AngleDiff.htm" />
   <HelpKINode Title="AngleDiffPositive method" Url="html/M_Slash_Math_Utils_Angles_AngleDiffPositive.htm" />
   <HelpKINode Title="Angles class">
@@ -267,9 +260,6 @@
   <HelpKINode Title="Blueprint.TryGetValue method" Url="html/M_Slash_ECS_Blueprints_Blueprint_TryGetValue.htm" />
   <HelpKINode Title="Blueprint.WriteXml method" Url="html/M_Slash_ECS_Blueprints_Blueprint_WriteXml.htm" />
   <HelpKINode Title="BlueprintAssetsFolder field" Url="html/F_Slash_Unity_Common_Configuration_GameConfigurationBehaviour_BlueprintAssetsFolder.htm" />
-  <HelpKINode Title="BlueprintFileExtensionBinary field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_BlueprintFileExtensionBinary.htm" />
-  <HelpKINode Title="BlueprintFileExtensionTemp field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_BlueprintFileExtensionTemp.htm" />
-  <HelpKINode Title="BlueprintFileExtensionXml field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_BlueprintFileExtensionXml.htm" />
   <HelpKINode Title="BlueprintId field" Url="html/F_Slash_Unity_Common_ECS_EntityConfigurationBehaviour_BlueprintId.htm" />
   <HelpKINode Title="BlueprintId property" Url="html/P_Slash_ECS_Configurations_EntityConfiguration_BlueprintId.htm" />
   <HelpKINode Title="BlueprintManager class">
@@ -330,97 +320,6 @@
     <HelpKINode Title="RectangleF.BottomRight Property " Url="html/P_Slash_Math_Geometry_Rectangles_RectangleF_BottomRight.htm" />
     <HelpKINode Title="RectangleI.BottomRight Property " Url="html/P_Slash_Math_Geometry_Rectangles_RectangleI_BottomRight.htm" />
   </HelpKINode>
-  <HelpKINode Title="BuildBlueprints class">
-    <HelpKINode Title="BuildBlueprints Class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints.htm" />
-    <HelpKINode Title="about BuildBlueprints class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints__ctor.htm" />
-    <HelpKINode Title="fields" Url="html/Fields_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints.htm" />
-  </HelpKINode>
-  <HelpKINode Title="BuildBlueprints.AbsoluteBlueprintsFolderPath property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_AbsoluteBlueprintsFolderPath.htm" />
-  <HelpKINode Title="BuildBlueprints.BlueprintFileExtensionBinary field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_BlueprintFileExtensionBinary.htm" />
-  <HelpKINode Title="BuildBlueprints.BlueprintFileExtensionTemp field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_BlueprintFileExtensionTemp.htm" />
-  <HelpKINode Title="BuildBlueprints.BlueprintFileExtensionXml field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_BlueprintFileExtensionXml.htm" />
-  <HelpKINode Title="BuildBlueprints.BuildBlueprints constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints__ctor.htm" />
-  <HelpKINode Title="BuildBlueprints.RelativeBlueprintsFolderPath field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_RelativeBlueprintsFolderPath.htm" />
-  <HelpKINode Title="BuildBlueprints.RestoreXmlBlueprints method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_RestoreXmlBlueprints.htm" />
-  <HelpKINode Title="BuildBlueprints.SwitchToBinaryBlueprints method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_SwitchToBinaryBlueprints.htm" />
-  <HelpKINode Title="BuildConfiguration class">
-    <HelpKINode Title="BuildConfiguration Class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration.htm" />
-    <HelpKINode Title="about BuildConfiguration class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration__ctor.htm" />
-    <HelpKINode Title="fields" Url="html/Fields_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration.htm" />
-  </HelpKINode>
-  <HelpKINode Title="BuildConfiguration.AndroidBundleIdentifier field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration_AndroidBundleIdentifier.htm" />
-  <HelpKINode Title="BuildConfiguration.BuildConfiguration constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration__ctor.htm" />
-  <HelpKINode Title="BuildConfiguration.ProductName field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration_ProductName.htm" />
-  <HelpKINode Title="BuildConfigurationDebug property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_BuildConfigurationDebug.htm" />
-  <HelpKINode Title="BuildConfigurationEditor property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_BuildConfigurationEditor.htm" />
-  <HelpKINode Title="BuildConfigurationRelease property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_BuildConfigurationRelease.htm" />
-  <HelpKINode Title="BuildManager class">
-    <HelpKINode Title="BuildManager Class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager.htm" />
-    <HelpKINode Title="about BuildManager class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager__ctor.htm" />
-    <HelpKINode Title="events" Url="html/Events_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager.htm" />
-    <HelpKINode Title="fields" Url="html/Fields_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager.htm" />
-  </HelpKINode>
-  <HelpKINode Title="BuildManager.AndroidKeyaliasPass property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_AndroidKeyaliasPass.htm" />
-  <HelpKINode Title="BuildManager.AndroidKeystorePass property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_AndroidKeystorePass.htm" />
-  <HelpKINode Title="BuildManager.BuildConfigurationDebug property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_BuildConfigurationDebug.htm" />
-  <HelpKINode Title="BuildManager.BuildConfigurationEditor property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_BuildConfigurationEditor.htm" />
-  <HelpKINode Title="BuildManager.BuildConfigurationRelease property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_BuildConfigurationRelease.htm" />
-  <HelpKINode Title="BuildManager.BuildManager constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager__ctor.htm" />
-  <HelpKINode Title="BuildManager.DefaultBuildFolder property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_DefaultBuildFolder.htm" />
-  <HelpKINode Title="BuildManager.EditorBuildSettings field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_EditorBuildSettings.htm" />
-  <HelpKINode Title="BuildManager.GetDefaultBuildPath method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_GetDefaultBuildPath.htm" />
-  <HelpKINode Title="BuildManager.PerformBuild method" Url="html/Overload_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PerformBuild.htm" />
-  <HelpKINode Title="BuildManager.PostBuild event" Url="html/E_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PostBuild.htm" />
-  <HelpKINode Title="BuildManager.PostBuildDelegate delegate" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PostBuildDelegate.htm" />
-  <HelpKINode Title="BuildManager.PreBuild event" Url="html/E_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PreBuild.htm" />
-  <HelpKINode Title="BuildManager.PreBuildDelegate delegate" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PreBuildDelegate.htm" />
-  <HelpKINode Title="BuildManager.PrepareBuild method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PrepareBuild.htm" />
-  <HelpKINode Title="BuildManager.ProjectName property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_ProjectName.htm" />
-  <HelpKINode Title="BuildManager.RestoreEditor method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_RestoreEditor.htm" />
-  <HelpKINode Title="BuildOptionSet class">
-    <HelpKINode Title="BuildOptionSet Class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildOptionSet.htm" />
-    <HelpKINode Title="about BuildOptionSet class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildOptionSet.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildOptionSet.htm" />
-  </HelpKINode>
-  <HelpKINode Title="BuildOptionSet.Parse method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildOptionSet_Parse.htm" />
-  <HelpKINode Title="BuildPath property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_BuildPath.htm" />
-  <HelpKINode Title="BuildSettings class">
-    <HelpKINode Title="BuildSettings Class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings.htm" />
-    <HelpKINode Title="about BuildSettings class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings__ctor.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings.htm" />
-  </HelpKINode>
-  <HelpKINode Title="BuildSettings.Android property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_Android.htm" />
-  <HelpKINode Title="BuildSettings.BuildPath property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_BuildPath.htm" />
-  <HelpKINode Title="BuildSettings.BuildSettings constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings__ctor.htm" />
-  <HelpKINode Title="BuildSettings.BuildTarget property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_BuildTarget.htm" />
-  <HelpKINode Title="BuildSettings.BuildType property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_BuildType.htm" />
-  <HelpKINode Title="BuildSettings.BundleVersion property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_BundleVersion.htm" />
-  <HelpKINode Title="BuildSettings.ToString method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_ToString.htm" />
-  <HelpKINode Title="BuildSettingsAndroid class">
-    <HelpKINode Title="BuildSettingsAndroid Class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid.htm" />
-    <HelpKINode Title="about BuildSettingsAndroid class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid__ctor.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid.htm" />
-  </HelpKINode>
-  <HelpKINode Title="BuildSettingsAndroid.BuildSettingsAndroid constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid__ctor.htm" />
-  <HelpKINode Title="BuildSettingsAndroid.BundleVersionCode property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid_BundleVersionCode.htm" />
-  <HelpKINode Title="BuildSettingsAndroid.ToString method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid_ToString.htm" />
-  <HelpKINode Title="BuildTarget property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_BuildTarget.htm" />
-  <HelpKINode Title="BuildType enumeration" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildType.htm" />
-  <HelpKINode Title="BuildType property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_BuildType.htm" />
-  <HelpKINode Title="BundleVersion property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_BundleVersion.htm" />
-  <HelpKINode Title="BundleVersionCode property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid_BundleVersionCode.htm" />
   <HelpKINode Title="ButtonRect field" Url="html/F_Slash_Unity_Common_Diagnostics_CheatConsole_ButtonRect.htm" />
   <HelpKINode Title="CalculateAngle method">
     <HelpKINode Title="Vector2F.CalculateAngle Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_CalculateAngle.htm" />
@@ -495,7 +394,6 @@
   <HelpKINode Title="CleanUpEntities method" Url="html/M_Slash_ECS_Components_EntityManager_CleanUpEntities.htm" />
   <HelpKINode Title="Clear method">
     <HelpKINode Title="AttributeTable.Clear Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_Clear.htm" />
-    <HelpKINode Title="OptionValueCollection.Clear Method " Url="html/M_NDesk_Options_OptionValueCollection_Clear.htm" />
     <HelpKINode Title="ReadOnlyCollection(T).Clear Method " Url="html/M_Slash_Collections_ObjectModel_ReadOnlyCollection_1_Clear.htm" />
   </HelpKINode>
   <HelpKINode Title="ClearAudioChannel method" Url="html/M_Slash_Unity_Common_Sound_SoundInterfaceBehaviour_ClearAudioChannel.htm" />
@@ -581,7 +479,6 @@
     <HelpKINode Title="AttributeTable.Contains Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_Contains.htm" />
     <HelpKINode Title="HierarchicalAttributeTable.Contains Method " Url="html/M_Slash_Collections_AttributeTables_HierarchicalAttributeTable_Contains.htm" />
     <HelpKINode Title="IAttributeTable.Contains Method " Url="html/M_Slash_Collections_AttributeTables_IAttributeTable_Contains.htm" />
-    <HelpKINode Title="OptionValueCollection.Contains Method " Url="html/M_NDesk_Options_OptionValueCollection_Contains.htm" />
     <HelpKINode Title="ReadOnlyCollection(T).Contains Method " Url="html/M_Slash_Collections_ObjectModel_ReadOnlyCollection_1_Contains.htm" />
     <HelpKINode Title="RectangleF.Contains Method " Url="html/Overload_Slash_Math_Geometry_Rectangles_RectangleF_Contains.htm" />
     <HelpKINode Title="RectangleI.Contains Method " Url="html/Overload_Slash_Math_Geometry_Rectangles_RectangleI_Contains.htm" />
@@ -611,16 +508,12 @@
     <HelpKINode Title="InspectorPropertyAttribute.ConvertValueToString Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorPropertyAttribute_ConvertValueToString.htm" />
     <HelpKINode Title="InspectorStringAttribute.ConvertValueToString Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorStringAttribute_ConvertValueToString.htm" />
   </HelpKINode>
-  <HelpKINode Title="CopyTo method">
-    <HelpKINode Title="OptionValueCollection.CopyTo Method " Url="html/M_NDesk_Options_OptionValueCollection_CopyTo.htm" />
-    <HelpKINode Title="ReadOnlyCollection(T).CopyTo Method " Url="html/M_Slash_Collections_ObjectModel_ReadOnlyCollection_1_CopyTo.htm" />
-  </HelpKINode>
+  <HelpKINode Title="CopyTo method" Url="html/M_Slash_Collections_ObjectModel_ReadOnlyCollection_1_CopyTo.htm" />
   <HelpKINode Title="Cos method" Url="html/M_Slash_Math_Utils_MathUtils_Cos.htm" />
   <HelpKINode Title="Count property">
     <HelpKINode Title="AttributeTable.Count Property " Url="html/P_Slash_Collections_AttributeTables_AttributeTable_Count.htm" />
     <HelpKINode Title="HierarchicalAttributeTable.Count Property " Url="html/P_Slash_Collections_AttributeTables_HierarchicalAttributeTable_Count.htm" />
     <HelpKINode Title="IAttributeTable.Count Property " Url="html/P_Slash_Collections_AttributeTables_IAttributeTable_Count.htm" />
-    <HelpKINode Title="OptionValueCollection.Count Property " Url="html/P_NDesk_Options_OptionValueCollection_Count.htm" />
     <HelpKINode Title="ReadOnlyCollection(T).Count Property " Url="html/P_Slash_Collections_ObjectModel_ReadOnlyCollection_1_Count.htm" />
   </HelpKINode>
   <HelpKINode Title="CreateDelegate method" Url="html/M_Slash_Reflection_Utils_DelegateUtils_CreateDelegate.htm" />
@@ -631,7 +524,6 @@
   </HelpKINode>
   <HelpKINode Title="CreateFromAttributeTable(Of T) method" Url="html/M_Slash_ECS_Inspector_Utils_InspectorUtils_CreateFromAttributeTable__1.htm" />
   <HelpKINode Title="CreateFromAttributeTable&lt;T&gt; method" Url="html/M_Slash_ECS_Inspector_Utils_InspectorUtils_CreateFromAttributeTable__1.htm" />
-  <HelpKINode Title="CreateOptionContext method" Url="html/M_NDesk_Options_OptionSet_CreateOptionContext.htm" />
   <HelpKINode Title="Cross method">
     <HelpKINode Title="Vector2F.Cross Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_Cross.htm" />
     <HelpKINode Title="Vector2I.Cross Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_Cross.htm" />
@@ -639,7 +531,6 @@
   <HelpKINode Title="CurveAngle method" Url="html/M_Slash_Math_Utils_Angles_CurveAngle.htm" />
   <HelpKINode Title="DeactivateEntity method" Url="html/M_Slash_ECS_Components_EntityManager_DeactivateEntity.htm" />
   <HelpKINode Title="Dead property" Url="html/P_Slash_ECS_Processes_GameProcess_Dead.htm" />
-  <HelpKINode Title="Debug enumeration member" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildType.htm" />
   <HelpKINode Title="DebugBuildBehaviour class">
     <HelpKINode Title="DebugBuildBehaviour Class" Url="html/T_Slash_Unity_Common_Diagnostics_DebugBuildBehaviour.htm" />
     <HelpKINode Title="about DebugBuildBehaviour class" Url="html/T_Slash_Unity_Common_Diagnostics_DebugBuildBehaviour.htm" />
@@ -673,7 +564,6 @@
     <HelpKINode Title="InspectorPropertyAttribute.Default Property " Url="html/P_Slash_ECS_Inspector_Attributes_InspectorPropertyAttribute_Default.htm" />
     <HelpKINode Title="ValidationError.Default Property " Url="html/P_Slash_ECS_Inspector_Validation_ValidationError_Default.htm" />
   </HelpKINode>
-  <HelpKINode Title="DefaultBuildFolder property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_DefaultBuildFolder.htm" />
   <HelpKINode Title="DefaultMessage field" Url="html/F_Slash_ECS_Inspector_Validation_ValidationError_DefaultMessage.htm" />
   <HelpKINode Title="DefinedTimeout field" Url="html/F_Slash_Unity_Common_GUI_SleepTimeoutBehaviour_DefinedTimeout.htm" />
   <HelpKINode Title="Deg2Rad method" Url="html/M_Slash_Math_Utils_Angles_Deg2Rad.htm" />
@@ -690,26 +580,25 @@
     <HelpKINode Title="InspectorType.Description Property " Url="html/P_Slash_ECS_Inspector_Data_InspectorType_Description.htm" />
     <HelpKINode Title="InspectorTypeAttribute.Description Property " Url="html/P_Slash_ECS_Inspector_Attributes_InspectorTypeAttribute_Description.htm" />
     <HelpKINode Title="IValueEditorContext.Description Property " Url="html/P_Slash_Unity_Common_GUI_ValueEditors_IValueEditorContext_Description.htm" />
-    <HelpKINode Title="Option.Description Property " Url="html/P_NDesk_Options_Option_Description.htm" />
     <HelpKINode Title="PropertyValueEditorContext.Description Property " Url="html/P_Slash_Unity_Common_GUI_ValueEditors_PropertyValueEditorContext_Description.htm" />
     <HelpKINode Title="SimpleValueEditorContext.Description Property " Url="html/P_Slash_Unity_Common_GUI_ValueEditors_SimpleValueEditorContext_Description.htm" />
   </HelpKINode>
-  <HelpKINode Title="deserialize method">
-    <HelpKINode Title="ValueWithTypeDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_deserialize.htm" />
-    <HelpKINode Title="DictionarySerializationContext.deserialize Method " Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_deserialize.htm" />
-    <HelpKINode Title="DictionaryDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_deserialize.htm" />
-    <HelpKINode Title="IDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_deserialize.htm" />
-    <HelpKINode Title="ListDictionarySerializer(T).deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_deserialize.htm" />
-    <HelpKINode Title="ListDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_deserialize.htm" />
-    <HelpKINode Title="StackDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_deserialize.htm" />
-    <HelpKINode Title="StackDictionarySerializer(T).deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_deserialize.htm" />
-  </HelpKINode>
   <HelpKINode Title="Deserialize method">
     <HelpKINode Title="AttributeTable.Deserialize Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_Deserialize.htm" />
-    <HelpKINode Title="BinaryDeserializer.Deserialize Method " Url="html/Overload_Slash_Serialization_Binary_BinaryDeserializer_Deserialize.htm" />
     <HelpKINode Title="Blueprint.Deserialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Deserialize.htm" />
     <HelpKINode Title="IBinarySerializable.Deserialize Method " Url="html/M_Slash_Serialization_Binary_IBinarySerializable_Deserialize.htm" />
     <HelpKINode Title="EntityConfiguration.Deserialize Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_Deserialize.htm" />
+    <HelpKINode Title="BinaryDeserializer.Deserialize Method " Url="html/Overload_Slash_Serialization_Binary_BinaryDeserializer_Deserialize.htm" />
+  </HelpKINode>
+  <HelpKINode Title="deserialize method">
+    <HelpKINode Title="DictionaryDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_deserialize.htm" />
+    <HelpKINode Title="DictionarySerializationContext.deserialize Method " Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_deserialize.htm" />
+    <HelpKINode Title="IDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_deserialize.htm" />
+    <HelpKINode Title="ListDictionarySerializer(T).deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_deserialize.htm" />
+    <HelpKINode Title="ListDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_deserialize.htm" />
+    <HelpKINode Title="StackDictionarySerializer(T).deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_deserialize.htm" />
+    <HelpKINode Title="StackDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_deserialize.htm" />
+    <HelpKINode Title="ValueWithTypeDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_deserialize.htm" />
   </HelpKINode>
   <HelpKINode Title="deserializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_deserializeContext.htm" />
   <HelpKINode Title="DestroyChildren method" Url="html/M_Slash_Unity_Common_Utils_UnityUtils_DestroyChildren.htm" />
@@ -816,7 +705,6 @@
     <HelpKINode Title="TextValueEditor.Edit Method " Url="html/M_Slash_Unity_Common_GUI_ValueEditors_TextValueEditor_Edit.htm" />
     <HelpKINode Title="Vector2IValueEditor.Edit Method " Url="html/M_Slash_Unity_Common_GUI_ValueEditors_Vector2IValueEditor_Edit.htm" />
   </HelpKINode>
-  <HelpKINode Title="EditorBuildSettings field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_EditorBuildSettings.htm" />
   <HelpKINode Title="EditorGUIUtils class">
     <HelpKINode Title="EditorGUIUtils Class" Url="html/T_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils.htm" />
     <HelpKINode Title="about EditorGUIUtils class" Url="html/T_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils.htm" />
@@ -1327,7 +1215,6 @@
   </HelpKINode>
   <HelpKINode Title="GetCondition method" Url="html/M_Slash_ECS_Inspector_Data_InspectorTypeTable_GetCondition.htm" />
   <HelpKINode Title="GetConversionFunc property" Url="html/P_Slash_Unity_Editor_Common_Inspectors_PropertyField_GetConversionFunc.htm" />
-  <HelpKINode Title="GetDefaultBuildPath method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_GetDefaultBuildPath.htm" />
   <HelpKINode Title="GetDerivedBlueprintComponents method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_GetDerivedBlueprintComponents.htm" />
   <HelpKINode Title="GetDistance method">
     <HelpKINode Title="Vector2F.GetDistance Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_GetDistance.htm" />
@@ -1351,7 +1238,6 @@
     <HelpKINode Title="HierarchicalAttributeTable.GetEnumerator Method " Url="html/M_Slash_Collections_AttributeTables_HierarchicalAttributeTable_GetEnumerator.htm" />
     <HelpKINode Title="HierarchicalBlueprintManager.GetEnumerator Method " Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_GetEnumerator.htm" />
     <HelpKINode Title="InspectorTypeTable.GetEnumerator Method " Url="html/M_Slash_ECS_Inspector_Data_InspectorTypeTable_GetEnumerator.htm" />
-    <HelpKINode Title="OptionValueCollection.GetEnumerator Method " Url="html/M_NDesk_Options_OptionValueCollection_GetEnumerator.htm" />
     <HelpKINode Title="ReadOnlyCollection(T).GetEnumerator Method " Url="html/M_Slash_Collections_ObjectModel_ReadOnlyCollection_1_GetEnumerator.htm" />
     <HelpKINode Title="SystemManager.GetEnumerator Method " Url="html/M_Slash_ECS_Systems_SystemManager_GetEnumerator.htm" />
   </HelpKINode>
@@ -1375,19 +1261,14 @@
     <HelpKINode Title="InspectorTypeTable.GetInspectorType Method " Url="html/M_Slash_ECS_Inspector_Data_InspectorTypeTable_GetInspectorType.htm" />
   </HelpKINode>
   <HelpKINode Title="GetIntOrDefault method" Url="html/M_Slash_Collections_AttributeTables_AttributeTableExtensions_GetIntOrDefault.htm" />
-  <HelpKINode Title="GetKeyForItem method" Url="html/M_NDesk_Options_OptionSet_GetKeyForItem.htm" />
   <HelpKINode Title="GetLoadedAssemblies method" Url="html/M_Slash_Reflection_Utils_AssemblyUtils_GetLoadedAssemblies.htm" />
   <HelpKINode Title="GetMemberProperty method" Url="html/M_Slash_Unity_Editor_Common_Inspectors_Utils_MemberReferenceDrawer_GetMemberProperty.htm" />
   <HelpKINode Title="GetMouseOver2dGUI method" Url="html/M_Slash_Unity_Common_Input_InputUtils_GetMouseOver2dGUI.htm" />
-  <HelpKINode Title="GetNames method" Url="html/M_NDesk_Options_Option_GetNames.htm" />
   <HelpKINode Title="GetNormalized method">
     <HelpKINode Title="Vector2F.GetNormalized Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_GetNormalized.htm" />
     <HelpKINode Title="Vector3F.GetNormalized Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector3F_GetNormalized.htm" />
     <HelpKINode Title="Vector3I.GetNormalized Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector3I_GetNormalized.htm" />
   </HelpKINode>
-  <HelpKINode Title="GetObjectData method" Url="html/M_NDesk_Options_OptionException_GetObjectData.htm" />
-  <HelpKINode Title="GetOptionForName method" Url="html/M_NDesk_Options_OptionSet_GetOptionForName.htm" />
-  <HelpKINode Title="GetOptionParts method" Url="html/M_NDesk_Options_OptionSet_GetOptionParts.htm" />
   <HelpKINode Title="GetOrderedChildren method" Url="html/M_Slash_Unity_Common_Utils_UnityUtils_GetOrderedChildren.htm" />
   <HelpKINode Title="GetPath method" Url="html/M_Slash_Unity_Common_Utils_UnityUtils_GetPath.htm" />
   <HelpKINode Title="GetPerpendicularVector method">
@@ -1437,7 +1318,6 @@
   <HelpKINode Title="GetValueOrDefault method" Url="html/Overload_Slash_Collections_Utils_CollectionUtils_GetValueOrDefault.htm" />
   <HelpKINode Title="GetValueOrDefault(Of T) method" Url="html/M_Slash_Collections_AttributeTables_AttributeTableExtensions_GetValueOrDefault__1.htm" />
   <HelpKINode Title="GetValueOrDefault&lt;T&gt; method" Url="html/M_Slash_Collections_AttributeTables_AttributeTableExtensions_GetValueOrDefault__1.htm" />
-  <HelpKINode Title="GetValueSeparators method" Url="html/M_NDesk_Options_Option_GetValueSeparators.htm" />
   <HelpKINode Title="GLDrawGrid method" Url="html/M_Slash_Unity_Common_Utils_GLUtils_GLDrawGrid.htm" />
   <HelpKINode Title="GLDrawGridOutline method" Url="html/M_Slash_Unity_Common_Utils_GLUtils_GLDrawGridOutline.htm" />
   <HelpKINode Title="GLDrawOutline method" Url="html/M_Slash_Unity_Common_Utils_GLUtils_GLDrawOutline.htm" />
@@ -1599,7 +1479,6 @@
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_ECS_Components_IEntityComponent.htm" />
   </HelpKINode>
   <HelpKINode Title="IEntityComponent.InitComponent method" Url="html/M_Slash_ECS_Components_IEntityComponent_InitComponent.htm" />
-  <HelpKINode Title="IndexOf method" Url="html/M_NDesk_Options_OptionValueCollection_IndexOf.htm" />
   <HelpKINode Title="Inequality operator">
     <HelpKINode Title="Vector2F.Inequality Operator " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_op_Inequality.htm" />
     <HelpKINode Title="Vector2I.Inequality Operator " Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_op_Inequality.htm" />
@@ -1631,8 +1510,6 @@
   <HelpKINode Title="InputUtils.GUIMousePosition property" Url="html/P_Slash_Unity_Common_Input_InputUtils_GUIMousePosition.htm" />
   <HelpKINode Title="InputUtils.ResetMouseOver2dGUI method" Url="html/M_Slash_Unity_Common_Input_InputUtils_ResetMouseOver2dGUI.htm" />
   <HelpKINode Title="InputUtils.SetMouseOver2dGUI method" Url="html/M_Slash_Unity_Common_Input_InputUtils_SetMouseOver2dGUI.htm" />
-  <HelpKINode Title="Insert method" Url="html/M_NDesk_Options_OptionValueCollection_Insert.htm" />
-  <HelpKINode Title="InsertItem method" Url="html/M_NDesk_Options_OptionSet_InsertItem.htm" />
   <HelpKINode Title="InsertParent method" Url="html/M_Slash_Collections_AttributeTables_HierarchicalAttributeTable_InsertParent.htm" />
   <HelpKINode Title="InspectorBlueprintAttribute class">
     <HelpKINode Title="InspectorBlueprintAttribute Class" Url="html/T_Slash_ECS_Inspector_Attributes_InspectorBlueprintAttribute.htm" />
@@ -1894,7 +1771,6 @@
     <HelpKINode Title="RectangleF.Intersects Method " Url="html/M_Slash_Math_Geometry_Rectangles_RectangleF_Intersects.htm" />
     <HelpKINode Title="RectangleI.Intersects Method " Url="html/M_Slash_Math_Geometry_Rectangles_RectangleI_Intersects.htm" />
   </HelpKINode>
-  <HelpKINode Title="Invoke method" Url="html/M_NDesk_Options_Option_Invoke.htm" />
   <HelpKINode Title="IsAllowed method">
     <HelpKINode Title="InspectorEnumAttribute.IsAllowed Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorEnumAttribute_IsAllowed.htm" />
     <HelpKINode Title="InspectorPropertyAttribute.IsAllowed Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorPropertyAttribute_IsAllowed.htm" />
@@ -1923,10 +1799,7 @@
   </HelpKINode>
   <HelpKINode Title="IsPlaying property" Url="html/P_Slash_Unity_Common_Sound_FadingAudioSource_IsPlaying.htm" />
   <HelpKINode Title="isRawSerializationPossible method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_isRawSerializationPossible.htm" />
-  <HelpKINode Title="IsReadOnly property">
-    <HelpKINode Title="OptionValueCollection.IsReadOnly Property " Url="html/P_NDesk_Options_OptionValueCollection_IsReadOnly.htm" />
-    <HelpKINode Title="ReadOnlyCollection(T).IsReadOnly Property " Url="html/P_Slash_Collections_ObjectModel_ReadOnlyCollection_1_IsReadOnly.htm" />
-  </HelpKINode>
+  <HelpKINode Title="IsReadOnly property" Url="html/P_Slash_Collections_ObjectModel_ReadOnlyCollection_1_IsReadOnly.htm" />
   <HelpKINode Title="IsWithinBounds(Of T) method" Url="html/M_Slash_Math_Utils_MathUtils_IsWithinBounds__1.htm" />
   <HelpKINode Title="IsWithinBounds&lt;T&gt; method" Url="html/M_Slash_Math_Utils_MathUtils_IsWithinBounds__1.htm" />
   <HelpKINode Title="ISystem interface">
@@ -1951,7 +1824,6 @@
     <HelpKINode Title="HierarchicalAttributeTable.Item Property " Url="html/P_Slash_Collections_AttributeTables_HierarchicalAttributeTable_Item.htm" />
     <HelpKINode Title="IAttributeTable.Item Property " Url="html/P_Slash_Collections_AttributeTables_IAttributeTable_Item.htm" />
     <HelpKINode Title="InspectorTypeTable.Item Property " Url="html/P_Slash_ECS_Inspector_Data_InspectorTypeTable_Item.htm" />
-    <HelpKINode Title="OptionValueCollection.Item Property " Url="html/P_NDesk_Options_OptionValueCollection_Item.htm" />
     <HelpKINode Title="SoundInterfaceBehaviour.Item Property " Url="html/P_Slash_Unity_Common_Sound_SoundInterfaceBehaviour_Item.htm" />
   </HelpKINode>
   <HelpKINode Title="ItemElementName property" Url="html/P_Slash_Serialization_Xml_SerializableDictionary_2_ItemElementName.htm" />
@@ -2193,7 +2065,6 @@
   </HelpKINode>
   <HelpKINode Title="MaxLength property" Url="html/P_Slash_ECS_Inspector_Attributes_InspectorStringAttribute_MaxLength.htm" />
   <HelpKINode Title="MaxTextureSize field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Util_CheckTextureAssets_MaxTextureSize.htm" />
-  <HelpKINode Title="MaxValueCount property" Url="html/P_NDesk_Options_Option_MaxValueCount.htm" />
   <HelpKINode Title="MemberName field" Url="html/F_Slash_Unity_Editor_Common_Inspectors_Utils_MemberReferenceDrawer_Entry_MemberName.htm" />
   <HelpKINode Title="MemberProperty property">
     <HelpKINode Title="MemberReferenceDrawer.MemberProperty Property " Url="html/P_Slash_Unity_Editor_Common_Inspectors_Utils_MemberReferenceDrawer_MemberProperty.htm" />
@@ -2232,7 +2103,6 @@
   <HelpKINode Title="MeshRendererSortingEditor.MeshRendererSortingEditor constructor" Url="html/M_Slash_Unity_Editor_Common_Inspectors_Rendering_MeshRendererSortingEditor__ctor.htm" />
   <HelpKINode Title="MeshRendererSortingEditor.OnInspectorGUI method" Url="html/M_Slash_Unity_Editor_Common_Inspectors_Rendering_MeshRendererSortingEditor_OnInspectorGUI.htm" />
   <HelpKINode Title="Message property" Url="html/P_Slash_ECS_Inspector_Validation_ValidationError_Message.htm" />
-  <HelpKINode Title="MessageLocalizer property" Url="html/P_NDesk_Options_OptionSet_MessageLocalizer.htm" />
   <HelpKINode Title="Messages property" Url="html/P_Slash_SystemExt_Exceptions_AggregateException_Messages.htm" />
   <HelpKINode Title="Min method">
     <HelpKINode Title="MathUtils.Min Method " Url="html/Overload_Slash_Math_Utils_MathUtils_Min.htm" />
@@ -2265,22 +2135,11 @@
     <HelpKINode Title="PropertyValueEditorContext.Name Property " Url="html/P_Slash_Unity_Common_GUI_ValueEditors_PropertyValueEditorContext_Name.htm" />
     <HelpKINode Title="SimpleValueEditorContext.Name Property " Url="html/P_Slash_Unity_Common_GUI_ValueEditors_SimpleValueEditorContext_Name.htm" />
   </HelpKINode>
-  <HelpKINode Title="NDesk.Options namespace" Url="html/N_NDesk_Options.htm" />
-  <HelpKINode Title="NDesk.Options.Option class" Url="html/T_NDesk_Options_Option.htm" />
-  <HelpKINode Title="NDesk.Options.OptionAction(Of TKey, TValue) delegate" Url="html/T_NDesk_Options_OptionAction_2.htm" />
-  <HelpKINode Title="NDesk.Options.OptionAction&lt;TKey, TValue&gt; delegate" Url="html/T_NDesk_Options_OptionAction_2.htm" />
-  <HelpKINode Title="NDesk.Options.OptionContext class" Url="html/T_NDesk_Options_OptionContext.htm" />
-  <HelpKINode Title="NDesk.Options.OptionException class" Url="html/T_NDesk_Options_OptionException.htm" />
-  <HelpKINode Title="NDesk.Options.OptionSet class" Url="html/T_NDesk_Options_OptionSet.htm" />
-  <HelpKINode Title="NDesk.Options.OptionValueCollection class" Url="html/T_NDesk_Options_OptionValueCollection.htm" />
-  <HelpKINode Title="NDesk.Options.OptionValueType enumeration" Url="html/T_NDesk_Options_OptionValueType.htm" />
   <HelpKINode Title="NeverSleep enumeration member" Url="html/T_Slash_Unity_Common_GUI_SleepTimeoutBehaviour_AvailableSetting.htm" />
   <HelpKINode Title="Next property" Url="html/P_Slash_ECS_Processes_GameProcess_Next.htm" />
   <HelpKINode Title="None enumeration member">
-    <HelpKINode Title="BuildType Enumeration" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildType.htm" />
     <HelpKINode Title="DirectionType Enumeration" Url="html/T_Slash_Math_Utils_DirectionType.htm" />
     <HelpKINode Title="FadingAudioSource.FadeState Enumeration" Url="html/T_Slash_Unity_Common_Sound_FadingAudioSource_FadeState.htm" />
-    <HelpKINode Title="OptionValueType Enumeration" Url="html/T_NDesk_Options_OptionValueType.htm" />
   </HelpKINode>
   <HelpKINode Title="Normalize method">
     <HelpKINode Title="Vector2F.Normalize Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_Normalize.htm" />
@@ -2320,7 +2179,6 @@
     <HelpKINode Title="GameConfigurationEditor.OnInspectorGUI Method " Url="html/M_Slash_Unity_Editor_Common_Inspectors_Configuration_GameConfigurationEditor_OnInspectorGUI.htm" />
     <HelpKINode Title="MeshRendererSortingEditor.OnInspectorGUI Method " Url="html/M_Slash_Unity_Editor_Common_Inspectors_Rendering_MeshRendererSortingEditor_OnInspectorGUI.htm" />
   </HelpKINode>
-  <HelpKINode Title="OnParseComplete method" Url="html/M_NDesk_Options_Option_OnParseComplete.htm" />
   <HelpKINode Title="OpenScene method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Windows_OpenSceneWindow_OpenScene.htm" />
   <HelpKINode Title="OpenSceneWindow class">
     <HelpKINode Title="OpenSceneWindow Class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Windows_OpenSceneWindow.htm" />
@@ -2332,112 +2190,11 @@
   <HelpKINode Title="OpenSceneWindow.OpenScene method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Windows_OpenSceneWindow_OpenScene.htm" />
   <HelpKINode Title="OpenSceneWindow.OpenSceneWindow constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Windows_OpenSceneWindow__ctor.htm" />
   <HelpKINode Title="Opposite method" Url="html/M_Slash_Math_Utils_Direction_Opposite.htm" />
-  <HelpKINode Title="Option class">
-    <HelpKINode Title="Option Class" Url="html/T_NDesk_Options_Option.htm" />
-    <HelpKINode Title="about Option class" Url="html/T_NDesk_Options_Option.htm" />
-    <HelpKINode Title="constructor" Url="html/Overload_NDesk_Options_Option__ctor.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_NDesk_Options_Option.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_NDesk_Options_Option.htm" />
-  </HelpKINode>
-  <HelpKINode Title="Option property" Url="html/P_NDesk_Options_OptionContext_Option.htm" />
-  <HelpKINode Title="Option.Description property" Url="html/P_NDesk_Options_Option_Description.htm" />
-  <HelpKINode Title="Option.GetNames method" Url="html/M_NDesk_Options_Option_GetNames.htm" />
-  <HelpKINode Title="Option.GetValueSeparators method" Url="html/M_NDesk_Options_Option_GetValueSeparators.htm" />
-  <HelpKINode Title="Option.Invoke method" Url="html/M_NDesk_Options_Option_Invoke.htm" />
-  <HelpKINode Title="Option.MaxValueCount property" Url="html/P_NDesk_Options_Option_MaxValueCount.htm" />
-  <HelpKINode Title="Option.OnParseComplete method" Url="html/M_NDesk_Options_Option_OnParseComplete.htm" />
-  <HelpKINode Title="Option.Option constructor" Url="html/Overload_NDesk_Options_Option__ctor.htm" />
-  <HelpKINode Title="Option.OptionValueType property" Url="html/P_NDesk_Options_Option_OptionValueType.htm" />
-  <HelpKINode Title="Option.Parse(Of T) method" Url="html/M_NDesk_Options_Option_Parse__1.htm" />
-  <HelpKINode Title="Option.Parse&lt;T&gt; method" Url="html/M_NDesk_Options_Option_Parse__1.htm" />
-  <HelpKINode Title="Option.Prototype property" Url="html/P_NDesk_Options_Option_Prototype.htm" />
-  <HelpKINode Title="Option.ToString method" Url="html/M_NDesk_Options_Option_ToString.htm" />
-  <HelpKINode Title="OptionAction(Of TKey, TValue) delegate" Url="html/T_NDesk_Options_OptionAction_2.htm" />
-  <HelpKINode Title="OptionAction&lt;TKey, TValue&gt; delegate" Url="html/T_NDesk_Options_OptionAction_2.htm" />
-  <HelpKINode Title="Optional enumeration member" Url="html/T_NDesk_Options_OptionValueType.htm" />
-  <HelpKINode Title="OptionContext class">
-    <HelpKINode Title="OptionContext Class" Url="html/T_NDesk_Options_OptionContext.htm" />
-    <HelpKINode Title="about OptionContext class" Url="html/T_NDesk_Options_OptionContext.htm" />
-    <HelpKINode Title="constructor" Url="html/M_NDesk_Options_OptionContext__ctor.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_NDesk_Options_OptionContext.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_NDesk_Options_OptionContext.htm" />
-  </HelpKINode>
-  <HelpKINode Title="OptionContext.Option property" Url="html/P_NDesk_Options_OptionContext_Option.htm" />
-  <HelpKINode Title="OptionContext.OptionContext constructor" Url="html/M_NDesk_Options_OptionContext__ctor.htm" />
-  <HelpKINode Title="OptionContext.OptionIndex property" Url="html/P_NDesk_Options_OptionContext_OptionIndex.htm" />
-  <HelpKINode Title="OptionContext.OptionName property" Url="html/P_NDesk_Options_OptionContext_OptionName.htm" />
-  <HelpKINode Title="OptionContext.OptionSet property" Url="html/P_NDesk_Options_OptionContext_OptionSet.htm" />
-  <HelpKINode Title="OptionContext.OptionValues property" Url="html/P_NDesk_Options_OptionContext_OptionValues.htm" />
-  <HelpKINode Title="OptionException class">
-    <HelpKINode Title="OptionException Class" Url="html/T_NDesk_Options_OptionException.htm" />
-    <HelpKINode Title="about OptionException class" Url="html/T_NDesk_Options_OptionException.htm" />
-    <HelpKINode Title="constructor" Url="html/Overload_NDesk_Options_OptionException__ctor.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_NDesk_Options_OptionException.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_NDesk_Options_OptionException.htm" />
-  </HelpKINode>
-  <HelpKINode Title="OptionException.GetObjectData method" Url="html/M_NDesk_Options_OptionException_GetObjectData.htm" />
-  <HelpKINode Title="OptionException.OptionException constructor" Url="html/Overload_NDesk_Options_OptionException__ctor.htm" />
-  <HelpKINode Title="OptionException.OptionName property" Url="html/P_NDesk_Options_OptionException_OptionName.htm" />
-  <HelpKINode Title="OptionIndex property" Url="html/P_NDesk_Options_OptionContext_OptionIndex.htm" />
-  <HelpKINode Title="OptionName property">
-    <HelpKINode Title="OptionContext.OptionName Property " Url="html/P_NDesk_Options_OptionContext_OptionName.htm" />
-    <HelpKINode Title="OptionException.OptionName Property " Url="html/P_NDesk_Options_OptionException_OptionName.htm" />
-  </HelpKINode>
-  <HelpKINode Title="OptionSet class">
-    <HelpKINode Title="OptionSet Class" Url="html/T_NDesk_Options_OptionSet.htm" />
-    <HelpKINode Title="about OptionSet class" Url="html/T_NDesk_Options_OptionSet.htm" />
-    <HelpKINode Title="constructor" Url="html/Overload_NDesk_Options_OptionSet__ctor.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_NDesk_Options_OptionSet.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_NDesk_Options_OptionSet.htm" />
-  </HelpKINode>
-  <HelpKINode Title="OptionSet property" Url="html/P_NDesk_Options_OptionContext_OptionSet.htm" />
-  <HelpKINode Title="OptionSet.Add method" Url="html/Overload_NDesk_Options_OptionSet_Add.htm" />
-  <HelpKINode Title="OptionSet.CreateOptionContext method" Url="html/M_NDesk_Options_OptionSet_CreateOptionContext.htm" />
-  <HelpKINode Title="OptionSet.GetKeyForItem method" Url="html/M_NDesk_Options_OptionSet_GetKeyForItem.htm" />
-  <HelpKINode Title="OptionSet.GetOptionForName method" Url="html/M_NDesk_Options_OptionSet_GetOptionForName.htm" />
-  <HelpKINode Title="OptionSet.GetOptionParts method" Url="html/M_NDesk_Options_OptionSet_GetOptionParts.htm" />
-  <HelpKINode Title="OptionSet.InsertItem method" Url="html/M_NDesk_Options_OptionSet_InsertItem.htm" />
-  <HelpKINode Title="OptionSet.MessageLocalizer property" Url="html/P_NDesk_Options_OptionSet_MessageLocalizer.htm" />
-  <HelpKINode Title="OptionSet.OptionSet constructor" Url="html/Overload_NDesk_Options_OptionSet__ctor.htm" />
-  <HelpKINode Title="OptionSet.Parse method" Url="html/Overload_NDesk_Options_OptionSet_Parse.htm" />
-  <HelpKINode Title="OptionSet.RemoveItem method" Url="html/M_NDesk_Options_OptionSet_RemoveItem.htm" />
-  <HelpKINode Title="OptionSet.SetItem method" Url="html/M_NDesk_Options_OptionSet_SetItem.htm" />
-  <HelpKINode Title="OptionSet.WriteOptionDescriptions method" Url="html/M_NDesk_Options_OptionSet_WriteOptionDescriptions.htm" />
-  <HelpKINode Title="OptionValueCollection class">
-    <HelpKINode Title="OptionValueCollection Class" Url="html/T_NDesk_Options_OptionValueCollection.htm" />
-    <HelpKINode Title="about OptionValueCollection class" Url="html/T_NDesk_Options_OptionValueCollection.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_NDesk_Options_OptionValueCollection.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_NDesk_Options_OptionValueCollection.htm" />
-  </HelpKINode>
-  <HelpKINode Title="OptionValueCollection.Add method" Url="html/M_NDesk_Options_OptionValueCollection_Add.htm" />
-  <HelpKINode Title="OptionValueCollection.Clear method" Url="html/M_NDesk_Options_OptionValueCollection_Clear.htm" />
-  <HelpKINode Title="OptionValueCollection.Contains method" Url="html/M_NDesk_Options_OptionValueCollection_Contains.htm" />
-  <HelpKINode Title="OptionValueCollection.CopyTo method" Url="html/M_NDesk_Options_OptionValueCollection_CopyTo.htm" />
-  <HelpKINode Title="OptionValueCollection.Count property" Url="html/P_NDesk_Options_OptionValueCollection_Count.htm" />
-  <HelpKINode Title="OptionValueCollection.GetEnumerator method" Url="html/M_NDesk_Options_OptionValueCollection_GetEnumerator.htm" />
-  <HelpKINode Title="OptionValueCollection.IndexOf method" Url="html/M_NDesk_Options_OptionValueCollection_IndexOf.htm" />
-  <HelpKINode Title="OptionValueCollection.Insert method" Url="html/M_NDesk_Options_OptionValueCollection_Insert.htm" />
-  <HelpKINode Title="OptionValueCollection.IsReadOnly property" Url="html/P_NDesk_Options_OptionValueCollection_IsReadOnly.htm" />
-  <HelpKINode Title="OptionValueCollection.Item property" Url="html/P_NDesk_Options_OptionValueCollection_Item.htm" />
-  <HelpKINode Title="OptionValueCollection.Remove method" Url="html/M_NDesk_Options_OptionValueCollection_Remove.htm" />
-  <HelpKINode Title="OptionValueCollection.RemoveAt method" Url="html/M_NDesk_Options_OptionValueCollection_RemoveAt.htm" />
-  <HelpKINode Title="OptionValueCollection.ToArray method" Url="html/M_NDesk_Options_OptionValueCollection_ToArray.htm" />
-  <HelpKINode Title="OptionValueCollection.ToList method" Url="html/M_NDesk_Options_OptionValueCollection_ToList.htm" />
-  <HelpKINode Title="OptionValueCollection.ToString method" Url="html/M_NDesk_Options_OptionValueCollection_ToString.htm" />
-  <HelpKINode Title="OptionValues property" Url="html/P_NDesk_Options_OptionContext_OptionValues.htm" />
-  <HelpKINode Title="OptionValueType enumeration" Url="html/T_NDesk_Options_OptionValueType.htm" />
-  <HelpKINode Title="OptionValueType property" Url="html/P_NDesk_Options_Option_OptionValueType.htm" />
   <HelpKINode Title="Order property" Url="html/P_Slash_ECS_Systems_GameSystemAttribute_Order.htm" />
   <HelpKINode Title="OrOption method" Url="html/M_Slash_SystemExt_Utils_EnumExtensions_OrOption.htm" />
   <HelpKINode Title="Parent property" Url="html/P_Slash_ECS_Blueprints_Blueprint_Parent.htm" />
   <HelpKINode Title="ParentId property" Url="html/P_Slash_ECS_Blueprints_Blueprint_ParentId.htm" />
   <HelpKINode Title="Parents property" Url="html/P_Slash_ECS_Blueprints_HierarchicalBlueprintManager_Parents.htm" />
-  <HelpKINode Title="Parse method">
-    <HelpKINode Title="BuildOptionSet.Parse Method " Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildOptionSet_Parse.htm" />
-    <HelpKINode Title="OptionSet.Parse Method " Url="html/Overload_NDesk_Options_OptionSet_Parse.htm" />
-  </HelpKINode>
-  <HelpKINode Title="Parse(Of T) method" Url="html/M_NDesk_Options_Option_Parse__1.htm" />
-  <HelpKINode Title="Parse&lt;T&gt; method" Url="html/M_NDesk_Options_Option_Parse__1.htm" />
   <HelpKINode Title="PathUtils class">
     <HelpKINode Title="PathUtils Class" Url="html/T_Slash_SystemExt_Utils_PathUtils.htm" />
     <HelpKINode Title="about PathUtils class" Url="html/T_Slash_SystemExt_Utils_PathUtils.htm" />
@@ -2448,7 +2205,6 @@
   <HelpKINode Title="PathUtils.PathUtils constructor" Url="html/M_Slash_SystemExt_Utils_PathUtils__ctor.htm" />
   <HelpKINode Title="Paused property" Url="html/P_Slash_ECS_Processes_GameProcess_Paused.htm" />
   <HelpKINode Title="PauseGame method" Url="html/M_Slash_ECS_Game_PauseGame.htm" />
-  <HelpKINode Title="PerformBuild method" Url="html/Overload_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PerformBuild.htm" />
   <HelpKINode Title="Pi field" Url="html/F_Slash_Math_Utils_MathUtils_Pi.htm" />
   <HelpKINode Title="PiOver2 field" Url="html/F_Slash_Math_Utils_MathUtils_PiOver2.htm" />
   <HelpKINode Title="PiOver4 field" Url="html/F_Slash_Math_Utils_MathUtils_PiOver4.htm" />
@@ -2503,13 +2259,10 @@
     <HelpKINode Title="InspectorEnumAttribute.PossibleValues Property " Url="html/P_Slash_ECS_Inspector_Attributes_InspectorEnumAttribute_PossibleValues.htm" />
     <HelpKINode Title="InspectorPropertyAttribute.PossibleValues Property " Url="html/P_Slash_ECS_Inspector_Attributes_InspectorPropertyAttribute_PossibleValues.htm" />
   </HelpKINode>
-  <HelpKINode Title="PostBuild event" Url="html/E_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PostBuild.htm" />
   <HelpKINode Title="Pow method" Url="html/Overload_Slash_Math_Utils_MathUtils_Pow.htm" />
   <HelpKINode Title="Pow2 method" Url="html/Overload_Slash_Math_Utils_MathUtils_Pow2.htm" />
   <HelpKINode Title="Pow3 method" Url="html/M_Slash_Math_Utils_MathUtils_Pow3.htm" />
   <HelpKINode Title="Pow4 method" Url="html/M_Slash_Math_Utils_MathUtils_Pow4.htm" />
-  <HelpKINode Title="PreBuild event" Url="html/E_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PreBuild.htm" />
-  <HelpKINode Title="PrepareBuild method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PrepareBuild.htm" />
   <HelpKINode Title="Priority property" Url="html/P_Slash_ECS_Inspector_Attributes_InspectorComponentAttribute_Priority.htm" />
   <HelpKINode Title="ProcessEvents method" Url="html/Overload_Slash_ECS_Events_EventManager_ProcessEvents.htm" />
   <HelpKINode Title="ProcessManager class">
@@ -2523,8 +2276,6 @@
   <HelpKINode Title="ProcessManager.ProcessManager constructor" Url="html/M_Slash_ECS_Processes_ProcessManager__ctor.htm" />
   <HelpKINode Title="ProcessManager.UpdateProcesses method" Url="html/M_Slash_ECS_Processes_ProcessManager_UpdateProcesses.htm" />
   <HelpKINode Title="ProcessType property" Url="html/P_Slash_ECS_Processes_GameProcess_ProcessType.htm" />
-  <HelpKINode Title="ProductName field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration_ProductName.htm" />
-  <HelpKINode Title="ProjectName property" Url="html/P_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_ProjectName.htm" />
   <HelpKINode Title="Properties property" Url="html/P_Slash_ECS_Inspector_Data_InspectorType_Properties.htm" />
   <HelpKINode Title="PropertyField class">
     <HelpKINode Title="PropertyField Class" Url="html/T_Slash_Unity_Editor_Common_Inspectors_PropertyField.htm" />
@@ -2572,7 +2323,6 @@
   <HelpKINode Title="PropertyValueEditorContext.TryGetValue&lt;T&gt; method" Url="html/M_Slash_Unity_Common_GUI_ValueEditors_PropertyValueEditorContext_TryGetValue__1.htm" />
   <HelpKINode Title="PropertyValueEditorContext.Type property" Url="html/P_Slash_Unity_Common_GUI_ValueEditors_PropertyValueEditorContext_Type.htm" />
   <HelpKINode Title="PropertyValueEditorContext.Value property" Url="html/P_Slash_Unity_Common_GUI_ValueEditors_PropertyValueEditorContext_Value.htm" />
-  <HelpKINode Title="Prototype property" Url="html/P_NDesk_Options_Option_Prototype.htm" />
   <HelpKINode Title="QueueEvent method" Url="html/Overload_Slash_ECS_Events_EventManager_QueueEvent.htm" />
   <HelpKINode Title="QuickCheats field" Url="html/F_Slash_Unity_Common_Diagnostics_CheatConsole_QuickCheats.htm" />
   <HelpKINode Title="Quit method" Url="html/M_Slash_Unity_Common_Scenes_SceneManager_Quit.htm" />
@@ -2735,14 +2485,8 @@
     <HelpKINode Title="GameEventBehaviour.RegisterListener Method " Url="html/M_Slash_Unity_Common_ECS_GameEventBehaviour_RegisterListener.htm" />
   </HelpKINode>
   <HelpKINode Title="RegisterListeners method" Url="html/M_Slash_Unity_Common_ECS_GameEventBehaviour_RegisterListeners.htm" />
-  <HelpKINode Title="RelativeBlueprintsFolderPath field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_RelativeBlueprintsFolderPath.htm" />
-  <HelpKINode Title="Release enumeration member" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildType.htm" />
-  <HelpKINode Title="Remove method">
-    <HelpKINode Title="OptionValueCollection.Remove Method " Url="html/M_NDesk_Options_OptionValueCollection_Remove.htm" />
-    <HelpKINode Title="ReadOnlyCollection(T).Remove Method " Url="html/M_Slash_Collections_ObjectModel_ReadOnlyCollection_1_Remove.htm" />
-  </HelpKINode>
+  <HelpKINode Title="Remove method" Url="html/M_Slash_Collections_ObjectModel_ReadOnlyCollection_1_Remove.htm" />
   <HelpKINode Title="RemoveAssemblyInfo method" Url="html/M_Slash_SystemExt_Utils_SystemExtensions_RemoveAssemblyInfo.htm" />
-  <HelpKINode Title="RemoveAt method" Url="html/M_NDesk_Options_OptionValueCollection_RemoveAt.htm" />
   <HelpKINode Title="RemoveBlueprint method">
     <HelpKINode Title="BlueprintManager.RemoveBlueprint Method " Url="html/M_Slash_ECS_Blueprints_BlueprintManager_RemoveBlueprint.htm" />
     <HelpKINode Title="HierarchicalBlueprintManager.RemoveBlueprint Method " Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_RemoveBlueprint.htm" />
@@ -2754,7 +2498,6 @@
   </HelpKINode>
   <HelpKINode Title="RemoveEntities method" Url="html/M_Slash_ECS_Components_EntityManager_RemoveEntities.htm" />
   <HelpKINode Title="RemoveEntity method" Url="html/M_Slash_ECS_Components_EntityManager_RemoveEntity.htm" />
-  <HelpKINode Title="RemoveItem method" Url="html/M_NDesk_Options_OptionSet_RemoveItem.htm" />
   <HelpKINode Title="RemoveListener method" Url="html/Overload_Slash_ECS_Events_EventManager_RemoveListener.htm" />
   <HelpKINode Title="RemoveParent method" Url="html/M_Slash_Collections_AttributeTables_HierarchicalAttributeTable_RemoveParent.htm" />
   <HelpKINode Title="RemoveValue method">
@@ -2762,14 +2505,11 @@
     <HelpKINode Title="HierarchicalAttributeTable.RemoveValue Method " Url="html/M_Slash_Collections_AttributeTables_HierarchicalAttributeTable_RemoveValue.htm" />
     <HelpKINode Title="IAttributeTable.RemoveValue Method " Url="html/M_Slash_Collections_AttributeTables_IAttributeTable_RemoveValue.htm" />
   </HelpKINode>
-  <HelpKINode Title="Required enumeration member" Url="html/T_NDesk_Options_OptionValueType.htm" />
   <HelpKINode Title="RequiredComponents property" Url="html/P_Slash_ECS_Inspector_Attributes_InspectorBlueprintAttribute_RequiredComponents.htm" />
   <HelpKINode Title="RequiredConditionValue property" Url="html/P_Slash_ECS_Inspector_Attributes_InspectorConditionalPropertyAttribute_RequiredConditionValue.htm" />
   <HelpKINode Title="ResetMouseOver2dGUI method" Url="html/M_Slash_Unity_Common_Input_InputUtils_ResetMouseOver2dGUI.htm" />
   <HelpKINode Title="ResolveParent method" Url="html/M_Slash_ECS_Blueprints_BlueprintUtils_ResolveParent.htm" />
   <HelpKINode Title="ResolveParents method" Url="html/M_Slash_ECS_Blueprints_BlueprintUtils_ResolveParents.htm" />
-  <HelpKINode Title="RestoreEditor method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_RestoreEditor.htm" />
-  <HelpKINode Title="RestoreXmlBlueprints method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_RestoreXmlBlueprints.htm" />
   <HelpKINode Title="ResumeGame method" Url="html/M_Slash_ECS_Game_ResumeGame.htm" />
   <HelpKINode Title="Right field">
     <HelpKINode Title="Vector3F.Right Field" Url="html/F_Slash_Math_Algebra_Vectors_Vector3F_Right.htm" />
@@ -2853,20 +2593,20 @@
   <HelpKINode Title="SerializationUtils.WriteXml method" Url="html/M_Slash_Serialization_Utils_SerializationUtils_WriteXml.htm" />
   <HelpKINode Title="serialize method">
     <HelpKINode Title="DictionarySerializationContext.serialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_serialize.htm" />
-    <HelpKINode Title="DictionaryDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_serialize.htm" />
-    <HelpKINode Title="IDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_serialize.htm" />
-    <HelpKINode Title="ListDictionarySerializer(T).serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_serialize.htm" />
-    <HelpKINode Title="ListDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_serialize.htm" />
     <HelpKINode Title="StackDictionarySerializer(T).serialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_serialize.htm" />
     <HelpKINode Title="StackDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_serialize.htm" />
     <HelpKINode Title="ValueWithTypeDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_serialize.htm" />
+    <HelpKINode Title="IDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_serialize.htm" />
+    <HelpKINode Title="DictionaryDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_serialize.htm" />
+    <HelpKINode Title="ListDictionarySerializer(T).serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_serialize.htm" />
+    <HelpKINode Title="ListDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_serialize.htm" />
   </HelpKINode>
   <HelpKINode Title="Serialize method">
-    <HelpKINode Title="Blueprint.Serialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Serialize.htm" />
-    <HelpKINode Title="EntityConfiguration.Serialize Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_Serialize.htm" />
     <HelpKINode Title="AttributeTable.Serialize Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_Serialize.htm" />
     <HelpKINode Title="IBinarySerializable.Serialize Method " Url="html/M_Slash_Serialization_Binary_IBinarySerializable_Serialize.htm" />
+    <HelpKINode Title="Blueprint.Serialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Serialize.htm" />
     <HelpKINode Title="BinarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Binary_BinarySerializer_Serialize.htm" />
+    <HelpKINode Title="EntityConfiguration.Serialize Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_Serialize.htm" />
   </HelpKINode>
   <HelpKINode Title="serializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_serializeContext.htm" />
   <HelpKINode Title="SerializedConfigurationKeys field" Url="html/F_Slash_Unity_Common_ECS_EntityConfigurationBehaviour_SerializedConfigurationKeys.htm" />
@@ -2882,7 +2622,6 @@
   <HelpKINode Title="SerializeMemberAttribute.SerializeMemberAttribute constructor" Url="html/M_Slash_Serialization_SerializeMemberAttribute__ctor.htm" />
   <HelpKINode Title="SetConversionFunc property" Url="html/P_Slash_Unity_Editor_Common_Inspectors_PropertyField_SetConversionFunc.htm" />
   <HelpKINode Title="SetDisabled method" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_SetDisabled.htm" />
-  <HelpKINode Title="SetItem method" Url="html/M_NDesk_Options_OptionSet_SetItem.htm" />
   <HelpKINode Title="SetMouseOver2dGUI method" Url="html/M_Slash_Unity_Common_Input_InputUtils_SetMouseOver2dGUI.htm" />
   <HelpKINode Title="SetPropertyValue method">
     <HelpKINode Title="InspectorDataAttribute.SetPropertyValue Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorDataAttribute_SetPropertyValue.htm" />
@@ -3173,16 +2912,6 @@
   <HelpKINode Title="Slash.Unity.Editor.Common.Inspectors.Utils.TooltipDrawer class" Url="html/T_Slash_Unity_Editor_Common_Inspectors_Utils_TooltipDrawer.htm" />
   <HelpKINode Title="Slash.Unity.Editor.Common.Inspectors.ViewModels namespace" Url="html/N_Slash_Unity_Editor_Common_Inspectors_ViewModels.htm" />
   <HelpKINode Title="Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer class" Url="html/T_Slash_Unity_Editor_Common_Inspectors_ViewModels_ViewEventDelegateDrawer.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build namespace" Url="html/N_Slash_Unity_Editor_Common_MenuItems_Build.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build.BuildBlueprints class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build.BuildConfiguration class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildConfiguration.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build.BuildManager class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PostBuildDelegate delegate" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PostBuildDelegate.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build.BuildManager.PreBuildDelegate delegate" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildManager_PreBuildDelegate.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build.BuildOptionSet class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildOptionSet.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build.BuildSettings class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build.BuildSettingsAndroid class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid.htm" />
-  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Build.BuildType enumeration" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Build_BuildType.htm" />
   <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Util namespace" Url="html/N_Slash_Unity_Editor_Common_MenuItems_Util.htm" />
   <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Util.CheckTextureAssets class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Util_CheckTextureAssets.htm" />
   <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Util.FindMonoBehaviourUsages class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Util_FindMonoBehaviourUsages.htm" />
@@ -3303,7 +3032,6 @@
   </HelpKINode>
   <HelpKINode Title="SwitchFullscreenBehaviour.KeyCode field" Url="html/F_Slash_Unity_Common_GUI_SwitchFullscreenBehaviour_KeyCode.htm" />
   <HelpKINode Title="SwitchFullscreenBehaviour.SwitchFullscreenBehaviour constructor" Url="html/M_Slash_Unity_Common_GUI_SwitchFullscreenBehaviour__ctor.htm" />
-  <HelpKINode Title="SwitchToBinaryBlueprints method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildBlueprints_SwitchToBinaryBlueprints.htm" />
   <HelpKINode Title="SystemAdded enumeration member" Url="html/T_Slash_ECS_Events_FrameworkEvent.htm" />
   <HelpKINode Title="SystemExtensions class">
     <HelpKINode Title="SystemExtensions Class" Url="html/T_Slash_SystemExt_Utils_SystemExtensions.htm" />
@@ -3353,10 +3081,8 @@
     <HelpKINode Title="WaitProcess.TimeElapsed Property " Url="html/P_Slash_ECS_Processes_WaitProcess_TimeElapsed.htm" />
   </HelpKINode>
   <HelpKINode Title="TimeFrame field" Url="html/F_Slash_Unity_Common_Diagnostics_FPSDisplay_TimeFrame.htm" />
-  <HelpKINode Title="ToArray method" Url="html/M_NDesk_Options_OptionValueCollection_ToArray.htm" />
   <HelpKINode Title="ToDirections method" Url="html/Overload_Slash_Math_Utils_Direction_ToDirections.htm" />
   <HelpKINode Title="TogglePause method" Url="html/M_Slash_ECS_Processes_GameProcess_TogglePause.htm" />
-  <HelpKINode Title="ToList method" Url="html/M_NDesk_Options_OptionValueCollection_ToList.htm" />
   <HelpKINode Title="ToMemoryStream method" Url="html/M_Slash_Serialization_Utils_SerializationUtils_ToMemoryStream.htm" />
   <HelpKINode Title="TooltipDrawer class">
     <HelpKINode Title="TooltipDrawer Class" Url="html/T_Slash_Unity_Editor_Common_Inspectors_Utils_TooltipDrawer.htm" />
@@ -3386,8 +3112,6 @@
   <HelpKINode Title="ToString method">
     <HelpKINode Title="Blueprint.ToString Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_ToString.htm" />
     <HelpKINode Title="BlueprintManager.ToString Method " Url="html/M_Slash_ECS_Blueprints_BlueprintManager_ToString.htm" />
-    <HelpKINode Title="BuildSettings.ToString Method " Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettings_ToString.htm" />
-    <HelpKINode Title="BuildSettingsAndroid.ToString Method " Url="html/M_Slash_Unity_Editor_Common_MenuItems_Build_BuildSettingsAndroid_ToString.htm" />
     <HelpKINode Title="CollectionUtils.ToString Method " Url="html/M_Slash_Collections_Utils_CollectionUtils_ToString.htm" />
     <HelpKINode Title="EntityComponentData.ToString Method " Url="html/M_Slash_ECS_Events_EntityComponentData_ToString.htm" />
     <HelpKINode Title="EntityConfiguration.ToString Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_ToString.htm" />
@@ -3398,8 +3122,6 @@
     <HelpKINode Title="InspectorIntAttribute.ToString Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorIntAttribute_ToString.htm" />
     <HelpKINode Title="InspectorPropertyAttribute.ToString Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorPropertyAttribute_ToString.htm" />
     <HelpKINode Title="InspectorStringAttribute.ToString Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorStringAttribute_ToString.htm" />
-    <HelpKINode Title="Option.ToString Method " Url="html/M_NDesk_Options_Option_ToString.htm" />
-    <HelpKINode Title="OptionValueCollection.ToString Method " Url="html/M_NDesk_Options_OptionValueCollection_ToString.htm" />
     <HelpKINode Title="RectangleF.ToString Method " Url="html/M_Slash_Math_Geometry_Rectangles_RectangleF_ToString.htm" />
     <HelpKINode Title="RectangleI.ToString Method " Url="html/M_Slash_Math_Geometry_Rectangles_RectangleI_ToString.htm" />
     <HelpKINode Title="Vector2F.ToString Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_ToString.htm" />
@@ -3893,7 +3615,6 @@
   <HelpKINode Title="WithTimestamp method" Url="html/M_Slash_Unity_Common_Utils_UnityUtils_WithTimestamp.htm" />
   <HelpKINode Title="Wrap method" Url="html/M_Slash_Math_Utils_MathUtils_Wrap.htm" />
   <HelpKINode Title="WrapValue method" Url="html/M_Slash_Math_Utils_MathUtils_WrapValue.htm" />
-  <HelpKINode Title="WriteOptionDescriptions method" Url="html/M_NDesk_Options_OptionSet_WriteOptionDescriptions.htm" />
   <HelpKINode Title="WriteXml method">
     <HelpKINode Title="AttributeTable.WriteXml Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_WriteXml.htm" />
     <HelpKINode Title="Blueprint.WriteXml Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_WriteXml.htm" />
