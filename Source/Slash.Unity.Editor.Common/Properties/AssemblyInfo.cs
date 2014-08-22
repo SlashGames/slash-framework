@@ -11,12 +11,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("SlashGames.Unity.Editor.Common")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Slash.Unity.Editor.Common")]
+[assembly: AssemblyDescription("Reusable Unity3D editor scripts and behaviours.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SlashGames.Unity.Editor.Common")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCompany("Slash Games")]
+[assembly: AssemblyProduct("Slash.Unity.Editor.Common")]
+[assembly: AssemblyCopyright("Copyright 2012-2014 Slash Games")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,142 +1,155 @@
-﻿using System;
-using System.Linq;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FindMonoBehaviourUsages.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
-using UnityEditor;
-
-using UnityEngine;
-
-/// <summary>
-///   Finds prefabs who have the specified MonoBehaviour attached.
-/// </summary>
-public class FindMonoBehaviourUsages : EditorWindow
+namespace Slash.Unity.Editor.Common.MenuItems.Util
 {
-    #region Static Fields
+    using System;
+    using System.Linq;
+
+    using UnityEditor;
+
+    using UnityEngine;
+
+    using Object = UnityEngine.Object;
 
     /// <summary>
-    ///   C# type of the script to find usages of.
+    ///   Finds prefabs who have the specified MonoBehaviour attached.
     /// </summary>
-    private static Type monoBehaviourType;
-
-    /// <summary>
-    ///   Script asset to find the usages of.
-    /// </summary>
-    private static MonoScript monoScript;
-
-    /// <summary>
-    ///   Prefabs who have the searched script attached.
-    /// </summary>
-    private static GameObject[] usages;
-
-    #endregion
-
-    #region Public Methods and Operators
-
-    /// <summary>
-    ///   Shows the Find Mono Behaviour Usages window.
-    /// </summary>
-    [MenuItem("Slash Games/Util/Find Mono Behaviour Usages")]
-    public static void findMonoBehaviourUsages()
+    public class FindMonoBehaviourUsages : EditorWindow
     {
-        GetWindow(typeof(FindMonoBehaviourUsages)).Show();
-    }
+        #region Static Fields
 
-    #endregion
+        /// <summary>
+        ///   C# type of the script to find usages of.
+        /// </summary>
+        private static Type monoBehaviourType;
 
-    #region Methods
+        /// <summary>
+        ///   Script asset to find the usages of.
+        /// </summary>
+        private static MonoScript monoScript;
 
-    /// <summary>
-    ///   Finds all prefabs who have the searched script attached.
-    /// </summary>
-    private static void findUsages()
-    {
-        var assetFolderPaths =
-            AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab", StringComparison.Ordinal));
+        /// <summary>
+        ///   Prefabs who have the searched script attached.
+        /// </summary>
+        private static GameObject[] usages;
 
-        usages =
-            assetFolderPaths.Select(item => AssetDatabase.LoadAssetAtPath(item, typeof(GameObject)))
-                            .Cast<GameObject>()
-                            .Where(obj => obj != null)
-                            .Where(obj => obj.GetComponentsInChildren(monoBehaviourType, true).Length > 0)
-                            .ToArray();
-    }
+        #endregion
 
-    /// <summary>
-    ///   Selects the specified prefab in the project window.
-    /// </summary>
-    /// <param name="prefab">Prefab to select.</param>
-    private static void navigateTo(UnityEngine.Object prefab)
-    {
-        Selection.activeObject = prefab;
-        EditorUtility.FocusProjectWindow();
-    }
+        #region Public Methods and Operators
 
-    private void OnGUI()
-    {
-        const int X = 3;
-        const int Height = 20;
-        const int Offset = 2;
-
-        var y = 3;
-        var width = this.position.width - 2 * X;
-        
-        // Show selection field for the user.
-        monoScript =
-            (MonoScript)
-            EditorGUI.ObjectField(
-                new Rect(X, y, width, Height), "Mono Behaviour", monoScript, typeof(MonoScript), false);
-
-        // Show error message if no mono behaviour selected.
-        y += Height + Offset;
-
-        if (monoScript == null)
+        /// <summary>
+        ///   Shows the Find Mono Behaviour Usages window.
+        /// </summary>
+        [MenuItem("Slash Games/Util/Find Mono Behaviour Usages")]
+        public static void findMonoBehaviourUsages()
         {
-            EditorGUI.LabelField(new Rect(X, y, width, Height), "Missing:", "Select a behaviour first!");
-            return;
+            GetWindow(typeof(FindMonoBehaviourUsages)).Show();
         }
 
-        if (monoScript.GetClass() == null || !typeof(MonoBehaviour).IsAssignableFrom(monoScript.GetClass()))
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///   Finds all prefabs who have the searched script attached.
+        /// </summary>
+        private static void findUsages()
         {
-            EditorGUI.LabelField(
-                new Rect(X, y, width, Height), "Missing:", string.Format("{0} is no MonoBehaviour.", monoScript.name));
-            return;
+            var assetFolderPaths =
+                AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab", StringComparison.Ordinal));
+
+            usages =
+                assetFolderPaths.Select(item => AssetDatabase.LoadAssetAtPath(item, typeof(GameObject)))
+                                .Cast<GameObject>()
+                                .Where(obj => obj != null)
+                                .Where(obj => obj.GetComponentsInChildren(monoBehaviourType, true).Length > 0)
+                                .ToArray();
         }
 
-        // Clear found usages if selection changed.
-        if (monoBehaviourType != monoScript.GetClass())
+        /// <summary>
+        ///   Selects the specified prefab in the project window.
+        /// </summary>
+        /// <param name="prefab">Prefab to select.</param>
+        private static void navigateTo(Object prefab)
         {
-            monoBehaviourType = monoScript.GetClass();
-            usages = null;
+            Selection.activeObject = prefab;
+            EditorUtility.FocusProjectWindow();
         }
 
-        // Show Find Usages button.
-        if (GUI.Button(new Rect(X, y, width, Height), "Find Prefabs"))
+        private void OnGUI()
         {
-            findUsages();
-        }
+            const int X = 3;
+            const int Height = 20;
+            const int Offset = 2;
 
-        if (usages == null)
-        {
-            return;
-        }
+            var y = 3;
+            var width = this.position.width - 2 * X;
 
-        // Show found usages.
-        foreach (var prefab in usages)
-        {
+            // Show selection field for the user.
+            monoScript =
+                (MonoScript)
+                EditorGUI.ObjectField(
+                    new Rect(X, y, width, Height), "Mono Behaviour", monoScript, typeof(MonoScript), false);
+
+            // Show error message if no mono behaviour selected.
             y += Height + Offset;
 
-            EditorGUILayout.BeginHorizontal();
-
-            EditorGUI.LabelField(new Rect(X, y, width / 2, Height), prefab.name);
-
-            if (GUI.Button(new Rect(X + width / 2, y, width / 2, Height), "Navigate To"))
+            if (monoScript == null)
             {
-                navigateTo(prefab);
+                EditorGUI.LabelField(new Rect(X, y, width, Height), "Missing:", "Select a behaviour first!");
                 return;
             }
 
-            EditorGUILayout.EndHorizontal();
-        }
-    }
+            if (monoScript.GetClass() == null || !typeof(MonoBehaviour).IsAssignableFrom(monoScript.GetClass()))
+            {
+                EditorGUI.LabelField(
+                    new Rect(X, y, width, Height),
+                    "Missing:",
+                    string.Format("{0} is no MonoBehaviour.", monoScript.name));
+                return;
+            }
 
-    #endregion
+            // Clear found usages if selection changed.
+            if (monoBehaviourType != monoScript.GetClass())
+            {
+                monoBehaviourType = monoScript.GetClass();
+                usages = null;
+            }
+
+            // Show Find Usages button.
+            if (GUI.Button(new Rect(X, y, width, Height), "Find Prefabs"))
+            {
+                findUsages();
+            }
+
+            if (usages == null)
+            {
+                return;
+            }
+
+            // Show found usages.
+            foreach (GameObject prefab in usages)
+            {
+                y += Height + Offset;
+
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUI.LabelField(new Rect(X, y, width / 2, Height), prefab.name);
+
+                if (GUI.Button(new Rect(X + width / 2, y, width / 2, Height), "Navigate To"))
+                {
+                    navigateTo(prefab);
+                    return;
+                }
+
+                EditorGUILayout.EndHorizontal();
+            }
+        }
+
+        #endregion
+    }
 }

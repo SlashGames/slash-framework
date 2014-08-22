@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.Editor.Common.Build
+namespace Slash.Unity.Editor.Common.MenuItems.Build
 {
     using System;
     using System.IO;
