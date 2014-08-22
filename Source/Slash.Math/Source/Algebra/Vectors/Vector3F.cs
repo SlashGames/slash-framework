@@ -380,7 +380,8 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Square distance between this and the passed vector. </returns>
         public float GetSquareDistance(Vector3F vector)
         {
-            return MathUtils.Pow2(vector.X - this.X) + MathUtils.Pow2(vector.Y - this.Y) + MathUtils.Pow2(vector.Z - this.Z);
+            return MathUtils.Pow2(vector.X - this.X) + MathUtils.Pow2(vector.Y - this.Y)
+                   + MathUtils.Pow2(vector.Z - this.Z);
         }
 
         /// <summary>

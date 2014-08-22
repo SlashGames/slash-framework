@@ -174,7 +174,8 @@ namespace Slash.Math.Utils
             }
 
             float sinTheta = MathUtils.Sin(angleDiff);
-            return MathUtils.Sin((1 - step) * angleDiff) / sinTheta * from + MathUtils.Sin(step * angleDiff) / sinTheta * to;
+            return MathUtils.Sin((1 - step) * angleDiff) / sinTheta * from
+                   + MathUtils.Sin(step * angleDiff) / sinTheta * to;
         }
 
         #endregion

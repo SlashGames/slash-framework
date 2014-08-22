@@ -3,8 +3,10 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.Unity.Editor.Common.MenuItems.Util
 {
+    using System;
     using System.IO;
     using System.Linq;
 
@@ -14,12 +16,20 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
 
     public static class CheckTextureAssets
     {
+        #region Constants
+
         public const int MaxTextureSize = 2048;
+
+        #endregion
+
+        #region Public Methods and Operators
 
         [MenuItem("Slash Games/Util/Check Texture Assets")]
         public static void CheckTextures()
         {
-            var assetsPaths = Directory.GetFiles(Application.dataPath, "*", SearchOption.AllDirectories).Where(path => !path.EndsWith(".meta"));
+            var assetsPaths =
+                Directory.GetFiles(Application.dataPath, "*", SearchOption.AllDirectories)
+                         .Where(path => !path.EndsWith(".meta"));
             var assetCount = assetsPaths.Count();
             var processedAssets = 0;
 
@@ -30,19 +40,27 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
                     "Checking texture assets", assetPath, (float)processedAssets / assetCount);
 
                 // Check texture size.
-                var relativeAssetPath = assetPath.Substring(assetPath.IndexOf("Assets", System.StringComparison.Ordinal));
+                var relativeAssetPath = assetPath.Substring(assetPath.IndexOf("Assets", StringComparison.Ordinal));
                 var texture = (Texture2D)AssetDatabase.LoadAssetAtPath(relativeAssetPath, typeof(Texture2D));
 
                 if (texture != null)
                 {
                     if (texture.width > MaxTextureSize)
                     {
-                        Debug.LogWarning(string.Format("Texture {0} exceeds maximum width of {1}. It won't be visible on some mobile devices.", texture, MaxTextureSize));
-                    }   
+                        Debug.LogWarning(
+                            string.Format(
+                                "Texture {0} exceeds maximum width of {1}. It won't be visible on some mobile devices.",
+                                texture,
+                                MaxTextureSize));
+                    }
 
                     if (texture.height > MaxTextureSize)
                     {
-                        Debug.LogWarning(string.Format("Texture {0} exceeds maximum height of {1}. It won't be visible on some mobile devices.", texture, MaxTextureSize));
+                        Debug.LogWarning(
+                            string.Format(
+                                "Texture {0} exceeds maximum height of {1}. It won't be visible on some mobile devices.",
+                                texture,
+                                MaxTextureSize));
                     }
                 }
 
@@ -51,5 +69,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
 
             EditorUtility.ClearProgressBar();
         }
+
+        #endregion
     }
 }

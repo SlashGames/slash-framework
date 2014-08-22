@@ -9,7 +9,6 @@ namespace Slash.ECS.Tests.Inspector.Attributes
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.ECS;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Components;
     using Slash.ECS.Configurations;

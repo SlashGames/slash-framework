@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FrameworkEventType.cs" company="Slash Games">
+// <copyright file="FrameworkEvent.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -128,7 +128,7 @@ namespace Slash.ECS.Events
         ///     A generic logging event.
         ///   </para>
         ///   <para>
-        ///     Event data: <see cref="string"/> (Log message).
+        ///     Event data: <see cref="string" /> (Log message).
         ///   </para>
         /// </summary>
         Logging,
@@ -138,7 +138,7 @@ namespace Slash.ECS.Events
         ///     Action to submit a cheat code into the game.
         ///   </para>
         ///   <para>
-        ///     Event data: <see cref="string"/> (Cheat code).
+        ///     Event data: <see cref="string" /> (Cheat code).
         ///   </para>
         /// </summary>
         Cheat,

@@ -48,7 +48,7 @@ namespace Slash.Serialization.Xml
             }
             string typeString = reader.GetAttribute("type");
             reader.Read(); // consume the value
-            if ( typeString == null || typeString == "null")
+            if (typeString == null || typeString == "null")
             {
                 return; // leave T at default value
             }

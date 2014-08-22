@@ -3,6 +3,7 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.ECS.Tests.Blueprints
 {
     using NUnit.Framework;
@@ -12,11 +13,17 @@ namespace Slash.ECS.Tests.Blueprints
 
     public class BlueprintManagerTest
     {
-        private BlueprintManager blueprintManager;
+        #region Fields
+
+        private Blueprint blueprint;
 
         private string blueprintId = "TestBlueprint";
 
-        private Blueprint blueprint;
+        private BlueprintManager blueprintManager;
+
+        #endregion
+
+        #region Public Methods and Operators
 
         [SetUp]
         public void SetUp()
@@ -31,5 +38,7 @@ namespace Slash.ECS.Tests.Blueprints
         {
             SerializationTestUtils.TestXmlSerialization(this.blueprintManager);
         }
+
+        #endregion
     }
 }

@@ -22,7 +22,7 @@ namespace Slash.Tests.ECS
         protected Game TestGame;
 
         #endregion
-        
+
         #region Public Methods and Operators
 
         [SetUp]

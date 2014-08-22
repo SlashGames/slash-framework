@@ -177,7 +177,7 @@ namespace Slash.ECS.Events
             }
 
             this.isProcessing = true;
-            
+
             int processedEvents = 0;
 
             // Process queues events.

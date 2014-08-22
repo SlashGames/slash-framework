@@ -121,8 +121,8 @@ namespace Slash.ECS.Blueprints
             }
             if (this.ContainsBlueprint(blueprintId))
             {
-                throw new ArgumentException(string.Format("A blueprint with this id already exists: {0}", blueprintId),
-                "blueprintId");
+                throw new ArgumentException(
+                    string.Format("A blueprint with this id already exists: {0}", blueprintId), "blueprintId");
             }
 
             this.blueprints.Add(blueprintId, blueprint);

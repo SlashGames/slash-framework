@@ -8,7 +8,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.Diagnostics
 {
     using Slash.Unity.Common.Diagnostics;
     using Slash.Unity.Common.Input;
-    using Slash.Unity.Editor.Common.Inspectors;
 
     using UnityEditor;
 

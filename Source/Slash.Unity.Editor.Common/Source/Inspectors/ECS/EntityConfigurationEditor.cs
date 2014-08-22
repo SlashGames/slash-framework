@@ -19,7 +19,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
     using Slash.Unity.Common.ECS;
     using Slash.Unity.Editor.Common.Inspectors.Utils;
 
-
     using UnityEditor;
 
     using UnityEngine;

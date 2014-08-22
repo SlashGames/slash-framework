@@ -21,13 +21,13 @@ namespace Slash.ECS.Tests.Blueprints
 
         private const int AttributeValue = 123;
 
+        private const string ParentId = "ParentBlueprint";
+
         #endregion
 
         #region Fields
 
         private Blueprint blueprint;
-
-        private const string ParentId = "ParentBlueprint";
 
         #endregion
 
@@ -40,8 +40,9 @@ namespace Slash.ECS.Tests.Blueprints
         }
 
         [Test]
-        public void TestComponentTypesSerialization()
+        public void TestAttributeTableAndComponentTypesSerialization()
         {
+            this.blueprint.AttributeTable.Add(AttributeKey, AttributeValue);
             this.blueprint.ComponentTypes.Add(typeof(TestComponent));
             SerializationTestUtils.TestXmlSerialization(this.blueprint);
         }
@@ -54,9 +55,8 @@ namespace Slash.ECS.Tests.Blueprints
         }
 
         [Test]
-        public void TestAttributeTableAndComponentTypesSerialization()
+        public void TestComponentTypesSerialization()
         {
-            this.blueprint.AttributeTable.Add(AttributeKey, AttributeValue);
             this.blueprint.ComponentTypes.Add(typeof(TestComponent));
             SerializationTestUtils.TestXmlSerialization(this.blueprint);
         }

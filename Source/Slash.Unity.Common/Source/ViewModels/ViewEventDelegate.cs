@@ -9,7 +9,7 @@ namespace Slash.Unity.Common.ViewModels
     using System;
 
     using UnityEngine;
-    
+
     [Serializable]
     public class ViewEventDelegate
     {

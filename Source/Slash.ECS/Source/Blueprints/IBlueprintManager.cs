@@ -28,7 +28,6 @@ namespace Slash.ECS.Blueprints
         /// <param name="blueprint">Blueprint to add.</param>
         void AddBlueprint(string blueprintId, Blueprint blueprint);
 
-
         /// <summary>
         ///   Changes the id under which a blueprint is stored.
         /// </summary>

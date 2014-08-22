@@ -44,14 +44,14 @@ namespace Slash.ECS.Inspector.Attributes
         #region Public Properties
 
         /// <summary>
-        ///   Maximum length of the string.
-        /// </summary>
-        public int MaxLength { get; set; }
-
-        /// <summary>
         ///   Whether this string should be localized to different languages and just represents a localization id.
         /// </summary>
         public bool Localized { get; set; }
+
+        /// <summary>
+        ///   Maximum length of the string.
+        /// </summary>
+        public int MaxLength { get; set; }
 
         #endregion
 

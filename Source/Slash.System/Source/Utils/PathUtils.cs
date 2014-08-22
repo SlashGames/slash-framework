@@ -7,7 +7,6 @@
 namespace Slash.SystemExt.Utils
 {
     using System;
-    using System.IO;
 
     public class PathUtils
     {
