@@ -4,13 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Inspector.Data
+namespace Slash.ECS.Inspector.Data
 {
     using System;
     using System.Collections.Generic;
 
-    using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Utils;
+    using Slash.ECS.Inspector.Attributes;
+    using Slash.ECS.Inspector.Utils;
 
     /// <summary>
     ///   Component accessible to the user in the landscape designer.

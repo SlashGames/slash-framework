@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Systems
+namespace Slash.ECS.Systems
 {
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Inspector.Utils;
+    using Slash.ECS.Inspector.Utils;
 
     /// <summary>
     ///   Base system class.

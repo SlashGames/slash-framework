@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Processes
+namespace Slash.ECS.Processes
 {
     /// <summary>
     ///   Timed process that can be queued with other processes. Good examples

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Systems
+namespace Slash.ECS.Systems
 {
     using System;
 

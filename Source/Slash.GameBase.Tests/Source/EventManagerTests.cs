@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Tests
+namespace Slash.ECS.Tests
 {
     using System.Collections.Generic;
 
@@ -12,9 +12,10 @@ namespace Slash.GameBase.Tests
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
-    using Slash.GameBase.Components;
-    using Slash.GameBase.Events;
-    using Slash.GameBase.Systems;
+    using Slash.ECS;
+    using Slash.ECS.Components;
+    using Slash.ECS.Events;
+    using Slash.ECS.Systems;
 
     /// <summary>
     ///   Unit tests for the EventManager class.

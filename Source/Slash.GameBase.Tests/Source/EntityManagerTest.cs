@@ -4,14 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Tests
+namespace Slash.ECS.Tests
 {
     using System;
 
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Components;
+    using Slash.ECS;
+    using Slash.ECS.Components;
 
     /// <summary>
     ///   Unit tests for the EntityManager class.

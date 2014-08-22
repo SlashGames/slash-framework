@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Events
+namespace Slash.ECS.Events
 {
     using System;
     using System.Collections.Generic;

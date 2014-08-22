@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Blueprints
+namespace Slash.ECS.Blueprints
 {
     using System;
     using System.Collections;
@@ -15,7 +15,6 @@ namespace Slash.GameBase.Blueprints
     using System.Xml.Serialization;
 
     using Slash.Collections.Utils;
-    using Slash.Diagnostics.Contracts;
     using Slash.Serialization;
     using Slash.Serialization.Xml;
 

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Events
+namespace Slash.ECS.Events
 {
     /// <summary>
     ///   Base class for all events which are for a specific entity.

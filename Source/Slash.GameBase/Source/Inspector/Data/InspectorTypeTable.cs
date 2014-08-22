@@ -4,14 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Inspector.Data
+namespace Slash.ECS.Inspector.Data
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
     using Slash.Reflection.Utils;
 
     /// <summary>

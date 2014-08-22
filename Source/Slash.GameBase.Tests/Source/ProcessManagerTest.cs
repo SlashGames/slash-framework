@@ -4,11 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Tests
+namespace Slash.ECS.Tests
 {
     using NUnit.Framework;
 
-    using Slash.GameBase.Processes;
+    using Slash.ECS;
+    using Slash.ECS.Processes;
 
     public class ProcessManagerTest
     {

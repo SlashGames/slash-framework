@@ -6,8 +6,8 @@
 
 namespace Slash.Unity.Common.Diagnostics
 {
-    using Slash.GameBase;
-    using Slash.GameBase.Events;
+    using Slash.ECS;
+    using Slash.ECS.Events;
     using Slash.Unity.Common.Core;
 
     using UnityEngine;

@@ -4,15 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Blueprints
+namespace Slash.ECS.Blueprints
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Slash.Diagnostics.Contracts;
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
 
     public class HierarchicalBlueprintManager : IBlueprintManager
     {

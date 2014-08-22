@@ -13,9 +13,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Core
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Blueprints;
-    using Slash.GameBase.Components;
-    using Slash.GameBase.Inspector.Data;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Components;
+    using Slash.ECS.Inspector.Data;
     using Slash.Unity.Common.Core;
     using Slash.Unity.Editor.Common.Inspectors.Utils;
 

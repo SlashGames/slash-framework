@@ -4,19 +4,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase
+namespace Slash.ECS
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Blueprints;
-    using Slash.GameBase.Components;
-    using Slash.GameBase.Events;
-    using Slash.GameBase.Logging;
-    using Slash.GameBase.Processes;
-    using Slash.GameBase.Systems;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Components;
+    using Slash.ECS.Events;
+    using Slash.ECS.Logging;
+    using Slash.ECS.Processes;
+    using Slash.ECS.Systems;
     using Slash.Reflection.Utils;
 
     /// <summary>

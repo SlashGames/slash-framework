@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Blueprints
+namespace Slash.ECS.Blueprints
 {
     using System.Collections.Generic;
 

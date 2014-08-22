@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Logging
+namespace Slash.ECS.Logging
 {
     public class GameLogger
     {

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Inspector.Attributes
+namespace Slash.ECS.Inspector.Attributes
 {
     public class InspectorVectorAttribute : InspectorPropertyAttribute
     {

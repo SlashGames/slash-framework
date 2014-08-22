@@ -4,17 +4,18 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Tests.Inspector.Attributes
+namespace Slash.ECS.Tests.Inspector.Attributes
 {
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Blueprints;
-    using Slash.GameBase.Components;
-    using Slash.GameBase.Configurations;
-    using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Data;
-    using Slash.GameBase.Inspector.Utils;
+    using Slash.ECS;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Components;
+    using Slash.ECS.Configurations;
+    using Slash.ECS.Inspector.Attributes;
+    using Slash.ECS.Inspector.Data;
+    using Slash.ECS.Inspector.Utils;
 
     public class InspectorEntityAttributeTest
     {

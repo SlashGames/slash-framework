@@ -4,14 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Tests.Inspector.Utils
+namespace Slash.ECS.Tests.Inspector.Utils
 {
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Data;
-    using Slash.GameBase.Inspector.Utils;
+    using Slash.ECS;
+    using Slash.ECS.Inspector.Attributes;
+    using Slash.ECS.Inspector.Data;
+    using Slash.ECS.Inspector.Utils;
 
     public class InspectorUtilsTest
     {

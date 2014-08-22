@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Processes
+namespace Slash.ECS.Processes
 {
     /// <summary>
     ///   Waits a specified amount of time before starting the next process.

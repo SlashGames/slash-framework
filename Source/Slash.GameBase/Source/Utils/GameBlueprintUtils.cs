@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Utils
+namespace Slash.ECS.Utils
 {
     using System.Collections.Generic;
     using System.Linq;

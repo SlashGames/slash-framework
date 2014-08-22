@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Components
+namespace Slash.ECS.Components
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    
+
     /// <summary>
     ///   Maps entity ids to specific game components. By contract this manager
     ///   should be responsible for mapping components of a single type, only.

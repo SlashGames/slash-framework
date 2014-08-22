@@ -4,13 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Tests
+namespace Slash.ECS.Tests
 {
     using System;
 
     using NUnit.Framework;
 
-    using Slash.GameBase.Systems;
+    using Slash.ECS;
+    using Slash.ECS.Systems;
 
     /// <summary>
     ///   Unit tests for the SystemManager class.

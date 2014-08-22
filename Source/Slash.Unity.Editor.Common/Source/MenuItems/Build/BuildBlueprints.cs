@@ -10,7 +10,7 @@ namespace Slash.Unity.Editor.Common.Build
     using System.IO;
     using System.Xml.Serialization;
 
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS.Blueprints;
     using Slash.Serialization.Binary;
 
     using UnityEditor;

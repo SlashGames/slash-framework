@@ -4,13 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Inspector.Attributes
+namespace Slash.ECS.Inspector.Attributes
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Slash.GameBase.Configurations;
+    using Slash.ECS.Configurations;
 
     [Serializable]
     public class InspectorEntityAttribute : InspectorPropertyAttribute

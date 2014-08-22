@@ -7,9 +7,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Slash.GameBase;
-using Slash.GameBase.Components;
-using Slash.GameBase.Events;
+using Slash.ECS;
+using Slash.ECS.Components;
+using Slash.ECS.Events;
 using Slash.Reflection.Utils;
 using Slash.Unity.Common.Core;
 

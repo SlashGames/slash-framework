@@ -4,13 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Tests.Blueprints
+namespace Slash.ECS.Tests.Blueprints
 {
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Blueprints;
-    using Slash.GameBase.Components;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Components;
     using Slash.Tests.Utils;
 
     public class BlueprintTest

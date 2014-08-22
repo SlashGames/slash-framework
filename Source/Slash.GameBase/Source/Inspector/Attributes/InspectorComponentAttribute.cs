@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Inspector.Attributes
+namespace Slash.ECS.Inspector.Attributes
 {
     /// <summary>
     ///   Exposes the component to the inspector.

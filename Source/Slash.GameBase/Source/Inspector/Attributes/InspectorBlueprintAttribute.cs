@@ -4,14 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Inspector.Attributes
+namespace Slash.ECS.Inspector.Attributes
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
 
     using Slash.Collections.Utils;
-    using Slash.GameBase.Inspector.Validation;
+    using Slash.ECS.Inspector.Validation;
 
     /// <summary>
     ///   Exposes the property to the inspector.

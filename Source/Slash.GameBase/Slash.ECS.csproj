@@ -8,8 +8,8 @@
     <ProjectGuid>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Slash.GameBase</RootNamespace>
-    <AssemblyName>Slash.GameBase</AssemblyName>
+    <RootNamespace>Slash.ECS</RootNamespace>
+    <AssemblyName>Slash.ECS</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

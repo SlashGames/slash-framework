@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Processes
+namespace Slash.ECS.Processes
 {
     using System.Collections.Generic;
 

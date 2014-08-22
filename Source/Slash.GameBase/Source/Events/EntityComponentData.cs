@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Events
+namespace Slash.ECS.Events
 {
     using System;
-    
-    using Slash.GameBase.Components;
+
+    using Slash.ECS.Components;
 
     /// <summary>
     ///   Data container holding information on a component event, such as the

@@ -3,14 +3,11 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Slash.GameBase.Tests.Blueprints
+namespace Slash.ECS.Tests.Blueprints
 {
-    using System.IO;
-    using System.Xml.Serialization;
-
     using NUnit.Framework;
 
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS.Blueprints;
     using Slash.Tests.Utils;
 
     public class BlueprintManagerTest
@@ -26,7 +23,7 @@ namespace Slash.GameBase.Tests.Blueprints
         {
             this.blueprintManager = new BlueprintManager();
             this.blueprint = new Blueprint();
-            this.blueprintManager.AddBlueprint(blueprintId, blueprint);
+            this.blueprintManager.AddBlueprint(this.blueprintId, this.blueprint);
         }
 
         [Test]

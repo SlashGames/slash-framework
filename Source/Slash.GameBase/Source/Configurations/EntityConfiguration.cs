@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Configurations
+namespace Slash.ECS.Configurations
 {
     using System;
     using System.Collections.Generic;

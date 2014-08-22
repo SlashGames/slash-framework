@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Inspector.Validation
+namespace Slash.ECS.Inspector.Validation
 {
     /// <summary>
     ///   Information about a validation error of a value for a inspector property.

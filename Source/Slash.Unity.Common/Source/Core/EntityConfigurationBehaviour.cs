@@ -10,7 +10,7 @@ namespace Slash.Unity.Common.Core
     using System.Collections.Generic;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase;
+    using Slash.ECS;
 
     using UnityEngine;
 

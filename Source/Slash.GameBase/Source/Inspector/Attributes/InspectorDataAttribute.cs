@@ -4,13 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Inspector.Attributes
+namespace Slash.ECS.Inspector.Attributes
 {
     using System;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Inspector.Data;
-    using Slash.GameBase.Inspector.Utils;
+    using Slash.ECS.Inspector.Data;
+    using Slash.ECS.Inspector.Utils;
 
     [Serializable]
     public class InspectorDataAttribute : InspectorPropertyAttribute

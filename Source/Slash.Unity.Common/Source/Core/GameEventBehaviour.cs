@@ -8,8 +8,8 @@ namespace Slash.Unity.Common.Core
 {
     using System.Collections.Generic;
 
-    using Slash.GameBase;
-    using Slash.GameBase.Events;
+    using Slash.ECS;
+    using Slash.ECS.Events;
 
     using UnityEngine;
 

@@ -4,14 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Inspector.Utils
+namespace Slash.ECS.Inspector.Utils
 {
     using System;
     using System.Collections.Generic;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Data;
+    using Slash.ECS.Inspector.Attributes;
+    using Slash.ECS.Inspector.Data;
 
     public static class InspectorUtils
     {

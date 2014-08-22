@@ -4,9 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.GameBase.Events
+namespace Slash.ECS.Events
 {
-    using Slash.GameBase.Components;
+    using Slash.ECS.Components;
 
     /// <summary>
     ///   Event data for ComponentEnabled and ComponentDisabled events.
