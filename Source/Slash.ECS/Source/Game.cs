@@ -19,7 +19,7 @@ namespace Slash.ECS
     using Slash.Reflection.Utils;
 
     /// <summary>
-    ///   Base game class. Provides default functionality
+    ///   Core game class. Provides default functionality
     ///   that is common across many games, such as components that are attached
     ///   to entities, or systems working on these components.
     /// </summary>
