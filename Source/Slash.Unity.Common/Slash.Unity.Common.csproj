@@ -102,7 +102,6 @@
     <Compile Include="Source\Loading\LoadSceneOnStartBehaviour.cs" />
     <Compile Include="Source\Logging\ConsoleAppender.cs" />
     <Compile Include="Source\Logging\LogBehaviour.cs" />
-    <Compile Include="Source\Logging\LoggerExtensions.cs" />
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
     <Compile Include="Source\Scenes\SceneManager.cs" />
@@ -148,10 +147,6 @@
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>Slash.Collections</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Slash.Diagnostics\Slash.Diagnostics.csproj">
-      <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
-      <Name>Slash.Diagnostics</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.ECS\Slash.ECS.csproj">
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>

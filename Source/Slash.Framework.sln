@@ -27,8 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Collections.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Sandbox", "Slash.Sandbox\Slash.Sandbox.csproj", "{DFD67F58-780B-4367-BDF9-241C5BA87BB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Diagnostics", "Slash.Diagnostics\Slash.Diagnostics.csproj", "{E155097A-6A57-498E-A707-F852AA672111}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Reflection.WindowsStore", "Slash.Reflection.WindowsStore\Slash.Reflection.WindowsStore.csproj", "{B98DD3EA-25C3-41BE-8253-206960364CC8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Mobile", "Slash.Mobile\Slash.Mobile.csproj", "{4A394AB7-73EA-4261-B7C0-E9475F63F404}"
@@ -243,20 +241,6 @@ Global
 		{DFD67F58-780B-4367-BDF9-241C5BA87BB8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DFD67F58-780B-4367-BDF9-241C5BA87BB8}.Release|x64.ActiveCfg = Release|Any CPU
 		{DFD67F58-780B-4367-BDF9-241C5BA87BB8}.Release|x86.ActiveCfg = Release|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Release|ARM.ActiveCfg = Release|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Release|x64.ActiveCfg = Release|Any CPU
-		{E155097A-6A57-498E-A707-F852AA672111}.Release|x86.ActiveCfg = Release|Any CPU
 		{B98DD3EA-25C3-41BE-8253-206960364CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B98DD3EA-25C3-41BE-8253-206960364CC8}.Debug|ARM.ActiveCfg = Debug|ARM
 		{B98DD3EA-25C3-41BE-8253-206960364CC8}.Debug|ARM.Build.0 = Debug|ARM
