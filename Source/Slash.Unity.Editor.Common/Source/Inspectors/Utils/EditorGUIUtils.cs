@@ -9,7 +9,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
     using System;
     using System.Collections;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
 
     using UnityEditor;
 

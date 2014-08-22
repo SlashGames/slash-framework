@@ -7,15 +7,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Slash.GameBase;
-using Slash.GameBase.Components;
-using Slash.GameBase.Events;
+using Slash.ECS;
+using Slash.ECS.Components;
+using Slash.ECS.Events;
 using Slash.Reflection.Utils;
 using Slash.Unity.Common.Core;
 
 using UnityEngine;
-
-using Event = Slash.GameBase.Events.Event;
 
 /// <summary>
 ///   Manages the game objects of all game entities after they are created.
@@ -168,11 +166,11 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
 #endif
 
             // Register for events.
-            game.EventManager.RegisterListener(FrameworkEventType.EntityCreated, this.onEntityCreated);
-            game.EventManager.RegisterListener(FrameworkEventType.EntityInitialized, this.onEntityInitialized);
-            game.EventManager.RegisterListener(FrameworkEventType.ComponentAdded, this.onComponentAdded);
-            game.EventManager.RegisterListener(FrameworkEventType.ComponentRemoved, this.onComponentRemoved);
-            game.EventManager.RegisterListener(FrameworkEventType.EntityRemoved, this.onEntityRemoved);
+            game.EventManager.RegisterListener(FrameworkEvent.EntityCreated, this.onEntityCreated);
+            game.EventManager.RegisterListener(FrameworkEvent.EntityInitialized, this.onEntityInitialized);
+            game.EventManager.RegisterListener(FrameworkEvent.ComponentAdded, this.onComponentAdded);
+            game.EventManager.RegisterListener(FrameworkEvent.ComponentRemoved, this.onComponentRemoved);
+            game.EventManager.RegisterListener(FrameworkEvent.EntityRemoved, this.onEntityRemoved);
 
             // Register for events for visual behaviours.
             foreach (LogicToVisualDelegate logicToVisualDelegate in this.logicToVisualDelegates)
@@ -199,7 +197,7 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
         this.entityObjectPool = (EntityObjectPool)FindObjectOfType(typeof(EntityObjectPool));
     }
 
-    private void DelegateVisualEvent(int entityId, Event e)
+    private void DelegateVisualEvent(int entityId, GameEvent e)
     {
         // Get entity object.
         GameObject entityObject;
@@ -320,7 +318,7 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
     ///   the entity with the passed id.
     /// </summary>
     /// <param name="e"> Game event that has occurred. </param>
-    private void onComponentAdded(Event e)
+    private void onComponentAdded(GameEvent e)
     {
         Profiler.BeginSample("Component added");
 
@@ -342,7 +340,7 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
         Profiler.EndSample();
     }
 
-    private void onComponentRemoved(Event e)
+    private void onComponentRemoved(GameEvent e)
     {
         EntityComponentData eventArgs = (EntityComponentData)e.EventData;
         int entityId = eventArgs.EntityId;
@@ -370,7 +368,7 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
     ///   Creates a new game object whenever a new entity has been created.
     /// </summary>
     /// <param name="e"> Game event that has occurred. </param>
-    private void onEntityCreated(Event e)
+    private void onEntityCreated(GameEvent e)
     {
         int entityId = (int)e.EventData;
         if (this.entities.ContainsKey(entityId))
@@ -411,7 +409,7 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
         Profiler.EndSample();
     }
 
-    private void onEntityInitialized(Event e)
+    private void onEntityInitialized(GameEvent e)
     {
         int entityId = (int)e.EventData;
         GameObject entityObject = this.entities[entityId];
@@ -421,7 +419,7 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
     ///   Destroys the game object representing the entity with the specified id.
     /// </summary>
     /// <param name="e"> Game event that has occurred. </param>
-    private void onEntityRemoved(Event e)
+    private void onEntityRemoved(GameEvent e)
     {
         int entityId = (int)e.EventData;
 
@@ -447,7 +445,7 @@ public class EntityGameObjectsBehaviour : MonoBehaviour
         Profiler.EndSample();
     }
 
-    private void onVisualEvent(Event e)
+    private void onVisualEvent(GameEvent e)
     {
         // Check for which entity the event is for.
         EntityEventData entityEventData = e.EventData as EntityEventData;

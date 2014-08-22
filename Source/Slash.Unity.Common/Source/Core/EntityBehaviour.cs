@@ -6,8 +6,8 @@
 
 namespace Slash.Unity.Common.Core
 {
-    using Slash.GameBase;
-    using Slash.GameBase.Components;
+    using Slash.ECS;
+    using Slash.ECS.Components;
 
     using UnityEngine;
 

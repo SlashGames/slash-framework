@@ -13,7 +13,7 @@ namespace Slash.Unity.Common.Configuration
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS.Blueprints;
     using Slash.Serialization.Binary;
 
     using UnityEngine;

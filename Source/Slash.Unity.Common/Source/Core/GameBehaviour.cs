@@ -7,8 +7,8 @@
 namespace Slash.Unity.Common.Core
 {
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase;
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS;
+    using Slash.ECS.Blueprints;
     using Slash.Unity.Common.Configuration;
 
     using UnityEngine;

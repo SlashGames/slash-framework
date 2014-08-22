@@ -6,8 +6,8 @@
 
 namespace Slash.Unity.Common.Diagnostics
 {
-    using Slash.GameBase;
-    using Slash.GameBase.Events;
+    using Slash.ECS;
+    using Slash.ECS.Events;
     using Slash.Unity.Common.Core;
 
     using UnityEngine;
@@ -111,7 +111,7 @@ namespace Slash.Unity.Common.Diagnostics
 
                 if (!string.IsNullOrEmpty(this.cheat) && GUILayout.Button("Submit"))
                 {
-                    this.game.EventManager.QueueEvent(FrameworkEventType.Cheat, this.cheat);
+                    this.game.EventManager.QueueEvent(FrameworkEvent.Cheat, this.cheat);
                 }
 
                 GUILayout.Label("Quick Cheats:");
@@ -120,7 +120,7 @@ namespace Slash.Unity.Common.Diagnostics
                 {
                     if (GUILayout.Button(quickCheat))
                     {
-                        this.game.EventManager.QueueEvent(FrameworkEventType.Cheat, quickCheat);
+                        this.game.EventManager.QueueEvent(FrameworkEvent.Cheat, quickCheat);
                     }
                 }
                 GUILayout.EndScrollView();

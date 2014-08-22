@@ -8,7 +8,7 @@ namespace Slash.Unity.Common.Core
 {
     using System;
 
-    using Slash.GameBase.Components;
+    using Slash.ECS.Components;
 
     public sealed class LogicToVisualMapping
     {

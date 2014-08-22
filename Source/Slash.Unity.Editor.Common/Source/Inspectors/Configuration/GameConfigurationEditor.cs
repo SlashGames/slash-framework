@@ -11,9 +11,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
-    using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Data;
-    using Slash.GameBase.Systems;
+    using Slash.ECS.Inspector.Attributes;
+    using Slash.ECS.Inspector.Data;
+    using Slash.ECS.Systems;
     using Slash.Unity.Common.Configuration;
     using Slash.Unity.Editor.Common.Inspectors.Utils;
 
