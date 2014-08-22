@@ -359,7 +359,7 @@ namespace Slash.GameBase.Tests
         /// <summary>
         ///   Test implementation of a game system.
         /// </summary>
-        private class TestSystem : SystemBase
+        private class TestSystem : GameSystem
         {
         }
     }

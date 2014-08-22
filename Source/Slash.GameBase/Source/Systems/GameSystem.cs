@@ -12,7 +12,7 @@ namespace Slash.GameBase.Systems
     /// <summary>
     ///   Base system class.
     /// </summary>
-    public class SystemBase : ISystem
+    public class GameSystem : ISystem
     {
         #region Public Properties
 

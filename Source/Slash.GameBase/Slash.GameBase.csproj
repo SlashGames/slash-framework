@@ -84,7 +84,7 @@
     <Compile Include="Source\Processes\WaitProcess.cs" />
     <Compile Include="Source\Systems\GameSystemAttribute.cs" />
     <Compile Include="Source\Systems\ISystem.cs" />
-    <Compile Include="Source\Systems\SystemBase.cs" />
+    <Compile Include="Source\Systems\GameSystem.cs" />
     <Compile Include="Source\Systems\SystemManager.cs" />
     <Compile Include="Source\Utils\GameBlueprintUtils.cs" />
   </ItemGroup>

@@ -120,7 +120,7 @@ namespace Slash.GameBase.Tests
         ///   Test implementation of a game system. Remebers whether it has
         ///   been updated any time, or not.
         /// </summary>
-        private class TestSystem : SystemBase
+        private class TestSystem : GameSystem
         {
             #region Public Properties
 
