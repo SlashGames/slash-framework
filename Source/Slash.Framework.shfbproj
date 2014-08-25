@@ -43,21 +43,56 @@
     <MissingTags>Summary, Parameter, Returns, Namespace, TypeParameter</MissingTags>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Collections.dll" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Collections.xml" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.ECS.dll" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.ECS.xml" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Math.dll" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Math.xml" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Reflection.dll" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Reflection.xml" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Serialization.dll" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Serialization.xml" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.System.dll" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.System.xml" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Unity.Common.dll" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Unity.Common.xml" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Unity.Editor.Common.dll" />
-<DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Unity.Editor.Common.xml" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Collections.xml" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.ECS.dll" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.ECS.xml" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Math.dll" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Math.xml" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Reflection.dll" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Reflection.xml" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Serialization.dll" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Serialization.xml" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.System.dll" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.System.xml" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Unity.Common.dll" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Unity.Common.xml" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Unity.Editor.Common.dll" />
+      <DocumentationSource sourceFile="..\Release\Slash.Framework\Release\Slash.Unity.Editor.Common.xml" />
+    </DocumentationSources>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="Slash.Collections (Group)" isGroup="True" isDocumented="True">Advanced collections and collection utility methods.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Collections.AttributeTables" isDocumented="True">Tables that allows storing and looking up attributes and their respective values.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Collections.Extensions" isDocumented="True">Extension methods for enumerables and collections.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Collections.ObjectModel" isDocumented="True">Restricted wrappers for collections.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Collections.Utils" isDocumented="True">Utility methods for enumerables and collections.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS (Group)" isGroup="True" isDocumented="True">Component-based entity system.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS" isDocumented="True">Component-based entity system.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Blueprints" isDocumented="True">Blueprints for creating entities with a specific set of components and initial attribute values.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Components" isDocumented="True">Game components that can be attached to entities.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Configurations" isDocumented="True">Data to create and initialize an entity.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Events" isDocumented="True">Events that occur within the entity system. May contain additional data listeners might be interested in.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Inspector.Attributes" isDocumented="True">Expose component properties to editors.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Inspector.Data" isDocumented="True">Additional property data to show in editors, such as names and descriptions.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Inspector.Utils" isDocumented="True">Utility methods for collecting editor data and initializing objects.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Inspector.Validation" isDocumented="True">Utility classes for validating editor properties.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Logging" isDocumented="True">Logger interface that allows interested listeners to register for log messages.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Processes" isDocumented="True">Allow ticking and queueing timed processes. Good examples are animations, tweens, or "Go to that point, and open the door after."</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Systems" isDocumented="True">Game logic systems that are the heart of each game.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.ECS.Utils" isDocumented="True">Utility methods for opearting on blueprints of a game (e.g. entity creation,...).</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Math (Group)" isGroup="True" isDocumented="True">Utility math data types and methods.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Math.Algebra.Vectors" isDocumented="True">2- and 3-dimensional floating point and integer vectors.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Math.Geometry.Rectangles" isDocumented="True">Floating point and integer rectangles.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Math.Utils" isDocumented="True">Utility methods and data types for angles, directions and pseudo-random numbers.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Reflection.Utils" isDocumented="True">Abstraction of .NET reflections from the underlying runtime platform.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Serialization (Group)" isGroup="True" isDocumented="True">Serialization helpers for multiple data formats, such as binary or XML.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Serialization" isDocumented="True">Serialization helpers for multiple data formats, such as binary or XML.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Serialization.Binary" isDocumented="True">Classes for converting objects to and from their binary representations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Serialization.Dictionary" isDocumented="True">Classes for converting objects to and from dictionary representations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Serialization.Utils" isDocumented="True">Utility methods for serializing and deserializing objects.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Serialization.Xml" isDocumented="True">Classes for converting objects to and from their XML representations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.SystemExt (Group)" isGroup="True" isDocumented="True">Extensions of the .NET System namespace.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.SystemExt.Exceptions" isDocumented="True">Custom exception types.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.SystemExt.Utils" isDocumented="True">Utility methods for operating on .NET system types, such as strings or enums.</NamespaceSummaryItem></NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->

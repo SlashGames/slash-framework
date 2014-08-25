@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Slash.Math")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("Utility math data types and mehods.")]
+[assembly: AssemblyConfiguration("Utility math data types and methods.")]
 [assembly: AssemblyCompany("Slash Games")]
 [assembly: AssemblyProduct("Slash.Math")]
 [assembly: AssemblyCopyright("Copyright 2012-2014 Slash Games")]
