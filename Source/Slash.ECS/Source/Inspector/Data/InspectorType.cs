@@ -13,7 +13,7 @@ namespace Slash.ECS.Inspector.Data
     using Slash.ECS.Inspector.Utils;
 
     /// <summary>
-    ///   Component accessible to the user in the landscape designer.
+    ///   Component accessible to the user in the inspector.
     /// </summary>
     public class InspectorType
     {
@@ -48,6 +48,12 @@ namespace Slash.ECS.Inspector.Data
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Gets inspector data such as name and description for the
+        ///   specified type.
+        /// </summary>
+        /// <param name="type">Type to get inspector data for.</param>
+        /// <returns>Inspector data for the specified type.</returns>
         public static InspectorType GetInspectorType(Type type)
         {
             Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute> tmpConditionalInspectors =
@@ -55,6 +61,13 @@ namespace Slash.ECS.Inspector.Data
             return GetInspectorType(type, ref tmpConditionalInspectors);
         }
 
+        /// <summary>
+        ///   Gets inspector data such as name and description for the
+        ///   specified type.
+        /// </summary>
+        /// <param name="type">Type to get inspector data for.</param>
+        /// <param name="conditionalInspectors">Dictionary to be filled with conditions for inspectors to be shown.</param>
+        /// <returns>Inspector data for the specified type.</returns>
         public static InspectorType GetInspectorType(
             Type type,
             ref Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute> conditionalInspectors)

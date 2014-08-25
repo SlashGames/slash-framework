@@ -103,8 +103,8 @@ namespace Slash.Collections.Utils
         ///   Default value to return if the specified key could not be found.
         /// </param>
         /// <returns>
-        ///   Value with the specified <paramref name="key"/>, if found,
-        ///   and <paramref name="defaultValue"/> otherwise.
+        ///   Value with the specified <paramref name="key" />, if found,
+        ///   and <paramref name="defaultValue" /> otherwise.
         /// </returns>
         public static TValue GetValueOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue)
@@ -128,8 +128,8 @@ namespace Slash.Collections.Utils
         ///   Default value provider to use to return a value if the key could not be found.
         /// </param>
         /// <returns>
-        ///   Value with the specified <paramref name="key"/>, if found,
-        ///   and a value provided by <paramref name="defaultValueProvider"/> otherwise.
+        ///   Value with the specified <paramref name="key" />, if found,
+        ///   and a value provided by <paramref name="defaultValueProvider" /> otherwise.
         /// </returns>
         public static TValue GetValueOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> defaultValueProvider)

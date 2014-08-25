@@ -184,12 +184,15 @@ namespace Slash.ECS.Blueprints
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.
         /// </summary>
         /// <returns>
-        /// true if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, false.
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.
         /// </returns>
-        /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>. </param><filterpriority>2</filterpriority>
+        /// <param name="obj">
+        ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
+        /// </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -240,10 +243,10 @@ namespace Slash.ECS.Blueprints
         }
 
         /// <summary>
-        /// Serves as a hash function for a particular type. 
+        ///   Serves as a hash function for a particular type.
         /// </summary>
         /// <returns>
-        /// A hash code for the current <see cref="T:System.Object"/>.
+        ///   A hash code for the current <see cref="T:System.Object" />.
         /// </returns>
         /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
@@ -252,10 +255,19 @@ namespace Slash.ECS.Blueprints
         }
 
         /// <summary>
-        /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
+        ///   This method is reserved and should not be used. When implementing the IXmlSerializable interface, you should return null (Nothing in Visual Basic) from this method, and instead, if specifying a custom schema is required, apply the
+        ///   <see
+        ///     cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute" />
+        ///   to the class.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
+        ///   An <see cref="T:System.Xml.Schema.XmlSchema" /> that describes the XML representation of the object that is produced by the
+        ///   <see
+        ///     cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)" />
+        ///   method and consumed by the
+        ///   <see
+        ///     cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)" />
+        ///   method.
         /// </returns>
         public XmlSchema GetSchema()
         {
@@ -263,9 +275,11 @@ namespace Slash.ECS.Blueprints
         }
 
         /// <summary>
-        /// Generates an object from its XML representation.
+        ///   Generates an object from its XML representation.
         /// </summary>
-        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized. </param>
+        /// <param name="reader">
+        ///   The <see cref="T:System.Xml.XmlReader" /> stream from which the object is deserialized.
+        /// </param>
         public void ReadXml(XmlReader reader)
         {
             this.blueprints.ReadXml(reader);
@@ -289,10 +303,10 @@ namespace Slash.ECS.Blueprints
         }
 
         /// <summary>
-        /// Returns a string that represents the current object.
+        ///   Returns a string that represents the current object.
         /// </summary>
         /// <returns>
-        /// A string that represents the current object.
+        ///   A string that represents the current object.
         /// </returns>
         /// <filterpriority>2</filterpriority>
         public override string ToString()
@@ -320,9 +334,11 @@ namespace Slash.ECS.Blueprints
         }
 
         /// <summary>
-        /// Converts an object into its XML representation.
+        ///   Converts an object into its XML representation.
         /// </summary>
-        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized. </param>
+        /// <param name="writer">
+        ///   The <see cref="T:System.Xml.XmlWriter" /> stream to which the object is serialized.
+        /// </param>
         public void WriteXml(XmlWriter writer)
         {
             this.blueprints.WriteXml(writer);

@@ -31,8 +31,8 @@ namespace Slash.Collections.AttributeTables
         ///   Default value to return if the specified key could not be found.
         /// </param>
         /// <returns>
-        ///   Attribute value with the specified <paramref name="key"/>, if found,
-        ///   and <paramref name="defaultValue"/> otherwise.
+        ///   Attribute value with the specified <paramref name="key" />, if found,
+        ///   and <paramref name="defaultValue" /> otherwise.
         /// </returns>
         public static bool GetBoolOrDefault(this IAttributeTable attributeTable, object key, bool defaultValue)
         {
@@ -55,8 +55,8 @@ namespace Slash.Collections.AttributeTables
         ///   Default value to return if the specified key could not be found.
         /// </param>
         /// <returns>
-        ///   Attribute value with the specified <paramref name="key"/>, if found,
-        ///   and <paramref name="defaultValue"/> otherwise.
+        ///   Attribute value with the specified <paramref name="key" />, if found,
+        ///   and <paramref name="defaultValue" /> otherwise.
         /// </returns>
         public static object GetEnumOrDefault(this IAttributeTable attributeTable, object key, object defaultValue)
         {
@@ -79,8 +79,8 @@ namespace Slash.Collections.AttributeTables
         ///   Default value to return if the specified key could not be found.
         /// </param>
         /// <returns>
-        ///   Attribute value with the specified <paramref name="key"/>, if found,
-        ///   and <paramref name="defaultValue"/> otherwise.
+        ///   Attribute value with the specified <paramref name="key" />, if found,
+        ///   and <paramref name="defaultValue" /> otherwise.
         /// </returns>
         public static float GetFloatOrDefault(this IAttributeTable attributeTable, object key, float defaultValue)
         {
@@ -103,8 +103,8 @@ namespace Slash.Collections.AttributeTables
         ///   Default value to return if the specified key could not be found.
         /// </param>
         /// <returns>
-        ///   Attribute value with the specified <paramref name="key"/>, if found,
-        ///   and <paramref name="defaultValue"/> otherwise.
+        ///   Attribute value with the specified <paramref name="key" />, if found,
+        ///   and <paramref name="defaultValue" /> otherwise.
         /// </returns>
         public static int GetIntOrDefault(this IAttributeTable attributeTable, object key, int defaultValue)
         {

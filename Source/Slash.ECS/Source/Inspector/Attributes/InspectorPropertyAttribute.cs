@@ -191,7 +191,7 @@ namespace Slash.ECS.Inspector.Attributes
         /// <summary>
         ///   Initializes the specified object via reflection with the specified property value.
         /// </summary>
-        /// <param name="game"></param>
+        /// <param name="game">The parameter is not used.</param>
         /// <param name="obj">Object to set property value for.</param>
         /// <param name="propertyValue">Property value to set.</param>
         public virtual void SetPropertyValue(Game game, object obj, object propertyValue)
@@ -199,6 +199,13 @@ namespace Slash.ECS.Inspector.Attributes
             obj.GetType().GetProperty(this.PropertyName).SetValue(obj, propertyValue, null);
         }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        ///   A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format("Name: {0}, Default: {1}", this.Name, this.Default);
