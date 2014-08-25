@@ -11,12 +11,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("SlashGames.Reflection.Tests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Slash.Reflection.Tests")]
+[assembly: AssemblyDescription("Unit tests for the abstraction of .NET reflections from the underlying runtime platform.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SlashGames.Reflection.Tests")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCompany("Slash Games")]
+[assembly: AssemblyProduct("Slash.Reflection.Tests")]
+[assembly: AssemblyCopyright("Copyright 2012-2014 Slash Games")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

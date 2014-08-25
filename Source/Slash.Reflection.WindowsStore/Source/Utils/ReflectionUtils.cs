@@ -10,7 +10,6 @@ namespace Slash.Reflection.Utils
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Text.RegularExpressions;
 
     /// <summary>
     ///   Provides utility methods for reflecting types and members.
