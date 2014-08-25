@@ -20,17 +20,23 @@ namespace Slash.Serialization.Dictionary
     {
         #region Constants
 
-        private const string DATA_PAIRS = "Pairs";
+        private const string DataPairs = "Pairs";
 
-        private const string DATA_TYPE = "Type";
+        private const string DataType = "Type";
 
         #endregion
 
         #region Public Methods and Operators
 
-        public object deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
+        /// <summary>
+        ///   Reads the object from the specified dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="data">Object to read.</param>
+        /// <returns>Read object.</returns>
+        public object Deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
         {
-            string itemTypeString = (string)data[DATA_TYPE];
+            string itemTypeString = (string)data[DataType];
             Type itemType = ReflectionUtils.FindType(itemTypeString);
             if (itemType == null)
             {
@@ -41,7 +47,7 @@ namespace Slash.Serialization.Dictionary
             IDictionary dictionary = (IDictionary)Activator.CreateInstance(genericType);
 
             bool typeSealed = itemType.IsSealed;
-            Dictionary<string, object> pairs = (Dictionary<string, object>)data[DATA_PAIRS];
+            Dictionary<string, object> pairs = (Dictionary<string, object>)data[DataPairs];
             foreach (KeyValuePair<string, object> pair in pairs)
             {
                 object valueData = pair.Value;
@@ -66,7 +72,13 @@ namespace Slash.Serialization.Dictionary
             return dictionary;
         }
 
-        public Dictionary<string, object> serialize(DictionarySerializationContext context, object obj)
+        /// <summary>
+        ///   Converts the specified object into a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="obj">Object to convert.</param>
+        /// <returns>Dictionary representation of the specified object.</returns>
+        public Dictionary<string, object> Serialize(DictionarySerializationContext context, object obj)
         {
             IDictionary dictionary = (IDictionary)obj;
             Type keyType = dictionary.GetType().GetGenericArguments()[0];
@@ -77,7 +89,7 @@ namespace Slash.Serialization.Dictionary
 
             Type valueType = dictionary.GetType().GetGenericArguments()[1];
 
-            Dictionary<string, object> data = new Dictionary<string, object> { { DATA_TYPE, valueType.FullName } };
+            Dictionary<string, object> data = new Dictionary<string, object> { { DataType, valueType.FullName } };
 
             bool typeSealed = valueType.IsSealed;
 
@@ -88,7 +100,7 @@ namespace Slash.Serialization.Dictionary
                 object valueData = typeSealed || value == null ? value : new ValueWithType(value);
                 keyValuePairs.Add(key, context.serialize(valueData));
             }
-            data.Add(DATA_PAIRS, keyValuePairs);
+            data.Add(DataPairs, keyValuePairs);
 
             return data;
         }

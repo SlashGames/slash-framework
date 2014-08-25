@@ -10,10 +10,22 @@ namespace Slash.Serialization.Binary
     using System.Collections.Generic;
     using System.Reflection;
 
+    /// <summary>
+    ///   Reflection utility methods for binary serialization and deserialization.
+    /// </summary>
     public static class BinarySerializationReflectionUtils
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Enumerates all instance fields of the specified type who have the <see cref="SerializeMemberAttribute" />
+        ///   applied, ordered by name.
+        /// </summary>
+        /// <param name="type">Type to enumerate instance fields of.</param>
+        /// <returns>
+        ///   Instance fields of the specified type who have the <see cref="SerializeMemberAttribute" />
+        ///   applied, ordered by name.
+        /// </returns>
         public static IEnumerable<FieldInfo> ReflectFields(Type type)
         {
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -30,6 +42,15 @@ namespace Slash.Serialization.Binary
             }
         }
 
+        /// <summary>
+        ///   Enumerates all instance properties of the specified type who have the <see cref="SerializeMemberAttribute" />
+        ///   applied, ordered by name.
+        /// </summary>
+        /// <param name="type">Type to enumerate instance properties of.</param>
+        /// <returns>
+        ///   Instance properties of the specified type who have the <see cref="SerializeMemberAttribute" />
+        ///   applied, ordered by name.
+        /// </returns>
         public static IEnumerable<PropertyInfo> ReflectProperties(Type type)
         {
             PropertyInfo[] properties =

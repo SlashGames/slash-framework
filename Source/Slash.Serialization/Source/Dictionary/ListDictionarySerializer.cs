@@ -14,32 +14,41 @@ namespace Slash.Serialization.Dictionary
 
     using Slash.Reflection.Utils;
 
+    /// <summary>
+    ///   Converts lists between dictionary representations and back.
+    /// </summary>
     public class ListDictionarySerializer : IDictionarySerializer
     {
         #region Constants
 
-        private const string DATA_COUNT = "Count";
+        private const string DataCount = "Count";
 
-        private const string DATA_TYPE = "Type";
+        private const string DataType = "Type";
 
         #endregion
 
         #region Public Methods and Operators
 
-        public object deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
+        /// <summary>
+        ///   Deserializes an object from a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="data">Dictionary which contains the object data.</param>
+        /// <returns>Deserialized object.</returns>
+        public object Deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
         {
-            if (!data.ContainsKey(DATA_COUNT))
+            if (!data.ContainsKey(DataCount))
             {
-                throw new ArgumentException(string.Format("List property not specified: {0}", DATA_COUNT));
+                throw new ArgumentException(string.Format("List property not specified: {0}", DataCount));
             }
 
-            if (!data.ContainsKey(DATA_TYPE))
+            if (!data.ContainsKey(DataType))
             {
-                throw new ArgumentException(string.Format("List property not specified: {0}", DATA_TYPE));
+                throw new ArgumentException(string.Format("List property not specified: {0}", DataType));
             }
 
-            int count = Convert.ToInt32(data[DATA_COUNT]);
-            string itemTypeString = (string)data[DATA_TYPE];
+            int count = Convert.ToInt32(data[DataCount]);
+            string itemTypeString = (string)data[DataType];
             Type itemType = ReflectionUtils.FindType(itemTypeString);
             if (itemType == null)
             {
@@ -74,15 +83,21 @@ namespace Slash.Serialization.Dictionary
             return list;
         }
 
-        public Dictionary<string, object> serialize(DictionarySerializationContext context, object obj)
+        /// <summary>
+        ///   Serializes an object to a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns>Dictionary which contains object data.</returns>
+        public Dictionary<string, object> Serialize(DictionarySerializationContext context, object obj)
         {
             IList list = (IList)obj;
             Type itemType = list.GetType().GetGenericArguments()[0];
 
             Dictionary<string, object> data = new Dictionary<string, object>
                 {
-                    { DATA_COUNT, list.Count },
-                    { DATA_TYPE, itemType.FullName }
+                    { DataCount, list.Count },
+                    { DataType, itemType.FullName }
                 };
 
             bool typeSealed = itemType.IsSealed;
@@ -102,24 +117,30 @@ namespace Slash.Serialization.Dictionary
     }
 
     /// <summary>
-    ///   Plist serializer for arbitrary lists.
+    ///   Converts lists between dictionary representations and back.
     /// </summary>
     /// <typeparam name="T">Type of the list elements.</typeparam>
     public class ListDictionarySerializer<T> : IDictionarySerializer
     {
         #region Constants
 
-        private const string DATA_COUNT = "Count";
+        private const string DataCount = "Count";
 
-        private const string DATA_TYPE = "Type";
+        private const string DataType = "Type";
 
         #endregion
 
         #region Public Methods and Operators
 
-        public object deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
+        /// <summary>
+        ///   Deserializes an object from a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="data">Dictionary which contains the object data.</param>
+        /// <returns>Deserialized object.</returns>
+        public object Deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
         {
-            int count = Convert.ToInt32(data[DATA_COUNT]);
+            int count = Convert.ToInt32(data[DataCount]);
             List<T> list = new List<T>(count);
 
             for (int i = 0; i < count; i++)
@@ -141,12 +162,18 @@ namespace Slash.Serialization.Dictionary
             return list;
         }
 
-        public Dictionary<string, object> serialize(DictionarySerializationContext context, object obj)
+        /// <summary>
+        ///   Serializes an object to a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns>Dictionary which contains object data.</returns>
+        public Dictionary<string, object> Serialize(DictionarySerializationContext context, object obj)
         {
             List<T> list = (List<T>)obj;
             Dictionary<string, object> data = new Dictionary<string, object>();
-            data.Add(DATA_COUNT, list.Count);
-            data.Add(DATA_TYPE, typeof(T).FullName);
+            data.Add(DataCount, list.Count);
+            data.Add(DataType, typeof(T).FullName);
 
             for (int i = 0; i < list.Count; i++)
             {

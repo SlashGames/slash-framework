@@ -14,6 +14,9 @@ namespace Slash.Serialization.Binary
 
     using Slash.SystemExt.Utils;
 
+    /// <summary>
+    ///   Converts objects to their binary representations.
+    /// </summary>
     public class BinarySerializer
     {
         #region Fields
@@ -24,6 +27,10 @@ namespace Slash.Serialization.Binary
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Creates a new binary serializer for writing objects to the specified stream.
+        /// </summary>
+        /// <param name="stream">Stream to write objects to.</param>
         public BinarySerializer(Stream stream)
         {
             this.writer = new BinaryWriter(stream);
@@ -33,6 +40,10 @@ namespace Slash.Serialization.Binary
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Writes the specified object to the current stream.
+        /// </summary>
+        /// <param name="o">Object to serialize.</param>
         public void Serialize(object o)
         {
             if (o == null)

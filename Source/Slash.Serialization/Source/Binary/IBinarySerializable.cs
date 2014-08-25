@@ -6,6 +6,9 @@
 
 namespace Slash.Serialization.Binary
 {
+    /// <summary>
+    ///   Object that can be converted to a binary representation and back.
+    /// </summary>
     public interface IBinarySerializable
     {
         #region Public Methods and Operators

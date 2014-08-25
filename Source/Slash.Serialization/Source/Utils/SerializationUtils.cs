@@ -12,6 +12,9 @@ namespace Slash.Serialization.Utils
     using System.Xml;
     using System.Xml.Serialization;
 
+    /// <summary>
+    ///   Utility methods for serializing and deserializing objects.
+    /// </summary>
     public static class SerializationUtils
     {
         #region Public Methods and Operators

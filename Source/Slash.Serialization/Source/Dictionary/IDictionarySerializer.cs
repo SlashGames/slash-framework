@@ -8,6 +8,9 @@ namespace Slash.Serialization.Dictionary
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    ///   Converts objects between dictionary representations and back.
+    /// </summary>
     public interface IDictionarySerializer
     {
         #region Public Methods and Operators
@@ -15,18 +18,18 @@ namespace Slash.Serialization.Dictionary
         /// <summary>
         ///   Deserializes an object from a dictionary.
         /// </summary>
-        /// <param name="context">Serialization context.</param>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
         /// <param name="data">Dictionary which contains the object data.</param>
         /// <returns>Deserialized object.</returns>
-        object deserialize(DictionarySerializationContext context, Dictionary<string, object> data);
+        object Deserialize(DictionarySerializationContext context, Dictionary<string, object> data);
 
         /// <summary>
         ///   Serializes an object to a dictionary.
         /// </summary>
-        /// <param name="context">Serialization context.</param>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
         /// <param name="obj">Object to serialize.</param>
         /// <returns>Dictionary which contains object data.</returns>
-        Dictionary<string, object> serialize(DictionarySerializationContext context, object obj);
+        Dictionary<string, object> Serialize(DictionarySerializationContext context, object obj);
 
         #endregion
     }

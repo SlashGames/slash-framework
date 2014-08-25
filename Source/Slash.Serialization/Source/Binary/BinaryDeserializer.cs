@@ -16,6 +16,9 @@ namespace Slash.Serialization.Binary
     using Slash.Reflection.Utils;
     using Slash.Serialization.Xml;
 
+    /// <summary>
+    ///   Reads objects from their binary representations.
+    /// </summary>
     public class BinaryDeserializer
     {
         #region Fields
@@ -26,6 +29,10 @@ namespace Slash.Serialization.Binary
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Creates a new binary deserializer for reading objects from the specified stream.
+        /// </summary>
+        /// <param name="stream">Stream to read objects from.</param>
         public BinaryDeserializer(Stream stream)
         {
             this.reader = new BinaryReader(stream);
@@ -35,12 +42,22 @@ namespace Slash.Serialization.Binary
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Reads and returns an object of the specified type from the current stream.
+        /// </summary>
+        /// <typeparam name="T">Type of the object to read.</typeparam>
+        /// <returns>Object of the specified type read from the current stream.</returns>
         public T Deserialize<T>()
         {
             Type type = typeof(T);
             return (T)this.Deserialize(type);
         }
 
+        /// <summary>
+        ///   Reads and returns an object of the specified type from the current stream.
+        /// </summary>
+        /// <param name="type">Type of the object to read.</param>
+        /// <returns>Object of the specified type read from the current stream.</returns>
         public object Deserialize(Type type)
         {
             // Check for primitive type.
