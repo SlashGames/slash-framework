@@ -11,7 +11,6 @@ namespace Slash.ECS.Tests
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.ECS;
     using Slash.ECS.Components;
 
     /// <summary>

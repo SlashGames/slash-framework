@@ -14,7 +14,7 @@ namespace Slash.ECS.Logging
 
         #endregion
 
-        #region Events
+        #region Public Events
 
         public event LogDelegate ErrorLogged;
 

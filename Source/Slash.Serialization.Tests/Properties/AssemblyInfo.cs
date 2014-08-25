@@ -12,7 +12,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Slash.Serialization.Tests")]
-[assembly: AssemblyDescription("Unit tests for the serialization helpers for multiple data formats, such as binary or XML.")]
+[assembly:
+    AssemblyDescription("Unit tests for the serialization helpers for multiple data formats, such as binary or XML.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Slash Games")]
 [assembly: AssemblyProduct("Slash.Serialization.Tests")]

@@ -56,14 +56,6 @@ namespace Slash.Reflection.Tests.Utils
         }
 
         [Test]
-        public void TestFindTypeUnknownAssembly()
-        {
-            string fullName =
-                "System.Collections.Generic.List`1[[Slash.GameBase.Configurations.EntityConfiguration, Slash.GameBase, Version=1.0.5161.23825, Culture=neutral, PublicKeyToken=null]]";
-            Assert.Throws<TypeLoadException>(() => ReflectionUtils.FindType(fullName));
-        }
-
-        [Test]
         public void TestFindTypeGenericFullNameOtherAssembly()
         {
             Type genericType = typeof(List<TestClass>);
@@ -84,6 +76,14 @@ namespace Slash.Reflection.Tests.Utils
             string fullNameWithoutAssemblyInfo = genericType.FullNameWithoutAssemblyInfo();
 
             this.TestFindType(fullNameWithoutAssemblyInfo, genericType);
+        }
+
+        [Test]
+        public void TestFindTypeUnknownAssembly()
+        {
+            string fullName =
+                "System.Collections.Generic.List`1[[Slash.GameBase.Configurations.EntityConfiguration, Slash.GameBase, Version=1.0.5161.23825, Culture=neutral, PublicKeyToken=null]]";
+            Assert.Throws<TypeLoadException>(() => ReflectionUtils.FindType(fullName));
         }
 
         #endregion

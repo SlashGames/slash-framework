@@ -8,8 +8,6 @@ namespace Slash.ECS.Tests
 {
     using NUnit.Framework;
 
-    using Slash.ECS;
-
     /// <summary>
     ///   Unit tests for the Game class.
     /// </summary>

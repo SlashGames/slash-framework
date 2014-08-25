@@ -43,41 +43,6 @@ namespace Slash.Unity.Common.ECS
 
         #region Public Methods and Operators
 
-        /// <summary>
-        ///   Changes the maximum capacity of this pool. If the maximum capacity is increased, an amount of objects equal to the capacity difference is added to the pool. If the maximum capacity is decreased, an amount of objets equal to the capacity difference is removed from the pool of available objects.
-        /// </summary>
-        /// <param name="newMaxCapacity">New maximum capacity of this pool.</param>
-        public void SetMaxCapacity(int newMaxCapacity)
-        {
-            int capacityDifference = newMaxCapacity - this.maxCapacity;
-
-            if (capacityDifference > 0)
-            {
-                Debug.Log(string.Format("Adjusting object pool size, adding {0} objects.", capacityDifference));
-
-                // Capacity increased. Increase pool size.
-                for (int i = 0; i < capacityDifference; i++)
-                {
-                    this.AddPoolObject();
-                }
-            }
-            else
-            {
-                // Capacity decreased. Decrease pool size.
-                int spareObjects = Mathf.Min(this.pool.Count, Mathf.Abs(capacityDifference));
-
-                Debug.Log(string.Format("Adjusting object pool size, removing {0} objects.", spareObjects));
-
-                for (int i = 0; i < spareObjects; i++)
-                {
-                    GameObject entityObject = this.pool.Pop();
-                    Destroy(entityObject);
-                }
-            }
-
-            this.maxCapacity = newMaxCapacity;
-        }
-
         public GameObject Alloc()
         {
             if (this.entityPrefab == null)
@@ -127,9 +92,50 @@ namespace Slash.Unity.Common.ECS
             }
         }
 
+        /// <summary>
+        ///   Changes the maximum capacity of this pool. If the maximum capacity is increased, an amount of objects equal to the capacity difference is added to the pool. If the maximum capacity is decreased, an amount of objets equal to the capacity difference is removed from the pool of available objects.
+        /// </summary>
+        /// <param name="newMaxCapacity">New maximum capacity of this pool.</param>
+        public void SetMaxCapacity(int newMaxCapacity)
+        {
+            int capacityDifference = newMaxCapacity - this.maxCapacity;
+
+            if (capacityDifference > 0)
+            {
+                Debug.Log(string.Format("Adjusting object pool size, adding {0} objects.", capacityDifference));
+
+                // Capacity increased. Increase pool size.
+                for (int i = 0; i < capacityDifference; i++)
+                {
+                    this.AddPoolObject();
+                }
+            }
+            else
+            {
+                // Capacity decreased. Decrease pool size.
+                int spareObjects = Mathf.Min(this.pool.Count, Mathf.Abs(capacityDifference));
+
+                Debug.Log(string.Format("Adjusting object pool size, removing {0} objects.", spareObjects));
+
+                for (int i = 0; i < spareObjects; i++)
+                {
+                    GameObject entityObject = this.pool.Pop();
+                    Destroy(entityObject);
+                }
+            }
+
+            this.maxCapacity = newMaxCapacity;
+        }
+
         #endregion
 
         #region Methods
+
+        private void AddPoolObject()
+        {
+            GameObject entityObject = this.gameObject.AddChild(this.entityPrefab);
+            this.PushPoolObject(entityObject);
+        }
 
         private void Awake()
         {
@@ -141,12 +147,6 @@ namespace Slash.Unity.Common.ECS
             {
                 this.AddPoolObject();
             }
-        }
-
-        private void AddPoolObject()
-        {
-            GameObject entityObject = this.gameObject.AddChild(this.entityPrefab);
-            this.PushPoolObject(entityObject);
         }
 
         private void PushPoolObject(GameObject entityObject)

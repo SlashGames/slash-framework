@@ -22,7 +22,7 @@ namespace Slash.Math.Utils
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>
         ///   Random number generator singleton.

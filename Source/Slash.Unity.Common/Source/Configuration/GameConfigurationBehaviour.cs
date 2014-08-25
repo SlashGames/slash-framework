@@ -6,7 +6,6 @@
 
 namespace Slash.Unity.Common.Configuration
 {
-    using System;
     using System.IO;
     using System.Linq;
     using System.Xml;
@@ -17,8 +16,6 @@ namespace Slash.Unity.Common.Configuration
     using Slash.Serialization.Binary;
 
     using UnityEngine;
-
-    using Object = UnityEngine.Object;
 
     /// <summary>
     ///   Behaviour to edit the game configuration inside Unity.
@@ -131,12 +128,14 @@ namespace Slash.Unity.Common.Configuration
                         }
                         try
                         {
-                            subBlueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+                            subBlueprintManager =
+                                (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
                         }
                         catch (XmlException e)
                         {
                             Debug.LogError(
-                                string.Format("Exception deserializing blueprint xml '{0}': {1}", blueprintAsset.name, e.Message));
+                                string.Format(
+                                    "Exception deserializing blueprint xml '{0}': {1}", blueprintAsset.name, e.Message));
                         }
                     }
                     else

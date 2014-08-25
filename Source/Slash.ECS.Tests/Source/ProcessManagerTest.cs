@@ -8,7 +8,6 @@ namespace Slash.ECS.Tests
 {
     using NUnit.Framework;
 
-    using Slash.ECS;
     using Slash.ECS.Processes;
 
     public class ProcessManagerTest

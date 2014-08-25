@@ -66,7 +66,7 @@ namespace Slash.Unity.Common.Scenes
         /// <param name="scene">Scene to change to.</param>
         public void ChangeScene(string scene)
         {
-            ChangeScene(scene, 0);
+            this.ChangeScene(scene, 0);
         }
 
         /// <summary>

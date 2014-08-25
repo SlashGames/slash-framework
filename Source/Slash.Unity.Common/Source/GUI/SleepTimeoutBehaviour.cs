@@ -62,7 +62,7 @@ namespace Slash.Unity.Common.GUI
 
             Screen.sleepTimeout = sleepTimeout;
         }
-        
+
         #endregion
     }
 }

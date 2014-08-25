@@ -3,10 +3,15 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.Unity.Common.Triggers.Actions
 {
     public interface IAction
     {
+        #region Public Methods and Operators
+
         void Execute(object actionArgs);
+
+        #endregion
     }
 }

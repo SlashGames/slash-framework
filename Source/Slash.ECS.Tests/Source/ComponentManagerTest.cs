@@ -25,7 +25,7 @@ namespace Slash.ECS.Tests
         ///   Test component manager to run unit tests on.
         /// </summary>
         private ComponentManager componentManager;
-        
+
         /// <summary>
         ///   Test component to run unit tests on.
         /// </summary>

@@ -21,7 +21,7 @@ namespace Slash.ECS.Inspector.Attributes
             : base(name)
         {
         }
-        
+
         #endregion
 
         #region Public Methods and Operators
@@ -29,12 +29,6 @@ namespace Slash.ECS.Inspector.Attributes
         public override object ConvertStringToValue(string text)
         {
             throw new NotImplementedException();
-        }
-
-        public override bool TryConvertStringToValue(string text, out object value)
-        {
-            value = null;
-            return false;
         }
 
         public override void SetPropertyValue(Game game, object obj, object propertyValue)
@@ -46,6 +40,12 @@ namespace Slash.ECS.Inspector.Attributes
             InspectorUtils.InitFromAttributeTable(game, propertyInspectorType, propertyValue, propertyAttributeTable);
 
             base.SetPropertyValue(game, obj, propertyValue);
+        }
+
+        public override bool TryConvertStringToValue(string text, out object value)
+        {
+            value = null;
+            return false;
         }
 
         #endregion

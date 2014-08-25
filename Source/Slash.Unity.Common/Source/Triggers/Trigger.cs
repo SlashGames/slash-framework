@@ -1,4 +1,10 @@
-﻿namespace Slash.Unity.Common.Triggers
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Trigger.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Slash.Unity.Common.Triggers
 {
     using System.Collections.Generic;
 
@@ -9,11 +15,23 @@
 
     public class Trigger : MonoBehaviour
     {
-        #region Methods
+        #region Fields
+
+        public List<IAction> Actions;
 
         public List<ICondition> Conditions;
 
-        public List<IAction> Actions; 
+        #endregion
+
+        #region Methods
+
+        private void OnConditionFulfilled()
+        {
+            // TODO(co): Check if all conditions are fulfilled.
+
+            // Trigger actions.
+            this.TriggerActions();
+        }
 
         /// <summary>
         ///   Called before first Update call.
@@ -46,14 +64,6 @@
                     condition.Fulfilled += this.OnConditionFulfilled;
                 }
             }
-        }
-
-        private void OnConditionFulfilled()
-        {
-            // TODO(co): Check if all conditions are fulfilled.
-
-            // Trigger actions.
-            this.TriggerActions();
         }
 
         private void TriggerActions()

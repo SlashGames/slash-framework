@@ -9,7 +9,6 @@ namespace Slash.ECS.Tests.Inspector.Attributes
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.ECS;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Inspector.Utils;
@@ -47,11 +46,12 @@ namespace Slash.ECS.Tests.Inspector.Attributes
             IAttributeTable parentAttributeTable = new AttributeTable();
             parentAttributeTable.SetValue(TestDataParent.AttributeTestData, attributeTable);
 
-            TestDataParent testDataParent = InspectorUtils.CreateFromAttributeTable<TestDataParent>(this.testGame, this.parentInspectorType, parentAttributeTable);
+            TestDataParent testDataParent = InspectorUtils.CreateFromAttributeTable<TestDataParent>(
+                this.testGame, this.parentInspectorType, parentAttributeTable);
             Assert.AreEqual(testDataParent.TestData.String1, TestValueString1);
             Assert.AreEqual(testDataParent.TestData.String2, TestValueString2);
         }
-        
+
         #endregion
     }
 

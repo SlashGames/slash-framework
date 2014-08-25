@@ -19,10 +19,6 @@ namespace Slash.Unity.Common.Triggers.Conditions
 
         #endregion
 
-        #region Public Events
-        
-        #endregion
-
         #region Methods
 
         private void Awake()
@@ -38,7 +34,6 @@ namespace Slash.Unity.Common.Triggers.Conditions
         {
             this.OnFulfilled();
         }
-
 
         #endregion
     }

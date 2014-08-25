@@ -113,7 +113,7 @@ namespace Slash.AI.BehaviorTrees.Data
                 return (base.GetHashCode() * 397) ^ (this.Parents != null ? this.Parents.GetHashCode() : 0);
             }
         }
-        
+
         /// <summary>
         ///   Tries to find the attribute with the passed id.
         /// </summary>
