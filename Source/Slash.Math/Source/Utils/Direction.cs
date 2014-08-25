@@ -67,11 +67,20 @@ namespace Slash.Math.Utils
         /// </summary>
         NorthWest = North | West,
 
+        /// <summary>
+        ///   West and east.
+        /// </summary>
         Horizontal = West | East,
 
+        /// <summary>
+        ///   North and south.
+        /// </summary>
         Vertical = North | South
     }
 
+    /// <summary>
+    ///   Utility methods for computing and comparing directions.
+    /// </summary>
     public static class Direction
     {
         #region Public Methods and Operators

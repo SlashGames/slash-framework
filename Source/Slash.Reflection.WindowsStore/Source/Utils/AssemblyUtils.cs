@@ -14,6 +14,9 @@ namespace Slash.Reflection.Utils
     using Windows.Foundation;
     using Windows.Storage;
 
+    /// <summary>
+    ///   Utility methods for operating on assemblies.
+    /// </summary>
     public class AssemblyUtils
     {
         #region Static Fields

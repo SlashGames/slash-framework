@@ -10,6 +10,9 @@ namespace Slash.Reflection.Utils
     using System.Collections.Generic;
     using System.Reflection;
 
+    /// <summary>
+    ///   Utility methods for operating on assemblies.
+    /// </summary>
     public class AssemblyUtils
     {
         #region Public Methods and Operators

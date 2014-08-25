@@ -83,9 +83,8 @@ namespace Slash.Reflection.Utils
             List<Type> types = new List<Type>();
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-                foreach (
-                    var typeInfo in
-                        assembly.DefinedTypes.Where(definedType => definedType.GetCustomAttribute<T>() != null))
+                foreach (var typeInfo in
+                    assembly.DefinedTypes.Where(definedType => definedType.GetCustomAttribute<T>() != null))
                 {
                     types.Add(typeInfo.AsType());
                 }
