@@ -40,6 +40,7 @@
     <Compile Include="Source\AttributeTables\AttributeTableExtensions.cs" />
     <Compile Include="Source\AttributeTables\HierarchicalAttributeTable.cs" />
     <Compile Include="Source\AttributeTables\IAttributeTable.cs" />
+    <Compile Include="Source\Extensions\DictionaryExtensionMethods.cs" />
     <Compile Include="Source\ObjectModel\ReadOnlyCollection.cs" />
     <Compile Include="Source\Utils\CollectionUtils.cs" />
     <Compile Include="Source\Extensions\EnumerableExtensionMethods.cs" />
