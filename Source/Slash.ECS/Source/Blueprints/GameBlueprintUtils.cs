@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.ECS.Utils
+namespace Slash.ECS.Blueprints
 {
     using System.Collections.Generic;
     using System.Linq;
