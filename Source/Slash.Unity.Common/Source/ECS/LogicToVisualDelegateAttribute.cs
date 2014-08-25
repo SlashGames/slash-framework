@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.Common.Core
+namespace Slash.Unity.Common.ECS
 {
     using System;
 

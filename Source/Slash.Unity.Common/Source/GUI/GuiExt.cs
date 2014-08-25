@@ -11,7 +11,7 @@ namespace Slash.Unity.Common.GUI
     /// <summary>
     ///   Extends the Unity.GUI class.
     /// </summary>
-    public static class GuiExt
+    public static class GUIExt
     {
         #region Static Fields
 

@@ -4,6 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Slash.Unity.Common.Diagnostics;
 using Slash.Unity.Common.Input;
 using Slash.Unity.Editor.Common.Inspectors;
 

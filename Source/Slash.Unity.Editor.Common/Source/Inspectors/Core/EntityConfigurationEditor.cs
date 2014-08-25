@@ -16,7 +16,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Core
     using Slash.ECS.Blueprints;
     using Slash.ECS.Components;
     using Slash.ECS.Inspector.Data;
-    using Slash.Unity.Common.Core;
+    using Slash.Unity.Common.ECS;
     using Slash.Unity.Editor.Common.Inspectors.Utils;
 
 

@@ -10,7 +10,7 @@ namespace Slash.Unity.Common.Logging
 
     using Slash.ECS;
     using Slash.ECS.Events;
-    using Slash.Unity.Common.Core;
+    using Slash.Unity.Common.ECS;
     using Slash.Unity.Common.Utils;
 
     using UnityEngine;
