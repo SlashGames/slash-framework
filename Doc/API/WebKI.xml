@@ -35,7 +35,10 @@
     <HelpKINode Title="IBlueprintManager.AddBlueprint Method " Url="html/M_Slash_ECS_Blueprints_IBlueprintManager_AddBlueprint.htm" />
   </HelpKINode>
   <HelpKINode Title="AddBlueprints method" Url="html/M_Slash_ECS_Blueprints_BlueprintManager_AddBlueprints.htm" />
-  <HelpKINode Title="AddChild method" Url="html/M_Slash_Unity_Common_Utils_UnityUtils_AddChild.htm" />
+  <HelpKINode Title="AddChild method">
+    <HelpKINode Title="HierarchicalBlueprintManager.AddChild Method " Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_AddChild.htm" />
+    <HelpKINode Title="UnityUtils.AddChild Method " Url="html/M_Slash_Unity_Common_Utils_UnityUtils_AddChild.htm" />
+  </HelpKINode>
   <HelpKINode Title="AddComponent method">
     <HelpKINode Title="ComponentManager.AddComponent Method " Url="html/M_Slash_ECS_Components_ComponentManager_AddComponent.htm" />
     <HelpKINode Title="EntityManager.AddComponent Method " Url="html/Overload_Slash_ECS_Components_EntityManager_AddComponent.htm" />
@@ -47,10 +50,7 @@
     <HelpKINode Title="Vector3I.Addition Operator " Url="html/M_Slash_Math_Algebra_Vectors_Vector3I_op_Addition.htm" />
   </HelpKINode>
   <HelpKINode Title="AdditionalComponentTypes property" Url="html/P_Slash_ECS_Configurations_EntityConfiguration_AdditionalComponentTypes.htm" />
-  <HelpKINode Title="AddParent method">
-    <HelpKINode Title="HierarchicalAttributeTable.AddParent Method " Url="html/M_Slash_Collections_AttributeTables_HierarchicalAttributeTable_AddParent.htm" />
-    <HelpKINode Title="HierarchicalBlueprintManager.AddParent Method " Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_AddParent.htm" />
-  </HelpKINode>
+  <HelpKINode Title="AddParent method" Url="html/M_Slash_Collections_AttributeTables_HierarchicalAttributeTable_AddParent.htm" />
   <HelpKINode Title="AddProcess method" Url="html/M_Slash_ECS_Processes_ProcessManager_AddProcess.htm" />
   <HelpKINode Title="AddRange method">
     <HelpKINode Title="AttributeTable.AddRange Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_AddRange.htm" />
@@ -387,6 +387,7 @@
   <HelpKINode Title="CheckTextureAssets.CheckTextures method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Util_CheckTextureAssets_CheckTextures.htm" />
   <HelpKINode Title="CheckTextureAssets.MaxTextureSize field" Url="html/F_Slash_Unity_Editor_Common_MenuItems_Util_CheckTextureAssets_MaxTextureSize.htm" />
   <HelpKINode Title="CheckTextures method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Util_CheckTextureAssets_CheckTextures.htm" />
+  <HelpKINode Title="Children property" Url="html/P_Slash_ECS_Blueprints_HierarchicalBlueprintManager_Children.htm" />
   <HelpKINode Title="Clamp(Of T) method" Url="html/M_Slash_Math_Utils_MathUtils_Clamp__1.htm" />
   <HelpKINode Title="Clamp&lt;T&gt; method" Url="html/M_Slash_Math_Utils_MathUtils_Clamp__1.htm" />
   <HelpKINode Title="ClampAngle method" Url="html/M_Slash_Math_Utils_Angles_ClampAngle.htm" />
@@ -584,22 +585,20 @@
     <HelpKINode Title="SimpleValueEditorContext.Description Property " Url="html/P_Slash_Unity_Common_GUI_ValueEditors_SimpleValueEditorContext_Description.htm" />
   </HelpKINode>
   <HelpKINode Title="Deserialize method">
+    <HelpKINode Title="BinaryDeserializer.Deserialize Method " Url="html/Overload_Slash_Serialization_Binary_BinaryDeserializer_Deserialize.htm" />
+    <HelpKINode Title="EntityConfiguration.Deserialize Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_Deserialize.htm" />
+    <HelpKINode Title="IBinarySerializable.Deserialize Method " Url="html/M_Slash_Serialization_Binary_IBinarySerializable_Deserialize.htm" />
+    <HelpKINode Title="IDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_Deserialize.htm" />
+    <HelpKINode Title="ListDictionarySerializer(T).Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_Deserialize.htm" />
+    <HelpKINode Title="ListDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_Deserialize.htm" />
+    <HelpKINode Title="DictionaryDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_Deserialize.htm" />
     <HelpKINode Title="AttributeTable.Deserialize Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_Deserialize.htm" />
     <HelpKINode Title="Blueprint.Deserialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Deserialize.htm" />
-    <HelpKINode Title="IBinarySerializable.Deserialize Method " Url="html/M_Slash_Serialization_Binary_IBinarySerializable_Deserialize.htm" />
-    <HelpKINode Title="EntityConfiguration.Deserialize Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_Deserialize.htm" />
-    <HelpKINode Title="BinaryDeserializer.Deserialize Method " Url="html/Overload_Slash_Serialization_Binary_BinaryDeserializer_Deserialize.htm" />
+    <HelpKINode Title="StackDictionarySerializer(T).Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_Deserialize.htm" />
+    <HelpKINode Title="StackDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_Deserialize.htm" />
+    <HelpKINode Title="ValueWithTypeDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_Deserialize.htm" />
   </HelpKINode>
-  <HelpKINode Title="deserialize method">
-    <HelpKINode Title="DictionaryDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_deserialize.htm" />
-    <HelpKINode Title="DictionarySerializationContext.deserialize Method " Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_deserialize.htm" />
-    <HelpKINode Title="IDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_deserialize.htm" />
-    <HelpKINode Title="ListDictionarySerializer(T).deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_deserialize.htm" />
-    <HelpKINode Title="ListDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_deserialize.htm" />
-    <HelpKINode Title="StackDictionarySerializer(T).deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_deserialize.htm" />
-    <HelpKINode Title="StackDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_deserialize.htm" />
-    <HelpKINode Title="ValueWithTypeDictionarySerializer.deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_deserialize.htm" />
-  </HelpKINode>
+  <HelpKINode Title="deserialize method" Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_deserialize.htm" />
   <HelpKINode Title="deserializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_deserializeContext.htm" />
   <HelpKINode Title="DestroyChildren method" Url="html/M_Slash_Unity_Common_Utils_UnityUtils_DestroyChildren.htm" />
   <HelpKINode Title="DialogRect field" Url="html/F_Slash_Unity_Common_Diagnostics_CatchExceptionsBehaviour_DialogRect.htm" />
@@ -609,9 +608,9 @@
     <HelpKINode Title="constructor" Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Serialization_Dictionary_DictionaryDictionarySerializer.htm" />
   </HelpKINode>
-  <HelpKINode Title="DictionaryDictionarySerializer.deserialize method" Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_deserialize.htm" />
+  <HelpKINode Title="DictionaryDictionarySerializer.Deserialize method" Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_Deserialize.htm" />
   <HelpKINode Title="DictionaryDictionarySerializer.DictionaryDictionarySerializer constructor" Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer__ctor.htm" />
-  <HelpKINode Title="DictionaryDictionarySerializer.serialize method" Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_serialize.htm" />
+  <HelpKINode Title="DictionaryDictionarySerializer.Serialize method" Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_Serialize.htm" />
   <HelpKINode Title="DictionaryEqual(Of TKey, TValue) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_DictionaryEqual__2.htm" />
   <HelpKINode Title="DictionaryEqual&lt;TKey, TValue&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_DictionaryEqual__2.htm" />
   <HelpKINode Title="DictionarySerializableAttribute class">
@@ -1391,15 +1390,15 @@
     <HelpKINode Title="properties" Url="html/Properties_T_Slash_ECS_Blueprints_HierarchicalBlueprintManager.htm" />
   </HelpKINode>
   <HelpKINode Title="HierarchicalBlueprintManager.AddBlueprint method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_AddBlueprint.htm" />
-  <HelpKINode Title="HierarchicalBlueprintManager.AddParent method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_AddParent.htm" />
+  <HelpKINode Title="HierarchicalBlueprintManager.AddChild method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_AddChild.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.Blueprints property" Url="html/P_Slash_ECS_Blueprints_HierarchicalBlueprintManager_Blueprints.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.ChangeBlueprintId method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_ChangeBlueprintId.htm" />
+  <HelpKINode Title="HierarchicalBlueprintManager.Children property" Url="html/P_Slash_ECS_Blueprints_HierarchicalBlueprintManager_Children.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.ContainsBlueprint method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_ContainsBlueprint.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.GetBlueprint method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_GetBlueprint.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.GetDerivedBlueprintComponents method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_GetDerivedBlueprintComponents.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.GetEnumerator method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_GetEnumerator.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.HierarchicalBlueprintManager constructor" Url="html/Overload_Slash_ECS_Blueprints_HierarchicalBlueprintManager__ctor.htm" />
-  <HelpKINode Title="HierarchicalBlueprintManager.Parents property" Url="html/P_Slash_ECS_Blueprints_HierarchicalBlueprintManager_Parents.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.RemoveBlueprint method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_RemoveBlueprint.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.TryGetBlueprint method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_TryGetBlueprint.htm" />
   <HelpKINode Title="HierarchicalBlueprintManager.UpdateLocalizationKeys method" Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_UpdateLocalizationKeys.htm" />
@@ -1471,8 +1470,8 @@
     <HelpKINode Title="about IDictionarySerializer interface" Url="html/T_Slash_Serialization_Dictionary_IDictionarySerializer.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Serialization_Dictionary_IDictionarySerializer.htm" />
   </HelpKINode>
-  <HelpKINode Title="IDictionarySerializer.deserialize method" Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_deserialize.htm" />
-  <HelpKINode Title="IDictionarySerializer.serialize method" Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_serialize.htm" />
+  <HelpKINode Title="IDictionarySerializer.Deserialize method" Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_Deserialize.htm" />
+  <HelpKINode Title="IDictionarySerializer.Serialize method" Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_Serialize.htm" />
   <HelpKINode Title="IEntityComponent interface">
     <HelpKINode Title="IEntityComponent Interface" Url="html/T_Slash_ECS_Components_IEntityComponent.htm" />
     <HelpKINode Title="about IEntityComponent interface" Url="html/T_Slash_ECS_Components_IEntityComponent.htm" />
@@ -1888,21 +1887,21 @@
     <HelpKINode Title="constructor" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Serialization_Dictionary_ListDictionarySerializer_1.htm" />
   </HelpKINode>
-  <HelpKINode Title="ListDictionarySerializer(Of T).deserialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_deserialize.htm" />
+  <HelpKINode Title="ListDictionarySerializer(Of T).Deserialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_Deserialize.htm" />
   <HelpKINode Title="ListDictionarySerializer(Of T).ListDictionarySerializer constructor" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1__ctor.htm" />
-  <HelpKINode Title="ListDictionarySerializer(Of T).serialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_serialize.htm" />
-  <HelpKINode Title="ListDictionarySerializer.deserialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_deserialize.htm" />
+  <HelpKINode Title="ListDictionarySerializer(Of T).Serialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_Serialize.htm" />
+  <HelpKINode Title="ListDictionarySerializer.Deserialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_Deserialize.htm" />
   <HelpKINode Title="ListDictionarySerializer.ListDictionarySerializer constructor" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer__ctor.htm" />
-  <HelpKINode Title="ListDictionarySerializer.serialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_serialize.htm" />
+  <HelpKINode Title="ListDictionarySerializer.Serialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_Serialize.htm" />
   <HelpKINode Title="ListDictionarySerializer&lt;T&gt; class">
     <HelpKINode Title="ListDictionarySerializer(T) Class" Url="html/T_Slash_Serialization_Dictionary_ListDictionarySerializer_1.htm" />
     <HelpKINode Title="about ListDictionarySerializer&lt;T&gt; class" Url="html/T_Slash_Serialization_Dictionary_ListDictionarySerializer_1.htm" />
     <HelpKINode Title="constructor" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Serialization_Dictionary_ListDictionarySerializer_1.htm" />
   </HelpKINode>
-  <HelpKINode Title="ListDictionarySerializer&lt;T&gt;.deserialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_deserialize.htm" />
+  <HelpKINode Title="ListDictionarySerializer&lt;T&gt;.Deserialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_Deserialize.htm" />
   <HelpKINode Title="ListDictionarySerializer&lt;T&gt;.ListDictionarySerializer constructor" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1__ctor.htm" />
-  <HelpKINode Title="ListDictionarySerializer&lt;T&gt;.serialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_serialize.htm" />
+  <HelpKINode Title="ListDictionarySerializer&lt;T&gt;.Serialize method" Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_Serialize.htm" />
   <HelpKINode Title="ListEqual method" Url="html/M_Slash_Collections_Utils_CollectionUtils_ListEqual.htm" />
   <HelpKINode Title="ListExtensionMethods class">
     <HelpKINode Title="ListExtensionMethods Class" Url="html/T_Slash_Collections_Extensions_ListExtensionMethods.htm" />
@@ -1950,9 +1949,7 @@
   <HelpKINode Title="Log method" Url="html/Overload_Slash_Math_Utils_MathUtils_Log.htm" />
   <HelpKINode Title="Log property" Url="html/P_Slash_ECS_Game_Log.htm" />
   <HelpKINode Title="Log10 method" Url="html/M_Slash_Math_Utils_MathUtils_Log10.htm" />
-  <HelpKINode Title="Log10E field" Url="html/F_Slash_Math_Utils_MathUtils_Log10E.htm" />
   <HelpKINode Title="Log2 method" Url="html/M_Slash_Math_Utils_MathUtils_Log2.htm" />
-  <HelpKINode Title="Log2E field" Url="html/F_Slash_Math_Utils_MathUtils_Log2E.htm" />
   <HelpKINode Title="LogBehaviour class">
     <HelpKINode Title="LogBehaviour Class" Url="html/T_Slash_Unity_Common_Logging_LogBehaviour.htm" />
     <HelpKINode Title="about LogBehaviour class" Url="html/T_Slash_Unity_Common_Logging_LogBehaviour.htm" />
@@ -2027,9 +2024,7 @@
   <HelpKINode Title="MathUtils.Lerp method" Url="html/M_Slash_Math_Utils_MathUtils_Lerp.htm" />
   <HelpKINode Title="MathUtils.Log method" Url="html/Overload_Slash_Math_Utils_MathUtils_Log.htm" />
   <HelpKINode Title="MathUtils.Log10 method" Url="html/M_Slash_Math_Utils_MathUtils_Log10.htm" />
-  <HelpKINode Title="MathUtils.Log10E field" Url="html/F_Slash_Math_Utils_MathUtils_Log10E.htm" />
   <HelpKINode Title="MathUtils.Log2 method" Url="html/M_Slash_Math_Utils_MathUtils_Log2.htm" />
-  <HelpKINode Title="MathUtils.Log2E field" Url="html/F_Slash_Math_Utils_MathUtils_Log2E.htm" />
   <HelpKINode Title="MathUtils.Max method" Url="html/Overload_Slash_Math_Utils_MathUtils_Max.htm" />
   <HelpKINode Title="MathUtils.Min method" Url="html/Overload_Slash_Math_Utils_MathUtils_Min.htm" />
   <HelpKINode Title="MathUtils.Mod method" Url="html/M_Slash_Math_Utils_MathUtils_Mod.htm" />
@@ -2039,9 +2034,7 @@
   <HelpKINode Title="MathUtils.Pow method" Url="html/Overload_Slash_Math_Utils_MathUtils_Pow.htm" />
   <HelpKINode Title="MathUtils.Pow2 method" Url="html/Overload_Slash_Math_Utils_MathUtils_Pow2.htm" />
   <HelpKINode Title="MathUtils.Pow3 method" Url="html/M_Slash_Math_Utils_MathUtils_Pow3.htm" />
-  <HelpKINode Title="MathUtils.Pow4 method" Url="html/M_Slash_Math_Utils_MathUtils_Pow4.htm" />
   <HelpKINode Title="MathUtils.Round method" Url="html/Overload_Slash_Math_Utils_MathUtils_Round.htm" />
-  <HelpKINode Title="MathUtils.RSqrt method" Url="html/M_Slash_Math_Utils_MathUtils_RSqrt.htm" />
   <HelpKINode Title="MathUtils.Saturate method" Url="html/M_Slash_Math_Utils_MathUtils_Saturate.htm" />
   <HelpKINode Title="MathUtils.Sign method" Url="html/M_Slash_Math_Utils_MathUtils_Sign.htm" />
   <HelpKINode Title="MathUtils.Sin method" Url="html/M_Slash_Math_Utils_MathUtils_Sin.htm" />
@@ -2194,7 +2187,6 @@
   <HelpKINode Title="OrOption method" Url="html/M_Slash_SystemExt_Utils_EnumExtensions_OrOption.htm" />
   <HelpKINode Title="Parent property" Url="html/P_Slash_ECS_Blueprints_Blueprint_Parent.htm" />
   <HelpKINode Title="ParentId property" Url="html/P_Slash_ECS_Blueprints_Blueprint_ParentId.htm" />
-  <HelpKINode Title="Parents property" Url="html/P_Slash_ECS_Blueprints_HierarchicalBlueprintManager_Parents.htm" />
   <HelpKINode Title="PathUtils class">
     <HelpKINode Title="PathUtils Class" Url="html/T_Slash_SystemExt_Utils_PathUtils.htm" />
     <HelpKINode Title="about PathUtils class" Url="html/T_Slash_SystemExt_Utils_PathUtils.htm" />
@@ -2262,7 +2254,6 @@
   <HelpKINode Title="Pow method" Url="html/Overload_Slash_Math_Utils_MathUtils_Pow.htm" />
   <HelpKINode Title="Pow2 method" Url="html/Overload_Slash_Math_Utils_MathUtils_Pow2.htm" />
   <HelpKINode Title="Pow3 method" Url="html/M_Slash_Math_Utils_MathUtils_Pow3.htm" />
-  <HelpKINode Title="Pow4 method" Url="html/M_Slash_Math_Utils_MathUtils_Pow4.htm" />
   <HelpKINode Title="Priority property" Url="html/P_Slash_ECS_Inspector_Attributes_InspectorComponentAttribute_Priority.htm" />
   <HelpKINode Title="ProcessEvents method" Url="html/Overload_Slash_ECS_Events_EventManager_ProcessEvents.htm" />
   <HelpKINode Title="ProcessManager class">
@@ -2521,7 +2512,6 @@
   </HelpKINode>
   <HelpKINode Title="Rotate method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_Rotate.htm" />
   <HelpKINode Title="Round method" Url="html/Overload_Slash_Math_Utils_MathUtils_Round.htm" />
-  <HelpKINode Title="RSqrt method" Url="html/M_Slash_Math_Utils_MathUtils_RSqrt.htm" />
   <HelpKINode Title="Running property" Url="html/P_Slash_ECS_Game_Running.htm" />
   <HelpKINode Title="Saturate method" Url="html/M_Slash_Math_Utils_MathUtils_Saturate.htm" />
   <HelpKINode Title="Save method" Url="html/M_Slash_Unity_Common_Configuration_GameConfigurationBehaviour_Save.htm" />
@@ -2591,23 +2581,21 @@
   <HelpKINode Title="SerializationUtils.ReadXml method" Url="html/M_Slash_Serialization_Utils_SerializationUtils_ReadXml.htm" />
   <HelpKINode Title="SerializationUtils.ToMemoryStream method" Url="html/M_Slash_Serialization_Utils_SerializationUtils_ToMemoryStream.htm" />
   <HelpKINode Title="SerializationUtils.WriteXml method" Url="html/M_Slash_Serialization_Utils_SerializationUtils_WriteXml.htm" />
-  <HelpKINode Title="serialize method">
-    <HelpKINode Title="DictionarySerializationContext.serialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_serialize.htm" />
-    <HelpKINode Title="StackDictionarySerializer(T).serialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_serialize.htm" />
-    <HelpKINode Title="StackDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_serialize.htm" />
-    <HelpKINode Title="ValueWithTypeDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_serialize.htm" />
-    <HelpKINode Title="IDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_serialize.htm" />
-    <HelpKINode Title="DictionaryDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_serialize.htm" />
-    <HelpKINode Title="ListDictionarySerializer(T).serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_serialize.htm" />
-    <HelpKINode Title="ListDictionarySerializer.serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_serialize.htm" />
-  </HelpKINode>
   <HelpKINode Title="Serialize method">
     <HelpKINode Title="AttributeTable.Serialize Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_Serialize.htm" />
-    <HelpKINode Title="IBinarySerializable.Serialize Method " Url="html/M_Slash_Serialization_Binary_IBinarySerializable_Serialize.htm" />
-    <HelpKINode Title="Blueprint.Serialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Serialize.htm" />
     <HelpKINode Title="BinarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Binary_BinarySerializer_Serialize.htm" />
+    <HelpKINode Title="Blueprint.Serialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Serialize.htm" />
+    <HelpKINode Title="DictionaryDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_Serialize.htm" />
     <HelpKINode Title="EntityConfiguration.Serialize Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_Serialize.htm" />
+    <HelpKINode Title="IBinarySerializable.Serialize Method " Url="html/M_Slash_Serialization_Binary_IBinarySerializable_Serialize.htm" />
+    <HelpKINode Title="IDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_Serialize.htm" />
+    <HelpKINode Title="ListDictionarySerializer(T).Serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_Serialize.htm" />
+    <HelpKINode Title="ListDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_Serialize.htm" />
+    <HelpKINode Title="StackDictionarySerializer(T).Serialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_Serialize.htm" />
+    <HelpKINode Title="StackDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_Serialize.htm" />
+    <HelpKINode Title="ValueWithTypeDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_Serialize.htm" />
   </HelpKINode>
+  <HelpKINode Title="serialize method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_serialize.htm" />
   <HelpKINode Title="serializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_serializeContext.htm" />
   <HelpKINode Title="SerializedConfigurationKeys field" Url="html/F_Slash_Unity_Common_ECS_EntityConfigurationBehaviour_SerializedConfigurationKeys.htm" />
   <HelpKINode Title="SerializedConfigurationTypes field" Url="html/F_Slash_Unity_Common_ECS_EntityConfigurationBehaviour_SerializedConfigurationTypes.htm" />
@@ -2981,11 +2969,11 @@
     <HelpKINode Title="constructor" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Serialization_Dictionary_StackDictionarySerializer_1.htm" />
   </HelpKINode>
-  <HelpKINode Title="StackDictionarySerializer(Of T).deserialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_deserialize.htm" />
-  <HelpKINode Title="StackDictionarySerializer(Of T).serialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_serialize.htm" />
+  <HelpKINode Title="StackDictionarySerializer(Of T).Deserialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_Deserialize.htm" />
+  <HelpKINode Title="StackDictionarySerializer(Of T).Serialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_Serialize.htm" />
   <HelpKINode Title="StackDictionarySerializer(Of T).StackDictionarySerializer constructor" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1__ctor.htm" />
-  <HelpKINode Title="StackDictionarySerializer.deserialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_deserialize.htm" />
-  <HelpKINode Title="StackDictionarySerializer.serialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_serialize.htm" />
+  <HelpKINode Title="StackDictionarySerializer.Deserialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_Deserialize.htm" />
+  <HelpKINode Title="StackDictionarySerializer.Serialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_Serialize.htm" />
   <HelpKINode Title="StackDictionarySerializer.StackDictionarySerializer constructor" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer__ctor.htm" />
   <HelpKINode Title="StackDictionarySerializer&lt;T&gt; class">
     <HelpKINode Title="StackDictionarySerializer(T) Class" Url="html/T_Slash_Serialization_Dictionary_StackDictionarySerializer_1.htm" />
@@ -2993,8 +2981,8 @@
     <HelpKINode Title="constructor" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Serialization_Dictionary_StackDictionarySerializer_1.htm" />
   </HelpKINode>
-  <HelpKINode Title="StackDictionarySerializer&lt;T&gt;.deserialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_deserialize.htm" />
-  <HelpKINode Title="StackDictionarySerializer&lt;T&gt;.serialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_serialize.htm" />
+  <HelpKINode Title="StackDictionarySerializer&lt;T&gt;.Deserialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_Deserialize.htm" />
+  <HelpKINode Title="StackDictionarySerializer&lt;T&gt;.Serialize method" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_Serialize.htm" />
   <HelpKINode Title="StackDictionarySerializer&lt;T&gt;.StackDictionarySerializer constructor" Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1__ctor.htm" />
   <HelpKINode Title="Start method">
     <HelpKINode Title="CheatConsole.Start Method " Url="html/M_Slash_Unity_Common_Diagnostics_CheatConsole_Start.htm" />
@@ -3337,8 +3325,8 @@
     <HelpKINode Title="constructor" Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer.htm" />
   </HelpKINode>
-  <HelpKINode Title="ValueWithTypeDictionarySerializer.deserialize method" Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_deserialize.htm" />
-  <HelpKINode Title="ValueWithTypeDictionarySerializer.serialize method" Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_serialize.htm" />
+  <HelpKINode Title="ValueWithTypeDictionarySerializer.Deserialize method" Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_Deserialize.htm" />
+  <HelpKINode Title="ValueWithTypeDictionarySerializer.Serialize method" Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_Serialize.htm" />
   <HelpKINode Title="ValueWithTypeDictionarySerializer.ValueWithTypeDictionarySerializer constructor" Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer__ctor.htm" />
   <HelpKINode Title="Vector2F class">
     <HelpKINode Title="Vector2F Class" Url="html/T_Slash_Math_Algebra_Vectors_Vector2F.htm" />
