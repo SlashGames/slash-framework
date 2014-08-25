@@ -12,6 +12,9 @@ namespace Slash.Collections.Utils
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    ///   Utility methods and LINQ extensions for enumerables and collections.
+    /// </summary>
     public static class CollectionUtils
     {
         #region Public Methods and Operators
@@ -85,6 +88,24 @@ namespace Slash.Collections.Utils
             return true;
         }
 
+        /// <summary>
+        ///   Tries to get the value with the specified key from the
+        ///   dictionary, and returns the passed default value if the key
+        ///   could not be found.
+        /// </summary>
+        /// <param name="dictionary">
+        ///   Dictionary to get the value from.
+        /// </param>
+        /// <param name="key">
+        ///   Key of the value to get.
+        /// </param>
+        /// <param name="defaultValue">
+        ///   Default value to return if the specified key could not be found.
+        /// </param>
+        /// <returns>
+        ///   Value with the specified <paramref name="key"/>, if found,
+        ///   and <paramref name="defaultValue"/> otherwise.
+        /// </returns>
         public static TValue GetValueOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue)
         {
@@ -92,6 +113,24 @@ namespace Slash.Collections.Utils
             return dictionary.TryGetValue(key, out value) ? value : defaultValue;
         }
 
+        /// <summary>
+        ///   Tries to get the value with the specified key from the
+        ///   dictionary, and uses the passed default value provider to return
+        ///   a value if the key could not be found.
+        /// </summary>
+        /// <param name="dictionary">
+        ///   Dictionary to get the value from.
+        /// </param>
+        /// <param name="key">
+        ///   Key of the value to get.
+        /// </param>
+        /// <param name="defaultValueProvider">
+        ///   Default value provider to use to return a value if the key could not be found.
+        /// </param>
+        /// <returns>
+        ///   Value with the specified <paramref name="key"/>, if found,
+        ///   and a value provided by <paramref name="defaultValueProvider"/> otherwise.
+        /// </returns>
         public static TValue GetValueOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> defaultValueProvider)
         {
@@ -304,11 +343,10 @@ namespace Slash.Collections.Utils
         }
 
         /// <summary>
-        ///   Returns a comma-seperated list of the elements of the passed sequence.
+        ///   Returns a comma-separated list of the elements of the passed sequence.
         /// </summary>
-        /// <typeparam name="T">Type of the elements of the sequence.</typeparam>
-        /// <param name="sequence">Sequence to get a comma-seperated list of.</param>
-        /// <returns>Comma-seperated list of the elements of the passed sequence.</returns>
+        /// <param name="sequence">Sequence to get a comma-separated list of.</param>
+        /// <returns>Comma-separated list of the elements of the passed sequence.</returns>
         public static string ToString(IEnumerable sequence)
         {
             if (sequence == null)

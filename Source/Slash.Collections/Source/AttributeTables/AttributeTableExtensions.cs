@@ -16,24 +16,96 @@ namespace Slash.Collections.AttributeTables
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Tries to get the boolean value with the specified key from the
+        ///   attribute table, and returns the passed default value if the key
+        ///   could not be found.
+        /// </summary>
+        /// <param name="attributeTable">
+        ///   Attribute table to get the value from.
+        /// </param>
+        /// <param name="key">
+        ///   Key of the attribute to get.
+        /// </param>
+        /// <param name="defaultValue">
+        ///   Default value to return if the specified key could not be found.
+        /// </param>
+        /// <returns>
+        ///   Attribute value with the specified <paramref name="key"/>, if found,
+        ///   and <paramref name="defaultValue"/> otherwise.
+        /// </returns>
         public static bool GetBoolOrDefault(this IAttributeTable attributeTable, object key, bool defaultValue)
         {
             bool value;
             return TryGetBool(attributeTable, key, out value) ? value : defaultValue;
         }
 
+        /// <summary>
+        ///   Tries to get the enum value with the specified key from the
+        ///   attribute table, and returns the passed default value if the key
+        ///   could not be found.
+        /// </summary>
+        /// <param name="attributeTable">
+        ///   Attribute table to get the value from.
+        /// </param>
+        /// <param name="key">
+        ///   Key of the attribute to get.
+        /// </param>
+        /// <param name="defaultValue">
+        ///   Default value to return if the specified key could not be found.
+        /// </param>
+        /// <returns>
+        ///   Attribute value with the specified <paramref name="key"/>, if found,
+        ///   and <paramref name="defaultValue"/> otherwise.
+        /// </returns>
         public static object GetEnumOrDefault(this IAttributeTable attributeTable, object key, object defaultValue)
         {
             object value;
             return attributeTable.TryGetValue(key, out value) ? value : defaultValue;
         }
 
+        /// <summary>
+        ///   Tries to get the float value with the specified key from the
+        ///   attribute table, and returns the passed default value if the key
+        ///   could not be found.
+        /// </summary>
+        /// <param name="attributeTable">
+        ///   Attribute table to get the value from.
+        /// </param>
+        /// <param name="key">
+        ///   Key of the attribute to get.
+        /// </param>
+        /// <param name="defaultValue">
+        ///   Default value to return if the specified key could not be found.
+        /// </param>
+        /// <returns>
+        ///   Attribute value with the specified <paramref name="key"/>, if found,
+        ///   and <paramref name="defaultValue"/> otherwise.
+        /// </returns>
         public static float GetFloatOrDefault(this IAttributeTable attributeTable, object key, float defaultValue)
         {
             float value;
             return TryGetFloat(attributeTable, key, out value) ? value : defaultValue;
         }
 
+        /// <summary>
+        ///   Tries to get the int value with the specified key from the
+        ///   attribute table, and returns the passed default value if the key
+        ///   could not be found.
+        /// </summary>
+        /// <param name="attributeTable">
+        ///   Attribute table to get the value from.
+        /// </param>
+        /// <param name="key">
+        ///   Key of the attribute to get.
+        /// </param>
+        /// <param name="defaultValue">
+        ///   Default value to return if the specified key could not be found.
+        /// </param>
+        /// <returns>
+        ///   Attribute value with the specified <paramref name="key"/>, if found,
+        ///   and <paramref name="defaultValue"/> otherwise.
+        /// </returns>
         public static int GetIntOrDefault(this IAttributeTable attributeTable, object key, int defaultValue)
         {
             int value;
