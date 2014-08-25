@@ -13,7 +13,7 @@ namespace Slash.Math.Algebra.Vectors
     using Slash.Serialization.Dictionary;
 
     /// <summary>
-    ///   Struct which represents a 2 dimensional float vector.
+    ///   2-dimensional float vector.
     /// </summary>
     [Serializable]
     [DictionarySerializable]
@@ -81,6 +81,9 @@ namespace Slash.Math.Algebra.Vectors
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Constructs a new zero vector.
+        /// </summary>
         public Vector2F()
         {
             this.X = 0;
@@ -183,6 +186,15 @@ namespace Slash.Math.Algebra.Vectors
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Returns a vector whose components represent the absolute values of
+        ///   the components of the specified vector.
+        /// </summary>
+        /// <param name="vector">Vector to compute the absolute component values of.</param>
+        /// <returns>
+        ///   Vector whose components represent the absolute values of
+        ///   the components of the specified vector.
+        /// </returns>
         public static Vector2F Abs(Vector2F vector)
         {
             return new Vector2F(Math.Abs(vector.X), Math.Abs(vector.Y));
@@ -309,6 +321,15 @@ namespace Slash.Math.Algebra.Vectors
             return new Vector2F(MathUtils.Min(value1.X, value2.X), MathUtils.Min(value1.Y, value2.Y));
         }
 
+        /// <summary>
+        ///   Spherically interpolates between the two passed vectors.
+        /// </summary>
+        /// <param name="from">First point of the arc.</param>
+        /// <param name="to">Last point of the arc.</param>
+        /// <param name="step">Interpolation parameter.</param>
+        /// <returns>
+        ///   Value of <paramref name="step" /> along the path along the line segment in the plane.
+        /// </returns>
         public static Vector2F Slerp(Vector2F from, Vector2F to, float step)
         {
             if (step == 0)
@@ -491,6 +512,16 @@ namespace Slash.Math.Algebra.Vectors
             return Dot(this, vector);
         }
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.
+        /// </returns>
+        /// <param name="obj">
+        ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
+        /// </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -518,6 +549,13 @@ namespace Slash.Math.Algebra.Vectors
             return MathUtils.Sqrt(this.GetSquareDistance(vector));
         }
 
+        /// <summary>
+        ///   Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             unchecked
@@ -631,6 +669,13 @@ namespace Slash.Math.Algebra.Vectors
             return new Vector2F(newX, newY);
         }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        ///   A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format(
@@ -657,6 +702,15 @@ namespace Slash.Math.Algebra.Vectors
 
         #region Methods
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="Vector2F" /> is equal to the current <see cref="Vector2F" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="Vector2F" /> is equal to the current <see cref="Vector2F" />; otherwise, false.
+        /// </returns>
+        /// <param name="other">
+        ///   The <see cref="Vector2F" /> to compare with the current <see cref="Vector2F" />.
+        /// </param>
         protected bool Equals(Vector2F other)
         {
             return this.X.Equals(other.X) && this.Y.Equals(other.Y);

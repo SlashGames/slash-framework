@@ -296,6 +296,9 @@ namespace Slash.Math.Geometry.Rectangles
             }
         }
 
+        /// <summary>
+        ///   Maximum x-value of this rectangle.
+        /// </summary>
         public float XMax
         {
             get
@@ -304,6 +307,9 @@ namespace Slash.Math.Geometry.Rectangles
             }
         }
 
+        /// <summary>
+        ///   Minimum x-value of this rectangle.
+        /// </summary>
         public float XMin
         {
             get
@@ -328,6 +334,9 @@ namespace Slash.Math.Geometry.Rectangles
             }
         }
 
+        /// <summary>
+        ///   Maximum y-value of this rectangle.
+        /// </summary>
         public float YMax
         {
             get
@@ -336,6 +345,9 @@ namespace Slash.Math.Geometry.Rectangles
             }
         }
 
+        /// <summary>
+        ///   Minimum x-value of this rectangle.
+        /// </summary>
         public float YMin
         {
             get

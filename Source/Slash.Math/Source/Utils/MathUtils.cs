@@ -19,49 +19,93 @@ namespace Slash.Math.Utils
     {
         #region Constants
 
+        /// <summary>
+        ///   Euler's number.
+        /// </summary>
         public const float E = 2.7182818284590452f;
 
-        public const float Log10E = 0.4342944819032518f;
-
-        public const float Log2E = 1.4426950408889634f;
-
+        /// <summary>
+        ///   Ratio of a circle's circumference to its diameter.
+        /// </summary>
         public const float Pi = (float)Math.PI;
 
+        /// <summary>
+        ///   Pi divided by two.
+        /// </summary>
         public const float PiOver2 = Pi * 0.5f;
 
+        /// <summary>
+        ///   Pi divided by four.
+        /// </summary>
         public const float PiOver4 = Pi * 0.25f;
 
+        /// <summary>
+        ///   Pi multiplied with two.
+        /// </summary>
         public const float TwoPi = Pi * 2.0f;
 
         #endregion
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Returns the angle whose cosine is the specified number, in radians.
+        /// </summary>
+        /// <param name="x">Number representing a cosine.</param>
+        /// <returns>Angle whose cosine is the specified number.</returns>
         public static float ACos(float x)
         {
             return (float)Math.Acos(x);
         }
 
+        /// <summary>
+        ///   Returns the angle whose sine is the specified number, in radians.
+        /// </summary>
+        /// <param name="x">Number representing a sine.</param>
+        /// <returns>Angle whose sine is the specified number.</returns>
         public static float ASin(float x)
         {
             return (float)Math.Asin(x);
         }
 
+        /// <summary>
+        ///   Returns the angle whose tangent is the specified number, in radians.
+        /// </summary>
+        /// <param name="x">Number representing a tangent.</param>
+        /// <returns>Angle whose tangent is the specified number.</returns>
         public static float ATan(float x)
         {
             return (float)Math.Atan(x);
         }
 
+        /// <summary>
+        ///   Returns the absolute value of the passed number.
+        /// </summary>
+        /// <param name="x">Number to compute the absolute value of.</param>
+        /// <returns>
+        ///   Absolute value of <paramref name="x" />.
+        /// </returns>
         public static float Abs(float x)
         {
             return Math.Abs(x);
         }
 
-        public static float Atan2(float x, float y)
+        /// <summary>
+        ///   Returns the angle in radians between the positive x-axis of a plane and the point given by the coordinates (x, y).
+        /// </summary>
+        /// <param name="x">x-coordinate of the point.</param>
+        /// <param name="y">y-coordinate of the point.</param>
+        /// <returns>Angle whose tangent is the quotient of the specified numbers.</returns>
+        public static float Atan2(float y, float x)
         {
-            return (float)Math.Atan2(x, y);
+            return (float)Math.Atan2(y, x);
         }
 
+        /// <summary>
+        ///   Returns the smallest integral value that is greater than or equal to the specified value.
+        /// </summary>
+        /// <param name="value">Value to ceil.</param>
+        /// <returns>Smallest integral value that is greater than or equal to the specified value.</returns>
         public static float Ceil(float value)
         {
             return (float)Math.Ceiling(value);
@@ -99,6 +143,11 @@ namespace Slash.Math.Utils
             return value;
         }
 
+        /// <summary>
+        ///   Returns the cosine of the specified angle in radians.
+        /// </summary>
+        /// <param name="x">Angle to compute the cosine of.</param>
+        /// <returns>Cosine of the specified angle.</returns>
         public static float Cos(float x)
         {
             return (float)Math.Cos(x);
@@ -216,21 +265,42 @@ namespace Slash.Math.Utils
             return x + (step * (y - x));
         }
 
+        /// <summary>
+        ///   Returns the natural logarithm of the specified number.
+        /// </summary>
+        /// <param name="x">Number to compute the logarithm of.</param>
+        /// <returns>Natural logarithm of the specified number.</returns>
         public static float Log(float x)
         {
             return (float)Math.Log(x);
         }
 
+        /// <summary>
+        ///   Returns the logarithm of the specified number in the passed base.
+        /// </summary>
+        /// <param name="x">Number to compute the logarithm of.</param>
+        /// <param name="newBase">Base of the logarithm to compute.</param>
+        /// <returns>Logarithm of the specified number in the passed base.</returns>
         public static float Log(float x, float newBase)
         {
             return (float)Math.Log(x, newBase);
         }
 
+        /// <summary>
+        ///   Returns the base 10 logarithm of the specified number.
+        /// </summary>
+        /// <param name="x">Number to compute the logarithm of.</param>
+        /// <returns>Base 10 logarithm of the specified number.</returns>
         public static float Log10(float x)
         {
             return (float)Math.Log10(x);
         }
 
+        /// <summary>
+        ///   Returns the base 2 logarithm of the specified number.
+        /// </summary>
+        /// <param name="x">Number to compute the logarithm of.</param>
+        /// <returns>Base 2 logarithm of the specified number.</returns>
         public static float Log2(float x)
         {
             return (float)Math.Log(x, 2);
@@ -280,11 +350,25 @@ namespace Slash.Math.Utils
             return values.Min();
         }
 
-        public static float Mod(float x, float y)
+        /// <summary>
+        ///   Returns the remainder of the Euclidean division of <paramref name="a" /> by <paramref name="n" />.
+        /// </summary>
+        /// <param name="a">Dividend.</param>
+        /// <param name="n">Divisor.</param>
+        /// <returns>
+        ///   Remainder of the Euclidean division of <paramref name="a" /> by <paramref name="n" />.
+        /// </returns>
+        public static float Mod(float a, float n)
         {
-            return x % y;
+            return a % n;
         }
 
+        /// <summary>
+        ///   Returns the specified number raised to the passed power.
+        /// </summary>
+        /// <param name="x">Number to raise.</param>
+        /// <param name="pow">Power to raise to.</param>
+        /// <returns>Specified number raised to the passed power.</returns>
         public static int Pow(int x, uint pow)
         {
             int ret = 1;
@@ -300,41 +384,63 @@ namespace Slash.Math.Utils
             return ret;
         }
 
+        /// <summary>
+        ///   Returns the specified number raised to the passed power.
+        /// </summary>
+        /// <param name="x">Number to raise.</param>
+        /// <param name="y">Power to raise to.</param>
+        /// <returns>Specified number raised to the passed power.</returns>
         public static float Pow(float x, float y)
         {
             return (float)Math.Pow(x, y);
         }
 
+        /// <summary>
+        ///   Returns the square of the specified number.
+        /// </summary>
+        /// <param name="x">Number to square.</param>
+        /// <returns>Square of the specified number.</returns>
         public static int Pow2(int x)
         {
             return x * x;
         }
 
+        /// <summary>
+        ///   Returns the square of the specified number.
+        /// </summary>
+        /// <param name="x">Number to square.</param>
+        /// <returns>Square of the specified number.</returns>
         public static float Pow2(float x)
         {
             return x * x;
         }
 
+        /// <summary>
+        ///   Returns the cube of the specified number.
+        /// </summary>
+        /// <param name="x">Number to cube.</param>
+        /// <returns>Cube of the specified number.</returns>
         public static float Pow3(float x)
         {
             return x * x * x;
         }
 
-        public static float Pow4(float x)
-        {
-            return Pow2(x) * Pow2(x);
-        }
-
-        public static float RSqrt(float x)
-        {
-            return 1.0f / Sqrt(x);
-        }
-
+        /// <summary>
+        ///   Rounds the specified number to the nearest integral value.
+        /// </summary>
+        /// <param name="x">Number to round.</param>
+        /// <returns>Specified number rounded to the nearest integral value.</returns>
         public static float Round(float x)
         {
             return (float)Math.Round(x);
         }
 
+        /// <summary>
+        ///   Rounds the specified number to the passed number of fractional digits.
+        /// </summary>
+        /// <param name="x">Number to round.</param>
+        /// <param name="digits">Number of fractional digits in the return value.</param>
+        /// <returns>Specified number rounded to the passed number of fractional digits.</returns>
         public static float Round(float x, int digits)
         {
             return (float)Math.Round(x, digits);
@@ -360,16 +466,32 @@ namespace Slash.Math.Utils
             return Math.Sign(value);
         }
 
+        /// <summary>
+        ///   Returns the sine of the specified angle in radians.
+        /// </summary>
+        /// <param name="x">Angle to compute the sine of.</param>
+        /// <returns>Sine of the specified angle.</returns>
         public static float Sin(float x)
         {
             return (float)Math.Sin(x);
         }
 
+        /// <summary>
+        ///   Returns the square root of the specified number.
+        /// </summary>
+        /// <param name="x">Number to compute the square root of.</param>
+        /// <returns>Square root of the specified number.</returns>
         public static float Sqrt(float x)
         {
             return (float)Math.Sqrt(x);
         }
 
+        /// <summary>
+        ///   Swaps the two specified values.
+        /// </summary>
+        /// <typeparam name="T">Type of the values to swap.</typeparam>
+        /// <param name="value1">First value to swap.</param>
+        /// <param name="value2">Second value to swap.</param>
         public static void Swap<T>(ref T value1, ref T value2)
         {
             T tmp = value1;
@@ -377,6 +499,11 @@ namespace Slash.Math.Utils
             value2 = tmp;
         }
 
+        /// <summary>
+        ///   Returns the tangent of the specified angle in radians.
+        /// </summary>
+        /// <param name="x">Angle to compute the tangent of.</param>
+        /// <returns>Tangent of the specified angle.</returns>
         public static float Tan(float x)
         {
             return (float)Math.Tan(x);

@@ -12,6 +12,9 @@ namespace Slash.Math.Algebra.Vectors
     using Slash.Math.Utils;
     using Slash.Serialization.Dictionary;
 
+    /// <summary>
+    ///   2-dimensional integer vector.
+    /// </summary>
     [Serializable]
     [DictionarySerializable]
     public class Vector3I
@@ -69,6 +72,9 @@ namespace Slash.Math.Algebra.Vectors
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Constructs a new zero vector.
+        /// </summary>
         public Vector3I()
         {
             this.X = 0;
@@ -292,6 +298,16 @@ namespace Slash.Math.Algebra.Vectors
             return Dot(this, vector);
         }
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.
+        /// </returns>
+        /// <param name="obj">
+        ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
+        /// </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -319,6 +335,13 @@ namespace Slash.Math.Algebra.Vectors
             return MathUtils.Sqrt(this.GetSquareDistance(vector));
         }
 
+        /// <summary>
+        ///   Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             unchecked
@@ -356,6 +379,13 @@ namespace Slash.Math.Algebra.Vectors
                    + MathUtils.Pow2(vector.Z - this.Z);
         }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        ///   A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format(
@@ -369,6 +399,15 @@ namespace Slash.Math.Algebra.Vectors
 
         #region Methods
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="Vector3I" /> is equal to the current <see cref="Vector3I" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="Vector3I" /> is equal to the current <see cref="Vector3I" />; otherwise, false.
+        /// </returns>
+        /// <param name="other">
+        ///   The <see cref="Vector3I" /> to compare with the current <see cref="Vector3I" />.
+        /// </param>
         protected bool Equals(Vector3I other)
         {
             return this.X == other.X && this.Y == other.Y && this.Z == other.Z;
