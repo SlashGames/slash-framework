@@ -104,8 +104,8 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\UnityEvents.cs" />
-    <Compile Include="Events\WindowEvents.cs" />
+    <Compile Include="Source\Events\UnityEvents.cs" />
+    <Compile Include="Source\Events\WindowEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">

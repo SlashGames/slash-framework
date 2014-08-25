@@ -36,8 +36,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\UnityEvents.cs" />
-    <Compile Include="Events\WindowEvents.cs" />
+    <Compile Include="Source\Events\UnityEvents.cs" />
+    <Compile Include="Source\Events\WindowEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
