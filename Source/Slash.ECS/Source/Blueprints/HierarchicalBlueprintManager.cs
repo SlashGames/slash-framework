@@ -18,32 +18,32 @@ namespace Slash.ECS.Blueprints
         #region Fields
 
         /// <summary>
-        ///   Parent managers to consult if a key can't be found in this one.
+        ///   Child managers to consult if a key can't be found in this one.
         /// </summary>
-        private readonly IList<IBlueprintManager> parents;
+        private readonly IList<IBlueprintManager> children;
 
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Constructs a new blueprint manager without any parents.
+        ///   Constructs a new blueprint manager without any children.
         /// </summary>
         public HierarchicalBlueprintManager()
         {
-            this.parents = new List<IBlueprintManager>();
+            this.children = new List<IBlueprintManager>();
         }
 
         /// <summary>
-        ///   Constructs a new blueprint manager with the specified parents.
+        ///   Constructs a new blueprint manager with the specified children.
         /// </summary>
-        /// <param name="parents">Parent managers to consult if a key can't be found.</param>
-        public HierarchicalBlueprintManager(params IBlueprintManager[] parents)
+        /// <param name="children">Child managers to consult if a key can't be found.</param>
+        public HierarchicalBlueprintManager(params IBlueprintManager[] children)
             : this()
         {
-            foreach (IBlueprintManager parent in parents.Where(parent => parent != null))
+            foreach (IBlueprintManager child in children.Where(child => child != null))
             {
-                this.AddParent(parent);
+                this.AddChild(child);
             }
         }
 
@@ -55,15 +55,15 @@ namespace Slash.ECS.Blueprints
         {
             get
             {
-                return this.parents.SelectMany(parent => parent.Blueprints);
+                return this.children.SelectMany(child => child.Blueprints);
             }
         }
 
-        public IEnumerable<IBlueprintManager> Parents
+        public IEnumerable<IBlueprintManager> Children
         {
             get
             {
-                return this.parents;
+                return this.children;
             }
         }
 
@@ -74,19 +74,19 @@ namespace Slash.ECS.Blueprints
         public void AddBlueprint(string blueprintId, Blueprint blueprint)
         {
             // TODO(np): Specify which blueprint manager to add to.
-            this.parents.FirstOrDefault().AddBlueprint(blueprintId, blueprint);
+            this.children.FirstOrDefault().AddBlueprint(blueprintId, blueprint);
         }
 
-        public void AddParent(IBlueprintManager parent)
+        public void AddChild(IBlueprintManager child)
         {
-            this.parents.Add(parent);
+            this.children.Add(child);
         }
 
         public void ChangeBlueprintId(string oldBlueprintId, string newBlueprintId)
         {
-            foreach (var parent in this.parents.Where(parent => parent.ContainsBlueprint(oldBlueprintId)))
+            foreach (var child in this.children.Where(child => child.ContainsBlueprint(oldBlueprintId)))
             {
-                parent.ChangeBlueprintId(oldBlueprintId, newBlueprintId);
+                child.ChangeBlueprintId(oldBlueprintId, newBlueprintId);
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace Slash.ECS.Blueprints
         /// <returns>True if the blueprint was found; otherwise, false.</returns>
         public bool ContainsBlueprint(string blueprintId)
         {
-            return this.parents.Any(parent => parent.ContainsBlueprint(blueprintId));
+            return this.children.Any(child => child.ContainsBlueprint(blueprintId));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Slash.ECS.Blueprints
         {
             Blueprint blueprint = null;
 
-            if (this.parents.Any(parent => parent.TryGetBlueprint(blueprintId, out blueprint)))
+            if (this.children.Any(child => child.TryGetBlueprint(blueprintId, out blueprint)))
             {
                 return blueprint;
             }
@@ -123,10 +123,10 @@ namespace Slash.ECS.Blueprints
         }
 
         /// <summary>
-        ///   Gets the list of components of the specified blueprint and all of its parents.
+        ///   Gets the list of components of the specified blueprint and all of its children.
         /// </summary>
         /// <param name="blueprint">Blueprint to get the inherited components of.</param>
-        /// <returns>list of components of the specified blueprint and all of its parents.</returns>
+        /// <returns>list of components of the specified blueprint and all of its children.</returns>
         public List<Type> GetDerivedBlueprintComponents(Blueprint blueprint)
         {
             return this.GetDerivedBlueprintComponentsRecursively(blueprint, new List<Type>());
@@ -134,12 +134,12 @@ namespace Slash.ECS.Blueprints
 
         public IEnumerator<Blueprint> GetEnumerator()
         {
-            return this.parents.SelectMany(parent => parent).GetEnumerator();
+            return this.children.SelectMany(child => child).GetEnumerator();
         }
 
         public bool RemoveBlueprint(string blueprintId)
         {
-            return this.parents.Any(parent => parent.RemoveBlueprint(blueprintId));
+            return this.children.Any(child => child.RemoveBlueprint(blueprintId));
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace Slash.ECS.Blueprints
         /// <returns>True if the blueprint was found; otherwise, false.</returns>
         public bool TryGetBlueprint(string blueprintId, out Blueprint blueprint)
         {
-            foreach (IBlueprintManager parent in this.parents)
+            foreach (IBlueprintManager child in this.children)
             {
-                if (parent.TryGetBlueprint(blueprintId, out blueprint))
+                if (child.TryGetBlueprint(blueprintId, out blueprint))
                 {
                     return true;
                 }

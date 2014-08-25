@@ -196,7 +196,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
 
                             if (blueprintManager != null)
                             {
-                                hierarchicalBlueprintManager.AddParent(blueprintManager);
+                                hierarchicalBlueprintManager.AddChild(blueprintManager);
                                 ++filesProcessed;
                             }
                         }
