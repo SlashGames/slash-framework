@@ -90,6 +90,13 @@ namespace Slash.ECS.Inspector.Attributes
             return new List<int>();
         }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        ///   A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format(

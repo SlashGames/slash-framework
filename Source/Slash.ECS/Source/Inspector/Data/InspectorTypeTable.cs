@@ -15,7 +15,7 @@ namespace Slash.ECS.Inspector.Data
     using Slash.Reflection.Utils;
 
     /// <summary>
-    ///   Lookup table for designer components. Avoids expensive reflection
+    ///   Lookup table for inspector components. Avoids expensive reflection
     ///   calls at runtime.
     /// </summary>
     public class InspectorTypeTable : IEnumerable<InspectorType>
@@ -29,7 +29,7 @@ namespace Slash.ECS.Inspector.Data
             conditionalInspectors;
 
         /// <summary>
-        ///   Components accessible to the user in the landscape designer.
+        ///   Components accessible to the user in the inspector.
         /// </summary>
         private readonly Dictionary<Type, InspectorType> inspectorTypes;
 
@@ -37,6 +37,9 @@ namespace Slash.ECS.Inspector.Data
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Constructs a new, empty lookup table for inspector components.
+        /// </summary>
         public InspectorTypeTable()
         {
             this.inspectorTypes = new Dictionary<Type, InspectorType>();
@@ -48,6 +51,11 @@ namespace Slash.ECS.Inspector.Data
 
         #region Public Indexers
 
+        /// <summary>
+        ///   Inspector data for the specified type.
+        /// </summary>
+        /// <param name="type">Type to get inspector data for.</param>
+        /// <returns>Inspector type for the specified type.</returns>
         public InspectorType this[Type type]
         {
             get
@@ -106,6 +114,13 @@ namespace Slash.ECS.Inspector.Data
             return condition;
         }
 
+        /// <summary>
+        ///   Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        ///   A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+        /// </returns>
+        /// <filterpriority>1</filterpriority>
         public IEnumerator<InspectorType> GetEnumerator()
         {
             return this.inspectorTypes.Values.GetEnumerator();
@@ -135,9 +150,9 @@ namespace Slash.ECS.Inspector.Data
         }
 
         /// <summary>
-        ///   Types accessible to the user in the landscape designer.
+        ///   Types accessible to the user in the inspector.
         /// </summary>
-        /// <returns>All types accessible to the user in the landscape designer.</returns>
+        /// <returns>All types accessible to the user in the inspector.</returns>
         public IEnumerable<Type> Types()
         {
             return this.inspectorTypes.Keys;

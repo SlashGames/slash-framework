@@ -40,6 +40,10 @@ namespace Slash.ECS.Processes
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Updates this process.
+        /// </summary>
+        /// <param name="dt">Time since last update, in seconds.</param>
         public override void Update(float dt)
         {
             base.Update(dt);

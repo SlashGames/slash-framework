@@ -13,6 +13,9 @@ namespace Slash.ECS.Blueprints
 
     using Slash.ECS.Inspector.Attributes;
 
+    /// <summary>
+    ///   Blueprint manager that consults children for looking up blueprints.
+    /// </summary>
     public class HierarchicalBlueprintManager : IBlueprintManager
     {
         #region Fields
@@ -51,6 +54,9 @@ namespace Slash.ECS.Blueprints
 
         #region Public Properties
 
+        /// <summary>
+        ///   All registered blueprints of all child blueprint managers.
+        /// </summary>
         public IEnumerable<KeyValuePair<string, Blueprint>> Blueprints
         {
             get
@@ -59,6 +65,9 @@ namespace Slash.ECS.Blueprints
             }
         }
 
+        /// <summary>
+        ///   Child blueprint managers consulted when looking up blueprints.
+        /// </summary>
         public IEnumerable<IBlueprintManager> Children
         {
             get
@@ -71,17 +80,32 @@ namespace Slash.ECS.Blueprints
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Adds the blueprint with the specified id to the first child blueprint manager.
+        /// </summary>
+        /// <param name="blueprintId">Id of the new blueprint to add.</param>
+        /// <param name="blueprint">New blueprint to add.</param>
         public void AddBlueprint(string blueprintId, Blueprint blueprint)
         {
             // TODO(np): Specify which blueprint manager to add to.
             this.children.FirstOrDefault().AddBlueprint(blueprintId, blueprint);
         }
 
+        /// <summary>
+        ///   Adds the passed blueprint manager to be consulted for future
+        ///   blueprint lookups.
+        /// </summary>
+        /// <param name="child">New blueprint manager child to add.</param>
         public void AddChild(IBlueprintManager child)
         {
             this.children.Add(child);
         }
 
+        /// <summary>
+        ///   Changes the id under which a blueprint is stored.
+        /// </summary>
+        /// <param name="oldBlueprintId">Old blueprint id.</param>
+        /// <param name="newBlueprintId">New blueprint id.</param>
         public void ChangeBlueprintId(string oldBlueprintId, string newBlueprintId)
         {
             foreach (var child in this.children.Where(child => child.ContainsBlueprint(oldBlueprintId)))
@@ -132,11 +156,23 @@ namespace Slash.ECS.Blueprints
             return this.GetDerivedBlueprintComponentsRecursively(blueprint, new List<Type>());
         }
 
+        /// <summary>
+        ///   Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        ///   A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+        /// </returns>
+        /// <filterpriority>1</filterpriority>
         public IEnumerator<Blueprint> GetEnumerator()
         {
             return this.children.SelectMany(child => child).GetEnumerator();
         }
 
+        /// <summary>
+        ///   Removes the blueprint with the specified id. Returns whether the blueprint was removed.
+        /// </summary>
+        /// <param name="blueprintId">Id of blueprint to search for.</param>
+        /// <returns>True if the blueprint was removed; otherwise, false.</returns>
         public bool RemoveBlueprint(string blueprintId)
         {
             return this.children.Any(child => child.RemoveBlueprint(blueprintId));
