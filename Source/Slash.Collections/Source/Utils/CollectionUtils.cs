@@ -12,7 +12,7 @@ namespace Slash.Collections.Utils
     using System.Text;
 
     /// <summary>
-    ///   Utility methods and LINQ extensions for enumerables and collections.
+    ///   Utility methods for enumerables and collections.
     /// </summary>
     public static class CollectionUtils
     {
