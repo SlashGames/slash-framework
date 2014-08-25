@@ -154,7 +154,7 @@ namespace Slash.Math.Algebra.Vectors
         {
             get
             {
-                return MathF.Sqrt(this.SquareMagnitude);
+                return MathUtils.Sqrt(this.SquareMagnitude);
             }
         }
 
@@ -316,7 +316,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Distance between this and the passed vector. </returns>
         public float GetDistance(Vector3I vector)
         {
-            return MathF.Sqrt(this.GetSquareDistance(vector));
+            return MathUtils.Sqrt(this.GetSquareDistance(vector));
         }
 
         public override int GetHashCode()
@@ -352,7 +352,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Square distance between this and the passed vector. </returns>
         public int GetSquareDistance(Vector3I vector)
         {
-            return MathI.Pow2(vector.X - this.X) + MathI.Pow2(vector.Y - this.Y) + MathI.Pow2(vector.Z - this.Z);
+            return MathUtils.Pow2(vector.X - this.X) + MathUtils.Pow2(vector.Y - this.Y) + MathUtils.Pow2(vector.Z - this.Z);
         }
 
         public override string ToString()

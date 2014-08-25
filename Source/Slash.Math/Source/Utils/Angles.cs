@@ -20,12 +20,12 @@ namespace Slash.Math.Utils
         /// <summary>
         ///   Factor to convert a degree angle to a radian angle.
         /// </summary>
-        public const float Deg2RadFactor = MathF.Pi / 180.0f;
+        public const float Deg2RadFactor = MathUtils.Pi / 180.0f;
 
         /// <summary>
         ///   Factor to convert a radian angle to a degree angle.
         /// </summary>
-        public const float Rad2DegFactor = 180.0f / MathF.Pi;
+        public const float Rad2DegFactor = 180.0f / MathUtils.Pi;
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace Slash.Math.Utils
             angleA = ClampAngle(angleA);
             angleB = ClampAngle(angleB);
             float diff = angleB - angleA;
-            float diff2 = diff < 0 ? diff + MathF.TwoPi : diff - MathF.TwoPi;
+            float diff2 = diff < 0 ? diff + MathUtils.TwoPi : diff - MathUtils.TwoPi;
             return ClampAngle(Math.Min(diff2, diff));
         }
 
@@ -57,7 +57,7 @@ namespace Slash.Math.Utils
             angleA = ClampAngle(angleA);
             angleB = ClampAngle(angleB);
             float diff = angleB - angleA;
-            float diff2 = diff < 0 ? diff + MathF.TwoPi : diff - MathF.TwoPi;
+            float diff2 = diff < 0 ? diff + MathUtils.TwoPi : diff - MathUtils.TwoPi;
             return ClampAnglePositive(Math.Min(diff2, diff));
         }
 
@@ -68,14 +68,14 @@ namespace Slash.Math.Utils
         /// <returns> Clamped angle (in radians). </returns>
         public static float ClampAngle(float angle)
         {
-            angle = angle % MathF.TwoPi;
-            while (angle < -MathF.Pi)
+            angle = angle % MathUtils.TwoPi;
+            while (angle < -MathUtils.Pi)
             {
-                angle += MathF.TwoPi;
+                angle += MathUtils.TwoPi;
             }
-            while (angle > MathF.Pi)
+            while (angle > MathUtils.Pi)
             {
-                angle -= MathF.TwoPi;
+                angle -= MathUtils.TwoPi;
             }
             return angle;
         }
@@ -87,14 +87,14 @@ namespace Slash.Math.Utils
         /// <returns> Clamped angle (in radians). </returns>
         public static float ClampAnglePositive(float angle)
         {
-            angle = angle % MathF.TwoPi;
+            angle = angle % MathUtils.TwoPi;
             while (angle < 0)
             {
-                angle += MathF.TwoPi;
+                angle += MathUtils.TwoPi;
             }
-            while (angle > MathF.TwoPi)
+            while (angle > MathUtils.TwoPi)
             {
-                angle -= MathF.TwoPi;
+                angle -= MathUtils.TwoPi;
             }
             return angle;
         }
@@ -117,12 +117,12 @@ namespace Slash.Math.Utils
                 return to;
             }
 
-            Vector2F fromVector = new Vector2F(MathF.Cos(from), MathF.Sin(from));
-            Vector2F toVector = new Vector2F(MathF.Cos(to), MathF.Sin(to));
+            Vector2F fromVector = new Vector2F(MathUtils.Cos(from), MathUtils.Sin(from));
+            Vector2F toVector = new Vector2F(MathUtils.Cos(to), MathUtils.Sin(to));
 
             Vector2F currentVector = Vector2F.Slerp(fromVector, toVector, step);
 
-            return MathF.Atan2(currentVector.Y, currentVector.X);
+            return MathUtils.Atan2(currentVector.Y, currentVector.X);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Slash.Math.Utils
         /// <returns> Converted angle (in radians). </returns>
         public static float Deg2Rad(float deg)
         {
-            return (deg * MathF.Pi) / 180.0f;
+            return (deg * MathUtils.Pi) / 180.0f;
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Slash.Math.Utils
         /// <returns> Converted angle (in degree). </returns>
         public static float Rad2Deg(float rad)
         {
-            return (rad * 180.0f) / MathF.Pi;
+            return (rad * 180.0f) / MathUtils.Pi;
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace Slash.Math.Utils
                 return to;
             }
 
-            float sinTheta = MathF.Sin(angleDiff);
-            return MathF.Sin((1 - step) * angleDiff) / sinTheta * from + MathF.Sin(step * angleDiff) / sinTheta * to;
+            float sinTheta = MathUtils.Sin(angleDiff);
+            return MathUtils.Sin((1 - step) * angleDiff) / sinTheta * from + MathUtils.Sin(step * angleDiff) / sinTheta * to;
         }
 
         #endregion

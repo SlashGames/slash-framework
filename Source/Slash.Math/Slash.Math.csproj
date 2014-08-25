@@ -56,8 +56,6 @@
     <Compile Include="Source\Geometry\Rectangles\RectangleI.cs" />
     <Compile Include="Source\Geometry\Rectangles\RectangleF.cs" />
     <Compile Include="Source\Utils\Angles.cs" />
-    <Compile Include="Source\Utils\MathI.cs" />
-    <Compile Include="Source\Utils\MathF.cs" />
     <Compile Include="Source\Utils\MathUtils.cs">
       <SubType>Code</SubType>
     </Compile>
