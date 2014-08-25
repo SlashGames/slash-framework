@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.Editor.Common.Inspectors.Core
+namespace Slash.Unity.Editor.Common.Inspectors.ECS
 {
     using System;
     using System.Globalization;
