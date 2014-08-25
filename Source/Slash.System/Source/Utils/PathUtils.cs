@@ -8,6 +8,9 @@ namespace Slash.SystemExt.Utils
 {
     using System;
 
+    /// <summary>
+    ///   Utility methods for processing URIs.
+    /// </summary>
     public class PathUtils
     {
         #region Public Methods and Operators

@@ -16,24 +16,30 @@ namespace Slash.Serialization.Dictionary
     using Slash.Reflection.Utils;
 
     /// <summary>
-    ///   Dictionary serializer for arbitrary stacks.
+    ///   Converts stacks between dictionary representations and back.
     /// </summary>
     public class StackDictionarySerializer : IDictionarySerializer
     {
         #region Constants
 
-        private const string DATA_COUNT = "Count";
+        private const string DataCount = "Count";
 
-        private const string DATA_TYPE = "Type";
+        private const string DataType = "Type";
 
         #endregion
 
         #region Public Methods and Operators
 
-        public object deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
+        /// <summary>
+        ///   Deserializes an object from a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="data">Dictionary which contains the object data.</param>
+        /// <returns>Deserialized object.</returns>
+        public object Deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
         {
-            int count = Convert.ToInt32(data[DATA_COUNT]);
-            string itemTypeString = (string)data[DATA_TYPE];
+            int count = Convert.ToInt32(data[DataCount]);
+            string itemTypeString = (string)data[DataType];
             Type itemType = ReflectionUtils.FindType(itemTypeString);
             if (itemType == null)
             {
@@ -69,15 +75,21 @@ namespace Slash.Serialization.Dictionary
             return stack;
         }
 
-        public Dictionary<string, object> serialize(DictionarySerializationContext context, object obj)
+        /// <summary>
+        ///   Serializes an object to a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns>Dictionary which contains object data.</returns>
+        public Dictionary<string, object> Serialize(DictionarySerializationContext context, object obj)
         {
             ICollection collection = (ICollection)obj;
             Type itemType = collection.GetType().GetGenericArguments()[0];
 
             Dictionary<string, object> data = new Dictionary<string, object>
                 {
-                    { DATA_COUNT, collection.Count },
-                    { DATA_TYPE, itemType.FullName }
+                    { DataCount, collection.Count },
+                    { DataType, itemType.FullName }
                 };
 
             bool typeSealed = itemType.IsSealed;
@@ -97,22 +109,28 @@ namespace Slash.Serialization.Dictionary
     }
 
     /// <summary>
-    ///   Dictionary serializer for arbitrary stacks.
+    ///   Converts stacks between dictionary representations and back.
     /// </summary>
     /// <typeparam name="T">Type of the stack elements.</typeparam>
     public class StackDictionarySerializer<T> : IDictionarySerializer
     {
         #region Constants
 
-        private const string DATA_COUNT = "Count";
+        private const string DataCount = "Count";
 
         #endregion
 
         #region Public Methods and Operators
 
-        public object deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
+        /// <summary>
+        ///   Deserializes an object from a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="data">Dictionary which contains the object data.</param>
+        /// <returns>Deserialized object.</returns>
+        public object Deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
         {
-            int count = Convert.ToInt32(data[DATA_COUNT]);
+            int count = Convert.ToInt32(data[DataCount]);
             Stack<T> stack = new Stack<T>(count);
 
             bool typeSealed = typeof(T).IsSealed;
@@ -143,11 +161,17 @@ namespace Slash.Serialization.Dictionary
             return stack;
         }
 
-        public Dictionary<string, object> serialize(DictionarySerializationContext context, object obj)
+        /// <summary>
+        ///   Serializes an object to a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns>Dictionary which contains object data.</returns>
+        public Dictionary<string, object> Serialize(DictionarySerializationContext context, object obj)
         {
             Stack<T> stack = (Stack<T>)obj;
 
-            Dictionary<string, object> data = new Dictionary<string, object> { { DATA_COUNT, stack.Count } };
+            Dictionary<string, object> data = new Dictionary<string, object> { { DataCount, stack.Count } };
 
             bool typeSealed = typeof(T).IsSealed;
 
