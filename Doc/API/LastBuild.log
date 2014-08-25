@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder" version="2014.5.31.0" projectFile="D:\Dev\SCM\SlashFramework\Source\Slash.Framework.shfbproj" started="8/25/2014 6:16:27 PM">
+<shfbBuild product="Sandcastle Help File Builder" version="2014.5.31.0" projectFile="D:\Dev\SCM\SlashFramework\Source\Slash.Framework.shfbproj" started="8/25/2014 6:43:28 PM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\Sandcastle Help File Builder\&#39;
@@ -51,16 +51,16 @@ Copying XML comments files
 <buildStep step="GenerateSharedContent">
 Generating shared content files (en-US, English (United States))...
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
-</plugIn>    Last step completed in 00:00:00.0740
+</plugIn>    Last step completed in 00:00:00.0030
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00.0150
+    Last step completed in 00:00:00.0070
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/25/2014 6:16:29 PM.
+Build started 8/25/2014 6:43:28 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateRefInfo.proj&quot; on node 1 (default targets).
 PrepareForBuild:
   Creating directory &quot;obj\Debug\&quot;.
@@ -69,7 +69,7 @@ GenerateRefInfo:
   Copyright &#184; 2006-2014, Microsoft Corporation, All Rights Reserved.
   Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
   Loaded 8 assemblies for reflection and 1 dependency assemblies.
-  Wrote information on 56 namespaces, 176 types, and 1185 members
+  Wrote information on 55 namespaces, 177 types, and 1185 members
   Copying file from &quot;reflection.org&quot; to &quot;reflection.all&quot;.
   XslTransform (v2014.5.31.0)
   Copyright &#184; 2006-2014, Microsoft Corporation, All Rights Reserved.
@@ -79,13 +79,13 @@ Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateRe
 
 Build succeeded.
 
-Time Elapsed 00:00:01.84
-    Last step completed in 00:00:02.0704
+Time Elapsed 00:00:01.30
+    Last step completed in 00:00:01.4680
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/25/2014 6:16:31 PM.
+Build started 8/25/2014 6:43:30 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\TransformManifest.proj&quot; on node 1 (default targets).
 TransformManifest:
   XslTransform (v2014.5.31.0)
@@ -107,15 +107,16 @@ TransformManifest:
     Unique name M_Slash_Collections_AttributeTables_AttributeTable_Add_2 generated for M:Slash.Collections.AttributeTables.AttributeTable.Add(System.Object,System.Object)
     Unique name M_Slash_Collections_AttributeTables_AttributeTable_Equals_1 generated for M:Slash.Collections.AttributeTables.AttributeTable.Equals(System.Object)
     Unique name M_Slash_Collections_AttributeTables_HierarchicalAttributeTable__ctor_1 generated for M:Slash.Collections.AttributeTables.HierarchicalAttributeTable.#ctor(Slash.Collections.AttributeTables.IAttributeTable[])
+    Unique name M_Slash_Collections_Extensions_DictionaryExtensionMethods_GetValueOrDefault__2_1 generated for M:Slash.Collections.Extensions.DictionaryExtensionMethods.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)
+    Unique name M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomItemOrDefault__1_1 generated for M:Slash.Collections.Extensions.EnumerableExtensionMethods.RandomItemOrDefault``1(System.Collections.Generic.IEnumerable{``0},``0)
     Unique name M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomSelect__1_1 generated for M:Slash.Collections.Extensions.EnumerableExtensionMethods.RandomSelect``1(System.Collections.Generic.IEnumerable{``0},System.Int32)
     Unique name M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomSelect__1_2 generated for M:Slash.Collections.Extensions.EnumerableExtensionMethods.RandomSelect``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Action{``0})
-    Unique name M_Slash_Collections_Utils_CollectionUtils_GetValueOrDefault__2_1 generated for M:Slash.Collections.Utils.CollectionUtils.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)
-    Unique name M_Slash_Collections_Utils_CollectionUtils_RandomItemOrDefault__1_1 generated for M:Slash.Collections.Utils.CollectionUtils.RandomItemOrDefault``1(System.Collections.Generic.IEnumerable{``0},``0)
+    Unique name M_Slash_Collections_Extensions_ListExtensionMethods_ToRandomOrder__1_1 generated for M:Slash.Collections.Extensions.ListExtensionMethods.ToRandomOrder``1(System.Collections.Generic.IList{``0},System.Random)
     Unique name M_Slash_Collections_Utils_CollectionUtils_SequenceEqual__1_1 generated for M:Slash.Collections.Utils.CollectionUtils.SequenceEqual``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})
-    Unique name M_Slash_Collections_Utils_CollectionUtils_ToRandomOrder__1_1 generated for M:Slash.Collections.Utils.CollectionUtils.ToRandomOrder``1(System.Collections.Generic.IList{``0},System.Random)
     Unique name M_Slash_ECS_Game_StartGame_1 generated for M:Slash.ECS.Game.StartGame(Slash.Collections.AttributeTables.IAttributeTable)
     Unique name M_Slash_ECS_Blueprints_Blueprint__ctor_1 generated for M:Slash.ECS.Blueprints.Blueprint.#ctor(Slash.ECS.Blueprints.Blueprint)
     Unique name M_Slash_ECS_Blueprints_BlueprintManager__ctor_1 generated for M:Slash.ECS.Blueprints.BlueprintManager.#ctor(Slash.ECS.Blueprints.BlueprintManager)
+    Unique name M_Slash_ECS_Blueprints_GameBlueprintUtils_CreateEntity_1 generated for M:Slash.ECS.Blueprints.GameBlueprintUtils.CreateEntity(Slash.ECS.Game,System.String,Slash.Collections.AttributeTables.AttributeTable)
     Unique name M_Slash_ECS_Blueprints_HierarchicalBlueprintManager__ctor_1 generated for M:Slash.ECS.Blueprints.HierarchicalBlueprintManager.#ctor(Slash.ECS.Blueprints.IBlueprintManager[])
     Unique name M_Slash_ECS_Components_ComponentManager_RemoveComponent_1 generated for M:Slash.ECS.Components.ComponentManager.RemoveComponent(System.Int32,Slash.ECS.Components.IEntityComponent@)
     Unique name M_Slash_ECS_Components_EntityManager_AddComponent_1 generated for M:Slash.ECS.Components.EntityManager.AddComponent(System.Int32,Slash.ECS.Components.IEntityComponent,System.Boolean)
@@ -139,7 +140,6 @@ TransformManifest:
     Unique name M_Slash_ECS_Inspector_Attributes_InspectorEnumAttribute__ctor_1 generated for M:Slash.ECS.Inspector.Attributes.InspectorEnumAttribute.#ctor(System.String,System.Type)
     Unique name M_Slash_ECS_Inspector_Data_InspectorType_GetInspectorType_1 generated for M:Slash.ECS.Inspector.Data.InspectorType.GetInspectorType(System.Type,System.Collections.Generic.Dictionary{Slash.ECS.Inspector.Attributes.InspectorPropertyAttribute,Slash.ECS.Inspector.Attributes.InspectorConditionalPropertyAttribute}@)
     Unique name M_Slash_ECS_Inspector_Utils_InspectorUtils_InitFromAttributeTable_1 generated for M:Slash.ECS.Inspector.Utils.InspectorUtils.InitFromAttributeTable(Slash.ECS.Game,System.Object,Slash.Collections.AttributeTables.IAttributeTable)
-    Unique name M_Slash_ECS_Utils_GameBlueprintUtils_CreateEntity_1 generated for M:Slash.ECS.Utils.GameBlueprintUtils.CreateEntity(Slash.ECS.Game,System.String,Slash.Collections.AttributeTables.AttributeTable)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2F__ctor_1 generated for M:Slash.Math.Algebra.Vectors.Vector2F.#ctor(Slash.Math.Algebra.Vectors.Vector2F)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2F__ctor_2 generated for M:Slash.Math.Algebra.Vectors.Vector2F.#ctor(System.Single,System.Single)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2F__ctor_3 generated for M:Slash.Math.Algebra.Vectors.Vector2F.#ctor(System.Single[])
@@ -237,26 +237,26 @@ Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\TransformM
 
 Build succeeded.
 
-Time Elapsed 00:00:02.40
-    Last step completed in 00:00:02.7348
+Time Elapsed 00:00:02.10
+    Last step completed in 00:00:02.4216
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
-    Last step completed in 00:00:00.1261
+    Last step completed in 00:00:00.1141
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
 No additional content to copy
-    Last step completed in 00:00:00.0120
+    Last step completed in 00:00:00.0050
 </buildStep>
 <buildStep step="MergeTablesOfContents">
 Merging conceptual and additional tables of contents...
-    Last step completed in 00:00:00.0030
+    Last step completed in 00:00:00.0020
 </buildStep>
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/25/2014 6:16:34 PM.
+Build started 8/25/2014 6:43:32 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
 GenerateIntermediateTOC:
   XslTransform (v2014.5.31.0)
@@ -269,22 +269,22 @@ Build succeeded.
 
 Time Elapsed 00:00:00.28
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00.4573
+    Last step completed in 00:00:00.4553
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
     sandcastle.config
-    Last step completed in 00:00:00.3292
+    Last step completed in 00:00:00.2472
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
 D:\Dev\SCM\SlashFramework\Doc\API\Working\sandcastle.config
-    Last step completed in 00:00:00.0400
+    Last step completed in 00:00:00.0540
 </buildStep>
 <buildStep step="BuildReferenceTopics">
 Building reference help topics...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/25/2014 6:16:35 PM.
+Build started 8/25/2014 6:43:33 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj&quot; on node 1 (default targets).
 BuildReferenceTopics:
   BuildAssembler (v2014.5.31.0)
@@ -292,36 +292,18 @@ BuildReferenceTopics:
   Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
   Loading configuration...
   Processing topics...
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Collections.AttributeTables] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Collections.Extensions] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Collections.ObjectModel] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Collections.Utils] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Utils.CollectionUtils.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``1})] Missing &lt;typeparam name=&quot;TKey&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Utils.CollectionUtils.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``1})] Missing &lt;typeparam name=&quot;TValue&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Utils.CollectionUtils.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)] Missing &lt;typeparam name=&quot;TKey&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Utils.CollectionUtils.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)] Missing &lt;typeparam name=&quot;TValue&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Blueprints] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Extensions.DictionaryExtensionMethods.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``1})] Missing &lt;typeparam name=&quot;TKey&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Extensions.DictionaryExtensionMethods.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``1})] Missing &lt;typeparam name=&quot;TValue&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Extensions.DictionaryExtensionMethods.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)] Missing &lt;typeparam name=&quot;TKey&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
+BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Extensions.DictionaryExtensionMethods.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)] Missing &lt;typeparam name=&quot;TValue&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Blueprints.BlueprintUtils.TryResolveParent(Slash.ECS.Blueprints.Blueprint,Slash.ECS.Blueprints.IBlueprintManager)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Components] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Configurations] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Events] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Inspector.Attributes] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Inspector.Attributes.InspectorTypeAttribute.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Inspector.Data] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Inspector.Data.InspectorType.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Inspector.Utils] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Inspector.Validation] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Inspector.Validation.ValidationError.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Logging] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Logging.GameLogger.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Processes] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Processes.GameProcess.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Processes.ProcessManager.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Systems] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Systems.GameSystem.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.ECS.Utils] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Math.Algebra.Vectors] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Add(System.Single,System.Single)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Area(Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F)] Missing &lt;param name=&quot;a&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Area(Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F)] Missing &lt;param name=&quot;b&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -343,21 +325,15 @@ BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.V
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.VectorExtensions.ToVector2F(Slash.Math.Algebra.Vectors.Vector3F)] Missing &lt;param name=&quot;vector&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.VectorExtensions.ToVector3F(Slash.Math.Algebra.Vectors.Vector2F,System.Single)] Missing &lt;param name=&quot;vector&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.VectorExtensions.ToVector3F(Slash.Math.Algebra.Vectors.Vector2F,System.Single)] Missing &lt;param name=&quot;z&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Math.Geometry.Rectangles] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Math.Utils] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Clamp``1(``0,``0,``0)] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Exp(System.Single)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Exp(System.Single)] Missing &lt;param name=&quot;x&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.IsWithinBounds``1(``0,``0,``0)] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Max``1(``0,``0)] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Min``1(``0,``0)] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Reflection.Utils] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Reflection.Utils.AssemblyUtils.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Reflection.Utils.ReflectionUtils.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Serialization] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.SerializeMemberAttribute.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Serialization.Binary] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Serialization.Dictionary] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictionary.DictionaryDictionarySerializer.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictionary.DictionarySerializableAttribute.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictionary.ListDictionarySerializer.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -365,11 +341,7 @@ BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictiona
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictionary.StackDictionarySerializer.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictionary.StackDictionarySerializer`1.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictionary.ValueWithTypeDictionarySerializer.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Serialization.Utils] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Utils.SerializationUtils.ReadXml(System.Xml.XmlReader,System.Type,System.String)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.Serialization.Xml] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.SystemExt.Exceptions] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [N:Slash.SystemExt.Utils] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.SystemExt.Utils.PathUtils.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [N:Slash.Unity.Common.Animations] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [T:Slash.Unity.Common.Animations.AnimationExtensions] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -10752,28 +10724,22 @@ BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.U
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Windows.OpenSceneWindow.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Windows.OpenSceneWindow.OpenScene] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [G:Slash.Unity] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [G:Slash.SystemExt] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [G:Slash.Serialization] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [G:Slash.Math] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [G:Slash.ECS] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [G:Slash.Collections] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-  Processed 1794 topic(s)
-  10465 warning(s)
+  Processed 1795 topic(s)
+  10432 warning(s)
   CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 11 of 15.
   CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 9 of 30.
-  ResolveReferenceLinksComponent: New MSDN content ID cache size: 141 entries
 Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj&quot; (default targets).
 
 Build succeeded.
 
-Time Elapsed 00:00:41.90
-    Last step completed in 00:00:42.3361
+Time Elapsed 00:00:39.54
+    Last step completed in 00:00:39.7444
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
 
 Clearing any prior web output
-    Last step completed in 00:00:00.4913
+    Last step completed in 00:00:00.5644
 </buildStep>
 <buildStep step="ExtractingHtmlInfo">
 Extracting HTML info for HTML Help 1 and/or website...
@@ -10785,11 +10751,11 @@ E-Mail: Eric@EWoodruff.us
 Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
 
 Processing website files in D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website
-Processed 1794 HTML files
+Processed 1795 HTML files
 Sorting keywords and generating See Also indices
 Saving website keyword index to D:\Dev\SCM\SlashFramework\Doc\API\Working\WebKI.xml
 Saving website table of contents to D:\Dev\SCM\SlashFramework\Doc\API\Working\WebTOC.xml
-    Last step completed in 00:00:02.5657
+    Last step completed in 00:00:00.9726
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -10869,18 +10835,18 @@ C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\We
 C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocOpen.gif -&gt; D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website\icons\TocOpen.gif
 C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website\scripts\branding-Website.js
 C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website\scripts\jquery-1.11.0.min.js
-    Last step completed in 00:00:00.3642
+    Last step completed in 00:00:02.9009
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating website table of contents file...
-    Last step completed in 00:00:00.0050
+    Last step completed in 00:00:00.0020
 </buildStep>
 <buildStep step="GenerateFullTextIndex">
 Generating full-text index for the website...
 
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
 Adding lightweight search and TOC elements to each topic...
-</plugIn>    Last step completed in 00:00:10.3499
+</plugIn>    Last step completed in 00:00:07.8022
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
@@ -10909,16 +10875,16 @@ Copied 2100 files
 Copied 2200 files
 Copied 2300 files
 Copied 2400 files
-Copied 2457 files for the website content
-    Last step completed in 00:00:23.0803
+Copied 2459 files for the website content
+    Last step completed in 00:00:20.0153
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:00.5584
+    Last step completed in 00:00:00.4033
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 08/25/2014 06:17 PM.  Total time: 00:01:26.9397
+Build completed successfully at 08/25/2014 06:44 PM.  Total time: 00:01:17.6685
 
 </buildStep>
 </shfbBuild>

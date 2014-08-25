@@ -411,21 +411,12 @@
     <HelpKINode Title="about CollectionUtils class" Url="html/T_Slash_Collections_Utils_CollectionUtils.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Collections_Utils_CollectionUtils.htm" />
   </HelpKINode>
-  <HelpKINode Title="CollectionUtils.ContainsAll(Of T) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_ContainsAll__1.htm" />
-  <HelpKINode Title="CollectionUtils.ContainsAll&lt;T&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_ContainsAll__1.htm" />
   <HelpKINode Title="CollectionUtils.DictionaryEqual(Of TKey, TValue) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_DictionaryEqual__2.htm" />
   <HelpKINode Title="CollectionUtils.DictionaryEqual&lt;TKey, TValue&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_DictionaryEqual__2.htm" />
-  <HelpKINode Title="CollectionUtils.GetValueOrDefault method" Url="html/Overload_Slash_Collections_Utils_CollectionUtils_GetValueOrDefault.htm" />
   <HelpKINode Title="CollectionUtils.ListEqual method" Url="html/M_Slash_Collections_Utils_CollectionUtils_ListEqual.htm" />
-  <HelpKINode Title="CollectionUtils.RandomItem(Of T) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_RandomItem__1.htm" />
-  <HelpKINode Title="CollectionUtils.RandomItem&lt;T&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_RandomItem__1.htm" />
-  <HelpKINode Title="CollectionUtils.RandomItemOrDefault method" Url="html/Overload_Slash_Collections_Utils_CollectionUtils_RandomItemOrDefault.htm" />
-  <HelpKINode Title="CollectionUtils.RandomWeightedItem(Of T) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_RandomWeightedItem__1.htm" />
-  <HelpKINode Title="CollectionUtils.RandomWeightedItem&lt;T&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_RandomWeightedItem__1.htm" />
   <HelpKINode Title="CollectionUtils.SequenceEqual method" Url="html/Overload_Slash_Collections_Utils_CollectionUtils_SequenceEqual.htm" />
   <HelpKINode Title="CollectionUtils.Swap(Of T) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_Swap__1.htm" />
   <HelpKINode Title="CollectionUtils.Swap&lt;T&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_Swap__1.htm" />
-  <HelpKINode Title="CollectionUtils.ToRandomOrder method" Url="html/Overload_Slash_Collections_Utils_CollectionUtils_ToRandomOrder.htm" />
   <HelpKINode Title="CollectionUtils.ToString method" Url="html/M_Slash_Collections_Utils_CollectionUtils_ToString.htm" />
   <HelpKINode Title="Collinear method">
     <HelpKINode Title="Vector2F.Collinear Method " Url="html/Overload_Slash_Math_Algebra_Vectors_Vector2F_Collinear.htm" />
@@ -484,8 +475,8 @@
     <HelpKINode Title="RectangleF.Contains Method " Url="html/Overload_Slash_Math_Geometry_Rectangles_RectangleF_Contains.htm" />
     <HelpKINode Title="RectangleI.Contains Method " Url="html/Overload_Slash_Math_Geometry_Rectangles_RectangleI_Contains.htm" />
   </HelpKINode>
-  <HelpKINode Title="ContainsAll(Of T) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_ContainsAll__1.htm" />
-  <HelpKINode Title="ContainsAll&lt;T&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_ContainsAll__1.htm" />
+  <HelpKINode Title="ContainsAll(Of T) method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_ContainsAll__1.htm" />
+  <HelpKINode Title="ContainsAll&lt;T&gt; method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_ContainsAll__1.htm" />
   <HelpKINode Title="ContainsBlueprint method">
     <HelpKINode Title="BlueprintManager.ContainsBlueprint Method " Url="html/M_Slash_ECS_Blueprints_BlueprintManager_ContainsBlueprint.htm" />
     <HelpKINode Title="HierarchicalBlueprintManager.ContainsBlueprint Method " Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_ContainsBlueprint.htm" />
@@ -518,10 +509,10 @@
     <HelpKINode Title="ReadOnlyCollection(T).Count Property " Url="html/P_Slash_Collections_ObjectModel_ReadOnlyCollection_1_Count.htm" />
   </HelpKINode>
   <HelpKINode Title="CreateDelegate method" Url="html/M_Slash_Reflection_Utils_DelegateUtils_CreateDelegate.htm" />
-  <HelpKINode Title="CreateEntities method" Url="html/M_Slash_ECS_Utils_GameBlueprintUtils_CreateEntities.htm" />
+  <HelpKINode Title="CreateEntities method" Url="html/M_Slash_ECS_Blueprints_GameBlueprintUtils_CreateEntities.htm" />
   <HelpKINode Title="CreateEntity method">
     <HelpKINode Title="EntityManager.CreateEntity Method " Url="html/Overload_Slash_ECS_Components_EntityManager_CreateEntity.htm" />
-    <HelpKINode Title="GameBlueprintUtils.CreateEntity Method " Url="html/Overload_Slash_ECS_Utils_GameBlueprintUtils_CreateEntity.htm" />
+    <HelpKINode Title="GameBlueprintUtils.CreateEntity Method " Url="html/Overload_Slash_ECS_Blueprints_GameBlueprintUtils_CreateEntity.htm" />
   </HelpKINode>
   <HelpKINode Title="CreateFromAttributeTable(Of T) method" Url="html/M_Slash_ECS_Inspector_Utils_InspectorUtils_CreateFromAttributeTable__1.htm" />
   <HelpKINode Title="CreateFromAttributeTable&lt;T&gt; method" Url="html/M_Slash_ECS_Inspector_Utils_InspectorUtils_CreateFromAttributeTable__1.htm" />
@@ -585,15 +576,15 @@
     <HelpKINode Title="SimpleValueEditorContext.Description Property " Url="html/P_Slash_Unity_Common_GUI_ValueEditors_SimpleValueEditorContext_Description.htm" />
   </HelpKINode>
   <HelpKINode Title="Deserialize method">
+    <HelpKINode Title="AttributeTable.Deserialize Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_Deserialize.htm" />
     <HelpKINode Title="BinaryDeserializer.Deserialize Method " Url="html/Overload_Slash_Serialization_Binary_BinaryDeserializer_Deserialize.htm" />
+    <HelpKINode Title="Blueprint.Deserialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Deserialize.htm" />
+    <HelpKINode Title="DictionaryDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_Deserialize.htm" />
     <HelpKINode Title="EntityConfiguration.Deserialize Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_Deserialize.htm" />
     <HelpKINode Title="IBinarySerializable.Deserialize Method " Url="html/M_Slash_Serialization_Binary_IBinarySerializable_Deserialize.htm" />
     <HelpKINode Title="IDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_Deserialize.htm" />
     <HelpKINode Title="ListDictionarySerializer(T).Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_Deserialize.htm" />
     <HelpKINode Title="ListDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_Deserialize.htm" />
-    <HelpKINode Title="DictionaryDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_Deserialize.htm" />
-    <HelpKINode Title="AttributeTable.Deserialize Method " Url="html/M_Slash_Collections_AttributeTables_AttributeTable_Deserialize.htm" />
-    <HelpKINode Title="Blueprint.Deserialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Deserialize.htm" />
     <HelpKINode Title="StackDictionarySerializer(T).Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_Deserialize.htm" />
     <HelpKINode Title="StackDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_Deserialize.htm" />
     <HelpKINode Title="ValueWithTypeDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_Deserialize.htm" />
@@ -613,6 +604,12 @@
   <HelpKINode Title="DictionaryDictionarySerializer.Serialize method" Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_Serialize.htm" />
   <HelpKINode Title="DictionaryEqual(Of TKey, TValue) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_DictionaryEqual__2.htm" />
   <HelpKINode Title="DictionaryEqual&lt;TKey, TValue&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_DictionaryEqual__2.htm" />
+  <HelpKINode Title="DictionaryExtensionMethods class">
+    <HelpKINode Title="DictionaryExtensionMethods Class" Url="html/T_Slash_Collections_Extensions_DictionaryExtensionMethods.htm" />
+    <HelpKINode Title="about DictionaryExtensionMethods class" Url="html/T_Slash_Collections_Extensions_DictionaryExtensionMethods.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Collections_Extensions_DictionaryExtensionMethods.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DictionaryExtensionMethods.GetValueOrDefault method" Url="html/Overload_Slash_Collections_Extensions_DictionaryExtensionMethods_GetValueOrDefault.htm" />
   <HelpKINode Title="DictionarySerializableAttribute class">
     <HelpKINode Title="DictionarySerializableAttribute Class" Url="html/T_Slash_Serialization_Dictionary_DictionarySerializableAttribute.htm" />
     <HelpKINode Title="about DictionarySerializableAttribute class" Url="html/T_Slash_Serialization_Dictionary_DictionarySerializableAttribute.htm" />
@@ -830,8 +827,15 @@
     <HelpKINode Title="about EnumerableExtensionMethods class" Url="html/T_Slash_Collections_Extensions_EnumerableExtensionMethods.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Collections_Extensions_EnumerableExtensionMethods.htm" />
   </HelpKINode>
+  <HelpKINode Title="EnumerableExtensionMethods.ContainsAll(Of T) method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_ContainsAll__1.htm" />
+  <HelpKINode Title="EnumerableExtensionMethods.ContainsAll&lt;T&gt; method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_ContainsAll__1.htm" />
   <HelpKINode Title="EnumerableExtensionMethods.IsNullOrEmpty method" Url="html/Overload_Slash_Collections_Extensions_EnumerableExtensionMethods_IsNullOrEmpty.htm" />
+  <HelpKINode Title="EnumerableExtensionMethods.RandomItem(Of T) method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomItem__1.htm" />
+  <HelpKINode Title="EnumerableExtensionMethods.RandomItem&lt;T&gt; method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomItem__1.htm" />
+  <HelpKINode Title="EnumerableExtensionMethods.RandomItemOrDefault method" Url="html/Overload_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomItemOrDefault.htm" />
   <HelpKINode Title="EnumerableExtensionMethods.RandomSelect method" Url="html/Overload_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomSelect.htm" />
+  <HelpKINode Title="EnumerableExtensionMethods.RandomWeightedItem(Of T) method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomWeightedItem__1.htm" />
+  <HelpKINode Title="EnumerableExtensionMethods.RandomWeightedItem&lt;T&gt; method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomWeightedItem__1.htm" />
   <HelpKINode Title="EnumExtensions class">
     <HelpKINode Title="EnumExtensions Class" Url="html/T_Slash_SystemExt_Utils_EnumExtensions.htm" />
     <HelpKINode Title="about EnumExtensions class" Url="html/T_Slash_SystemExt_Utils_EnumExtensions.htm" />
@@ -1068,12 +1072,12 @@
   <HelpKINode Title="GameBehaviour.StartGame method" Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_StartGame.htm" />
   <HelpKINode Title="GameBehaviour.Update method" Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_Update.htm" />
   <HelpKINode Title="GameBlueprintUtils class">
-    <HelpKINode Title="GameBlueprintUtils Class" Url="html/T_Slash_ECS_Utils_GameBlueprintUtils.htm" />
-    <HelpKINode Title="about GameBlueprintUtils class" Url="html/T_Slash_ECS_Utils_GameBlueprintUtils.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Slash_ECS_Utils_GameBlueprintUtils.htm" />
+    <HelpKINode Title="GameBlueprintUtils Class" Url="html/T_Slash_ECS_Blueprints_GameBlueprintUtils.htm" />
+    <HelpKINode Title="about GameBlueprintUtils class" Url="html/T_Slash_ECS_Blueprints_GameBlueprintUtils.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Slash_ECS_Blueprints_GameBlueprintUtils.htm" />
   </HelpKINode>
-  <HelpKINode Title="GameBlueprintUtils.CreateEntities method" Url="html/M_Slash_ECS_Utils_GameBlueprintUtils_CreateEntities.htm" />
-  <HelpKINode Title="GameBlueprintUtils.CreateEntity method" Url="html/Overload_Slash_ECS_Utils_GameBlueprintUtils_CreateEntity.htm" />
+  <HelpKINode Title="GameBlueprintUtils.CreateEntities method" Url="html/M_Slash_ECS_Blueprints_GameBlueprintUtils_CreateEntities.htm" />
+  <HelpKINode Title="GameBlueprintUtils.CreateEntity method" Url="html/Overload_Slash_ECS_Blueprints_GameBlueprintUtils_CreateEntity.htm" />
   <HelpKINode Title="GameChanged event" Url="html/E_Slash_Unity_Common_ECS_GameBehaviour_GameChanged.htm" />
   <HelpKINode Title="GameCheatBehaviour class">
     <HelpKINode Title="GameCheatBehaviour Class" Url="html/T_Slash_Unity_Common_Diagnostics_GameCheatBehaviour.htm" />
@@ -1314,7 +1318,7 @@
     <HelpKINode Title="SimpleValueEditorContext.GetValue(T) Method " Url="html/M_Slash_Unity_Common_GUI_ValueEditors_SimpleValueEditorContext_GetValue__1.htm" />
     <HelpKINode Title="ValueEditorContext.GetValue(T) Method " Url="html/M_Slash_Unity_Common_GUI_ValueEditors_ValueEditorContext_GetValue__1.htm" />
   </HelpKINode>
-  <HelpKINode Title="GetValueOrDefault method" Url="html/Overload_Slash_Collections_Utils_CollectionUtils_GetValueOrDefault.htm" />
+  <HelpKINode Title="GetValueOrDefault method" Url="html/Overload_Slash_Collections_Extensions_DictionaryExtensionMethods_GetValueOrDefault.htm" />
   <HelpKINode Title="GetValueOrDefault(Of T) method" Url="html/M_Slash_Collections_AttributeTables_AttributeTableExtensions_GetValueOrDefault__1.htm" />
   <HelpKINode Title="GetValueOrDefault&lt;T&gt; method" Url="html/M_Slash_Collections_AttributeTables_AttributeTableExtensions_GetValueOrDefault__1.htm" />
   <HelpKINode Title="GLDrawGrid method" Url="html/M_Slash_Unity_Common_Utils_GLUtils_GLDrawGrid.htm" />
@@ -1910,6 +1914,7 @@
   </HelpKINode>
   <HelpKINode Title="ListExtensionMethods.Move method" Url="html/M_Slash_Collections_Extensions_ListExtensionMethods_Move.htm" />
   <HelpKINode Title="ListExtensionMethods.Shuffle method" Url="html/M_Slash_Collections_Extensions_ListExtensionMethods_Shuffle.htm" />
+  <HelpKINode Title="ListExtensionMethods.ToRandomOrder method" Url="html/Overload_Slash_Collections_Extensions_ListExtensionMethods_ToRandomOrder.htm" />
   <HelpKINode Title="Load method" Url="html/M_Slash_Unity_Common_Configuration_GameConfigurationBehaviour_Load.htm" />
   <HelpKINode Title="LoadAdditive field" Url="html/F_Slash_Unity_Common_Loading_LoadSceneOnStartBehaviour_LoadAdditive.htm" />
   <HelpKINode Title="LoadingScreenPrefab field" Url="html/F_Slash_Unity_Common_Scenes_SceneManager_LoadingScreenPrefab.htm" />
@@ -2320,9 +2325,9 @@
   <HelpKINode Title="Rad2Deg method" Url="html/M_Slash_Math_Utils_Angles_Rad2Deg.htm" />
   <HelpKINode Title="Rad2DegFactor field" Url="html/F_Slash_Math_Utils_Angles_Rad2DegFactor.htm" />
   <HelpKINode Title="Random property" Url="html/P_Slash_Math_Utils_RandomUtils_Random.htm" />
-  <HelpKINode Title="RandomItem(Of T) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_RandomItem__1.htm" />
-  <HelpKINode Title="RandomItem&lt;T&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_RandomItem__1.htm" />
-  <HelpKINode Title="RandomItemOrDefault method" Url="html/Overload_Slash_Collections_Utils_CollectionUtils_RandomItemOrDefault.htm" />
+  <HelpKINode Title="RandomItem(Of T) method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomItem__1.htm" />
+  <HelpKINode Title="RandomItem&lt;T&gt; method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomItem__1.htm" />
+  <HelpKINode Title="RandomItemOrDefault method" Url="html/Overload_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomItemOrDefault.htm" />
   <HelpKINode Title="RandomSelect method" Url="html/Overload_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomSelect.htm" />
   <HelpKINode Title="RandomSign method" Url="html/M_Slash_Math_Utils_RandomUtils_RandomSign.htm" />
   <HelpKINode Title="RandomUtils class">
@@ -2334,8 +2339,8 @@
   <HelpKINode Title="RandomUtils.Random property" Url="html/P_Slash_Math_Utils_RandomUtils_Random.htm" />
   <HelpKINode Title="RandomUtils.RandomSign method" Url="html/M_Slash_Math_Utils_RandomUtils_RandomSign.htm" />
   <HelpKINode Title="RandomUtils.RangeDouble method" Url="html/M_Slash_Math_Utils_RandomUtils_RangeDouble.htm" />
-  <HelpKINode Title="RandomWeightedItem(Of T) method" Url="html/M_Slash_Collections_Utils_CollectionUtils_RandomWeightedItem__1.htm" />
-  <HelpKINode Title="RandomWeightedItem&lt;T&gt; method" Url="html/M_Slash_Collections_Utils_CollectionUtils_RandomWeightedItem__1.htm" />
+  <HelpKINode Title="RandomWeightedItem(Of T) method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomWeightedItem__1.htm" />
+  <HelpKINode Title="RandomWeightedItem&lt;T&gt; method" Url="html/M_Slash_Collections_Extensions_EnumerableExtensionMethods_RandomWeightedItem__1.htm" />
   <HelpKINode Title="RangeDouble method" Url="html/M_Slash_Math_Utils_RandomUtils_RangeDouble.htm" />
   <HelpKINode Title="ReadOnlyCollection(Of T) class">
     <HelpKINode Title="ReadOnlyCollection(T) Class" Url="html/T_Slash_Collections_ObjectModel_ReadOnlyCollection_1.htm" />
@@ -2674,6 +2679,7 @@
   <HelpKINode Title="Slash.Collections.AttributeTables.HierarchicalAttributeTable class" Url="html/T_Slash_Collections_AttributeTables_HierarchicalAttributeTable.htm" />
   <HelpKINode Title="Slash.Collections.AttributeTables.IAttributeTable interface" Url="html/T_Slash_Collections_AttributeTables_IAttributeTable.htm" />
   <HelpKINode Title="Slash.Collections.Extensions namespace" Url="html/N_Slash_Collections_Extensions.htm" />
+  <HelpKINode Title="Slash.Collections.Extensions.DictionaryExtensionMethods class" Url="html/T_Slash_Collections_Extensions_DictionaryExtensionMethods.htm" />
   <HelpKINode Title="Slash.Collections.Extensions.EnumerableExtensionMethods class" Url="html/T_Slash_Collections_Extensions_EnumerableExtensionMethods.htm" />
   <HelpKINode Title="Slash.Collections.Extensions.ListExtensionMethods class" Url="html/T_Slash_Collections_Extensions_ListExtensionMethods.htm" />
   <HelpKINode Title="Slash.Collections.ObjectModel namespace" Url="html/N_Slash_Collections_ObjectModel.htm" />
@@ -2687,6 +2693,7 @@
   <HelpKINode Title="Slash.ECS.Blueprints.BlueprintManager class" Url="html/T_Slash_ECS_Blueprints_BlueprintManager.htm" />
   <HelpKINode Title="Slash.ECS.Blueprints.BlueprintManager.BlueprintsChangedDelegate delegate" Url="html/T_Slash_ECS_Blueprints_BlueprintManager_BlueprintsChangedDelegate.htm" />
   <HelpKINode Title="Slash.ECS.Blueprints.BlueprintUtils class" Url="html/T_Slash_ECS_Blueprints_BlueprintUtils.htm" />
+  <HelpKINode Title="Slash.ECS.Blueprints.GameBlueprintUtils class" Url="html/T_Slash_ECS_Blueprints_GameBlueprintUtils.htm" />
   <HelpKINode Title="Slash.ECS.Blueprints.HierarchicalBlueprintManager class" Url="html/T_Slash_ECS_Blueprints_HierarchicalBlueprintManager.htm" />
   <HelpKINode Title="Slash.ECS.Blueprints.IBlueprintManager interface" Url="html/T_Slash_ECS_Blueprints_IBlueprintManager.htm" />
   <HelpKINode Title="Slash.ECS.Components namespace" Url="html/N_Slash_ECS_Components.htm" />
@@ -2737,8 +2744,6 @@
   <HelpKINode Title="Slash.ECS.Systems.GameSystemAttribute class" Url="html/T_Slash_ECS_Systems_GameSystemAttribute.htm" />
   <HelpKINode Title="Slash.ECS.Systems.ISystem interface" Url="html/T_Slash_ECS_Systems_ISystem.htm" />
   <HelpKINode Title="Slash.ECS.Systems.SystemManager class" Url="html/T_Slash_ECS_Systems_SystemManager.htm" />
-  <HelpKINode Title="Slash.ECS.Utils namespace" Url="html/N_Slash_ECS_Utils.htm" />
-  <HelpKINode Title="Slash.ECS.Utils.GameBlueprintUtils class" Url="html/T_Slash_ECS_Utils_GameBlueprintUtils.htm" />
   <HelpKINode Title="Slash.Math.Algebra.Vectors namespace" Url="html/N_Slash_Math_Algebra_Vectors.htm" />
   <HelpKINode Title="Slash.Math.Algebra.Vectors.Vector2F class" Url="html/T_Slash_Math_Algebra_Vectors_Vector2F.htm" />
   <HelpKINode Title="Slash.Math.Algebra.Vectors.Vector2I class" Url="html/T_Slash_Math_Algebra_Vectors_Vector2I.htm" />
@@ -3093,7 +3098,7 @@
     <HelpKINode Title="RectangleF.TopRight Property " Url="html/P_Slash_Math_Geometry_Rectangles_RectangleF_TopRight.htm" />
     <HelpKINode Title="RectangleI.TopRight Property " Url="html/P_Slash_Math_Geometry_Rectangles_RectangleI_TopRight.htm" />
   </HelpKINode>
-  <HelpKINode Title="ToRandomOrder method" Url="html/Overload_Slash_Collections_Utils_CollectionUtils_ToRandomOrder.htm" />
+  <HelpKINode Title="ToRandomOrder method" Url="html/Overload_Slash_Collections_Extensions_ListExtensionMethods_ToRandomOrder.htm" />
   <HelpKINode Title="ToRect method" Url="html/Overload_Slash_Unity_Common_Math_MathConversionExtensions_ToRect.htm" />
   <HelpKINode Title="ToRectangleF method" Url="html/M_Slash_Unity_Common_Math_MathConversionExtensions_ToRectangleF.htm" />
   <HelpKINode Title="ToRectangleI method" Url="html/M_Slash_Unity_Common_Math_MathConversionExtensions_ToRectangleI.htm" />
