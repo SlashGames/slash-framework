@@ -44,7 +44,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Angle to transform forward to side vector.
         /// </summary>
-        public static float SideAngle = -MathF.PiOver2;
+        public static float SideAngle = -MathUtils.PiOver2;
 
         /// <summary>
         ///   X component is 1, Y component is 0.
@@ -164,7 +164,7 @@ namespace Slash.Math.Algebra.Vectors
         {
             get
             {
-                return MathF.Sqrt(this.SquareMagnitude);
+                return MathUtils.Sqrt(this.SquareMagnitude);
             }
         }
 
@@ -214,16 +214,16 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Return the angle between two vectors on a plane. The angle is from vector 1 to vector 2, positive counter-clockwise. The result is between -pi -> pi. </returns>
         public static float CalculateAngle(Vector2F vector1, Vector2F vector2)
         {
-            float theta1 = MathF.Atan2(vector1.Y, vector1.X);
-            float theta2 = MathF.Atan2(vector2.Y, vector2.X);
+            float theta1 = MathUtils.Atan2(vector1.Y, vector1.X);
+            float theta2 = MathUtils.Atan2(vector2.Y, vector2.X);
             float dtheta = theta2 - theta1;
-            while (dtheta > MathF.Pi)
+            while (dtheta > MathUtils.Pi)
             {
-                dtheta -= (2 * MathF.Pi);
+                dtheta -= (2 * MathUtils.Pi);
             }
-            while (dtheta < -MathF.Pi)
+            while (dtheta < -MathUtils.Pi)
             {
-                dtheta += (2 * MathF.Pi);
+                dtheta += (2 * MathUtils.Pi);
             }
 
             return (dtheta);
@@ -251,7 +251,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> True if the three vectors are collinear; otherwise, false. </returns>
         public static bool Collinear(ref Vector2F a, ref Vector2F b, ref Vector2F c, float tolerance)
         {
-            return MathF.FloatInRange(Area(ref a, ref b, ref c), -tolerance, tolerance);
+            return MathUtils.FloatInRange(Area(ref a, ref b, ref c), -tolerance, tolerance);
         }
 
         /// <summary>
@@ -321,19 +321,19 @@ namespace Slash.Math.Algebra.Vectors
                 return to;
             }
 
-            float theta = MathF.ACos(Dot(from, to));
+            float theta = MathUtils.ACos(Dot(from, to));
             if (theta == 0)
             {
                 return to;
             }
 
-            float sinTheta = MathF.Sin(theta);
+            float sinTheta = MathUtils.Sin(theta);
             if (sinTheta == 0.0f)
             {
                 return to;
             }
 
-            return MathF.Sin((1 - step) * theta) / sinTheta * from + MathF.Sin(step * theta) / sinTheta * to;
+            return MathUtils.Sin((1 - step) * theta) / sinTheta * from + MathUtils.Sin(step * theta) / sinTheta * to;
         }
 
         /// <summary>
@@ -515,7 +515,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Distance between this and the passed vector. </returns>
         public float GetDistance(Vector2F vector)
         {
-            return MathF.Sqrt(this.GetSquareDistance(vector));
+            return MathUtils.Sqrt(this.GetSquareDistance(vector));
         }
 
         public override int GetHashCode()
@@ -571,7 +571,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Square distance between this and the passed vector. </returns>
         public float GetSquareDistance(Vector2F vector)
         {
-            return MathF.Pow(vector.X - this.X, 2) + MathF.Pow(vector.Y - this.Y, 2);
+            return MathUtils.Pow(vector.X - this.X, 2) + MathUtils.Pow(vector.Y - this.Y, 2);
         }
 
         /// <summary>
@@ -624,8 +624,8 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Rotated vector. </returns>
         public Vector2F Rotate(float angle)
         {
-            float cos = MathF.Cos(angle);
-            float sin = MathF.Sin(angle);
+            float cos = MathUtils.Cos(angle);
+            float sin = MathUtils.Sin(angle);
             float newX = this.X * cos - this.Y * sin;
             float newY = this.Y * cos + this.X * sin;
             return new Vector2F(newX, newY);

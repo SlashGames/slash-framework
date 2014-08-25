@@ -9,8 +9,8 @@ namespace Slash.Tests.ECS
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase;
-    using Slash.GameBase.Systems;
+    using Slash.ECS;
+    using Slash.ECS.Systems;
 
     public class SystemTest<T>
         where T : ISystem, new()

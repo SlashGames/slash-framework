@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Slash.ECS</RootNamespace>
+    <AssemblyName>Slash.ECS</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release WindowsStore|AnyCPU' ">
+    <OutputPath>bin\Release WindowsStore\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS_STORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Source\Inspector\Attributes\ConditionalFlagsCheck.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorDataAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorEntityAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorTypeAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorComponentAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorConditionalFlagsPropertyAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorConditionalPropertyAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorBlueprintAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorBoolAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorEnumAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorFloatAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorIntAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorPropertyAttribute.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorStringAttribute.cs" />
+    <Compile Include="Source\Blueprints\Blueprint.cs" />
+    <Compile Include="Source\Blueprints\BlueprintManager.cs" />
+    <Compile Include="Source\Blueprints\BlueprintUtils.cs" />
+    <Compile Include="Source\Blueprints\HierarchicalBlueprintManager.cs" />
+    <Compile Include="Source\Blueprints\IBlueprintManager.cs" />
+    <Compile Include="Source\Configurations\EntityConfiguration.cs" />
+    <Compile Include="Source\Events\GameEvent.cs" />
+    <Compile Include="Source\Events\ComponentStatusChangedEventData.cs" />
+    <Compile Include="Source\Events\Entity2Data.cs" />
+    <Compile Include="Source\Events\EntityComponentData.cs" />
+    <Compile Include="Source\Events\EntityEventData.cs" />
+    <Compile Include="Source\Events\EventManager.cs" />
+    <Compile Include="Source\Events\FrameworkEvent.cs" />
+    <Compile Include="Source\Components\IEntityComponent.cs" />
+    <Compile Include="Source\Components\ComponentManager.cs" />
+    <Compile Include="Source\Components\EntityManager.cs" />
+    <Compile Include="Source\Game.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorVectorAttribute.cs" />
+    <Compile Include="Source\Inspector\Data\InspectorType.cs" />
+    <Compile Include="Source\Inspector\Data\InspectorTypeTable.cs" />
+    <Compile Include="Source\Inspector\Utils\InspectorUtils.cs" />
+    <Compile Include="Source\Inspector\Validation\ValidationError.cs" />
+    <Compile Include="Source\Logging\GameLogger.cs" />
+    <Compile Include="Source\Processes\GameProcess.cs" />
+    <Compile Include="Source\Processes\ProcessManager.cs" />
+    <Compile Include="Source\Processes\WaitProcess.cs" />
+    <Compile Include="Source\Systems\GameSystemAttribute.cs" />
+    <Compile Include="Source\Systems\ISystem.cs" />
+    <Compile Include="Source\Systems\GameSystem.cs" />
+    <Compile Include="Source\Systems\SystemManager.cs" />
+    <Compile Include="Source\Utils\GameBlueprintUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
+      <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
+      <Name>Slash.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Diagnostics\Slash.Diagnostics.csproj">
+      <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
+      <Name>Slash.Diagnostics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
+      <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>
+      <Name>Slash.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
+      <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
+      <Name>Slash.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.System\Slash.System.csproj">
+      <Project>{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}</Project>
+      <Name>Slash.System</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

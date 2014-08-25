@@ -151,7 +151,7 @@ namespace Slash.Math.Algebra.Vectors
         {
             get
             {
-                return MathF.Sqrt(this.SquareMagnitude);
+                return MathUtils.Sqrt(this.SquareMagnitude);
             }
         }
 
@@ -201,16 +201,16 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Return the angle between two vectors on a plane. The angle is from vector 1 to vector 2, positive counter-clockwise. The result is between -pi -> pi. </returns>
         public static float CalculateAngle(Vector2I vector1, Vector2I vector2)
         {
-            float theta1 = MathF.Atan2(vector1.Y, vector1.X);
-            float theta2 = MathF.Atan2(vector2.Y, vector2.X);
+            float theta1 = MathUtils.Atan2(vector1.Y, vector1.X);
+            float theta2 = MathUtils.Atan2(vector2.Y, vector2.X);
             float dtheta = theta2 - theta1;
-            while (dtheta > MathF.Pi)
+            while (dtheta > MathUtils.Pi)
             {
-                dtheta -= (2 * MathF.Pi);
+                dtheta -= (2 * MathUtils.Pi);
             }
-            while (dtheta < -MathF.Pi)
+            while (dtheta < -MathUtils.Pi)
             {
-                dtheta += (2 * MathF.Pi);
+                dtheta += (2 * MathUtils.Pi);
             }
 
             return (dtheta);
@@ -238,7 +238,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> True if the three vectors are collinear; otherwise, false. </returns>
         public static bool Collinear(ref Vector2I a, ref Vector2I b, ref Vector2I c, float tolerance)
         {
-            return MathF.FloatInRange(Area(ref a, ref b, ref c), -tolerance, tolerance);
+            return MathUtils.FloatInRange(Area(ref a, ref b, ref c), -tolerance, tolerance);
         }
 
         /// <summary>
@@ -465,7 +465,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Distance between this and the passed vector. </returns>
         public float GetDistance(Vector2I vector)
         {
-            return MathF.Sqrt(this.GetSquareDistance(vector));
+            return MathUtils.Sqrt(this.GetSquareDistance(vector));
         }
 
         public override int GetHashCode()
@@ -492,7 +492,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Square distance between this and the passed vector. </returns>
         public int GetSquareDistance(Vector2I vector)
         {
-            return MathI.Pow(vector.X - this.X, 2) + MathI.Pow(vector.Y - this.Y, 2);
+            return MathUtils.Pow(vector.X - this.X, 2) + MathUtils.Pow(vector.Y - this.Y, 2);
         }
 
         /// <summary>

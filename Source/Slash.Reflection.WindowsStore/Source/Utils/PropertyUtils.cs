@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Reflection
+namespace Slash.Reflection.Utils
 {
     using System;
     using System.Linq.Expressions;

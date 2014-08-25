@@ -4,11 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.HOTweenExt
+namespace Slash.Unity.Common.Triggers.Conditions
 {
     using System;
 
-    using Slash.Unity.Common.Triggers.Conditions;
     using Slash.Unity.Common.ViewModels;
 
     [Serializable]

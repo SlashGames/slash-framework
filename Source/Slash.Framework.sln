@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Math", "Slash.Math\Slash.Math.csproj", "{834E18DE-A529-4F17-A838-92B1EF259FE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.GameBase", "Slash.GameBase\Slash.GameBase.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.ECS", "Slash.ECS\Slash.ECS.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Unity.Common", "Slash.Unity.Common\Slash.Unity.Common.csproj", "{AA429D02-6020-44F3-8B62-6A5C1AD4FE7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.AI.BehaviorTrees", "Slash.AI.BehaviorTrees\Slash.AI.BehaviorTrees.csproj", "{F48C77D8-CE6B-4454-8781-DFE8BF48847D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.GameBase.Tests", "Slash.GameBase.Tests\Slash.GameBase.Tests.csproj", "{C329C9AD-95E9-4A10-8A6A-61B5944FC676}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.ECS.Tests", "Slash.ECS.Tests\Slash.ECS.Tests.csproj", "{C329C9AD-95E9-4A10-8A6A-61B5944FC676}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Collections", "Slash.Collections\Slash.Collections.csproj", "{03F9A6F7-F402-4581-B748-FA51BF3B1B82}"
 EndProject

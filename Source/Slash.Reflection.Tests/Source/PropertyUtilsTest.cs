@@ -10,6 +10,8 @@ namespace Slash.Reflection.Tests
 
     using NUnit.Framework;
 
+    using Slash.Reflection.Utils;
+
     public class PropertyUtilsTest
     {
         #region Public Methods and Operators

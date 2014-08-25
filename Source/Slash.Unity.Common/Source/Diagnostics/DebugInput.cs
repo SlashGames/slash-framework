@@ -4,11 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using UnityEngine;
-
-/// <summary>
-///   Enables the DebugInputEditor to show information about the unity input.
-/// </summary>
-public class DebugInput : MonoBehaviour
+namespace Slash.Unity.Common.Diagnostics
 {
+    using UnityEngine;
+
+    /// <summary>
+    ///   Enables the DebugInputEditor to show information about the unity input.
+    /// </summary>
+    public class DebugInput : MonoBehaviour
+    {
+    }
 }

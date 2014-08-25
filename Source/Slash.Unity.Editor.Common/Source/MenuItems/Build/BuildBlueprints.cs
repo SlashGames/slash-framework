@@ -4,13 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.Editor.Common.Build
+namespace Slash.Unity.Editor.Common.MenuItems.Build
 {
     using System;
     using System.IO;
     using System.Xml.Serialization;
 
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS.Blueprints;
     using Slash.Serialization.Binary;
 
     using UnityEditor;
