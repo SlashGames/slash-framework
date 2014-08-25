@@ -8,9 +8,12 @@ namespace Slash.Collections.Extensions
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
+
+    using Slash.Collections.Utils;
 
     /// <summary>
-    ///   Extension methods for IList and IList{T}.
+    ///   Extension methods for lists.
     /// </summary>
     public static class ListExtensionMethods
     {
@@ -68,6 +71,39 @@ namespace Slash.Collections.Extensions
                 list[k] = list[n];
                 list[n] = value;
             }
+        }
+
+        /// <summary>
+        ///   Enumerates the elements of the specified list in random order.
+        /// </summary>
+        /// <typeparam name="T">Type of list to enumerate the items of.</typeparam>
+        /// <param name="list">List to enumerate the items of.</param>
+        /// <returns>List with the same items in random order.</returns>
+        public static List<T> ToRandomOrder<T>(this IList<T> list)
+        {
+            return ToRandomOrder(list, new Random());
+        }
+
+        /// <summary>
+        ///   Enumerates the elements of the specified list in random order.
+        /// </summary>
+        /// <typeparam name="T">Type of list to enumerate the items of.</typeparam>
+        /// <param name="list">List to enumerate the items of.</param>
+        /// <param name="random">Random number generator to use.</param>
+        /// <returns>List with the same items in random order.</returns>
+        public static List<T> ToRandomOrder<T>(this IList<T> list, Random random)
+        {
+            List<T> copy = new List<T>(list);
+            int count = copy.Count;
+
+            while (count > 0)
+            {
+                int next = random.Next(count);
+                CollectionUtils.Swap(copy, next, count - 1);
+                count--;
+            }
+
+            return copy;
         }
 
         #endregion
