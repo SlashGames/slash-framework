@@ -30,12 +30,25 @@ namespace Slash.Unity.Common.GUI
 
         #region Enums
 
+        /// <summary>
+        ///   Setting of sleep timeout.
+        /// </summary>
         public enum AvailableSetting
         {
+            /// <summary>
+            ///   Set the sleep timeout to whatever user has specified in the system settings.
+            /// </summary>
             SystemSetting,
 
+            /// <summary>
+            ///   Prevent screen dimming.
+            /// </summary>
             NeverSleep,
 
+            /// <summary>
+            ///   Use manual defined timeout (in s).
+            /// </summary>
+            /// <seealso cref="DefinedTimeout" />
             ManualDefined
         }
 

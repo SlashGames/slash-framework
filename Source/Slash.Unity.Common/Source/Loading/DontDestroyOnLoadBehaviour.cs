@@ -15,9 +15,9 @@ namespace Slash.Unity.Common.Loading
     /// </summary>
     public class DontDestroyOnLoadBehaviour : MonoBehaviour
     {
-        #region Public Methods and Operators
+        #region Methods
 
-        public void Start()
+        private void Start()
         {
             DontDestroyOnLoad(this);
         }

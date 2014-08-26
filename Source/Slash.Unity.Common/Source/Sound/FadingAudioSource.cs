@@ -64,12 +64,24 @@ namespace Slash.Unity.Common.Sound
 
         #region Enums
 
+        /// <summary>
+        ///   Whether fading out or in.
+        /// </summary>
         public enum FadeState
         {
+            /// <summary>
+            ///   Not fading.
+            /// </summary>
             None,
 
+            /// <summary>
+            ///   Reducing volume.
+            /// </summary>
             FadingOut,
 
+            /// <summary>
+            ///   Increasing volume.
+            /// </summary>
             FadingIn
         }
 
@@ -128,7 +140,7 @@ namespace Slash.Unity.Common.Sound
         /// <summary>
         ///   If the audio source is enabled and playing, fades out the current clip and fades in the specified one, after.
         ///   If the audio source is enabled and not playing, fades in the specified clip immediately.
-        ///   If the audio source is not enalbed, fades in the specified clip as soon as it gets enabled.
+        ///   If the audio source is not enabled, fades in the specified clip as soon as it gets enabled.
         /// </summary>
         /// <param name="clip">Clip to fade in.</param>
         /// <param name="volume">Volume to fade to.</param>
@@ -141,7 +153,7 @@ namespace Slash.Unity.Common.Sound
         /// <summary>
         ///   If the audio source is enabled and playing, fades out the current clip and fades in the specified intro clip, after.
         ///   If the audio source is enabled and not playing, fades in the specified intro clip immediately.
-        ///   If the audio source is not enalbed, fades in the specified intro clip as soon as it gets enabled.
+        ///   If the audio source is not enabled, fades in the specified intro clip as soon as it gets enabled.
         ///   After the intro clip has finished, starts looping the loop clip immediately, without fading.
         /// </summary>
         /// <param name="clip">Clip to fade in.</param>
@@ -178,6 +190,15 @@ namespace Slash.Unity.Common.Sound
             }
         }
 
+        /// <summary>
+        ///   If the audio source is enabled and playing, fades out the current clip and fades in the specified one, after.
+        ///   If the audio source is enabled and not playing, fades in the specified clip immediately.
+        ///   If the audio source is not enabled, fades in the specified clip as soon as it gets enabled.
+        /// </summary>
+        /// <param name="clip">Clip to fade in.</param>
+        /// <param name="volume">Volume to fade to.</param>
+        /// <param name="loop">Whether to loop the new clip, or not.</param>
+        /// <param name="fadeSpeed">Speed to fade in or out with, in volume/second.</param>
         public void Fade(AudioClip clip, float volume, bool loop, float fadeSpeed)
         {
             if (clip == null || clip == this.audioSource.clip)

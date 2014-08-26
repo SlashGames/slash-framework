@@ -23,12 +23,20 @@ namespace Slash.Unity.Common.ECS
 
         #region Public Properties
 
+        /// <summary>
+        ///   Current entity game object map.
+        /// </summary>
         public static EntityGameObjectMap Instance { get; private set; }
 
         #endregion
 
         #region Public Indexers
 
+        /// <summary>
+        ///   Unity game object mapped by the specified entity id.
+        /// </summary>
+        /// <param name="entityId">Entity id mapped to the game object.</param>
+        /// <returns>Unity game object mapped by the specified entity id.</returns>
         public GameObject this[int entityId]
         {
             get

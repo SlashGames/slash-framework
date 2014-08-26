@@ -10,11 +10,17 @@ namespace Slash.Unity.Common.Triggers.Conditions
 
     using Slash.Unity.Common.ViewModels;
 
+    /// <summary>
+    ///   Condition that is fulfilled whenever a specific game event occurs.
+    /// </summary>
     [Serializable]
     public sealed class EventCondition : Condition
     {
         #region Fields
 
+        /// <summary>
+        ///   Event fulfilling this condition.
+        /// </summary>
         public ViewEventDelegate EventDelegate;
 
         #endregion

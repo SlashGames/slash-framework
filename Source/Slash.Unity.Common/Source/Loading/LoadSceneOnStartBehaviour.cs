@@ -8,6 +8,9 @@ namespace Slash.Unity.Common.Loading
 {
     using UnityEngine;
 
+    /// <summary>
+    ///   Loads the specified scene immediately after start.
+    /// </summary>
     public class LoadSceneOnStartBehaviour : MonoBehaviour
     {
         #region Fields

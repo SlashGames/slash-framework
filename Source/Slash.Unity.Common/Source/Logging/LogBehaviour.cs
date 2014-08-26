@@ -15,6 +15,9 @@ namespace Slash.Unity.Common.Logging
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Writes all game logic events to the Unity console.
+    /// </summary>
     public class LogBehaviour : MonoBehaviour
     {
         #region Fields

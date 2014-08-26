@@ -86,6 +86,12 @@ namespace Slash.Unity.Common.ECS
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Starts the specified game with the current configuration, notifying
+        ///   interested listeners of the new game.
+        /// </summary>
+        /// <param name="newGame">Game to start.</param>
+        /// <seealso cref="GameConfiguration" />
         public void StartGame(Game newGame)
         {
             // Create game.
@@ -115,6 +121,9 @@ namespace Slash.Unity.Common.ECS
 
         #region Methods
 
+        /// <summary>
+        ///   Loads the game configuration, if available.
+        /// </summary>
         protected virtual void Awake()
         {
             if (this.GameConfiguration == null)
@@ -124,6 +133,11 @@ namespace Slash.Unity.Common.ECS
             }
         }
 
+        /// <summary>
+        ///   Notifies interested listeners of new games.
+        /// </summary>
+        /// <param name="newGame">New game instance.</param>
+        /// <param name="oldGame">Previous game instance.</param>
         protected void OnGameChanged(Game newGame, Game oldGame)
         {
             var handler = this.GameChanged;
@@ -133,6 +147,9 @@ namespace Slash.Unity.Common.ECS
             }
         }
 
+        /// <summary>
+        ///   Ticks the current game and increases the frame counter.
+        /// </summary>
         protected virtual void Update()
         {
             if (this.Game != null)

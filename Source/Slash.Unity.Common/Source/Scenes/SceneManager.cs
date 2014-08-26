@@ -10,6 +10,10 @@ namespace Slash.Unity.Common.Scenes
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Handles scene transitions, providing loading screens and inter-scene
+    ///   communication.
+    /// </summary>
     public class SceneManager : MonoBehaviour
     {
         #region Static Fields
@@ -29,18 +33,28 @@ namespace Slash.Unity.Common.Scenes
 
         #region Delegates
 
+        /// <summary>
+        ///   New scene is about to be loaded.
+        /// </summary>
+        /// <param name="newScene">Name of the new scene.</param>
         public delegate void SceneChangingDelegate(string newScene);
 
         #endregion
 
         #region Public Events
 
+        /// <summary>
+        ///   New scene is about to be loaded.
+        /// </summary>
         public event SceneChangingDelegate SceneChanging;
 
         #endregion
 
         #region Public Properties
 
+        /// <summary>
+        ///   Current scene manager instance.
+        /// </summary>
         public static SceneManager Instance
         {
             get
@@ -54,6 +68,9 @@ namespace Slash.Unity.Common.Scenes
             }
         }
 
+        /// <summary>
+        ///   Data to pass to the next scene that is loaded.
+        /// </summary>
         public object InitParams { get; set; }
 
         #endregion
@@ -80,6 +97,11 @@ namespace Slash.Unity.Common.Scenes
             this.StartCoroutine(this.ChangeSceneWithLoadingScreen(scene, delay));
         }
 
+        /// <summary>
+        ///   Loads the specified scene, passing it the passed data.
+        /// </summary>
+        /// <param name="scene">Name of the scene to load.</param>
+        /// <param name="initParams">Data to pass to the new scene.</param>
         public void LoadScene(string scene, object initParams)
         {
             this.InitParams = initParams;

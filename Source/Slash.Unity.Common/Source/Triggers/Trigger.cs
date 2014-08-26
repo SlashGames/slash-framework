@@ -13,12 +13,21 @@ namespace Slash.Unity.Common.Triggers
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Trigger that executes a set of actions whenever a set of conditions if fulfilled.
+    /// </summary>
     public class Trigger : MonoBehaviour
     {
         #region Fields
 
+        /// <summary>
+        ///   Actions to execute.
+        /// </summary>
         public List<IAction> Actions;
 
+        /// <summary>
+        ///   Conditions that have to be fulfilled in order to trigger the actions.
+        /// </summary>
         public List<ICondition> Conditions;
 
         #endregion

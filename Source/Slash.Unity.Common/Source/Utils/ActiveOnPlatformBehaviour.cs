@@ -15,8 +15,14 @@ namespace Slash.Unity.Common.Utils
     {
         #region Fields
 
+        /// <summary>
+        ///   Whether to activate or deactive this game object.
+        /// </summary>
         public bool Active;
 
+        /// <summary>
+        ///   Runtime platform causing the game object to be activated or deactivated.
+        /// </summary>
         public RuntimePlatform Platform;
 
         #endregion

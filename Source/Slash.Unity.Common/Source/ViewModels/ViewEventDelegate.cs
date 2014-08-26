@@ -10,6 +10,10 @@ namespace Slash.Unity.Common.ViewModels
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Allows registering as listener for a specific view event of a MonoBehaviour.
+    /// </summary>
+    /// <seealso cref="ViewEvent" />
     [Serializable]
     public class ViewEventDelegate
     {
@@ -25,6 +29,9 @@ namespace Slash.Unity.Common.ViewModels
 
         #region Public Properties
 
+        /// <summary>
+        ///   View event to register as listener for.
+        /// </summary>
         public string Field
         {
             get
@@ -37,6 +44,9 @@ namespace Slash.Unity.Common.ViewModels
             }
         }
 
+        /// <summary>
+        ///   Mono behaviour instance to register as listener at.
+        /// </summary>
         public MonoBehaviour Source
         {
             get
@@ -53,6 +63,12 @@ namespace Slash.Unity.Common.ViewModels
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Registers the passed callback for this view event.
+        /// </summary>
+        /// <param name="callback">Method to call when the specified view event occurs on the target behaviour.</param>
+        /// <seealso cref="Field" />
+        /// <seealso cref="Source" />
         public void Register(ViewEvent.EventDelegate callback)
         {
             if (this.source == null || string.IsNullOrEmpty(this.field))
