@@ -92,7 +92,35 @@
 <NamespaceSummaryItem name="Slash.Serialization.Xml" isDocumented="True">Classes for converting objects to and from their XML representations.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="Slash.SystemExt (Group)" isGroup="True" isDocumented="True">Extensions of the .NET System namespace.</NamespaceSummaryItem>
 <NamespaceSummaryItem name="Slash.SystemExt.Exceptions" isDocumented="True">Custom exception types.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Slash.SystemExt.Utils" isDocumented="True">Utility methods for operating on .NET system types, such as strings or enums.</NamespaceSummaryItem></NamespaceSummaries>
+<NamespaceSummaryItem name="Slash.SystemExt.Utils" isDocumented="True">Utility methods for operating on .NET system types, such as strings or enums.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity (Group)" isGroup="True" isDocumented="True">Reusable Unity3D scripts and behaviours.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Animations" isDocumented="True">Extension methods for Unity animation objects.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Attributes" isDocumented="True">Custom attributes for exposing data to the Unity inspector.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Configuration" isDocumented="True">Unity layer for accessing game configurations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Diagnostics" isDocumented="True">Helper classes for debugging in Unity, such as cheat consoles and display overlays.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.ECS" isDocumented="True">Unity layer for the component-based entity system.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.GUI" isDocumented="True">Extensions for Unity GUI classes.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Input" isDocumented="True">Utility methods for handling Unity input and Unity GUI.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Loading" isDocumented="True">Utility scripts for loading scenes on specific events, such as on start or click.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Logging" isDocumented="True">Unity layer for logging game logic events.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Math" isDocumented="True">Helper classes for converting between framework math types and Unity math types.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Scenes" isDocumented="True">Scene management providing loading screens and inter-scene communication.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Sound" isDocumented="True">Advanced Unity sound wrapper, providing audio channels and fading.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Triggers" isDocumented="True">Triggers that execute a set of actions whenever a set of conditions if fulfilled.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Triggers.Actions" isDocumented="True">Actions that can be triggered if a set of conditions is fulfilled.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Triggers.Conditions" isDocumented="True">Conditions that have to be fulfilled before a set of actions is triggered.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Utils" isDocumented="True">Extension methods for several Unity types, such as game objects or colors.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.ViewModels" isDocumented="True">Provide view events interested listeners can register for.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Common.Visual" isDocumented="True">Reusable visual Unity scripts, e.g. for tweening or changing object alpha.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Editor.Common.Inspectors" isDocumented="True">Custom editors for several framework types.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Editor.Common.Inspectors.Configuration" isDocumented="True">Custom inspectors for game configurations.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Editor.Common.Inspectors.Diagnostics" isDocumented="True">Custom inspectors for helper classes for debugging in Unity, such as cheat consoles and display overlays.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Editor.Common.Inspectors.ECS" isDocumented="True">Custom inspectors for the Unity layer for the component-based entity system.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Editor.Common.Inspectors.Rendering" isDocumented="True">Custom inspectors for Unity renderers.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Editor.Common.Inspectors.Utils" isDocumented="True">Common custom editors and inspectors.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Editor.Common.Inspectors.ViewModels" isDocumented="True">Custom inspectors for view events interested listeners can register for.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Editor.Common.MenuItems.Util" isDocumented="True">Utility editor windows, e.g. for checking texture sizes or finding MonoBehaviour usages.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Slash.Unity.Editor.Common.MenuItems.Windows" isDocumented="True">Utility editor windows, e.g. for changing the current scene in the editor.</NamespaceSummaryItem></NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
