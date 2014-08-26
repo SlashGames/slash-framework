@@ -10,27 +10,33 @@ namespace Slash.Serialization.Dictionary
     using System.Collections.Generic;
 
     /// <summary>
-    ///   Plist serializer for a value-type-pair.
+    ///   Converts value-type-pairs between dictionary representations and back.
     /// </summary>
     public class ValueWithTypeDictionarySerializer : IDictionarySerializer
     {
         #region Constants
 
-        internal const string DATA_TYPE = "type";
+        internal const string DataType = "type";
 
-        internal const string DATA_VALUE = "value";
+        internal const string DataValue = "value";
 
         #endregion
 
         #region Public Methods and Operators
 
-        public object deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
+        /// <summary>
+        ///   Deserializes an object from a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="data">Dictionary which contains the object data.</param>
+        /// <returns>Deserialized object.</returns>
+        public object Deserialize(DictionarySerializationContext context, Dictionary<string, object> data)
         {
             ValueWithType valueWithType = new ValueWithType();
 
             object typeFullName;
-            object value = data[DATA_VALUE];
-            if (data.TryGetValue(DATA_TYPE, out typeFullName))
+            object value = data[DataValue];
+            if (data.TryGetValue(DataType, out typeFullName))
             {
                 valueWithType.TypeFullName = (string)typeFullName;
                 Type type = valueWithType.Type;
@@ -45,18 +51,24 @@ namespace Slash.Serialization.Dictionary
             return valueWithType;
         }
 
-        public Dictionary<string, object> serialize(DictionarySerializationContext context, object obj)
+        /// <summary>
+        ///   Serializes an object to a dictionary.
+        /// </summary>
+        /// <param name="context">Serialization parameters, such as custom serializers and version number.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns>Dictionary which contains object data.</returns>
+        public Dictionary<string, object> Serialize(DictionarySerializationContext context, object obj)
         {
             ValueWithType valueWithType = (ValueWithType)obj;
 
             Dictionary<string, object> data = new Dictionary<string, object>
                 {
-                    { DATA_VALUE, context.serialize(valueWithType.Value) }
+                    { DataValue, context.serialize(valueWithType.Value) }
                 };
 
             if (!context.isRawSerializationPossible(valueWithType.Type))
             {
-                data.Add(DATA_TYPE, valueWithType.TypeFullName);
+                data.Add(DataType, valueWithType.TypeFullName);
             }
 
             return data;

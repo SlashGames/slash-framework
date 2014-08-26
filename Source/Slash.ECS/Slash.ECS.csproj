@@ -88,7 +88,7 @@
     <Compile Include="Source\Systems\ISystem.cs" />
     <Compile Include="Source\Systems\GameSystem.cs" />
     <Compile Include="Source\Systems\SystemManager.cs" />
-    <Compile Include="Source\Utils\GameBlueprintUtils.cs" />
+    <Compile Include="Source\Blueprints\GameBlueprintUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

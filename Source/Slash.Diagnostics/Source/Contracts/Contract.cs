@@ -24,25 +24,6 @@ namespace Slash.Diagnostics.Contracts
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Checks if the specified container of variables are not null.
-        /// </summary>
-        /// <example>
-        ///   Contract.RequiresNotNull(new { variable }, "Variable is null.");
-        /// </example>
-        /// <typeparam name="T">Type of variables.</typeparam>
-        /// <param name="container">Variable(s) container.</param>
-        /// <param name="userMessage">The message to display if one of the variables is null.</param>
-        [ContractAnnotation("container:null => halt")]
-        public static void RequiresNotNull<T>(T container, string userMessage) where T : class
-        {
-            if (container == null)
-            {
-                throw new ArgumentNullException("container", userMessage);
-            }
-            NullChecker<T>.Check(container, userMessage);
-        }
-
-        /// <summary>
         ///   Specifies a precondition contract for the enclosing method or property, and throws an exception with the provided message if the condition for the contract fails.
         /// </summary>
         /// <typeparam name="TException">The exception to throw if the condition is false.</typeparam>
@@ -76,6 +57,25 @@ namespace Slash.Diagnostics.Contracts
 
             Exception exception = (Exception)Activator.CreateInstance(typeof(TException), args);
             throw exception;
+        }
+
+        /// <summary>
+        ///   Checks if the specified container of variables are not null.
+        /// </summary>
+        /// <example>
+        ///   Contract.RequiresNotNull(new { variable }, "Variable is null.");
+        /// </example>
+        /// <typeparam name="T">Type of variables.</typeparam>
+        /// <param name="container">Variable(s) container.</param>
+        /// <param name="userMessage">The message to display if one of the variables is null.</param>
+        [ContractAnnotation("container:null => halt")]
+        public static void RequiresNotNull<T>(T container, string userMessage) where T : class
+        {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container", userMessage);
+            }
+            NullChecker<T>.Check(container, userMessage);
         }
 
         #endregion

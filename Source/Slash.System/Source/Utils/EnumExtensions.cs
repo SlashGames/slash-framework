@@ -8,10 +8,20 @@ namespace Slash.SystemExt.Utils
 {
     using System;
 
+    /// <summary>
+    ///   Utility methods for operating on enum values.
+    /// </summary>
     public static class EnumExtensions
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Logical AND of the enum value and the complement of the specified option.
+        /// </summary>
+        /// <param name="value">First operand.</param>
+        /// <param name="option">Second operand to take the complement of.</param>
+        /// <param name="enumType">Type of the enum to compute the new value of.</param>
+        /// <returns>Logical AND of the enum value and the complement of the specified option.</returns>
         public static Enum AndComplementOption(this Enum value, Enum option, Type enumType)
         {
             if (IsSignedEnumValue(value))
@@ -28,6 +38,13 @@ namespace Slash.SystemExt.Utils
             }
         }
 
+        /// <summary>
+        ///   Logical AND of the enum value and the specified option.
+        /// </summary>
+        /// <param name="value">First operand.</param>
+        /// <param name="option">Second operand.</param>
+        /// <param name="enumType">Type of the enum to compute the new value of.</param>
+        /// <returns>Logical AND of the enum value and the specified option.</returns>
         public static Enum AndOption(this Enum value, Enum option, Type enumType)
         {
             if (IsSignedEnumValue(value))
@@ -88,6 +105,13 @@ namespace Slash.SystemExt.Utils
             }
         }
 
+        /// <summary>
+        ///   Logical OR of the enum value and the specified option.
+        /// </summary>
+        /// <param name="value">First operand.</param>
+        /// <param name="option">Second operand.</param>
+        /// <param name="enumType">Type of the enum to compute the new value of.</param>
+        /// <returns>Logical OR of the enum value and the specified option.</returns>
         public static Enum OrOption(this Enum value, Enum option, Type enumType)
         {
             if (IsSignedEnumValue(value))
@@ -108,6 +132,13 @@ namespace Slash.SystemExt.Utils
 
         #region Methods
 
+        /// <summary>
+        ///   Checks if the type of the specified enum value is a signed type.
+        /// </summary>
+        /// <param name="enumValue">Enum value to check the type of.</param>
+        /// <returns>
+        ///   <c>true</c>, if the type of the specified enum value is a signed type, and <c>false</c> otherwise.
+        /// </returns>
         private static bool IsSignedEnumValue(Enum enumValue)
         {
 #if WINDOWS_STORE

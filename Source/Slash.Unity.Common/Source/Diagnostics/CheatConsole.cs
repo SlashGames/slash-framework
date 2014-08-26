@@ -53,9 +53,9 @@ namespace Slash.Unity.Common.Diagnostics
 
         private Vector2 scrollPositionGameSpecific;
 
-        private bool showConsole = true;
-
         private Vector2 scrollPositionQuickCheats;
+
+        private bool showConsole = true;
 
         #endregion
 

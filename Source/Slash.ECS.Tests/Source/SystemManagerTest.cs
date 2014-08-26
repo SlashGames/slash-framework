@@ -10,7 +10,6 @@ namespace Slash.ECS.Tests
 
     using NUnit.Framework;
 
-    using Slash.ECS;
     using Slash.ECS.Systems;
 
     /// <summary>

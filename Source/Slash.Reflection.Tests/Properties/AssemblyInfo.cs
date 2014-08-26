@@ -12,7 +12,8 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Slash.Reflection.Tests")]
-[assembly: AssemblyDescription("Unit tests for the abstraction of .NET reflections from the underlying runtime platform.")]
+[assembly:
+    AssemblyDescription("Unit tests for the abstraction of .NET reflections from the underlying runtime platform.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Slash Games")]
 [assembly: AssemblyProduct("Slash.Reflection.Tests")]

@@ -17,6 +17,10 @@ namespace Slash.Unity.Common.Utils
         /// </summary>
         public string VersionFilePath = "Misc/Version";
 
+        #endregion
+
+        #region Public Properties
+
         public string Version { get; private set; }
 
         #endregion

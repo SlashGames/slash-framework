@@ -13,7 +13,6 @@ namespace Slash.Unity.Common.ECS
     using Slash.ECS.Components;
     using Slash.ECS.Events;
     using Slash.Reflection.Utils;
-    using Slash.Unity.Common.ECS;
 
     using UnityEngine;
 

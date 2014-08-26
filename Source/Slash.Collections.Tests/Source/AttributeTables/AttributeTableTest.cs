@@ -18,6 +18,13 @@ namespace Slash.Collections.Tests.Source.AttributeTables
         #region Public Methods and Operators
 
         [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestAddNullKey()
+        {
+            new AttributeTable { { null, 1 } };
+        }
+
+        [Test]
         public void TestSerialization()
         {
             AttributeTable attributeTable = new AttributeTable { { "one", 1 } };
@@ -29,13 +36,6 @@ namespace Slash.Collections.Tests.Source.AttributeTables
         {
             AttributeTable attributeTable = new AttributeTable { { "null", null } };
             SerializationTestUtils.TestXmlSerialization(attributeTable);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void TestAddNullKey()
-        {
-            new AttributeTable { { null, 1 } };
         }
 
         #endregion

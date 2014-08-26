@@ -9,7 +9,6 @@ namespace Slash.ECS.Tests.Inspector.Utils
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
-    using Slash.ECS;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Inspector.Utils;

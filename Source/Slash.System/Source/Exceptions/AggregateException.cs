@@ -34,36 +34,66 @@ namespace Slash.SystemExt.Exceptions
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Constructs a new, empty aggregate exception.
+        /// </summary>
         public AggregateException()
             : this(new List<Exception>())
         {
         }
 
+        /// <summary>
+        ///   Constructs a new aggreate exception wrapping the passed inner exceptions.
+        /// </summary>
+        /// <param name="innerExceptions">Inner exceptions to wrap.</param>
         public AggregateException(params Exception[] innerExceptions)
             : this(new List<Exception>(innerExceptions))
         {
         }
 
+        /// <summary>
+        ///   Constructs a new aggreate exception wrapping the passed inner exceptions.
+        /// </summary>
+        /// <param name="innerExceptions">Inner exceptions to wrap.</param>
         public AggregateException(IEnumerable<Exception> innerExceptions)
             : this(DefaultMessage, innerExceptions)
         {
         }
 
+        /// <summary>
+        ///   Constructs a new, empty aggregate exception with the specified detail message.
+        /// </summary>
+        /// <param name="message">Error message that explains the reason for the exception.</param>
         public AggregateException(string message)
             : this(message, new List<Exception>())
         {
         }
 
+        /// <summary>
+        ///   Constructs a new aggregate exception to wrap the passed inner exception with the specified detail message.
+        /// </summary>
+        /// <param name="message">Error message that explains the reason for the exception.</param>
+        /// <param name="innerException">Exception to wrap.</param>
         public AggregateException(string message, Exception innerException)
             : this(message, new List<Exception> { innerException })
         {
         }
 
+        /// <summary>
+        ///   Constructs a new aggreate exception wrapping the passed inner exceptions with the specified detail message.
+        /// </summary>
+        /// <param name="message">Error message that explains the reason for the exception.</param>
+        /// <param name="innerExceptions">Inner exceptions to wrap.</param>
         public AggregateException(string message, params Exception[] innerExceptions)
             : this(message, new List<Exception>(innerExceptions))
         {
         }
 
+        /// <summary>
+        ///   Constructs a new aggreate exception wrapping the passed inner exceptions with the specified detail message.
+        /// </summary>
+        /// <param name="message">Error message that explains the reason for the exception.</param>
+        /// <param name="innerExceptions">Inner exceptions to wrap.</param>
         public AggregateException(string message, IEnumerable<Exception> innerExceptions)
             : base(message, innerExceptions.FirstOrDefault())
         {
@@ -75,6 +105,9 @@ namespace Slash.SystemExt.Exceptions
 
         #region Public Properties
 
+        /// <summary>
+        ///   Wrapped exceptions.
+        /// </summary>
         public ReadOnlyCollection<Exception> InnerExceptions
         {
             get

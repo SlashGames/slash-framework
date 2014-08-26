@@ -44,14 +44,14 @@ namespace Slash.ECS.Inspector.Attributes
         #region Public Properties
 
         /// <summary>
-        ///   Maximum length of the string.
-        /// </summary>
-        public int MaxLength { get; set; }
-
-        /// <summary>
         ///   Whether this string should be localized to different languages and just represents a localization id.
         /// </summary>
         public bool Localized { get; set; }
+
+        /// <summary>
+        ///   Maximum length of the string.
+        /// </summary>
+        public int MaxLength { get; set; }
 
         #endregion
 
@@ -89,6 +89,13 @@ namespace Slash.ECS.Inspector.Attributes
             return new List<string>();
         }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        ///   A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format("Name: {0}, MaxLength: {1}, Default: {2}", this.Name, this.MaxLength, this.Default);

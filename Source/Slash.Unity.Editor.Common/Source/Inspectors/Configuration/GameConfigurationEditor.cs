@@ -10,6 +10,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
     using System.Collections.Generic;
 
     using Slash.Collections.AttributeTables;
+    using Slash.Collections.Extensions;
     using Slash.Collections.Utils;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;

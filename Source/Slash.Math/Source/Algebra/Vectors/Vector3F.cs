@@ -11,6 +11,9 @@ namespace Slash.Math.Algebra.Vectors
 
     using Slash.Math.Utils;
 
+    /// <summary>
+    ///   3-dimensional float vector.
+    /// </summary>
     [Serializable]
     public class Vector3F
     {
@@ -64,6 +67,9 @@ namespace Slash.Math.Algebra.Vectors
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Constructs a new zero vector.
+        /// </summary>
         public Vector3F()
         {
             this.X = 0;
@@ -320,6 +326,16 @@ namespace Slash.Math.Algebra.Vectors
             return Dot(this, vector);
         }
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.
+        /// </returns>
+        /// <param name="obj">
+        ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
+        /// </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -347,6 +363,13 @@ namespace Slash.Math.Algebra.Vectors
             return MathUtils.Sqrt(this.GetSquareDistance(vector));
         }
 
+        /// <summary>
+        ///   Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             unchecked
@@ -380,7 +403,8 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> Square distance between this and the passed vector. </returns>
         public float GetSquareDistance(Vector3F vector)
         {
-            return MathUtils.Pow2(vector.X - this.X) + MathUtils.Pow2(vector.Y - this.Y) + MathUtils.Pow2(vector.Z - this.Z);
+            return MathUtils.Pow2(vector.X - this.X) + MathUtils.Pow2(vector.Y - this.Y)
+                   + MathUtils.Pow2(vector.Z - this.Z);
         }
 
         /// <summary>
@@ -396,6 +420,13 @@ namespace Slash.Math.Algebra.Vectors
             return new Vector3F(this.X, this.Y, this.Z);
         }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        ///   A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format(
@@ -409,8 +440,21 @@ namespace Slash.Math.Algebra.Vectors
 
         #region Methods
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="Vector3F" /> is equal to the current <see cref="Vector3F" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="Vector3F" /> is equal to the current <see cref="Vector3F" />; otherwise, false.
+        /// </returns>
+        /// <param name="other">
+        ///   The <see cref="Vector3F" /> to compare with the current <see cref="Vector3F" />.
+        /// </param>
         protected bool Equals(Vector3F other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException("other");
+            }
             return this.X.Equals(other.X) && this.Y.Equals(other.Y) && this.Z.Equals(other.Z);
         }
 

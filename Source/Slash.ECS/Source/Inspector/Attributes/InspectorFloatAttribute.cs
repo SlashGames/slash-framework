@@ -31,7 +31,7 @@ namespace Slash.ECS.Inspector.Attributes
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Exposes the property to the landscape designer inspector.
+        ///   Exposes the property to the inspector.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
         public InspectorFloatAttribute(string name)
@@ -99,6 +99,13 @@ namespace Slash.ECS.Inspector.Attributes
             return new List<float>();
         }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        ///   A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format(

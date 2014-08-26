@@ -83,7 +83,8 @@ namespace Slash.Reflection.Utils
             List<Type> types = new List<Type>();
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-                foreach (var typeInfo in assembly.DefinedTypes.Where(definedType => definedType.GetCustomAttribute<T>() != null))
+                foreach (var typeInfo in
+                    assembly.DefinedTypes.Where(definedType => definedType.GetCustomAttribute<T>() != null))
                 {
                     types.Add(typeInfo.AsType());
                 }
@@ -98,8 +99,7 @@ namespace Slash.Reflection.Utils
         /// </summary>
         /// <param name="action">Action to execute for found types and their attribute.</param>
         /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
-        public static void HandleTypesWithAttribute<T>(Action<Type, T> action)
-            where T : Attribute
+        public static void HandleTypesWithAttribute<T>(Action<Type, T> action) where T : Attribute
         {
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {

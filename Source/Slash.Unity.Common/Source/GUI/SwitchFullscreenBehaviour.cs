@@ -10,13 +10,13 @@ namespace Slash.Unity.Common.GUI
 
     public class SwitchFullscreenBehaviour : MonoBehaviour
     {
-        #region Fields  
+        #region Fields
 
         /// <summary>
         ///   Key to switch fullscreen.
         /// </summary>
         public KeyCode KeyCode = KeyCode.F10;
-        
+
         #endregion
 
         #region Methods

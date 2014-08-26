@@ -119,6 +119,16 @@ namespace Slash.ECS.Configurations
             return new EntityConfiguration(this);
         }
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.
+        /// </returns>
+        /// <param name="obj">
+        ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
+        /// </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -139,6 +149,13 @@ namespace Slash.ECS.Configurations
             return this.Equals((EntityConfiguration)obj);
         }
 
+        /// <summary>
+        ///   Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             unchecked
@@ -150,6 +167,13 @@ namespace Slash.ECS.Configurations
             }
         }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        ///   A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format(
@@ -163,6 +187,18 @@ namespace Slash.ECS.Configurations
 
         #region Methods
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="EntityConfiguration" /> is equal to the current
+        ///   <see
+        ///     cref="EntityConfiguration" />
+        ///   .
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="EntityConfiguration" /> is equal to the current <see cref="EntityConfiguration" />; otherwise, false.
+        /// </returns>
+        /// <param name="other">
+        ///   The <see cref="EntityConfiguration" /> to compare with the current <see cref="EntityConfiguration" />.
+        /// </param>
         protected bool Equals(EntityConfiguration other)
         {
             return CollectionUtils.SequenceEqual(this.AdditionalComponentTypes, other.AdditionalComponentTypes)
@@ -172,13 +208,22 @@ namespace Slash.ECS.Configurations
 
         #endregion
 
-        public void Deserialize(BinaryDeserializer serializer)
+        /// <summary>
+        ///   Reads this object from its binary representation.
+        /// </summary>
+        /// <param name="deserializer">Deserializer to read the object with.</param>
+        public void Deserialize(BinaryDeserializer deserializer)
         {
-            this.AdditionalComponentTypes = serializer.Deserialize<string[]>().Select(ReflectionUtils.FindType).ToList();
-            this.BlueprintId = serializer.Deserialize<string>();
-            this.Configuration = serializer.Deserialize<AttributeTable>();
+            this.AdditionalComponentTypes =
+                deserializer.Deserialize<string[]>().Select(ReflectionUtils.FindType).ToList();
+            this.BlueprintId = deserializer.Deserialize<string>();
+            this.Configuration = deserializer.Deserialize<AttributeTable>();
         }
 
+        /// <summary>
+        ///   Converts this object to its binary representation.
+        /// </summary>
+        /// <param name="serializer">Serializer to writer this object with.</param>
         public void Serialize(BinarySerializer serializer)
         {
             serializer.Serialize(

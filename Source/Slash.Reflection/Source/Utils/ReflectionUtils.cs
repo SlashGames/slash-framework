@@ -11,6 +11,8 @@ namespace Slash.Reflection.Utils
     using System.Linq;
     using System.Reflection;
 
+    using Slash.SystemExt.Utils;
+
     /// <summary>
     ///   Provides utility methods for reflecting types and members.
     /// </summary>
@@ -49,7 +51,7 @@ namespace Slash.Reflection.Utils
             }
 
             // Split type name from .dll version.
-            fullName = SystemExt.Utils.SystemExtensions.RemoveAssemblyInfo(fullName);
+            fullName = SystemExtensions.RemoveAssemblyInfo(fullName);
 
             Type t = Type.GetType(fullName);
 
@@ -109,8 +111,7 @@ namespace Slash.Reflection.Utils
         /// </summary>
         /// <param name="action">Action to execute for found types and their attribute.</param>
         /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
-        public static void HandleTypesWithAttribute<T>(Action<Type, T> action)
-            where T : Attribute
+        public static void HandleTypesWithAttribute<T>(Action<Type, T> action) where T : Attribute
         {
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {

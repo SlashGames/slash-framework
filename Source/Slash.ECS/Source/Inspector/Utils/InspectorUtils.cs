@@ -13,10 +13,19 @@ namespace Slash.ECS.Inspector.Utils
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
 
+    /// <summary>
+    ///   Utility methods for collecting inspector data and initializing objects.
+    /// </summary>
     public static class InspectorUtils
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Returns inspector data for all inspectable properties of the specified type.
+        /// </summary>
+        /// <param name="inspectorType">Type to get inspector data for.</param>
+        /// <param name="conditionalInspectors">Dictionary to be filled with conditions for inspectors to be shown.</param>
+        /// <returns>Inspector data for all inspectable properties of the specified type.</returns>
         public static List<InspectorPropertyAttribute> CollectInspectorProperties(
             Type inspectorType,
             ref Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute> conditionalInspectors)
@@ -64,8 +73,18 @@ namespace Slash.ECS.Inspector.Utils
             return inspectorProperties;
         }
 
-        public static T CreateFromAttributeTable<T>(Game game, InspectorType inspectorType, IAttributeTable attributeTable)
-            where T : class
+        /// <summary>
+        ///   Creates an object of the specified type and initializes it with
+        ///   values from the passed attribute table, or default values of the
+        ///   respective inspector properties, if no attribute value is present.
+        /// </summary>
+        /// <typeparam name="T">Type of the object to create.</typeparam>
+        /// <param name="game">Game to use for initializing the object, e.g. for creating entities from entity configuration attributes.</param>
+        /// <param name="inspectorType">Inspector data of the type of the object to create.</param>
+        /// <param name="attributeTable">Attribute table to initialize the object with.</param>
+        /// <returns>Initialized new object of the specified type.</returns>
+        public static T CreateFromAttributeTable<T>(
+            Game game, InspectorType inspectorType, IAttributeTable attributeTable) where T : class
         {
             // Create object.
             T obj = (T)Activator.CreateInstance(inspectorType.Type);
@@ -80,6 +99,7 @@ namespace Slash.ECS.Inspector.Utils
         ///   Initializes an object by getting its inspector properties via reflection and
         ///   look them up in the specified attribute table.
         /// </summary>
+        /// <param name="game">Game to use for initializing the object, e.g. for creating entities from entity configuration attributes.</param>
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
         public static void InitFromAttributeTable(Game game, object obj, IAttributeTable attributeTable)
@@ -102,11 +122,13 @@ namespace Slash.ECS.Inspector.Utils
         ///   Initializes an object by getting its inspector properties from the specified inspector type
         ///   and look them up in the specified attribute table.
         /// </summary>
+        /// <param name="game">Game to use for initializing the object, e.g. for creating entities from entity configuration attributes.</param>
+        /// ///
         /// <param name="inspectorType">Contains information about the properties of the object.</param>
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
-        public static void InitFromAttributeTable(Game game,
-            InspectorType inspectorType, object obj, IAttributeTable attributeTable)
+        public static void InitFromAttributeTable(
+            Game game, InspectorType inspectorType, object obj, IAttributeTable attributeTable)
         {
             if (attributeTable == null)
             {

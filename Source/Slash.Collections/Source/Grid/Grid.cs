@@ -111,26 +111,6 @@ namespace Slash.Collections.Grid
             return (this.grid != null ? this.grid.GetHashCode() : 0);
         }
 
-        public override string ToString()
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            for (int i = 0; i < this.grid.GetLength(0); i++)
-            {
-                stringBuilder.Append("[ ");
-
-                for (int j = 0; j < this.grid.GetLength(1); j++)
-                {
-                    stringBuilder.AppendFormat("{0}, ", this.grid[i, j]);
-                }
-
-                stringBuilder.Length = stringBuilder.Length - 2;
-                stringBuilder.AppendLine("]");
-            }
-
-            return stringBuilder.ToString();
-        }
-
         public T GetObjectAt(int x, int y)
         {
             if (x < 0 || x >= this.grid.GetLength(0))
@@ -182,6 +162,26 @@ namespace Slash.Collections.Grid
             }
 
             this.grid[x, y] = gridObject;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 0; i < this.grid.GetLength(0); i++)
+            {
+                stringBuilder.Append("[ ");
+
+                for (int j = 0; j < this.grid.GetLength(1); j++)
+                {
+                    stringBuilder.AppendFormat("{0}, ", this.grid[i, j]);
+                }
+
+                stringBuilder.Length = stringBuilder.Length - 2;
+                stringBuilder.AppendLine("]");
+            }
+
+            return stringBuilder.ToString();
         }
 
         public bool TryGetObject(int x, int y, out T gridObject)

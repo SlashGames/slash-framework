@@ -12,7 +12,6 @@ namespace Slash.ECS.Tests
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
-    using Slash.ECS;
     using Slash.ECS.Components;
     using Slash.ECS.Events;
     using Slash.ECS.Systems;
@@ -90,6 +89,38 @@ namespace Slash.ECS.Tests
         }
 
         /// <summary>
+        ///   Tests that delayed events are correctly dispatched when calling ProcessEvents while processing.
+        /// </summary>
+        [Test]
+        public void TestDelayedEventsDispatchedWhenProcessEventsWhileProcessing()
+        {
+            const int TestEvent1 = 1;
+            const int TestEvent2 = 2;
+            const int TestEvent3 = 3;
+            const float dt = 0.5f;
+            this.game.EventManager.RegisterListener(
+                TestEvent1,
+                ev =>
+                    {
+                        this.game.EventManager.QueueEvent(TestEvent3);
+                        this.game.EventManager.ProcessEvents(dt);
+                    });
+            List<object> events = new List<object>();
+            this.game.EventManager.RegisterListener(ev => events.Add(ev.EventType));
+
+            // Queue two events.
+            this.game.EventManager.QueueEvent(TestEvent1);
+            this.game.EventManager.FireDelayed(dt * 1.5f, TestEvent2);
+
+            // Process events.
+            this.game.EventManager.ProcessEvents(dt);
+
+            // Check order.
+            Assert.IsTrue(
+                CollectionUtils.SequenceEqual(events, new List<object> { TestEvent1, TestEvent3, TestEvent2 }));
+        }
+
+        /// <summary>
         ///   Tests whether the appropriate event is fired on creating a new entity.
         /// </summary>
         [Test]
@@ -161,30 +192,6 @@ namespace Slash.ECS.Tests
         }
 
         /// <summary>
-        ///   Tests removing a listener for a specific event.
-        /// </summary>
-        [Test]
-        public void TestRemoveListener()
-        {
-            this.game.EventManager.RegisterListener(FrameworkEvent.EntityCreated, this.OnEntityCreated);
-            this.game.EventManager.RemoveListener(FrameworkEvent.EntityCreated, this.OnEntityCreated);
-            this.game.EntityManager.CreateEntity();
-            this.game.EventManager.ProcessEvents();
-            Assert.IsFalse(this.testPassed);
-        }
-
-        /// <summary>
-        ///   Tests whether the appropriate event is fired on adding a new system.
-        /// </summary>
-        [Test]
-        public void TestSystemAddedEvent()
-        {
-            this.game.EventManager.RegisterListener(FrameworkEvent.SystemAdded, this.OnSystemAdded);
-            this.game.SystemManager.AddSystem(this.system);
-            this.CheckTestPassed();
-        }
-
-        /// <summary>
         ///   Tests that event order is maintained even if ProcessEvents is called while processing events.
         /// </summary>
         [Test]
@@ -212,39 +219,31 @@ namespace Slash.ECS.Tests
 
             // Check order.
             Assert.IsTrue(
-                CollectionUtils.SequenceEqual(events, new List<object>() { TestEvent1, TestEvent2, TestEvent3 }));
+                CollectionUtils.SequenceEqual(events, new List<object> { TestEvent1, TestEvent2, TestEvent3 }));
         }
 
         /// <summary>
-        ///   Tests that delayed events are correctly dispatched when calling ProcessEvents while processing.
+        ///   Tests removing a listener for a specific event.
         /// </summary>
         [Test]
-        public void TestDelayedEventsDispatchedWhenProcessEventsWhileProcessing()
+        public void TestRemoveListener()
         {
-            const int TestEvent1 = 1;
-            const int TestEvent2 = 2;
-            const int TestEvent3 = 3;
-            const float dt = 0.5f;
-            this.game.EventManager.RegisterListener(
-                TestEvent1,
-                ev =>
-                {
-                    this.game.EventManager.QueueEvent(TestEvent3);
-                    this.game.EventManager.ProcessEvents(dt);
-                });
-            List<object> events = new List<object>();
-            this.game.EventManager.RegisterListener(ev => events.Add(ev.EventType));
+            this.game.EventManager.RegisterListener(FrameworkEvent.EntityCreated, this.OnEntityCreated);
+            this.game.EventManager.RemoveListener(FrameworkEvent.EntityCreated, this.OnEntityCreated);
+            this.game.EntityManager.CreateEntity();
+            this.game.EventManager.ProcessEvents();
+            Assert.IsFalse(this.testPassed);
+        }
 
-            // Queue two events.
-            this.game.EventManager.QueueEvent(TestEvent1);
-            this.game.EventManager.FireDelayed(dt * 1.5f, TestEvent2);
-
-            // Process events.
-            this.game.EventManager.ProcessEvents(dt);
-
-            // Check order.
-            Assert.IsTrue(
-                CollectionUtils.SequenceEqual(events, new List<object>() { TestEvent1, TestEvent3, TestEvent2 }));
+        /// <summary>
+        ///   Tests whether the appropriate event is fired on adding a new system.
+        /// </summary>
+        [Test]
+        public void TestSystemAddedEvent()
+        {
+            this.game.EventManager.RegisterListener(FrameworkEvent.SystemAdded, this.OnSystemAdded);
+            this.game.SystemManager.AddSystem(this.system);
+            this.CheckTestPassed();
         }
 
         #endregion

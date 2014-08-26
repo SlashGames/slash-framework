@@ -6,6 +6,9 @@
 
 namespace Slash.Math.Algebra.Vectors
 {
+    /// <summary>
+    ///   Conversions between 2- and 3-dimensional vectors.
+    /// </summary>
     public static class VectorExtensions
     {
         #region Public Methods and Operators

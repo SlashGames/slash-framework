@@ -12,7 +12,7 @@ namespace Slash.Serialization.Dictionary
     using System.Runtime.Serialization;
 
     /// <summary>
-    ///   Context for serializing and deserializing arbitrary types as dictionaries to Plists.
+    ///   Context for converting objects to dictionaries and back.
     /// </summary>
     public class DictionarySerializationContext
     {
@@ -146,7 +146,7 @@ namespace Slash.Serialization.Dictionary
                     Type genericType = type.GetGenericTypeDefinition();
                     if (genericType != null && this.genericSerializerMap.TryGetValue(genericType, out serializer))
                     {
-                        return serializer.deserialize(this, (Dictionary<string, object>)data);
+                        return serializer.Deserialize(this, (Dictionary<string, object>)data);
                     }
                 }
 
@@ -166,7 +166,7 @@ namespace Slash.Serialization.Dictionary
                 throw new ArgumentException(string.Format("Unsupported type for dictionary serialization: {0}", type));
             }
 
-            return serializer.deserialize(this, (Dictionary<string, object>)data);
+            return serializer.Deserialize(this, (Dictionary<string, object>)data);
         }
 
         /// <summary>
@@ -209,8 +209,7 @@ namespace Slash.Serialization.Dictionary
         }
 
         /// <summary>
-        ///   Serializes the passed object to a data dictionary that can be
-        ///   written to a Plist.
+        ///   Serializes the passed object to a data dictionary.
         /// </summary>
         /// <param name="obj">Object to serialize.</param>
         /// <returns>Object serialized as data dictionary.</returns>
@@ -226,8 +225,7 @@ namespace Slash.Serialization.Dictionary
         }
 
         /// <summary>
-        ///   Serializes this context to a data dictionary that can be
-        ///   written to a Plist.
+        ///   Serializes this context to a data dictionary.
         /// </summary>
         /// <returns>This context serialized as data dictionary.</returns>
         public object serializeContext()
@@ -389,7 +387,7 @@ namespace Slash.Serialization.Dictionary
                     Type genericType = type.GetGenericTypeDefinition();
                     if (genericType != null && this.genericSerializerMap.TryGetValue(genericType, out serializer))
                     {
-                        return serializer.serialize(this, obj);
+                        return serializer.Serialize(this, obj);
                     }
                 }
 
@@ -409,12 +407,11 @@ namespace Slash.Serialization.Dictionary
                     string.Format("Unsupported type for dictionary serialization: {0}", type), "obj");
             }
 
-            return serializer.serialize(this, obj);
+            return serializer.Serialize(this, obj);
         }
 
         /// <summary>
-        ///   Serializes the passed object to a data dictionary that can be
-        ///   written to a Plist by reflecting its type.
+        ///   Serializes the passed object to a data dictionary by reflecting its type.
         /// </summary>
         /// <param name="obj">Object to serialize.</param>
         /// <returns>Object serialized as data dictionary</returns>

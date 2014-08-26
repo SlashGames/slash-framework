@@ -321,6 +321,9 @@ namespace Slash.Math.Geometry.Rectangles
             }
         }
 
+        /// <summary>
+        ///   Maximum x-value of this rectangle.
+        /// </summary>
         public int XMax
         {
             get
@@ -329,6 +332,9 @@ namespace Slash.Math.Geometry.Rectangles
             }
         }
 
+        /// <summary>
+        ///   Minimum x-value of this rectangle.
+        /// </summary>
         public int XMin
         {
             get
@@ -353,6 +359,9 @@ namespace Slash.Math.Geometry.Rectangles
             }
         }
 
+        /// <summary>
+        ///   Maximum y-value of this rectangle.
+        /// </summary>
         public int YMax
         {
             get
@@ -361,6 +370,9 @@ namespace Slash.Math.Geometry.Rectangles
             }
         }
 
+        /// <summary>
+        ///   Minimum x-value of this rectangle.
+        /// </summary>
         public int YMin
         {
             get
@@ -426,12 +438,32 @@ namespace Slash.Math.Geometry.Rectangles
             return new RectangleI(xMin, yMin, xMax - xMin + 1, yMax - yMin + 1);
         }
 
+        /// <summary>
+        ///   Calculates the point closest to the specified position on the border of this rectangle.
+        ///   If this rectangle contains the specified position, the position is returned instead.
+        /// </summary>
+        /// <param name="position">Position to calculate the closest border point for.</param>
+        /// <returns>
+        ///   Closest point to the specified position on the border of this rectangle,
+        ///   if this rectangle doesn't contain that position, and the position otherwise.
+        /// </returns>
         public Vector2I CalculateClosestPoint(Vector2I position)
         {
             return new Vector2I(
                 MathUtils.Clamp(position.X, this.XMin, this.XMax), MathUtils.Clamp(position.Y, this.YMin, this.YMax));
         }
 
+        /// <summary>
+        ///   Calculates the point closest to the specified position on the border of this rectangle
+        ///   with width <paramref name="threshold" />.
+        ///   If this rectangle contains the specified position, the position is returned instead.
+        /// </summary>
+        /// <param name="position">Position to calculate the closest border point for.</param>
+        /// <param name="threshold">Thickness of the rectangle border.</param>
+        /// <returns>
+        ///   Closest point to the specified position on the border of this rectangle,
+        ///   if this rectangle doesn't contain that position, and the position otherwise.
+        /// </returns>
         public Vector2F CalculateClosestPoint(Vector2F position, Vector2F threshold)
         {
             if (threshold.X < 0 || threshold.Y < 0)
@@ -443,6 +475,17 @@ namespace Slash.Math.Geometry.Rectangles
                 MathUtils.Clamp(position.Y, this.YMin + threshold.Y, this.YMax - threshold.Y));
         }
 
+        /// <summary>
+        ///   Calculates the point closest to the specified position on the border of this rectangle
+        ///   with width <paramref name="threshold" />.
+        ///   If this rectangle contains the specified position, the position is returned instead.
+        /// </summary>
+        /// <param name="position">Position to calculate the closest border point for.</param>
+        /// <param name="threshold">Thickness of the rectangle border.</param>
+        /// <returns>
+        ///   Closest point to the specified position on the border of this rectangle,
+        ///   if this rectangle doesn't contain that position, and the position otherwise.
+        /// </returns>
         public Vector2I CalculateClosestPoint(Vector2I position, Vector2I threshold)
         {
             if (threshold.X < 0 || threshold.Y < 0)

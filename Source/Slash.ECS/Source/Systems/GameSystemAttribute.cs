@@ -16,6 +16,9 @@ namespace Slash.ECS.Systems
     {
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   System that is automatically added to the game.
+        /// </summary>
         public GameSystemAttribute()
         {
             this.Enabled = true;

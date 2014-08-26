@@ -6,10 +6,17 @@
 
 namespace Slash.ECS.Inspector.Attributes
 {
+    /// <summary>
+    ///   Exposes the property to the inspector.
+    /// </summary>
     public class InspectorVectorAttribute : InspectorPropertyAttribute
     {
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Exposes the property to the inspector.
+        /// </summary>
+        /// <param name="name">Property name to be shown in the inspector.</param>
         public InspectorVectorAttribute(string name)
             : base(name)
         {

@@ -8,6 +8,9 @@ namespace Slash.ECS.Blueprints
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    ///   Maps blueprint ids to blueprints.
+    /// </summary>
     public interface IBlueprintManager : IEnumerable<Blueprint>
     {
         #region Public Properties
@@ -27,7 +30,6 @@ namespace Slash.ECS.Blueprints
         /// <param name="blueprintId">Blueprint id of new blueprint.</param>
         /// <param name="blueprint">Blueprint to add.</param>
         void AddBlueprint(string blueprintId, Blueprint blueprint);
-
 
         /// <summary>
         ///   Changes the id under which a blueprint is stored.
@@ -52,7 +54,7 @@ namespace Slash.ECS.Blueprints
         Blueprint GetBlueprint(string blueprintId);
 
         /// <summary>
-        ///   Removes the blueprint with the specified id. Returns if the blueprint was removed.
+        ///   Removes the blueprint with the specified id. Returns whether the blueprint was removed.
         /// </summary>
         /// <param name="blueprintId">Id of blueprint to search for.</param>
         /// <returns>True if the blueprint was removed; otherwise, false.</returns>

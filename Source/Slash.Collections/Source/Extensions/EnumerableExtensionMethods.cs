@@ -12,7 +12,7 @@ namespace Slash.Collections.Extensions
     using System.Linq;
 
     /// <summary>
-    ///   Extension methods for IEnumerable and IEnumerable{T}.
+    ///   Extension methods for enumerables.
     /// </summary>
     public static class EnumerableExtensionMethods
     {
@@ -26,6 +26,21 @@ namespace Slash.Collections.Extensions
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Checks whether the first sequence contains all elements of the second one.
+        /// </summary>
+        /// <typeparam name="T">Type of the sequence to check.</typeparam>
+        /// <param name="first">Containing sequence.</param>
+        /// <param name="second">Contained sequence.</param>
+        /// <returns>
+        ///   <c>true</c>, if the first sequence contains all elements of the second one, and
+        ///   <c>false</c> otherwise.
+        /// </returns>
+        public static bool ContainsAll<T>(this IEnumerable<T> first, IEnumerable<T> second)
+        {
+            return second.All(first.Contains);
+        }
 
         /// <summary>
         ///   Determines whether the collection is null or contains no elements.
@@ -59,6 +74,64 @@ namespace Slash.Collections.Extensions
             }
 
             return !enumerable.Cast<object>().Any();
+        }
+
+        /// <summary>
+        ///   Returns a random item from the specified sequence.
+        /// </summary>
+        /// <typeparam name="T">Type of sequence items.</typeparam>
+        /// <param name="sequence">Sequence to get item from.</param>
+        /// <returns>Time-dependent random item.</returns>
+        public static T RandomItem<T>(this IEnumerable<T> sequence)
+        {
+            Random random = new Random();
+
+            T current = default(T);
+            int count = 0;
+            foreach (T element in sequence)
+            {
+                count++;
+                if (random.Next(count) == 0)
+                {
+                    current = element;
+                }
+            }
+            if (count == 0)
+            {
+                throw new InvalidOperationException("Sequence was empty");
+            }
+            return current;
+        }
+
+        /// <summary>
+        ///   Returns a random item from the specified sequence or the default value of the
+        ///   specified type if the sequence is null or empty.
+        /// </summary>
+        /// <typeparam name="T">Type of sequence items.</typeparam>
+        /// <param name="sequence">Sequence to get item from.</param>
+        /// <returns>Time-dependent random item.</returns>
+        public static T RandomItemOrDefault<T>(this IEnumerable<T> sequence)
+        {
+            return sequence.RandomItemOrDefault(default(T));
+        }
+
+        /// <summary>
+        ///   Returns a random item from the specified sequence or the specified default value if
+        ///   the sequence is null or empty.
+        /// </summary>
+        /// <typeparam name="T">Type of sequence items.</typeparam>
+        /// <param name="sequence">Sequence to get item from.</param>
+        /// <param name="defaultValue">Default value to use if the sequence is null or empty.</param>
+        /// <returns>Time-dependent random item.</returns>
+        public static T RandomItemOrDefault<T>(this IEnumerable<T> sequence, T defaultValue)
+        {
+            IEnumerable<T> list = sequence as IList<T> ?? sequence.ToList();
+            if (sequence == null || !list.Any())
+            {
+                return defaultValue;
+            }
+
+            return list.RandomItem();
         }
 
         /// <summary>
@@ -191,6 +264,34 @@ namespace Slash.Collections.Extensions
 
             // NOTE(co): The method should never get here.
             throw new Exception("Algorithm didn't work correctly.");
+        }
+
+        /// <summary>
+        ///   Returns a random weighted item from the specified sequence.
+        ///   Uses the specified function to get the weight of an item.
+        ///   Idea was taken from http://stackoverflow.com/questions/17912005/quick-way-of-selecting-a-random-item-from-a-list-with-varying-probabilities-ba
+        /// </summary>
+        /// <typeparam name="T">Type of sequence items.</typeparam>
+        /// <param name="sequence">Sequence to get item from.</param>
+        /// <param name="getWeight">Function to get weight of an item.</param>
+        /// <param name="random">Random number generator.</param>
+        /// <returns>Time-dependent random item.</returns>
+        public static T RandomWeightedItem<T>(this IEnumerable<T> sequence, Func<T, float> getWeight, Random random)
+        {
+            float totalProbabilities = sequence.Sum(getWeight);
+            float probabilityPick = (float)(random.NextDouble() * totalProbabilities);
+            foreach (var item in sequence)
+            {
+                float weight = getWeight(item);
+                if (weight < probabilityPick)
+                {
+                    return item;
+                }
+
+                probabilityPick -= weight;
+            }
+
+            throw new InvalidOperationException("Not supposed to reach this point, random picking went wrong.");
         }
 
         #endregion

@@ -6,30 +6,17 @@
 
 namespace Slash.Collections.Utils
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    ///   Utility methods for enumerables and collections.
+    /// </summary>
     public static class CollectionUtils
     {
         #region Public Methods and Operators
-
-        /// <summary>
-        ///   Checks whether the first sequence contains all elements of the second one.
-        /// </summary>
-        /// <typeparam name="T">Type of the sequence to check.</typeparam>
-        /// <param name="first">Containing sequence.</param>
-        /// <param name="second">Contained sequence.</param>
-        /// <returns>
-        ///   <c>true</c>, if the first sequence contains all elements of the second one, and
-        ///   <c>false</c> otherwise.
-        /// </returns>
-        public static bool ContainsAll<T>(this IEnumerable<T> first, IEnumerable<T> second)
-        {
-            return second.All(first.Contains);
-        }
 
         /// <summary>
         ///   Compares two dictionary for equality.
@@ -85,20 +72,6 @@ namespace Slash.Collections.Utils
             return true;
         }
 
-        public static TValue GetValueOrDefault<TKey, TValue>(
-            this IDictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue)
-        {
-            TValue value;
-            return dictionary.TryGetValue(key, out value) ? value : defaultValue;
-        }
-
-        public static TValue GetValueOrDefault<TKey, TValue>(
-            this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> defaultValueProvider)
-        {
-            TValue value;
-            return dictionary.TryGetValue(key, out value) ? value : defaultValueProvider();
-        }
-
         /// <summary>
         ///   Compares the two passed lists for equality. Two lists are considered equal, if they contain equal elements in the same order.
         /// </summary>
@@ -134,92 +107,6 @@ namespace Slash.Collections.Utils
 
             // One list is null.
             return false;
-        }
-
-        /// <summary>
-        ///   Returns a random item from the specified sequence.
-        /// </summary>
-        /// <typeparam name="T">Type of sequence items.</typeparam>
-        /// <param name="sequence">Sequence to get item from.</param>
-        /// <returns>Time-dependent random item.</returns>
-        public static T RandomItem<T>(this IEnumerable<T> sequence)
-        {
-            Random random = new Random();
-
-            T current = default(T);
-            int count = 0;
-            foreach (T element in sequence)
-            {
-                count++;
-                if (random.Next(count) == 0)
-                {
-                    current = element;
-                }
-            }
-            if (count == 0)
-            {
-                throw new InvalidOperationException("Sequence was empty");
-            }
-            return current;
-        }
-
-        /// <summary>
-        ///   Returns a random item from the specified sequence or the specified default value if
-        ///   the sequence is null or empty.
-        /// </summary>
-        /// <typeparam name="T">Type of sequence items.</typeparam>
-        /// <param name="sequence">Sequence to get item from.</param>
-        /// <param name="defaultValue">Default value to use if the sequence is null or empty.</param>
-        /// <returns>Time-dependent random item.</returns>
-        public static T RandomItemOrDefault<T>(this IEnumerable<T> sequence, T defaultValue)
-        {
-            IEnumerable<T> list = sequence as IList<T> ?? sequence.ToList();
-            if (sequence == null || !list.Any())
-            {
-                return defaultValue;
-            }
-
-            return list.RandomItem();
-        }
-
-        /// <summary>
-        ///   Returns a random item from the specified sequence or the default value of the
-        ///   specified type if the sequence is null or empty.
-        /// </summary>
-        /// <typeparam name="T">Type of sequence items.</typeparam>
-        /// <param name="sequence">Sequence to get item from.</param>
-        /// <returns>Time-dependent random item.</returns>
-        public static T RandomItemOrDefault<T>(this IEnumerable<T> sequence)
-        {
-            return sequence.RandomItemOrDefault(default(T));
-        }
-
-        /// <summary>
-        ///   Returns a random weighted item from the specified sequence.
-        ///   Uses the specified function to get the weight of an item.
-        ///   Idea was taken from http://stackoverflow.com/questions/17912005/quick-way-of-selecting-a-random-item-from-a-list-with-varying-probabilities-ba
-        /// </summary>
-        /// <typeparam name="T">Type of sequence items.</typeparam>
-        /// <param name="sequence">Sequence to get item from.</param>
-        /// <param name="getWeight">Function to get weight of an item.</param>
-        /// <param name="random">Random number generator.</param>
-        /// <returns>Time-dependent random item.</returns>
-        public static T RandomWeightedItem<T>(this ICollection<T> sequence, Func<T, float> getWeight, Random random)
-        {
-            float totalProbabilities = sequence.Sum(getWeight);
-            float probabilityPick = (float)(random.NextDouble() * totalProbabilities);
-            foreach (var item in sequence)
-            {
-                float weight = getWeight(item);
-                if (weight < probabilityPick)
-                {
-                    return item;
-                }
-
-                probabilityPick -= weight;
-            }
-
-            throw new InvalidOperationException("Not supposed to reach this point, random picking went wrong.");
         }
 
         /// <summary>
@@ -271,44 +158,10 @@ namespace Slash.Collections.Utils
         }
 
         /// <summary>
-        ///   Enumerates the elements of the specified list in random order.
+        ///   Returns a comma-separated list of the elements of the passed sequence.
         /// </summary>
-        /// <typeparam name="T">Type of list to enumerate the items of.</typeparam>
-        /// <param name="list">List to enumerate the items of.</param>
-        /// <returns>List with the same items in random order.</returns>
-        public static List<T> ToRandomOrder<T>(this IList<T> list)
-        {
-            return ToRandomOrder(list, new Random());
-        }
-
-        /// <summary>
-        ///   Enumerates the elements of the specified list in random order.
-        /// </summary>
-        /// <typeparam name="T">Type of list to enumerate the items of.</typeparam>
-        /// <param name="list">List to enumerate the items of.</param>
-        /// <param name="random">Random number generator to use.</param>
-        /// <returns>List with the same items in random order.</returns>
-        public static List<T> ToRandomOrder<T>(this IList<T> list, Random random)
-        {
-            List<T> copy = new List<T>(list);
-            int count = copy.Count;
-
-            while (count > 0)
-            {
-                int next = random.Next(count);
-                Swap(copy, next, count - 1);
-                count--;
-            }
-
-            return copy;
-        }
-
-        /// <summary>
-        ///   Returns a comma-seperated list of the elements of the passed sequence.
-        /// </summary>
-        /// <typeparam name="T">Type of the elements of the sequence.</typeparam>
-        /// <param name="sequence">Sequence to get a comma-seperated list of.</param>
-        /// <returns>Comma-seperated list of the elements of the passed sequence.</returns>
+        /// <param name="sequence">Sequence to get a comma-separated list of.</param>
+        /// <returns>Comma-separated list of the elements of the passed sequence.</returns>
         public static string ToString(IEnumerable sequence)
         {
             if (sequence == null)

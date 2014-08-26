@@ -12,11 +12,18 @@ namespace Slash.ECS.Inspector.Attributes
 
     using Slash.ECS.Configurations;
 
+    /// <summary>
+    ///   Exposes the property to the inspector.
+    /// </summary>
     [Serializable]
     public class InspectorEntityAttribute : InspectorPropertyAttribute
     {
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Exposes the property to the inspector.
+        /// </summary>
+        /// <param name="name">Property name to be shown in the inspector.</param>
         public InspectorEntityAttribute(string name)
             : base(name)
         {
@@ -71,6 +78,14 @@ namespace Slash.ECS.Inspector.Attributes
             base.SetPropertyValue(game, obj, propertyValue);
         }
 
+        /// <summary>
+        ///   Tries to convert the specified text to a value of the correct type for this property.
+        /// </summary>
+        /// <param name="text">Text to convert.</param>
+        /// <param name="value">Value of the correct type for this property, if the conversion was successful.</param>
+        /// <returns>
+        ///   True if the conversion was successful; otherwise, false.
+        /// </returns>
         public override bool TryConvertStringToValue(string text, out object value)
         {
             if (string.IsNullOrEmpty(text))
