@@ -171,9 +171,11 @@ namespace Slash.Serialization.Dictionary
         public Dictionary<string, object> Serialize(DictionarySerializationContext context, object obj)
         {
             List<T> list = (List<T>)obj;
-            Dictionary<string, object> data = new Dictionary<string, object>();
-            data.Add(DataCount, list.Count);
-            data.Add(DataType, typeof(T).FullName);
+            Dictionary<string, object> data = new Dictionary<string, object>
+                {
+                    { DataCount, list.Count },
+                    { DataType, typeof(T).FullName }
+                };
 
             for (int i = 0; i < list.Count; i++)
             {
