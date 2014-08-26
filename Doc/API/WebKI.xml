@@ -108,8 +108,8 @@
   <HelpKINode Title="AnimationExtensions.WhilePlaying method" Url="html/Overload_Slash_Unity_Common_Animations_AnimationExtensions_WhilePlaying.htm" />
   <HelpKINode Title="AnyOptionSet method" Url="html/M_Slash_SystemExt_Utils_EnumExtensions_AnyOptionSet.htm" />
   <HelpKINode Title="Area method">
-    <HelpKINode Title="Vector2F.Area Method " Url="html/Overload_Slash_Math_Algebra_Vectors_Vector2F_Area.htm" />
-    <HelpKINode Title="Vector2I.Area Method " Url="html/Overload_Slash_Math_Algebra_Vectors_Vector2I_Area.htm" />
+    <HelpKINode Title="Vector2F.Area Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_Area.htm" />
+    <HelpKINode Title="Vector2I.Area Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_Area.htm" />
   </HelpKINode>
   <HelpKINode Title="Area property">
     <HelpKINode Title="RectangleF.Area Property " Url="html/P_Slash_Math_Geometry_Rectangles_RectangleF_Area.htm" />
@@ -330,7 +330,7 @@
     <HelpKINode Title="Vector3I.CalculateDotProduct Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector3I_CalculateDotProduct.htm" />
   </HelpKINode>
   <HelpKINode Title="CanBeRemoved property" Url="html/P_Slash_ECS_Inspector_Attributes_InspectorComponentAttribute_CanBeRemoved.htm" />
-  <HelpKINode Title="canSerialize method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_canSerialize.htm" />
+  <HelpKINode Title="CanSerialize method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_CanSerialize.htm" />
   <HelpKINode Title="CardinalDirections method" Url="html/M_Slash_Math_Utils_Direction_CardinalDirections.htm" />
   <HelpKINode Title="CatchExceptionsBehaviour class">
     <HelpKINode Title="CatchExceptionsBehaviour Class" Url="html/T_Slash_Unity_Common_Diagnostics_CatchExceptionsBehaviour.htm" />
@@ -572,6 +572,7 @@
     <HelpKINode Title="BinaryDeserializer.Deserialize Method " Url="html/Overload_Slash_Serialization_Binary_BinaryDeserializer_Deserialize.htm" />
     <HelpKINode Title="Blueprint.Deserialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Deserialize.htm" />
     <HelpKINode Title="DictionaryDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_Deserialize.htm" />
+    <HelpKINode Title="DictionarySerializationContext.Deserialize Method " Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_Deserialize.htm" />
     <HelpKINode Title="EntityConfiguration.Deserialize Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_Deserialize.htm" />
     <HelpKINode Title="IBinarySerializable.Deserialize Method " Url="html/M_Slash_Serialization_Binary_IBinarySerializable_Deserialize.htm" />
     <HelpKINode Title="IDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_Deserialize.htm" />
@@ -581,8 +582,7 @@
     <HelpKINode Title="StackDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_Deserialize.htm" />
     <HelpKINode Title="ValueWithTypeDictionarySerializer.Deserialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_Deserialize.htm" />
   </HelpKINode>
-  <HelpKINode Title="deserialize method" Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_deserialize.htm" />
-  <HelpKINode Title="deserializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_deserializeContext.htm" />
+  <HelpKINode Title="DeserializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_DeserializeContext.htm" />
   <HelpKINode Title="DestroyChildren method" Url="html/M_Slash_Unity_Common_Utils_UnityGameObjectUtils_DestroyChildren.htm" />
   <HelpKINode Title="DialogRect field" Url="html/F_Slash_Unity_Common_Diagnostics_CatchExceptionsBehaviour_DialogRect.htm" />
   <HelpKINode Title="DictionaryDictionarySerializer class">
@@ -617,17 +617,17 @@
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Serialization_Dictionary_DictionarySerializationContext.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Slash_Serialization_Dictionary_DictionarySerializationContext.htm" />
   </HelpKINode>
-  <HelpKINode Title="DictionarySerializationContext.canSerialize method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_canSerialize.htm" />
-  <HelpKINode Title="DictionarySerializationContext.deserialize method" Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_deserialize.htm" />
-  <HelpKINode Title="DictionarySerializationContext.deserializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_deserializeContext.htm" />
+  <HelpKINode Title="DictionarySerializationContext.CanSerialize method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_CanSerialize.htm" />
+  <HelpKINode Title="DictionarySerializationContext.Deserialize method" Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_Deserialize.htm" />
+  <HelpKINode Title="DictionarySerializationContext.DeserializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_DeserializeContext.htm" />
   <HelpKINode Title="DictionarySerializationContext.DictionarySerializationContext constructor" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext__ctor.htm" />
-  <HelpKINode Title="DictionarySerializationContext.getSerializer method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_getSerializer.htm" />
-  <HelpKINode Title="DictionarySerializationContext.isRawSerializationPossible method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_isRawSerializationPossible.htm" />
-  <HelpKINode Title="DictionarySerializationContext.serialize method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_serialize.htm" />
-  <HelpKINode Title="DictionarySerializationContext.serializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_serializeContext.htm" />
-  <HelpKINode Title="DictionarySerializationContext.setSerializer method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_setSerializer.htm" />
+  <HelpKINode Title="DictionarySerializationContext.GetSerializer method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_GetSerializer.htm" />
+  <HelpKINode Title="DictionarySerializationContext.IsRawSerializationPossible method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_IsRawSerializationPossible.htm" />
+  <HelpKINode Title="DictionarySerializationContext.Serialize method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_Serialize.htm" />
+  <HelpKINode Title="DictionarySerializationContext.SerializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_SerializeContext.htm" />
+  <HelpKINode Title="DictionarySerializationContext.SetSerializer method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_SetSerializer.htm" />
   <HelpKINode Title="DictionarySerializationContext.Settings property" Url="html/P_Slash_Serialization_Dictionary_DictionarySerializationContext_Settings.htm" />
-  <HelpKINode Title="DictionarySerializationContext.tryDeserialize method" Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_tryDeserialize.htm" />
+  <HelpKINode Title="DictionarySerializationContext.TryDeserialize method" Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_TryDeserialize.htm" />
   <HelpKINode Title="DictionarySerializationContext.Version property" Url="html/P_Slash_Serialization_Dictionary_DictionarySerializationContext_Version.htm" />
   <HelpKINode Title="Direction class">
     <HelpKINode Title="Direction Class" Url="html/T_Slash_Math_Utils_Direction.htm" />
@@ -940,9 +940,8 @@
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Editor_Common_MenuItems_Util_FindMonoBehaviourUsages.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Slash_Unity_Editor_Common_MenuItems_Util_FindMonoBehaviourUsages.htm" />
   </HelpKINode>
-  <HelpKINode Title="findMonoBehaviourUsages method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Util_FindMonoBehaviourUsages_findMonoBehaviourUsages.htm" />
   <HelpKINode Title="FindMonoBehaviourUsages.FindMonoBehaviourUsages constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Util_FindMonoBehaviourUsages__ctor.htm" />
-  <HelpKINode Title="FindMonoBehaviourUsages.findMonoBehaviourUsages method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Util_FindMonoBehaviourUsages_findMonoBehaviourUsages.htm" />
+  <HelpKINode Title="FindMonoBehaviourUsages.ShowFindMonoBehaviourUsages method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Util_FindMonoBehaviourUsages_ShowFindMonoBehaviourUsages.htm" />
   <HelpKINode Title="FindType method" Url="html/M_Slash_Reflection_Utils_ReflectionUtils_FindType.htm" />
   <HelpKINode Title="FindTypesWithAttribute(Of T) method" Url="html/M_Slash_Reflection_Utils_ReflectionUtils_FindTypesWithAttribute__1.htm" />
   <HelpKINode Title="FindTypesWithAttribute&lt;T&gt; method" Url="html/M_Slash_Reflection_Utils_ReflectionUtils_FindTypesWithAttribute__1.htm" />
@@ -1255,7 +1254,7 @@
     <HelpKINode Title="SerializableDictionary(TKey, TValue).GetSchema Method " Url="html/M_Slash_Serialization_Xml_SerializableDictionary_2_GetSchema.htm" />
     <HelpKINode Title="XmlAnything(T).GetSchema Method " Url="html/M_Slash_Serialization_Xml_XmlAnything_1_GetSchema.htm" />
   </HelpKINode>
-  <HelpKINode Title="getSerializer method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_getSerializer.htm" />
+  <HelpKINode Title="GetSerializer method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_GetSerializer.htm" />
   <HelpKINode Title="GetSquareDistance method">
     <HelpKINode Title="Vector2F.GetSquareDistance Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_GetSquareDistance.htm" />
     <HelpKINode Title="Vector2I.GetSquareDistance Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_GetSquareDistance.htm" />
@@ -1723,7 +1722,7 @@
     <HelpKINode Title="Vector2I.IsParallel Method " Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_IsParallel.htm" />
   </HelpKINode>
   <HelpKINode Title="IsPlaying property" Url="html/P_Slash_Unity_Common_Sound_FadingAudioSource_IsPlaying.htm" />
-  <HelpKINode Title="isRawSerializationPossible method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_isRawSerializationPossible.htm" />
+  <HelpKINode Title="IsRawSerializationPossible method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_IsRawSerializationPossible.htm" />
   <HelpKINode Title="IsReadOnly property" Url="html/P_Slash_Collections_ObjectModel_ReadOnlyCollection_1_IsReadOnly.htm" />
   <HelpKINode Title="IsWithinBounds(Of T) method" Url="html/M_Slash_Math_Utils_MathUtils_IsWithinBounds__1.htm" />
   <HelpKINode Title="IsWithinBounds&lt;T&gt; method" Url="html/M_Slash_Math_Utils_MathUtils_IsWithinBounds__1.htm" />
@@ -2307,7 +2306,7 @@
   <HelpKINode Title="RectangleI.RectangleI constructor" Url="html/Overload_Slash_Math_Geometry_Rectangles_RectangleI__ctor.htm" />
   <HelpKINode Title="RectangleI.Right property" Url="html/P_Slash_Math_Geometry_Rectangles_RectangleI_Right.htm" />
   <HelpKINode Title="RectangleI.Size property" Url="html/P_Slash_Math_Geometry_Rectangles_RectangleI_Size.htm" />
-  <HelpKINode Title="RectangleI.span method" Url="html/M_Slash_Math_Geometry_Rectangles_RectangleI_span.htm" />
+  <HelpKINode Title="RectangleI.Span method" Url="html/M_Slash_Math_Geometry_Rectangles_RectangleI_Span.htm" />
   <HelpKINode Title="RectangleI.Top property" Url="html/P_Slash_Math_Geometry_Rectangles_RectangleI_Top.htm" />
   <HelpKINode Title="RectangleI.TopLeft property" Url="html/P_Slash_Math_Geometry_Rectangles_RectangleI_TopLeft.htm" />
   <HelpKINode Title="RectangleI.TopRight property" Url="html/P_Slash_Math_Geometry_Rectangles_RectangleI_TopRight.htm" />
@@ -2453,17 +2452,17 @@
     <HelpKINode Title="BinarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Binary_BinarySerializer_Serialize.htm" />
     <HelpKINode Title="Blueprint.Serialize Method " Url="html/M_Slash_ECS_Blueprints_Blueprint_Serialize.htm" />
     <HelpKINode Title="DictionaryDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionaryDictionarySerializer_Serialize.htm" />
+    <HelpKINode Title="DictionarySerializationContext.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_Serialize.htm" />
     <HelpKINode Title="EntityConfiguration.Serialize Method " Url="html/M_Slash_ECS_Configurations_EntityConfiguration_Serialize.htm" />
     <HelpKINode Title="IBinarySerializable.Serialize Method " Url="html/M_Slash_Serialization_Binary_IBinarySerializable_Serialize.htm" />
     <HelpKINode Title="IDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_IDictionarySerializer_Serialize.htm" />
     <HelpKINode Title="ListDictionarySerializer(T).Serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_1_Serialize.htm" />
-    <HelpKINode Title="StackDictionarySerializer(T).Serialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_Serialize.htm" />
     <HelpKINode Title="ListDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_ListDictionarySerializer_Serialize.htm" />
+    <HelpKINode Title="StackDictionarySerializer(T).Serialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_1_Serialize.htm" />
     <HelpKINode Title="StackDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_StackDictionarySerializer_Serialize.htm" />
     <HelpKINode Title="ValueWithTypeDictionarySerializer.Serialize Method " Url="html/M_Slash_Serialization_Dictionary_ValueWithTypeDictionarySerializer_Serialize.htm" />
   </HelpKINode>
-  <HelpKINode Title="serialize method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_serialize.htm" />
-  <HelpKINode Title="serializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_serializeContext.htm" />
+  <HelpKINode Title="SerializeContext method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_SerializeContext.htm" />
   <HelpKINode Title="SerializedConfigurationKeys field" Url="html/F_Slash_Unity_Common_ECS_EntityConfigurationBehaviour_SerializedConfigurationKeys.htm" />
   <HelpKINode Title="SerializedConfigurationTypes field" Url="html/F_Slash_Unity_Common_ECS_EntityConfigurationBehaviour_SerializedConfigurationTypes.htm" />
   <HelpKINode Title="SerializedConfigurationValues field" Url="html/F_Slash_Unity_Common_ECS_EntityConfigurationBehaviour_SerializedConfigurationValues.htm" />
@@ -2482,7 +2481,7 @@
     <HelpKINode Title="InspectorEntityAttribute.SetPropertyValue Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorEntityAttribute_SetPropertyValue.htm" />
     <HelpKINode Title="InspectorPropertyAttribute.SetPropertyValue Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorPropertyAttribute_SetPropertyValue.htm" />
   </HelpKINode>
-  <HelpKINode Title="setSerializer method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_setSerializer.htm" />
+  <HelpKINode Title="SetSerializer method" Url="html/M_Slash_Serialization_Dictionary_DictionarySerializationContext_SetSerializer.htm" />
   <HelpKINode Title="Setting field" Url="html/F_Slash_Unity_Common_GUI_SleepTimeoutBehaviour_Setting.htm" />
   <HelpKINode Title="Settings property" Url="html/P_Slash_Serialization_Dictionary_DictionarySerializationContext_Settings.htm" />
   <HelpKINode Title="SetValue method">
@@ -2505,6 +2504,7 @@
   <HelpKINode Title="ShaderField method" Url="html/M_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_ShaderField.htm" />
   <HelpKINode Title="ShouldSerializeAttributeTableSerialized method" Url="html/M_Slash_ECS_Blueprints_Blueprint_ShouldSerializeAttributeTableSerialized.htm" />
   <HelpKINode Title="ShouldSerializeComponentTypesSerialized method" Url="html/M_Slash_ECS_Blueprints_Blueprint_ShouldSerializeComponentTypesSerialized.htm" />
+  <HelpKINode Title="ShowFindMonoBehaviourUsages method" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Util_FindMonoBehaviourUsages_ShowFindMonoBehaviourUsages.htm" />
   <HelpKINode Title="Shuffle method" Url="html/M_Slash_Collections_Extensions_ListExtensionMethods_Shuffle.htm" />
   <HelpKINode Title="Side field">
     <HelpKINode Title="Vector2F.Side Field" Url="html/F_Slash_Math_Algebra_Vectors_Vector2F_Side.htm" />
@@ -2783,7 +2783,7 @@
   <HelpKINode Title="South enumeration member" Url="html/T_Slash_Math_Utils_DirectionType.htm" />
   <HelpKINode Title="SouthEast enumeration member" Url="html/T_Slash_Math_Utils_DirectionType.htm" />
   <HelpKINode Title="SouthWest enumeration member" Url="html/T_Slash_Math_Utils_DirectionType.htm" />
-  <HelpKINode Title="span method" Url="html/M_Slash_Math_Geometry_Rectangles_RectangleI_span.htm" />
+  <HelpKINode Title="Span method" Url="html/M_Slash_Math_Geometry_Rectangles_RectangleI_Span.htm" />
   <HelpKINode Title="SplitByCapitalLetters method" Url="html/M_Slash_SystemExt_Utils_SystemExtensions_SplitByCapitalLetters.htm" />
   <HelpKINode Title="Sqrt method" Url="html/M_Slash_Math_Utils_MathUtils_Sqrt.htm" />
   <HelpKINode Title="SquareMagnitude property">
@@ -2986,7 +2986,7 @@
     <HelpKINode Title="InspectorPropertyAttribute.TryConvertValueToString Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorPropertyAttribute_TryConvertValueToString.htm" />
     <HelpKINode Title="InspectorStringAttribute.TryConvertValueToString Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorStringAttribute_TryConvertValueToString.htm" />
   </HelpKINode>
-  <HelpKINode Title="tryDeserialize method" Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_tryDeserialize.htm" />
+  <HelpKINode Title="TryDeserialize method" Url="html/Overload_Slash_Serialization_Dictionary_DictionarySerializationContext_TryDeserialize.htm" />
   <HelpKINode Title="TryGetBlueprint method">
     <HelpKINode Title="BlueprintManager.TryGetBlueprint Method " Url="html/M_Slash_ECS_Blueprints_BlueprintManager_TryGetBlueprint.htm" />
     <HelpKINode Title="HierarchicalBlueprintManager.TryGetBlueprint Method " Url="html/M_Slash_ECS_Blueprints_HierarchicalBlueprintManager_TryGetBlueprint.htm" />
@@ -3138,7 +3138,7 @@
   <HelpKINode Title="Vector2F.Abs method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_Abs.htm" />
   <HelpKINode Title="Vector2F.Add method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_Add.htm" />
   <HelpKINode Title="Vector2F.Addition operator" Url="html/Overload_Slash_Math_Algebra_Vectors_Vector2F_op_Addition.htm" />
-  <HelpKINode Title="Vector2F.Area method" Url="html/Overload_Slash_Math_Algebra_Vectors_Vector2F_Area.htm" />
+  <HelpKINode Title="Vector2F.Area method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_Area.htm" />
   <HelpKINode Title="Vector2F.CalculateAngle method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_CalculateAngle.htm" />
   <HelpKINode Title="Vector2F.CalculateDotProduct method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2F_CalculateDotProduct.htm" />
   <HelpKINode Title="Vector2F.Collinear method" Url="html/Overload_Slash_Math_Algebra_Vectors_Vector2F_Collinear.htm" />
@@ -3194,7 +3194,7 @@
   <HelpKINode Title="Vector2I.Abs method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_Abs.htm" />
   <HelpKINode Title="Vector2I.Add method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_Add.htm" />
   <HelpKINode Title="Vector2I.Addition operator" Url="html/Overload_Slash_Math_Algebra_Vectors_Vector2I_op_Addition.htm" />
-  <HelpKINode Title="Vector2I.Area method" Url="html/Overload_Slash_Math_Algebra_Vectors_Vector2I_Area.htm" />
+  <HelpKINode Title="Vector2I.Area method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_Area.htm" />
   <HelpKINode Title="Vector2I.CalculateAngle method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_CalculateAngle.htm" />
   <HelpKINode Title="Vector2I.CalculateDotProduct method" Url="html/M_Slash_Math_Algebra_Vectors_Vector2I_CalculateDotProduct.htm" />
   <HelpKINode Title="Vector2I.Collinear method" Url="html/Overload_Slash_Math_Algebra_Vectors_Vector2I_Collinear.htm" />

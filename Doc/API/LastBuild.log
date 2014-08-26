@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder" version="2014.5.31.0" projectFile="D:\Dev\SCM\SlashFramework\Source\Slash.Framework.shfbproj" started="8/26/2014 4:09:49 PM">
+<shfbBuild product="Sandcastle Help File Builder" version="2014.5.31.0" projectFile="D:\Dev\SCM\SlashFramework\Source\Slash.Framework.shfbproj" started="8/26/2014 5:47:28 PM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\Sandcastle Help File Builder\&#39;
@@ -51,16 +51,16 @@ Copying XML comments files
 <buildStep step="GenerateSharedContent">
 Generating shared content files (en-US, English (United States))...
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
-</plugIn>    Last step completed in 00:00:00.0210
+</plugIn>    Last step completed in 00:00:00.0030
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00.0100
+    Last step completed in 00:00:00.0090
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/26/2014 4:09:49 PM.
+Build started 8/26/2014 5:47:29 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateRefInfo.proj&quot; on node 1 (default targets).
 PrepareForBuild:
   Creating directory &quot;obj\Debug\&quot;.
@@ -69,7 +69,7 @@ GenerateRefInfo:
   Copyright &#184; 2006-2014, Microsoft Corporation, All Rights Reserved.
   Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
   Loaded 8 assemblies for reflection and 1 dependency assemblies.
-  Wrote information on 54 namespaces, 164 types, and 1129 members
+  Wrote information on 54 namespaces, 164 types, and 1127 members
   Copying file from &quot;reflection.org&quot; to &quot;reflection.all&quot;.
   XslTransform (v2014.5.31.0)
   Copyright &#184; 2006-2014, Microsoft Corporation, All Rights Reserved.
@@ -79,13 +79,13 @@ Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateRe
 
 Build succeeded.
 
-Time Elapsed 00:00:01.35
-    Last step completed in 00:00:01.5170
+Time Elapsed 00:00:01.48
+    Last step completed in 00:00:01.6531
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/26/2014 4:09:51 PM.
+Build started 8/26/2014 5:47:31 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\TransformManifest.proj&quot; on node 1 (default targets).
 TransformManifest:
   XslTransform (v2014.5.31.0)
@@ -143,7 +143,6 @@ TransformManifest:
     Unique name M_Slash_Math_Algebra_Vectors_Vector2F__ctor_1 generated for M:Slash.Math.Algebra.Vectors.Vector2F.#ctor(Slash.Math.Algebra.Vectors.Vector2F)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2F__ctor_2 generated for M:Slash.Math.Algebra.Vectors.Vector2F.#ctor(System.Single,System.Single)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2F__ctor_3 generated for M:Slash.Math.Algebra.Vectors.Vector2F.#ctor(System.Single[])
-    Unique name M_Slash_Math_Algebra_Vectors_Vector2F_Area_1 generated for M:Slash.Math.Algebra.Vectors.Vector2F.Area(Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2F_Collinear_1 generated for M:Slash.Math.Algebra.Vectors.Vector2F.Collinear(Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@,System.Single)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2F_Equals_1 generated for M:Slash.Math.Algebra.Vectors.Vector2F.Equals(System.Object)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2F_op_Addition_1 generated for M:Slash.Math.Algebra.Vectors.Vector2F.op_Addition(Slash.Math.Algebra.Vectors.Vector2F,System.Single)
@@ -153,7 +152,6 @@ TransformManifest:
     Unique name M_Slash_Math_Algebra_Vectors_Vector2I__ctor_1 generated for M:Slash.Math.Algebra.Vectors.Vector2I.#ctor(Slash.Math.Algebra.Vectors.Vector2I)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2I__ctor_2 generated for M:Slash.Math.Algebra.Vectors.Vector2I.#ctor(System.Int32,System.Int32)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2I__ctor_3 generated for M:Slash.Math.Algebra.Vectors.Vector2I.#ctor(System.Int32[])
-    Unique name M_Slash_Math_Algebra_Vectors_Vector2I_Area_1 generated for M:Slash.Math.Algebra.Vectors.Vector2I.Area(Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2I_Collinear_1 generated for M:Slash.Math.Algebra.Vectors.Vector2I.Collinear(Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@,System.Single)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2I_Equals_1 generated for M:Slash.Math.Algebra.Vectors.Vector2I.Equals(System.Object)
     Unique name M_Slash_Math_Algebra_Vectors_Vector2I_op_Addition_1 generated for M:Slash.Math.Algebra.Vectors.Vector2I.op_Addition(Slash.Math.Algebra.Vectors.Vector2I,System.Int32)
@@ -202,7 +200,7 @@ TransformManifest:
     Unique name M_Slash_Math_Utils_MathUtils_Round_1 generated for M:Slash.Math.Utils.MathUtils.Round(System.Single,System.Int32)
     Unique name M_Slash_Serialization_ValueWithType__ctor_1 generated for M:Slash.Serialization.ValueWithType.#ctor(System.Object)
     Unique name M_Slash_Serialization_ValueWithType_Equals_1 generated for M:Slash.Serialization.ValueWithType.Equals(System.Object)
-    Unique name M_Slash_Serialization_Dictionary_DictionarySerializationContext_tryDeserialize__1_1 generated for M:Slash.Serialization.Dictionary.DictionarySerializationContext.tryDeserialize``1(System.Collections.Generic.Dictionary{System.String,System.Object},System.String,``0)
+    Unique name M_Slash_Serialization_Dictionary_DictionarySerializationContext_TryDeserialize__1_1 generated for M:Slash.Serialization.Dictionary.DictionarySerializationContext.TryDeserialize``1(System.Collections.Generic.Dictionary{System.String,System.Object},System.String,``0)
     Unique name M_Slash_Serialization_Xml_SerializableDictionary_2__ctor_1 generated for M:Slash.Serialization.Xml.SerializableDictionary`2.#ctor(System.Int32)
     Unique name M_Slash_Serialization_Xml_XmlAnything_1__ctor_1 generated for M:Slash.Serialization.Xml.XmlAnything`1.#ctor(`0)
     Unique name M_Slash_SystemExt_Exceptions_AggregateException__ctor_1 generated for M:Slash.SystemExt.Exceptions.AggregateException.#ctor(System.Collections.Generic.IEnumerable{System.Exception})
@@ -235,26 +233,26 @@ Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\TransformM
 
 Build succeeded.
 
-Time Elapsed 00:00:02.10
-    Last step completed in 00:00:02.4026
+Time Elapsed 00:00:02.29
+    Last step completed in 00:00:02.6217
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
-    Last step completed in 00:00:00.1211
+    Last step completed in 00:00:00.1131
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
 No additional content to copy
-    Last step completed in 00:00:00.0110
+    Last step completed in 00:00:00.0040
 </buildStep>
 <buildStep step="MergeTablesOfContents">
 Merging conceptual and additional tables of contents...
-    Last step completed in 00:00:00.0030
+    Last step completed in 00:00:00.0020
 </buildStep>
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/26/2014 4:09:53 PM.
+Build started 8/26/2014 5:47:34 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
 GenerateIntermediateTOC:
   XslTransform (v2014.5.31.0)
@@ -265,24 +263,24 @@ Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\GenerateIn
 
 Build succeeded.
 
-Time Elapsed 00:00:00.27
+Time Elapsed 00:00:00.30
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00.4713
+    Last step completed in 00:00:00.4803
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
     sandcastle.config
-    Last step completed in 00:00:00.2962
+    Last step completed in 00:00:00.2512
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
 D:\Dev\SCM\SlashFramework\Doc\API\Working\sandcastle.config
-    Last step completed in 00:00:00.0370
+    Last step completed in 00:00:00.0510
 </buildStep>
 <buildStep step="BuildReferenceTopics">
 Building reference help topics...
 [C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
-Build started 8/26/2014 4:09:54 PM.
+Build started 8/26/2014 5:47:34 PM.
 Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj&quot; on node 1 (default targets).
 BuildReferenceTopics:
   BuildAssembler (v2014.5.31.0)
@@ -290,11 +288,6 @@ BuildReferenceTopics:
   Portions Copyright &#184; 2006-2014, Eric Woodruff, All Rights Reserved.
   Loading configuration...
   Processing topics...
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Extensions.DictionaryExtensionMethods.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``1})] Missing &lt;typeparam name=&quot;TKey&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Extensions.DictionaryExtensionMethods.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``1})] Missing &lt;typeparam name=&quot;TValue&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Extensions.DictionaryExtensionMethods.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)] Missing &lt;typeparam name=&quot;TKey&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Collections.Extensions.DictionaryExtensionMethods.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)] Missing &lt;typeparam name=&quot;TValue&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Blueprints.BlueprintUtils.TryResolveParent(Slash.ECS.Blueprints.Blueprint,Slash.ECS.Blueprints.IBlueprintManager)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Inspector.Attributes.InspectorTypeAttribute.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Inspector.Data.InspectorType.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Inspector.Validation.ValidationError.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -302,33 +295,6 @@ BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Logging.GameLogger
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Processes.GameProcess.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Processes.ProcessManager.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.ECS.Systems.GameSystem.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Add(System.Single,System.Single)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Area(Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F)] Missing &lt;param name=&quot;a&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Area(Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F)] Missing &lt;param name=&quot;b&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Area(Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F,Slash.Math.Algebra.Vectors.Vector2F)] Missing &lt;param name=&quot;c&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Area(Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@)] Missing &lt;param name=&quot;a&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Area(Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@)] Missing &lt;param name=&quot;b&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Area(Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@,Slash.Math.Algebra.Vectors.Vector2F@)] Missing &lt;param name=&quot;c&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Limit(System.Single)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Normalize] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2F.Truncate(System.Single)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2I.Add(System.Int32,System.Int32)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2I.Area(Slash.Math.Algebra.Vectors.Vector2I,Slash.Math.Algebra.Vectors.Vector2I,Slash.Math.Algebra.Vectors.Vector2I)] Missing &lt;param name=&quot;a&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2I.Area(Slash.Math.Algebra.Vectors.Vector2I,Slash.Math.Algebra.Vectors.Vector2I,Slash.Math.Algebra.Vectors.Vector2I)] Missing &lt;param name=&quot;b&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2I.Area(Slash.Math.Algebra.Vectors.Vector2I,Slash.Math.Algebra.Vectors.Vector2I,Slash.Math.Algebra.Vectors.Vector2I)] Missing &lt;param name=&quot;c&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2I.Area(Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@)] Missing &lt;param name=&quot;a&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2I.Area(Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@)] Missing &lt;param name=&quot;b&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector2I.Area(Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@,Slash.Math.Algebra.Vectors.Vector2I@)] Missing &lt;param name=&quot;c&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.Vector3F.Normalize] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.VectorExtensions.ToVector2F(Slash.Math.Algebra.Vectors.Vector3F)] Missing &lt;param name=&quot;vector&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.VectorExtensions.ToVector3F(Slash.Math.Algebra.Vectors.Vector2F,System.Single)] Missing &lt;param name=&quot;vector&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Algebra.Vectors.VectorExtensions.ToVector3F(Slash.Math.Algebra.Vectors.Vector2F,System.Single)] Missing &lt;param name=&quot;z&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Clamp``1(``0,``0,``0)] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Exp(System.Single)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Exp(System.Single)] Missing &lt;param name=&quot;x&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.IsWithinBounds``1(``0,``0,``0)] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Max``1(``0,``0)] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Math.Utils.MathUtils.Min``1(``0,``0)] Missing &lt;typeparam name=&quot;T&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Reflection.Utils.AssemblyUtils.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Reflection.Utils.ReflectionUtils.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.SerializeMemberAttribute.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -339,7 +305,6 @@ BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictiona
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictionary.StackDictionarySerializer.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictionary.StackDictionarySerializer`1.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Dictionary.ValueWithTypeDictionarySerializer.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Serialization.Utils.SerializationUtils.ReadXml(System.Xml.XmlReader,System.Type,System.String)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.SystemExt.Utils.PathUtils.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Animations.AnimationExtensions.WhilePlaying(UnityEngine.Animation)] Unknown reference link target &#39;T:UnityEngine.Animation&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Animations.AnimationExtensions.WhilePlaying(UnityEngine.Animation)] Unknown reference link target &#39;T:UnityEngine.Animation&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -7419,13 +7384,10 @@ BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlayAudioClip(Slash.Unity.Common.Sound.AudioChannelType,UnityEngine.AudioClip,System.Single,System.Boolean,System.Single)] Unknown reference link target &#39;T:UnityEngine.AudioClip&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlayAudioClipWithIntroAndLoop(Slash.Unity.Common.Sound.AudioChannelType,UnityEngine.AudioClip,UnityEngine.AudioClip,System.Single)] Unknown reference link target &#39;T:UnityEngine.AudioClip&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlayAudioClipWithIntroAndLoop(Slash.Unity.Common.Sound.AudioChannelType,UnityEngine.AudioClip,UnityEngine.AudioClip,System.Single)] Unknown reference link target &#39;T:UnityEngine.AudioClip&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlaySoundEffect(UnityEngine.AudioClip)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlaySoundEffect(UnityEngine.AudioClip)] Unknown reference link target &#39;T:UnityEngine.AudioClip&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlaySoundEffect(UnityEngine.AudioClip)] Unknown reference link target &#39;T:UnityEngine.AudioSource&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlaySoundEffect(UnityEngine.AudioClip,System.Single)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlaySoundEffect(UnityEngine.AudioClip,System.Single)] Unknown reference link target &#39;T:UnityEngine.AudioClip&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlaySoundEffect(UnityEngine.AudioClip,System.Single)] Unknown reference link target &#39;T:UnityEngine.AudioSource&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlaySoundEffect(UnityEngine.AudioClip,System.Single,System.Boolean)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlaySoundEffect(UnityEngine.AudioClip,System.Single,System.Boolean)] Unknown reference link target &#39;T:UnityEngine.AudioClip&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.PlaySoundEffect(UnityEngine.AudioClip,System.Single,System.Boolean)] Unknown reference link target &#39;T:UnityEngine.AudioSource&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [F:Slash.Unity.Common.Sound.SoundInterfaceBehaviour.SoundEffectSourcePrefab] Unknown reference link target &#39;T:UnityEngine.GameObject&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -9991,8 +9953,6 @@ BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.U
 BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.Unity.Editor.Common.Inspectors.Utils.MemberReferenceDrawer] Unknown reference link target &#39;P:UnityEditor.PropertyDrawer.fieldInfo&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.Unity.Editor.Common.Inspectors.Utils.MemberReferenceDrawer] Unknown reference link target &#39;T:UnityEditor.PropertyDrawer&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.Inspectors.Utils.MemberReferenceDrawer.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.Inspectors.Utils.MemberReferenceDrawer.GetApplicableMembers(UnityEngine.GameObject)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.Inspectors.Utils.MemberReferenceDrawer.GetApplicableMembers(UnityEngine.GameObject)] Missing &lt;param name=&quot;target&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Editor.Common.Inspectors.Utils.MemberReferenceDrawer.GetApplicableMembers(UnityEngine.GameObject)] Unknown reference link target &#39;T:UnityEngine.GameObject&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Editor.Common.Inspectors.Utils.MemberReferenceDrawer.GetPropertyHeight(UnityEditor.SerializedProperty,UnityEngine.GUIContent)] Unknown reference link target &#39;T:UnityEditor.SerializedProperty&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Editor.Common.Inspectors.Utils.MemberReferenceDrawer.GetPropertyHeight(UnityEditor.SerializedProperty,UnityEngine.GUIContent)] Unknown reference link target &#39;T:UnityEngine.GUIContent&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -10063,8 +10023,6 @@ BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.U
 BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer] Unknown reference link target &#39;P:UnityEditor.PropertyDrawer.fieldInfo&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer] Unknown reference link target &#39;T:UnityEditor.PropertyDrawer&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer.GetApplicableMembers(UnityEngine.GameObject)] Missing &lt;returns&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer.GetApplicableMembers(UnityEngine.GameObject)] Missing &lt;param name=&quot;target&quot;/&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [M:Slash.Unity.Editor.Common.Inspectors.ViewModels.ViewEventDelegateDrawer.GetApplicableMembers(UnityEngine.GameObject)] Unknown reference link target &#39;T:UnityEngine.GameObject&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [T:Slash.Unity.Editor.Common.MenuItems.Util.FindMonoBehaviourUsages] Unknown reference link target &#39;T:UnityEngine.Object&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [T:Slash.Unity.Editor.Common.MenuItems.Util.FindMonoBehaviourUsages] Unknown reference link target &#39;T:UnityEngine.ScriptableObject&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
@@ -10322,22 +10280,23 @@ BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.U
 BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.Unity.Editor.Common.MenuItems.Windows.OpenSceneWindow] Unknown reference link target &#39;P:UnityEditor.EditorWindow.wantsMouseMove&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ResolveReferenceLinksComponent: [Properties.T:Slash.Unity.Editor.Common.MenuItems.Windows.OpenSceneWindow] Unknown reference link target &#39;T:UnityEditor.EditorWindow&#39;. [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
 BuildAssembler : warning : ShowMissingComponent: [M:Slash.Unity.Editor.Common.MenuItems.Windows.OpenSceneWindow.#ctor] Missing &lt;summary&gt; documentation [D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj]
-  Processed 1706 topic(s)
-  10032 warning(s)
+  Processed 1702 topic(s)
+  9992 warning(s)
   CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 11 of 15.
   CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 9 of 30.
+  ResolveReferenceLinksComponent: New MSDN content ID cache size: 142 entries
 Done Building Project &quot;D:\Dev\SCM\SlashFramework\Doc\API\Working\BuildReferenceTopics.proj&quot; (default targets).
 
 Build succeeded.
 
-Time Elapsed 00:00:37.52
-    Last step completed in 00:00:37.7380
+Time Elapsed 00:00:35.00
+    Last step completed in 00:00:35.4455
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
 
 Clearing any prior web output
-    Last step completed in 00:00:00.4523
+    Last step completed in 00:00:00.4163
 </buildStep>
 <buildStep step="ExtractingHtmlInfo">
 Extracting HTML info for HTML Help 1 and/or website...
@@ -10349,11 +10308,11 @@ E-Mail: Eric@EWoodruff.us
 Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
 
 Processing website files in D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website
-Processed 1706 HTML files
+Processed 1702 HTML files
 Sorting keywords and generating See Also indices
 Saving website keyword index to D:\Dev\SCM\SlashFramework\Doc\API\Working\WebKI.xml
 Saving website table of contents to D:\Dev\SCM\SlashFramework\Doc\API\Working\WebTOC.xml
-    Last step completed in 00:00:00.8956
+    Last step completed in 00:00:01.0437
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -10433,18 +10392,18 @@ C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\We
 C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocOpen.gif -&gt; D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website\icons\TocOpen.gif
 C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website\scripts\branding-Website.js
 C:\Program Files (x86)\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; D:\Dev\SCM\SlashFramework\Doc\API\Working\Output\Website\scripts\jquery-1.11.0.min.js
-    Last step completed in 00:00:00.2452
+    Last step completed in 00:00:00.2071
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating website table of contents file...
-    Last step completed in 00:00:00.0050
+    Last step completed in 00:00:00.0020
 </buildStep>
 <buildStep step="GenerateFullTextIndex">
 Generating full-text index for the website...
 
 <plugIn name="Lightweight Website Style" behavior="After" priority="1000">
 Adding lightweight search and TOC elements to each topic...
-</plugIn>    Last step completed in 00:00:08.2375
+</plugIn>    Last step completed in 00:00:07.9693
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
@@ -10472,16 +10431,16 @@ Copied 2000 files
 Copied 2100 files
 Copied 2200 files
 Copied 2300 files
-Copied 2337 files for the website content
-    Last step completed in 00:00:13.4649
+Copied 2331 files for the website content
+    Last step completed in 00:00:05.9319
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:01.3789
+    Last step completed in 00:00:02.5397
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 08/26/2014 04:10 PM.  Total time: 00:01:07.8169
+Build completed successfully at 08/26/2014 05:48 PM.  Total time: 00:00:59.2663
 
 </buildStep>
 </shfbBuild>
