@@ -87,8 +87,15 @@ namespace Slash.ECS.Blueprints
         /// <param name="blueprint">New blueprint to add.</param>
         public void AddBlueprint(string blueprintId, Blueprint blueprint)
         {
+            var child = this.children.FirstOrDefault();
+
+            if (child == null)
+            {
+                throw new InvalidOperationException("No child blueprint manager to add blueprint to!");
+            }
+
             // TODO(np): Specify which blueprint manager to add to.
-            this.children.FirstOrDefault().AddBlueprint(blueprintId, blueprint);
+            child.AddBlueprint(blueprintId, blueprint);
         }
 
         /// <summary>
