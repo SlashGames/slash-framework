@@ -58,11 +58,11 @@ namespace Slash.Serialization.Dictionary
                 }
                 else if (typeSealed)
                 {
-                    value = context.deserialize(itemType, valueData);
+                    value = context.Deserialize(itemType, valueData);
                 }
                 else
                 {
-                    ValueWithType valueWithType = context.deserialize(typeof(ValueWithType), valueData) as ValueWithType;
+                    ValueWithType valueWithType = context.Deserialize(typeof(ValueWithType), valueData) as ValueWithType;
                     value = valueWithType.Value;
                 }
 
@@ -98,7 +98,7 @@ namespace Slash.Serialization.Dictionary
             {
                 object value = dictionary[key];
                 object valueData = typeSealed || value == null ? value : new ValueWithType(value);
-                keyValuePairs.Add(key, context.serialize(valueData));
+                keyValuePairs.Add(key, context.Serialize(valueData));
             }
             data.Add(DataPairs, keyValuePairs);
 

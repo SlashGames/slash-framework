@@ -15,30 +15,47 @@ namespace Slash.Unity.Common.Sound
     {
         #region Constants
 
-        public const string PlayerPrefsKeyPlayMusic = "PlayMusic";
+        private const string PlayerPrefsKeyPlayMusic = "PlayMusic";
 
-        public const string PlayerPrefsKeyPlaySound = "PlaySound";
+        private const string PlayerPrefsKeyPlaySound = "PlaySound";
 
         #endregion
 
         #region Delegates
 
+        /// <summary>
+        ///   Music has been turned on or off.
+        /// </summary>
+        /// <param name="playMusic">Whether to play music.</param>
         public delegate void PlayMusicChangedDelegate(bool playMusic);
 
+        /// <summary>
+        ///   Sound effects have been turned on or off.
+        /// </summary>
+        /// <param name="playSound">Whether to play sound effects.</param>
         public delegate void PlaySoundChangedDelegate(bool playSound);
 
         #endregion
 
         #region Public Events
 
+        /// <summary>
+        ///   Music has been turned on or off.
+        /// </summary>
         public static event PlayMusicChangedDelegate PlayMusicChanged;
 
+        /// <summary>
+        ///   Sound effects have been turned on or off.
+        /// </summary>
         public static event PlaySoundChangedDelegate PlaySoundChanged;
 
         #endregion
 
         #region Public Properties
 
+        /// <summary>
+        ///   Whether to play background music.
+        /// </summary>
         public static bool PlayMusic
         {
             get
@@ -59,6 +76,9 @@ namespace Slash.Unity.Common.Sound
             }
         }
 
+        /// <summary>
+        ///   Whether to play sound effects.
+        /// </summary>
         public static bool PlaySound
         {
             get

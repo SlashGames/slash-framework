@@ -416,7 +416,7 @@ namespace Slash.Math.Geometry.Rectangles
         /// </summary>
         /// <param name="positions">Positions to span a rectangle around.</param>
         /// <returns>Rectangle which spans the specified positions.</returns>
-        public static RectangleI span(IEnumerable<Vector2I> positions)
+        public static RectangleI Span(IEnumerable<Vector2I> positions)
         {
             if (positions == null || !positions.Any())
             {

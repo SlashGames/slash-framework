@@ -45,6 +45,9 @@ namespace Slash.Unity.Common.Configuration
         /// </summary>
         public BlueprintManager BlueprintManager { get; private set; }
 
+        /// <summary>
+        ///   Current game configuration.
+        /// </summary>
         public IAttributeTable Configuration
         {
             get
@@ -65,6 +68,9 @@ namespace Slash.Unity.Common.Configuration
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Loads the current game configuration from the resource at <see cref="ConfigurationFilePath" />.
+        /// </summary>
         public void Load()
         {
             Debug.Log("Loading game configuration from resources at " + this.ConfigurationFilePath);
@@ -81,6 +87,9 @@ namespace Slash.Unity.Common.Configuration
             this.Configuration = (IAttributeTable)xmlSerializer.Deserialize(new StringReader(configurationFile.text));
         }
 
+        /// <summary>
+        ///   Saves the current game configuration to the resource <see cref="ConfigurationFilePath" />.
+        /// </summary>
         public void Save()
         {
 #if WINDOWS_STORE

@@ -8,6 +8,10 @@ namespace Slash.Unity.Common.Utils
 {
     using UnityEngine;
 
+    /// <summary>
+    ///   Provides the version number specified by the text file at the
+    ///   given path.
+    /// </summary>
     public class VersionNumberBehaviour : MonoBehaviour
     {
         #region Fields
@@ -21,6 +25,9 @@ namespace Slash.Unity.Common.Utils
 
         #region Public Properties
 
+        /// <summary>
+        ///   Current version number.
+        /// </summary>
         public string Version { get; private set; }
 
         #endregion

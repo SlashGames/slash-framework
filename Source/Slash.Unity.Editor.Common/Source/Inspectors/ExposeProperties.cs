@@ -16,8 +16,6 @@ namespace Slash.Unity.Editor.Common.Inspectors
 
     using UnityEngine;
 
-    using Object = System.Object;
-
     /// <summary>
     ///   Helper class to show all properties of a mono behaviour which are flagged with the ExposeProperty attribute
     ///   in the inspector.
@@ -26,6 +24,10 @@ namespace Slash.Unity.Editor.Common.Inspectors
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Draws editor controls for modifying the specified properties.
+        /// </summary>
+        /// <param name="properties">Properties to draw inspector controls for.</param>
         public static void Expose(IEnumerable<PropertyField> properties)
         {
             GUILayoutOption[] emptyOptions = new GUILayoutOption[0];
@@ -64,7 +66,7 @@ namespace Slash.Unity.Editor.Common.Inspectors
                         break;
 
                     case SerializedPropertyType.String:
-                        newValue = EditorGUILayout.TextField(field.Name, (String)value, emptyOptions);
+                        newValue = EditorGUILayout.TextField(field.Name, (string)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.Vector2:
@@ -101,7 +103,16 @@ namespace Slash.Unity.Editor.Common.Inspectors
             EditorGUILayout.EndVertical();
         }
 
-        public static PropertyField[] GetProperties(Object obj)
+        /// <summary>
+        ///   Gets all properties of the specified object which are flagged with the ExposeProperty attribute
+        ///   and are supported by Unity inspectors.
+        /// </summary>
+        /// <param name="obj">Object to get the properties of.</param>
+        /// <returns>
+        ///   All properties of the specified object which are flagged with the ExposeProperty attribute
+        ///   and are supported by Unity inspectors.
+        /// </returns>
+        public static PropertyField[] GetProperties(object obj)
         {
             List<PropertyField> fields = new List<PropertyField>();
 

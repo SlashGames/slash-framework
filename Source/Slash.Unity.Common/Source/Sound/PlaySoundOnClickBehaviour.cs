@@ -8,6 +8,9 @@ namespace Slash.Unity.Common.Sound
 {
     using UnityEngine;
 
+    /// <summary>
+    ///   Plays the specified sound effect whenever this game object is clicked.
+    /// </summary>
     public class PlaySoundOnClickBehaviour : MonoBehaviour
     {
         #region Fields

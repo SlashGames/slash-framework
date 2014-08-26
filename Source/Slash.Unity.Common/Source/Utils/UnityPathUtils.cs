@@ -8,6 +8,9 @@ namespace Slash.Unity.Common.Utils
 {
     using System.IO;
 
+    /// <summary>
+    ///   Utility methods for handling URIs in Unity.
+    /// </summary>
     public static class UnityPathUtils
     {
         #region Public Methods and Operators

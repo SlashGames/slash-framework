@@ -35,11 +35,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.Diagnostics
 
         #region Public Methods and Operators
 
-        public void OnDisable()
-        {
-            this.instance = null;
-        }
-
         /// <summary>
         ///   Called when the inspector gets active.
         /// </summary>
@@ -79,6 +74,15 @@ namespace Slash.Unity.Editor.Common.Inspectors.Diagnostics
 
             // Always update.
             EditorUtility.SetDirty(this.instance);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void OnDisable()
+        {
+            this.instance = null;
         }
 
         #endregion

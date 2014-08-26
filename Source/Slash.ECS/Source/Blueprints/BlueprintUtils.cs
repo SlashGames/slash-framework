@@ -54,6 +54,7 @@ namespace Slash.ECS.Blueprints
         /// </summary>
         /// <param name="blueprint">Blueprint to try to resolve parent reference for.</param>
         /// <param name="blueprintManager">Blueprint manager to use to search for parent blueprints.</param>
+        /// <returns><c>true</c>, if the parent blueprint could be found, and <c>false</c> otherwise.</returns>
         public static bool TryResolveParent(Blueprint blueprint, IBlueprintManager blueprintManager)
         {
             if (string.IsNullOrEmpty(blueprint.ParentId) || blueprint.Parent != null)

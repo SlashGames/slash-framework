@@ -11,10 +11,12 @@ namespace Slash.Unity.Common.Logging
     using Slash.ECS;
     using Slash.ECS.Events;
     using Slash.Unity.Common.ECS;
-    using Slash.Unity.Common.Utils;
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Writes all game logic events to the Unity console.
+    /// </summary>
     public class LogBehaviour : MonoBehaviour
     {
         #region Fields
@@ -133,7 +135,7 @@ namespace Slash.Unity.Common.Logging
 
         private void OnErrorLogged(string message)
         {
-            this.Error(UnityUtils.WithTimestamp(message));
+            this.Error(this.WithTimestamp(message));
         }
 
         private void OnEvent(GameEvent e)
@@ -146,7 +148,7 @@ namespace Slash.Unity.Common.Logging
             if (!this.disabledEventTypes.Contains(e.EventType.ToString()))
             {
                 this.Info(
-                    UnityUtils.WithTimestamp(
+                    this.WithTimestamp(
                         string.Format(
                             "{0}: {1} (Frame: {2})", e.EventType, e.EventData, this.gameBehaviour.FrameCounter)));
             }
@@ -175,12 +177,22 @@ namespace Slash.Unity.Common.Logging
 
         private void OnInfoLogged(string message)
         {
-            this.Info(UnityUtils.WithTimestamp(message));
+            this.Info(this.WithTimestamp(message));
         }
 
         private void OnWarningLogged(string message)
         {
-            this.Warning(UnityUtils.WithTimestamp(message));
+            this.Warning(this.WithTimestamp(message));
+        }
+
+        /// <summary>
+        ///   Adds a timestamp to the specified string.
+        /// </summary>
+        /// <param name="message">String to add a timestamp to.</param>
+        /// <returns>Timestamped message.</returns>
+        private string WithTimestamp(string message)
+        {
+            return string.Format("[{0:000.000}] {1}", Time.realtimeSinceStartup, message);
         }
 
         #endregion

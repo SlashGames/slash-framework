@@ -69,11 +69,11 @@ namespace Slash.Serialization.Dictionary
                 }
                 else if (typeSealed)
                 {
-                    value = context.deserialize(itemType, valueData);
+                    value = context.Deserialize(itemType, valueData);
                 }
                 else
                 {
-                    ValueWithType valueWithType = context.deserialize(typeof(ValueWithType), valueData) as ValueWithType;
+                    ValueWithType valueWithType = context.Deserialize(typeof(ValueWithType), valueData) as ValueWithType;
                     value = valueWithType.Value;
                 }
 
@@ -107,7 +107,7 @@ namespace Slash.Serialization.Dictionary
                 object valueData = typeSealed || value == null ? value : new ValueWithType(value);
 
                 string valueKey = i.ToString(CultureInfo.InvariantCulture);
-                data.Add(valueKey, context.serialize(valueData));
+                data.Add(valueKey, context.Serialize(valueData));
             }
 
             return data;
@@ -147,9 +147,9 @@ namespace Slash.Serialization.Dictionary
             {
                 T value;
 
-                if (context.canSerialize(typeof(T)))
+                if (context.CanSerialize(typeof(T)))
                 {
-                    value = (T)context.deserialize(typeof(T), data[i.ToString(CultureInfo.InvariantCulture)]);
+                    value = (T)context.Deserialize(typeof(T), data[i.ToString(CultureInfo.InvariantCulture)]);
                 }
                 else
                 {
@@ -177,9 +177,9 @@ namespace Slash.Serialization.Dictionary
 
             for (int i = 0; i < list.Count; i++)
             {
-                if (context.canSerialize(typeof(T)))
+                if (context.CanSerialize(typeof(T)))
                 {
-                    data.Add(i.ToString(CultureInfo.InvariantCulture), context.serialize(list[i]));
+                    data.Add(i.ToString(CultureInfo.InvariantCulture), context.Serialize(list[i]));
                 }
                 else
                 {

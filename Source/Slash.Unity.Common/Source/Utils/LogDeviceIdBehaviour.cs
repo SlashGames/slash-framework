@@ -8,6 +8,9 @@ namespace Slash.Unity.Common.Utils
 {
     using UnityEngine;
 
+    /// <summary>
+    ///   Logs the unique device identifier on awake.
+    /// </summary>
     public class LogDeviceIdBehaviour : MonoBehaviour
     {
         #region Methods

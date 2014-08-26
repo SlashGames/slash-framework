@@ -10,10 +10,16 @@ namespace Slash.Unity.Common.Loading
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Loads the specified scene on ESC or back button.
+    /// </summary>
     public class LoadSceneOnEscBehaviour : MonoBehaviour
     {
         #region Fields
 
+        /// <summary>
+        ///   Name of the scene to load.
+        /// </summary>
         public string SceneName;
 
         #endregion

@@ -13,6 +13,9 @@ namespace Slash.Unity.Common.ECS
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Mono behaviour that registers as listener for specific game logic events.
+    /// </summary>
     public class GameEventBehaviour : MonoBehaviour
     {
         #region Fields
@@ -32,6 +35,9 @@ namespace Slash.Unity.Common.ECS
 
         #region Properties
 
+        /// <summary>
+        ///   Current game instance.
+        /// </summary>
         protected Game Game
         {
             get
@@ -44,6 +50,9 @@ namespace Slash.Unity.Common.ECS
 
         #region Methods
 
+        /// <summary>
+        ///   Allows registering as listener for specific game logic events.
+        /// </summary>
         protected virtual void Awake()
         {
             this.gameBehaviour = FindObjectOfType<GameBehaviour>();
@@ -57,6 +66,9 @@ namespace Slash.Unity.Common.ECS
             this.OnGameChanged(this.gameBehaviour.Game, null);
         }
 
+        /// <summary>
+        ///   Removes all listeners.
+        /// </summary>
         protected virtual void OnDestroy()
         {
             if (this.gameBehaviour != null)
@@ -66,6 +78,11 @@ namespace Slash.Unity.Common.ECS
             }
         }
 
+        /// <summary>
+        ///   Removes all listeners from the old game, and adds them for the new game.
+        /// </summary>
+        /// <param name="newGame">Game to register as listeners for.</param>
+        /// <param name="oldGame">Game to remove listeners from.</param>
         protected void OnGameChanged(Game newGame, Game oldGame)
         {
             if (oldGame != null)

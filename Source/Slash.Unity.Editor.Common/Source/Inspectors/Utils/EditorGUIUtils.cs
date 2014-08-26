@@ -13,97 +13,142 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 
     using UnityEditor;
 
-    using UnityEditorInternal;
-
     using UnityEngine;
 
     using Object = UnityEngine.Object;
 
+    /// <summary>
+    ///   Additional EditorGUILayout kind methods.
+    /// </summary>
     public static class EditorGUIUtils
     {
         #region Public Methods and Operators
 
-        public static bool ArrayField<T>(bool foldout, GUIContent content, ref T[] array) where T : Object
+        /// <summary>
+        ///   Draws an inspector for modifying the specified array.
+        /// </summary>
+        /// <typeparam name="T">Type of the array to draw an inspector for.</typeparam>
+        /// <param name="foldout">Whether to show all array entries, or not.</param>
+        /// <param name="foldoutText">Text to show next to the array editor.</param>
+        /// <param name="array">Array to draw the inspector for.</param>
+        /// <returns>Whether to show all array entries now, or not.</returns>
+        public static bool ArrayField<T>(bool foldout, GUIContent foldoutText, ref T[] array) where T : Object
         {
             IList newArray;
-            bool newFoldout = ArrayField(foldout, content, array, CreateArray<T>, typeof(T), out newArray);
+            bool newFoldout = ListField(foldout, foldoutText, array, i => new T[i], typeof(T), out newArray);
             array = (T[])newArray;
             return newFoldout;
         }
 
-        public static bool ArrayField(
+        /// <summary>
+        ///   Draws an inspector for modifying the specified list.
+        /// </summary>
+        /// <param name="foldout">Whether to show all list entries, or not.</param>
+        /// <param name="foldoutText">Text to show next to the list editor.</param>
+        /// <param name="list">List to draw the inspector for.</param>
+        /// <param name="createList">Method for creating a new list if the size should be changed.</param>
+        /// <param name="objectType">Unity object type of the list items.</param>
+        /// <param name="newList">Modified list.</param>
+        /// <returns>Whether to show all list entries now, or not.</returns>
+        public static bool ListField(
             bool foldout,
-            GUIContent content,
-            IList array,
-            Func<int, IList> createArray,
+            GUIContent foldoutText,
+            IList list,
+            Func<int, IList> createList,
             Type objectType,
-            out IList newArray)
+            out IList newList)
         {
-            return ArrayField(
+            return ListField(
                 foldout,
-                content,
-                array,
-                createArray,
+                foldoutText,
+                list,
+                createList,
                 (obj, index) => EditorGUILayout.ObjectField("Element " + index, (Object)obj, objectType, false),
-                out newArray);
+                out newList);
         }
 
-        public static bool ArrayField(
+        /// <summary>
+        ///   Draws an inspector for modifying the specified list.
+        /// </summary>
+        /// <param name="foldout">Whether to show all list entries, or not.</param>
+        /// <param name="foldoutText">Text to show next to the list editor.</param>
+        /// <param name="list">List to draw the inspector for.</param>
+        /// <param name="createList">Method for creating a new list if the size should be changed.</param>
+        /// <param name="editItem">Method for changing a specific list item.</param>
+        /// <param name="newList">Modified list.</param>
+        /// <returns>Whether to show all list entries now, or not.</returns>
+        public static bool ListField(
             bool foldout,
-            GUIContent content,
-            IList array,
-            Func<int, IList> createArray,
+            GUIContent foldoutText,
+            IList list,
+            Func<int, IList> createList,
             Func<object, int, object> editItem,
-            out IList newArray)
+            out IList newList)
         {
-            foldout = EditorGUILayout.Foldout(foldout, content);
+            foldout = EditorGUILayout.Foldout(foldout, foldoutText);
             if (foldout)
             {
                 EditorGUI.indentLevel++;
 
-                int currentSize = array != null ? array.Count : 0;
+                int currentSize = list != null ? list.Count : 0;
                 int newSize = EditorGUILayout.IntField("Size", currentSize);
                 if (currentSize != newSize)
                 {
-                    newArray = createArray(newSize);
+                    newList = createList(newSize);
                     for (int x = 0; x < newSize; x++)
                     {
                         if (x < currentSize)
                         {
-                            newArray[x] = array != null ? array[x] : null;
+                            newList[x] = list != null ? list[x] : null;
                         }
                     }
                 }
                 else
                 {
-                    newArray = array;
-                    array = newArray;
+                    newList = list;
+                    list = newList;
                 }
 
                 for (int x = 0; x < currentSize; x++)
                 {
-                    array[x] = editItem(array[x], x);
+                    list[x] = editItem(list[x], x);
                 }
 
                 EditorGUI.indentLevel--;
             }
             else
             {
-                newArray = array;
+                newList = list;
             }
 
             return foldout;
         }
 
-        public static bool ArrayField<T>(
-            bool foldout, GUIContent content, ref IList array, Func<int, IList> createArray) where T : Object
+        /// <summary>
+        ///   Draws an inspector for modifying the specified list.
+        /// </summary>
+        /// <typeparam name="T">Type of the list items.</typeparam>
+        /// <param name="foldout">Whether to show all list entries, or not.</param>
+        /// <param name="foldoutText">Text to show next to the list editor.</param>
+        /// <param name="list">List to draw the inspector for.</param>
+        /// <param name="createList">Method for creating a new list if the size should be changed.</param>
+        /// <returns>Whether to show all list entries now, or not.</returns>
+        public static bool ListField<T>(
+            bool foldout, GUIContent foldoutText, ref IList list, Func<int, IList> createList) where T : Object
         {
             IList newArray;
-            bool newFoldout = ArrayField(foldout, content, array, createArray, typeof(T), out newArray);
-            array = newArray;
+            bool newFoldout = ListField(foldout, foldoutText, list, createList, typeof(T), out newArray);
+            list = newArray;
             return newFoldout;
         }
 
+        /// <summary>
+        ///   Draws an inspector for the specified logic property.
+        /// </summary>
+        /// <param name="inspectorProperty">Logic property to draw the inspector for.</param>
+        /// <param name="currentValue">Current logic property value.</param>
+        /// <param name="label">Text to show next to the property editor.</param>
+        /// <returns>New logic property value.</returns>
         public static object LogicInspectorPropertyField(
             InspectorPropertyAttribute inspectorProperty, object currentValue, GUIContent label)
         {
@@ -137,6 +182,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             return currentValue;
         }
 
+        /// <summary>
+        ///   Draws an inspector for the specified logic property.
+        /// </summary>
+        /// <param name="inspectorProperty">Logic property to draw the inspector for.</param>
+        /// <param name="currentValue">Current logic property value.</param>
+        /// <returns>New logic property value.</returns>
         public static object LogicInspectorPropertyField(
             InspectorPropertyAttribute inspectorProperty, object currentValue)
         {
@@ -144,6 +195,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
                 inspectorProperty, currentValue, new GUIContent(inspectorProperty.Name, inspectorProperty.Description));
         }
 
+        /// <summary>
+        ///   Draws an inspector for the specified shader.
+        /// </summary>
+        /// <param name="shaderContext">Shader to draw the inspector for.</param>
+        /// <param name="label">Text to show next to the shader editor.</param>
+        /// <returns>New selected shader name.</returns>
         public static string ShaderField(ShaderContext shaderContext, string label)
         {
             EditorGUILayout.BeginHorizontal();
@@ -157,75 +214,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             EditorGUILayout.EndHorizontal();
 
             return selectedShaderName;
-        }
-
-        #endregion
-
-        #region Methods
-
-        private static IList CreateArray<T>(int i)
-        {
-            return new T[i];
-        }
-
-        #endregion
-    }
-
-    public class ShaderContext : ScriptableObject
-    {
-        #region Fields
-
-        public string SelectedShader;
-
-        private readonly Material dummyMaterial;
-
-        private MenuCommand mc;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        public ShaderContext()
-        {
-            // Create dummy material to make it not highlight any shaders inside:
-            const string TmpStr = "Shader \"Hidden/tmp_shdr\"{SubShader{Pass{}}}";
-            this.dummyMaterial = new Material(TmpStr);
-        }
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        public void DisplayShaderContext(Rect r)
-        {
-            if (this.mc == null)
-            {
-                this.mc = new MenuCommand(this, 0);
-            }
-
-            Shader shader = string.IsNullOrEmpty(this.SelectedShader) ? null : Shader.Find(this.SelectedShader);
-            Material temp = shader != null ? new Material(shader) : this.dummyMaterial;
-
-            // Rebuild shader menu:
-            InternalEditorUtility.SetupShaderMenu(temp);
-
-            // Destroy temporary material.
-            if (shader != null)
-            {
-                DestroyImmediate(temp, true);
-            }
-
-            // Display shader popup:
-            EditorUtility.DisplayPopupMenu(r, "CONTEXT/ShaderPopup", this.mc);
-        }
-
-        #endregion
-
-        #region Methods
-
-        private void OnSelectedShaderPopup(string command, Object shader)
-        {
-            this.SelectedShader = shader != null ? shader.name : null;
         }
 
         #endregion

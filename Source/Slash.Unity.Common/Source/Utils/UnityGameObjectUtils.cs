@@ -1,17 +1,23 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnityUtils.cs" company="Slash Games">
+// <copyright file="UnityGameObjectUtils.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.Unity.Common.Utils
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using UnityEngine;
 
-    public static class UnityUtils
+    using Object = UnityEngine.Object;
+
+    /// <summary>
+    ///   Utility methods for handling Unity game object hiearchies.
+    /// </summary>
+    public static class UnityGameObjectUtils
     {
         #region Public Methods and Operators
 
@@ -36,20 +42,6 @@ namespace Slash.Unity.Common.Utils
                 go.layer = parent.layer;
             }
             return go;
-        }
-
-        /// <summary>
-        ///   Creates a unity color from integer RGB values.
-        ///   The constructor of the Unity Color class takes float values from
-        ///   0 to 1 by default.
-        /// </summary>
-        /// <param name="r">Red value (0-255).</param>
-        /// <param name="g">Green value (0-255).</param>
-        /// <param name="b">Blue value (0-255).</param>
-        /// <returns>Unity color from the specified RGB values.</returns>
-        public static Color ColorFromRGB(int r, int g, int b)
-        {
-            return new Color(r / 255.0f, g / 255.0f, b / 255.0f);
         }
 
         /// <summary>
@@ -101,16 +93,6 @@ namespace Slash.Unity.Common.Utils
             }
             path += gameObject.name;
             return path;
-        }
-
-        /// <summary>
-        ///   Adds a timestamp to the specified string.
-        /// </summary>
-        /// <param name="message">String to add a timestamp to.</param>
-        /// <returns>Timestamped message.</returns>
-        public static string WithTimestamp(string message)
-        {
-            return string.Format("[{0:000.000}] {1}", Time.realtimeSinceStartup, message);
         }
 
         #endregion

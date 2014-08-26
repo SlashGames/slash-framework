@@ -23,6 +23,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Custom inspector for entity configurations.
+    /// </summary>
     [CustomEditor(typeof(EntityConfigurationBehaviour))]
     public class EntityConfigurationEditor : Editor
     {
@@ -75,6 +78,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Draws the entity configuration inspector.
+        /// </summary>
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();

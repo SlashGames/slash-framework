@@ -15,6 +15,13 @@ namespace Slash.Unity.Common.GUI
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Shows either the currently selected option, or the whole list of options.
+        /// </summary>
+        /// <param name="selectedIndex">Index of the currently selected option.</param>
+        /// <param name="displayedOptions">List of options.</param>
+        /// <param name="showList">Whether to show the whole list, or not.</param>
+        /// <returns>Index of the new selected option.</returns>
         public static int Popup(int selectedIndex, string[] displayedOptions, ref bool showList)
         {
             string selectedItem = displayedOptions[selectedIndex];
