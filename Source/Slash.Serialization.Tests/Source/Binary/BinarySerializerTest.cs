@@ -218,7 +218,7 @@ namespace Slash.Serialization.Tests.Source.Binary
             #region Fields
 
             [SerializeMember]
-            private readonly TestEnum Color;
+            private readonly TestEnum color;
 
             #endregion
 
@@ -230,7 +230,7 @@ namespace Slash.Serialization.Tests.Source.Binary
 
             public TestClass(TestEnum color, string name)
             {
-                this.Color = color;
+                this.color = color;
                 this.Name = name;
             }
 
@@ -266,13 +266,13 @@ namespace Slash.Serialization.Tests.Source.Binary
             {
                 unchecked
                 {
-                    return ((int)this.Color * 397) ^ (this.Name != null ? this.Name.GetHashCode() : 0);
+                    return ((int)this.color * 397) ^ (this.Name != null ? this.Name.GetHashCode() : 0);
                 }
             }
 
             public override string ToString()
             {
-                return string.Format("Color: {0}, Name: {1}", this.Color, this.Name);
+                return string.Format("Color: {0}, Name: {1}", this.color, this.Name);
             }
 
             #endregion
@@ -281,7 +281,7 @@ namespace Slash.Serialization.Tests.Source.Binary
 
             protected bool Equals(TestClass other)
             {
-                return this.Color == other.Color && string.Equals(this.Name, other.Name);
+                return this.color == other.color && string.Equals(this.Name, other.Name);
             }
 
             #endregion

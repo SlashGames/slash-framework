@@ -298,6 +298,7 @@ namespace Slash.Unity.Common.Sound
         /// </summary>
         /// <param name="delayInSeconds">Seconds to wait before starting to play the clip.</param>
         /// <param name="loopedClip">Clip to loop.</param>
+        /// <returns>Enumerator yielding for the specified amount of seconds.</returns>
         private IEnumerator LoopClipAfterDelay(float delayInSeconds, AudioClip loopedClip)
         {
             yield return new WaitForSeconds(delayInSeconds);

@@ -33,7 +33,7 @@ namespace Slash.Unity.Common.ECS
         #region Public Indexers
 
         /// <summary>
-        ///   Unity game object mapped by the specified entity id.
+        ///   Gets or sets the Unity game object mapped by the specified entity id.
         /// </summary>
         /// <param name="entityId">Entity id mapped to the game object.</param>
         /// <returns>Unity game object mapped by the specified entity id.</returns>

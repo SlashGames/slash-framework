@@ -190,17 +190,11 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Returns a positive number if c is to the left of the line going from a to b.
         /// </summary>
+        /// <param name="a">First point of the line.</param>
+        /// <param name="b">Second point of the line.</param>
+        /// <param name="c">Point to check against the line.</param>
         /// <returns> Positive number if point is left, negative if point is right, and 0 if points are collinear. </returns>
         public static int Area(Vector2I a, Vector2I b, Vector2I c)
-        {
-            return Area(ref a, ref b, ref c);
-        }
-
-        /// <summary>
-        ///   Returns a positive number if c is to the left of the line going from a to b.
-        /// </summary>
-        /// <returns> Positive number if point is left, negative if point is right, and 0 if points are collinear. </returns>
-        public static int Area(ref Vector2I a, ref Vector2I b, ref Vector2I c)
         {
             return a.X * (b.Y - c.Y) + b.X * (c.Y - a.Y) + c.X * (a.Y - b.Y);
         }
@@ -250,7 +244,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> True if the three vectors are collinear; otherwise, false. </returns>
         public static bool Collinear(ref Vector2I a, ref Vector2I b, ref Vector2I c, float tolerance)
         {
-            return MathUtils.FloatInRange(Area(ref a, ref b, ref c), -tolerance, tolerance);
+            return MathUtils.FloatInRange(Area(a, b, c), -tolerance, tolerance);
         }
 
         /// <summary>
@@ -444,6 +438,7 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="addX"> Value to add to x. </param>
         /// <param name="addY"> Value to add to y. </param>
+        /// <returns>Sum of <paramref name="addX"/> and <paramref name="addY"/>.</returns>
         public Vector2I Add(int addX, int addY)
         {
             return new Vector2I(this.X + addX, this.Y + addY);

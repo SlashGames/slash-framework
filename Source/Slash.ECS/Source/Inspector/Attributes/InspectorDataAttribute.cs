@@ -38,7 +38,7 @@ namespace Slash.ECS.Inspector.Attributes
         /// </summary>
         /// <param name="text">Not implemented.</param>
         /// <returns>
-        ///   Not implemented.
+        ///   Throws a <see cref="NotImplementedException"/>.
         /// </returns>
         public override object ConvertStringToValue(string text)
         {
@@ -68,7 +68,7 @@ namespace Slash.ECS.Inspector.Attributes
         /// <param name="text">Not implemented..</param>
         /// <param name="value">Not implemented.</param>
         /// <returns>
-        ///   Not implemented.
+        ///   Throws a <see cref="NotImplementedException"/>.
         /// </returns>
         public override bool TryConvertStringToValue(string text, out object value)
         {

@@ -21,16 +21,14 @@ namespace Slash.SystemExt.Utils
         /// <param name="fromPath">Contains the directory that defines the start of the relative path.</param>
         /// <param name="toPath">Contains the path that defines the endpoint of the relative path.</param>
         /// <returns>The relative path from the start directory to the end path.</returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="UriFormatException"></exception>
-        /// <exception cref="InvalidOperationException"></exception>
-        public static String MakeRelativePath(String fromPath, String toPath)
+        /// <exception cref="ArgumentNullException"><paramref name="fromPath"/> or <paramref name="toPath"/> is empty.</exception>
+        public static string MakeRelativePath(string fromPath, string toPath)
         {
-            if (String.IsNullOrEmpty(fromPath))
+            if (string.IsNullOrEmpty(fromPath))
             {
                 throw new ArgumentNullException("fromPath");
             }
-            if (String.IsNullOrEmpty(toPath))
+            if (string.IsNullOrEmpty(toPath))
             {
                 throw new ArgumentNullException("toPath");
             }
@@ -45,7 +43,7 @@ namespace Slash.SystemExt.Utils
             }
 
             Uri relativeUri = fromUri.MakeRelativeUri(toUri);
-            String relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+            string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
 
             if (toUri.Scheme.ToUpperInvariant() == "FILE")
             {

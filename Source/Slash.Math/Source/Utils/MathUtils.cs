@@ -93,8 +93,8 @@ namespace Slash.Math.Utils
         /// <summary>
         ///   Returns the angle in radians between the positive x-axis of a plane and the point given by the coordinates (x, y).
         /// </summary>
-        /// <param name="x">x-coordinate of the point.</param>
         /// <param name="y">y-coordinate of the point.</param>
+        /// <param name="x">x-coordinate of the point.</param>
         /// <returns>Angle whose tangent is the quotient of the specified numbers.</returns>
         public static float Atan2(float y, float x)
         {
@@ -126,6 +126,7 @@ namespace Slash.Math.Utils
         ///   Clamps the passed value to the passed bounds (i.e. if value is smaller than min bound it's set to min bound,
         ///   if bigger than max bound it's set to max bound).
         /// </summary>
+        /// <typeparam name="T">Type of the value to clamp.</typeparam>
         /// <param name="value"> Value to clamp. </param>
         /// <param name="min"> Minimum bound. </param>
         /// <param name="max"> Maximum bound (inclusive). </param>
@@ -154,8 +155,10 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
-        ///   Exponential and logarithmic functions
+        ///   Returns e raised to the specified power.
         /// </summary>
+        /// <param name="x">Power to raise e to.</param>
+        /// <returns>e raised to the specified power.</returns>
         public static float Exp(float x)
         {
             return (float)Math.Exp(x);
@@ -244,6 +247,7 @@ namespace Slash.Math.Utils
         ///   Checks if the passed value is within the passed bounds (i.e. bigger or equal minimum bound and
         ///   smaller maximum bound).
         /// </summary>
+        /// <typeparam name="T">Type of the value to check.</typeparam>
         /// <param name="value"> Value to check. </param>
         /// <param name="min"> Minimum bound. </param>
         /// <param name="max"> Maximum bound (exclusive). </param>
@@ -309,6 +313,7 @@ namespace Slash.Math.Utils
         /// <summary>
         ///   Returns the maximum value of the two passed values.
         /// </summary>
+        /// <typeparam name="T">Type of the values to compare.</typeparam>
         /// <param name="a"> First value. </param>
         /// <param name="b"> Second value. </param>
         /// <returns> First value if it is bigger than the second; otherwise, the second value. </returns>
@@ -331,6 +336,7 @@ namespace Slash.Math.Utils
         /// <summary>
         ///   Returns the minimum value of the two passed values.
         /// </summary>
+        /// <typeparam name="T">Type of the values to compare.</typeparam>
         /// <param name="a"> First value. </param>
         /// <param name="b"> Second value. </param>
         /// <returns> First value if it is smaller than the second; otherwise, the second value. </returns>

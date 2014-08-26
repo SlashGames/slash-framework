@@ -46,15 +46,14 @@ namespace Slash.Unity.Common.Sound
         [HideInInspector]
         // ReSharper disable FieldCanBeMadeReadOnly.Local - Unity won't serialize this when readonly.
         private List<AudioChannel> audioChannels = new List<AudioChannel>();
+        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         #endregion
-
-        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         #region Public Indexers
 
         /// <summary>
-        ///   Audio channel of the specified type.
+        ///   Gets or sets the audio channel of the specified type.
         /// </summary>
         /// <param name="channelType">Type of the audio channel.</param>
         /// <returns>Audio channel of the specified type.</returns>
@@ -191,6 +190,7 @@ namespace Slash.Unity.Common.Sound
         ///   Plays the specified sound effect once.
         /// </summary>
         /// <param name="clip">Sound effect clip to play.</param>
+        /// <returns>Audio source playing the specified clip.</returns>
         public AudioSource PlaySoundEffect(AudioClip clip)
         {
             return this.PlaySoundEffect(clip, DefaultVolume);
@@ -201,6 +201,7 @@ namespace Slash.Unity.Common.Sound
         /// </summary>
         /// <param name="clip">Sound effect clip to play.</param>
         /// <param name="volume">Volume to play the sound with.</param>
+        /// <returns>Audio source playing the specified clip.</returns>
         public AudioSource PlaySoundEffect(AudioClip clip, float volume)
         {
             return this.PlaySoundEffect(clip, volume, false);
@@ -212,6 +213,7 @@ namespace Slash.Unity.Common.Sound
         /// <param name="clip">Sound effect clip to play.</param>
         /// <param name="volume">Volume to play the sound with.</param>
         /// <param name="loop">Whether to loop the sound effect, or play it one-shot.</param>
+        /// <returns>Audio source playing the specified clip.</returns>
         public AudioSource PlaySoundEffect(AudioClip clip, float volume, bool loop)
         {
             if (this.SoundEffectSourcePrefab == null)

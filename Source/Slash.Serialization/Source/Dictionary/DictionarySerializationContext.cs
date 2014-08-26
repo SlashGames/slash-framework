@@ -21,7 +21,7 @@ namespace Slash.Serialization.Dictionary
         /// <summary>
         ///   Serialization version.
         /// </summary>
-        private const string DATA_VERSION = "version";
+        private const string DataVersion = "version";
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace Slash.Serialization.Dictionary
         public DictionarySerializationContext()
         {
             // Set some default serializers.
-            this.setSerializer(typeof(ValueWithType), new ValueWithTypeDictionarySerializer());
+            this.SetSerializer(typeof(ValueWithType), new ValueWithTypeDictionarySerializer());
 
             this.genericSerializerMap[typeof(List<>)] = new ListDictionarySerializer();
             this.genericSerializerMap[typeof(Stack<>)] = new StackDictionarySerializer();
@@ -92,9 +92,9 @@ namespace Slash.Serialization.Dictionary
         /// <returns>
         ///   <c>true</c>, if this context can serialize the specified type with custom serializers or reflection, and <c>false</c> otherwise.
         /// </returns>
-        public bool canSerialize(Type type)
+        public bool CanSerialize(Type type)
         {
-            IDictionarySerializer serializer = this.getSerializer(type);
+            IDictionarySerializer serializer = this.GetSerializer(type);
             return serializer != null || Attribute.IsDefined(type, typeof(DictionarySerializableAttribute));
         }
 
@@ -104,9 +104,9 @@ namespace Slash.Serialization.Dictionary
         /// <typeparam name="T">Type of the object to deserialize.</typeparam>
         /// <param name="data">Data dictionary containing the values of the object to deserialize.</param>
         /// <returns>Object deserialized from the passed data dictionary.</returns>
-        public T deserialize<T>(object data)
+        public T Deserialize<T>(object data)
         {
-            return (T)this.deserialize(typeof(T), data);
+            return (T)this.Deserialize(typeof(T), data);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Slash.Serialization.Dictionary
         /// <param name="type">Type of the object to deserialize.</param>
         /// <param name="data">Data dictionary containing the values of the object to deserialize.</param>
         /// <returns>Object deserialized from the passed data dictionary.</returns>
-        public object deserialize(Type type, object data)
+        public object Deserialize(Type type, object data)
         {
             if (data == null)
             {
@@ -123,13 +123,13 @@ namespace Slash.Serialization.Dictionary
             }
 
             // Check if raw serialization possible.
-            if (this.isRawSerializationPossible(type))
+            if (this.IsRawSerializationPossible(type))
             {
                 return Convert.ChangeType(data, type);
             }
 
             // Get serializer for object.
-            IDictionarySerializer serializer = this.getSerializer(type);
+            IDictionarySerializer serializer = this.GetSerializer(type);
 
             if (serializer == null)
             {
@@ -137,7 +137,7 @@ namespace Slash.Serialization.Dictionary
                 Type nullableType = Nullable.GetUnderlyingType(type);
                 if (nullableType != null)
                 {
-                    return this.deserialize(nullableType, data);
+                    return this.Deserialize(nullableType, data);
                 }
 
                 // Check if generic type.
@@ -160,7 +160,7 @@ namespace Slash.Serialization.Dictionary
                 // No custom serializer found - try reflection.
                 if (Attribute.IsDefined(type, typeof(DictionarySerializableAttribute)))
                 {
-                    return this.deserializeReflection(type, (Dictionary<string, object>)data);
+                    return this.DeserializeReflection(type, (Dictionary<string, object>)data);
                 }
 
                 throw new ArgumentException(string.Format("Unsupported type for dictionary serialization: {0}", type));
@@ -173,10 +173,10 @@ namespace Slash.Serialization.Dictionary
         ///   Deserializes this context from the passed data dictionary.
         /// </summary>
         /// <param name="obj">Data dictionary containing the values of the object to deserialize.</param>
-        public void deserializeContext(object obj)
+        public void DeserializeContext(object obj)
         {
             Dictionary<string, object> data = (Dictionary<string, object>)obj;
-            this.Version = Convert.ToInt32(data[DATA_VERSION]);
+            this.Version = Convert.ToInt32(data[DataVersion]);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Slash.Serialization.Dictionary
         /// </summary>
         /// <param name="type">Type to get the custom serializer of.</param>
         /// <returns>Custom serializer for the specified type.</returns>
-        public IDictionarySerializer getSerializer(Type type)
+        public IDictionarySerializer GetSerializer(Type type)
         {
             IDictionarySerializer serializer;
             this.serializerMap.TryGetValue(type, out serializer);
@@ -197,7 +197,7 @@ namespace Slash.Serialization.Dictionary
         /// </summary>
         /// <param name="type">Type to check.</param>
         /// <returns>True if the type can be serialized directly; otherwise, false.</returns>
-        public bool isRawSerializationPossible(Type type)
+        public bool IsRawSerializationPossible(Type type)
         {
             // Check if primitive type or string.
             if (type.IsPrimitive || type == typeof(string))
@@ -213,7 +213,7 @@ namespace Slash.Serialization.Dictionary
         /// </summary>
         /// <param name="obj">Object to serialize.</param>
         /// <returns>Object serialized as data dictionary.</returns>
-        public object serialize(object obj)
+        public object Serialize(object obj)
         {
             if (obj == null)
             {
@@ -221,17 +221,17 @@ namespace Slash.Serialization.Dictionary
             }
 
             Type type = obj.GetType();
-            return this.serialize(type, obj);
+            return this.Serialize(type, obj);
         }
 
         /// <summary>
         ///   Serializes this context to a data dictionary.
         /// </summary>
         /// <returns>This context serialized as data dictionary.</returns>
-        public object serializeContext()
+        public object SerializeContext()
         {
             Dictionary<string, object> data = new Dictionary<string, object>();
-            data[DATA_VERSION] = this.Version;
+            data[DataVersion] = this.Version;
             return data;
         }
 
@@ -240,7 +240,7 @@ namespace Slash.Serialization.Dictionary
         /// </summary>
         /// <param name="type">Type to set the custom serializer of.</param>
         /// <param name="serializer">Custom serializer for the specified type.</param>
-        public void setSerializer(Type type, IDictionarySerializer serializer)
+        public void SetSerializer(Type type, IDictionarySerializer serializer)
         {
             this.serializerMap[type] = serializer;
         }
@@ -253,9 +253,9 @@ namespace Slash.Serialization.Dictionary
         /// <param name="data">Data dictionary which contains value.</param>
         /// <param name="key">Key of value in data dictionary.</param>
         /// <returns>Deserialized value if found; otherwise, default value of specified type.</returns>
-        public T tryDeserialize<T>(Dictionary<string, object> data, string key)
+        public T TryDeserialize<T>(Dictionary<string, object> data, string key)
         {
-            return this.tryDeserialize(data, key, default(T));
+            return this.TryDeserialize(data, key, default(T));
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Slash.Serialization.Dictionary
         /// <param name="key">Key of value in data dictionary.</param>
         /// <param name="defaultValue">Default value to use if key was not found.</param>
         /// <returns>Deserialized value if found; otherwise, specified default value.</returns>
-        public T tryDeserialize<T>(Dictionary<string, object> data, string key, T defaultValue)
+        public T TryDeserialize<T>(Dictionary<string, object> data, string key, T defaultValue)
         {
             if (data == null)
             {
@@ -277,7 +277,7 @@ namespace Slash.Serialization.Dictionary
             object valueData;
             if (data.TryGetValue(key, out valueData))
             {
-                return this.deserialize<T>(valueData);
+                return this.Deserialize<T>(valueData);
             }
             return defaultValue;
         }
@@ -293,7 +293,7 @@ namespace Slash.Serialization.Dictionary
         /// <param name="type">Type of the object to deserialize.</param>
         /// <param name="data">Data dictionary containing the values of the object to deserialize.</param>
         /// <returns>Object deserialized from the passed data dictionary.</returns>
-        private object deserializeReflection(Type type, Dictionary<string, object> data)
+        private object DeserializeReflection(Type type, Dictionary<string, object> data)
         {
             // Create object instance.
             object obj = Activator.CreateInstance(type);
@@ -314,7 +314,7 @@ namespace Slash.Serialization.Dictionary
 
                         if (data.TryGetValue(field.Name, out serializedValue))
                         {
-                            object fieldValue = this.deserialize(fieldType, serializedValue);
+                            object fieldValue = this.Deserialize(fieldType, serializedValue);
 
                             // Set property value.
                             field.SetValue(obj, fieldValue);
@@ -344,7 +344,7 @@ namespace Slash.Serialization.Dictionary
 
                         if (data.TryGetValue(property.Name, out serializedValue))
                         {
-                            object propertyValue = this.deserialize(propertyType, serializedValue);
+                            object propertyValue = this.Deserialize(propertyType, serializedValue);
 
                             // Set property value.
                             property.SetValue(obj, propertyValue, null);
@@ -361,16 +361,16 @@ namespace Slash.Serialization.Dictionary
             return obj;
         }
 
-        private object serialize(Type type, object obj)
+        private object Serialize(Type type, object obj)
         {
             // Check if raw serialization is possible.
-            if (this.isRawSerializationPossible(type))
+            if (this.IsRawSerializationPossible(type))
             {
                 return obj;
             }
 
             // Get serializer for object.
-            IDictionarySerializer serializer = this.getSerializer(type);
+            IDictionarySerializer serializer = this.GetSerializer(type);
 
             if (serializer == null)
             {
@@ -378,7 +378,7 @@ namespace Slash.Serialization.Dictionary
                 Type nullableType = Nullable.GetUnderlyingType(type);
                 if (nullableType != null)
                 {
-                    return this.serialize(nullableType, obj);
+                    return this.Serialize(nullableType, obj);
                 }
 
                 // Check if generic type.
@@ -400,7 +400,7 @@ namespace Slash.Serialization.Dictionary
                 // No custom serializer found - try reflection.
                 if (Attribute.IsDefined(type, typeof(DictionarySerializableAttribute)))
                 {
-                    return this.serializeReflection(obj);
+                    return this.SerializeReflection(obj);
                 }
 
                 throw new ArgumentException(
@@ -415,7 +415,7 @@ namespace Slash.Serialization.Dictionary
         /// </summary>
         /// <param name="obj">Object to serialize.</param>
         /// <returns>Object serialized as data dictionary</returns>
-        private Dictionary<string, object> serializeReflection(object obj)
+        private Dictionary<string, object> SerializeReflection(object obj)
         {
             // Create data dictionary.
             Dictionary<string, object> data = new Dictionary<string, object>();
@@ -430,7 +430,7 @@ namespace Slash.Serialization.Dictionary
                 {
                     // Check how the field value has to be serialized.
                     object fieldValue = field.GetValue(obj);
-                    data.Add(field.Name, this.serialize(fieldValue));
+                    data.Add(field.Name, this.Serialize(fieldValue));
                 }
             }
 
@@ -443,7 +443,7 @@ namespace Slash.Serialization.Dictionary
                 {
                     // Check how the property value has to be serialized.
                     object propertyValue = property.GetGetMethod().Invoke(obj, null);
-                    data.Add(property.Name, this.serialize(propertyValue));
+                    data.Add(property.Name, this.Serialize(propertyValue));
                 }
             }
 

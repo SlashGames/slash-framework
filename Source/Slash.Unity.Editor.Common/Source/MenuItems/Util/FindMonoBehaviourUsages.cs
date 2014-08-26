@@ -45,7 +45,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
         ///   Shows the Find Mono Behaviour Usages window.
         /// </summary>
         [MenuItem("Slash Games/Util/Find Mono Behaviour Usages")]
-        public static void findMonoBehaviourUsages()
+        public static void ShowFindMonoBehaviourUsages()
         {
             GetWindow(typeof(FindMonoBehaviourUsages)).Show();
         }
@@ -57,7 +57,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
         /// <summary>
         ///   Finds all prefabs who have the searched script attached.
         /// </summary>
-        private static void findUsages()
+        private static void FindUsages()
         {
             var assetFolderPaths =
                 AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab", StringComparison.Ordinal));
@@ -74,7 +74,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
         ///   Selects the specified prefab in the project window.
         /// </summary>
         /// <param name="prefab">Prefab to select.</param>
-        private static void navigateTo(Object prefab)
+        private static void NavigateTo(Object prefab)
         {
             Selection.activeObject = prefab;
             EditorUtility.FocusProjectWindow();
@@ -123,7 +123,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
             // Show Find Usages button.
             if (GUI.Button(new Rect(X, y, width, Height), "Find Prefabs"))
             {
-                findUsages();
+                FindUsages();
             }
 
             if (usages == null)
@@ -142,7 +142,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
 
                 if (GUI.Button(new Rect(X + width / 2, y, width / 2, Height), "Navigate To"))
                 {
-                    navigateTo(prefab);
+                    NavigateTo(prefab);
                     return;
                 }
 

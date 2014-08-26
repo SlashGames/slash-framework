@@ -46,11 +46,12 @@ namespace Slash.Serialization.Utils
 #endif
 
         /// <summary>
-        ///   Deserializes an object of the specified type from the specified xml reader.
+        ///   Deserializes an object of the specified type from the specified XML reader.
         /// </summary>
-        /// <param name="reader">Xml reader to read object from.</param>
+        /// <param name="reader">XML reader to read object from.</param>
         /// <param name="type">Type of object to deserialize.</param>
         /// <param name="elementName">Element node name the object is serialized under.</param>
+        /// <returns>Deserialized object.</returns>
         public static object ReadXml(XmlReader reader, Type type, string elementName)
         {
             // Deserialize object.

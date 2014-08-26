@@ -61,11 +61,11 @@ namespace Slash.Serialization.Dictionary
                 }
                 else if (typeSealed)
                 {
-                    value = context.deserialize(itemType, valueData);
+                    value = context.Deserialize(itemType, valueData);
                 }
                 else
                 {
-                    ValueWithType valueWithType = context.deserialize(typeof(ValueWithType), valueData) as ValueWithType;
+                    ValueWithType valueWithType = context.Deserialize(typeof(ValueWithType), valueData) as ValueWithType;
                     value = valueWithType.Value;
                 }
 
@@ -98,7 +98,7 @@ namespace Slash.Serialization.Dictionary
             foreach (object value in collection)
             {
                 object valueData = typeSealed || value == null ? value : new ValueWithType(value);
-                data.Add(index.ToString(CultureInfo.InvariantCulture), context.serialize(valueData));
+                data.Add(index.ToString(CultureInfo.InvariantCulture), context.Serialize(valueData));
                 ++index;
             }
 
@@ -140,11 +140,11 @@ namespace Slash.Serialization.Dictionary
                 T value;
                 if (typeSealed)
                 {
-                    value = (T)context.deserialize(typeof(T), valueData);
+                    value = (T)context.Deserialize(typeof(T), valueData);
                 }
                 else
                 {
-                    ValueWithType valueWithType = context.deserialize(typeof(ValueWithType), valueData) as ValueWithType;
+                    ValueWithType valueWithType = context.Deserialize(typeof(ValueWithType), valueData) as ValueWithType;
                     if (!(valueWithType.Value is T))
                     {
                         throw new SerializationException(
@@ -179,7 +179,7 @@ namespace Slash.Serialization.Dictionary
             foreach (T value in stack)
             {
                 object valueData = typeSealed || value == null ? (object)value : new ValueWithType(value);
-                data.Add(index.ToString(CultureInfo.InvariantCulture), context.serialize(valueData));
+                data.Add(index.ToString(CultureInfo.InvariantCulture), context.Serialize(valueData));
                 ++index;
             }
 

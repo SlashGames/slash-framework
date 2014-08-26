@@ -18,7 +18,7 @@ namespace Slash.Unity.Common.Animations
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Enumerator that keeps yielding while the animation is playing.
+        ///   Keeps yielding while the animation is playing.
         /// </summary>
         /// <param name="animation">Animation to check.</param>
         /// <returns>Enumerator that keeps yielding while the animation is playing.</returns>
@@ -32,7 +32,7 @@ namespace Slash.Unity.Common.Animations
         }
 
         /// <summary>
-        ///   Enumerator that keeps yielding while the specified animation is playing.
+        ///   Keeps yielding while the specified animation is playing.
         /// </summary>
         /// <param name="animation">Animation to check.</param>
         /// <param name="animationName">Name of the animation to check.</param>
