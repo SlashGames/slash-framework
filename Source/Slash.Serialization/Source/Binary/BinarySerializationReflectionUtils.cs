@@ -8,6 +8,7 @@ namespace Slash.Serialization.Binary
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
 
     /// <summary>
@@ -33,13 +34,7 @@ namespace Slash.Serialization.Binary
             // Sort fields by name to prevent re-ordering members from being a breaking change.
             Array.Sort(fields, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
 
-            foreach (FieldInfo field in fields)
-            {
-                if (Attribute.IsDefined(field, typeof(SerializeMemberAttribute)))
-                {
-                    yield return field;
-                }
-            }
+            return fields.Where(field => Attribute.IsDefined(field, typeof(SerializeMemberAttribute)));
         }
 
         /// <summary>
@@ -59,13 +54,7 @@ namespace Slash.Serialization.Binary
             // Sort properties by name to prevent re-ordering members from being a breaking change.
             Array.Sort(properties, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
 
-            foreach (PropertyInfo property in properties)
-            {
-                if (Attribute.IsDefined(property, typeof(SerializeMemberAttribute)))
-                {
-                    yield return property;
-                }
-            }
+            return properties.Where(property => Attribute.IsDefined(property, typeof(SerializeMemberAttribute)));
         }
 
         #endregion
