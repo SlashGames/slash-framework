@@ -95,13 +95,20 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         #region Methods
 
         /// <summary>
-        ///   Collects a list of members of the source MonoBehaviour that can be selected in the editor.
+        ///   Collects a list of members of the target game object that can be selected in the editor.
         /// </summary>
+        /// <param name="target">Game object to get applicable members of.</param>
+        /// <returns>List of members of the target game object that can be selected in the editor.</returns>
         protected abstract List<Entry> GetApplicableMembers(GameObject target);
 
         /// <summary>
-        ///   Convert the specified list of applicable entries into a string array.
+        ///   Convert the specified list of applicable entries to a string array.
         /// </summary>
+        /// <param name="list">List of entries to convert.</param>
+        /// <param name="selectedSource">MonoBehaviour providing the applicable entries.</param>
+        /// <param name="selectedField">Field to match with list entries.</param>
+        /// <param name="index">Selected list entry.</param>
+        /// <returns>Names of the list entries.</returns>
         private static string[] GetEntryNames(
             List<Entry> list, MonoBehaviour selectedSource, string selectedField, out int index)
         {

@@ -40,7 +40,7 @@ namespace Slash.Serialization.Dictionary
             {
                 valueWithType.TypeFullName = (string)typeFullName;
                 Type type = valueWithType.Type;
-                valueWithType.Value = context.deserialize(type, value);
+                valueWithType.Value = context.Deserialize(type, value);
             }
             else
             {
@@ -63,10 +63,10 @@ namespace Slash.Serialization.Dictionary
 
             Dictionary<string, object> data = new Dictionary<string, object>
                 {
-                    { DataValue, context.serialize(valueWithType.Value) }
+                    { DataValue, context.Serialize(valueWithType.Value) }
                 };
 
-            if (!context.isRawSerializationPossible(valueWithType.Type))
+            if (!context.IsRawSerializationPossible(valueWithType.Type))
             {
                 data.Add(DataType, valueWithType.TypeFullName);
             }

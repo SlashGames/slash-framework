@@ -53,6 +53,8 @@ namespace Slash.Unity.Editor.Common.Inspectors.ViewModels
         /// <summary>
         ///   Collects a list of usable routed events from the specified target game object.
         /// </summary>
+        /// <param name="target">Game object to get all usable routes events of.</param>
+        /// <returns>Usable routed events from the specified target game object.</returns>
         protected override List<Entry> GetApplicableMembers(GameObject target)
         {
             MonoBehaviour[] components = target.GetComponents<MonoBehaviour>();

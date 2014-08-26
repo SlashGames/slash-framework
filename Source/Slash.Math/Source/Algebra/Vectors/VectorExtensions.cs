@@ -26,6 +26,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Returns the 2D representation of this 3D vector (i.e. x and y coordinates).
         /// </summary>
+        /// <param name="vector">Vector to get the 2D representation of.</param>
         /// <returns>2D vector of this vector.</returns>
         public static Vector2F ToVector2F(this Vector3F vector)
         {
@@ -45,6 +46,8 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Returns the 3D representation of this 2D vector and z coordinate.
         /// </summary>
+        /// <param name="vector">Vector to get the 3D representation of.</param>
+        /// <param name="z">z-coordinate of the 3D representation of the vector.</param>
         /// <returns>3D vector of this vector.</returns>
         public static Vector3F ToVector3F(this Vector2F vector, float z)
         {

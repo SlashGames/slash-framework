@@ -66,7 +66,7 @@ namespace Slash.Unity.Editor.Common.Inspectors
                         break;
 
                     case SerializedPropertyType.String:
-                        newValue = EditorGUILayout.TextField(field.Name, (String)value, emptyOptions);
+                        newValue = EditorGUILayout.TextField(field.Name, (string)value, emptyOptions);
                         break;
 
                     case SerializedPropertyType.Vector2:

@@ -16,7 +16,7 @@ namespace Slash.SystemExt.Utils
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Logical AND of the enum value and the complement of the specified option.
+        ///   Computes the logical AND of the enum value and the complement of the specified option.
         /// </summary>
         /// <param name="value">First operand.</param>
         /// <param name="option">Second operand to take the complement of.</param>
@@ -39,7 +39,7 @@ namespace Slash.SystemExt.Utils
         }
 
         /// <summary>
-        ///   Logical AND of the enum value and the specified option.
+        ///   Computes the logical AND of the enum value and the specified option.
         /// </summary>
         /// <param name="value">First operand.</param>
         /// <param name="option">Second operand.</param>
@@ -106,7 +106,7 @@ namespace Slash.SystemExt.Utils
         }
 
         /// <summary>
-        ///   Logical OR of the enum value and the specified option.
+        ///   Computes the logical OR of the enum value and the specified option.
         /// </summary>
         /// <param name="value">First operand.</param>
         /// <param name="option">Second operand.</param>

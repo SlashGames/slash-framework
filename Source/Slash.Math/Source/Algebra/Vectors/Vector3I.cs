@@ -195,7 +195,7 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="lhs"> First vector. </param>
         /// <param name="rhs"> Second vector. </param>
-        /// <returns> Returns a vector that is made from the largest components of two vectors. </returns>
+        /// <returns>Vector that is made from the largest components of two vectors.</returns>
         public static Vector3I Max(Vector3I lhs, Vector3I rhs)
         {
             return new Vector3I(MathUtils.Max(lhs.X, rhs.X), MathUtils.Max(lhs.Y, rhs.Y), MathUtils.Max(lhs.Z, rhs.Z));
@@ -206,7 +206,7 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="lhs"> First vector. </param>
         /// <param name="rhs"> Second vector. </param>
-        /// <returns> Returns a vector that is made from the smallest components of two vectors. </returns>
+        /// <returns>Vector that is made from the smallest components of two vectors.</returns>
         public static Vector3I Min(Vector3I lhs, Vector3I rhs)
         {
             return new Vector3I(MathUtils.Min(lhs.X, rhs.X), MathUtils.Min(lhs.Y, rhs.Y), MathUtils.Min(lhs.Z, rhs.Z));

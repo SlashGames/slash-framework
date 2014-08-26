@@ -31,7 +31,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         /// <param name="foldout">Whether to show all array entries, or not.</param>
         /// <param name="foldoutText">Text to show next to the array editor.</param>
         /// <param name="array">Array to draw the inspector for.</param>
-        /// <returns>Whether to show all array entries, or not.</returns>
+        /// <returns>Whether to show all array entries now, or not.</returns>
         public static bool ArrayField<T>(bool foldout, GUIContent foldoutText, ref T[] array) where T : Object
         {
             IList newArray;
@@ -49,7 +49,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         /// <param name="createList">Method for creating a new list if the size should be changed.</param>
         /// <param name="objectType">Unity object type of the list items.</param>
         /// <param name="newList">Modified list.</param>
-        /// <returns>Whether to show all list entries, or not.</returns>
+        /// <returns>Whether to show all list entries now, or not.</returns>
         public static bool ListField(
             bool foldout,
             GUIContent foldoutText,
@@ -76,7 +76,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         /// <param name="createList">Method for creating a new list if the size should be changed.</param>
         /// <param name="editItem">Method for changing a specific list item.</param>
         /// <param name="newList">Modified list.</param>
-        /// <returns>Whether to show all list entries, or not.</returns>
+        /// <returns>Whether to show all list entries now, or not.</returns>
         public static bool ListField(
             bool foldout,
             GUIContent foldoutText,
@@ -132,7 +132,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         /// <param name="foldoutText">Text to show next to the list editor.</param>
         /// <param name="list">List to draw the inspector for.</param>
         /// <param name="createList">Method for creating a new list if the size should be changed.</param>
-        /// <returns>Whether to show all list entries, or not.</returns>
+        /// <returns>Whether to show all list entries now, or not.</returns>
         public static bool ListField<T>(
             bool foldout, GUIContent foldoutText, ref IList list, Func<int, IList> createList) where T : Object
         {

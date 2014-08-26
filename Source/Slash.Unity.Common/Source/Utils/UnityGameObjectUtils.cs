@@ -86,7 +86,7 @@ namespace Slash.Unity.Common.Utils
         /// <returns>Full path of the specified game object.</returns>
         public static string GetPath(this GameObject gameObject)
         {
-            string path = String.Empty;
+            string path = string.Empty;
             if (gameObject.transform.parent != null)
             {
                 path = gameObject.transform.parent.gameObject.GetPath() + "/";

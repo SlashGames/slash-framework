@@ -21,6 +21,8 @@ namespace Slash.Collections.Extensions
         ///   dictionary, and returns the passed default value if the key
         ///   could not be found.
         /// </summary>
+        /// <typeparam name="TKey">Type of the dictionary keys.</typeparam>
+        /// <typeparam name="TValue">Type of the dictionary values.</typeparam>
         /// <param name="dictionary">
         ///   Dictionary to get the value from.
         /// </param>
@@ -46,6 +48,8 @@ namespace Slash.Collections.Extensions
         ///   dictionary, and uses the passed default value provider to return
         ///   a value if the key could not be found.
         /// </summary>
+        /// <typeparam name="TKey">Type of the dictionary keys.</typeparam>
+        /// <typeparam name="TValue">Type of the dictionary values.</typeparam>
         /// <param name="dictionary">
         ///   Dictionary to get the value from.
         /// </param>

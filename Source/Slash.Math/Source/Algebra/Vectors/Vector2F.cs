@@ -203,17 +203,11 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Returns a positive number if c is to the left of the line going from a to b.
         /// </summary>
+        /// <param name="a">First point of the line.</param>
+        /// <param name="b">Second point of the line.</param>
+        /// <param name="c">Point to check against the line.</param>
         /// <returns> Positive number if point is left, negative if point is right, and 0 if points are collinear. </returns>
         public static float Area(Vector2F a, Vector2F b, Vector2F c)
-        {
-            return Area(ref a, ref b, ref c);
-        }
-
-        /// <summary>
-        ///   Returns a positive number if c is to the left of the line going from a to b.
-        /// </summary>
-        /// <returns> Positive number if point is left, negative if point is right, and 0 if points are collinear. </returns>
-        public static float Area(ref Vector2F a, ref Vector2F b, ref Vector2F c)
         {
             return a.X * (b.Y - c.Y) + b.X * (c.Y - a.Y) + c.X * (a.Y - b.Y);
         }
@@ -263,7 +257,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <returns> True if the three vectors are collinear; otherwise, false. </returns>
         public static bool Collinear(ref Vector2F a, ref Vector2F b, ref Vector2F c, float tolerance)
         {
-            return MathUtils.FloatInRange(Area(ref a, ref b, ref c), -tolerance, tolerance);
+            return MathUtils.FloatInRange(Area(a, b, c), -tolerance, tolerance);
         }
 
         /// <summary>
@@ -497,6 +491,7 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="addX"> Value to add to x. </param>
         /// <param name="addY"> Value to add to y. </param>
+        /// <returns>Sum of <paramref name="addX"/> and <paramref name="addY"/>.</returns>
         public Vector2F Add(float addX, float addY)
         {
             return new Vector2F(this.X + addX, this.Y + addY);
@@ -632,6 +627,7 @@ namespace Slash.Math.Algebra.Vectors
         ///   If the vector is longer it is truncated, otherwise it stays the same.
         /// </summary>
         /// <param name="limit"> Maximum magnitude. </param>
+        /// <returns>Vector with the same orientation as this vector, limited to the specified length.</returns>
         public Vector2F Limit(float limit)
         {
             if (this.SquareMagnitude > limit * limit)
@@ -644,6 +640,7 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Normalizes this vector.
         /// </summary>
+        /// <returns>Vector with the same orientation as this one, and unit length.</returns>
         public Vector2F Normalize()
         {
             float magnitude = this.Magnitude;
@@ -688,6 +685,7 @@ namespace Slash.Math.Algebra.Vectors
         ///   Changes the magnitude of this vector to the passed value.
         /// </summary>
         /// <param name="length"> New magnitude. </param>
+        /// <returns>Vector with the same orientation as this one, and the specified length.</returns>
         public Vector2F Truncate(float length)
         {
             float magnitude = this.Magnitude;
