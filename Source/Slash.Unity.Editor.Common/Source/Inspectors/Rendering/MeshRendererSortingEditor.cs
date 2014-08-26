@@ -18,6 +18,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Rendering
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Draws the mesh renderer inspector.
+        /// </summary>
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();

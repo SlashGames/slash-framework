@@ -11,7 +11,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Extensions;
-    using Slash.Collections.Utils;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Systems;
@@ -22,6 +21,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Custom inspector for game configurations.
+    /// </summary>
     [CustomEditor(typeof(GameConfigurationBehaviour))]
     public class GameConfigurationEditor : Editor
     {
@@ -37,6 +39,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Draws the game configuration inspector.
+        /// </summary>
         public override void OnInspectorGUI()
         {
             this.DrawDefaultInspector();
@@ -89,7 +94,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
                     InspectorPropertyAttribute localInspectorProperty = inspectorProperty;
                     IList newList;
                     this.foldoutProperty[inspectorProperty] =
-                        EditorGUIUtils.ArrayField(
+                        EditorGUIUtils.ListField(
                             this.foldoutProperty.GetValueOrDefault(inspectorProperty, false),
                             new GUIContent(inspectorProperty.Name),
                             currentList,

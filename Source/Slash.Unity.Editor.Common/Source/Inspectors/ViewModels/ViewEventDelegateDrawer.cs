@@ -16,11 +16,17 @@ namespace Slash.Unity.Editor.Common.Inspectors.ViewModels
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Custom editor for delegates allowing registering as listener for a specific view event of a MonoBehaviour.
+    /// </summary>
     [CustomPropertyDrawer(typeof(ViewEventDelegate))]
     public class ViewEventDelegateDrawer : MemberReferenceDrawer
     {
         #region Properties
 
+        /// <summary>
+        ///   Name of the serialized property that makes up the selected member.
+        /// </summary>
         protected override string MemberProperty
         {
             get
@@ -29,6 +35,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.ViewModels
             }
         }
 
+        /// <summary>
+        ///   Name of the serialized property that makes up the selected source.
+        /// </summary>
         protected override string SourceProperty
         {
             get
@@ -42,7 +51,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.ViewModels
         #region Methods
 
         /// <summary>
-        ///   Collect a list of usable routed events from the specified target game object.
+        ///   Collects a list of usable routed events from the specified target game object.
         /// </summary>
         protected override List<Entry> GetApplicableMembers(GameObject target)
         {

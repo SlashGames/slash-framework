@@ -18,8 +18,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
     using Object = UnityEngine.Object;
 
     /// <summary>
-    ///   Found in Unity forum: http://forum.unity3d.com/threads/182621-Inspector-Tooltips.
+    ///   Shows a tooltip next to a property in the Unity inspector.
     /// </summary>
+    /// <seealso href="http://forum.unity3d.com/threads/182621-Inspector-Tooltips" />
     [CustomPropertyDrawer(typeof(InspectorTooltipAttribute))]
     public class TooltipDrawer : PropertyDrawer
     {
@@ -40,8 +41,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         private GUIContent oldlabel;
 
         #endregion
-
-        //private SerializedProperty currentProperty = null;
 
         #region Properties
 
@@ -109,6 +108,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Shows a tooltip next to a property in the Unity inspector.
+        /// </summary>
+        /// <param name="position">Position to draw the property editor at.</param>
+        /// <param name="property">Property to draw the editor for.</param>
+        /// <param name="oldLabel">Tooltip text.</param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent oldLabel)
         {
             this.oldlabel = oldLabel;

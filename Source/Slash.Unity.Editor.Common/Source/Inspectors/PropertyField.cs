@@ -16,17 +16,18 @@ namespace Slash.Unity.Editor.Common.Inspectors
 
     using UnityEngine;
 
-    using Object = System.Object;
-
+    /// <summary>
+    ///   Property wrapper for mono behaviour properties exposed in the Unity inspector.
+    /// </summary>
     public class PropertyField
     {
         #region Fields
 
         private readonly MethodInfo getter;
 
-        private readonly PropertyInfo info;
+        private readonly object instance;
 
-        private readonly Object instance;
+        private readonly PropertyInfo property;
 
         private readonly MethodInfo setter;
 
@@ -36,14 +37,20 @@ namespace Slash.Unity.Editor.Common.Inspectors
 
         #region Constructors and Destructors
 
-        public PropertyField(Object instance, PropertyInfo info, SerializedPropertyType type)
+        /// <summary>
+        ///   Creates a new wrapper for mono behaviour properties exposed in the Unity inspector.
+        /// </summary>
+        /// <param name="instance">Object to wrap the property of.</param>
+        /// <param name="property">Property to wrap.</param>
+        /// <param name="type">Type of the property to wrap.</param>
+        public PropertyField(object instance, PropertyInfo property, SerializedPropertyType type)
         {
             this.instance = instance;
-            this.info = info;
+            this.property = property;
             this.type = type;
 
-            this.getter = this.info.GetGetMethod();
-            this.setter = this.info.GetSetMethod();
+            this.getter = this.property.GetGetMethod();
+            this.setter = this.property.GetSetMethod();
         }
 
         #endregion
@@ -55,19 +62,25 @@ namespace Slash.Unity.Editor.Common.Inspectors
         /// </summary>
         public Func<object, object> GetConversionFunc { get; set; }
 
-        public String Name
+        /// <summary>
+        ///   Name of the wrapped property to be shown in the inspector.
+        /// </summary>
+        public string Name
         {
             get
             {
-                return ObjectNames.NicifyVariableName(this.info.Name);
+                return ObjectNames.NicifyVariableName(this.property.Name);
             }
         }
 
         /// <summary>
         ///   Conversion function when writing the value from the inspector back to the property.
         /// </summary>
-        public Func<Object, Object> SetConversionFunc { get; set; }
+        public Func<object, object> SetConversionFunc { get; set; }
 
+        /// <summary>
+        ///   Serialized type of the wrapped property.
+        /// </summary>
         public SerializedPropertyType Type
         {
             get
@@ -168,12 +181,22 @@ namespace Slash.Unity.Editor.Common.Inspectors
             return false;
         }
 
-        public Object GetValue()
+        /// <summary>
+        ///   Returns the converted current property value.
+        /// </summary>
+        /// <returns>Current property value.</returns>
+        /// <see cref="GetConversionFunc" />
+        public object GetValue()
         {
             return this.getter.Invoke(this.instance, null);
         }
 
-        public void SetValue(Object value)
+        /// <summary>
+        ///   Converts and sets the current property value.
+        /// </summary>
+        /// <param name="value">New property value.</param>
+        /// <see cref="SetConversionFunc" />
+        public void SetValue(object value)
         {
             if (this.setter != null)
             {

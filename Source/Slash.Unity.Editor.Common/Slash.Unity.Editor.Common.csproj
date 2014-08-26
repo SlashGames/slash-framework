@@ -53,6 +53,7 @@
     <Compile Include="Source\Inspectors\Rendering\MeshRendererSortingEditor.cs" />
     <Compile Include="Source\Inspectors\Utils\EditorGUIUtils.cs" />
     <Compile Include="Source\Inspectors\Utils\MemberReferenceDrawer.cs" />
+    <Compile Include="Source\Inspectors\Utils\ShaderContext.cs" />
     <Compile Include="Source\Inspectors\Utils\TooltipDrawer.cs" />
     <Compile Include="Source\Inspectors\ViewModels\ViewEventDelegateDrawer.cs" />
     <Compile Include="Source\MenuItems\Util\PlayerPrefsDeleteAll.cs" />
