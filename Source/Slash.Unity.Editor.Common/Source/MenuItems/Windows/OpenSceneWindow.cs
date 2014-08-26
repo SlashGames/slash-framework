@@ -14,6 +14,9 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Menu for changing scenes in the editor.
+    /// </summary>
     public class OpenSceneWindow : EditorWindow
     {
         #region Static Fields
@@ -32,6 +35,9 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Shows the menu for changing scenes in the editor.
+        /// </summary>
         [MenuItem("Slash Games/Windows/Open Scene")]
         public static void OpenScene()
         {

@@ -12,18 +12,33 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Custom editor for selecting a member of a specified source MonoBehaviour attached to a Unity game object.
+    /// </summary>
     public abstract class MemberReferenceDrawer : PropertyDrawer
     {
         #region Properties
 
+        /// <summary>
+        ///   Name of the serialized property that makes up the selected member.
+        /// </summary>
         protected abstract string MemberProperty { get; }
 
+        /// <summary>
+        ///   Name of the serialized property that makes up the selected source.
+        /// </summary>
         protected abstract string SourceProperty { get; }
 
         #endregion
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Gets the total height of this editor.
+        /// </summary>
+        /// <param name="property">Property to get the total height of the editor for.</param>
+        /// <param name="label">The parameter is not used.</param>
+        /// <returns>Total height of this editor.</returns>
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             SerializedProperty sourceProperty = this.GetSourceProperty(property);
@@ -32,6 +47,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             return EditorGUI.GetPropertyHeight(sourceProperty) + EditorGUI.GetPropertyHeight(memberProperty);
         }
 
+        /// <summary>
+        ///   Draws the custom editor for selecting a member of a specified source MonoBehaviour attached to a Unity game object.
+        /// </summary>
+        /// <param name="position">Position to draw the editor at.</param>
+        /// <param name="property">Property to draw the editor for.</param>
+        /// <param name="label">Text to show next to the property editor.</param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             SerializedProperty sourceProperty = this.GetSourceProperty(property);
@@ -74,22 +95,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         #region Methods
 
         /// <summary>
-        ///   Collect a list of usable routed events from the specified target game object.
+        ///   Collects a list of members of the source MonoBehaviour that can be selected in the editor.
         /// </summary>
         protected abstract List<Entry> GetApplicableMembers(GameObject target);
 
-        protected SerializedProperty GetMemberProperty(SerializedProperty property)
-        {
-            return property.FindPropertyRelative(this.MemberProperty);
-        }
-
-        protected SerializedProperty GetSourceProperty(SerializedProperty property)
-        {
-            return property.FindPropertyRelative(this.SourceProperty);
-        }
-
         /// <summary>
-        ///   Convert the specified list of delegate entries into a string array.
+        ///   Convert the specified list of applicable entries into a string array.
         /// </summary>
         private static string[] GetEntryNames(
             List<Entry> list, MonoBehaviour selectedSource, string selectedField, out int index)
@@ -155,14 +166,33 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             return type + "." + memberName;
         }
 
+        private SerializedProperty GetMemberProperty(SerializedProperty property)
+        {
+            return property.FindPropertyRelative(this.MemberProperty);
+        }
+
+        private SerializedProperty GetSourceProperty(SerializedProperty property)
+        {
+            return property.FindPropertyRelative(this.SourceProperty);
+        }
+
         #endregion
 
+        /// <summary>
+        ///   Applicable member of the specified source MonoBehaviour attached to a Unity game object.
+        /// </summary>
         protected class Entry
         {
             #region Fields
 
+            /// <summary>
+            ///   Name of the member.
+            /// </summary>
             public string MemberName;
 
+            /// <summary>
+            ///   Source MonoBehaviour attached to a Unity game object.
+            /// </summary>
             public MonoBehaviour Target;
 
             #endregion

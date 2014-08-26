@@ -14,16 +14,25 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Checks whether any Texture2D assets exceed <see cref="MaxTextureSize" />.
+    /// </summary>
     public static class CheckTextureAssets
     {
         #region Constants
 
+        /// <summary>
+        ///   Maximum size that causes a texture not to be reported.
+        /// </summary>
         public const int MaxTextureSize = 2048;
 
         #endregion
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Checks whether any Texture2D assets exceed <see cref="MaxTextureSize" />.
+        /// </summary>
         [MenuItem("Slash Games/Util/Check Texture Assets")]
         public static void CheckTextures()
         {
