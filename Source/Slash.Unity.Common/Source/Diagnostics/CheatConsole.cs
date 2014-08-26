@@ -12,10 +12,17 @@ namespace Slash.Unity.Common.Diagnostics
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Allows executing cheats (e.g. game events) manually.
+    /// </summary>
+    /// <seealso cref="FrameworkEvent.Cheat" />
     public class CheatConsole : MonoBehaviour
     {
         #region Fields
 
+        /// <summary>
+        ///   Rectangle showing the button to show or hide the cheat console.
+        /// </summary>
         public Rect ButtonRect = new Rect(0, 0, 10, 10);
 
         /// <summary>
@@ -24,23 +31,29 @@ namespace Slash.Unity.Common.Diagnostics
         /// </summary>
         public GameCheatBehaviour GameSpecific;
 
+        /// <summary>
+        ///   Cheats that should be provided as buttons for quick access.
+        /// </summary>
         public string[] QuickCheats;
 
         /// <summary>
-        ///   Height of UI.
+        ///   Design height of the game.
         /// </summary>
         public float UIHeight = 600;
 
         /// <summary>
-        ///   Width of UI.
+        ///   Design width of the game.
         /// </summary>
         public float UIWidth = 800;
 
         /// <summary>
-        ///   Indicates if a butotn should be shown to enable/disable cheat console.
+        ///   Indicates if a button should be shown to enable/disable cheat console.
         /// </summary>
         public bool UseButton = true;
 
+        /// <summary>
+        ///   Rectangle of the cheat console window.
+        /// </summary>
         public Rect WindowRect = new Rect(10, 10, 300, 400);
 
         private readonly Rect dragRect = new Rect(0, 0, 10000, 20);
@@ -61,6 +74,9 @@ namespace Slash.Unity.Common.Diagnostics
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Hides the cheat console.
+        /// </summary>
         public void DisableConsole()
         {
             this.showConsole = false;
@@ -76,6 +92,9 @@ namespace Slash.Unity.Common.Diagnostics
             }
         }
 
+        /// <summary>
+        ///   Shows the cheat console.
+        /// </summary>
         public void EnableConsole()
         {
             this.showConsole = true;
@@ -89,11 +108,6 @@ namespace Slash.Unity.Common.Diagnostics
             {
                 this.collider2D.enabled = true;
             }
-        }
-
-        public void Start()
-        {
-            this.DisableConsole();
         }
 
         #endregion
@@ -174,6 +188,11 @@ namespace Slash.Unity.Common.Diagnostics
             var currentMatrix = GUI.matrix;
             GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(horizRatio, vertRatio, 1));
             return currentMatrix;
+        }
+
+        private void Start()
+        {
+            this.DisableConsole();
         }
 
         private void Update()

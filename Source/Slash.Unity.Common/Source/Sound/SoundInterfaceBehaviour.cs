@@ -53,6 +53,11 @@ namespace Slash.Unity.Common.Sound
 
         #region Public Indexers
 
+        /// <summary>
+        ///   Audio channel of the specified type.
+        /// </summary>
+        /// <param name="channelType">Type of the audio channel.</param>
+        /// <returns>Audio channel of the specified type.</returns>
         public AudioChannel this[AudioChannelType channelType]
         {
             get
@@ -89,11 +94,24 @@ namespace Slash.Unity.Common.Sound
             audioChannel.Source.FadeOut();
         }
 
+        /// <summary>
+        ///   Plays the specified clip, if it's not already playing.
+        /// </summary>
+        /// <param name="channelType">Channel to play the clip at.</param>
+        /// <param name="clip">Music clip to play.</param>
+        /// <param name="volume">Volume to play the clip at.</param>
         public void PlayAudioClip(AudioChannelType channelType, AudioClip clip, float volume)
         {
             this.PlayAudioClip(channelType, clip, volume, true);
         }
 
+        /// <summary>
+        ///   Plays the specified clip, if it's not already playing.
+        /// </summary>
+        /// <param name="channelType">Channel to play the clip at.</param>
+        /// <param name="clip">Music clip to play.</param>
+        /// <param name="volume">Volume to play the clip at.</param>
+        /// <param name="loop">Whether to loop the clip or play one-shot.</param>
         public void PlayAudioClip(AudioChannelType channelType, AudioClip clip, float volume, bool loop)
         {
             var audioChannel = this[channelType];
@@ -119,6 +137,15 @@ namespace Slash.Unity.Common.Sound
             this.PlayAudioClip(channelType, clip, DefaultVolume);
         }
 
+        /// <summary>
+        ///   Fades to the specified clip, if it's not already playing.
+        /// </summary>
+        /// <param name="channelType">Channel to play the clip at.</param>
+        /// <param name="clip">Music clip to play.</param>
+        /// <param name="volume">Volume to play the clip at.</param>
+        /// <param name="loop">Whether to loop the clip or play one-shot.</param>
+        /// <param name="fadeSpeed">Speed to fade in or out with, in volume/second.</param>
+        /// <seealso cref="FadingAudioSource.Fade(UnityEngine.AudioClip,float,bool)" />
         public void PlayAudioClip(
             AudioChannelType channelType, AudioClip clip, float volume, bool loop, float fadeSpeed)
         {
@@ -135,6 +162,15 @@ namespace Slash.Unity.Common.Sound
             }
         }
 
+        /// <summary>
+        ///   Fades to the specified intro clip, if it's not already playing,
+        ///   playing it one time, and loops the passed loop after.
+        /// </summary>
+        /// <param name="channelType">Channel to play the clip at.</param>
+        /// <param name="introClip">Clip to play once.</param>
+        /// <param name="loopClip">Clip to loop after.</param>
+        /// <param name="volume">Volume to play the clip at.</param>
+        /// <seealso cref="FadingAudioSource.Fade(UnityEngine.AudioClip,float,bool)" />
         public void PlayAudioClipWithIntroAndLoop(
             AudioChannelType channelType, AudioClip introClip, AudioClip loopClip, float volume)
         {
@@ -152,7 +188,7 @@ namespace Slash.Unity.Common.Sound
         }
 
         /// <summary>
-        ///   Plays the specified sound effect.
+        ///   Plays the specified sound effect once.
         /// </summary>
         /// <param name="clip">Sound effect clip to play.</param>
         public AudioSource PlaySoundEffect(AudioClip clip)
@@ -161,7 +197,7 @@ namespace Slash.Unity.Common.Sound
         }
 
         /// <summary>
-        ///   Plays the specified sound effect with the passed volume.
+        ///   Plays the specified sound effect once with the passed volume.
         /// </summary>
         /// <param name="clip">Sound effect clip to play.</param>
         /// <param name="volume">Volume to play the sound with.</param>
@@ -170,6 +206,12 @@ namespace Slash.Unity.Common.Sound
             return this.PlaySoundEffect(clip, volume, false);
         }
 
+        /// <summary>
+        ///   Plays the specified sound effect with the passed volume.
+        /// </summary>
+        /// <param name="clip">Sound effect clip to play.</param>
+        /// <param name="volume">Volume to play the sound with.</param>
+        /// <param name="loop">Whether to loop the sound effect, or play it one-shot.</param>
         public AudioSource PlaySoundEffect(AudioClip clip, float volume, bool loop)
         {
             if (this.SoundEffectSourcePrefab == null)
@@ -203,6 +245,10 @@ namespace Slash.Unity.Common.Sound
             return audioSource;
         }
 
+        /// <summary>
+        ///   Stops the specified looping sound effect.
+        /// </summary>
+        /// <param name="effectSource">Sound effect source to stop.</param>
         public void StopSoundEffect(AudioSource effectSource)
         {
             if (effectSource == null)

@@ -15,6 +15,9 @@ namespace Slash.Unity.Common.Diagnostics
     {
         #region Fields
 
+        /// <summary>
+        ///   Rectangle showing caught exceptions.
+        /// </summary>
         public Rect DialogRect = new Rect(100, 100, 400, 300);
 
         private Vector2 dialogScrollPosition = Vector2.zero;

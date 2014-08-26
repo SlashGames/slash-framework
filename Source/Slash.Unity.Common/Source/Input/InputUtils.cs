@@ -8,14 +8,11 @@ namespace Slash.Unity.Common.Input
 {
     using UnityEngine;
 
+    /// <summary>
+    ///   Utility methods for handling Unity input and Unity GUI.
+    /// </summary>
     public static class InputUtils
     {
-        #region Static Fields
-
-        private static bool mouseOver2dGUI;
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -31,25 +28,6 @@ namespace Slash.Unity.Common.Input
                 Vector3 mousePosition = Input.mousePosition;
                 return new Vector2(mousePosition.x, Screen.height - mousePosition.y);
             }
-        }
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        public static bool GetMouseOver2dGUI()
-        {
-            return mouseOver2dGUI;
-        }
-
-        public static void ResetMouseOver2dGUI()
-        {
-            mouseOver2dGUI = false;
-        }
-
-        public static void SetMouseOver2dGUI(bool overGUI)
-        {
-            mouseOver2dGUI = mouseOver2dGUI || overGUI;
         }
 
         #endregion

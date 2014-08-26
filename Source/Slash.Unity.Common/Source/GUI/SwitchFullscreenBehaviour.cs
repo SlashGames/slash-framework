@@ -8,6 +8,9 @@ namespace Slash.Unity.Common.GUI
 {
     using UnityEngine;
 
+    /// <summary>
+    ///   Allows switching between full-screen and windowed mode.
+    /// </summary>
     public class SwitchFullscreenBehaviour : MonoBehaviour
     {
         #region Fields

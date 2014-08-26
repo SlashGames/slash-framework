@@ -8,10 +8,18 @@ namespace Slash.Unity.Common.Utils
 {
     using UnityEngine;
 
+    /// <summary>
+    ///   Utility methods extending Unity low-level OpenGL support.
+    /// </summary>
     public static class GLUtils
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Draws a two-dimensional unit grid with the specified size.
+        /// </summary>
+        /// <param name="gridOrigin">Corner of the grid.</param>
+        /// <param name="gridSize">Number of rows and columns of the grid.</param>
         public static void GLDrawGrid(Vector3 gridOrigin, Vector2 gridSize)
         {
             // Draw X axis lines.
@@ -30,13 +38,17 @@ namespace Slash.Unity.Common.Utils
             }
         }
 
-        public static void GLDrawGridOutline(Vector3 outlineOrigin, Vector2 outlineSize)
+        /// <summary>
+        ///   Draws a rectangle with the specified dimensions.
+        /// </summary>
+        /// <param name="origin">Corner of the rectangle.</param>
+        /// <param name="size">Width and height of the rectangle.</param>
+        public static void GLDrawRect(Vector3 origin, Vector2 size)
         {
-            Vector3 botLeft = new Vector3(outlineOrigin.x, outlineOrigin.y, outlineOrigin.z);
-            Vector3 botRight = new Vector3(outlineOrigin.x + outlineSize.x, outlineOrigin.y, outlineOrigin.z);
-            Vector3 topLeft = new Vector3(outlineOrigin.x, outlineOrigin.y + outlineSize.y, outlineOrigin.z);
-            Vector3 topRight = new Vector3(
-                outlineOrigin.x + outlineSize.x, outlineOrigin.y + outlineSize.y, outlineOrigin.z);
+            Vector3 botLeft = new Vector3(origin.x, origin.y, origin.z);
+            Vector3 botRight = new Vector3(origin.x + size.x, origin.y, origin.z);
+            Vector3 topLeft = new Vector3(origin.x, origin.y + size.y, origin.z);
+            Vector3 topRight = new Vector3(origin.x + size.x, origin.y + size.y, origin.z);
 
             // Draw X axis lines.
             GL.Vertex(botLeft);
@@ -53,18 +65,23 @@ namespace Slash.Unity.Common.Utils
             GL.Vertex(topRight);
         }
 
-        public static void GLDrawOutline(Vector3 outlineOrigin, Vector2 outlineSize, float thickness)
+        /// <summary>
+        ///   Draws a rectangle with the specified dimensions.
+        /// </summary>
+        /// <param name="origin">Corner of the rectangle.</param>
+        /// <param name="size">Width and height of the rectangle.</param>
+        /// <param name="lineThickness">Extents of the outlines.</param>
+        public static void GLDrawRect(Vector3 origin, Vector2 size, float lineThickness)
         {
-            Vector3 botLeft = new Vector3(outlineOrigin.x, outlineOrigin.y, outlineOrigin.z);
-            Vector3 botRight = new Vector3(outlineOrigin.x + outlineSize.x, outlineOrigin.y, outlineOrigin.z);
-            Vector3 topLeft = new Vector3(outlineOrigin.x, outlineOrigin.y + outlineSize.y, outlineOrigin.z);
-            Vector3 topRight = new Vector3(
-                outlineOrigin.x + outlineSize.x, outlineOrigin.y + outlineSize.y, outlineOrigin.z);
+            Vector3 botLeft = new Vector3(origin.x, origin.y, origin.z);
+            Vector3 botRight = new Vector3(origin.x + size.x, origin.y, origin.z);
+            Vector3 topLeft = new Vector3(origin.x, origin.y + size.y, origin.z);
+            Vector3 topRight = new Vector3(origin.x + size.x, origin.y + size.y, origin.z);
 
-            Vector3 botLeftInner = new Vector3(botLeft.x + thickness, botLeft.y + thickness, botLeft.z);
-            Vector3 botRightInner = new Vector3(botRight.x - thickness, botRight.y + thickness, botRight.z);
-            Vector3 topLeftInner = new Vector3(topLeft.x + thickness, topLeft.y - thickness, topLeft.z);
-            Vector3 topRightInner = new Vector3(topRight.x - thickness, topRight.y - thickness, topRight.z);
+            Vector3 botLeftInner = new Vector3(botLeft.x + lineThickness, botLeft.y + lineThickness, botLeft.z);
+            Vector3 botRightInner = new Vector3(botRight.x - lineThickness, botRight.y + lineThickness, botRight.z);
+            Vector3 topLeftInner = new Vector3(topLeft.x + lineThickness, topLeft.y - lineThickness, topLeft.z);
+            Vector3 topRightInner = new Vector3(topRight.x - lineThickness, topRight.y - lineThickness, topRight.z);
 
             // Draw X axis lines.
             GL.Vertex(botLeft);
