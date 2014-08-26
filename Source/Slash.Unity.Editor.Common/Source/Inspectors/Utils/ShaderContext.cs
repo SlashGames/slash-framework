@@ -74,14 +74,5 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         }
 
         #endregion
-
-        #region Methods
-
-        private void OnSelectedShaderPopup(string command, Object shader)
-        {
-            this.SelectedShader = shader != null ? shader.name : null;
-        }
-
-        #endregion
     }
 }

@@ -41,14 +41,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Diagnostics
         public void OnEnable()
         {
             this.instance = this.target as DebugInput;
-            if (this.instance != null)
-            {
-                this.propertyFields = ExposeProperties.GetProperties(this.instance);
-            }
-            else
-            {
-                this.propertyFields = null;
-            }
+            this.propertyFields = this.instance != null ? ExposeProperties.GetProperties(this.instance) : null;
         }
 
         /// <summary>

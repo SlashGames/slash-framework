@@ -6,7 +6,6 @@
 
 namespace Slash.Unity.Common.Utils
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -15,7 +14,7 @@ namespace Slash.Unity.Common.Utils
     using Object = UnityEngine.Object;
 
     /// <summary>
-    ///   Utility methods for handling Unity game object hiearchies.
+    ///   Utility methods for handling Unity game object hierarchies.
     /// </summary>
     public static class UnityGameObjectUtils
     {
