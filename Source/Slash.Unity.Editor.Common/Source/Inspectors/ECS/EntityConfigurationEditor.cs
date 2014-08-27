@@ -138,7 +138,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
                     var inspectorType = inspectorComponentTypes[componentType];
 
                     // Draw inspector.
-                    this.DrawInspector(inspectorType, this.entityConfigurationBehaviour.Configuration);
+                    EditorGUIUtils.AttributeTableField(inspectorType, this.entityConfigurationBehaviour.Configuration);
                 }
 
                 if (GUILayout.Button("Reload Blueprints"))
@@ -151,24 +151,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
         #endregion
 
         #region Methods
-
-        private void DrawInspector(InspectorType inspectorType, IAttributeTable configuration)
-        {
-            foreach (var inspectorProperty in inspectorType.Properties)
-            {
-                // Get current value.
-                object currentValue = configuration.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default);
-
-                // Draw inspector property.
-                object newValue = EditorGUIUtils.LogicInspectorPropertyField(inspectorProperty, currentValue);
-
-                // Set new value if changed.
-                if (!Equals(newValue, currentValue))
-                {
-                    configuration.SetValue(inspectorProperty.Name, newValue);
-                }
-            }
-        }
 
         private void LoadBlueprints()
         {
