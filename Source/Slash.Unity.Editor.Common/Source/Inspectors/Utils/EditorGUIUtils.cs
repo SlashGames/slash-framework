@@ -9,7 +9,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
     using System;
     using System.Collections;
 
+    using Slash.Collections.AttributeTables;
     using Slash.ECS.Inspector.Attributes;
+    using Slash.ECS.Inspector.Data;
 
     using UnityEditor;
 
@@ -38,6 +40,30 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             bool newFoldout = ListField(foldout, foldoutText, array, i => new T[i], typeof(T), out newArray);
             array = (T[])newArray;
             return newFoldout;
+        }
+
+        /// <summary>
+        ///   Draws an inspector for the passed attribute table.
+        /// </summary>
+        /// <param name="inspectorType">Type to draw inspector controls for.</param>
+        /// <param name="attributeTable">Attribute to draw inspector for.</param>
+        public static void AttributeTableField(InspectorType inspectorType, IAttributeTable attributeTable)
+        {
+            foreach (var inspectorProperty in inspectorType.Properties)
+            {
+                // Get current value.
+                object currentValue = attributeTable.GetValueOrDefault(
+                    inspectorProperty.Name, inspectorProperty.Default);
+
+                // Draw inspector property.
+                object newValue = LogicInspectorPropertyField(inspectorProperty, currentValue);
+
+                // Set new value if changed.
+                if (!Equals(newValue, currentValue))
+                {
+                    attributeTable.SetValue(inspectorProperty.Name, newValue);
+                }
+            }
         }
 
         /// <summary>

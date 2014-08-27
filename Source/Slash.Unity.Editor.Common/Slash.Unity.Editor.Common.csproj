@@ -59,6 +59,7 @@
     <Compile Include="Source\MenuItems\Util\PlayerPrefsDeleteAll.cs" />
     <Compile Include="Source\MenuItems\Util\FindMonoBehaviourUsages.cs" />
     <Compile Include="Source\MenuItems\Util\CheckTextureAssets.cs" />
+    <Compile Include="Source\MenuItems\Windows\BlueprintEditorWindow.cs" />
     <Compile Include="Source\MenuItems\Windows\OpenSceneWindow.cs" />
   </ItemGroup>
   <ItemGroup>
