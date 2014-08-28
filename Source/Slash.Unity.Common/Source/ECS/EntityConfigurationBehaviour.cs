@@ -131,7 +131,7 @@ namespace Slash.Unity.Common.ECS
             {
                 // Create entity.
                 var blueprint = newGame.BlueprintManager.GetBlueprint(this.BlueprintId);
-                this.EntityId = this.gameBehaviour.Game.EntityManager.CreateEntity(blueprint, this.Configuration);
+                this.EntityId = newGame.EntityManager.CreateEntity(blueprint, this.Configuration);
 
                 if (EntityGameObjectMap.Instance != null)
                 {

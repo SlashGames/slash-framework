@@ -26,6 +26,11 @@ namespace Slash.Unity.Common.ECS
         public int FrameCounter;
 
         /// <summary>
+        ///   Whether to start the game immediately when the scene is loaded.
+        /// </summary>
+        public bool StartImmediately = true;
+
+        /// <summary>
         ///   Current game instance.
         /// </summary>
         private Game game;
@@ -94,9 +99,6 @@ namespace Slash.Unity.Common.ECS
         /// <seealso cref="GameConfiguration" />
         public void StartGame(Game newGame)
         {
-            // Create game.
-            this.Game = newGame;
-
             // Get game configuration.
             var gameConfiguration = this.GameConfiguration != null
                                         ? new AttributeTable(this.GameConfiguration.Configuration)
@@ -105,13 +107,16 @@ namespace Slash.Unity.Common.ECS
             // Load game data.
             if (this.GameConfiguration != null)
             {
-                this.Game.BlueprintManager = this.GameConfiguration.BlueprintManager;
+                newGame.BlueprintManager = this.GameConfiguration.BlueprintManager;
             }
             else
             {
                 Debug.LogError("No game configuration set.");
-                this.Game.BlueprintManager = new BlueprintManager();
+                newGame.BlueprintManager = new BlueprintManager();
             }
+
+            // Create game.
+            this.Game = newGame;
 
             // Start game.
             this.Game.StartGame(gameConfiguration);
@@ -124,7 +129,7 @@ namespace Slash.Unity.Common.ECS
         /// <summary>
         ///   Loads the game configuration, if available.
         /// </summary>
-        protected virtual void Awake()
+        private void Awake()
         {
             if (this.GameConfiguration == null)
             {
@@ -138,7 +143,7 @@ namespace Slash.Unity.Common.ECS
         /// </summary>
         /// <param name="newGame">New game instance.</param>
         /// <param name="oldGame">Previous game instance.</param>
-        protected void OnGameChanged(Game newGame, Game oldGame)
+        private void OnGameChanged(Game newGame, Game oldGame)
         {
             var handler = this.GameChanged;
             if (handler != null)
@@ -147,10 +152,18 @@ namespace Slash.Unity.Common.ECS
             }
         }
 
+        private void Start()
+        {
+            if (this.StartImmediately)
+            {
+                this.StartGame(new Game());
+            }
+        }
+
         /// <summary>
         ///   Ticks the current game and increases the frame counter.
         /// </summary>
-        protected virtual void Update()
+        private void Update()
         {
             if (this.Game != null)
             {
