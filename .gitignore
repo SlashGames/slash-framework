@@ -35,3 +35,5 @@ Source/Slash.Unity.NGUI/Source/Unity/Temp/
 /Tests/CodeCoverageReport
 /Tests/CodeCoverageResult.xml
 /UnitTestsResult.xml
+Release/
+Source/Slash.Unity.Export/Source/Library/
