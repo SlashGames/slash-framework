@@ -172,6 +172,7 @@
   <HelpKINode Title="AttributeTableExtensions.TryGetFloat method" Url="html/M_Slash_Collections_AttributeTables_AttributeTableExtensions_TryGetFloat.htm" />
   <HelpKINode Title="AttributeTableExtensions.TryGetInt method" Url="html/M_Slash_Collections_AttributeTables_AttributeTableExtensions_TryGetInt.htm" />
   <HelpKINode Title="AttributeTableExtensions.TryGetValue method" Url="html/Overload_Slash_Collections_AttributeTables_AttributeTableExtensions_TryGetValue.htm" />
+  <HelpKINode Title="AttributeTableField method" Url="html/M_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_AttributeTableField.htm" />
   <HelpKINode Title="AttributeTableSerialized property" Url="html/P_Slash_ECS_Blueprints_Blueprint_AttributeTableSerialized.htm" />
   <HelpKINode Title="AttributeType property" Url="html/P_Slash_ECS_Inspector_Attributes_InspectorPropertyAttribute_AttributeType.htm" />
   <HelpKINode Title="AudioChannel class">
@@ -202,10 +203,7 @@
   <HelpKINode Title="AudioPlayerPrefs.PlaySound property" Url="html/P_Slash_Unity_Common_Sound_AudioPlayerPrefs_PlaySound.htm" />
   <HelpKINode Title="AudioPlayerPrefs.PlaySoundChanged event" Url="html/E_Slash_Unity_Common_Sound_AudioPlayerPrefs_PlaySoundChanged.htm" />
   <HelpKINode Title="AudioPlayerPrefs.PlaySoundChangedDelegate delegate" Url="html/T_Slash_Unity_Common_Sound_AudioPlayerPrefs_PlaySoundChangedDelegate.htm" />
-  <HelpKINode Title="Awake method">
-    <HelpKINode Title="GameBehaviour.Awake Method " Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_Awake.htm" />
-    <HelpKINode Title="GameEventBehaviour.Awake Method " Url="html/M_Slash_Unity_Common_ECS_GameEventBehaviour_Awake.htm" />
-  </HelpKINode>
+  <HelpKINode Title="Awake method" Url="html/M_Slash_Unity_Common_ECS_GameEventBehaviour_Awake.htm" />
   <HelpKINode Title="BinaryDeserializer class">
     <HelpKINode Title="BinaryDeserializer Class" Url="html/T_Slash_Serialization_Binary_BinaryDeserializer.htm" />
     <HelpKINode Title="about BinaryDeserializer class" Url="html/T_Slash_Serialization_Binary_BinaryDeserializer.htm" />
@@ -257,6 +255,14 @@
   <HelpKINode Title="Blueprint.TryGetValue method" Url="html/M_Slash_ECS_Blueprints_Blueprint_TryGetValue.htm" />
   <HelpKINode Title="Blueprint.WriteXml method" Url="html/M_Slash_ECS_Blueprints_Blueprint_WriteXml.htm" />
   <HelpKINode Title="BlueprintAssetsFolder field" Url="html/F_Slash_Unity_Common_Configuration_GameConfigurationBehaviour_BlueprintAssetsFolder.htm" />
+  <HelpKINode Title="BlueprintEditorWindow class">
+    <HelpKINode Title="BlueprintEditorWindow Class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Windows_BlueprintEditorWindow.htm" />
+    <HelpKINode Title="about BlueprintEditorWindow class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Windows_BlueprintEditorWindow.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Windows_BlueprintEditorWindow__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Editor_Common_MenuItems_Windows_BlueprintEditorWindow.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Slash_Unity_Editor_Common_MenuItems_Windows_BlueprintEditorWindow.htm" />
+  </HelpKINode>
+  <HelpKINode Title="BlueprintEditorWindow.BlueprintEditorWindow constructor" Url="html/M_Slash_Unity_Editor_Common_MenuItems_Windows_BlueprintEditorWindow__ctor.htm" />
   <HelpKINode Title="BlueprintId field" Url="html/F_Slash_Unity_Common_ECS_EntityConfigurationBehaviour_BlueprintId.htm" />
   <HelpKINode Title="BlueprintId property" Url="html/P_Slash_ECS_Configurations_EntityConfiguration_BlueprintId.htm" />
   <HelpKINode Title="BlueprintManager class">
@@ -646,7 +652,7 @@
   <HelpKINode Title="Direction.ToVector2I method" Url="html/M_Slash_Math_Utils_Direction_ToVector2I.htm" />
   <HelpKINode Title="DirectionType enumeration" Url="html/T_Slash_Math_Utils_DirectionType.htm" />
   <HelpKINode Title="DisableConsole method" Url="html/M_Slash_Unity_Common_Diagnostics_CheatConsole_DisableConsole.htm" />
-  <HelpKINode Title="Disabled field" Url="html/F_Slash_Unity_Common_Logging_LogBehaviour_Disabled.htm" />
+  <HelpKINode Title="Disabled field" Url="html/F_Slash_Unity_Common_Logging_GameLogBehaviour_Disabled.htm" />
   <HelpKINode Title="DisableWithSceneManager class">
     <HelpKINode Title="DisableWithSceneManager Class" Url="html/T_Slash_Unity_Common_Diagnostics_DisableWithSceneManager.htm" />
     <HelpKINode Title="about DisableWithSceneManager class" Url="html/T_Slash_Unity_Common_Diagnostics_DisableWithSceneManager.htm" />
@@ -690,6 +696,7 @@
   </HelpKINode>
   <HelpKINode Title="EditorGUIUtils.ArrayField(Of T) method" Url="html/M_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_ArrayField__1.htm" />
   <HelpKINode Title="EditorGUIUtils.ArrayField&lt;T&gt; method" Url="html/M_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_ArrayField__1.htm" />
+  <HelpKINode Title="EditorGUIUtils.AttributeTableField method" Url="html/M_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_AttributeTableField.htm" />
   <HelpKINode Title="EditorGUIUtils.ListField method" Url="html/Overload_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_ListField.htm" />
   <HelpKINode Title="EditorGUIUtils.LogicInspectorPropertyField method" Url="html/Overload_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_LogicInspectorPropertyField.htm" />
   <HelpKINode Title="EditorGUIUtils.ShaderField method" Url="html/M_Slash_Unity_Editor_Common_Inspectors_Utils_EditorGUIUtils_ShaderField.htm" />
@@ -848,8 +855,8 @@
     <HelpKINode Title="Vector3I.Equals Method " Url="html/Overload_Slash_Math_Algebra_Vectors_Vector3I_Equals.htm" />
   </HelpKINode>
   <HelpKINode Title="Error method">
+    <HelpKINode Title="GameLogBehaviour.Error Method " Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_Error.htm" />
     <HelpKINode Title="GameLogger.Error Method " Url="html/M_Slash_ECS_Logging_GameLogger_Error.htm" />
-    <HelpKINode Title="LogBehaviour.Error Method " Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_Error.htm" />
   </HelpKINode>
   <HelpKINode Title="ErrorLogged event" Url="html/E_Slash_ECS_Logging_GameLogger_ErrorLogged.htm" />
   <HelpKINode Title="Event event" Url="html/E_Slash_Unity_Common_ViewModels_ViewEvent_Event.htm" />
@@ -1027,16 +1034,14 @@
     <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Common_ECS_GameBehaviour.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Slash_Unity_Common_ECS_GameBehaviour.htm" />
   </HelpKINode>
-  <HelpKINode Title="GameBehaviour.Awake method" Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_Awake.htm" />
   <HelpKINode Title="GameBehaviour.FrameCounter field" Url="html/F_Slash_Unity_Common_ECS_GameBehaviour_FrameCounter.htm" />
   <HelpKINode Title="GameBehaviour.Game property" Url="html/P_Slash_Unity_Common_ECS_GameBehaviour_Game.htm" />
   <HelpKINode Title="GameBehaviour.GameBehaviour constructor" Url="html/M_Slash_Unity_Common_ECS_GameBehaviour__ctor.htm" />
   <HelpKINode Title="GameBehaviour.GameChanged event" Url="html/E_Slash_Unity_Common_ECS_GameBehaviour_GameChanged.htm" />
   <HelpKINode Title="GameBehaviour.GameChangedDelegate delegate" Url="html/T_Slash_Unity_Common_ECS_GameBehaviour_GameChangedDelegate.htm" />
   <HelpKINode Title="GameBehaviour.GameConfiguration property" Url="html/P_Slash_Unity_Common_ECS_GameBehaviour_GameConfiguration.htm" />
-  <HelpKINode Title="GameBehaviour.OnGameChanged method" Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_OnGameChanged.htm" />
   <HelpKINode Title="GameBehaviour.StartGame method" Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_StartGame.htm" />
-  <HelpKINode Title="GameBehaviour.Update method" Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_Update.htm" />
+  <HelpKINode Title="GameBehaviour.StartImmediately field" Url="html/F_Slash_Unity_Common_ECS_GameBehaviour_StartImmediately.htm" />
   <HelpKINode Title="GameBlueprintUtils class">
     <HelpKINode Title="GameBlueprintUtils Class" Url="html/T_Slash_ECS_Blueprints_GameBlueprintUtils.htm" />
     <HelpKINode Title="about GameBlueprintUtils class" Url="html/T_Slash_ECS_Blueprints_GameBlueprintUtils.htm" />
@@ -1104,6 +1109,21 @@
   <HelpKINode Title="GameEventBehaviour.OnGameChanged method" Url="html/M_Slash_Unity_Common_ECS_GameEventBehaviour_OnGameChanged.htm" />
   <HelpKINode Title="GameEventBehaviour.RegisterListener method" Url="html/M_Slash_Unity_Common_ECS_GameEventBehaviour_RegisterListener.htm" />
   <HelpKINode Title="GameEventBehaviour.RegisterListeners method" Url="html/M_Slash_Unity_Common_ECS_GameEventBehaviour_RegisterListeners.htm" />
+  <HelpKINode Title="GameLogBehaviour class">
+    <HelpKINode Title="GameLogBehaviour Class" Url="html/T_Slash_Unity_Common_Logging_GameLogBehaviour.htm" />
+    <HelpKINode Title="about GameLogBehaviour class" Url="html/T_Slash_Unity_Common_Logging_GameLogBehaviour.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour__ctor.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Slash_Unity_Common_Logging_GameLogBehaviour.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Common_Logging_GameLogBehaviour.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Slash_Unity_Common_Logging_GameLogBehaviour.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GameLogBehaviour.Disabled field" Url="html/F_Slash_Unity_Common_Logging_GameLogBehaviour_Disabled.htm" />
+  <HelpKINode Title="GameLogBehaviour.Error method" Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_Error.htm" />
+  <HelpKINode Title="GameLogBehaviour.GameLogBehaviour constructor" Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour__ctor.htm" />
+  <HelpKINode Title="GameLogBehaviour.Info method" Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_Info.htm" />
+  <HelpKINode Title="GameLogBehaviour.IsDisabled method" Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_IsDisabled.htm" />
+  <HelpKINode Title="GameLogBehaviour.SetDisabled method" Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_SetDisabled.htm" />
+  <HelpKINode Title="GameLogBehaviour.Warning method" Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_Warning.htm" />
   <HelpKINode Title="GameLogger class">
     <HelpKINode Title="GameLogger Class" Url="html/T_Slash_ECS_Logging_GameLogger.htm" />
     <HelpKINode Title="about GameLogger class" Url="html/T_Slash_ECS_Logging_GameLogger.htm" />
@@ -1421,8 +1441,8 @@
     <HelpKINode Title="Vector3F.Inequality Operator " Url="html/M_Slash_Math_Algebra_Vectors_Vector3F_op_Inequality.htm" />
   </HelpKINode>
   <HelpKINode Title="Info method">
+    <HelpKINode Title="GameLogBehaviour.Info Method " Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_Info.htm" />
     <HelpKINode Title="GameLogger.Info Method " Url="html/M_Slash_ECS_Logging_GameLogger_Info.htm" />
-    <HelpKINode Title="LogBehaviour.Info Method " Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_Info.htm" />
   </HelpKINode>
   <HelpKINode Title="InfoLogged event" Url="html/E_Slash_ECS_Logging_GameLogger_InfoLogged.htm" />
   <HelpKINode Title="Init method">
@@ -1702,7 +1722,7 @@
   <HelpKINode Title="IsBetween(Of T) method" Url="html/M_Slash_SystemExt_Utils_SystemExtensions_IsBetween__1.htm" />
   <HelpKINode Title="IsBetween&lt;T&gt; method" Url="html/M_Slash_SystemExt_Utils_SystemExtensions_IsBetween__1.htm" />
   <HelpKINode Title="IsCardinalDirection method" Url="html/Overload_Slash_Math_Utils_Direction_IsCardinalDirection.htm" />
-  <HelpKINode Title="IsDisabled method" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_IsDisabled.htm" />
+  <HelpKINode Title="IsDisabled method" Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_IsDisabled.htm" />
   <HelpKINode Title="IsFulfilled method">
     <HelpKINode Title="InspectorConditionalFlagsPropertyAttribute.IsFulfilled Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorConditionalFlagsPropertyAttribute_IsFulfilled.htm" />
     <HelpKINode Title="InspectorConditionalPropertyAttribute.IsFulfilled Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorConditionalPropertyAttribute_IsFulfilled.htm" />
@@ -1845,21 +1865,6 @@
   <HelpKINode Title="Log property" Url="html/P_Slash_ECS_Game_Log.htm" />
   <HelpKINode Title="Log10 method" Url="html/M_Slash_Math_Utils_MathUtils_Log10.htm" />
   <HelpKINode Title="Log2 method" Url="html/M_Slash_Math_Utils_MathUtils_Log2.htm" />
-  <HelpKINode Title="LogBehaviour class">
-    <HelpKINode Title="LogBehaviour Class" Url="html/T_Slash_Unity_Common_Logging_LogBehaviour.htm" />
-    <HelpKINode Title="about LogBehaviour class" Url="html/T_Slash_Unity_Common_Logging_LogBehaviour.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour__ctor.htm" />
-    <HelpKINode Title="fields" Url="html/Fields_T_Slash_Unity_Common_Logging_LogBehaviour.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Slash_Unity_Common_Logging_LogBehaviour.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_Slash_Unity_Common_Logging_LogBehaviour.htm" />
-  </HelpKINode>
-  <HelpKINode Title="LogBehaviour.Disabled field" Url="html/F_Slash_Unity_Common_Logging_LogBehaviour_Disabled.htm" />
-  <HelpKINode Title="LogBehaviour.Error method" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_Error.htm" />
-  <HelpKINode Title="LogBehaviour.Info method" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_Info.htm" />
-  <HelpKINode Title="LogBehaviour.IsDisabled method" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_IsDisabled.htm" />
-  <HelpKINode Title="LogBehaviour.LogBehaviour constructor" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour__ctor.htm" />
-  <HelpKINode Title="LogBehaviour.SetDisabled method" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_SetDisabled.htm" />
-  <HelpKINode Title="LogBehaviour.Warning method" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_Warning.htm" />
   <HelpKINode Title="LogDeviceIdBehaviour class">
     <HelpKINode Title="LogDeviceIdBehaviour Class" Url="html/T_Slash_Unity_Common_Utils_LogDeviceIdBehaviour.htm" />
     <HelpKINode Title="about LogDeviceIdBehaviour class" Url="html/T_Slash_Unity_Common_Utils_LogDeviceIdBehaviour.htm" />
@@ -2046,10 +2051,7 @@
   <HelpKINode Title="OneSet enumeration member" Url="html/T_Slash_ECS_Inspector_Attributes_ConditionalFlagsCheck.htm" />
   <HelpKINode Title="OnEvent method" Url="html/M_Slash_Unity_Common_ViewModels_ViewEvent_OnEvent.htm" />
   <HelpKINode Title="OnFulfilled method" Url="html/M_Slash_Unity_Common_Triggers_Conditions_Condition_OnFulfilled.htm" />
-  <HelpKINode Title="OnGameChanged method">
-    <HelpKINode Title="GameBehaviour.OnGameChanged Method " Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_OnGameChanged.htm" />
-    <HelpKINode Title="GameEventBehaviour.OnGameChanged Method " Url="html/M_Slash_Unity_Common_ECS_GameEventBehaviour_OnGameChanged.htm" />
-  </HelpKINode>
+  <HelpKINode Title="OnGameChanged method" Url="html/M_Slash_Unity_Common_ECS_GameEventBehaviour_OnGameChanged.htm" />
   <HelpKINode Title="OnGameStarted method" Url="html/M_Slash_ECS_Game_OnGameStarted.htm" />
   <HelpKINode Title="OnGUI method">
     <HelpKINode Title="MemberReferenceDrawer.OnGUI Method " Url="html/M_Slash_Unity_Editor_Common_Inspectors_Utils_MemberReferenceDrawer_OnGUI.htm" />
@@ -2475,7 +2477,7 @@
   </HelpKINode>
   <HelpKINode Title="SerializeMemberAttribute.SerializeMemberAttribute constructor" Url="html/M_Slash_Serialization_SerializeMemberAttribute__ctor.htm" />
   <HelpKINode Title="SetConversionFunc property" Url="html/P_Slash_Unity_Editor_Common_Inspectors_PropertyField_SetConversionFunc.htm" />
-  <HelpKINode Title="SetDisabled method" Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_SetDisabled.htm" />
+  <HelpKINode Title="SetDisabled method" Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_SetDisabled.htm" />
   <HelpKINode Title="SetPropertyValue method">
     <HelpKINode Title="InspectorDataAttribute.SetPropertyValue Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorDataAttribute_SetPropertyValue.htm" />
     <HelpKINode Title="InspectorEntityAttribute.SetPropertyValue Method " Url="html/M_Slash_ECS_Inspector_Attributes_InspectorEntityAttribute_SetPropertyValue.htm" />
@@ -2675,7 +2677,7 @@
   <HelpKINode Title="Slash.Unity.Common.Loading.LoadSceneOnEscBehaviour class" Url="html/T_Slash_Unity_Common_Loading_LoadSceneOnEscBehaviour.htm" />
   <HelpKINode Title="Slash.Unity.Common.Loading.LoadSceneOnStartBehaviour class" Url="html/T_Slash_Unity_Common_Loading_LoadSceneOnStartBehaviour.htm" />
   <HelpKINode Title="Slash.Unity.Common.Logging namespace" Url="html/N_Slash_Unity_Common_Logging.htm" />
-  <HelpKINode Title="Slash.Unity.Common.Logging.LogBehaviour class" Url="html/T_Slash_Unity_Common_Logging_LogBehaviour.htm" />
+  <HelpKINode Title="Slash.Unity.Common.Logging.GameLogBehaviour class" Url="html/T_Slash_Unity_Common_Logging_GameLogBehaviour.htm" />
   <HelpKINode Title="Slash.Unity.Common.Math namespace" Url="html/N_Slash_Unity_Common_Math.htm" />
   <HelpKINode Title="Slash.Unity.Common.Math.MathConversionExtensions class" Url="html/T_Slash_Unity_Common_Math_MathConversionExtensions.htm" />
   <HelpKINode Title="Slash.Unity.Common.Scenes namespace" Url="html/N_Slash_Unity_Common_Scenes.htm" />
@@ -2740,6 +2742,7 @@
   <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Util.FindMonoBehaviourUsages class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Util_FindMonoBehaviourUsages.htm" />
   <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Util.PlayerPrefsDeleteAll class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Util_PlayerPrefsDeleteAll.htm" />
   <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Windows namespace" Url="html/N_Slash_Unity_Editor_Common_MenuItems_Windows.htm" />
+  <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Windows.BlueprintEditorWindow class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Windows_BlueprintEditorWindow.htm" />
   <HelpKINode Title="Slash.Unity.Editor.Common.MenuItems.Windows.OpenSceneWindow class" Url="html/T_Slash_Unity_Editor_Common_MenuItems_Windows_OpenSceneWindow.htm" />
   <HelpKINode Title="SleepTimeoutBehaviour class">
     <HelpKINode Title="SleepTimeoutBehaviour Class" Url="html/T_Slash_Unity_Common_GUI_SleepTimeoutBehaviour.htm" />
@@ -2824,6 +2827,7 @@
     <HelpKINode Title="GameBehaviour.StartGame Method " Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_StartGame.htm" />
   </HelpKINode>
   <HelpKINode Title="StartHighlight method" Url="html/M_Slash_Unity_Common_Visual_HighlightSpriteAlpha_StartHighlight.htm" />
+  <HelpKINode Title="StartImmediately field" Url="html/F_Slash_Unity_Common_ECS_GameBehaviour_StartImmediately.htm" />
   <HelpKINode Title="Stop method" Url="html/M_Slash_Unity_Common_Sound_FadingAudioSource_Stop.htm" />
   <HelpKINode Title="StopHighlight method" Url="html/M_Slash_Unity_Common_Visual_HighlightSpriteAlpha_StopHighlight.htm" />
   <HelpKINode Title="StopSoundEffect method" Url="html/M_Slash_Unity_Common_Sound_SoundInterfaceBehaviour_StopSoundEffect.htm" />
@@ -3062,7 +3066,6 @@
   </HelpKINode>
   <HelpKINode Title="Update method">
     <HelpKINode Title="Game.Update Method " Url="html/M_Slash_ECS_Game_Update.htm" />
-    <HelpKINode Title="GameBehaviour.Update Method " Url="html/M_Slash_Unity_Common_ECS_GameBehaviour_Update.htm" />
     <HelpKINode Title="GameProcess.Update Method " Url="html/M_Slash_ECS_Processes_GameProcess_Update.htm" />
     <HelpKINode Title="SystemManager.Update Method " Url="html/M_Slash_ECS_Systems_SystemManager_Update.htm" />
     <HelpKINode Title="WaitProcess.Update Method " Url="html/M_Slash_ECS_Processes_WaitProcess_Update.htm" />
@@ -3379,8 +3382,8 @@
   <HelpKINode Title="WaitProcess.Update method" Url="html/M_Slash_ECS_Processes_WaitProcess_Update.htm" />
   <HelpKINode Title="WaitProcess.WaitProcess constructor" Url="html/M_Slash_ECS_Processes_WaitProcess__ctor.htm" />
   <HelpKINode Title="Warning method">
+    <HelpKINode Title="GameLogBehaviour.Warning Method " Url="html/M_Slash_Unity_Common_Logging_GameLogBehaviour_Warning.htm" />
     <HelpKINode Title="GameLogger.Warning Method " Url="html/M_Slash_ECS_Logging_GameLogger_Warning.htm" />
-    <HelpKINode Title="LogBehaviour.Warning Method " Url="html/M_Slash_Unity_Common_Logging_LogBehaviour_Warning.htm" />
   </HelpKINode>
   <HelpKINode Title="WarningLogged event" Url="html/E_Slash_ECS_Logging_GameLogger_WarningLogged.htm" />
   <HelpKINode Title="West enumeration member" Url="html/T_Slash_Math_Utils_DirectionType.htm" />
