@@ -83,7 +83,7 @@
     <Compile Include="Source\GUI\SwitchFullscreenBehaviour.cs" />
     <Compile Include="Source\Input\InputUtils.cs" />
     <Compile Include="Source\Loading\LoadSceneOnStartBehaviour.cs" />
-    <Compile Include="Source\Logging\LogBehaviour.cs" />
+    <Compile Include="Source\Logging\GameLogBehaviour.cs" />
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
     <Compile Include="Source\Scenes\SceneManager.cs" />
