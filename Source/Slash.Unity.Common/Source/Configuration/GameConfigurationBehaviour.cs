@@ -181,7 +181,7 @@ namespace Slash.Unity.Common.Configuration
             {
                 this.BlueprintManager = this.LoadBlueprints();
 
-                Debug.Log(string.Format("{0} blueprints loaded.", this.BlueprintManager.Blueprints.Count()));
+                Debug.Log(string.Format("{0} blueprint(s) loaded.", this.BlueprintManager.Blueprints.Count()));
             }
         }
 
