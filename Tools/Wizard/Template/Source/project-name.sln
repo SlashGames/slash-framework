@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Math", "%SLASH_FRAMEW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Diagnostics", "%SLASH_FRAMEWORK_HOME%Source\Slash.Diagnostics\Slash.Diagnostics.csproj", "{E155097A-6A57-498E-A707-F852AA672111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.GameBase", "%SLASH_FRAMEWORK_HOME%Source\Slash.GameBase\Slash.GameBase.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.ECS", "%SLASH_FRAMEWORK_HOME%Source\Slash.ECS\Slash.ECS.csproj", "{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Serialization", "%SLASH_FRAMEWORK_HOME%Source\Slash.Serialization\Slash.Serialization.csproj", "{C92C88B0-5268-443B-B32F-CC2A6D686C51}"
 EndProject
