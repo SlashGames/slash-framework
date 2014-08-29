@@ -20,6 +20,7 @@ namespace Slash.Reflection.Utils
     {
         #region Public Methods and Operators
 
+#if !WINDOWS_STORE
         /// <summary>
         ///   Loads an assembly from the specified file.
         /// </summary>
@@ -29,7 +30,7 @@ namespace Slash.Reflection.Utils
         {
             return Assembly.LoadFrom(assemblyFile);
         }
-
+#endif
         /// <summary>
         ///   <para>
         ///     Looks up the specified full type name in all loaded assemblies,
@@ -82,7 +83,13 @@ namespace Slash.Reflection.Utils
             List<Type> types = new List<Type>();
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
+#if WINDOWS_STORE
+                types.AddRange(
+                    assembly.DefinedTypes.Where(typeInfo => typeInfo.GetCustomAttribute<T>() != null)
+                            .Select(typeInfo => typeInfo.AsType()));
+#else
                 types.AddRange(assembly.GetTypes().Where(type => Attribute.IsDefined(type, typeof(T))));
+#endif
             }
 
             return types;
@@ -99,7 +106,13 @@ namespace Slash.Reflection.Utils
             Type baseType = typeof(T);
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
+#if WINDOWS_STORE
+                types.AddRange(
+                    assembly.DefinedTypes.Where(baseType.GetTypeInfo().IsAssignableFrom)
+                            .Select(typeInfo => typeInfo.AsType()));
+#else
                 types.AddRange(assembly.GetTypes().Where(baseType.IsAssignableFrom));
+#endif
             }
 
             return types;
@@ -115,6 +128,16 @@ namespace Slash.Reflection.Utils
         {
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
+#if WINDOWS_STORE
+                foreach (var typeInfo in assembly.DefinedTypes)
+                {
+                    T attribute = typeInfo.GetCustomAttribute<T>();
+                    if (attribute != null)
+                    {
+                        action(typeInfo.AsType(), attribute);
+                    }
+                }
+#else
                 foreach (Type type in assembly.GetTypes())
                 {
                     T attribute = (T)Attribute.GetCustomAttribute(type, typeof(T));
@@ -123,6 +146,7 @@ namespace Slash.Reflection.Utils
                         action(type, attribute);
                     }
                 }
+#endif
             }
         }
 

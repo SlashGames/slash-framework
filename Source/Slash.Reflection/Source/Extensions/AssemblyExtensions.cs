@@ -4,10 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-
-#if !WINDOWS_STORE
-
-namespace Slash.Reflection
+namespace Slash.Reflection.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -115,5 +112,3 @@ namespace Slash.Reflection
         #endregion
     }
 }
-
-#endif

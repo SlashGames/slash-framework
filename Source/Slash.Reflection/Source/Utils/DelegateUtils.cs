@@ -8,6 +8,10 @@ namespace Slash.Reflection.Utils
 {
     using System;
 
+#if WINDOWS_STORE
+    using System.Reflection;
+#endif
+
     /// <summary>
     ///   Utility methods for operating on delegates.
     /// </summary>
@@ -28,7 +32,12 @@ namespace Slash.Reflection.Utils
         /// </returns>
         public static Delegate CreateDelegate(Type type, object target, string method)
         {
+#if WINDOWS_STORE
+            var methodInfo = target.GetType().GetTypeInfo().GetDeclaredMethod(method);
+            return methodInfo.CreateDelegate(type);
+#else
             return Delegate.CreateDelegate(type, target, method);
+#endif
         }
 
         #endregion
