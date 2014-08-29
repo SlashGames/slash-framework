@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{77D7FB58-EC5B-4B50-8D59-63304259DC5A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Slash.Collections</RootNamespace>
+    <AssemblyName>Slash.Collections</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\Slash.Reflection.WindowsStore\Slash.Reflection.WindowsStore.csproj">
+      <Project>{b98dd3ea-25c3-41be-8253-206960364cc8}</Project>
+      <Name>Slash.Reflection.WindowsStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.WindowsStore.csproj">
+      <Project>{813f246a-f8f4-4943-a513-5178a5e6d6cf}</Project>
+      <Name>Slash.Serialization.WindowsStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.System\Slash.System.WindowsStore.csproj">
+      <Project>{d4130cf9-c05d-4428-a1c9-2c6b1a5874f1}</Project>
+      <Name>Slash.System.WindowsStore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\AttributeTables\AttributeTable.cs" />
+    <Compile Include="Source\AttributeTables\AttributeTableExtensions.cs" />
+    <Compile Include="Source\AttributeTables\HierarchicalAttributeTable.cs" />
+    <Compile Include="Source\AttributeTables\IAttributeTable.cs" />
+    <Compile Include="Source\Extensions\DictionaryExtensionMethods.cs" />
+    <Compile Include="Source\Extensions\EnumerableExtensionMethods.cs" />
+    <Compile Include="Source\Extensions\ListExtensionMethods.cs" />
+    <Compile Include="Source\Graphs\AdjacencyListWeightedDirectedGraph.cs" />
+    <Compile Include="Source\Graphs\IGraphVertex.cs" />
+    <Compile Include="Source\Graphs\IWeightedGraph.cs" />
+    <Compile Include="Source\Grid\Grid.cs" />
+    <Compile Include="Source\ObjectModel\ReadOnlyCollection.cs" />
+    <Compile Include="Source\PriorityQueues\FibonacciHeap.cs" />
+    <Compile Include="Source\PriorityQueues\FibonacciHeapItem.cs" />
+    <Compile Include="Source\PriorityQueues\FibonacciHeapNode.cs" />
+    <Compile Include="Source\PriorityQueues\IPriorityQueue.cs" />
+    <Compile Include="Source\PriorityQueues\IPriorityQueueItem.cs" />
+    <Compile Include="Source\Utils\CollectionUtils.cs" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
+    <VisualStudioVersion>11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
