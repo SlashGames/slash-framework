@@ -50,12 +50,6 @@
     <Compile Include="Source\Utils\PathUtils.cs" />
     <Compile Include="Source\Utils\SystemExtensions.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Slash.Diagnostics\Slash.Diagnostics.csproj">
-      <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
-      <Name>Slash.Diagnostics</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

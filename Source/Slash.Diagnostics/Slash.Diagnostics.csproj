@@ -76,6 +76,12 @@
     <Reference Include="System" />
     <Reference Include="System.XML" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
+      <Project>{49a6d476-f045-42b3-8ffc-a67b3f9bb073}</Project>
+      <Name>Slash.Reflection</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
