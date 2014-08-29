@@ -37,7 +37,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugSymbols>true</DebugSymbols>
-	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
@@ -48,7 +48,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
@@ -61,7 +61,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugSymbols>true</DebugSymbols>
-	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
@@ -72,7 +72,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
@@ -85,7 +85,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugSymbols>true</DebugSymbols>
-	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
@@ -96,7 +96,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-	<OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
@@ -108,7 +108,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\Slash.Reflection.WindowsStore\Slash.Reflection.WindowsStore.csproj">
+    <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.WindowsStore.csproj">
       <Project>{b98dd3ea-25c3-41be-8253-206960364cc8}</Project>
       <Name>Slash.Reflection.WindowsStore</Name>
     </ProjectReference>
