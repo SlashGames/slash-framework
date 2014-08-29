@@ -24,7 +24,9 @@ namespace Slash.Collections.AttributeTables
     ///   Table that allows storing and looking up attributes and their
     ///   respective values.
     /// </summary>
+#if !WINDOWS_STORE
     [Serializable]
+#endif
     public class AttributeTable : IAttributeTable,
                                   IXmlSerializable,
                                   IBinarySerializable,

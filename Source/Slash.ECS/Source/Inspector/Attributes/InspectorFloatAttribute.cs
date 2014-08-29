@@ -16,7 +16,9 @@ namespace Slash.ECS.Inspector.Attributes
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>
+#if !WINDOWS_STORE
     [Serializable]
+#endif
     public class InspectorFloatAttribute : InspectorPropertyAttribute
     {
         #region Constants

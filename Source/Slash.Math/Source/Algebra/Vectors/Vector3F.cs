@@ -14,7 +14,9 @@ namespace Slash.Math.Algebra.Vectors
     /// <summary>
     ///   3-dimensional float vector.
     /// </summary>
+#if !WINDOWS_STORE
     [Serializable]
+#endif
     public class Vector3F
     {
         #region Static Fields

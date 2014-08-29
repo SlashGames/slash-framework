@@ -13,7 +13,9 @@ namespace Slash.ECS.Inspector.Attributes
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>
+#if !WINDOWS_STORE
     [Serializable]
+#endif
     public class InspectorEnumAttribute : InspectorPropertyAttribute
     {
         #region Constructors and Destructors

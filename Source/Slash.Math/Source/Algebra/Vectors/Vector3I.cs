@@ -15,7 +15,9 @@ namespace Slash.Math.Algebra.Vectors
     /// <summary>
     ///   2-dimensional integer vector.
     /// </summary>
+#if !WINDOWS_STORE
     [Serializable]
+#endif
     [DictionarySerializable]
     public class Vector3I
     {

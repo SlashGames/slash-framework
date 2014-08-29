@@ -15,7 +15,9 @@ namespace Slash.Math.Algebra.Vectors
     /// <summary>
     ///   2-dimensional float vector.
     /// </summary>
+#if !WINDOWS_STORE
     [Serializable]
+#endif
     [DictionarySerializable]
     public class Vector2F
     {
