@@ -1,4 +1,4 @@
-Shader "HIDDEN/Unlit/Text 3" 
+Shader "Hidden/Unlit/Text 3" 
 {
 	Properties
 	{
@@ -24,7 +24,6 @@ Shader "HIDDEN/Unlit/Text 3"
 			Offset -1, -1
 			Fog { Mode Off }
 			//ColorMask RGB
-			AlphaTest Greater .01
 			Blend SrcAlpha OneMinusSrcAlpha
 
 			CGPROGRAM

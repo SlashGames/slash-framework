@@ -171,6 +171,24 @@ public class NGUISettings
 
 #region Convenience accessor properties
 
+	static public bool showTransformHandles
+	{
+		get { return GetBool("NGUI Transform Handles", false); }
+		set { SetBool("NGUI Transform Handles", value); }
+	}
+
+	static public bool minimalisticLook
+	{
+		get { return GetBool("NGUI Minimalistic", false); }
+		set { SetBool("NGUI Minimalistic", value); }
+	}
+
+	static public bool unifiedTransform
+	{
+		get { return GetBool("NGUI Unified", false); }
+		set { SetBool("NGUI Unified", value); }
+	}
+
 	static public Color color
 	{
 		get { return GetColor("NGUI Color", Color.white); }
@@ -235,13 +253,11 @@ public class NGUISettings
 		set { Set("NGUI Texture", value); }
 	}
 
-#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
 	static public Sprite sprite2D
 	{
 		get { return Get<Sprite>("NGUI Sprite2D", null); }
 		set { Set("NGUI Sprite2D", value); }
 	}
-#endif
 
 	static public string selectedSprite
 	{
@@ -286,6 +302,12 @@ public class NGUISettings
 	{
 		get { return GetInt("NGUI Font Size", 16); }
 		set { SetInt("NGUI Font Size", value); }
+	}
+
+	static public bool fontKerning
+	{
+		get { return GetBool("NGUI Font Kerning", true); }
+		set { SetBool("NGUI Font Kerning", value); }
 	}
 
 	static public FontStyle fontStyle
@@ -336,6 +358,12 @@ public class NGUISettings
 		set { SetBool("NGUI Packing", value); }
 	}
 
+	static public bool trueColorAtlas
+	{
+		get { return GetBool("NGUI Truecolor", true); }
+		set { SetBool("NGUI Truecolor", value); }
+	}
+
 	static public bool forceSquareAtlas
 	{
 		get { return GetBool("NGUI Square", false); }
@@ -377,6 +405,18 @@ public class NGUISettings
 		}
 		set { SetString("NGUI FreeType", value); }
 	}
+
+	static public string searchField
+	{
+		get { return GetString("NGUI Search", null); }
+		set { SetString("NGUI Search", value); }
+	}
+
+	static public string currentPath
+	{
+		get { return GetString("NGUI Path", "Assets/"); }
+		set { SetString("NGUI Path", value); }
+	}
 #endregion
 
 	/// <summary>
@@ -408,7 +448,6 @@ public class NGUISettings
 		return w;
 	}
 
-#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
 	/// <summary>
 	/// Convenience method -- add a UnityEngine.Sprite.
 	/// </summary>
@@ -423,7 +462,7 @@ public class NGUISettings
 		w.height = 100;
 		return w;
 	}
-#endif
+
 	/// <summary>
 	/// Convenience method -- add a sprite.
 	/// </summary>
@@ -576,6 +615,7 @@ public class NGUISettings
 		sp.centerType = GetEnum<UISprite.AdvancedType>("Center Type", UISprite.AdvancedType.Sliced);
 		sp.fillAmount = GetFloat("Fill", sp.fillAmount);
 		sp.fillDirection = GetEnum<UISprite.FillDirection>("FDir", sp.fillDirection);
+		NGUITools.SetDirty(sp);
 	}
 
 	/// <summary>
@@ -617,5 +657,6 @@ public class NGUISettings
 		float x = GetFloat("Effect X", lbl.effectDistance.x);
 		float y = GetFloat("Effect Y", lbl.effectDistance.y);
 		lbl.effectDistance = new Vector2(x, y);
+		NGUITools.SetDirty(lbl);
 	}
 }

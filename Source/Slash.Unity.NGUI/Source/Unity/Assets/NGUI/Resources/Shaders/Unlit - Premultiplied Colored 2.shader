@@ -1,4 +1,4 @@
-Shader "HIDDEN/Unlit/Premultiplied Colored 2"
+Shader "Hidden/Unlit/Premultiplied Colored 2"
 {
 	Properties
 	{

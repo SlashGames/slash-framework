@@ -1,16 +1,15 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!29 &1
-Scene:
+SceneSettings:
   m_ObjectHideFlags: 0
   m_PVSData: 
-  m_QueryMode: 1
   m_PVSObjectsArray: []
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
-    viewCellSize: 1
-    bakeMode: 2
-    memoryUsage: 10485760
+    smallestOccluder: 5
+    smallestHole: .25
+    backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
   m_Fog: 0
@@ -23,11 +22,12 @@ RenderSettings:
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
   m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 0}
   m_ObjectHideFlags: 0
 --- !u!127 &3
-GameManager:
+LevelGameManager:
   m_ObjectHideFlags: 0
 --- !u!157 &4
 LightmapSettings:
@@ -79,7 +79,7 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 58665454}
   - 114: {fileID: 58665455}
@@ -101,6 +101,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1834162021}
+  m_RootOrder: 0
 --- !u!114 &58665455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,8 +110,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 58665453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 1}
+  m_Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   leftAnchor:
     target: {fileID: 1834162021}
     relative: 0
@@ -127,6 +129,7 @@ MonoBehaviour:
     target: {fileID: 1834162021}
     relative: 1
     absolute: 80
+  updateAnchors: 1
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
   mWidth: 700
@@ -166,7 +169,7 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 318916588}
   - 114: {fileID: 318916589}
@@ -188,6 +191,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1881649308}
+  m_RootOrder: 0
 --- !u!114 &318916589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,8 +200,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 318916587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 1}
+  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   leftAnchor:
     target: {fileID: 1881649308}
     relative: 0
@@ -214,6 +219,7 @@ MonoBehaviour:
     target: {fileID: 1881649308}
     relative: 1
     absolute: 0
+  updateAnchors: 1
   mColor: {r: .343283594, g: .343283594, b: .343283594, a: .360784322}
   mPivot: 4
   mWidth: 1280
@@ -223,25 +229,25 @@ MonoBehaviour:
   hideIfOffScreen: 0
   keepAspectRatio: 0
   aspectRatio: 1.77777779
-  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
-  mSpriteName: Stripes 2
   mType: 2
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
   mFlip: 0
-  mFillCenter: 1
   centerType: 1
   leftType: 1
   rightType: 1
   bottomType: 1
   topType: 1
+  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
+  mSpriteName: Stripes 2
+  mFillCenter: 1
 --- !u!1 &752726403
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 752726404}
   - 114: {fileID: 752726405}
@@ -263,6 +269,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1834162021}
+  m_RootOrder: 1
 --- !u!114 &752726405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,8 +278,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 752726403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 1}
+  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   leftAnchor:
     target: {fileID: 1834162021}
     relative: 0
@@ -289,6 +297,7 @@ MonoBehaviour:
     target: {fileID: 1834162021}
     relative: 1
     absolute: 40
+  updateAnchors: 1
   mColor: {r: .216417909, g: .216417909, b: .216417909, a: .729411781}
   mPivot: 4
   mWidth: 780
@@ -297,26 +306,26 @@ MonoBehaviour:
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepAspectRatio: 0
-  aspectRatio: 1.43382359
-  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
-  mSpriteName: Window
+  aspectRatio: 1.55999994
   mType: 1
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
   mFlip: 0
-  mFillCenter: 1
   centerType: 1
   leftType: 1
   rightType: 1
   bottomType: 1
   topType: 1
+  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
+  mSpriteName: Window
+  mFillCenter: 1
 --- !u!1 &1407405223
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 1407405224}
   - 20: {fileID: 1407405225}
@@ -339,6 +348,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1881649308}
+  m_RootOrder: 2
 --- !u!20 &1407405225
 Camera:
   m_ObjectHideFlags: 0
@@ -366,7 +376,11 @@ Camera:
     m_Bits: 256
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
   m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: .0219999999
 --- !u!114 &1407405226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,8 +389,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1407405223}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a92b5d748695fd44aac9feef17ba415, type: 1}
+  m_Script: {fileID: 11500000, guid: 2a92b5d748695fd44aac9feef17ba415, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   eventType: 1
   eventReceiverMask:
     serializedVersion: 2
@@ -406,7 +421,7 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 1576589456}
   - 20: {fileID: 1576589457}
@@ -431,6 +446,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!20 &1576589457
 Camera:
   m_ObjectHideFlags: 0
@@ -458,7 +474,11 @@ Camera:
     m_Bits: 4294967039
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
   m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: .0219999999
 --- !u!81 &1576589458
 AudioListener:
   m_ObjectHideFlags: 0
@@ -485,7 +505,7 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 1713345660}
   - 114: {fileID: 1713345661}
@@ -507,6 +527,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1881649308}
+  m_RootOrder: 1
 --- !u!114 &1713345661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,8 +536,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1713345659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 1}
+  m_Script: {fileID: 11500000, guid: 1b3dc54f924693f41b5cbecb267e647a, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   leftAnchor:
     target: {fileID: 1881649308}
     relative: 0
@@ -533,6 +555,7 @@ MonoBehaviour:
     target: {fileID: 1881649308}
     relative: 1
     absolute: 0
+  updateAnchors: 1
   mColor: {r: 0, g: 0, b: 0, a: 1}
   mPivot: 4
   mWidth: 1280
@@ -542,25 +565,25 @@ MonoBehaviour:
   hideIfOffScreen: 0
   keepAspectRatio: 0
   aspectRatio: 1.77777779
-  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
-  mSpriteName: Glow - Inner
   mType: 1
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
   mFlip: 0
-  mFillCenter: 1
   centerType: 1
   leftType: 1
   rightType: 1
   bottomType: 1
   topType: 1
+  mAtlas: {fileID: 11400000, guid: 62adb30369acbf943a67cee0f69267a3, type: 2}
+  mSpriteName: Glow - Inner
+  mFillCenter: 1
 --- !u!1 &1834162020
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 1834162021}
   - 114: {fileID: 1834162022}
@@ -587,6 +610,7 @@ Transform:
   - {fileID: 58665454}
   - {fileID: 752726404}
   m_Father: {fileID: 1881649308}
+  m_RootOrder: 3
 --- !u!114 &1834162022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,8 +619,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1834162020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 1}
+  m_Script: {fileID: 11500000, guid: e9d0b5f3bbe925a408bd595c79d0bf63, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   leftAnchor:
     target: {fileID: 0}
     relative: 0
@@ -613,6 +638,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: -20
+  updateAnchors: 1
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
   mWidth: 700
@@ -625,9 +651,9 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: 29056518aafb01b49a5b08faf8e30cff, type: 2}
-  mText: 'To help you create UIs easier, NGUI features a flexible [99ff00]layout system[-]
-    that makes it easy to create widgets that position and resize themselves based
-    on other widgets or even 3D objects.
+  mText: 'To [99ff00]help[-] you create UIs easier, NGUI features a flexible [99ff00]layout
+    system[-] that makes it easy to create widgets that position and resize themselves
+    based on other widgets or even 3D objects.
 
 
     To make use of this, have a look at the [99ff00]Anchors[-] section under any widget
@@ -651,8 +677,8 @@ MonoBehaviour:
     Final Position = Target [Width or Height] * [99ff00]Relative[-] + [99ff00]Absolute[-]
 
 
-    Read more by following [url=http://www.tasharen.com/forum/index.php?topic=7013.0][u]this
-    link[/u][/url].'
+    Read more by following [u][url=http://www.tasharen.com/forum/index.php?topic=7013.0]this
+    link[/url][/u].'
   mFontSize: 20
   mFontStyle: 0
   mAlignment: 1
@@ -682,9 +708,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1834162020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5e1210a659c71f49b09ec14c4d40e77, type: 1}
+  m_Script: {fileID: 11500000, guid: e5e1210a659c71f49b09ec14c4d40e77, type: 3}
   m_Name: 
-  charsPerSecond: 120
+  m_EditorClassIdentifier: 
+  charsPerSecond: 60
+  fadeInTime: .200000003
+  delayOnPeriod: .5
+  delayOnNewLine: .200000003
+  scrollView: {fileID: 0}
+  keepFullDimensions: 0
 --- !u!114 &1834162024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,8 +725,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1834162020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f4e76ca1e5bd9d41938bc027a0aa6b9, type: 1}
+  m_Script: {fileID: 11500000, guid: 7f4e76ca1e5bd9d41938bc027a0aa6b9, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &1834162025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -712,7 +745,7 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 1881649308}
   - 114: {fileID: 1881649309}
@@ -740,6 +773,7 @@ Transform:
   - {fileID: 1407405224}
   - {fileID: 1834162021}
   m_Father: {fileID: 0}
+  m_RootOrder: 1
 --- !u!114 &1881649309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -748,8 +782,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1881649307}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c5ecb5660b11414fb042fb826e03b73, type: 1}
+  m_Script: {fileID: 11500000, guid: 2c5ecb5660b11414fb042fb826e03b73, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   scalingStyle: 0
   manualHeight: 720
   minimumHeight: 320
@@ -764,8 +799,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1881649307}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae942c9068183dc40a9d01f648273726, type: 1}
+  m_Script: {fileID: 11500000, guid: ae942c9068183dc40a9d01f648273726, type: 3}
   m_Name: 
+  m_EditorClassIdentifier: 
   leftAnchor:
     target: {fileID: 0}
     relative: 0
@@ -782,6 +818,7 @@ MonoBehaviour:
     target: {fileID: 0}
     relative: 1
     absolute: 0
+  updateAnchors: 1
   showInPanelTool: 1
   generateNormals: 0
   widgetsAreStatic: 0
@@ -795,6 +832,7 @@ MonoBehaviour:
   mClipRange: {x: 0, y: 0, z: 300, w: 200}
   mClipSoftness: {x: 4, y: 4}
   mDepth: 0
+  mSortingOrder: 0
   mClipOffset: {x: 0, y: 0}
 --- !u!54 &1881649311
 Rigidbody:

@@ -6,12 +6,7 @@
 using UnityEngine;
 using UnityEditor;
 
-[CanEditMultipleObjects]
-#if UNITY_3_5
-[CustomEditor(typeof(UIWrapContent))]
-#else
 [CustomEditor(typeof(UIWrapContent), true)]
-#endif
 public class UIWrapContentEditor : Editor
 {
 	public override void OnInspectorGUI ()
@@ -45,6 +40,15 @@ public class UIWrapContentEditor : Editor
 		NGUIEditorTools.DrawProperty(fieldName, serializedObject, "itemSize", GUILayout.Width(130f));
 		GUILayout.Label("pixels");
 		GUILayout.EndHorizontal();
+
+		GUILayout.BeginHorizontal();
+		SerializedProperty sp1 = NGUIEditorTools.DrawProperty("Range Limit", serializedObject, "minIndex", GUILayout.Width(130f));
+		NGUIEditorTools.SetLabelWidth(20f);
+		SerializedProperty sp2 = NGUIEditorTools.DrawProperty("to", serializedObject, "maxIndex", GUILayout.Width(60f));
+		NGUIEditorTools.SetLabelWidth(90f);
+		if (sp1.intValue == sp2.intValue) GUILayout.Label("unlimited");
+		GUILayout.EndHorizontal();
+
 		NGUIEditorTools.DrawProperty("Cull Content", serializedObject, "cullContent");
 
 		if (!string.IsNullOrEmpty(error))
@@ -55,5 +59,13 @@ public class UIWrapContentEditor : Editor
 		}
 
 		serializedObject.ApplyModifiedProperties();
+
+		if (sp1.intValue != sp2.intValue)
+		{
+			if ((target as UIWrapContent).GetComponent<UICenterOnChild>() != null)
+			{
+				EditorGUILayout.HelpBox("Limiting indices doesn't play well with UICenterOnChild. You should either not limit the indices, or not use UICenterOnChild.", MessageType.Warning);
+			}
+		}
 	}
 }

@@ -77,6 +77,25 @@ public class TweenPosition : UITweener
 		return comp;
 	}
 
+	/// <summary>
+	/// Start the tweening operation.
+	/// </summary>
+
+	static public TweenPosition Begin (GameObject go, float duration, Vector3 pos, bool worldSpace)
+	{
+		TweenPosition comp = UITweener.Begin<TweenPosition>(go, duration);
+		comp.worldSpace = worldSpace;
+		comp.from = comp.value;
+		comp.to = pos;
+
+		if (duration <= 0f)
+		{
+			comp.Sample(1f, true);
+			comp.enabled = false;
+		}
+		return comp;
+	}
+
 	[ContextMenu("Set 'From' to current value")]
 	public override void SetStartToCurrentValue () { from = value; }
 

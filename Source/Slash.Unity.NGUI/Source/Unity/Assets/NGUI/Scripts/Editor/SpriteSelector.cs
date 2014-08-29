@@ -52,7 +52,7 @@ public class SpriteSelector : ScriptableWizard
 
 			string before = NGUISettings.partialSprite;
 			string after = EditorGUILayout.TextField("", before, "SearchTextField");
-			NGUISettings.partialSprite = after;
+			if (before != after) NGUISettings.partialSprite = after;
 
 			if (GUILayout.Button("", "SearchCancelButton", GUILayout.Width(18f)))
 			{

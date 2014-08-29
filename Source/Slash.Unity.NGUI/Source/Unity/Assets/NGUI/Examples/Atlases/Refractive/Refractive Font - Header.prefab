@@ -55,7 +55,7 @@ MonoBehaviour:
     mBase: 21
     mWidth: 256
     mHeight: 512
-    mSpriteName: 
+    mSpriteName: Header Font
     mSaved:
     - index: 32
       x: 244
@@ -1769,7 +1769,6 @@ MonoBehaviour:
       kerning: 
   mAtlas: {fileID: 11400000, guid: f1289d9a909bfda4e97fbd6af270d511, type: 2}
   mReplacement: {fileID: 0}
-  mPixelSize: 1
   mSymbols: []
   mDynamicFont: {fileID: 0}
   mDynamicFontSize: 16

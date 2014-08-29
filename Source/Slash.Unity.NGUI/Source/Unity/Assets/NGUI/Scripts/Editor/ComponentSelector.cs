@@ -127,7 +127,7 @@ public class ComponentSelector : ScriptableWizard
 		{
 			string[] paths = AssetDatabase.GetAllAssetPaths();
 			bool isComponent = mType.IsSubclassOf(typeof(Component));
-			BetterList<Object> list = new BetterList<Object>();
+			List<Object> list = new List<Object>();
 
 			for (int i = 0; i < mObjects.Length; ++i)
 				if (mObjects[i] != null)

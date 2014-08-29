@@ -39,6 +39,18 @@ public class PropertyReferenceDrawer
 	static public bool canConvert = true;
 
 	/// <summary>
+	/// Whether the property should be readable. Used to filter the property selection list.
+	/// </summary>
+
+	static public bool mustRead = false;
+
+	/// <summary>
+	/// Whether the property should be writable. Used to filter the property selection list.
+	/// </summary>
+
+	static public bool mustWrite = false;
+
+	/// <summary>
 	/// Collect a list of usable properties and fields.
 	/// </summary>
 
@@ -57,6 +69,14 @@ public class PropertyReferenceDrawer
 			BindingFlags flags = BindingFlags.Instance | BindingFlags.Public;
 			FieldInfo[] fields = type.GetFields(flags);
 			PropertyInfo[] props = type.GetProperties(flags);
+
+			// The component itself without any method
+			if (PropertyReference.Convert(comp, filter))
+			{
+				Entry ent = new Entry();
+				ent.target = comp;
+				list.Add(ent);
+			}
 
 			for (int b = 0; b < fields.Length; ++b)
 			{
@@ -122,7 +142,6 @@ public class PropertyReferenceDrawer
 		return names;
 	}
 
-#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
 	/// <summary>
 	/// The property is either going to be 16 or 34 pixels tall, depending on whether the target has been set or not.
 	/// </summary>
@@ -156,7 +175,7 @@ public class PropertyReferenceDrawer
 			int index = 0;
 
 			// Get all the properties on the target game object
-			List<Entry> list = GetProperties(comp.gameObject, true, true);
+			List<Entry> list = GetProperties(comp.gameObject, mustRead, mustWrite);
 
 			// We want the field to look like "Component.property" rather than just "property"
 			string current = PropertyReference.ToString(target.objectReferenceValue as Component, field.stringValue);
@@ -180,5 +199,4 @@ public class PropertyReferenceDrawer
 			EditorGUI.EndDisabledGroup();
 		}
 	}
-#endif
 }

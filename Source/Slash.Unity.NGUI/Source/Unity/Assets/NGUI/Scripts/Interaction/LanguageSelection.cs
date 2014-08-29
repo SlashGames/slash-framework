@@ -20,7 +20,7 @@ public class LanguageSelection : MonoBehaviour
 	{
 		mList = GetComponent<UIPopupList>();
 
-		if (Localization.instance != null && Localization.knownLanguages != null)
+		if (Localization.knownLanguages != null)
 		{
 			mList.items.Clear();
 

@@ -158,7 +158,7 @@ public class UIDragObject : MonoBehaviour
 
 					// Create the plane to drag along
 					Transform trans = UICamera.currentCamera.transform;
-					mPlane = new Plane((mPanel != null ? mPanel.cachedTransform.rotation : trans.rotation) * Vector3.back, UICamera.lastHit.point);
+					mPlane = new Plane((mPanel != null ? mPanel.cachedTransform.rotation : trans.rotation) * Vector3.back, UICamera.lastWorldPosition);
 				}
 			}
 			else if (mPressed && mTouchID == UICamera.currentTouchID)

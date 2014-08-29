@@ -3,8 +3,6 @@
 // Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
-#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
-
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -17,11 +15,13 @@ using System.Collections.Generic;
 
 [ExecuteInEditMode]
 [AddComponentMenu("NGUI/UI/NGUI Unity2D Sprite")]
-public class UI2DSprite : UIWidget
+public class UI2DSprite : UIBasicSprite
 {
 	[HideInInspector][SerializeField] UnityEngine.Sprite mSprite;
 	[HideInInspector][SerializeField] Material mMat;
 	[HideInInspector][SerializeField] Shader mShader;
+	[HideInInspector][SerializeField] Vector4 mBorder = Vector4.zero;
+	[HideInInspector][SerializeField] bool mFixedAspect = false;
 
 	/// <summary>
 	/// To be used with animations.
@@ -29,7 +29,7 @@ public class UI2DSprite : UIWidget
 
 	public UnityEngine.Sprite nextSprite;
 
-	int mPMA = -1;
+	[System.NonSerialized] int mPMA = -1;
 
 	/// <summary>
 	/// UnityEngine.Sprite drawn by this widget.
@@ -48,7 +48,7 @@ public class UI2DSprite : UIWidget
 				RemoveFromPanel();
 				mSprite = value;
 				nextSprite = null;
-				MarkAsChanged();
+				CreatePanel();
 			}
 		}
 	}
@@ -121,7 +121,7 @@ public class UI2DSprite : UIWidget
 	/// Whether the texture is using a premultiplied alpha material.
 	/// </summary>
 
-	public bool premultipliedAlpha
+	public override bool premultipliedAlpha
 	{
 		get
 		{
@@ -151,42 +151,92 @@ public class UI2DSprite : UIWidget
 			float x1 = x0 + mWidth;
 			float y1 = y0 + mHeight;
 
-			int w = (mSprite != null) ? Mathf.RoundToInt(mSprite.textureRect.width) : mWidth;
-			int h = (mSprite != null) ? Mathf.RoundToInt(mSprite.textureRect.height) : mHeight;
+			if (mSprite != null && mType != UISprite.Type.Tiled)
+			{
+				int w = Mathf.RoundToInt(mSprite.rect.width);
+				int h = Mathf.RoundToInt(mSprite.rect.height);
+				int padLeft = Mathf.RoundToInt(mSprite.textureRectOffset.x);
+				int padBottom = Mathf.RoundToInt(mSprite.textureRectOffset.y);
+				int padRight = Mathf.RoundToInt(mSprite.rect.width - mSprite.textureRect.width - mSprite.textureRectOffset.x);
+				int padTop = Mathf.RoundToInt(mSprite.rect.height - mSprite.textureRect.height - mSprite.textureRectOffset.y);
 
-			if ((w & 1) != 0) x1 -= (1f / w) * mWidth;
-			if ((h & 1) != 0) y1 -= (1f / h) * mHeight;
+				float px = 1f;
+				float py = 1f;
 
-			return new Vector4(
-				mDrawRegion.x == 0f ? x0 : Mathf.Lerp(x0, x1, mDrawRegion.x),
-				mDrawRegion.y == 0f ? y0 : Mathf.Lerp(y0, y1, mDrawRegion.y),
-				mDrawRegion.z == 1f ? x1 : Mathf.Lerp(x0, x1, mDrawRegion.z),
-				mDrawRegion.w == 1f ? y1 : Mathf.Lerp(y0, y1, mDrawRegion.w));
+				if (w > 0 && h > 0 && (mType == UISprite.Type.Simple || mType == UISprite.Type.Filled))
+				{
+					if ((w & 1) != 0) ++padRight;
+					if ((h & 1) != 0) ++padTop;
+
+					px = (1f / w) * mWidth;
+					py = (1f / h) * mHeight;
+				}
+
+				if (mFlip == UISprite.Flip.Horizontally || mFlip == UISprite.Flip.Both)
+				{
+					x0 += padRight * px;
+					x1 -= padLeft * px;
+				}
+				else
+				{
+					x0 += padLeft * px;
+					x1 -= padRight * px;
+				}
+
+				if (mFlip == UISprite.Flip.Vertically || mFlip == UISprite.Flip.Both)
+				{
+					y0 += padTop * py;
+					y1 -= padBottom * py;
+				}
+				else
+				{
+					y0 += padBottom * py;
+					y1 -= padTop * py;
+				}
+			}
+
+			float fw, fh;
+
+			if (mFixedAspect)
+			{
+				fw = 0f;
+				fh = 0f;
+			}
+			else
+			{
+				Vector4 br = border;
+				fw = br.x + br.z;
+				fh = br.y + br.w;
+			}
+
+			float vx = Mathf.Lerp(x0, x1 - fw, mDrawRegion.x);
+			float vy = Mathf.Lerp(y0, y1 - fh, mDrawRegion.y);
+			float vz = Mathf.Lerp(x0 + fw, x1, mDrawRegion.z);
+			float vw = Mathf.Lerp(y0 + fh, y1, mDrawRegion.w);
+
+			return new Vector4(vx, vy, vz, vw);
 		}
 	}
 
 	/// <summary>
-	/// Texture rectangle.
+	/// Sprite's border. X = left, Y = bottom, Z = right, W = top.
 	/// </summary>
 
-	public Rect uvRect
+	public override Vector4 border
 	{
 		get
 		{
-			Texture tex = mainTexture;
-
-			if (tex != null)
+			// Normally this would be enough... but there seems to be no way to SET the 'border' anywhere. Sigh, Unity.
+			//return (mSprite != null) ? mSprite.border : Vector4.zero;
+			return mBorder;
+		}
+		set
+		{
+			if (mBorder != value)
 			{
-				Rect rect = mSprite.textureRect;
-
-				rect.xMin /= tex.width;
-				rect.xMax /= tex.width;
-				rect.yMin /= tex.height;
-				rect.yMax /= tex.height;
-
-				return rect;
+				mBorder = value;
+				MarkAsChanged();
 			}
-			return new Rect(0f, 0f, 1f, 1f);
 		}
 	}
 
@@ -203,7 +253,56 @@ public class UI2DSprite : UIWidget
 			nextSprite = null;
 		}
 		base.OnUpdate();
+
+		if (mFixedAspect)
+		{
+			Texture tex = mainTexture;
+
+			if (tex != null)
+			{
+				int w = Mathf.RoundToInt(mSprite.rect.width);
+				int h = Mathf.RoundToInt(mSprite.rect.height);
+				int padLeft = Mathf.RoundToInt(mSprite.textureRectOffset.x);
+				int padBottom = Mathf.RoundToInt(mSprite.textureRectOffset.y);
+				int padRight = Mathf.RoundToInt(mSprite.rect.width - mSprite.textureRect.width - mSprite.textureRectOffset.x);
+				int padTop = Mathf.RoundToInt(mSprite.rect.height - mSprite.textureRect.height - mSprite.textureRectOffset.y);
+
+				w += padLeft + padRight;
+				h += padTop + padBottom;
+
+				float widgetWidth = mWidth;
+				float widgetHeight = mHeight;
+				float widgetAspect = widgetWidth / widgetHeight;
+				float textureAspect = (float)w / h;
+
+				if (textureAspect < widgetAspect)
+				{
+					float x = (widgetWidth - widgetHeight * textureAspect) / widgetWidth * 0.5f;
+					drawRegion = new Vector4(x, 0f, 1f - x, 1f);
+				}
+				else
+				{
+					float y = (widgetHeight - widgetWidth / textureAspect) / widgetHeight * 0.5f;
+					drawRegion = new Vector4(0f, y, 1f, 1f - y);
+				}
+			}
+		}
 	}
+
+#if UNITY_EDITOR
+	/// <summary>
+	/// Keep sane values.
+	/// </summary>
+
+	protected override void OnValidate ()
+	{
+		base.OnValidate();
+		mBorder.x = Mathf.Max(mBorder.x, 0);
+		mBorder.y = Mathf.Max(mBorder.y, 0);
+		mBorder.z = Mathf.Max(mBorder.z, 0);
+		mBorder.w = Mathf.Max(mBorder.w, 0);
+	}
+#endif
 
 	/// <summary>
 	/// Adjust the scale of the widget to make it pixel-perfect.
@@ -211,19 +310,27 @@ public class UI2DSprite : UIWidget
 
 	public override void MakePixelPerfect ()
 	{
-		if (mSprite != null)
-		{
-			Rect rect = mSprite.textureRect;
-			int w = Mathf.RoundToInt(rect.width);
-			int h = Mathf.RoundToInt(rect.height);
-
-			if ((w & 1) == 1) ++w;
-			if ((h & 1) == 1) ++h;
-
-			width = w;
-			height = h;
-		}
 		base.MakePixelPerfect();
+		if (mType == Type.Tiled) return;
+
+		Texture tex = mainTexture;
+		if (tex == null) return;
+
+		if (mType == Type.Simple || mType == Type.Filled || !hasBorder)
+		{
+			if (tex != null)
+			{
+				Rect rect = mSprite.rect;
+				int w = Mathf.RoundToInt(rect.width);
+				int h = Mathf.RoundToInt(rect.height);
+
+				if ((w & 1) == 1) ++w;
+				if ((h & 1) == 1) ++h;
+
+				width = w;
+				height = h;
+			}
+		}
 	}
 
 	/// <summary>
@@ -232,26 +339,34 @@ public class UI2DSprite : UIWidget
 
 	public override void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
 	{
-		Color colF = color;
-		colF.a = finalAlpha;
-		Color32 col = premultipliedAlpha ? NGUITools.ApplyPMA(colF) : colF;
-		Vector4 v = drawingDimensions;
-		Rect rect = uvRect;
+		Texture tex = mainTexture;
+		if (tex == null) return;
 
-		verts.Add(new Vector3(v.x, v.y));
-		verts.Add(new Vector3(v.x, v.w));
-		verts.Add(new Vector3(v.z, v.w));
-		verts.Add(new Vector3(v.z, v.y));
+		Rect outer = mSprite.textureRect;
+		Rect inner = outer;
+		Vector4 br = border;
+		inner.xMin += br.x;
+		inner.yMin += br.y;
+		inner.xMax -= br.z;
+		inner.yMax -= br.w;
 
-		uvs.Add(new Vector2(rect.xMin, rect.yMin));
-		uvs.Add(new Vector2(rect.xMin, rect.yMax));
-		uvs.Add(new Vector2(rect.xMax, rect.yMax));
-		uvs.Add(new Vector2(rect.xMax, rect.yMin));
+		float w = 1f / tex.width;
+		float h = 1f / tex.height;
 
-		cols.Add(col);
-		cols.Add(col);
-		cols.Add(col);
-		cols.Add(col);
+		outer.xMin *= w;
+		outer.xMax *= w;
+		outer.yMin *= h;
+		outer.yMax *= h;
+
+		inner.xMin *= w;
+		inner.xMax *= w;
+		inner.yMin *= h;
+		inner.yMax *= h;
+
+		int offset = verts.size;
+		Fill(verts, uvs, cols, outer, inner);
+
+		if (onPostFill != null)
+			onPostFill(this, offset, verts, uvs, cols);
 	}
 }
-#endif

@@ -35,12 +35,50 @@ public class UIWidget : UIRect
 	[HideInInspector][SerializeField] protected int mDepth = 0;
 
 	public delegate void OnDimensionsChanged ();
+	public delegate void OnPostFillCallback (UIWidget widget, int bufferOffset, BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols);
 
 	/// <summary>
 	/// Notification triggered when the widget's dimensions or position changes.
 	/// </summary>
 
 	public OnDimensionsChanged onChange;
+
+	/// <summary>
+	/// Notification triggered after the widget's buffer has been filled.
+	/// </summary>
+
+	public OnPostFillCallback onPostFill;
+
+	/// <summary>
+	/// Callback triggered when the widget is about to be renderered (OnWillRenderObject).
+	/// NOTE: This property is only exposed for the sake of speed to avoid property execution.
+	/// In most cases you will want to use UIWidget.onRender instead.
+	/// </summary>
+
+	public UIDrawCall.OnRenderCallback mOnRender;
+
+	/// <summary>
+	/// Set the callback that will be triggered when the widget is being rendered (OnWillRenderObject).
+	/// This is where you would set material properties and shader values.
+	/// </summary>
+
+	public UIDrawCall.OnRenderCallback onRender
+	{
+		get
+		{
+			return mOnRender;
+		}
+		set
+		{
+			if (mOnRender != value)
+			{
+				if (drawCall != null && drawCall.onRender != null && mOnRender != null)
+					drawCall.onRender -= mOnRender;
+				mOnRender = value;
+				if (drawCall != null) drawCall.onRender += value;
+			}
+		}
+	}
 
 	/// <summary>
 	/// If set to 'true', the box collider's dimensions will be adjusted to always match the widget whenever it resizes.
@@ -86,40 +124,34 @@ public class UIWidget : UIRect
 	/// Panel that's managing this widget.
 	/// </summary>
 
-	[System.NonSerialized]
-	public UIPanel panel;
+	[System.NonSerialized] public UIPanel panel;
 
 	/// <summary>
 	/// Widget's generated geometry.
 	/// </summary>
 
-	[System.NonSerialized]
-	public UIGeometry geometry = new UIGeometry();
+	[System.NonSerialized] public UIGeometry geometry = new UIGeometry();
 
 	/// <summary>
 	/// If set to 'false', the widget's OnFill function will not be called, letting you define custom geometry at will.
 	/// </summary>
 
-	[System.NonSerialized]
-	public bool fillGeometry = true;
-	
-	protected bool mPlayMode = true;
-	protected Vector4 mDrawRegion = new Vector4(0f, 0f, 1f, 1f);
-
-	Matrix4x4 mLocalToPanel;
-	bool mIsVisibleByAlpha = true;
-	bool mIsVisibleByPanel = true;
-	bool mIsInFront = true;
-	float mLastAlpha = 0f;
-	bool mMoved = false;
+	[System.NonSerialized] public bool fillGeometry = true;
+	[System.NonSerialized] protected bool mPlayMode = true;
+	[System.NonSerialized] protected Vector4 mDrawRegion = new Vector4(0f, 0f, 1f, 1f);
+	[System.NonSerialized] Matrix4x4 mLocalToPanel;
+	[System.NonSerialized] bool mIsVisibleByAlpha = true;
+	[System.NonSerialized] bool mIsVisibleByPanel = true;
+	[System.NonSerialized] bool mIsInFront = true;
+	[System.NonSerialized] float mLastAlpha = 0f;
+	[System.NonSerialized] bool mMoved = false;
 
 	/// <summary>
 	/// Internal usage -- draw call that's drawing the widget.
 	/// </summary>
 
-	[HideInInspector][System.NonSerialized] public UIDrawCall drawCall;
-
-	protected Vector3[] mCorners = new Vector3[4];
+	[System.NonSerialized] public UIDrawCall drawCall;
+	[System.NonSerialized] protected Vector3[] mCorners = new Vector3[4];
 
 	/// <summary>
 	/// Draw region alters how the widget looks without modifying the widget's rectangle.
@@ -442,6 +474,19 @@ public class UIWidget : UIRect
 	}
 
 	/// <summary>
+	/// Widget's center in local coordinates. Don't forget to transform by the widget's transform.
+	/// </summary>
+
+	public Vector3 localCenter
+	{
+		get
+		{
+			Vector3[] cr = localCorners;
+			return Vector3.Lerp(cr[0], cr[2], 0.5f);
+		}
+	}
+
+	/// <summary>
 	/// World-space corners of the widget. The order is bottom-left, top-left, top-right, bottom-right.
 	/// </summary>
 
@@ -466,6 +511,12 @@ public class UIWidget : UIRect
 			return mCorners;
 		}
 	}
+
+	/// <summary>
+	/// World-space center of the widget.
+	/// </summary>
+
+	public Vector3 worldCenter { get { return cachedTransform.TransformPoint(localCenter); } }
 
 	/// <summary>
 	/// Local space region where the actual drawing will take place.
@@ -557,7 +608,8 @@ public class UIWidget : UIRect
 		get
 		{
 			BoxCollider box = collider as BoxCollider;
-			return (box != null);
+			if (box != null) return true;
+			return GetComponent<BoxCollider2D>() != null;
 		}
 	}
 
@@ -615,7 +667,7 @@ public class UIWidget : UIRect
 		return mCorners;
 	}
 
-	int mAlphaFrameID = -1;
+	[System.NonSerialized] int mAlphaFrameID = -1;
 
 	/// <summary>
 	/// Widget's final alpha, after taking the panel's alpha into account.
@@ -623,7 +675,11 @@ public class UIWidget : UIRect
 
 	public override float CalculateFinalAlpha (int frameID)
 	{
+#if UNITY_EDITOR
+		if (mAlphaFrameID != frameID || !Application.isPlaying)
+#else
 		if (mAlphaFrameID != frameID)
+#endif
 		{
 			mAlphaFrameID = frameID;
 			UpdateFinalAlpha(frameID);
@@ -680,7 +736,7 @@ public class UIWidget : UIRect
 	/// Set the widget's rectangle.
 	/// </summary>
 
-	public void SetRect (float x, float y, float width, float height)
+	public override void SetRect (float x, float y, float width, float height)
 	{
 		Vector2 po = pivotOffset;
 
@@ -723,14 +779,7 @@ public class UIWidget : UIRect
 	/// Adjust the widget's collider size to match the widget's dimensions.
 	/// </summary>
 
-	public void ResizeCollider ()
-	{
-		if (NGUITools.GetActive(this))
-		{
-			BoxCollider box = collider as BoxCollider;
-			if (box != null) NGUITools.UpdateWidgetCollider(box, true);
-		}
-	}
+	public void ResizeCollider () { if (NGUITools.GetActive(this)) NGUITools.UpdateWidgetCollider(gameObject); }
 
 	/// <summary>
 	/// Static widget comparison function used for depth sorting.
@@ -814,13 +863,14 @@ public class UIWidget : UIRect
 	/// Remove this widget from the panel.
 	/// </summary>
 
-	protected void RemoveFromPanel ()
+	public void RemoveFromPanel ()
 	{
 		if (panel != null)
 		{
 			panel.RemoveWidget(this);
 			panel = null;
 		}
+		drawCall = null;
 #if UNITY_EDITOR
 		mOldTex = null;
 		mOldShader = null;
@@ -828,8 +878,8 @@ public class UIWidget : UIRect
 	}
 
 #if UNITY_EDITOR
-	Texture mOldTex;
-	Shader mOldShader;
+	[System.NonSerialized] Texture mOldTex;
+	[System.NonSerialized] Shader mOldShader;
 
 	/// <summary>
 	/// This callback is sent inside the editor notifying us that some property has changed.
@@ -860,12 +910,6 @@ public class UIWidget : UIRect
 				mOldShader = shader;
 			}
 
-			if (panel != null)
-			{
-				panel.RemoveWidget(this);
-				panel = null;
-			}
-
 			aspectRatio = (keepAspectRatio == AspectRatioSource.Free) ?
 				(float)mWidth / mHeight : Mathf.Max(0.01f, aspectRatio);
 
@@ -877,7 +921,16 @@ public class UIWidget : UIRect
 			{
 				mHeight = Mathf.RoundToInt(mWidth / aspectRatio);
 			}
-			CreatePanel();
+
+			if (!Application.isPlaying)
+			{
+				if (panel != null)
+				{
+					panel.RemoveWidget(this);
+					panel = null;
+				}
+				CreatePanel();
+			}
 		}
 		else
 		{
@@ -1008,15 +1061,27 @@ public class UIWidget : UIRect
 		Vector3 scale = cachedTransform.localScale;
 		mWidth = Mathf.Abs(Mathf.RoundToInt(scale.x));
 		mHeight = Mathf.Abs(Mathf.RoundToInt(scale.y));
-		if (GetComponent<BoxCollider>() != null)
-			NGUITools.AddWidgetCollider(gameObject, true);
+		NGUITools.UpdateWidgetCollider(gameObject, true);
 	}
 
 	/// <summary>
 	/// Virtual Start() functionality for widgets.
 	/// </summary>
 
-	protected override void OnStart () { CreatePanel(); }
+	protected override void OnStart ()
+	{
+#if UNITY_EDITOR
+		if (GetComponent<UIPanel>() != null)
+		{
+			Debug.LogError("Widgets and panels should not be on the same object! Widget must be a child of the panel.", this);
+		}
+		else if (!Application.isPlaying && GetComponents<UIWidget>().Length > 1)
+		{
+			Debug.LogError("You should not place more than one widget on the same object. Weird stuff will happen!", this);
+		}
+#endif
+		CreatePanel();
+	}
 
 	/// <summary>
 	/// Update the anchored edges and ensure the widget is registered with a panel.
@@ -1346,9 +1411,9 @@ public class UIWidget : UIRect
 	}
 
 #if UNITY_3_5 || UNITY_4_0
-	Vector3 mOldPos;
-	Quaternion mOldRot;
-	Vector3 mOldScale;
+	[System.NonSerialized] Vector3 mOldPos;
+	[System.NonSerialized] Quaternion mOldRot;
+	[System.NonSerialized] Vector3 mOldScale;
 
 	/// <summary>
 	/// Whether the transform has changed since the last time it was checked.
@@ -1397,7 +1462,7 @@ public class UIWidget : UIRect
 				if (geometry.hasVertices)
 				{
 					// Want to see what's being filled? Uncomment this line.
-					//Debug.Log("Fill " + name + " (" + Time.time + ")");
+					//Debug.Log("Fill " + name + " (" + Time.frameCount + ")");
 
 					if (mMatrixFrame != frame)
 					{
@@ -1473,11 +1538,16 @@ public class UIWidget : UIRect
 	/// Dimensions of the sprite's border, if any.
 	/// </summary>
 
-	virtual public Vector4 border { get { return Vector4.zero; } }
+	virtual public Vector4 border { get { return Vector4.zero; } set { } }
 
 	/// <summary>
 	/// Virtual function called by the UIPanel that fills the buffers.
 	/// </summary>
 
-	virtual public void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols) { }
+	virtual public void OnFill(BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
+	{
+		// Call this in your derived classes:
+		//if (onPostFill != null)
+		//	onPostFill(this, verts.size, verts, uvs, cols);
+	}
 }

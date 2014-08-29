@@ -3,8 +3,6 @@
 // Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
-#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
-
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -14,12 +12,8 @@ using System.Collections.Generic;
 /// </summary>
 
 [CanEditMultipleObjects]
-#if UNITY_3_5
-[CustomEditor(typeof(UI2DSprite))]
-#else
 [CustomEditor(typeof(UI2DSprite), true)]
-#endif
-public class UI2DSpriteEditor : UIWidgetInspector
+public class UI2DSpriteEditor : UIBasicSpriteEditor
 {
 	UI2DSprite mSprite;
 
@@ -28,6 +22,10 @@ public class UI2DSpriteEditor : UIWidgetInspector
 		base.OnEnable();
 		mSprite = target as UI2DSprite;
 	}
+
+	/// <summary>
+	/// Should we draw the widget's custom properties?
+	/// </summary>
 
 	protected override bool ShouldDrawProperties ()
 	{
@@ -41,6 +39,16 @@ public class UI2DSpriteEditor : UIWidgetInspector
 		{
 			NGUIEditorTools.DrawProperty("Shader", serializedObject, "mShader");
 		}
+
+		SerializedProperty fa = serializedObject.FindProperty("mFixedAspect");
+		bool before = fa.boolValue;
+		NGUIEditorTools.DrawProperty("Fixed Aspect", fa);
+		if (fa.boolValue != before) (target as UIWidget).drawRegion = new Vector4(0f, 0f, 1f, 1f);
+
+		if (fa.boolValue)
+		{
+			EditorGUILayout.HelpBox("Note that Fixed Aspect mode is not compatible with Draw Region modifications done by sliders and progress bars.", MessageType.Info);
+		}
 		return (sp.objectReferenceValue != null);
 	}
 
@@ -50,7 +58,8 @@ public class UI2DSpriteEditor : UIWidgetInspector
 
 	public override bool HasPreviewGUI ()
 	{
-		return (mSprite != null) && (mSprite.mainTexture as Texture2D != null);
+		return (Selection.activeGameObject == null || Selection.gameObjects.Length == 1) &&
+			(mSprite != null) && (mSprite.mainTexture as Texture2D != null);
 	}
 
 	/// <summary>
@@ -62,8 +71,7 @@ public class UI2DSpriteEditor : UIWidgetInspector
 		if (mSprite != null && mSprite.sprite2D != null)
 		{
 			Texture2D tex = mSprite.mainTexture as Texture2D;
-			if (tex != null) NGUIEditorTools.DrawTexture(tex, rect, mSprite.uvRect, mSprite.color);
+			if (tex != null) NGUIEditorTools.DrawSprite(tex, rect, mSprite.color, mSprite.sprite2D.textureRect, mSprite.border);
 		}
 	}
 }
-#endif
