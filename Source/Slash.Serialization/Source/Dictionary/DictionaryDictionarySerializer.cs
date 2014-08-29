@@ -11,6 +11,7 @@ namespace Slash.Serialization.Dictionary
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
+    using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
 
     /// <summary>
@@ -46,7 +47,7 @@ namespace Slash.Serialization.Dictionary
             Type genericType = typeof(Dictionary<,>).MakeGenericType(typeof(string), itemType);
             IDictionary dictionary = (IDictionary)Activator.CreateInstance(genericType);
 
-            bool typeSealed = itemType.IsSealed;
+            bool typeSealed = itemType.IsSealed();
             Dictionary<string, object> pairs = (Dictionary<string, object>)data[DataPairs];
             foreach (KeyValuePair<string, object> pair in pairs)
             {
@@ -91,7 +92,7 @@ namespace Slash.Serialization.Dictionary
 
             Dictionary<string, object> data = new Dictionary<string, object> { { DataType, valueType.FullName } };
 
-            bool typeSealed = valueType.IsSealed;
+            bool typeSealed = valueType.IsSealed();
 
             Dictionary<string, object> keyValuePairs = new Dictionary<string, object>();
             foreach (string key in dictionary.Keys)

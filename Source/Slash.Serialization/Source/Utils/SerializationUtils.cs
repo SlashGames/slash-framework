@@ -7,10 +7,13 @@
 namespace Slash.Serialization.Utils
 {
     using System;
-    using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
     using System.Xml;
     using System.Xml.Serialization;
+
+#if !WINDOWS_STORE
+    using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
+#endif
 
     /// <summary>
     ///   Utility methods for serializing and deserializing objects.

@@ -12,6 +12,7 @@ namespace Slash.Serialization.Dictionary
     using System.Globalization;
     using System.Runtime.Serialization;
 
+    using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
 
     /// <summary>
@@ -57,7 +58,7 @@ namespace Slash.Serialization.Dictionary
 
             IList list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(itemType));
 
-            bool typeSealed = itemType.IsSealed;
+            bool typeSealed = itemType.IsSealed();
             for (int i = 0; i < count; i++)
             {
                 object valueData = data[i.ToString(CultureInfo.InvariantCulture)];
@@ -100,7 +101,7 @@ namespace Slash.Serialization.Dictionary
                     { DataType, itemType.FullName }
                 };
 
-            bool typeSealed = itemType.IsSealed;
+            bool typeSealed = itemType.IsSealed();
             for (int i = 0; i < list.Count; i++)
             {
                 object value = list[i];

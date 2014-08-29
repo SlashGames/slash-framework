@@ -11,6 +11,8 @@ namespace Slash.Serialization.Binary
     using System.Linq;
     using System.Reflection;
 
+    using Slash.Reflection.Extensions;
+
     /// <summary>
     ///   Reflection utility methods for binary serialization and deserialization.
     /// </summary>
@@ -29,12 +31,12 @@ namespace Slash.Serialization.Binary
         /// </returns>
         public static IEnumerable<FieldInfo> ReflectFields(Type type)
         {
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo[] fields = type.GetInstanceFields().ToArray();
 
             // Sort fields by name to prevent re-ordering members from being a breaking change.
             Array.Sort(fields, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
 
-            return fields.Where(field => Attribute.IsDefined(field, typeof(SerializeMemberAttribute)));
+            return fields.Where(field => field.IsDefined(typeof(SerializeMemberAttribute), true));
         }
 
         /// <summary>
@@ -48,13 +50,12 @@ namespace Slash.Serialization.Binary
         /// </returns>
         public static IEnumerable<PropertyInfo> ReflectProperties(Type type)
         {
-            PropertyInfo[] properties =
-                type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            PropertyInfo[] properties = type.GetInstanceProperties().ToArray();
 
             // Sort properties by name to prevent re-ordering members from being a breaking change.
             Array.Sort(properties, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
 
-            return properties.Where(property => Attribute.IsDefined(property, typeof(SerializeMemberAttribute)));
+            return properties.Where(property => property.IsDefined(typeof(SerializeMemberAttribute), true));
         }
 
         #endregion

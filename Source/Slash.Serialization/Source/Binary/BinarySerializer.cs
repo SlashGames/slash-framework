@@ -12,6 +12,7 @@ namespace Slash.Serialization.Binary
     using System.Reflection;
     using System.Runtime.Serialization;
 
+    using Slash.Reflection.Extensions;
     using Slash.SystemExt.Utils;
 
     /// <summary>
@@ -62,7 +63,7 @@ namespace Slash.Serialization.Binary
         private void Serialize(object o, Type type)
         {
             // Check for primitive types.
-            if (type.IsPrimitive)
+            if (type.IsPrimitive())
             {
                 this.SerializePrimitive(o);
                 return;
@@ -98,7 +99,7 @@ namespace Slash.Serialization.Binary
             }
 
             // Check for enum.
-            if (type.IsEnum)
+            if (type.IsEnum())
             {
                 this.writer.Write(o.ToString());
                 return;
@@ -135,7 +136,7 @@ namespace Slash.Serialization.Binary
             foreach (object key in dictionary.Keys)
             {
                 // Write key.
-                if (keyType.IsSealed || key == null)
+                if (keyType.IsSealed() || key == null)
                 {
                     this.Serialize(key, keyType);
                 }
@@ -147,7 +148,7 @@ namespace Slash.Serialization.Binary
                 // Write value.
                 object value = dictionary[key];
 
-                if (valueType.IsSealed || value == null)
+                if (valueType.IsSealed() || value == null)
                 {
                     this.Serialize(value, valueType);
                 }
@@ -168,7 +169,7 @@ namespace Slash.Serialization.Binary
 
             foreach (object item in list)
             {
-                if (itemType.IsSealed || item == null)
+                if (itemType.IsSealed() || item == null)
                 {
                     this.Serialize(item, itemType);
                 }
