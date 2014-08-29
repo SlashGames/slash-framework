@@ -8,10 +8,12 @@ namespace Slash.ECS.Inspector.Utils
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection;
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
+    using Slash.Reflection.Extensions;
 
     /// <summary>
     ///   Utility methods for collecting inspector data and initializing objects.
@@ -31,7 +33,7 @@ namespace Slash.ECS.Inspector.Utils
             ref Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute> conditionalInspectors)
         {
             // Access inspector properties.
-            var properties = inspectorType.GetProperties();
+            var properties = inspectorType.GetInstanceProperties();
             var inspectorProperties = new List<InspectorPropertyAttribute>();
 
             foreach (var property in properties)
@@ -56,9 +58,7 @@ namespace Slash.ECS.Inspector.Utils
                 if (conditionalInspectors != null)
                 {
                     // Find all properties whose inspectors are shown only if certain conditions are met.
-                    var conditionInspector =
-                        (InspectorConditionalPropertyAttribute)
-                        Attribute.GetCustomAttribute(property, typeof(InspectorConditionalPropertyAttribute));
+                    var conditionInspector = property.GetCustomAttribute<InspectorConditionalPropertyAttribute>();
 
                     if (conditionInspector != null && inspectorPropertyAttributes != null)
                     {

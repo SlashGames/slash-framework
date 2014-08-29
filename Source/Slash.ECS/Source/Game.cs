@@ -16,6 +16,7 @@ namespace Slash.ECS
     using Slash.ECS.Logging;
     using Slash.ECS.Processes;
     using Slash.ECS.Systems;
+    using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
 
     /// <summary>
@@ -176,9 +177,7 @@ namespace Slash.ECS
 
                 // Check if enabled and order by index.
                 var gameSystemTypes = from systemType in systemTypes
-                                      let systemTypeAttribute =
-                                          (GameSystemAttribute)
-                                          Attribute.GetCustomAttribute(systemType, typeof(GameSystemAttribute))
+                                      let systemTypeAttribute = systemType.GetAttribute<GameSystemAttribute>()
                                       where systemTypeAttribute != null && systemTypeAttribute.Enabled
                                       orderby systemTypeAttribute.Order
                                       select systemType;

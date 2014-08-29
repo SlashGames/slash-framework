@@ -10,8 +10,10 @@ namespace Slash.ECS.Blueprints
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     using Slash.ECS.Inspector.Attributes;
+    using Slash.Reflection.Extensions;
 
     /// <summary>
     ///   Blueprint manager that consults children for looking up blueprints.
@@ -218,13 +220,11 @@ namespace Slash.ECS.Blueprints
 
                 foreach (var componentType in blueprintComponents)
                 {
-                    var properties = componentType.GetProperties();
+                    var properties = componentType.GetInstanceProperties();
 
                     foreach (var property in properties)
                     {
-                        var stringAttribute =
-                            (InspectorStringAttribute)
-                            Attribute.GetCustomAttribute(property, typeof(InspectorStringAttribute));
+                        var stringAttribute = property.GetCustomAttribute<InspectorStringAttribute>();
 
                         if (stringAttribute != null && stringAttribute.Localized)
                         {

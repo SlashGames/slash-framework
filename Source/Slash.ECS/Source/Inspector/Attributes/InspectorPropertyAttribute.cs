@@ -12,6 +12,7 @@ namespace Slash.ECS.Inspector.Attributes
     using System.Text;
 
     using Slash.ECS.Inspector.Validation;
+    using Slash.Reflection.Extensions;
 
     /// <summary>
     ///   Exposes the property to the inspector.

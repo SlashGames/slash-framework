@@ -59,14 +59,19 @@ namespace Slash.Reflection.Extensions
             return type.GetTypeInfo().GetCustomAttribute<T>() != null;
         }
 
-        public static MethodInfo GetGetMethod(this PropertyInfo propertyInfo)
+        public static T GetAttribute<T>(this Type type) where T : Attribute
         {
-            return propertyInfo.GetMethod;
+            return type.GetTypeInfo().GetCustomAttribute<T>();
         }
 
         public static bool IsSealed(this Type type)
         {
             return type.GetTypeInfo().IsSealed;
+        }
+
+        public static bool IsInterface(this Type type)
+        {
+            return type.GetTypeInfo().IsInterface;
         }
 
         public static Type[] GetGenericArguments(this Type type)
@@ -100,14 +105,19 @@ namespace Slash.Reflection.Extensions
             return type.IsEnum;
         }
 
-         public static bool IsPrimitive(this Type type)
+        public static bool IsPrimitive(this Type type)
         {
             return type.IsPrimitive;
         }
 
-                public static bool IsSealed(this Type type)
+        public static bool IsSealed(this Type type)
         {
             return type.IsSealed;
+        }
+
+        public static bool IsInterface(this Type type)
+        {
+            return type.IsInterface;
         }
 
         public static IEnumerable<FieldInfo> GetInstanceFields(this Type type)
@@ -123,6 +133,11 @@ namespace Slash.Reflection.Extensions
         public static bool IsAttributeDefined<T>(this Type type) where T : Attribute
         {
             return Attribute.IsDefined(type, typeof(T));
+        }
+
+        public static T GetAttribute<T>(this Type type) where T : Attribute
+        {
+            return (T)Attribute.GetCustomAttribute(type, typeof(T));
         }
 #endif
     }

@@ -17,6 +17,13 @@ namespace Slash.Reflection.Extensions
     /// </summary>
     public static class AssemblyExtensions
     {
+#if WINDOWS_STORE
+
+        public static IEnumerable<Type> GetTypes(this Assembly assembly)
+        {
+            return assembly.DefinedTypes.Select(definedType => definedType.AsType());
+        }
+#else
         #region Public Methods and Operators
 
         /// <summary>
@@ -110,5 +117,7 @@ namespace Slash.Reflection.Extensions
         }
 
         #endregion
+#endif
     }
+
 }

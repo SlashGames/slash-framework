@@ -12,6 +12,7 @@ namespace Slash.ECS.Inspector.Data
     using System.Linq;
 
     using Slash.ECS.Inspector.Attributes;
+    using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
 
     /// <summary>
@@ -85,7 +86,7 @@ namespace Slash.ECS.Inspector.Data
                                 type =>
                                 baseType == null
                                 || baseType.IsAssignableFrom(type)
-                                && Attribute.IsDefined(type, typeof(InspectorTypeAttribute)));
+                                && type.IsAttributeDefined<InspectorTypeAttribute>());
 
                 foreach (var inspectorType in inspectorTypes)
                 {

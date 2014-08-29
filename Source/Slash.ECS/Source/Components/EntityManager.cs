@@ -17,6 +17,7 @@ namespace Slash.ECS.Components
     using Slash.ECS.Events;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Inspector.Utils;
+    using Slash.Reflection.Extensions;
 
     /// <summary>
     ///   Creates and removes game entities. Holds references to all component
@@ -445,7 +446,7 @@ namespace Slash.ECS.Components
             }
 
             // Get component manager.
-            if (componentType.IsInterface)
+            if (componentType.IsInterface())
             {
                 foreach (KeyValuePair<Type, ComponentManager> componentManagerPair in this.componentManagers)
                 {
