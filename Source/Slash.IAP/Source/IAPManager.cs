@@ -16,6 +16,10 @@ namespace Slash.IAP
 
         #endregion
 
+        public static Action<string> OnPurchaseSucceeded;
+
+        public static Action<string> OnPurchaseFailed;
+
         #region Public Methods and Operators
 
         public static bool BuyFeature(string key)
