@@ -44,8 +44,15 @@ namespace Slash.IAP
             if (!productLicense.IsActive)
             {
                 // The customer doesn't own this feature, so show the purchase dialog.
-                IAsyncOperation<string> requestProductPurchaseAsync =
-                    CurrentAppSimulator.RequestProductPurchaseAsync(key, false);
+#if DEBUG
+                IAsyncOperation<string> requestProductPurchaseAsync = Debug
+                                                                          ? CurrentAppSimulator
+                                                                                .RequestProductPurchaseAsync(key, false)
+                                                                          : CurrentApp.RequestProductPurchaseAsync(
+                                                                              key, false);
+#else
+                IAsyncOperation<string> requestProductPurchaseAsync = CurrentApp.RequestProductPurchaseAsync(key, false);
+#endif
                 requestProductPurchaseAsync.AsTask().Wait();
 
                 // Check the license state to determine if the in-app purchase was successful.
@@ -75,7 +82,11 @@ namespace Slash.IAP
         public static void Init()
         {
             // Get the license info.
+#if DEBUG
             licenseInformation = Debug ? CurrentAppSimulator.LicenseInformation : CurrentApp.LicenseInformation;
+#else
+            licenseInformation = CurrentApp.LicenseInformation;
+#endif
         }
 
         #endregion
