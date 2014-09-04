@@ -9,7 +9,6 @@ namespace Slash.IAP
     using System;
 
     using Windows.ApplicationModel.Store;
-    using Windows.Foundation;
 
     public static class IAPManager
     {
@@ -18,6 +17,14 @@ namespace Slash.IAP
         private static LicenseInformation licenseInformation;
 
         #endregion
+
+        public static Action<string> OnBuyFeature;
+
+        public static Action<string> OnSimulateBuyFeature;
+
+        public static Action<string> OnPurchaseSucceeded;
+
+        public static Action<string> OnPurchaseFailed;
 
         #region Public Properties
 
@@ -44,16 +51,22 @@ namespace Slash.IAP
             if (!productLicense.IsActive)
             {
                 // The customer doesn't own this feature, so show the purchase dialog.
-#if DEBUG
-                IAsyncOperation<string> requestProductPurchaseAsync = Debug
-                                                                          ? CurrentAppSimulator
-                                                                                .RequestProductPurchaseAsync(key, false)
-                                                                          : CurrentApp.RequestProductPurchaseAsync(
-                                                                              key, false);
-#else
-                IAsyncOperation<string> requestProductPurchaseAsync = CurrentApp.RequestProductPurchaseAsync(key, false);
-#endif
-                requestProductPurchaseAsync.AsTask().Wait();
+                if (Debug)
+                {
+                    var handler = OnSimulateBuyFeature;
+                    if (handler != null)
+                    {
+                        handler(key);
+                    }
+                }
+                else
+                {
+                    var handler = OnBuyFeature;
+                    if (handler != null)
+                    {
+                        handler(key);
+                    }
+                }
 
                 // Check the license state to determine if the in-app purchase was successful.
                 return HasFeature(key);
