@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Xml", "%SLASH_FRAMEWO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Collections", "%SLASH_FRAMEWORK_HOME%Source\Slash.Collections\Slash.Collections.csproj", "{03F9A6F7-F402-4581-B748-FA51BF3B1B82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.System", "%SLASH_FRAMEWORK_HOME%Source\Slash.System\Slash.System.csproj", "{2929B671-2BB6-4FF7-BAD8-AA296C4F6E0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Reflection", "%SLASH_FRAMEWORK_HOME%Source\Slash.Reflection\Slash.Reflection.csproj", "{49A6D476-F045-42B3-8FFC-A67B3F9BB073}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
