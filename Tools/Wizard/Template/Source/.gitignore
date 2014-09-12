@@ -109,25 +109,29 @@ UpgradeLog*.XML
 /*/bin
 /*/obj
 
-/Unity/Assets/Game/Editor/Plugins/PostBuildEditor.dll
-/Unity/Assets/Game/Editor/Plugins/PostBuildEditor.dll.meta
-/Unity/Assets/Game/Plugins/PostBuild.dll
-/Unity/Assets/Game/Plugins/PostBuild.dll.meta
 
 *.pidb
 
 /Unity/Unity.userprefs
 
+/Unity/Assets/Game/Plugins/PostBuild.dll
+/Unity/Assets/Game/Plugins/PostBuild.dll.meta
 /Unity/Assets/Game/Plugins/*.mdb*
 /Unity/Assets/Game/Plugins/*.pdb*
-/Unity/Assets/Game/Editor/Plugins
-/Unity/Assets/Game/Editor/Plugins.meta
+
+/Unity/Assets/Game/Editor/Plugins/PostBuild.Editor.dll
+/Unity/Assets/Game/Editor/Plugins/PostBuild.Editor.dll.meta
 /Unity/Assets/Game/Editor/Plugins/*.mdb*
 /Unity/Assets/Game/Editor/Plugins/*.pdb*
+
 /Build
 
 # If you don't want to check in DLLs to the Unity folder, uncomment this line.
+# /Unity/Assets/Game/Plugins
+# /Unity/Assets/Game/Plugins.meta
 # /Unity/Assets/Game/Plugins/*/*.dll*
 
 # If you don't want to check in DLLs to the Unity Editor folder, uncomment this line.
+# /Unity/Assets/Game/Editor/Plugins
+# /Unity/Assets/Game/Editor/Plugins.meta
 # /Unity/Assets/Game/Editor/Plugins/*/*.dll*
