@@ -11,14 +11,27 @@ namespace Slash.Unity.Common.Utils
 
     using UnityEngine;
 
-    using Object = UnityEngine.Object;
-
     /// <summary>
     ///   Utility methods for handling Unity game object hierarchies.
     /// </summary>
     public static class UnityGameObjectUtils
     {
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Instantiates a new game object with the specified name and adds it
+        ///   to the game object.
+        ///   Makes sure the position/rotation/scale are initialized correctly.
+        /// </summary>
+        /// <param name="parent">Game object to add child to.</param>
+        /// <param name="name">Name of the new child.</param>
+        /// <returns>Instantiated new child.</returns>
+        public static GameObject AddChild(this GameObject parent, string name)
+        {
+            GameObject go = AddChild(parent, (GameObject)null);
+            go.name = name;
+            return go;
+        }
 
         /// <summary>
         ///   Instantiates a new game object from the specified prefab and adds it
@@ -30,7 +43,7 @@ namespace Slash.Unity.Common.Utils
         /// <returns>Instantiated new child.</returns>
         public static GameObject AddChild(this GameObject parent, GameObject prefab)
         {
-            GameObject go = Object.Instantiate(prefab) as GameObject;
+            GameObject go = prefab != null ? Object.Instantiate(prefab) as GameObject : new GameObject();
             if (go != null && parent != null)
             {
                 Transform t = go.transform;
