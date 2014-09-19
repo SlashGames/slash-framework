@@ -104,6 +104,7 @@ UpgradeLog*.XML
 /Unity/Library
 /Unity/Temp
 /Unity/Assembly-*.*proj
+/Unity/UnityVS.Unity.*.csproj
 /Unity/*.sln
 
 /*/bin
