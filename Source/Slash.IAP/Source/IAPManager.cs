@@ -14,22 +14,6 @@ namespace Slash.IAP
 
     public static class IAPManager
     {
-#if WINDOWS_STORE
-        #region Static Fields
-
-        private static LicenseInformation licenseInformation;
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        ///   Whether to use local debug license information instead of the current user account.
-        /// </summary>
-        /// <see
-        ///   cref="http://msdn.microsoft.com/en-us/library/windows/apps/xaml/windows.applicationmodel.store.currentappsimulator.aspx" />
-        public static bool Debug { get; set; }
-
         public static Action<string> OnBuyFeature;
 
         public static Action<string> OnSimulateBuyFeature;
@@ -38,6 +22,17 @@ namespace Slash.IAP
 
         public static Action<string> OnPurchaseFailed;
 
+        /// <summary>
+        ///   Whether to use local debug license information instead of the current user account.
+        /// </summary>
+        /// <see
+        ///   cref="http://msdn.microsoft.com/en-us/library/windows/apps/xaml/windows.applicationmodel.store.currentappsimulator.aspx" />
+        public static bool Debug { get; set; }
+
+#if WINDOWS_STORE
+        #region Static Fields
+
+        private static LicenseInformation licenseInformation;
 
         #endregion
 
@@ -108,11 +103,6 @@ namespace Slash.IAP
 
         #endregion
 #else
-        #region Public Properties
-
-        public static bool Debug { get; set; }
-
-        #endregion
 
         #region Public Methods and Operators
 
