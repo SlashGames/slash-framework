@@ -17,7 +17,7 @@ namespace Slash.Reflection.Extensions
     /// </summary>
     public static class AssemblyExtensions
     {
-#if WINDOWS_STORE
+#if WINDOWS_STORE || WINDOWS_PHONE
 
         public static IEnumerable<Type> GetTypes(this Assembly assembly)
         {

@@ -15,7 +15,7 @@ namespace Slash.Math.Algebra.Vectors
     /// <summary>
     ///   2-dimensional float vector.
     /// </summary>
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
     [Serializable]
 #endif
     [DictionarySerializable]

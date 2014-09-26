@@ -24,7 +24,7 @@ namespace Slash.ECS.Blueprints
     ///   Blueprint for creating an entity with a specific set of components
     ///   and initial attribute values.
     /// </summary>
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
     [Serializable]
 #endif
     public sealed class Blueprint : IXmlSerializable, IBinarySerializable

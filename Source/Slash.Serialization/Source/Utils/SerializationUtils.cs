@@ -10,7 +10,7 @@ namespace Slash.Serialization.Utils
     using System.Xml;
     using System.Xml.Serialization;
 
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
 #endif
@@ -22,7 +22,7 @@ namespace Slash.Serialization.Utils
     {
         #region Public Methods and Operators
 
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
         /// <summary>
         ///   Makes a deep copy of the specified object by serializing and deserializing the specified object.
         /// </summary>
@@ -62,7 +62,7 @@ namespace Slash.Serialization.Utils
             return xmlSerializer.Deserialize(reader);
         }
 
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
         /// <summary>
         ///   Serializes the specified object to a binary stream.
         /// </summary>

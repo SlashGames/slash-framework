@@ -9,7 +9,7 @@ namespace Slash.SystemExt.Utils
     using System;
     using System.Text.RegularExpressions;
 
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
     using System.IO;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
@@ -24,7 +24,7 @@ namespace Slash.SystemExt.Utils
     {
         #region Public Methods and Operators
 
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
         /// <summary>
         ///   Perform a deep Copy of the object.
         ///   Reference Article http://www.codeproject.com/KB/tips/SerializedObjectCloner.aspx

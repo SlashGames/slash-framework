@@ -130,7 +130,7 @@
 //
 //************************************************************************************
 
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
 
 namespace System.Numerics
 {
@@ -139,7 +139,7 @@ namespace System.Numerics
         // maximum length of the BigInteger in uint (4 bytes)
         // change this to suit the required level of precision.
 
-        #region Constants
+#region Constants
 
         private const int maxLength = 70;
 
@@ -147,7 +147,7 @@ namespace System.Numerics
 
         // primes smaller than 2000 to test the generated prime number
 
-        #region Static Fields
+#region Static Fields
 
         public static readonly int[] primesBelow2000 =
             {
@@ -171,7 +171,7 @@ namespace System.Numerics
 
         #endregion
 
-        #region Fields
+#region Fields
 
         public int dataLength; // number of actual chars used
 
@@ -183,7 +183,7 @@ namespace System.Numerics
         // Constructor (Default value for BigInteger is 0
         //***********************************************************************
 
-        #region Constructors and Destructors
+#region Constructors and Destructors
 
         public BigInteger()
         {
@@ -519,7 +519,7 @@ namespace System.Numerics
 
         #endregion
 
-        #region Public Methods and Operators
+#region Public Methods and Operators
 
         public static int Jacobi(BigInteger a, BigInteger b)
         {
@@ -641,7 +641,7 @@ namespace System.Numerics
             return LucasSequenceHelper(P, Q, t, n, constant, s);
         }
 
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
         public static void Main(string[] args)
         {
             // Known problem -> these two pseudoprimes passes my implementation of
@@ -2936,7 +2936,7 @@ namespace System.Numerics
         // k must be odd.  i.e LSB == 1
         //***********************************************************************
 
-        #region Methods
+#region Methods
 
         private static BigInteger[] LucasSequenceHelper(
             BigInteger P, BigInteger Q, BigInteger k, BigInteger n, BigInteger constant, int s)
