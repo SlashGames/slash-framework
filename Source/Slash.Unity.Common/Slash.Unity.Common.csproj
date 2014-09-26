@@ -124,6 +124,7 @@
     <Compile Include="Source\Loading\LoadSceneOnClickBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneOnEscBehaviour.cs" />
     <Compile Include="Source\Utils\LogDeviceIdBehaviour.cs" />
+    <Compile Include="Source\Utils\OpenUrlOnClickBehaviour.cs" />
     <Compile Include="Source\Utils\UnityColorUtils.cs" />
     <Compile Include="Source\Utils\UnityGameObjectUtils.cs" />
     <Compile Include="Source\Utils\UnityPathUtils.cs" />
