@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.Editor.Common.MenuItems.Build
+namespace Slash.Unity.Editor.Common.Build
 {
     using System;
     using System.IO;
@@ -56,39 +56,9 @@ namespace Slash.Unity.Editor.Common.MenuItems.Build
 
         public BuildConfiguration BuildConfigurationRelease { get; set; }
 
-        public string DefaultBuildFolder { get; set; }
-
-        public string ProjectName { get; set; }
-
         #endregion
 
         #region Public Methods and Operators
-
-        /// <summary>
-        ///   Returns the default build path for the specified build target.
-        /// </summary>
-        /// <param name="buildTarget">Build target to get path for.</param>
-        /// <returns>Path to build package/executable/...</returns>
-        public string GetDefaultBuildPath(BuildTarget buildTarget)
-        {
-            string fileExtension = "";
-            switch (buildTarget)
-            {
-                case BuildTarget.Android:
-                    {
-                        fileExtension = "apk";
-                    }
-                    break;
-                case BuildTarget.StandaloneWindows:
-                    {
-                        fileExtension = "exe";
-                    }
-                    break;
-            }
-
-            return string.Format(
-                "{0}/{1}/{2}.{3}", this.DefaultBuildFolder, buildTarget, this.ProjectName, fileExtension);
-        }
 
         /// <summary>
         ///   Performs the build from the command line.
@@ -138,7 +108,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Build
                         {
                             BuildTarget = buildTarget,
                             BuildType = buildType,
-                            BuildPath = this.GetDefaultBuildPath(buildTarget)
+                            BuildPath = this.EditorBuildSettings.GetDefaultBuildPath(buildTarget)
                         });
         }
 
@@ -163,7 +133,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Build
             // Make sure build directory exists.
             if (string.IsNullOrEmpty(buildSettings.BuildPath))
             {
-                buildSettings.BuildPath = this.GetDefaultBuildPath(buildSettings.BuildTarget);
+                buildSettings.BuildPath = this.EditorBuildSettings.GetDefaultBuildPath(buildSettings.BuildTarget);
             }
 
             string buildDirectory = Path.GetDirectoryName(buildSettings.BuildPath);
@@ -204,9 +174,12 @@ namespace Slash.Unity.Editor.Common.MenuItems.Build
         /// </summary>
         public void RestoreEditor(BuildSettings buildSettings = null)
         {
-            // Use build configuration of editor.
-            PlayerSettings.productName = this.BuildConfigurationEditor.ProductName;
-            PlayerSettings.bundleIdentifier = this.BuildConfigurationEditor.AndroidBundleIdentifier;
+            if (this.BuildConfigurationEditor != null)
+            {
+                // Use build configuration of editor.
+                PlayerSettings.productName = this.BuildConfigurationEditor.ProductName;
+                PlayerSettings.bundleIdentifier = this.BuildConfigurationEditor.AndroidBundleIdentifier;
+            }
 
             this.SetBuildConfiguration(buildSettings ?? this.EditorBuildSettings);
 

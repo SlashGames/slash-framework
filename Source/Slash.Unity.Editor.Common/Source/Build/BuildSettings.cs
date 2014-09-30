@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.Editor.Common.MenuItems.Build
+namespace Slash.Unity.Editor.Common.Build
 {
     using UnityEditor;
 
@@ -22,6 +22,8 @@ namespace Slash.Unity.Editor.Common.MenuItems.Build
         {
             this.Android = new BuildSettingsAndroid();
             this.BundleVersion = PlayerSettings.bundleVersion;
+            this.ProjectName = PlayerSettings.productName;
+            this.DefaultBuildFolder = "../../Build";
         }
 
         #endregion
@@ -54,9 +56,45 @@ namespace Slash.Unity.Editor.Common.MenuItems.Build
         /// </summary>
         public string BundleVersion { get; set; }
 
+        /// <summary>
+        ///   Default folder to store build at.
+        /// </summary>
+        public string DefaultBuildFolder { get; set; }
+
+        /// <summary>
+        ///   Project name.
+        /// </summary>
+        public string ProjectName { get; set; }
+
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Returns the default build path for the specified build target.
+        /// </summary>
+        /// <param name="buildTarget">Build target to get path for.</param>
+        /// <returns>Path to build package/executable/...</returns>
+        public string GetDefaultBuildPath(BuildTarget buildTarget)
+        {
+            string fileExtension = "";
+            switch (buildTarget)
+            {
+                case BuildTarget.Android:
+                    {
+                        fileExtension = "apk";
+                    }
+                    break;
+                case BuildTarget.StandaloneWindows:
+                    {
+                        fileExtension = "exe";
+                    }
+                    break;
+            }
+
+            return string.Format(
+                "{0}/{1}/{2}.{3}", this.DefaultBuildFolder, buildTarget, this.ProjectName, fileExtension);
+        }
 
         public override string ToString()
         {

@@ -1,19 +1,17 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BuildConfiguration.cs" company="Slash Games">
+// <copyright file="BuildType.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.Editor.Common.MenuItems.Build
+namespace Slash.Unity.Editor.Common.Build
 {
-    public class BuildConfiguration
+    public enum BuildType
     {
-        #region Fields
+        None,
 
-        public string AndroidBundleIdentifier;
+        Debug,
 
-        public string ProductName;
-
-        #endregion
+        Release,
     }
 }
