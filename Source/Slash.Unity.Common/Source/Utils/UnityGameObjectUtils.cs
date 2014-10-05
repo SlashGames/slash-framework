@@ -6,10 +6,13 @@
 
 namespace Slash.Unity.Common.Utils
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using UnityEngine;
+
+    using Object = UnityEngine.Object;
 
     /// <summary>
     ///   Utility methods for handling Unity game object hierarchies.
@@ -98,13 +101,49 @@ namespace Slash.Unity.Common.Utils
         /// <returns>Full path of the specified game object.</returns>
         public static string GetPath(this GameObject gameObject)
         {
-            string path = string.Empty;
+            string path = String.Empty;
             if (gameObject.transform.parent != null)
             {
                 path = gameObject.transform.parent.gameObject.GetPath() + "/";
             }
             path += gameObject.name;
             return path;
+        }
+
+        /// <summary>
+        ///   Returns the absolute scale of the specified transform relative to the specified ancestor.
+        /// </summary>
+        /// <param name="transform">Transform to get scale for.</param>
+        /// <param name="ancestor">Ancestor to which the scale should be relative. Null if global.</param>
+        /// <returns>Absolute scale of the specified transform relative to the specified ancestor.</returns>
+        public static Vector3 GetScale(this Transform transform, Transform ancestor)
+        {
+            if (transform == null || transform == ancestor)
+            {
+                return Vector3.one;
+            }
+            Vector3 parentScale = GetScale(transform.parent, ancestor);
+            return new Vector3(
+                transform.localScale.x * parentScale.x,
+                transform.localScale.y * parentScale.y,
+                transform.localScale.z * parentScale.z);
+        }
+
+        /// <summary>
+        ///   Sets the absolute scale of the specified transform relative to the specified ancestor.
+        /// </summary>
+        /// <param name="transform">Transform to set scale for.</param>
+        /// <param name="ancestor">Ancestor to which the scale should be relative. Null if global.</param>
+        /// <param name="scale">Absolute scale.</param>
+        public static void SetScale(this Transform transform, Transform ancestor, Vector3 scale)
+        {
+            Vector3 parentScale = transform.parent != null ? GetScale(transform.parent, ancestor) : Vector3.one;
+            if (parentScale != Vector3.zero)
+            {
+                Vector3 localScale = new Vector3(
+                    scale.x / parentScale.x, scale.y / parentScale.y, scale.z / parentScale.z);
+                transform.localScale = localScale;
+            }
         }
 
         #endregion
