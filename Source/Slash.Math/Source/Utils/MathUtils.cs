@@ -258,6 +258,20 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
+        ///   Checks if the specified value is within the specified bounds (i.e. bigger or equal minimum bound and
+        ///   smaller or equal maximum bound).
+        /// </summary>
+        /// <typeparam name="T">Type of the value to check.</typeparam>
+        /// <param name="value"> Value to check. </param>
+        /// <param name="min"> Minimum bound. </param>
+        /// <param name="max"> Maximum bound (inclusive). </param>
+        /// <returns> True if value is within bounds; otherwise, false. </returns>
+        public static bool IsWithinBoundsInclusive<T>(T value, T min, T max) where T : IComparable<T>
+        {
+            return value.CompareTo(min) >= 0 && value.CompareTo(max) <= 0;
+        }
+
+        /// <summary>
         ///   Linear interpolation of a float. TODO: generic
         /// </summary>
         /// <param name="x"> First value. </param>
