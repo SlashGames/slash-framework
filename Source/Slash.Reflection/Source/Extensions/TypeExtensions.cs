@@ -14,6 +14,17 @@ namespace Slash.Reflection.Extensions
     public static class TypeExtensions
     {
 #if WINDOWS_STORE
+        public static FieldInfo GetField(this Type type, string name)
+        {
+            return type.GetRuntimeField(name);
+        }
+
+        public static object GetFieldValue(this Type type, object o, string fieldName)
+        {
+            var fieldInfo = type.GetRuntimeField(fieldName);
+            return fieldInfo.GetValue(o);
+        }
+
         public static PropertyInfo GetProperty(this Type type, string name)
         {
             return type.GetRuntimeProperty(name);
@@ -88,8 +99,13 @@ namespace Slash.Reflection.Extensions
         {
             return type.GetTypeInfo().IsAssignableFrom(other.GetTypeInfo());
         }
-
 #else
+        public static object GetFieldValue(this Type type, object o, string fieldName)
+        {
+            var fieldInfo = type.GetField(fieldName);
+            return fieldInfo.GetValue(o);
+        }
+
         public static bool IsValueType(this Type type)
         {
             return type.IsValueType;
