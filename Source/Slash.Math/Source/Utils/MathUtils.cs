@@ -467,6 +467,16 @@ namespace Slash.Math.Utils
         }
 
         /// <summary>
+        ///   Rounds the specified value to the nearest integral value.
+        /// </summary>
+        /// <param name="value">Value to round.</param>
+        /// <returns>Specified value rounded to the nearest integral value.</returns>
+        public static int RoundToInt(float value)
+        {
+            return (int)Math.Round(value);
+        }
+
+        /// <summary>
         ///   Clamps the passed value to 0...1.
         /// </summary>
         /// <param name="value"> Value to saturate. </param>
