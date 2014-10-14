@@ -18,12 +18,8 @@ namespace Slash.ECS.Configurations
     /// <summary>
     ///   Contains all data to create and initialize an entity.
     /// </summary>
-#if !WINDOWS_STORE && !WINDOWS_PHONE
     [Serializable]
     public class EntityConfiguration : ICloneable, IBinarySerializable
-#else
-    public class EntityConfiguration : IBinarySerializable
-#endif
     {
         #region Fields
 

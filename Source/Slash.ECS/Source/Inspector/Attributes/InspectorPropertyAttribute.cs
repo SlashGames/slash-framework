@@ -18,9 +18,7 @@ namespace Slash.ECS.Inspector.Attributes
     ///   Exposes the property to the inspector.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-#if !WINDOWS_STORE && !WINDOWS_PHONE
     [Serializable]
-#endif
     public abstract class InspectorPropertyAttribute : Attribute
     {
         #region Constants

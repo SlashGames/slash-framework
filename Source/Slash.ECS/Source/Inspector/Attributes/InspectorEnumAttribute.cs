@@ -13,9 +13,7 @@ namespace Slash.ECS.Inspector.Attributes
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>
-#if !WINDOWS_STORE && !WINDOWS_PHONE
     [Serializable]
-#endif
     public class InspectorEnumAttribute : InspectorPropertyAttribute
     {
         #region Constructors and Destructors

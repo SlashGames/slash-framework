@@ -21,9 +21,7 @@ namespace Slash.ECS.Blueprints
     /// <summary>
     ///   Manager that maps blueprint ids to blueprints.
     /// </summary>
-#if !WINDOWS_STORE && !WINDOWS_PHONE
     [Serializable]
-#endif
     public sealed class BlueprintManager : IBlueprintManager, IXmlSerializable
     {
         #region Fields
