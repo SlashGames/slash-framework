@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;DEBUG;LOG4NET</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,14 +26,15 @@
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;LOG4NET</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug NoLog4Net|AnyCPU'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug NoLog4Net\</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,7 +42,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release NoLog4Net|AnyCPU'">
-    <OutputPath>bin\Release NoLog4Net\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -51,7 +53,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release WindowsStore|AnyCPU'">
-    <OutputPath>bin\Release WindowsStore\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>

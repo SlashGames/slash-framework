@@ -20,6 +20,7 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -31,9 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Bin\Release</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
@@ -41,10 +43,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\x86\Debug</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
@@ -52,9 +55,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Bin\x86\Release</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
@@ -62,10 +66,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
@@ -73,9 +78,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Bin\ARM\Release</OutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
