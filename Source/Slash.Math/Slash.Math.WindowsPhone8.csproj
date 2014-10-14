@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="WinRTLegacy">
-      <HintPath>$(UNITY_PATH)Editor\Data\PlaybackEngines\wp8support\Managed\WinRTLegacy.dll</HintPath>
+      <HintPath>$(UNITY_PATH)Data\PlaybackEngines\wp8support\Managed\WinRTLegacy.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
