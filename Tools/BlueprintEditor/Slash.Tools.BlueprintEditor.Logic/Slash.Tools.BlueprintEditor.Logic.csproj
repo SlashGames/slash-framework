@@ -45,9 +45,9 @@
     <Compile Include="Source\Localization\LocalizationTableNGUISerializer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Slash.GameBase\Slash.GameBase.csproj">
-      <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
-      <Name>Slash.GameBase</Name>
+    <ProjectReference Include="..\..\..\Source\Slash.ECS\Slash.ECS.csproj">
+      <Project>{A9512E70-2963-4843-855E-B1C9AAA60720}</Project>
+      <Name>Slash.ECS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Source\Slash.Reflection\Slash.Reflection.csproj">
       <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>

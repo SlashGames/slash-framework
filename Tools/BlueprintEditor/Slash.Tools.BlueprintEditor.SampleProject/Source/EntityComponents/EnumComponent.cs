@@ -7,8 +7,8 @@
 namespace Slash.Tools.BlueprintEditor.SampleProject.EntityComponents
 {
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Components;
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Components;
+    using Slash.ECS.Inspector.Attributes;
 
     public enum TestEnum
     {

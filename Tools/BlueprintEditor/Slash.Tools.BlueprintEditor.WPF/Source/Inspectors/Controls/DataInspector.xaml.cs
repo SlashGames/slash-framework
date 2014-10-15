@@ -9,8 +9,8 @@ namespace BlueprintEditor.Inspectors.Controls
     using System.Windows;
 
     using Slash.Collections.AttributeTables;
-    using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Data;
+    using Slash.ECS.Inspector.Attributes;
+    using Slash.ECS.Inspector.Data;
 
     /// <summary>
     ///   Inspector to edit a value in a combo box.

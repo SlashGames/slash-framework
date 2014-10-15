@@ -16,7 +16,7 @@ namespace BlueprintEditor.ViewModels
 
     using MonitoredUndo;
 
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
@@ -56,7 +56,7 @@ namespace BlueprintEditor.ViewModels
                         });
             }
 
-            this.CurrentBlueprintManager = (BlueprintManager)this.blueprintManager.Parents.First();
+            this.CurrentBlueprintManager = (BlueprintManager)this.blueprintManager.Children.First();
 
             this.Blueprints.CollectionChanged += this.OnBlueprintsChanged;
         }

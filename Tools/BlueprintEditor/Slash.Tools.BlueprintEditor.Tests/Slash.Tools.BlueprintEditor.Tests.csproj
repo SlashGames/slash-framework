@@ -51,9 +51,9 @@
     <Compile Include="Source\ViewModels\BlueprintManagerViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\Slash.GameBase\Slash.GameBase.csproj">
-      <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
-      <Name>Slash.GameBase</Name>
+    <ProjectReference Include="..\..\..\Source\Slash.ECS\Slash.ECS.csproj">
+      <Project>{A9512E70-2963-4843-855E-B1C9AAA60720}</Project>
+      <Name>Slash.ECS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Source\Slash.Serialization\Slash.Serialization.csproj">
       <Project>{c92c88b0-5268-443b-b32f-cc2a6d686c51}</Project>

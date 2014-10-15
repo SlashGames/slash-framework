@@ -11,7 +11,7 @@ namespace BlueprintEditor.ViewModels
 
     using BlueprintEditor.Annotations;
 
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Context;
 
     public class ProjectFileViewModel : INotifyPropertyChanged

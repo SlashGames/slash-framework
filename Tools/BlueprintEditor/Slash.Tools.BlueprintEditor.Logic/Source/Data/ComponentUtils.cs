@@ -11,7 +11,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Data
     using System.Linq;
     using System.Reflection;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
 
     public static class ComponentUtils
     {

@@ -16,8 +16,8 @@ namespace BlueprintEditor.Inspectors.Controls
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
-    using Slash.GameBase.Configurations;
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Configurations;
+    using Slash.ECS.Inspector.Attributes;
 
     /// <summary>
     ///   Interaction logic for EntityInspector.xaml

@@ -51,7 +51,7 @@
       <Name>Slash.Collections</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.ECS\Slash.ECS.csproj">
-      <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
+      <Project>{A9512E70-2963-4843-855E-B1C9AAA60720}</Project>
       <Name>Slash.ECS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">

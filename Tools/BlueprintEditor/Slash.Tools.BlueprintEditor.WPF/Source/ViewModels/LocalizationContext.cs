@@ -15,7 +15,7 @@ namespace BlueprintEditor.ViewModels
 
     using CsvHelper;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
     using Slash.SystemExt.Exceptions;
     using Slash.Tools.BlueprintEditor.Logic.Context;
     using Slash.Tools.BlueprintEditor.Logic.Data;

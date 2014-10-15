@@ -19,7 +19,7 @@ namespace BlueprintEditor.Windows
 
     using CsvHelper;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     /// <summary>

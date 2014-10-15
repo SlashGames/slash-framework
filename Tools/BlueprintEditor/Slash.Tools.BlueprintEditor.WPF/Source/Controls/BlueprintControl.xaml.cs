@@ -15,7 +15,7 @@ namespace BlueprintEditor.Controls
     using BlueprintEditor.Inspectors;
     using BlueprintEditor.ViewModels;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
 
     /// <summary>
     ///   Interaction logic for BlueprintControl.xaml

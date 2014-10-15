@@ -18,8 +18,8 @@ namespace BlueprintEditor.ViewModels
 
     using MonitoredUndo;
 
-    using Slash.GameBase.Blueprints;
-    using Slash.GameBase.Inspector.Data;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Inspector.Data;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public class BlueprintViewModel : INotifyPropertyChanged,

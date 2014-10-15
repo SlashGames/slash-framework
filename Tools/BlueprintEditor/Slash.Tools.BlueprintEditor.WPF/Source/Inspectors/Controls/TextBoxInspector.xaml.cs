@@ -8,7 +8,7 @@ namespace BlueprintEditor.Inspectors.Controls
 {
     using BlueprintEditor.ViewModels;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
 
     /// <summary>
     ///   Inspector to edit a value in a textbox.

@@ -6,7 +6,7 @@
 
 namespace BlueprintEditor.ViewModels
 {
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
 
     public class PropertyValueMappingViewModel : ValueMappingViewModel
     {

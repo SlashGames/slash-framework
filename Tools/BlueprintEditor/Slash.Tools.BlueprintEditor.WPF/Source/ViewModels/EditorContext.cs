@@ -19,7 +19,7 @@ namespace BlueprintEditor.ViewModels
 
     using MonitoredUndo;
 
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS.Blueprints;
     using Slash.Reflection.Utils;
     using Slash.Serialization.Binary;
     using Slash.Tools.BlueprintEditor.Logic.Annotations;
@@ -475,7 +475,7 @@ namespace BlueprintEditor.ViewModels
 
             foreach (var blueprintFile in this.ProjectSettings.BlueprintFiles)
             {
-                blueprintManager.AddParent(blueprintFile.BlueprintManager);
+                blueprintManager.AddChild(blueprintFile.BlueprintManager);
             }
 
             // Load all blueprints.

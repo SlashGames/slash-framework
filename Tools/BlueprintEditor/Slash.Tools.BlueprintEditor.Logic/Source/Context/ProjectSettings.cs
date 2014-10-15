@@ -13,7 +13,7 @@ namespace Slash.Tools.BlueprintEditor.Logic.Context
     using System.Reflection;
     using System.Xml.Serialization;
 
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS.Blueprints;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public sealed class LanguageFile
