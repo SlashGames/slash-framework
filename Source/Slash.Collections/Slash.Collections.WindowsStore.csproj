@@ -142,6 +142,11 @@
     <Compile Include="Source\PriorityQueues\IPriorityQueueItem.cs" />
     <Compile Include="Source\Utils\CollectionUtils.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="WinRTLegacy">
+      <HintPath>$(UNITY_PATH)Data\PlaybackEngines\metrosupport\Managed\WinRTLegacy.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
