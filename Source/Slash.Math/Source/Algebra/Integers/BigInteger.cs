@@ -641,7 +641,6 @@ namespace System.Numerics
             return LucasSequenceHelper(P, Q, t, n, constant, s);
         }
 
-#if !WINDOWS_STORE && !WINDOWS_PHONE
         public static void Main(string[] args)
         {
             // Known problem -> these two pseudoprimes passes my implementation of
@@ -1011,7 +1010,6 @@ namespace System.Numerics
                 Console.WriteLine(" <PASSED>.");
             }
         }
-#endif
 
         public static BigInteger genPseudoPrime(int bits, int confidence, Random rand)
         {
