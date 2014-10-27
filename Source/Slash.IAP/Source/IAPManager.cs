@@ -8,7 +8,7 @@ namespace Slash.IAP
 {
     using System;
 
-#if WINDOWS_STORE
+#if WINDOWS_STORE || WINDOWS_PHONE
     using Windows.ApplicationModel.Store;
 #endif
 
@@ -29,7 +29,7 @@ namespace Slash.IAP
         ///   cref="http://msdn.microsoft.com/en-us/library/windows/apps/xaml/windows.applicationmodel.store.currentappsimulator.aspx" />
         public static bool Debug { get; set; }
 
-#if WINDOWS_STORE
+#if WINDOWS_STORE || WINDOWS_PHONE
         #region Static Fields
 
         private static LicenseInformation licenseInformation;
