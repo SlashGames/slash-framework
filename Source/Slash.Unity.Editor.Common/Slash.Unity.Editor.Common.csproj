@@ -50,6 +50,7 @@
     <Compile Include="Source\Inspectors\ECS\EntityConfigurationEditor.cs" />
     <Compile Include="Source\Inspectors\Diagnostics\DebugInputEditor.cs" />
     <Compile Include="Source\Inspectors\ExposeProperties.cs" />
+    <Compile Include="Source\Inspectors\Logging\EventManagerLogBehaviourEditor.cs" />
     <Compile Include="Source\Inspectors\PropertyField.cs" />
     <Compile Include="Source\Inspectors\Rendering\MeshRendererSortingEditor.cs" />
     <Compile Include="Source\Inspectors\Utils\EditorGUIUtils.cs" />
