@@ -34,6 +34,11 @@ namespace Slash.Unity.Common.Configuration
         /// </summary>
         public string ConfigurationFilePath = "Configuration/GameConfiguration";
 
+        /// <summary>
+        ///   Indicates if xml format should be used for build. Otherwise binary blueprint files are used.
+        /// </summary>
+        public bool UseXmlInBuild;
+
         private IAttributeTable configuration;
 
         #endregion
@@ -129,7 +134,7 @@ namespace Slash.Unity.Common.Configuration
                     // Load blueprints.
                     BlueprintManager subBlueprintManager = null;
 
-                    if (Application.isEditor)
+                    if (Application.isEditor || this.UseXmlInBuild)
                     {
                         if (blueprintManagerSerializer == null)
                         {
