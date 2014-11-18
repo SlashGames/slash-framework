@@ -41,6 +41,8 @@ namespace Slash.Unity.Common.Configuration
 
         private IAttributeTable configuration;
 
+        private TextAsset configurationFile;
+
         #endregion
 
         #region Public Properties
@@ -80,8 +82,8 @@ namespace Slash.Unity.Common.Configuration
         {
             Debug.Log("Loading game configuration from resources at " + this.ConfigurationFilePath);
 
-            TextAsset configurationFile = (TextAsset)Resources.Load(this.ConfigurationFilePath);
-            if (configurationFile == null)
+            this.configurationFile = (TextAsset)Resources.Load(this.ConfigurationFilePath);
+            if (this.configurationFile == null)
             {
                 Debug.LogWarning("No configuration file at " + this.ConfigurationFilePath);
                 this.Configuration = new AttributeTable();
@@ -89,7 +91,8 @@ namespace Slash.Unity.Common.Configuration
             }
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
-            this.Configuration = (IAttributeTable)xmlSerializer.Deserialize(new StringReader(configurationFile.text));
+            this.Configuration =
+                (IAttributeTable)xmlSerializer.Deserialize(new StringReader(this.configurationFile.text));
         }
 
         /// <summary>
@@ -102,6 +105,14 @@ namespace Slash.Unity.Common.Configuration
 #else
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
             string filePath = "Assets/Resources/" + this.ConfigurationFilePath + ".xml";
+
+#if UNITY_EDITOR
+            if (this.configurationFile != null)
+            {
+                filePath = UnityEditor.AssetDatabase.GetAssetPath(this.configurationFile);
+            }
+#endif
+
             // Make sure directory exists.
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
