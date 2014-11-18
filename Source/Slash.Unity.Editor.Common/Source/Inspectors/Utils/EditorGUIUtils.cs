@@ -12,6 +12,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
+    using Slash.Math.Algebra.Vectors;
 
     using UnityEditor;
 
@@ -198,8 +199,19 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             InspectorEnumAttribute enumInspectorProperty = inspectorProperty as InspectorEnumAttribute;
             if (enumInspectorProperty != null)
             {
-                return EditorGUILayout.EnumPopup(
-                    label, (Enum)Convert.ChangeType(currentValue, enumInspectorProperty.PropertyType));
+                object currentEnumValue = (currentValue != null)
+                                              ? Convert.ChangeType(currentValue, enumInspectorProperty.PropertyType)
+                                              : Enum.GetValues(enumInspectorProperty.PropertyType).GetValue(0);
+                return EditorGUILayout.EnumPopup(label, (Enum)currentEnumValue);
+            }
+            InspectorVectorAttribute vectorInspectorproperty = inspectorProperty as InspectorVectorAttribute;
+            if (vectorInspectorproperty != null)
+            {
+                if (vectorInspectorproperty.PropertyType == typeof(Vector2I))
+                {
+                    Vector2I currentVectorValue = (currentValue != null) ? (Vector2I)currentValue : Vector2I.Zero;
+                    return Vector2IField(label, currentVectorValue);
+                }
             }
 
             EditorGUILayout.HelpBox(
@@ -240,6 +252,17 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             EditorGUILayout.EndHorizontal();
 
             return selectedShaderName;
+        }
+
+        public static Vector2I Vector2IField(GUIContent label, Vector2I v)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel(label);
+            var x = EditorGUILayout.IntField("X", v.X);
+            var y = EditorGUILayout.IntField("Y", v.Y);
+            EditorGUILayout.EndHorizontal();
+
+            return new Vector2I(x, y);
         }
 
         #endregion
