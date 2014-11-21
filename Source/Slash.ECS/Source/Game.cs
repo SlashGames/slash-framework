@@ -1,14 +1,8 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Game.cs" company="Slash Games">
-//   Copyright (c) Slash Games. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Slash.ECS
+﻿namespace Slash.ECS
 {
     using System;
     using System.Linq;
-
+    
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Components;
@@ -161,8 +155,7 @@ namespace Slash.ECS
         public void AddSystem<T>() where T : ISystem, new()
         {
             var system = new T();
-            this.SystemManager.AddSystem(system);
-            system.Game = this;
+            this.AddSystem(system);
         }
 
         /// <summary>
@@ -171,24 +164,20 @@ namespace Slash.ECS
         public virtual void InitGame()
         {
             // Add game systems using reflection.
-            foreach (var assembly in AssemblyUtils.GetLoadedAssemblies())
+            var systemTypes = ReflectionUtils.FindTypesWithBase<ISystem>();
+
+            // Check if enabled and order by index.
+            var gameSystemTypes = from systemType in systemTypes
+                                  let systemTypeAttribute = systemType.GetAttribute<GameSystemAttribute>()
+                                  where systemTypeAttribute != null && systemTypeAttribute.Enabled
+                                  orderby systemTypeAttribute.Order
+                                  select systemType;
+
+            // Attach systems.
+            foreach (var gameSystemType in gameSystemTypes)
             {
-                var systemTypes = assembly.GetTypes().Where(type => typeof(ISystem).IsAssignableFrom(type));
-
-                // Check if enabled and order by index.
-                var gameSystemTypes = from systemType in systemTypes
-                                      let systemTypeAttribute = systemType.GetAttribute<GameSystemAttribute>()
-                                      where systemTypeAttribute != null && systemTypeAttribute.Enabled
-                                      orderby systemTypeAttribute.Order
-                                      select systemType;
-
-                // Attach systems.
-                foreach (var gameSystemType in gameSystemTypes)
-                {
-                    var system = (ISystem)Activator.CreateInstance(gameSystemType);
-                    this.SystemManager.AddSystem(system);
-                    system.Game = this;
-                }
+                var system = (ISystem)Activator.CreateInstance(gameSystemType);
+                this.AddSystem(system);
             }
         }
 
@@ -253,8 +242,6 @@ namespace Slash.ECS
 
             // Give the derived game the chance to do game start things.
             this.OnGameStarted();
-
-            this.eventManager.ProcessEvents();
         }
 
         /// <summary>
@@ -299,6 +286,16 @@ namespace Slash.ECS
         /// </summary>
         protected virtual void OnGameStarted()
         {
+        }
+
+        private void AddSystem(ISystem system)
+        {
+            this.SystemManager.AddSystem(system);
+
+            system.EntityManager = this.EntityManager;
+            system.BlueprintManager = this.BlueprintManager;
+            system.EventManager = this.EventManager;
+            system.Log = this.Log;
         }
 
         /// <summary>

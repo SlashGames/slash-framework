@@ -1,12 +1,10 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISystem.cs" company="Slash Games">
-//   Copyright (c) Slash Games. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Slash.ECS.Systems
+﻿namespace Slash.ECS.Systems
 {
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Components;
+    using Slash.ECS.Events;
+    using Slash.ECS.Logging;
 
     /// <summary>
     ///   Contract that all systems that make up a game have to fulfill,
@@ -17,9 +15,24 @@ namespace Slash.ECS.Systems
         #region Public Properties
 
         /// <summary>
-        ///   Game this system belongs to.
+        ///   Blueprint manager for this system.
         /// </summary>
-        Game Game { get; set; }
+        IBlueprintManager BlueprintManager { get; set; }
+
+        /// <summary>
+        ///   Entity manager for this system.
+        /// </summary>
+        IEntityManager EntityManager { get; set; }
+
+        /// <summary>
+        ///   Event manager for this system.
+        /// </summary>
+        EventManager EventManager { get; set; }
+
+        /// <summary>
+        ///   Logger for logic events.
+        /// </summary>
+        GameLogger Log { get; set; }
 
         #endregion
 

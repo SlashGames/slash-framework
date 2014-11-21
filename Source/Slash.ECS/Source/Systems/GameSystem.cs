@@ -1,13 +1,11 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GameSystem.cs" company="Slash Games">
-//   Copyright (c) Slash Games. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Slash.ECS.Systems
+﻿namespace Slash.ECS.Systems
 {
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Components;
+    using Slash.ECS.Events;
     using Slash.ECS.Inspector.Utils;
+    using Slash.ECS.Logging;
 
     /// <summary>
     ///   Base system class.
@@ -17,9 +15,24 @@ namespace Slash.ECS.Systems
         #region Public Properties
 
         /// <summary>
-        ///   Game this system belongs to.
+        ///   Blueprint manager for this system.
         /// </summary>
-        public Game Game { get; set; }
+        public IBlueprintManager BlueprintManager { get; set; }
+
+        /// <summary>
+        ///   Entity manager for this system.
+        /// </summary>
+        public IEntityManager EntityManager { get; set; }
+
+        /// <summary>
+        ///   Event manager for this system.
+        /// </summary>
+        public EventManager EventManager { get; set; }
+
+        /// <summary>
+        ///   Logger for logic events.
+        /// </summary>
+        public GameLogger Log { get; set; }
 
         #endregion
 
@@ -33,7 +46,7 @@ namespace Slash.ECS.Systems
         public virtual void Init(IAttributeTable configuration)
         {
             // Initialize from configuration.
-            InspectorUtils.InitFromAttributeTable(this.Game, this, configuration);
+            InspectorUtils.InitFromAttributeTable(this.EntityManager, this, configuration);
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ namespace Slash.ECS.Inspector.Attributes
     using System;
 
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Components;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Inspector.Utils;
 
@@ -48,18 +49,18 @@ namespace Slash.ECS.Inspector.Attributes
         /// <summary>
         ///   Initializes the specified object via reflection with the specified property value.
         /// </summary>
-        /// <param name="game">The parameter is not used.</param>
+        /// <param name="entityManager">Entity manager.</param>
         /// <param name="obj">Object to set property value for.</param>
         /// <param name="propertyValue">Property value to set.</param>
-        public override void SetPropertyValue(Game game, object obj, object propertyValue)
+        public override void SetPropertyValue(IEntityManager entityManager, object obj, object propertyValue)
         {
             IAttributeTable propertyAttributeTable = (IAttributeTable)propertyValue;
 
             propertyValue = Activator.CreateInstance(this.PropertyType);
             InspectorType propertyInspectorType = InspectorType.GetInspectorType(this.PropertyType);
-            InspectorUtils.InitFromAttributeTable(game, propertyInspectorType, propertyValue, propertyAttributeTable);
+            InspectorUtils.InitFromAttributeTable(entityManager, propertyInspectorType, propertyValue, propertyAttributeTable);
 
-            base.SetPropertyValue(game, obj, propertyValue);
+            base.SetPropertyValue(entityManager, obj, propertyValue);
         }
 
         /// <summary>

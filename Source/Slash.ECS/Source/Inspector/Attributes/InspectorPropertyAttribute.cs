@@ -11,6 +11,7 @@ namespace Slash.ECS.Inspector.Attributes
     using System.Collections.Generic;
     using System.Text;
 
+    using Slash.ECS.Components;
     using Slash.ECS.Inspector.Validation;
     using Slash.Reflection.Extensions;
 
@@ -192,10 +193,10 @@ namespace Slash.ECS.Inspector.Attributes
         /// <summary>
         ///   Initializes the specified object via reflection with the specified property value.
         /// </summary>
-        /// <param name="game">The parameter is not used.</param>
+        /// <param name="entityManager">Entity manager.</param>
         /// <param name="obj">Object to set property value for.</param>
         /// <param name="propertyValue">Property value to set.</param>
-        public virtual void SetPropertyValue(Game game, object obj, object propertyValue)
+        public virtual void SetPropertyValue(IEntityManager entityManager, object obj, object propertyValue)
         {
             obj.GetType().GetProperty(this.PropertyName).SetValue(obj, propertyValue, null);
         }

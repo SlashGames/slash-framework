@@ -1,10 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EntityManager.cs" company="Slash Games">
-//   Copyright (c) Slash Games. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Slash.ECS.Components
+﻿namespace Slash.ECS.Components
 {
     using System;
     using System.Collections;
@@ -23,7 +17,7 @@ namespace Slash.ECS.Components
     ///   Creates and removes game entities. Holds references to all component
     ///   managers, delegating all calls for adding or removing components.
     /// </summary>
-    public class EntityManager
+    public class EntityManager : IEntityManager
     {
         #region Fields
 
@@ -294,6 +288,30 @@ namespace Slash.ECS.Components
         public int CreateEntity(Blueprint blueprint)
         {
             return this.CreateEntity(blueprint, null);
+        }
+
+        /// <summary>
+        ///   Creates a new entity, adding components of the blueprint with the specified id.
+        /// </summary>
+        /// <param name="blueprintId">Id of blueprint describing the entity to create.</param>
+        /// <returns>Unique id of the new entity.</returns>
+        public int CreateEntity(string blueprintId)
+        {
+            return this.CreateEntity(this.game.BlueprintManager.GetBlueprint(blueprintId));
+        }
+
+        /// <summary>
+        ///   Creates a new entity, adding components matching the passed
+        ///   blueprint and initializing these with the data stored in the
+        ///   blueprint and the specified configuration. Configuration data
+        ///   is preferred over blueprint data.
+        /// </summary>
+        /// <param name="blueprintId"> Id of blueprint describing the entity to create. </param>
+        /// <param name="configuration"> Data for initializing the entity. </param>
+        /// <returns> Unique id of the new entity. </returns>
+        public int CreateEntity(string blueprintId, IAttributeTable configuration)
+        {
+            return this.CreateEntity(this.game.BlueprintManager.GetBlueprint(blueprintId), configuration);
         }
 
         /// <summary>
@@ -851,7 +869,7 @@ namespace Slash.ECS.Components
         private void InitComponent(IEntityComponent component, IAttributeTable attributeTable)
         {
             InspectorUtils.InitFromAttributeTable(
-                this.game, this.inspectorTypes.GetInspectorType(component.GetType()), component, attributeTable);
+                this, this.inspectorTypes.GetInspectorType(component.GetType()), component, attributeTable);
         }
 
         #endregion
