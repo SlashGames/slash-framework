@@ -5,6 +5,7 @@ use File::Basename;
 use File::Spec qw(catfile);
 use File::Copy::Recursive qw(dircopy);
 use File::Copy qw(move);
+use File::Find;
 
 # Wizards of the Slash framework:
 # - setup project-name
@@ -55,4 +56,34 @@ if ($mode == "setup")
     my $target_solution_file = File::Spec->catfile($project_name, "Source/$project_name.sln");
     print "\nRenaming solution file from '$original_solution_file' to '$target_solution_file'.";
     move $original_solution_file, $target_solution_file;
+    
+    # Replace namespace in source files.
+    print "\nReplacing namespaces in source files.";
+    my @files;
+    sub find_cs {
+        
+        my $F = $File::Find::name;
+
+        if ($F =~ /cs$/ ) {        
+            push @files, $F;
+            print "$F\n";
+        }
+    }
+
+    find({ wanted => \&find_cs }, $project_name);
+    foreach my $filename (@files)
+    {
+        print "\nReplacing namespaces in '$filename'.";    
+    
+        @ARGV = ($filename);
+        $^I = '.bak';
+        while (<>)
+        {
+            $_ =~ s/{GAME}/$project_name/;
+            print $_;
+        }
+        
+        # Delete backup file.
+        unlink $filename . $^I;
+    }
 }
