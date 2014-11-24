@@ -868,6 +868,14 @@
         /// <param name="attributeTable">Attribute table which contains the data of the component.</param>
         private void InitComponent(IEntityComponent component, IAttributeTable attributeTable)
         {
+            if (!this.inspectorTypes.HasType(component.GetType()))
+            {
+                this.game.Log.Warning(
+                    "Entity component '" + component.GetType()
+                    + "' not flagged as inspector type, can't initialize via reflection.");
+                return;
+            }
+
             InspectorUtils.InitFromAttributeTable(
                 this, this.inspectorTypes.GetInspectorType(component.GetType()), component, attributeTable);
         }
