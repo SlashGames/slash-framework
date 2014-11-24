@@ -29,6 +29,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Logging
 
         #region Properties
 
+        /// <summary>
+        ///   Event types which can be configured.
+        /// </summary>
         protected abstract IEnumerable<Type> EventTypes { get; }
 
         #endregion

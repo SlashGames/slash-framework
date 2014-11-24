@@ -11,6 +11,7 @@ namespace Slash.ECS.Events
     /// <summary>
     ///   Type of an event that occurred within the entity system.
     /// </summary>
+    [GameEventType]
     public enum FrameworkEvent
     {
         /// <summary>
