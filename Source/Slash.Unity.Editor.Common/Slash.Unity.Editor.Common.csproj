@@ -47,6 +47,7 @@
     <Compile Include="Source\Build\BuildWizard.cs" />
     <Compile Include="Source\Build\BuildWizardPrefs.cs" />
     <Compile Include="Source\Inspectors\Configuration\GameConfigurationEditor.cs" />
+    <Compile Include="Source\Inspectors\Delegates\MethodDelegateDrawer.cs" />
     <Compile Include="Source\Inspectors\ECS\EntityConfigurationEditor.cs" />
     <Compile Include="Source\Inspectors\Diagnostics\DebugInputEditor.cs" />
     <Compile Include="Source\Inspectors\ExposeProperties.cs" />
