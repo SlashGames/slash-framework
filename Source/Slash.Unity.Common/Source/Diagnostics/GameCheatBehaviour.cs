@@ -6,12 +6,13 @@
 
 namespace Slash.Unity.Common.Diagnostics
 {
+    using Slash.ECS;
+
     using UnityEngine;
 
     /// <summary>
     ///   Allows games to provide game-specific cheats for the cheat console.
     /// </summary>
-    /// <seealso cref="CatchExceptionsBehaviour" />
     public abstract class GameCheatBehaviour : MonoBehaviour
     {
         #region Public Methods and Operators
@@ -19,7 +20,7 @@ namespace Slash.Unity.Common.Diagnostics
         /// <summary>
         ///   Renders controls to execute game-specific cheats.
         /// </summary>
-        public abstract void DrawCheats();
+        public abstract void DrawCheats(Game game);
 
         #endregion
     }

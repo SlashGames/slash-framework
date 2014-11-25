@@ -149,7 +149,7 @@ namespace Slash.Unity.Common.Diagnostics
             {
                 GUILayout.Label("Game Specific: ");
                 this.scrollPositionGameSpecific = GUILayout.BeginScrollView(this.scrollPositionGameSpecific);
-                this.GameSpecific.DrawCheats();
+                this.GameSpecific.DrawCheats(this.game);
                 GUILayout.EndScrollView();
             }
         }
