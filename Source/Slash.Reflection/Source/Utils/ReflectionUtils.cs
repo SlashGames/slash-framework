@@ -31,6 +31,7 @@ namespace Slash.Reflection.Utils
             return Assembly.LoadFrom(assemblyFile);
         }
 #endif
+
         /// <summary>
         ///   <para>
         ///     Looks up the specified full type name in all loaded assemblies,
@@ -73,6 +74,29 @@ namespace Slash.Reflection.Utils
             throw new TypeLoadException(string.Format("Unable to find type {0}.", fullName));
         }
 
+        public static IEnumerable<Type> FindTypes(Func<Type, bool> condition)
+        {
+            List<Type> types = new List<Type>();
+            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
+            {
+#if WINDOWS_STORE
+                types.AddRange(
+                    assembly.DefinedTypes.Where(condition)
+                            .Select(typeInfo => typeInfo.AsType()));
+#else
+                try
+                {
+                    types.AddRange(assembly.GetTypes().Where(condition));
+                }
+                catch (Exception)
+                {
+                }
+#endif
+            }
+
+            return types;
+        }
+
         /// <summary>
         ///   Searches all loaded assemblies and returns the types which have the specified attribute.
         /// </summary>
@@ -102,20 +126,12 @@ namespace Slash.Reflection.Utils
         /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
         public static IEnumerable<Type> FindTypesWithBase<T>() where T : class
         {
-            List<Type> types = new List<Type>();
             Type baseType = typeof(T);
-            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
-            {
 #if WINDOWS_STORE
-                types.AddRange(
-                    assembly.DefinedTypes.Where(baseType.GetTypeInfo().IsAssignableFrom)
-                            .Select(typeInfo => typeInfo.AsType()));
+            return FindTypes(baseType.GetTypeInfo().IsAssignableFrom);
 #else
-                types.AddRange(assembly.GetTypes().Where(baseType.IsAssignableFrom));
+            return FindTypes(baseType.IsAssignableFrom);
 #endif
-            }
-
-            return types;
         }
 
         /// <summary>
@@ -149,6 +165,102 @@ namespace Slash.Reflection.Utils
 #endif
             }
         }
+
+#if WINDOWS_STORE
+        public static bool IsValueType(Type type)
+        {
+            return type.GetTypeInfo().IsValueType;
+        }
+
+        private static IEnumerable<Type> GetBaseTypes(Type type)
+        {
+            yield return type;
+
+            var baseType = type.GetTypeInfo().BaseType;
+
+            if (baseType != null)
+            {
+                foreach (var t in GetBaseTypes(baseType))
+                {
+                    yield return t;
+                }
+            }
+        }
+
+        public static PropertyInfo GetProperty(Type type, string name)
+        {
+            return
+                GetBaseTypes(type)
+                    .Select(baseType => baseType.GetTypeInfo().GetDeclaredProperty(name))
+                    .FirstOrDefault(property => property != null);
+        }
+
+        public static MethodInfo GetMethod(Type type, string name)
+        {
+            return
+                GetBaseTypes(type)
+                    .Select(baseType => baseType.GetTypeInfo().GetDeclaredMethod(name))
+                    .FirstOrDefault(method => method != null);
+        }
+
+        public static FieldInfo GetField(Type type, string name)
+        {
+            return
+                GetBaseTypes(type)
+                    .Select(baseType => baseType.GetTypeInfo().GetDeclaredField(name))
+                    .FirstOrDefault(field => field != null);
+        }
+
+        public static bool IsEnum(Type type)
+        {
+            return type.GetTypeInfo().IsEnum;
+        }
+
+        public static Delegate CreateDelegate(Type type, object target, MethodInfo method)
+        {
+            return method.CreateDelegate(type, target);
+        }
+
+        public static bool IsAssignableFrom(Type first, Type second)
+        {
+            return first.GetTypeInfo().IsAssignableFrom(second.GetTypeInfo());
+        }
+#else
+        public static bool IsValueType(Type type)
+        {
+            return type.IsValueType;
+        }
+
+        public static PropertyInfo GetProperty(Type type, string name)
+        {
+            return type.GetProperty(name);
+        }
+
+        public static MethodInfo GetMethod(Type type, string name)
+        {
+            return type.GetMethod(name);
+        }
+
+        public static bool IsEnum(Type type)
+        {
+            return type.IsEnum;
+        }
+
+        public static FieldInfo GetField(Type type, string name)
+        {
+            return type.GetField(name);
+        }
+
+        public static Delegate CreateDelegate(Type type, object target, MethodInfo method)
+        {
+            return Delegate.CreateDelegate(type, target, method);
+        }
+
+        public static bool IsAssignableFrom(Type first, Type second)
+        {
+            return first.IsAssignableFrom(second);
+        }
+#endif
 
         #endregion
     }
