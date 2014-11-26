@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    
+
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Components;
@@ -63,11 +63,18 @@
             this.Running = false;
             this.TimeElapsed = 0.0f;
             this.Log = new GameLogger();
+            this.AddSystemsViaReflection = true;
         }
 
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        ///   Indicates if game systems should be added which are flagged with the
+        ///   GameSystem attribute.
+        /// </summary>
+        public bool AddSystemsViaReflection { get; set; }
 
         /// <summary>
         ///   Manages all blueprints available in the game.
@@ -156,29 +163,6 @@
         {
             var system = new T();
             this.AddSystem(system);
-        }
-
-        /// <summary>
-        ///   Initialization of the game. Can be used for game-specific initialization steps.
-        /// </summary>
-        public virtual void InitGame()
-        {
-            // Add game systems using reflection.
-            var systemTypes = ReflectionUtils.FindTypesWithBase<ISystem>();
-
-            // Check if enabled and order by index.
-            var gameSystemTypes = from systemType in systemTypes
-                                  let systemTypeAttribute = systemType.GetAttribute<GameSystemAttribute>()
-                                  where systemTypeAttribute != null && systemTypeAttribute.Enabled
-                                  orderby systemTypeAttribute.Order
-                                  select systemType;
-
-            // Attach systems.
-            foreach (var gameSystemType in gameSystemTypes)
-            {
-                var system = (ISystem)Activator.CreateInstance(gameSystemType);
-                this.AddSystem(system);
-            }
         }
 
         /// <summary>
@@ -296,6 +280,32 @@
             system.BlueprintManager = this.BlueprintManager;
             system.EventManager = this.EventManager;
             system.Log = this.Log;
+        }
+
+        /// <summary>
+        ///   Initialization of the game. Can be used for game-specific initialization steps.
+        /// </summary>
+        private void InitGame()
+        {
+            if (this.AddSystemsViaReflection)
+            {
+                // Add game systems using reflection.
+                var systemTypes = ReflectionUtils.FindTypesWithBase<ISystem>();
+
+                // Check if enabled and order by index.
+                var gameSystemTypes = from systemType in systemTypes
+                                      let systemTypeAttribute = systemType.GetAttribute<GameSystemAttribute>()
+                                      where systemTypeAttribute != null && systemTypeAttribute.Enabled
+                                      orderby systemTypeAttribute.Order
+                                      select systemType;
+
+                // Attach systems.
+                foreach (var gameSystemType in gameSystemTypes)
+                {
+                    var system = (ISystem)Activator.CreateInstance(gameSystemType);
+                    this.AddSystem(system);
+                }
+            }
         }
 
         /// <summary>
