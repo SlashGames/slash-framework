@@ -6,22 +6,17 @@
 
 namespace Slash.Unity.Common.Scenes
 {
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using UnityEngine;
 
-    /// <summary>
-    ///   Handles scene transitions, providing loading screens and inter-scene
-    ///   communication.
-    /// </summary>
-    public class SceneManager : MonoBehaviour
+    public sealed class SceneManager : MonoBehaviour
     {
-        #region Static Fields
-
-        private static SceneManager instance;
-
-        #endregion
-
         #region Fields
 
         /// <summary>
@@ -29,49 +24,34 @@ namespace Slash.Unity.Common.Scenes
         /// </summary>
         public GameObject LoadingScreenPrefab;
 
+        private string loadingSceneId;
+
+        /// <summary>
+        ///   Root of main scene.
+        /// </summary>
+        private SceneRoot mainScene;
+
         #endregion
 
         #region Delegates
 
-        /// <summary>
-        ///   New scene is about to be loaded.
-        /// </summary>
-        /// <param name="newScene">Name of the new scene.</param>
+        public delegate void SceneChangedDelegate(SceneRoot newSceneRoot);
+
         public delegate void SceneChangingDelegate(string newScene);
 
         #endregion
 
         #region Public Events
 
-        /// <summary>
-        ///   New scene is about to be loaded.
-        /// </summary>
+        public event SceneChangedDelegate SceneChanged;
+
         public event SceneChangingDelegate SceneChanging;
 
         #endregion
 
         #region Public Properties
 
-        /// <summary>
-        ///   Current scene manager instance.
-        /// </summary>
-        public static SceneManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    GameObject newGameObject = new GameObject();
-                    instance = newGameObject.AddComponent<SceneManager>();
-                }
-                return instance;
-            }
-        }
-
-        /// <summary>
-        ///   Data to pass to the next scene that is loaded.
-        /// </summary>
-        public object InitParams { get; set; }
+        public static SceneManager Instance { get; private set; }
 
         #endregion
 
@@ -83,30 +63,8 @@ namespace Slash.Unity.Common.Scenes
         /// <param name="scene">Scene to change to.</param>
         public void ChangeScene(string scene)
         {
-            this.ChangeScene(scene, 0);
-        }
-
-        /// <summary>
-        ///   Changes to the specified scene.
-        /// </summary>
-        /// <param name="scene">Scene to change to.</param>
-        /// <param name="delay">Delay before scene change (e.g. to play animations) (in s).</param>
-        public void ChangeScene(string scene, float delay)
-        {
             this.OnSceneChanging(scene);
-            this.StartCoroutine(this.ChangeSceneWithLoadingScreen(scene, delay));
-        }
-
-        /// <summary>
-        ///   Loads the specified scene, passing it the passed data.
-        /// </summary>
-        /// <param name="scene">Name of the scene to load.</param>
-        /// <param name="initParams">Data to pass to the new scene.</param>
-        public void LoadScene(string scene, object initParams)
-        {
-            this.InitParams = initParams;
-
-            Application.LoadLevel(scene);
+            this.StartCoroutine(this.DoChangeScene(scene));
         }
 
         /// <summary>
@@ -129,20 +87,17 @@ namespace Slash.Unity.Common.Scenes
 
         private void Awake()
         {
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
             }
+
+            // Consider case where content and scene manager are in one scene.
+            this.mainScene = FindObjectOfType<SceneRoot>();
         }
 
-        private IEnumerator ChangeSceneWithLoadingScreen(string scene, float delay)
+        private IEnumerator DoChangeScene(string scene)
         {
-            if (delay > 0)
-            {
-                // Delay changing.
-                yield return new WaitForSeconds(delay);
-            }
-
             GameObject loadingScreen = null;
 
             if (this.LoadingScreenPrefab != null)
@@ -157,12 +112,72 @@ namespace Slash.Unity.Common.Scenes
             }
 
             // Load level.
-            Application.LoadLevel(scene);
+            this.loadingSceneId = scene;
+            yield return Application.LoadLevelAsync(this.loadingSceneId);
 
             if (loadingScreen != null)
             {
                 // Hide loading screen.
                 Destroy(loadingScreen);
+            }
+        }
+
+        private SceneRoot FindSceneRoot(string sceneId)
+        {
+            Debug.Log("Setup scene " + sceneId);
+            // Get new scene root.
+            IEnumerable<SceneRoot> sceneRoots =
+                FindObjectsOfType<SceneRoot>().Where(existingSceneRoot => existingSceneRoot != this.mainScene).ToList();
+            if (!sceneRoots.Any())
+            {
+                Debug.LogError(
+                    "No scene root found in loaded scene '" + sceneId
+                    + "'. Please make sure to add a SceneRoot component to the root game object of the scene.",
+                    this);
+                return null;
+            }
+
+            if (sceneRoots.Count() > 1)
+            {
+                Debug.LogError(
+                    "Multiple scene roots found in loaded scene '" + sceneId
+                    + "'. Please make sure to use only one SceneRoot component per scene.",
+                    this);
+                return null;
+            }
+
+            return sceneRoots.First();
+        }
+
+        private void OnLevelLoaded()
+        {
+            // Find new scene root.
+            SceneRoot sceneRoot = this.FindSceneRoot(this.loadingSceneId);
+            this.mainScene = sceneRoot;
+            Debug.Log("Changed to scene '" + this.loadingSceneId + "'.");
+
+            // Dispatch event.
+            this.OnSceneChanged(this.mainScene);
+        }
+
+        private void OnLevelWasLoaded(int levelIndex)
+        {
+            Debug.Log("Level was loaded: " + levelIndex);
+            if (string.IsNullOrEmpty(this.loadingSceneId))
+            {
+                Debug.LogWarning(
+                    "Loaded scene " + levelIndex
+                    + " without scene manager. Make sure to use ChangeScene to make sure scene manager works as intended.");
+            }
+            this.OnLevelLoaded();
+        }
+
+        private void OnSceneChanged(SceneRoot newSceneRoot)
+        {
+            SceneChangedDelegate handler = this.SceneChanged;
+            if (handler != null)
+            {
+                handler(newSceneRoot);
             }
         }
 

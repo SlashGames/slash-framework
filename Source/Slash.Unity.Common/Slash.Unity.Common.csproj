@@ -110,6 +110,7 @@
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
     <Compile Include="Source\Scenes\SceneManager.cs" />
+    <Compile Include="Source\Scenes\SceneRoot.cs" />
     <Compile Include="Source\Sound\AudioChannel.cs" />
     <Compile Include="Source\Sound\AudioChannelType.cs" />
     <Compile Include="Source\Sound\AudioPlayerPrefs.cs" />
