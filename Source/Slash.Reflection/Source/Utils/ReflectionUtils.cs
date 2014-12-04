@@ -126,13 +126,23 @@ namespace Slash.Reflection.Utils
         /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
         public static IEnumerable<Type> FindTypesWithBase<T>() where T : class
         {
-            Type baseType = typeof(T);
+            return FindTypesWithBase(typeof(T));
+        }
+
+        /// <summary>
+        ///   Searches all loaded assemblies and returns the types which have the specified attribute.
+        /// </summary>
+        /// <param name="baseType">Type of the attribute to get the types of.</param>
+        /// <returns>List of found types.</returns>
+        public static IEnumerable<Type> FindTypesWithBase(Type baseType)
+        {
+            List<Type> types = new List<Type>();
 #if WINDOWS_STORE
             return FindTypes(baseType.GetTypeInfo().IsAssignableFrom);
 #else
             return FindTypes(baseType.IsAssignableFrom);
 #endif
-        }
+            }
 
         /// <summary>
         ///   Searches all loaded assemblies and returns the types which have the specified attribute

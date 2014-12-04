@@ -109,6 +109,7 @@
     <Compile Include="Source\Logging\LoggerExtensions.cs" />
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
+    <Compile Include="Source\PropertyDrawers\TypePropertyAttribute.cs" />
     <Compile Include="Source\Scenes\SceneManager.cs" />
     <Compile Include="Source\Scenes\SceneRoot.cs" />
     <Compile Include="Source\Sound\AudioChannel.cs" />
