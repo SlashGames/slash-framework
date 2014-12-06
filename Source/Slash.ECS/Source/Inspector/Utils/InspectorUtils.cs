@@ -1,4 +1,10 @@
-﻿namespace Slash.ECS.Inspector.Utils
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="InspectorUtils.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Slash.ECS.Inspector.Utils
 {
     using System;
     using System.Collections.Generic;
@@ -137,6 +143,33 @@
                     inspectorProperty.Name, inspectorProperty.Default);
 
                 inspectorProperty.SetPropertyValue(entityManager, obj, propertyValue);
+            }
+        }
+
+        public static void SaveToAttributeTable(EntityManager entityManager, object obj, AttributeTable attributeTable)
+        {
+            InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
+            if (inspectorType == null)
+            {
+                throw new ArgumentException("No inspector type for object " + obj.GetType());
+            }
+
+            SaveToAttributeTable(entityManager, inspectorType, obj, attributeTable);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static void SaveToAttributeTable(
+            EntityManager entityManager, InspectorType inspectorType, object obj, AttributeTable attributeTable)
+        {
+            // Set values for all properties.
+            foreach (var inspectorProperty in inspectorType.Properties)
+            {
+                // Get value from object.
+                object propertyValue = inspectorProperty.GetPropertyValue(entityManager, obj);
+                attributeTable.SetValue(inspectorProperty.Name, propertyValue);
             }
         }
 

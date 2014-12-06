@@ -57,12 +57,16 @@ namespace Slash.ECS.Inspector.Attributes
                 }
                 else
                 {
-                    // Create entity from value (backwards compatibility).
-                    EntityConfiguration entityConfiguration = (EntityConfiguration)propertyValue;
-                    if (entityConfiguration != null)
+                    entityIds = propertyValue as List<int>;
+                    if (entityIds == null)
                     {
-                        int entityId = CreateEntity(entityManager, entityConfiguration);
-                        entityIds = new List<int> { entityId };
+                        // Create entity from value (backwards compatibility).
+                        EntityConfiguration entityConfiguration = (EntityConfiguration)propertyValue;
+                        if (entityConfiguration != null)
+                        {
+                            int entityId = CreateEntity(entityManager, entityConfiguration);
+                            entityIds = new List<int> { entityId };
+                        }
                     }
                 }
 
@@ -70,11 +74,13 @@ namespace Slash.ECS.Inspector.Attributes
             }
             else
             {
-                // Create entity from value.
-                EntityConfiguration entityConfiguration = (EntityConfiguration)propertyValue;
-                int entityId = CreateEntity(entityManager, entityConfiguration);
-
-                propertyValue = entityId;
+                if (!(propertyValue is int))
+                {
+                    // Create entity from value.
+                    EntityConfiguration entityConfiguration = (EntityConfiguration)propertyValue;
+                    int entityId = CreateEntity(entityManager, entityConfiguration);
+                    propertyValue = entityId;
+                }
             }
 
             base.SetPropertyValue(entityManager, obj, propertyValue);

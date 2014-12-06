@@ -13,14 +13,13 @@ namespace Slash.ECS.Inspector.Attributes
 
     using Slash.ECS.Components;
     using Slash.ECS.Inspector.Validation;
-    using Slash.Reflection.Extensions;
 
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     [Serializable]
-    public abstract class InspectorPropertyAttribute : Attribute
+    public class InspectorPropertyAttribute : Attribute
     {
         #region Constants
 
@@ -37,7 +36,7 @@ namespace Slash.ECS.Inspector.Attributes
         ///   Exposes the property to the inspector.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
-        protected InspectorPropertyAttribute(string name)
+        public InspectorPropertyAttribute(string name)
         {
             this.Name = name;
         }
@@ -178,6 +177,17 @@ namespace Slash.ECS.Inspector.Attributes
         public virtual IList GetEmptyList()
         {
             return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(this.PropertyType));
+        }
+
+        /// <summary>
+        ///   Returns the value of the property this inspeoctor property is for.
+        /// </summary>
+        /// <param name="entityManager">Entity manager.</param>
+        /// <param name="obj">Object to get property value for.</param>
+        /// <returns>Property value.</returns>
+        public virtual object GetPropertyValue(IEntityManager entityManager, object obj)
+        {
+            return obj.GetType().GetProperty(this.PropertyName).GetValue(obj, null);
         }
 
         /// <summary>

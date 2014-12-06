@@ -1,4 +1,10 @@
-﻿namespace Slash.ECS.Components
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IEntityManager.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Slash.ECS.Components
 {
     using System;
     using System.Collections;
@@ -8,8 +14,20 @@
     using Slash.ECS.Blueprints;
     using Slash.ECS.Events;
 
+    public delegate void ComponentAddedDelegate<in T>(int entityId, T component);
+
+    public delegate void ComponentRemovedDelegate<in T>(int entityId, T component);
+
     public interface IEntityManager
     {
+        #region Public Properties
+
+        IEnumerable<int> Entities { get; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
         /// <summary>
         ///   Re-activates the entity with the specified id, if it is inactive.
         /// </summary>
@@ -271,6 +289,15 @@
         void InitEntity(int entityId, IEnumerable<IEntityComponent> components);
 
         /// <summary>
+        ///   Registers listeners to track adding/removing of components of type T.
+        /// </summary>
+        /// <typeparam name="T">Type of component to track.</typeparam>
+        /// <param name="onComponentAdded">Callback when a new component of the type was added.</param>
+        /// <param name="onComponentRemoved">Callback when a component of the type was removed.</param>
+        void RegisterComponentListeners<T>(
+            ComponentAddedDelegate<T> onComponentAdded, ComponentRemovedDelegate<T> onComponentRemoved);
+
+        /// <summary>
         ///   Removes a component of the passed type from the entity with the specified id.
         /// </summary>
         /// <param name="entityId"> Id of the entity to remove the component from. </param>
@@ -304,6 +331,8 @@
         /// <exception cref="ArgumentException">Entity with the specified id has already been removed.</exception>
         void RemoveEntity(int entityId);
 
+        Blueprint Save(int entityId);
+
         /// <summary>
         ///   Tries to get a component of the passed type attached to the entity with the specified id.
         /// </summary>
@@ -325,5 +354,7 @@
         ///   <c>true</c>, if a component could be found, and <c>false</c> otherwise.
         /// </returns>
         bool TryGetComponent<T>(int entityId, out T entityComponent) where T : IEntityComponent;
+
+        #endregion
     }
 }

@@ -1,4 +1,10 @@
-﻿namespace Slash.ECS.Components
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EntityManager.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Slash.ECS.Components
 {
     using System;
     using System.Collections;
@@ -180,12 +186,8 @@
 
             Type componentType = component.GetType();
 
-            if (!this.componentManagers.ContainsKey(componentType))
-            {
-                this.componentManagers.Add(componentType, new ComponentManager());
-            }
-
-            this.componentManagers[component.GetType()].AddComponent(entityId, component);
+            ComponentManager componentManager = this.GetComponentManager(componentType, true);
+            componentManager.AddComponent(entityId, component);
 
             if (sendEvent)
             {
@@ -257,7 +259,15 @@
         /// <returns>Unique id of the new entity.</returns>
         public int CreateEntity(int id)
         {
-            this.entities.Add(id);
+            if (!this.entities.Add(id))
+            {
+                throw new ArgumentException(
+                    "An entity with id " + id + " couldn't be created, id already exists.", "id");
+            }
+
+            // Adjust next entity id.
+            this.nextEntityId = Math.Max(this.nextEntityId, id + 1);
+
             this.game.EventManager.QueueEvent(FrameworkEvent.EntityCreated, id);
             return id;
         }
@@ -678,6 +688,35 @@
         }
 
         /// <summary>
+        ///   Registers listeners to track adding/removing of components of type T.
+        /// </summary>
+        /// <typeparam name="T">Type of component to track.</typeparam>
+        /// <param name="onComponentAdded">Callback when a new component of the type was added.</param>
+        /// <param name="onComponentRemoved">Callback when a component of the type was removed.</param>
+        public void RegisterComponentListeners<T>(
+            ComponentAddedDelegate<T> onComponentAdded, ComponentRemovedDelegate<T> onComponentRemoved)
+        {
+            Type componentType = typeof(T);
+
+            ComponentManager componentManager = this.GetComponentManager(componentType, true);
+
+            // TODO(co): Use generic events in component manager? => Use generic component manager?
+            componentManager.ComponentAdded += (entityId, component) => onComponentAdded(entityId, (T)component);
+            componentManager.ComponentRemoved += (entityId, component) => onComponentRemoved(entityId, (T)component);
+        }
+
+        private ComponentManager GetComponentManager(Type componentType, bool createIfNecessary)
+        {
+            ComponentManager componentManager;
+            if (!this.componentManagers.TryGetValue(componentType, out componentManager) && createIfNecessary)
+            {
+                componentManager = new ComponentManager();
+                this.componentManagers.Add(componentType, componentManager);
+            }
+            return componentManager;
+        }
+
+        /// <summary>
         ///   Removes a component of the passed type from the entity with the specified id.
         /// </summary>
         /// <param name="entityId"> Id of the entity to remove the component from. </param>
@@ -789,6 +828,28 @@
             this.removedEntities.Add(entityId);
         }
 
+        public Blueprint Save(int entityId)
+        {
+            AttributeTable attributeTable = new AttributeTable();
+            List<Type> componentTypes = new List<Type>();
+
+            // Get all components.
+            foreach (ComponentManager componentManager in this.componentManagers.Values)
+            {
+                IEntityComponent entityComponent = componentManager.GetComponent(entityId);
+                if (entityComponent == null)
+                {
+                    continue;
+                }
+
+                componentTypes.Add(entityComponent.GetType());
+                InspectorUtils.SaveToAttributeTable(this, entityComponent, attributeTable);
+            }
+
+            Blueprint blueprint = new Blueprint { AttributeTable = attributeTable, ComponentTypes = componentTypes };
+            return blueprint;
+        }
+        
         /// <summary>
         ///   Tries to get a component of the passed type attached to the entity with the specified id.
         /// </summary>
@@ -836,14 +897,14 @@
             // Create component.
             IEntityComponent component = (IEntityComponent)Activator.CreateInstance(componentType);
 
-            // Add component. 
-            this.AddComponent(entityId, component);
-
             // Init component.
             this.InitComponent(component, attributeTable);
 
             // Initialize component with the attribute table data.
             component.InitComponent(attributeTable);
+
+            // Add component. 
+            this.AddComponent(entityId, component);
         }
 
         /// <summary>
