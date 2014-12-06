@@ -47,6 +47,7 @@
     <Compile Include="Source\Components\EntityComponent.cs" />
     <Compile Include="Source\Components\IEntityManager.cs" />
     <Compile Include="Source\Events\GameEventTypeAttribute.cs" />
+    <Compile Include="Source\Features\Serialization\Events\SerializationAction.cs" />
     <Compile Include="Source\Inspector\Attributes\ConditionalFlagsCheck.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorDataAttribute.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorEntityAttribute.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Source\Systems\GameSystemAttribute.cs" />
     <Compile Include="Source\Systems\ISystem.cs" />
     <Compile Include="Source\Systems\GameSystem.cs" />
+    <Compile Include="Source\Features\Serialization\Systems\SerializationSystem.cs" />
     <Compile Include="Source\Systems\SystemManager.cs" />
     <Compile Include="Source\Blueprints\GameBlueprintUtils.cs" />
   </ItemGroup>
