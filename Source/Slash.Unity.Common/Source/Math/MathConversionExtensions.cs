@@ -69,6 +69,16 @@ namespace Slash.Unity.Common.Math
         }
 
         /// <summary>
+        ///   Converts the specified framework vector to an Unity vector.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <returns>Corresponding Unity vector.</returns>
+        public static Vector2 ToVector2(this Vector2F vector)
+        {
+            return new Vector2(vector.X, vector.Y);
+        }
+
+        /// <summary>
         ///   Converts the specified Unity vector to a framework vector.
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
