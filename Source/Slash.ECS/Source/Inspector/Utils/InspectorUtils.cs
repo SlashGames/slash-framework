@@ -105,11 +105,6 @@ namespace Slash.ECS.Inspector.Utils
         public static void InitFromAttributeTable(
             IEntityManager entityManager, object obj, IAttributeTable attributeTable)
         {
-            if (attributeTable == null)
-            {
-                return;
-            }
-
             InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
             if (inspectorType == null)
             {
@@ -130,17 +125,14 @@ namespace Slash.ECS.Inspector.Utils
         public static void InitFromAttributeTable(
             IEntityManager entityManager, InspectorType inspectorType, object obj, IAttributeTable attributeTable)
         {
-            if (attributeTable == null)
-            {
-                return;
-            }
-
             // Set values for all properties.
             foreach (var inspectorProperty in inspectorType.Properties)
             {
                 // Get value from attribute table or default.
-                object propertyValue = attributeTable.GetValueOrDefault(
-                    inspectorProperty.Name, inspectorProperty.Default);
+                object propertyValue = attributeTable != null
+                                           ? attributeTable.GetValueOrDefault(
+                                               inspectorProperty.Name, inspectorProperty.Default)
+                                           : inspectorProperty.Default;
 
                 inspectorProperty.SetPropertyValue(entityManager, obj, propertyValue);
             }
