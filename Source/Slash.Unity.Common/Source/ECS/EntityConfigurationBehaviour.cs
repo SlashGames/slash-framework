@@ -11,6 +11,7 @@ namespace Slash.Unity.Common.ECS
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS;
+    using Slash.ECS.Events;
 
     using UnityEngine;
 
@@ -125,8 +126,22 @@ namespace Slash.Unity.Common.ECS
             this.gameBehaviour.GameChanged += this.OnGameChanged;
         }
 
+        private void OnEntityRemoved(GameEvent e)
+        {
+            var entityId = (int)e.EventData;
+            if (entityId == this.EntityId)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+
         private void OnGameChanged(Game newGame, Game oldGame)
         {
+            if (oldGame != null)
+            {
+                oldGame.EventManager.RemoveListener(FrameworkEvent.EntityRemoved, this.OnEntityRemoved);
+            }
+
             if (newGame != null)
             {
                 // Create entity.
@@ -138,6 +153,8 @@ namespace Slash.Unity.Common.ECS
                     // Register entity object.
                     EntityGameObjectMap.Instance[this.EntityId] = this.gameObject;
                 }
+
+                newGame.EventManager.RegisterListener(FrameworkEvent.EntityRemoved, this.OnEntityRemoved);
             }
         }
 
