@@ -72,6 +72,7 @@
     <Compile Include="Source\ECS\EntityGameObjectMap.cs" />
     <Compile Include="Source\ECS\EntityGameObjectsBehaviour.cs" />
     <Compile Include="Source\ECS\EntityObjectPool.cs" />
+    <Compile Include="Source\ECS\EventManagerOperator.cs" />
     <Compile Include="Source\ECS\GameBehaviour.cs" />
     <Compile Include="Source\ECS\LogicToVisualDelegate.cs" />
     <Compile Include="Source\ECS\LogicToVisualDelegateAttribute.cs" />
