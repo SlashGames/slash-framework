@@ -211,7 +211,7 @@ namespace Slash.ECS.Configurations
         public void Deserialize(BinaryDeserializer deserializer)
         {
             this.AdditionalComponentTypes =
-                deserializer.Deserialize<string[]>().Select(ReflectionUtils.FindType).ToList();
+                deserializer.Deserialize<string[]>().Select<string, Type>(ReflectionUtils.FindType).ToList();
             this.BlueprintId = deserializer.Deserialize<string>();
             this.Configuration = deserializer.Deserialize<AttributeTable>();
         }
