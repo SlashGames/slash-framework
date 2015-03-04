@@ -22,7 +22,7 @@
         /// <summary>
         ///   Entity manager for this system.
         /// </summary>
-        public IEntityManager EntityManager { get; set; }
+        public EntityManager EntityManager { get; set; }
 
         /// <summary>
         ///   Event manager for this system.

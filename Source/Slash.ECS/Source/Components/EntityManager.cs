@@ -697,12 +697,20 @@ namespace Slash.ECS.Components
             ComponentAddedDelegate<T> onComponentAdded, ComponentRemovedDelegate<T> onComponentRemoved)
         {
             Type componentType = typeof(T);
+            RegisterComponentListeners(componentType, (entityId, component) => onComponentAdded(entityId, (T)component), (entityId, component) => onComponentRemoved(entityId, (T)component));
+        }
 
+        /// <summary>
+        ///   Registers listeners to track adding/removing of components of specified component type.
+        /// </summary>
+        /// <param name="componentType">Type of component to track.</param>
+        /// <param name="onComponentAdded">Callback when a new component of the type was added.</param>
+        /// <param name="onComponentRemoved">Callback when a component of the type was removed.</param>
+        public void RegisterComponentListeners(Type componentType, ComponentAddedDelegate<object> onComponentAdded, ComponentRemovedDelegate<object> onComponentRemoved)
+        {
             ComponentManager componentManager = this.GetComponentManager(componentType, true);
-
-            // TODO(co): Use generic events in component manager? => Use generic component manager?
-            componentManager.ComponentAdded += (entityId, component) => onComponentAdded(entityId, (T)component);
-            componentManager.ComponentRemoved += (entityId, component) => onComponentRemoved(entityId, (T)component);
+            componentManager.ComponentAdded += onComponentAdded;
+            componentManager.ComponentRemoved += onComponentRemoved;
         }
 
         private ComponentManager GetComponentManager(Type componentType, bool createIfNecessary)
