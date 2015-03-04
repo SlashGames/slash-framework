@@ -78,6 +78,9 @@ namespace Slash.ECS.Inspector.Data
         {
             InspectorTypeTable inspectorTypeTable = new InspectorTypeTable();
 
+            // Make sure all referenced assemblies are loaded.
+            AssemblyUtils.CheckReferencedAssembliesAreLoaded();
+
             foreach (var assembly in AssemblyUtils.GetLoadedAssemblies())
             {
                 var inspectorTypes =

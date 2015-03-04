@@ -8,6 +8,7 @@ namespace Slash.Reflection.Utils
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
 
 #if WINDOWS_STORE
@@ -80,7 +81,40 @@ namespace Slash.Reflection.Utils
 
         #endregion
 #else
+
         #region Public Methods and Operators
+
+        public static void CheckReferencedAssembliesAreLoaded()
+        {
+            var loadedAssemblies = GetLoadedAssemblies().ToList();
+            foreach (var loadedAssembly in loadedAssemblies)
+            {
+                CheckReferencedAssembliesAreLoaded(loadedAssembly, new List<Assembly>(loadedAssemblies));
+            }
+        }
+
+        private static void CheckReferencedAssembliesAreLoaded(Assembly assembly, IList<Assembly> loadedAssemblies)
+        {
+            var loadedAssemblyNames = loadedAssemblies.Select(a => a.FullName).ToArray();
+
+            var referencedAssemblies = assembly.GetReferencedAssemblies();
+            var assemblyNamesToLoad =
+                referencedAssemblies.Where(
+                    referencedAssembly => !loadedAssemblyNames.Contains(referencedAssembly.FullName));
+            foreach (var assemblyName in assemblyNamesToLoad)
+            {
+                var loadedAssembly = AppDomain.CurrentDomain.Load(assemblyName);
+
+                // Check if really not loaded already, might just be another version.
+                if (!loadedAssemblies.Contains(loadedAssembly))
+                {
+                    loadedAssemblies.Add(loadedAssembly);
+
+                    // Do recursive for loaded assembly.
+                    CheckReferencedAssembliesAreLoaded(loadedAssembly, loadedAssemblies);
+                }
+            }
+        }
 
         /// <summary>
         ///   Gets all assemblies that are loaded in the current application domain.
@@ -92,6 +126,7 @@ namespace Slash.Reflection.Utils
         }
 
         #endregion
+
 #endif
     }
 }

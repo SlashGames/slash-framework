@@ -288,7 +288,10 @@
         private void InitGame()
         {
             if (this.AddSystemsViaReflection)
-            {
+            {            
+                // Make sure all referenced assemblies are loaded.
+                AssemblyUtils.CheckReferencedAssembliesAreLoaded();
+
                 // Add game systems using reflection.
                 var systemTypes = ReflectionUtils.FindTypesWithBase<ISystem>();
 
