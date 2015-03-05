@@ -58,7 +58,7 @@ namespace Slash.ECS.Tests.Inspector.Attributes
             attributeTable.SetValue(TestData.AttributeTestEntity, entityConfiguration);
 
             TestData testData = InspectorUtils.CreateFromAttributeTable<TestData>(
-                this.testGame, InspectorType.GetInspectorType(typeof(TestData)), attributeTable);
+                this.testGame.EntityManager, InspectorType.GetInspectorType(typeof(TestData)), attributeTable);
             Assert.AreNotEqual(testData.TestEntity, 0);
             Assert.AreNotEqual(testData.TestEntity, -1);
 

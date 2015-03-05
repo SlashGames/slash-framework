@@ -47,7 +47,7 @@ namespace Slash.ECS.Tests.Inspector.Attributes
             parentAttributeTable.SetValue(TestDataParent.AttributeTestData, attributeTable);
 
             TestDataParent testDataParent = InspectorUtils.CreateFromAttributeTable<TestDataParent>(
-                this.testGame, this.parentInspectorType, parentAttributeTable);
+                this.testGame.EntityManager, this.parentInspectorType, parentAttributeTable);
             Assert.AreEqual(testDataParent.TestData.String1, TestValueString1);
             Assert.AreEqual(testDataParent.TestData.String2, TestValueString2);
         }

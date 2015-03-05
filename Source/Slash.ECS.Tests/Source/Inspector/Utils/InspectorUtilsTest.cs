@@ -43,7 +43,7 @@ namespace Slash.ECS.Tests.Inspector.Utils
 
             TestInspectorType testInspectorType =
                 InspectorUtils.CreateFromAttributeTable<TestInspectorType>(
-                    this.testGame, this.inspectorType, attributeTable);
+                    this.testGame.EntityManager, this.inspectorType, attributeTable);
             Assert.AreEqual(testInspectorType.String1, TestValueString1);
             Assert.AreEqual(testInspectorType.String2, TestValueString2);
         }
@@ -56,7 +56,7 @@ namespace Slash.ECS.Tests.Inspector.Utils
                 () =>
                     {
                         testInspectorType = InspectorUtils.CreateFromAttributeTable<TestInspectorType>(
-                            this.testGame, this.inspectorType, null);
+                            this.testGame.EntityManager, this.inspectorType, null);
                     });
 
             Assert.NotNull(testInspectorType);
@@ -66,7 +66,7 @@ namespace Slash.ECS.Tests.Inspector.Utils
         public void TestInitFromNullAttributeTable()
         {
             TestInspectorType testInspectorType = new TestInspectorType();
-            Assert.DoesNotThrow(() => InspectorUtils.InitFromAttributeTable(this.testGame, testInspectorType, null));
+            Assert.DoesNotThrow(() => InspectorUtils.InitFromAttributeTable(this.testGame.EntityManager, testInspectorType, null));
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Slash.ECS.Tests.Inspector.Utils
         {
             TestInspectorType testInspectorType = new TestInspectorType();
             Assert.DoesNotThrow(
-                () => InspectorUtils.InitFromAttributeTable(this.testGame, this.inspectorType, testInspectorType, null));
+                () => InspectorUtils.InitFromAttributeTable(this.testGame.EntityManager, this.inspectorType, testInspectorType, null));
         }
 
         #endregion
