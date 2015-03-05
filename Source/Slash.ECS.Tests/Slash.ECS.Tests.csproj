@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{19227CC4-BB44-459A-BD09-B1F08C7F02FA}</ProjectGuid>
+    <ProjectGuid>{C329C9AD-95E9-4A10-8A6A-61B5944FC676}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Slash.ECS.Tests</RootNamespace>
