@@ -20,6 +20,8 @@ namespace Slash.Unity.Common.Diagnostics
     {
         #region Fields
 
+        private readonly Rect dragRect = new Rect(0, 0, 10000, 20);
+
         /// <summary>
         ///   Rectangle showing the button to show or hide the cheat console.
         /// </summary>
@@ -56,9 +58,11 @@ namespace Slash.Unity.Common.Diagnostics
         /// </summary>
         public Rect WindowRect = new Rect(10, 10, 300, 400);
 
-        private readonly Rect dragRect = new Rect(0, 0, 10000, 20);
-
         private string cheat = string.Empty;
+
+        private Collider consoleCollider;
+
+        private Collider2D consoleCollider2D;
 
         private Game game;
 
@@ -82,13 +86,13 @@ namespace Slash.Unity.Common.Diagnostics
             this.showConsole = false;
 
             // Disable collider if available (blocks input for other UI).
-            if (this.collider != null)
+            if (this.consoleCollider != null)
             {
-                this.collider.enabled = false;
+                this.consoleCollider.enabled = false;
             }
-            if (this.collider2D != null)
+            if (this.consoleCollider2D != null)
             {
-                this.collider2D.enabled = false;
+                this.consoleCollider2D.enabled = false;
             }
         }
 
@@ -100,19 +104,25 @@ namespace Slash.Unity.Common.Diagnostics
             this.showConsole = true;
 
             // Enable collider if available (blocks input for other UI).
-            if (this.collider != null)
+            if (this.consoleCollider != null)
             {
-                this.collider.enabled = true;
+                this.consoleCollider.enabled = true;
             }
-            if (this.collider2D != null)
+            if (this.consoleCollider2D != null)
             {
-                this.collider2D.enabled = true;
+                this.consoleCollider2D.enabled = true;
             }
         }
 
         #endregion
 
         #region Methods
+
+        protected void Awake()
+        {
+            this.consoleCollider = this.GetComponent<Collider>();
+            this.consoleCollider2D = this.GetComponent<Collider2D>();
+        }
 
         private void DrawCheatConsole(int id)
         {
@@ -154,6 +164,11 @@ namespace Slash.Unity.Common.Diagnostics
             }
         }
 
+        private void OnGameChanged(Game newGame, Game oldGame)
+        {
+            this.game = newGame;
+        }
+
         private void OnGUI()
         {
             // Draw button to show/hide cheat console.
@@ -173,11 +188,6 @@ namespace Slash.Unity.Common.Diagnostics
                 this.WindowRect = GUI.Window(0, this.WindowRect, this.DrawCheatConsole, "Cheat Console");
                 GUI.matrix = currentMatrix;
             }
-        }
-
-        private void OnGameChanged(Game newGame, Game oldGame)
-        {
-            this.game = newGame;
         }
 
         private Matrix4x4 ScaleGUI()
