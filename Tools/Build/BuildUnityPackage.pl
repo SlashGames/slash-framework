@@ -12,7 +12,7 @@ use Cwd 'cwd';
 use Slash;
 
 # Read arguments.
-my $DLL_SOURCE_DIR = abs_path($ARGV[0]);
+my $DLL_SOURCE_DIR = abs_path("$ARGV[0]");
 
 my $TARGET_FOLDER = "Slash.Framework/Assets/Plugins";
 
@@ -72,7 +72,7 @@ chdir($pwd);
 sub find_file_to_delete {
     my $F = $File::Find::name;
 
-    if ($F =~ /pdb$/ or /UnityEngine.dll$/) {
+    if ($F =~ /UnityEngine.dll$/) {
         print "$F\n";
         unlink $F;
     }
