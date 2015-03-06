@@ -8,6 +8,7 @@ namespace Slash.Reflection.Utils
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
 
@@ -103,15 +104,22 @@ namespace Slash.Reflection.Utils
                     referencedAssembly => !loadedAssemblyNames.Contains(referencedAssembly.FullName));
             foreach (var assemblyName in assemblyNamesToLoad)
             {
-                var loadedAssembly = AppDomain.CurrentDomain.Load(assemblyName);
-
-                // Check if really not loaded already, might just be another version.
-                if (!loadedAssemblies.Contains(loadedAssembly))
+                try
                 {
-                    loadedAssemblies.Add(loadedAssembly);
+                    var loadedAssembly = AppDomain.CurrentDomain.Load(assemblyName);
 
-                    // Do recursive for loaded assembly.
-                    CheckReferencedAssembliesAreLoaded(loadedAssembly, loadedAssemblies);
+                    // Check if really not loaded already, might just be another version.
+                    if (!loadedAssemblies.Contains(loadedAssembly))
+                    {
+                        loadedAssemblies.Add(loadedAssembly);
+
+                        // Do recursive for loaded assembly.
+                        CheckReferencedAssembliesAreLoaded(loadedAssembly, loadedAssemblies);
+                    }
+                }
+                catch (FileNotFoundException e)
+                {
+                    // NOTE(co): Okay or not?
                 }
             }
         }
