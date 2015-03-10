@@ -5,7 +5,7 @@ obj/
 Library
 Temp
 Assembly-*.*proj
-UnityVS.Unity.*.csproj
+UnityVS.*.csproj
 *.sln
 
 # If you don't want to check in DLLs to the Unity folder, uncomment this line.
