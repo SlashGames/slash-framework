@@ -112,24 +112,3 @@ Source/Unity/*.sln
 
 # Build output folders
 /Build
-
-Source/PostBuild/bin
-Source/PostBuild/obj
-Source/PostBuild.Editor/bin/
-Source/PostBuild.Editor/obj/
-Source/Unity/bin/
-Source/Unity/obj/
-
-# If you don't want to check in DLLs to the Unity folder, uncomment this line.
-Source/Unity/Assets/Game/Plugins
-Source/Unity/Assets/Game/Plugins.meta
-Source/Unity/Assets/Game/Plugins/*/*.dll*
-
-# If you don't want to check in DLLs to the Unity Editor folder, uncomment this line.
-Source/Unity/Assets/Game/Editor/Plugins
-Source/Unity/Assets/Game/Editor/Plugins.meta
-Source/Unity/Assets/Game/Editor/Plugins/*/*.dll*
-
-# UnityVS
-Source/Unity/Assets/UnityVS/
-Source/Unity/Assets/UnityVS.meta

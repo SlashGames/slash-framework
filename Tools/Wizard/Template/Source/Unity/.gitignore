@@ -1,0 +1,23 @@
+bin/
+obj/
+
+# Unity temporary files
+Library
+Temp
+Assembly-*.*proj
+UnityVS.Unity.*.csproj
+*.sln
+
+# If you don't want to check in DLLs to the Unity folder, uncomment this line.
+Assets/Game/Plugins
+Assets/Game/Plugins.meta
+Assets/Game/Plugins/*/*.dll*
+
+# If you don't want to check in DLLs to the Unity Editor folder, uncomment this line.
+Assets/Game/Editor/Plugins
+Assets/Game/Editor/Plugins.meta
+Assets/Game/Editor/Plugins/*/*.dll*
+
+# UnityVS
+Assets/UnityVS/
+Assets/UnityVS.meta
