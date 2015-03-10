@@ -75,6 +75,7 @@
     <Compile Include="Source\Inspector\Utils\InspectorUtilsTest.cs" />
     <Compile Include="Source\ProcessManagerTest.cs" />
     <Compile Include="Source\SystemManagerTest.cs" />
+    <Compile Include="Source\Systems\CompoundEntitiesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
