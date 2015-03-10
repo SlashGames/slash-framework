@@ -123,6 +123,7 @@
     <Compile Include="Source\Sound\PlayAudioBehaviour.cs" />
     <Compile Include="Source\Sound\PlaySoundOnClickBehaviour.cs" />
     <Compile Include="Source\Sound\SoundInterfaceBehaviour.cs" />
+    <Compile Include="Source\Transforms\EasedMovementBehaviour.cs" />
     <Compile Include="Source\Triggers\Actions\IAction.cs" />
     <Compile Include="Source\Triggers\Conditions\Condition.cs" />
     <Compile Include="Source\Triggers\Conditions\ICondition.cs" />
