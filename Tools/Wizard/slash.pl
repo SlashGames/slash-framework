@@ -57,6 +57,18 @@ if ($mode == "setup")
     print "\nRenaming solution file from '$original_solution_file' to '$target_solution_file'.";
     move $original_solution_file, $target_solution_file;
     
+    # Rename game folder
+    my $original_game_folder = File::Spec->catfile($project_name, "Source/Unity/Assets/Game");
+    my $target_game_folder = File::Spec->catfile($project_name, "Source/Unity/Assets/$project_name.Unity");
+    print "\nRenaming game folder from '$original_game_folder' to '$target_game_folder'.";
+    move $original_game_folder, $target_game_folder;
+    
+    # Rename unity folder
+    my $original_unity_folder = File::Spec->catfile($project_name, "Source/Unity");
+    my $target_unity_folder = File::Spec->catfile($project_name, "Source/$project_name.Unity");
+    print "\nRenaming Unity folder from '$original_unity_folder' to '$target_unity_folder'.";
+    move $original_unity_folder, $target_unity_folder;
+    
     # Replace namespace in source files.
     print "\nReplacing namespaces in source files.";
     my @files;
@@ -80,7 +92,7 @@ if ($mode == "setup")
         while (<>)
         {
             $_ =~ s/{GAME}/$project_name/;
-            print $_;
+            print $_ . "\n";
         }
         
         # Delete backup file.
