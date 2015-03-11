@@ -13,8 +13,7 @@ use Slash;
 
 # Read arguments.
 my $DLL_SOURCE_DIR = abs_path("$ARGV[0]");
-
-my $TARGET_FOLDER = "Slash.Framework/Assets/Plugins";
+my $TARGET_FOLDER = "$ARGV[1]";
 
 # Delete target folder.
 if (-e $TARGET_FOLDER)
@@ -29,8 +28,8 @@ unless(-e $TARGET_FOLDER or make_path $TARGET_FOLDER) {
 
 my $DLL_TARGET_DIR = abs_path($TARGET_FOLDER);
 
-# Copy all dlls to tmp folder.
-print "Copying '${DLL_SOURCE_DIR}/*.dll' and '${DLL_SOURCE_DIR}/*.mdb' to '${DLL_TARGET_DIR}'\n";
+# Copy all dlls to target folder.
+print "Copying '${DLL_SOURCE_DIR}/*.dll' and '${DLL_SOURCE_DIR}/*.pdb' to '${DLL_TARGET_DIR}'\n";
 
 for my $file (<"${DLL_SOURCE_DIR}/*.dll">) 
 {
