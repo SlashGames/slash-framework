@@ -175,15 +175,18 @@ namespace Slash.Collections.Utils
 
             foreach (var element in sequence)
             {
-                string elementString;
-                IEnumerable elementEnumerable = element as IEnumerable;
-                if (elementEnumerable != null)
+                string elementString = element as string;
+                if (elementString == null)
                 {
-                    elementString = ToString(elementEnumerable);
-                }
-                else
-                {
-                    elementString = element.ToString();
+                    var elementEnumerable = element as IEnumerable;
+                    if (elementEnumerable != null)
+                    {
+                        elementString = ToString(elementEnumerable);
+                    }
+                    else
+                    {
+                        elementString = element.ToString();
+                    }
                 }
 
                 stringBuilder.AppendFormat("{0}, ", elementString);
