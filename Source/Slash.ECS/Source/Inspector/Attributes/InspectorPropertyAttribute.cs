@@ -14,6 +14,10 @@ namespace Slash.ECS.Inspector.Attributes
     using Slash.ECS.Components;
     using Slash.ECS.Inspector.Validation;
 
+#if WINDOWS_STORE
+    using Slash.Reflection.Extensions;
+#endif
+
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>

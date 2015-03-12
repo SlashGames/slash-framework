@@ -14,6 +14,7 @@ namespace Slash.ECS.Source.Systems
 
     using Slash.ECS.Components;
     using Slash.Reflection.Extensions;
+    using Slash.Reflection.Utils;
 
     public sealed class CompoundEntities<T> : IEnumerable<T>
         where T : class, new()
@@ -105,7 +106,11 @@ namespace Slash.ECS.Source.Systems
         private IEnumerable<ComponentProperty> CollectComponentProperties(Type type)
         {
             // Return all property component types.
+#if WINDOWS_STORE
+            var propertyInfos = type.GetRuntimeProperties();
+#else
             var propertyInfos = type.GetProperties();
+#endif
             foreach (var propertyInfo in propertyInfos)
             {
                 var compoundComponentAttribute = propertyInfo.GetCustomAttribute<CompoundComponentAttribute>();

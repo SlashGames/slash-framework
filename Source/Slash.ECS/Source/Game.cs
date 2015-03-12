@@ -289,8 +289,10 @@
         {
             if (this.AddSystemsViaReflection)
             {            
+#if !WINDOWS_STORE
                 // Make sure all referenced assemblies are loaded.
                 AssemblyUtils.CheckReferencedAssembliesAreLoaded();
+#endif
 
                 // Add game systems using reflection.
                 var systemTypes = ReflectionUtils.FindTypesWithBase<ISystem>();

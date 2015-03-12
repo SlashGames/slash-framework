@@ -78,8 +78,10 @@ namespace Slash.ECS.Inspector.Data
         {
             InspectorTypeTable inspectorTypeTable = new InspectorTypeTable();
 
+#if !WINDOWS_STORE
             // Make sure all referenced assemblies are loaded.
             AssemblyUtils.CheckReferencedAssembliesAreLoaded();
+#endif
 
             foreach (var assembly in AssemblyUtils.GetLoadedAssemblies())
             {

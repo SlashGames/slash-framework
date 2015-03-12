@@ -138,8 +138,10 @@
     <Compile Include="Source\Blueprints\HierarchicalBlueprintManager.cs" />
     <Compile Include="Source\Blueprints\IBlueprintManager.cs" />
     <Compile Include="Source\Components\ComponentManager.cs" />
+    <Compile Include="Source\Components\EntityComponent.cs" />
     <Compile Include="Source\Components\EntityManager.cs" />
     <Compile Include="Source\Components\IEntityComponent.cs" />
+    <Compile Include="Source\Components\IEntityManager.cs" />
     <Compile Include="Source\Configurations\EntityConfiguration.cs" />
     <Compile Include="Source\Events\ComponentStatusChangedEventData.cs" />
     <Compile Include="Source\Events\Entity2Data.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="Source\Events\EventManager.cs" />
     <Compile Include="Source\Events\FrameworkEvent.cs" />
     <Compile Include="Source\Events\GameEvent.cs" />
+    <Compile Include="Source\Events\GameEventTypeAttribute.cs" />
     <Compile Include="Source\Game.cs" />
     <Compile Include="Source\Inspector\Attributes\ConditionalFlagsCheck.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorBlueprintAttribute.cs" />
@@ -172,6 +175,8 @@
     <Compile Include="Source\Processes\GameProcess.cs" />
     <Compile Include="Source\Processes\ProcessManager.cs" />
     <Compile Include="Source\Processes\WaitProcess.cs" />
+    <Compile Include="Source\Systems\CompoundComponentAttribute.cs" />
+    <Compile Include="Source\Systems\CompoundEntities.cs" />
     <Compile Include="Source\Systems\GameSystem.cs" />
     <Compile Include="Source\Systems\GameSystemAttribute.cs" />
     <Compile Include="Source\Systems\ISystem.cs" />

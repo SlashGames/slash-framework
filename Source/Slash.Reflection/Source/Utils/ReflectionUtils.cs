@@ -74,16 +74,24 @@ namespace Slash.Reflection.Utils
             throw new TypeLoadException(string.Format("Unable to find type {0}.", fullName));
         }
 
+#if WINDOWS_STORE
+        public static IEnumerable<Type> FindTypes(Func<TypeInfo, bool> condition)
+        {
+            List<Type> types = new List<Type>();
+            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
+            {
+
+                types.AddRange(assembly.DefinedTypes.Where(condition).Select(typeInfo => typeInfo.AsType()));
+            }
+
+            return types;
+        }
+#else
         public static IEnumerable<Type> FindTypes(Func<Type, bool> condition)
         {
             List<Type> types = new List<Type>();
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-#if WINDOWS_STORE
-                types.AddRange(
-                    assembly.DefinedTypes.Where(condition)
-                            .Select(typeInfo => typeInfo.AsType()));
-#else
                 try
                 {
                     types.AddRange(assembly.GetTypes().Where(condition));
@@ -91,12 +99,11 @@ namespace Slash.Reflection.Utils
                 catch (Exception)
                 {
                 }
-#endif
             }
 
             return types;
         }
-
+#endif
         /// <summary>
         ///   Searches all loaded assemblies and returns the types which have the specified attribute.
         /// </summary>
