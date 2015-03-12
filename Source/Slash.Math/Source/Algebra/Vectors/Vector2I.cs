@@ -59,13 +59,13 @@ namespace Slash.Math.Algebra.Vectors
         ///   X component.
         /// </summary>
         [DictionarySerializable]
-        public readonly int X;
+        public int X;
 
         /// <summary>
         ///   Y component.
         /// </summary>
         [DictionarySerializable]
-        public readonly int Y;
+        public int Y;
 
         #endregion
 
