@@ -31,6 +31,13 @@ namespace Slash.Unity.Common.ECS
         public bool StartImmediately = true;
 
         /// <summary>
+        ///   Update period of game (in s).
+        ///   0 if no fixed update.
+        /// </summary>
+        [Tooltip("Update period of game (in s). 0 if no fixed update.")]
+        public float UpdatePeriod;
+
+        /// <summary>
         ///   Current game instance.
         /// </summary>
         private Game game;
@@ -48,7 +55,7 @@ namespace Slash.Unity.Common.ECS
 
         #endregion
 
-        #region Public Events
+        #region Events
 
         /// <summary>
         ///   Current game has changed.
@@ -57,7 +64,7 @@ namespace Slash.Unity.Common.ECS
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Current game instance.
@@ -101,8 +108,8 @@ namespace Slash.Unity.Common.ECS
         {
             // Get game configuration.
             var gameConfiguration = this.GameConfiguration != null
-                                        ? new AttributeTable(this.GameConfiguration.Configuration)
-                                        : null;
+                ? new AttributeTable(this.GameConfiguration.Configuration)
+                : null;
 
             // Load game data.
             if (this.GameConfiguration != null)
@@ -117,6 +124,9 @@ namespace Slash.Unity.Common.ECS
 
             // Create game.
             this.Game = newGame;
+
+            // Setup game.
+            this.Game.UpdatePeriod = this.UpdatePeriod;
 
             // Start game.
             this.Game.StartGame(gameConfiguration);
