@@ -16,12 +16,45 @@ namespace Slash.ECS.Tests.Systems
         #region Public Methods and Operators
 
         [Test]
+        public void TestEntityRemovedWhenRemovingWholeEntity()
+        {
+            Game game = new Game();
+            EntityManager entityManager = new EntityManager(game);
+
+            // Create compound entities.
+            CompoundEntities<TestCompound> compoundEntities = new CompoundEntities<TestCompound>(entityManager);
+            int eventCount = 0;
+            compoundEntities.EntityRemoved += (id, entity) => { ++eventCount; };
+
+            // Add entity with required components.
+            var entityId = entityManager.CreateEntity();
+            entityManager.AddComponent<TestCompoundComponentA>(entityId);
+            entityManager.AddComponent<TestCompoundComponentB>(entityId);
+
+            // Now remove entity.
+            entityManager.RemoveEntity(entityId);
+            entityManager.CleanUpEntities();
+
+            Assert.AreEqual(1, eventCount);
+        }
+
+        [Test]
         public void TestInitialize()
         {
             Game game = new Game();
             EntityManager entityManager = new EntityManager(game);
             // Create compound entities.
             new CompoundEntities<TestCompound>(entityManager);
+        }
+
+        [Test]
+        public void TestInitializeWithComponentField()
+        {
+            Game game = new Game();
+            EntityManager entityManager = new EntityManager(game);
+
+            // Create compound entities.
+            new CompoundEntities<TestCompoundWithField>(entityManager);
         }
 
         [Test]
@@ -57,6 +90,25 @@ namespace Slash.ECS.Tests.Systems
             var entityId = entityManager.CreateEntity();
             entityManager.AddComponent<TestCompoundComponentA>(entityId);
             entityManager.AddComponent<TestCompoundComponentB>(entityId);
+
+            Assert.IsTrue(entityAdded);
+        }
+
+        [Test]
+        public void TestValidEntityAddedWithComponentField()
+        {
+            Game game = new Game();
+            EntityManager entityManager = new EntityManager(game);
+
+            // Create compound entities.
+            CompoundEntities<TestCompoundWithField> compoundEntities =
+                new CompoundEntities<TestCompoundWithField>(entityManager);
+            bool entityAdded = false;
+            compoundEntities.EntityAdded += (id, entity) => { entityAdded = true; };
+
+            // Add entity with correct components.
+            var entityId = entityManager.CreateEntity();
+            entityManager.AddComponent<TestCompoundComponentA>(entityId);
 
             Assert.IsTrue(entityAdded);
         }
@@ -100,30 +152,6 @@ namespace Slash.ECS.Tests.Systems
             Assert.AreEqual(1, entityAddedEvent);
         }
 
-        [Test]
-        public void TestEntityRemovedWhenRemovingWholeEntity()
-        {
-            Game game = new Game();
-            EntityManager entityManager = new EntityManager(game);
-
-            // Create compound entities.
-            CompoundEntities<TestCompound> compoundEntities =
-                new CompoundEntities<TestCompound>(entityManager);
-            int eventCount = 0;
-            compoundEntities.EntityRemoved += (id, entity) => { ++eventCount; };
-
-            // Add entity with required components.
-            var entityId = entityManager.CreateEntity();
-            entityManager.AddComponent<TestCompoundComponentA>(entityId);
-            entityManager.AddComponent<TestCompoundComponentB>(entityId);
-
-            // Now remove entity.
-            entityManager.RemoveEntity(entityId);
-            entityManager.CleanUpEntities();
-
-            Assert.AreEqual(1, eventCount);
-        }
-
         #endregion
 
         private class TestCompoundComponentA : EntityComponent
@@ -156,6 +184,16 @@ namespace Slash.ECS.Tests.Systems
 
             [CompoundComponent(IsOptional = true)]
             public TestCompoundComponentB ComponentB { get; set; }
+
+            #endregion
+        }
+
+        private class TestCompoundWithField
+        {
+            #region Fields
+
+            [CompoundComponent]
+            public TestCompoundComponentA ComponentA;
 
             #endregion
         }
