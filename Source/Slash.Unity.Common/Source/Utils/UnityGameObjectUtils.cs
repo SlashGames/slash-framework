@@ -70,7 +70,14 @@ namespace Slash.Unity.Common.Utils
             {
                 // Set inactive to hide immediatly. The destruction is just performed after the next update.
                 child.SetActive(false);
-                Object.Destroy(child);
+                if (Application.isEditor && !Application.isPlaying)
+                {
+                    Object.DestroyImmediate(child);
+                }
+                else
+                {
+                    Object.Destroy(child);
+                }
             }
         }
 
