@@ -100,6 +100,30 @@ namespace Slash.ECS.Tests.Systems
             Assert.AreEqual(1, entityAddedEvent);
         }
 
+        [Test]
+        public void TestEntityRemovedWhenRemovingWholeEntity()
+        {
+            Game game = new Game();
+            EntityManager entityManager = new EntityManager(game);
+
+            // Create compound entities.
+            CompoundEntities<TestCompound> compoundEntities =
+                new CompoundEntities<TestCompound>(entityManager);
+            int eventCount = 0;
+            compoundEntities.EntityRemoved += (id, entity) => { ++eventCount; };
+
+            // Add entity with required components.
+            var entityId = entityManager.CreateEntity();
+            entityManager.AddComponent<TestCompoundComponentA>(entityId);
+            entityManager.AddComponent<TestCompoundComponentB>(entityId);
+
+            // Now remove entity.
+            entityManager.RemoveEntity(entityId);
+            entityManager.CleanUpEntities();
+
+            Assert.AreEqual(1, eventCount);
+        }
+
         #endregion
 
         private class TestCompoundComponentA : EntityComponent

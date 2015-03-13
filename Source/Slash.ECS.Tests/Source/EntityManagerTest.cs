@@ -98,7 +98,8 @@ namespace Slash.ECS.Tests
             int entityId = this.entityManager.CreateEntity();
             this.entityManager.AddComponent(entityId, this.testEntityComponent);
             Assert.AreEqual(
-                this.testEntityComponent, this.entityManager.GetComponent(entityId, typeof(TestEntityComponent)));
+                this.testEntityComponent,
+                this.entityManager.GetComponent(entityId, typeof(TestEntityComponent)));
         }
 
         /// <summary>
@@ -137,7 +138,8 @@ namespace Slash.ECS.Tests
         {
             this.testEntityId = this.entityManager.CreateEntity();
             IEntityComponent entityComponent = this.entityManager.GetComponent(
-                this.testEntityId, typeof(TestEntityComponent));
+                this.testEntityId,
+                typeof(TestEntityComponent));
             Assert.IsNull(entityComponent);
         }
 
@@ -205,6 +207,25 @@ namespace Slash.ECS.Tests
             this.entityManager.CleanUpEntities();
 
             Assert.AreEqual(this.entityManager.EntityCount, 0);
+        }
+
+        /// <summary>
+        ///   Tests removing an entity and checks if all components where removed as well.
+        /// </summary>
+        [Test]
+        public void TestRemoveEntityRemovesAllComponents()
+        {
+            int removedComponents = 0;
+            this.entityManager.RegisterComponentListeners<TestEntityComponent>(
+                (id, component) => { },
+                (id, component) => { ++removedComponents; });
+
+            int entityId = this.entityManager.CreateEntity();
+            this.entityManager.AddComponent<TestEntityComponent>(entityId);
+            this.entityManager.RemoveEntity(entityId);
+            this.entityManager.CleanUpEntities();
+
+            Assert.AreEqual(1, removedComponents);
         }
 
         #endregion

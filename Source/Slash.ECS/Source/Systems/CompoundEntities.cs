@@ -202,7 +202,12 @@ namespace Slash.ECS.Source.Systems
             // Remove component.
             componentProperty.PropertyInfo.SetValue(entity, null, null);
 
-            // TODO(co): Check if to remove entity completely.
+            // Check if to remove entity completely.
+            if (!componentProperty.Attribute.IsOptional)
+            {
+                this.entities.Remove(entityId);
+                this.OnEntityRemoved(entityId, entity);
+            }
         }
 
         private void OnEntityAdded(int entityid, T entity)
