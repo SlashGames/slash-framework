@@ -31,8 +31,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
     {
         #region Fields
 
-        private readonly Dictionary<object, bool> foldoutProperty = new Dictionary<object, bool>();
-
         private GameConfigurationBehaviour gameConfiguration;
 
         private InspectorTypeTable inspectorSystemTypes;
@@ -88,48 +86,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
             {
                 // Get current value.
                 object currentValue = configuration.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default);
+                object newValue = EditorGUIUtils.LogicInspectorPropertyField(inspectorProperty, currentValue);
 
-                if (inspectorProperty.IsList)
+                // Set new value if changed.
+                if (!Equals(newValue, currentValue))
                 {
-                    // Build array.
-                    IList currentList = currentValue as IList;
-                    InspectorPropertyAttribute localInspectorProperty = inspectorProperty;
-                    IList newList;
-                    this.foldoutProperty[inspectorProperty] =
-                        EditorGUIUtils.ListField(
-                            this.foldoutProperty.GetValueOrDefault(inspectorProperty, false),
-                            new GUIContent(inspectorProperty.Name),
-                            currentList,
-                            count =>
-                                {
-                                    IList list = localInspectorProperty.GetEmptyList();
-                                    for (int idx = 0; idx < count; idx++)
-                                    {
-                                        list.Add(null);
-                                    }
-                                    return list;
-                                },
-                            (obj, index) =>
-                            EditorGUIUtils.LogicInspectorPropertyField(
-                                localInspectorProperty, obj, new GUIContent("Item " + index)),
-                            out newList);
-
-                    // Set new value if changed.
-                    if (!Equals(newList, currentList))
-                    {
-                        configuration.SetValue(inspectorProperty.Name, newList);
-                    }
-                }
-                else
-                {
-                    // Draw inspector property.
-                    object newValue = EditorGUIUtils.LogicInspectorPropertyField(inspectorProperty, currentValue);
-
-                    // Set new value if changed.
-                    if (!Equals(newValue, currentValue))
-                    {
-                        configuration.SetValue(inspectorProperty.Name, newValue);
-                    }
+                    configuration.SetValue(inspectorProperty.Name, newValue);
                 }
             }
         }

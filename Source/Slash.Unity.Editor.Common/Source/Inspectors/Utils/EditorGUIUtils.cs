@@ -8,6 +8,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Inspector.Attributes;
@@ -122,12 +123,9 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
                 if (currentSize != newSize)
                 {
                     newList = createList(newSize);
-                    for (int x = 0; x < newSize; x++)
+                    for (int x = 0; x < currentSize && x < newSize; x++)
                     {
-                        if (x < currentSize)
-                        {
-                            newList[x] = list != null ? list[x] : null;
-                        }
+                        newList[x] = list[x];
                     }
                 }
                 else
@@ -237,6 +235,35 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         public static object LogicInspectorPropertyField(
             InspectorPropertyAttribute inspectorProperty, object currentValue)
         {
+            if (inspectorProperty.IsList)
+            {
+                // Build array.
+                IList currentList = currentValue as IList;
+                InspectorPropertyAttribute localInspectorProperty = inspectorProperty;
+                IList newList;
+
+                ListField(
+                    true,
+                    new GUIContent(inspectorProperty.Name),
+                    currentList,
+                    count =>
+                        {
+                            IList list = localInspectorProperty.GetEmptyList();
+                            for (int idx = 0; idx < count; idx++)
+                            {
+                                list.Add(null);
+                            }
+                            return list;
+
+                        },
+                    (obj, index) =>
+                    LogicInspectorPropertyField(localInspectorProperty, obj, new GUIContent("Item " + index)),
+                    out newList);
+
+                return newList;
+            }
+            
+            // Draw inspector property.
             return LogicInspectorPropertyField(
                 inspectorProperty, currentValue, new GUIContent(inspectorProperty.Name, inspectorProperty.Description));
         }
