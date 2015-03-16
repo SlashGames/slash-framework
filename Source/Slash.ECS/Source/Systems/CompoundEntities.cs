@@ -113,16 +113,26 @@ namespace Slash.ECS.Source.Systems
 #endif
             foreach (var propertyInfo in propertyInfos)
             {
-                var compoundComponentAttribute = propertyInfo.GetCustomAttribute<CompoundComponentAttribute>();
+                var compoundComponentAttribute = ReflectionUtils.GetAttribute<CompoundComponentAttribute>(propertyInfo);
                 if (compoundComponentAttribute != null)
                 {
-                    yield return
-                        new ComponentProperty()
-                        {
-                            PropertyInfo = propertyInfo,
-                            Type = propertyInfo.PropertyType,
-                            Attribute = compoundComponentAttribute
-                        };
+                    yield return new ComponentProperty(propertyInfo) { Attribute = compoundComponentAttribute };
+                }
+            }
+
+            // Return all field component types.
+#if WINDOWS_STORE
+            var fieldInfos = type.GetRuntimeFields();
+#else
+            var fieldInfos = type.GetFields();
+#endif
+
+            foreach (var fieldInfo in fieldInfos)
+            {
+                var compoundComponentAttribute = ReflectionUtils.GetAttribute<CompoundComponentAttribute>(fieldInfo);
+                if (compoundComponentAttribute != null)
+                {
+                    yield return new ComponentProperty(fieldInfo) { Attribute = compoundComponentAttribute };
                 }
             }
         }
@@ -147,8 +157,7 @@ namespace Slash.ECS.Source.Systems
         {
             foreach (var componentProperty in this.componentProperties)
             {
-                if (!componentProperty.Attribute.IsOptional
-                    && componentProperty.PropertyInfo.GetValue(entity, null) == null)
+                if (!componentProperty.Attribute.IsOptional && componentProperty.GetValue(entity) == null)
                 {
                     return false;
                 }
@@ -175,7 +184,7 @@ namespace Slash.ECS.Source.Systems
             }
 
             // Set component.
-            componentProperty.PropertyInfo.SetValue(entity, component, null);
+            componentProperty.SetValue(entity, component);
 
             // Check if complete, i.e. all necessary components are set.
             if (!componentProperty.Attribute.IsOptional && this.IsComplete(entity))
@@ -205,9 +214,14 @@ namespace Slash.ECS.Source.Systems
             }
 
             // Remove component.
-            componentProperty.PropertyInfo.SetValue(entity, null, null);
+            componentProperty.SetValue(entity, null);
 
-            // TODO(co): Check if to remove entity completely.
+            // Check if to remove entity completely.
+            if (!componentProperty.Attribute.IsOptional)
+            {
+                this.entities.Remove(entityId);
+                this.OnEntityRemoved(entityId, entity);
+            }
         }
 
         private void OnEntityAdded(int entityid, T entity)
@@ -232,13 +246,64 @@ namespace Slash.ECS.Source.Systems
 
         private class ComponentProperty
         {
+            #region Fields
+
+            private readonly FieldInfo fieldInfo;
+
+            private readonly PropertyInfo propertyInfo;
+
+            #endregion
+
+            #region Constructors and Destructors
+
+            public ComponentProperty(PropertyInfo propertyInfo)
+            {
+                this.propertyInfo = propertyInfo;
+                this.Type = propertyInfo.PropertyType;
+            }
+
+            public ComponentProperty(FieldInfo fieldInfo)
+            {
+                this.fieldInfo = fieldInfo;
+                this.Type = fieldInfo.FieldType;
+            }
+
+            #endregion
+
             #region Properties
 
             public CompoundComponentAttribute Attribute { get; set; }
 
-            public PropertyInfo PropertyInfo { get; set; }
+            public Type Type { get; private set; }
 
-            public Type Type { get; set; }
+            #endregion
+
+            #region Public Methods and Operators
+
+            public object GetValue(object obj)
+            {
+                if (this.propertyInfo != null)
+                {
+                    return this.propertyInfo.GetValue(obj, null);
+                }
+                if (this.fieldInfo != null)
+                {
+                    return this.fieldInfo.GetValue(obj);
+                }
+                return null;
+            }
+
+            public void SetValue(object obj, object value)
+            {
+                if (this.propertyInfo != null)
+                {
+                    this.propertyInfo.SetValue(obj, value, null);
+                }
+                else if (this.fieldInfo != null)
+                {
+                    this.fieldInfo.SetValue(obj, value);
+                }
+            }
 
             #endregion
         }

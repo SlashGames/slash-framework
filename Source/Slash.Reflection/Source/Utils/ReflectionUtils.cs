@@ -247,6 +247,11 @@ namespace Slash.Reflection.Utils
         {
             return type.GetTypeInfo().GetCustomAttributes(type, inherit).ToArray();
         }
+
+        public static T GetAttribute<T>(MemberInfo member) where T : Attribute
+        {
+            return member.GetCustomAttribute<T>();
+        }
 #else
         public static bool IsValueType(Type type)
         {
@@ -286,6 +291,11 @@ namespace Slash.Reflection.Utils
         public static object[] GetAttributes(Type type, Type attributeType, bool inherit)
         {
             return type.GetCustomAttributes(type, inherit);
+        }
+
+        public static T GetAttribute<T>(MemberInfo member) where T : Attribute
+        {
+            return (T)Attribute.GetCustomAttribute(member, typeof(T));
         }
 #endif
 
