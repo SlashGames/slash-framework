@@ -205,12 +205,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             InspectorVectorAttribute vectorInspectorproperty = inspectorProperty as InspectorVectorAttribute;
             if (vectorInspectorproperty != null)
             {
-                if (vectorInspectorproperty.PropertyType == typeof(Vector2I))
+                if (vectorInspectorproperty.PropertyType == typeof(Vector2I) || vectorInspectorproperty.PropertyType == typeof(List<Vector2I>))
                 {
                     Vector2I currentVector2IValue = (currentValue != null) ? (Vector2I)currentValue : Vector2I.Zero;
                     return Vector2IField(label, currentVector2IValue);
                 }
-                if (vectorInspectorproperty.PropertyType == typeof(Vector2F))
+                if (vectorInspectorproperty.PropertyType == typeof(Vector2F) || vectorInspectorproperty.PropertyType == typeof(List<Vector2F>))
                 {
                     Vector2F currentVector2FValue = (currentValue != null) ? (Vector2F)currentValue : Vector2F.Zero;
                     return Vector2FField(label, currentVector2FValue);
