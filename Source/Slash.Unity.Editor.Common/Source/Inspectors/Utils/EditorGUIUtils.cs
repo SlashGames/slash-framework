@@ -209,8 +209,13 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             {
                 if (vectorInspectorproperty.PropertyType == typeof(Vector2I))
                 {
-                    Vector2I currentVectorValue = (currentValue != null) ? (Vector2I)currentValue : Vector2I.Zero;
-                    return Vector2IField(label, currentVectorValue);
+                    Vector2I currentVector2IValue = (currentValue != null) ? (Vector2I)currentValue : Vector2I.Zero;
+                    return Vector2IField(label, currentVector2IValue);
+                }
+                if (vectorInspectorproperty.PropertyType == typeof(Vector2F))
+                {
+                    Vector2F currentVector2FValue = (currentValue != null) ? (Vector2F)currentValue : Vector2F.Zero;
+                    return Vector2FField(label, currentVector2FValue);
                 }
             }
 
@@ -252,6 +257,17 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             EditorGUILayout.EndHorizontal();
 
             return selectedShaderName;
+        }
+
+        public static Vector2F Vector2FField(GUIContent label, Vector2F v)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel(label);
+            var x = EditorGUILayout.FloatField("X", v.X);
+            var y = EditorGUILayout.FloatField("Y", v.Y);
+            EditorGUILayout.EndHorizontal();
+
+            return new Vector2F(x, y);
         }
 
         public static Vector2I Vector2IField(GUIContent label, Vector2I v)
