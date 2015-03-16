@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.ECS.Source.Systems
+namespace Slash.ECS.Systems
 {
     using System;
     using System.Collections;
@@ -13,7 +13,6 @@ namespace Slash.ECS.Source.Systems
     using System.Reflection;
 
     using Slash.ECS.Components;
-    using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
 
     public sealed class CompoundEntities<T> : IEnumerable<T>

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.ECS.Source.Systems
+namespace Slash.ECS.Systems
 {
     using System;
 

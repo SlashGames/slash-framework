@@ -9,7 +9,7 @@ namespace Slash.ECS.Tests.Systems
     using NUnit.Framework;
 
     using Slash.ECS.Components;
-    using Slash.ECS.Source.Systems;
+    using Slash.ECS.Systems;
 
     public class CompoundEntitiesTests
     {
