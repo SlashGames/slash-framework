@@ -180,7 +180,15 @@ namespace Slash.ECS.Inspector.Attributes
         /// <returns>Empty list of matching type.</returns>
         public virtual IList GetEmptyList()
         {
-            return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(this.PropertyType));
+            var itemType = this.PropertyType;
+
+            // If this property is of list type, get generic type argument for creating new list.
+            if (itemType.IsGenericType)
+            {
+                itemType = itemType.GetGenericArguments()[0];
+            }
+
+            return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(itemType));
         }
 
         /// <summary>
