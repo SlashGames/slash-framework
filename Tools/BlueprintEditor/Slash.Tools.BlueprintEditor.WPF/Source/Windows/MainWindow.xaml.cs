@@ -159,7 +159,14 @@ namespace BlueprintEditor.Windows
                 this.Context.SetAvailableLanguages(languageTags);
 
                 // Load blueprints.
-                this.Context.LoadBlueprints();
+                try
+                {
+                    this.Context.LoadBlueprints();
+                }
+                catch (FileNotFoundException ex)
+                {
+                    EditorDialog.Error("Unable to load blueprints", ex.Message);
+                }
 
                 this.UpdateWindowTitle();
             }
