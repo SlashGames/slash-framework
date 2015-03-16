@@ -220,7 +220,10 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             }
 
             EditorGUILayout.HelpBox(
-                string.Format("No inspector found for property type '{0}'.", inspectorProperty.GetType().Name),
+                string.Format(
+                    "No inspector found for property {0} of type {1}.",
+                    inspectorProperty.Name,
+                    inspectorProperty.PropertyType),
                 MessageType.Warning);
             return currentValue;
         }
