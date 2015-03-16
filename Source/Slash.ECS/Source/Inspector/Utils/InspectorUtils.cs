@@ -8,16 +8,17 @@ namespace Slash.ECS.Inspector.Utils
 {
     using System;
     using System.Collections.Generic;
+    
+#if WINDOWS_STORE
     using System.Reflection;
+#endif
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Components;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
-
-#if WINDOWS_STORE
     using Slash.Reflection.Extensions;
-#endif
+
 
     /// <summary>
     ///   Utility methods for collecting inspector data and initializing objects.

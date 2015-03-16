@@ -9,6 +9,8 @@ namespace Slash.Unity.Common.GUI.ValueEditors
     using System;
     using System.Collections.Generic;
 
+    using Slash.Reflection.Utils;
+
     using UnityEngine;
 
     /// <summary>
@@ -31,7 +33,7 @@ namespace Slash.Unity.Common.GUI.ValueEditors
         /// <param name="context">Editor context to work with.</param>
         public void Edit(IValueEditorContext context)
         {
-            if (!context.Type.IsEnum)
+            if (!ReflectionUtils.IsEnum(context.Type))
             {
                 throw new ArgumentException(string.Format("Type '{0}' is no enum type.", context.Type), "context");
             }

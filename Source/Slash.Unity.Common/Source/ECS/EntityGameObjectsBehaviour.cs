@@ -289,7 +289,8 @@ namespace Slash.Unity.Common.ECS
             {
                 LogicToVisualDelegateAttribute[] delegateAttributes =
                     (LogicToVisualDelegateAttribute[])
-                    logicToVisualMapping.VisualType.GetCustomAttributes(typeof(LogicToVisualDelegateAttribute), true);
+                    ReflectionUtils.GetAttributes(
+                        logicToVisualMapping.VisualType, typeof(LogicToVisualDelegateAttribute), true);
                 if (delegateAttributes.Length == 0)
                 {
                     continue;

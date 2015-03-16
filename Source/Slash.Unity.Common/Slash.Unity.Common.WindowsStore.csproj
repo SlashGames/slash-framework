@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{86DC75E6-D550-41BE-ADB9-3A2BD13C201A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Slash.Unity.Common</RootNamespace>
+    <AssemblyName>Slash.Unity.Common</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\Slash.Unity.Common.WindowsStore\Any CPU\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_STORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\Slash.Unity.Common.WindowsStore\Any CPU\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_STORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\Bin\Slash.Unity.Common.WindowsStore\ARM\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_STORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common.WindowsStore\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_STORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\Bin\Slash.Unity.Common.WindowsStore\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_STORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common.WindowsStore\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_STORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\Bin\Slash.Unity.Common.WindowsStore\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_STORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common.WindowsStore\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_STORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Animations\AnimationExtensions.cs" />
+    <Compile Include="Source\Attributes\ExposePropertyAttribute.cs" />
+    <Compile Include="Source\Configuration\GameConfigurationBehaviour.cs" />
+    <Compile Include="Source\Delegates\MethodDelegate.cs" />
+    <Compile Include="Source\Diagnostics\CatchExceptionsBehaviour.cs" />
+    <Compile Include="Source\Diagnostics\CheatConsole.cs" />
+    <Compile Include="Source\Diagnostics\DebugBuildBehaviour.cs" />
+    <Compile Include="Source\Diagnostics\DebugInput.cs" />
+    <Compile Include="Source\Diagnostics\DisableWithSceneManager.cs" />
+    <Compile Include="Source\Diagnostics\FPSDisplay.cs" />
+    <Compile Include="Source\Diagnostics\GameCheatBehaviour.cs" />
+    <Compile Include="Source\ECS\EntityBehaviour.cs" />
+    <Compile Include="Source\ECS\EntityConfigurationBehaviour.cs" />
+    <Compile Include="Source\ECS\EntityGameObjectMap.cs" />
+    <Compile Include="Source\ECS\EntityGameObjectsBehaviour.cs" />
+    <Compile Include="Source\ECS\EntityObjectPool.cs" />
+    <Compile Include="Source\ECS\EventManagerOperator.cs" />
+    <Compile Include="Source\ECS\GameBehaviour.cs" />
+    <Compile Include="Source\ECS\GameEventBehaviour.cs" />
+    <Compile Include="Source\ECS\LogicToVisualDelegate.cs" />
+    <Compile Include="Source\ECS\LogicToVisualDelegateAttribute.cs" />
+    <Compile Include="Source\ECS\LogicToVisualMapping.cs" />
+    <Compile Include="Source\ECS\LogicToVisualMappingAttribute.cs" />
+    <Compile Include="Source\GUI\GuiExt.cs" />
+    <Compile Include="Source\GUI\GUIHelper.cs" />
+    <Compile Include="Source\GUI\GUILayoutExt.cs" />
+    <Compile Include="Source\GUI\SleepTimeoutBehaviour.cs" />
+    <Compile Include="Source\GUI\SwitchFullscreenBehaviour.cs" />
+    <Compile Include="Source\GUI\ValueEditors\EnumValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\FloatValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\IntegerValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\IValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\IValueEditorContext.cs" />
+    <Compile Include="Source\GUI\ValueEditors\IValueEditorFactory.cs" />
+    <Compile Include="Source\GUI\ValueEditors\PropertyValueEditorContext.cs" />
+    <Compile Include="Source\GUI\ValueEditors\SimpleValueEditorContext.cs" />
+    <Compile Include="Source\GUI\ValueEditors\TextValueEditor.cs" />
+    <Compile Include="Source\GUI\ValueEditors\ValueEditorContext.cs" />
+    <Compile Include="Source\GUI\ValueEditors\Vector2IValueEditor.cs" />
+    <Compile Include="Source\Input\InputUtils.cs" />
+    <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
+    <Compile Include="Source\Loading\LoadSceneBehaviour.cs" />
+    <Compile Include="Source\Loading\LoadSceneOnClickBehaviour.cs" />
+    <Compile Include="Source\Loading\LoadSceneOnEscBehaviour.cs" />
+    <Compile Include="Source\Loading\LoadSceneOnStartBehaviour.cs" />
+    <Compile Include="Source\Logging\ConsoleAppender.cs" />
+    <Compile Include="Source\Logging\EventManagerLogBehaviour.cs" />
+    <Compile Include="Source\Logging\GameLogBehaviour.cs" />
+    <Compile Include="Source\Logging\LoggerExtensions.cs" />
+    <Compile Include="Source\Math\MathConversionExtensions.cs" />
+    <Compile Include="Source\PropertyDrawers\TypePropertyAttribute.cs" />
+    <Compile Include="Source\Scenes\SceneManager.cs" />
+    <Compile Include="Source\Scenes\SceneRoot.cs" />
+    <Compile Include="Source\Scenes\WindowManager.cs" />
+    <Compile Include="Source\Scenes\WindowRoot.cs" />
+    <Compile Include="Source\Sound\AudioChannel.cs" />
+    <Compile Include="Source\Sound\AudioChannelType.cs" />
+    <Compile Include="Source\Sound\AudioPlayerPrefs.cs" />
+    <Compile Include="Source\Sound\FadingAudioSource.cs" />
+    <Compile Include="Source\Sound\PlayAudioBehaviour.cs" />
+    <Compile Include="Source\Sound\PlaySoundOnClickBehaviour.cs" />
+    <Compile Include="Source\Sound\SoundInterfaceBehaviour.cs" />
+    <Compile Include="Source\Transforms\EasedMovementBehaviour.cs" />
+    <Compile Include="Source\Triggers\Actions\IAction.cs" />
+    <Compile Include="Source\Triggers\Conditions\Condition.cs" />
+    <Compile Include="Source\Triggers\Conditions\EventCondition.cs" />
+    <Compile Include="Source\Triggers\Conditions\ICondition.cs" />
+    <Compile Include="Source\Triggers\Trigger.cs" />
+    <Compile Include="Source\Utils\ActiveOnPlatformBehaviour.cs" />
+    <Compile Include="Source\Utils\GLUtils.cs" />
+    <Compile Include="Source\Utils\InspectorTooltipAttribute.cs" />
+    <Compile Include="Source\Utils\LogDeviceIdBehaviour.cs" />
+    <Compile Include="Source\Utils\OpenUrlOnClickBehaviour.cs" />
+    <Compile Include="Source\Utils\UnityColorUtils.cs" />
+    <Compile Include="Source\Utils\UnityGameObjectUtils.cs" />
+    <Compile Include="Source\Utils\UnityPathUtils.cs" />
+    <Compile Include="Source\Utils\VersionNumberBehaviour.cs" />
+    <Compile Include="Source\ViewModels\ViewEvent.cs" />
+    <Compile Include="Source\ViewModels\ViewEventDelegate.cs" />
+    <Compile Include="Source\Visual\HighlightSpriteAlpha.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\Tools\Unity5\Editor\Data\PlaybackEngines\windowsstandalonesupport\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="WinRTLegacy">
+      <HintPath>..\..\Bin\Slash.Collections.WindowsStore\x86\Debug\WinRTLegacy.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Slash.Collections\Slash.Collections.WindowsStore.csproj">
+      <Project>{77D7FB58-EC5B-4B50-8D59-63304259DC5A}</Project>
+      <Name>Slash.Collections.WindowsStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Diagnostics\Slash.Diagnostics.WindowsStore.csproj">
+      <Project>{871906CF-4F88-482C-913B-230CBCDE1C64}</Project>
+      <Name>Slash.Diagnostics.WindowsStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.ECS\Slash.ECS.WindowsStore.csproj">
+      <Project>{197A6637-D4C2-4B1F-BBA4-2AA04F667212}</Project>
+      <Name>Slash.ECS.WindowsStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Math\Slash.Math.WindowsStore.csproj">
+      <Project>{F3F2FED3-990E-457C-81B0-CF9C6180AC6B}</Project>
+      <Name>Slash.Math.WindowsStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.WindowsStore.csproj">
+      <Project>{B98DD3EA-25C3-41BE-8253-206960364CC8}</Project>
+      <Name>Slash.Reflection.WindowsStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.WindowsStore.csproj">
+      <Project>{813F246A-F8F4-4943-A513-5178A5E6D6CF}</Project>
+      <Name>Slash.Serialization.WindowsStore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
+    <VisualStudioVersion>11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

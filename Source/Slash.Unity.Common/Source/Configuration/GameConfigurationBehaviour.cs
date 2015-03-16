@@ -95,34 +95,6 @@ namespace Slash.Unity.Common.Configuration
                 (IAttributeTable)xmlSerializer.Deserialize(new StringReader(this.configurationFile.text));
         }
 
-        /// <summary>
-        ///   Saves the current game configuration to the resource <see cref="ConfigurationFilePath" />.
-        /// </summary>
-        public void Save()
-        {
-#if WINDOWS_STORE
-            throw new NotImplementedException("Not implemented for Windows Store build target.");
-#else
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
-            string filePath = "Assets/Resources/" + this.ConfigurationFilePath + ".xml";
-
-#if UNITY_EDITOR
-            if (this.configurationFile != null)
-            {
-                filePath = UnityEditor.AssetDatabase.GetAssetPath(this.configurationFile);
-            }
-#endif
-
-            // Make sure directory exists.
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-            Debug.Log("Save to " + filePath);
-            StreamWriter writer = new StreamWriter(filePath);
-            xmlSerializer.Serialize(writer, this.Configuration);
-            writer.Close();
-#endif
-        }
-
         #endregion
 
         #region Methods

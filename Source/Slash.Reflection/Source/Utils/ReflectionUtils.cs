@@ -242,6 +242,11 @@ namespace Slash.Reflection.Utils
         {
             return first.GetTypeInfo().IsAssignableFrom(second.GetTypeInfo());
         }
+
+        public static object[] GetAttributes(Type type, Type attributeType, bool inherit)
+        {
+            return type.GetTypeInfo().GetCustomAttributes(type, inherit).ToArray();
+        }
 #else
         public static bool IsValueType(Type type)
         {
@@ -276,6 +281,11 @@ namespace Slash.Reflection.Utils
         public static bool IsAssignableFrom(Type first, Type second)
         {
             return first.IsAssignableFrom(second);
+        }
+
+        public static object[] GetAttributes(Type type, Type attributeType, bool inherit)
+        {
+            return type.GetCustomAttributes(type, inherit);
         }
 #endif
 

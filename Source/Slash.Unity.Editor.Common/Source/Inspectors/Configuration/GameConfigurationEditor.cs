@@ -8,6 +8,8 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Extensions;
@@ -69,7 +71,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
             {
                 // Save configuration.
                 // TODO(co): Save automatically if changed.
-                this.gameConfiguration.Save();
+                this.Save();
 
                 // Refresh assets.
                 AssetDatabase.Refresh();
@@ -135,6 +137,29 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
         private void OnEnable()
         {
             this.gameConfiguration = (GameConfigurationBehaviour)this.target;
+        }
+
+        /// <summary>
+        ///   Saves the current game configuration to the resource specified by
+        ///   <see cref="GameConfigurationBehaviour.ConfigurationFilePath" />.
+        /// </summary>
+        private void Save()
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
+
+            var configurationFile = (TextAsset)Resources.Load(this.gameConfiguration.ConfigurationFilePath);
+
+            var filePath = configurationFile != null
+                               ? AssetDatabase.GetAssetPath(configurationFile)
+                               : "Assets/Resources/" + this.gameConfiguration.ConfigurationFilePath + ".xml";
+
+            // Make sure directory exists.
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+            Debug.Log("Save to " + filePath);
+            StreamWriter writer = new StreamWriter(filePath);
+            xmlSerializer.Serialize(writer, this.gameConfiguration.Configuration);
+            writer.Close();
         }
 
         #endregion
