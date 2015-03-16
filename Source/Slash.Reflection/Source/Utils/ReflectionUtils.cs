@@ -212,6 +212,11 @@ namespace Slash.Reflection.Utils
                     .FirstOrDefault(property => property != null);
         }
 
+        public static PropertyInfo[] GetProperties(Type type)
+        {
+            return type.GetRuntimeProperties().ToArray();
+        }
+
         public static MethodInfo GetMethod(Type type, string name)
         {
             return
@@ -226,6 +231,11 @@ namespace Slash.Reflection.Utils
                 GetBaseTypes(type)
                     .Select(baseType => baseType.GetTypeInfo().GetDeclaredField(name))
                     .FirstOrDefault(field => field != null);
+        }
+
+        public static FieldInfo[] GetFields(Type type)
+        {
+            return type.GetRuntimeFields().ToArray();
         }
 
         public static bool IsEnum(Type type)
@@ -263,6 +273,11 @@ namespace Slash.Reflection.Utils
             return type.GetProperty(name);
         }
 
+        public static PropertyInfo[] GetProperties(Type type)
+        {
+            return type.GetProperties();
+        }
+
         public static MethodInfo GetMethod(Type type, string name)
         {
             return type.GetMethod(name);
@@ -276,6 +291,11 @@ namespace Slash.Reflection.Utils
         public static FieldInfo GetField(Type type, string name)
         {
             return type.GetField(name);
+        }
+
+        public static FieldInfo[] GetFields(Type type)
+        {
+            return type.GetFields();
         }
 
         public static Delegate CreateDelegate(Type type, object target, MethodInfo method)

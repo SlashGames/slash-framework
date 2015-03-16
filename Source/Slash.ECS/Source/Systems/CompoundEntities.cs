@@ -106,11 +106,7 @@ namespace Slash.ECS.Source.Systems
         private IEnumerable<ComponentProperty> CollectComponentProperties(Type type)
         {
             // Return all property component types.
-#if WINDOWS_STORE
-            var propertyInfos = type.GetRuntimeProperties();
-#else
-            var propertyInfos = type.GetProperties();
-#endif
+            var propertyInfos = ReflectionUtils.GetProperties(type);
             foreach (var propertyInfo in propertyInfos)
             {
                 var compoundComponentAttribute = ReflectionUtils.GetAttribute<CompoundComponentAttribute>(propertyInfo);
@@ -121,12 +117,7 @@ namespace Slash.ECS.Source.Systems
             }
 
             // Return all field component types.
-#if WINDOWS_STORE
-            var fieldInfos = type.GetRuntimeFields();
-#else
-            var fieldInfos = type.GetFields();
-#endif
-
+            var fieldInfos = ReflectionUtils.GetFields(type);
             foreach (var fieldInfo in fieldInfos)
             {
                 var compoundComponentAttribute = ReflectionUtils.GetAttribute<CompoundComponentAttribute>(fieldInfo);
