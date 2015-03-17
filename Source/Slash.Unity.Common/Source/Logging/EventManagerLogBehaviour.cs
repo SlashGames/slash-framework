@@ -91,7 +91,7 @@ namespace Slash.Unity.Common.Logging
         /// </returns>
         public bool IsDisabled(object eventType)
         {
-            return this.disabledEventTypes.Contains(eventType.ToString());
+            return this.disabledEventTypes.Contains(this.ConvertEventTypeToString(eventType));
         }
 
         /// <summary>
@@ -101,13 +101,14 @@ namespace Slash.Unity.Common.Logging
         /// <param name="logDisabled">Whether to enable or disable logging.</param>
         public void SetDisabled(object eventType, bool logDisabled)
         {
+            var eventTypeString = this.ConvertEventTypeToString(eventType);
             if (logDisabled)
             {
-                this.disabledEventTypes.Add(eventType.ToString());
+                this.disabledEventTypes.Add(eventTypeString);
             }
             else
             {
-                this.disabledEventTypes.Remove(eventType.ToString());
+                this.disabledEventTypes.Remove(eventTypeString);
             }
         }
 
@@ -137,10 +138,19 @@ namespace Slash.Unity.Common.Logging
                 return;
             }
 
-            if (!this.disabledEventTypes.Contains(e.EventType.ToString()))
+            string eventTypeString = this.ConvertEventTypeToString(e.EventType);
+            if (!this.disabledEventTypes.Contains(eventTypeString))
             {
-                this.Info(this.FormatLog(string.Format("{0}: {1}", e.EventType, e.EventData)));
+                this.Info(
+                    e.EventData != null
+                        ? this.FormatLog(string.Format("{0}: {1}", eventTypeString, e.EventData))
+                        : this.FormatLog(eventTypeString));
             }
+        }
+
+        private string ConvertEventTypeToString(object eventType)
+        {
+            return string.Format("{0}.{1}", eventType.GetType().Name, eventType);
         }
 
         #endregion
