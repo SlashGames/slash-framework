@@ -122,24 +122,11 @@ namespace Slash.Unity.Common.Math
         ///   Converts the specified framework vector to an Unity vector.
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
-        /// <param name="height">y value of converted vector.</param>
+        /// <param name="z">Z value.</param>
         /// <returns>Corresponding Unity vector.</returns>
-        public static Vector3 ToVector3(this Vector2F vector, float height = 0.0f)
+        public static Vector3 ToVector3(this Vector2F vector, float z = 0)
         {
-            return new Vector3(vector.X, height, vector.Y);
-        }
-
-        /// <summary>
-        ///   Converts the specified framework vector to an Unity vector,
-        ///   multiplying it with the passed scalar.
-        /// </summary>
-        /// <param name="vector">Vector to convert.</param>
-        /// <param name="height">y value of converted vector.</param>
-        /// <param name="factor">Scalar to multiply the input vector with before converting it.</param>
-        /// <returns>Corresponding Unity vector.</returns>
-        public static Vector3 ToVector3(this Vector2I vector, float height = 0.0f, float factor = 1.0f)
-        {
-            return new Vector3(vector.X * factor, height, vector.Y * factor);
+            return new Vector3(vector.X, vector.Y, z);
         }
 
         #endregion
