@@ -13,6 +13,7 @@ namespace Slash.ECS.Inspector.Attributes
 
     using Slash.ECS.Components;
     using Slash.ECS.Inspector.Validation;
+    using Slash.Reflection.Utils;
 
 #if WINDOWS_STORE
     using Slash.Reflection.Extensions;
@@ -183,7 +184,7 @@ namespace Slash.ECS.Inspector.Attributes
             var itemType = this.PropertyType;
 
             // If this property is of list type, get generic type argument for creating new list.
-            if (itemType.IsGenericType)
+            if (ReflectionUtils.IsGenericType(itemType))
             {
                 itemType = itemType.GetGenericArguments()[0];
             }

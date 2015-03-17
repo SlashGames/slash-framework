@@ -262,6 +262,11 @@ namespace Slash.Reflection.Utils
         {
             return member.GetCustomAttribute<T>();
         }
+
+        public static bool IsGenericType(Type type)
+        {
+            return type.GetTypeInfo().IsGenericType;
+        }
 #else
         public static bool IsValueType(Type type)
         {
@@ -316,6 +321,11 @@ namespace Slash.Reflection.Utils
         public static T GetAttribute<T>(MemberInfo member) where T : Attribute
         {
             return (T)Attribute.GetCustomAttribute(member, typeof(T));
+        }
+
+        public static bool IsGenericType(Type type)
+        {
+            return type.IsGenericType;
         }
 #endif
 
