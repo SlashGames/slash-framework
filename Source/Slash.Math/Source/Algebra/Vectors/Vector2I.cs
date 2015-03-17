@@ -17,9 +17,9 @@ namespace Slash.Math.Algebra.Vectors
     /// </summary>
     [Serializable]
     [DictionarySerializable]
-    public class Vector2I
+    public struct Vector2I
     {
-        #region Static Fields
+        #region Constants
 
         /// <summary>
         ///   Unrotated forward vector.
@@ -72,15 +72,6 @@ namespace Slash.Math.Algebra.Vectors
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Constructs a new zero vector.
-        /// </summary>
-        public Vector2I()
-        {
-            this.X = 0;
-            this.Y = 0;
-        }
-
-        /// <summary>
         ///   Constructor.
         /// </summary>
         /// <param name="vector"> Initial vector. </param>
@@ -104,7 +95,10 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Constructor.
         /// </summary>
-        /// <param name="values"> Array which contains the initial vector value. Value at index 0 is taken as the initial x value, value at index 1 is taken as the initial y value. </param>
+        /// <param name="values">
+        ///   Array which contains the initial vector value. Value at index 0 is taken as the initial x value,
+        ///   value at index 1 is taken as the initial y value.
+        /// </param>
         public Vector2I(params int[] values)
         {
             if (values == null)
@@ -123,7 +117,7 @@ namespace Slash.Math.Algebra.Vectors
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Indicates if at least one vector component is not zero.
@@ -188,6 +182,17 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
+        ///   Adds the passed values to the x and y value.
+        /// </summary>
+        /// <param name="addX"> Value to add to x. </param>
+        /// <param name="addY"> Value to add to y. </param>
+        /// <returns>Sum of <paramref name="addX" /> and <paramref name="addY" />.</returns>
+        public Vector2I Add(int addX, int addY)
+        {
+            return new Vector2I(this.X + addX, this.Y + addY);
+        }
+
+        /// <summary>
         ///   Returns a positive number if c is to the left of the line going from a to b.
         /// </summary>
         /// <param name="a">First point of the line.</param>
@@ -204,7 +209,10 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="vector1"> First vector. </param>
         /// <param name="vector2"> Second vector. </param>
-        /// <returns> Return the angle between two vectors on a plane. The angle is from vector 1 to vector 2, positive counter-clockwise. The result is between -pi -> pi. </returns>
+        /// <returns>
+        ///   Return the angle between two vectors on a plane. The angle is from vector 1 to vector 2, positive
+        ///   counter-clockwise. The result is between -pi -> pi.
+        /// </returns>
         public static float CalculateAngle(Vector2I vector1, Vector2I vector2)
         {
             float theta1 = MathUtils.Atan2(vector1.Y, vector1.X);
@@ -220,6 +228,17 @@ namespace Slash.Math.Algebra.Vectors
             }
 
             return (dtheta);
+        }
+
+        /// <summary>
+        ///   Calculates the dot product of this and the passed vector. See http://en.wikipedia.org/wiki/Dot_product for more
+        ///   details.
+        /// </summary>
+        /// <param name="vector"> Vector to calculate dot product with. </param>
+        /// <returns> Dot product of this and the passed vector. </returns>
+        public int CalculateDotProduct(Vector2I vector)
+        {
+            return Dot(this, vector);
         }
 
         /// <summary>
@@ -248,7 +267,8 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the cross product of the two passed vectors. See http://en.wikipedia.org/wiki/Cross_product for more details.
+        ///   Calculates the cross product of the two passed vectors. See http://en.wikipedia.org/wiki/Cross_product for more
+        ///   details.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -278,6 +298,104 @@ namespace Slash.Math.Algebra.Vectors
         public static int Dot(Vector2I a, Vector2I b)
         {
             return (a.X * b.X) + (a.Y * b.Y);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+        ///   <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="obj">
+        ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
+        /// </param>
+        /// <filterpriority>2</filterpriority>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+            return this.Equals((Vector2I)obj);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="Vector2I" /> is equal to the current <see cref="Vector2I" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="Vector2I" /> is equal to the current <see cref="Vector2I" />; otherwise, false.
+        /// </returns>
+        /// <param name="other">
+        ///   The <see cref="Vector2I" /> to compare with the current <see cref="Vector2I" />.
+        /// </param>
+        public bool Equals(Vector2I other)
+        {
+            return this.X == other.X && this.Y == other.Y;
+        }
+
+        /// <summary>
+        ///   Calculates the distance between this and the passed vector.
+        /// </summary>
+        /// <param name="vector"> Vector to compute distance to. </param>
+        /// <returns> Distance between this and the passed vector. </returns>
+        public float GetDistance(Vector2I vector)
+        {
+            return MathUtils.Sqrt(this.GetSquareDistance(vector));
+        }
+
+        /// <summary>
+        ///   Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (this.X * 397) ^ this.Y;
+            }
+        }
+
+        /// <summary>
+        ///   Returns a vector which is perpendicular to this vector.
+        /// </summary>
+        /// <returns> Vector perpendicular to this one. </returns>
+        public Vector2I GetPerpendicularVector()
+        {
+            return new Vector2I(-this.Y, this.X);
+        }
+
+        /// <summary>
+        ///   Calculates the square distance between this and the passed vector.
+        /// </summary>
+        /// <param name="vector"> Vector to compute square distance to. </param>
+        /// <returns> Square distance between this and the passed vector. </returns>
+        public int GetSquareDistance(Vector2I vector)
+        {
+            return MathUtils.Pow(vector.X - this.X, 2) + MathUtils.Pow(vector.Y - this.Y, 2);
+        }
+
+        /// <summary>
+        ///   Checks if this vector is parallel or anti-parallel to the passed one.
+        /// </summary>
+        /// <param name="other"> Vector to check. </param>
+        /// <returns> True if both vectors are parallel or anti-parallel, else false. </returns>
+        public bool IsParallel(Vector2I other)
+        {
+            if (this.IsZero || other.IsZero)
+            {
+                return false;
+            }
+
+            return Math.Abs(this.CalculateDotProduct(other) / (this.Magnitude * other.Magnitude)) == 1;
         }
 
         /// <summary>
@@ -329,7 +447,10 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="a"> Vector to add the value to. </param>
         /// <param name="b"> Integer value to add. </param>
-        /// <returns> Vector where each component is the sum of the particular component of the passed vector plus the passed value. </returns>
+        /// <returns>
+        ///   Vector where each component is the sum of the particular component of the passed vector plus the passed
+        ///   value.
+        /// </returns>
         public static Vector2I operator +(Vector2I a, int b)
         {
             return new Vector2I(a.X + b, a.Y + b);
@@ -340,7 +461,10 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="a"> Vector to divide by the value. </param>
         /// <param name="b"> Value to divide by. </param>
-        /// <returns> Vector where each component is the result of the particular component of the passed vector divided by the passed value. </returns>
+        /// <returns>
+        ///   Vector where each component is the result of the particular component of the passed vector divided by the
+        ///   passed value.
+        /// </returns>
         public static Vector2I operator /(Vector2I a, int b)
         {
             return new Vector2I(a.X / b, a.Y / b);
@@ -406,7 +530,10 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="a"> Vector to subtract the value from. </param>
         /// <param name="b"> Integer value to subtract. </param>
-        /// <returns> Vector where each component is the sum of the particular component of the passed vector minus the passed value. </returns>
+        /// <returns>
+        ///   Vector where each component is the sum of the particular component of the passed vector minus the passed
+        ///   value.
+        /// </returns>
         public static Vector2I operator -(Vector2I a, int b)
         {
             return new Vector2I(a.X - b, a.Y - b);
@@ -434,113 +561,6 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Adds the passed values to the x and y value.
-        /// </summary>
-        /// <param name="addX"> Value to add to x. </param>
-        /// <param name="addY"> Value to add to y. </param>
-        /// <returns>Sum of <paramref name="addX"/> and <paramref name="addY"/>.</returns>
-        public Vector2I Add(int addX, int addY)
-        {
-            return new Vector2I(this.X + addX, this.Y + addY);
-        }
-
-        /// <summary>
-        ///   Calculates the dot product of this and the passed vector. See http://en.wikipedia.org/wiki/Dot_product for more details.
-        /// </summary>
-        /// <param name="vector"> Vector to calculate dot product with. </param>
-        /// <returns> Dot product of this and the passed vector. </returns>
-        public int CalculateDotProduct(Vector2I vector)
-        {
-            return Dot(this, vector);
-        }
-
-        /// <summary>
-        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.
-        /// </summary>
-        /// <returns>
-        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.
-        /// </returns>
-        /// <param name="obj">
-        ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
-        /// </param>
-        /// <filterpriority>2</filterpriority>
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            if (obj.GetType() != this.GetType())
-            {
-                return false;
-            }
-            return this.Equals((Vector2I)obj);
-        }
-
-        /// <summary>
-        ///   Calculates the distance between this and the passed vector.
-        /// </summary>
-        /// <param name="vector"> Vector to compute distance to. </param>
-        /// <returns> Distance between this and the passed vector. </returns>
-        public float GetDistance(Vector2I vector)
-        {
-            return MathUtils.Sqrt(this.GetSquareDistance(vector));
-        }
-
-        /// <summary>
-        ///   Serves as a hash function for a particular type.
-        /// </summary>
-        /// <returns>
-        ///   A hash code for the current <see cref="T:System.Object" />.
-        /// </returns>
-        /// <filterpriority>2</filterpriority>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (this.X * 397) ^ this.Y;
-            }
-        }
-
-        /// <summary>
-        ///   Returns a vector which is perpendicular to this vector.
-        /// </summary>
-        /// <returns> Vector perpendicular to this one. </returns>
-        public Vector2I GetPerpendicularVector()
-        {
-            return new Vector2I(-this.Y, this.X);
-        }
-
-        /// <summary>
-        ///   Calculates the square distance between this and the passed vector.
-        /// </summary>
-        /// <param name="vector"> Vector to compute square distance to. </param>
-        /// <returns> Square distance between this and the passed vector. </returns>
-        public int GetSquareDistance(Vector2I vector)
-        {
-            return MathUtils.Pow(vector.X - this.X, 2) + MathUtils.Pow(vector.Y - this.Y, 2);
-        }
-
-        /// <summary>
-        ///   Checks if this vector is parallel or anti-parallel to the passed one.
-        /// </summary>
-        /// <param name="other"> Vector to check. </param>
-        /// <returns> True if both vectors are parallel or anti-parallel, else false. </returns>
-        public bool IsParallel(Vector2I other)
-        {
-            if (this.IsZero || other.IsZero)
-            {
-                return false;
-            }
-
-            return Math.Abs(this.CalculateDotProduct(other) / (this.Magnitude * other.Magnitude)) == 1;
-        }
-
-        /// <summary>
         ///   Returns a string that represents the current object.
         /// </summary>
         /// <returns>
@@ -553,24 +573,6 @@ namespace Slash.Math.Algebra.Vectors
                 "({0},{1})",
                 this.X.ToString(CultureInfo.InvariantCulture.NumberFormat),
                 this.Y.ToString(CultureInfo.InvariantCulture.NumberFormat));
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        ///   Determines whether the specified <see cref="Vector2I" /> is equal to the current <see cref="Vector2I" />.
-        /// </summary>
-        /// <returns>
-        ///   true if the specified <see cref="Vector2I" /> is equal to the current <see cref="Vector2I" />; otherwise, false.
-        /// </returns>
-        /// <param name="other">
-        ///   The <see cref="Vector2I" /> to compare with the current <see cref="Vector2I" />.
-        /// </param>
-        protected bool Equals(Vector2I other)
-        {
-            return this.X == other.X && this.Y == other.Y;
         }
 
         #endregion

@@ -15,9 +15,9 @@ namespace Slash.Math.Algebra.Vectors
     ///   3-dimensional float vector.
     /// </summary>
     [Serializable]
-    public class Vector3F
+    public struct Vector3F
     {
-        #region Static Fields
+        #region Constants
 
         /// <summary>
         ///   Unrotated forward vector.
@@ -68,16 +68,6 @@ namespace Slash.Math.Algebra.Vectors
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Constructs a new zero vector.
-        /// </summary>
-        public Vector3F()
-        {
-            this.X = 0;
-            this.Y = 0;
-            this.Z = 0;
-        }
-
-        /// <summary>
         ///   Constructor.
         /// </summary>
         /// <param name="vector"> Initial vector. </param>
@@ -115,7 +105,10 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Constructor.
         /// </summary>
-        /// <param name="values"> Float array which contains the initial vector value. Value at index 0 is taken as the initial x value, value at index 1 is taken as the initial y value, value at index 2 is taken as the initial z value. </param>
+        /// <param name="values">
+        ///   Float array which contains the initial vector value. Value at index 0 is taken as the initial x
+        ///   value, value at index 1 is taken as the initial y value, value at index 2 is taken as the initial z value.
+        /// </param>
         public Vector3F(params float[] values)
         {
             if (values == null)
@@ -135,7 +128,7 @@ namespace Slash.Math.Algebra.Vectors
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Indicates if at least one vector component is not zero.
@@ -186,6 +179,17 @@ namespace Slash.Math.Algebra.Vectors
         #region Public Methods and Operators
 
         /// <summary>
+        ///   Calculates the dot product of this and the passed vector. See http://en.wikipedia.org/wiki/Dot_product for more
+        ///   details.
+        /// </summary>
+        /// <param name="vector"> Vector to calculate dot product with. </param>
+        /// <returns> Dot product of this and the passed vector. </returns>
+        public float CalculateDotProduct(Vector3F vector)
+        {
+            return Dot(this, vector);
+        }
+
+        /// <summary>
         ///   Calculates the dot product of the two passed vectors. See http://en.wikipedia.org/wiki/Dot_product for more details.
         /// </summary>
         /// <param name="a"> First vector. </param>
@@ -194,6 +198,107 @@ namespace Slash.Math.Algebra.Vectors
         public static float Dot(Vector3F a, Vector3F b)
         {
             return (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+        ///   <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="obj">
+        ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
+        /// </param>
+        /// <filterpriority>2</filterpriority>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+            return this.Equals((Vector3F)obj);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="Vector3F" /> is equal to the current <see cref="Vector3F" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="Vector3F" /> is equal to the current <see cref="Vector3F" />; otherwise, false.
+        /// </returns>
+        /// <param name="other">
+        ///   The <see cref="Vector3F" /> to compare with the current <see cref="Vector3F" />.
+        /// </param>
+        public bool Equals(Vector3F other)
+        {
+            if (other == null)
+            {
+                throw new ArgumentNullException("other");
+            }
+            return this.X.Equals(other.X) && this.Y.Equals(other.Y) && this.Z.Equals(other.Z);
+        }
+
+        /// <summary>
+        ///   Calculates the distance between this and the passed vector.
+        /// </summary>
+        /// <param name="vector"> Vector to compute distance to. </param>
+        /// <returns> Distance between this and the passed vector. </returns>
+        public float GetDistance(Vector3F vector)
+        {
+            return MathUtils.Sqrt(this.GetSquareDistance(vector));
+        }
+
+        /// <summary>
+        ///   Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = this.X.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.Z.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        /// <summary>
+        ///   Returns the normalized vector.
+        /// </summary>
+        /// <returns> Normalized vector. </returns>
+        public Vector3F GetNormalized()
+        {
+            float magnitude = this.Magnitude;
+            if (magnitude != 0.0f)
+            {
+                return new Vector3F(this.X / magnitude, this.Y / magnitude, this.Z / magnitude);
+            }
+
+            return Zero;
+        }
+
+        /// <summary>
+        ///   Calculates the square distance between this and the passed vector.
+        /// </summary>
+        /// <param name="vector"> Vector to compute square distance to. </param>
+        /// <returns> Square distance between this and the passed vector. </returns>
+        public float GetSquareDistance(Vector3F vector)
+        {
+            return MathUtils.Pow2(vector.X - this.X) + MathUtils.Pow2(vector.Y - this.Y)
+                   + MathUtils.Pow2(vector.Z - this.Z);
         }
 
         /// <summary>
@@ -219,6 +324,20 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
+        ///   Normalizes this vector.
+        /// </summary>
+        /// <returns>Vector with the same orientation as this one, and unit length.</returns>
+        public Vector3F Normalize()
+        {
+            float magnitude = this.Magnitude;
+            if (magnitude != 0.0f)
+            {
+                return new Vector3F(this.X / magnitude, this.Y / magnitude, this.Z / magnitude);
+            }
+            return new Vector3F(this.X, this.Y, this.Z);
+        }
+
+        /// <summary>
         ///   Sums the components of the passed vectors and returns the resulting vector.
         /// </summary>
         /// <param name="a"> First vector. </param>
@@ -234,7 +353,10 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="a"> Vector to divide by the float value. </param>
         /// <param name="b"> Float value to divide by. </param>
-        /// <returns> Vector where each component is the result of the particular component of the passed vector divided by the passed float value. </returns>
+        /// <returns>
+        ///   Vector where each component is the result of the particular component of the passed vector divided by the
+        ///   passed float value.
+        /// </returns>
         public static Vector3F operator /(Vector3F a, float b)
         {
             return new Vector3F(a.X / b, a.Y / b, a.Z / b);
@@ -317,111 +439,6 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the dot product of this and the passed vector. See http://en.wikipedia.org/wiki/Dot_product for more details.
-        /// </summary>
-        /// <param name="vector"> Vector to calculate dot product with. </param>
-        /// <returns> Dot product of this and the passed vector. </returns>
-        public float CalculateDotProduct(Vector3F vector)
-        {
-            return Dot(this, vector);
-        }
-
-        /// <summary>
-        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.
-        /// </summary>
-        /// <returns>
-        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.
-        /// </returns>
-        /// <param name="obj">
-        ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
-        /// </param>
-        /// <filterpriority>2</filterpriority>
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            if (obj.GetType() != this.GetType())
-            {
-                return false;
-            }
-            return this.Equals((Vector3F)obj);
-        }
-
-        /// <summary>
-        ///   Calculates the distance between this and the passed vector.
-        /// </summary>
-        /// <param name="vector"> Vector to compute distance to. </param>
-        /// <returns> Distance between this and the passed vector. </returns>
-        public float GetDistance(Vector3F vector)
-        {
-            return MathUtils.Sqrt(this.GetSquareDistance(vector));
-        }
-
-        /// <summary>
-        ///   Serves as a hash function for a particular type.
-        /// </summary>
-        /// <returns>
-        ///   A hash code for the current <see cref="T:System.Object" />.
-        /// </returns>
-        /// <filterpriority>2</filterpriority>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int hashCode = this.X.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Y.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Z.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        ///   Returns the normalized vector.
-        /// </summary>
-        /// <returns> Normalized vector. </returns>
-        public Vector3F GetNormalized()
-        {
-            float magnitude = this.Magnitude;
-            if (magnitude != 0.0f)
-            {
-                return new Vector3F(this.X / magnitude, this.Y / magnitude, this.Z / magnitude);
-            }
-
-            return Zero;
-        }
-
-        /// <summary>
-        ///   Calculates the square distance between this and the passed vector.
-        /// </summary>
-        /// <param name="vector"> Vector to compute square distance to. </param>
-        /// <returns> Square distance between this and the passed vector. </returns>
-        public float GetSquareDistance(Vector3F vector)
-        {
-            return MathUtils.Pow2(vector.X - this.X) + MathUtils.Pow2(vector.Y - this.Y)
-                   + MathUtils.Pow2(vector.Z - this.Z);
-        }
-
-        /// <summary>
-        ///   Normalizes this vector.
-        /// </summary>
-        /// <returns>Vector with the same orientation as this one, and unit length.</returns>
-        public Vector3F Normalize()
-        {
-            float magnitude = this.Magnitude;
-            if (magnitude != 0.0f)
-            {
-                return new Vector3F(this.X / magnitude, this.Y / magnitude, this.Z / magnitude);
-            }
-            return new Vector3F(this.X, this.Y, this.Z);
-        }
-
-        /// <summary>
         ///   Returns a string that represents the current object.
         /// </summary>
         /// <returns>
@@ -435,28 +452,6 @@ namespace Slash.Math.Algebra.Vectors
                 this.X.ToString(CultureInfo.InvariantCulture.NumberFormat),
                 this.Y.ToString(CultureInfo.InvariantCulture.NumberFormat),
                 this.Z.ToString(CultureInfo.InvariantCulture.NumberFormat));
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        ///   Determines whether the specified <see cref="Vector3F" /> is equal to the current <see cref="Vector3F" />.
-        /// </summary>
-        /// <returns>
-        ///   true if the specified <see cref="Vector3F" /> is equal to the current <see cref="Vector3F" />; otherwise, false.
-        /// </returns>
-        /// <param name="other">
-        ///   The <see cref="Vector3F" /> to compare with the current <see cref="Vector3F" />.
-        /// </param>
-        protected bool Equals(Vector3F other)
-        {
-            if (other == null)
-            {
-                throw new ArgumentNullException("other");
-            }
-            return this.X.Equals(other.X) && this.Y.Equals(other.Y) && this.Z.Equals(other.Z);
         }
 
         #endregion
