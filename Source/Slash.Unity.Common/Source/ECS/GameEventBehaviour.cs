@@ -63,7 +63,10 @@ namespace Slash.Unity.Common.ECS
 
             this.RegisterListeners();
 
-            this.OnGameChanged(this.gameBehaviour.Game, null);
+            if (this.gameBehaviour != null)
+            {
+                this.OnGameChanged(this.gameBehaviour.Game, null);
+            }
         }
 
         /// <summary>
