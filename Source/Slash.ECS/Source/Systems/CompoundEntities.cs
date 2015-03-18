@@ -203,15 +203,18 @@ namespace Slash.ECS.Systems
                 return;
             }
 
-            // Remove component.
-            componentProperty.SetValue(entity, null);
-
             // Check if to remove entity completely.
             if (!componentProperty.Attribute.IsOptional)
             {
                 this.entities.Remove(entityId);
+
+                // Send event before removing component, 
+                // it may be needed for deinitialization of listeners.
                 this.OnEntityRemoved(entityId, entity);
             }
+
+            // Remove component.
+            componentProperty.SetValue(entity, null);
         }
 
         private void OnEntityAdded(int entityid, T entity)
