@@ -9,8 +9,11 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Configurations;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.Math.Algebra.Vectors;
@@ -49,22 +52,74 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         /// </summary>
         /// <param name="inspectorType">Type to draw inspector controls for.</param>
         /// <param name="attributeTable">Attribute to draw inspector for.</param>
-        public static void AttributeTableField(InspectorType inspectorType, IAttributeTable attributeTable)
+        /// <param name="inspectorTypeTable"></param>
+        /// <param name="blueprintManager"></param>
+        public static void AttributeTableField(
+            InspectorType inspectorType,
+            IAttributeTable attributeTable,
+            InspectorTypeTable inspectorTypeTable,
+            IBlueprintManager blueprintManager)
         {
             foreach (var inspectorProperty in inspectorType.Properties)
             {
                 // Get current value.
                 object currentValue = attributeTable.GetValueOrDefault(
-                    inspectorProperty.Name, inspectorProperty.Default);
+                    inspectorProperty.Name,
+                    inspectorProperty.Default);
 
                 // Draw inspector property.
-                object newValue = LogicInspectorPropertyField(inspectorProperty, currentValue);
+                object newValue = LogicInspectorPropertyField(
+                    inspectorProperty,
+                    currentValue,
+                    inspectorTypeTable,
+                    blueprintManager);
 
                 // Set new value if changed.
                 if (!Equals(newValue, currentValue))
                 {
                     attributeTable.SetValue(inspectorProperty.Name, newValue);
                 }
+            }
+        }
+
+        public static void BlueprintComponentsField(
+            Blueprint blueprint,
+            IAttributeTable configuration,
+            InspectorTypeTable inspectorTypeTable,
+            IBlueprintManager blueprintManager)
+        {
+            foreach (var componentType in blueprint.ComponentTypes)
+            {
+                var inspectorType = inspectorTypeTable[componentType];
+
+                // Draw inspector.
+                AttributeTableField(inspectorType, configuration, inspectorTypeTable, blueprintManager);
+            }
+        }
+
+        public static string BlueprintIdSelection(
+            GUIContent label,
+            string selectedBlueprintId,
+            InspectorTypeTable inspectorComponentTypes,
+            IBlueprintManager blueprintManager)
+        {
+            // Store all blueprint ids for access from a pulldown menu.
+            var blueprintIds = blueprintManager.Blueprints.Select(blueprint => blueprint.Key).ToArray();
+
+            // Show blueprint dropdown.
+            var oldSelectedBlueprintIndex = Array.IndexOf(blueprintIds, selectedBlueprintId);
+            var selectedBlueprintIndex = EditorGUILayout.Popup(
+                label,
+                oldSelectedBlueprintIndex,
+                blueprintIds.Select(blueprintId => new GUIContent(blueprintId)).ToArray());
+            if (selectedBlueprintIndex != oldSelectedBlueprintIndex)
+            {
+                // Update selected blueprint of the target entity.
+                return blueprintIds[selectedBlueprintIndex >= 0 ? selectedBlueprintIndex : 0];
+            }
+            else
+            {
+                return selectedBlueprintId;
             }
         }
 
@@ -159,7 +214,10 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         /// <param name="createList">Method for creating a new list if the size should be changed.</param>
         /// <returns>Whether to show all list entries now, or not.</returns>
         public static bool ListField<T>(
-            bool foldout, GUIContent foldoutText, ref IList list, Func<int, IList> createList) where T : Object
+            bool foldout,
+            GUIContent foldoutText,
+            ref IList list,
+            Func<int, IList> createList) where T : Object
         {
             IList newArray;
             bool newFoldout = ListField(foldout, foldoutText, list, createList, typeof(T), out newArray);
@@ -173,9 +231,15 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         /// <param name="inspectorProperty">Logic property to draw the inspector for.</param>
         /// <param name="currentValue">Current logic property value.</param>
         /// <param name="label">Text to show next to the property editor.</param>
+        /// <param name="inspectorTypeTable"></param>
+        /// <param name="blueprintManager"></param>
         /// <returns>New logic property value.</returns>
         public static object LogicInspectorPropertyField(
-            InspectorPropertyAttribute inspectorProperty, object currentValue, GUIContent label)
+            InspectorPropertyAttribute inspectorProperty,
+            object currentValue,
+            GUIContent label,
+            InspectorTypeTable inspectorTypeTable,
+            IBlueprintManager blueprintManager)
         {
             // Draw inspector control.
             if (inspectorProperty is InspectorBoolAttribute)
@@ -198,23 +262,62 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             if (enumInspectorProperty != null)
             {
                 object currentEnumValue = (currentValue != null)
-                                              ? Convert.ChangeType(currentValue, enumInspectorProperty.PropertyType)
-                                              : Enum.GetValues(enumInspectorProperty.PropertyType).GetValue(0);
+                    ? Convert.ChangeType(currentValue, enumInspectorProperty.PropertyType)
+                    : Enum.GetValues(enumInspectorProperty.PropertyType).GetValue(0);
                 return EditorGUILayout.EnumPopup(label, (Enum)currentEnumValue);
             }
             InspectorVectorAttribute vectorInspectorproperty = inspectorProperty as InspectorVectorAttribute;
             if (vectorInspectorproperty != null)
             {
-                if (vectorInspectorproperty.PropertyType == typeof(Vector2I) || vectorInspectorproperty.PropertyType == typeof(List<Vector2I>))
+                if (vectorInspectorproperty.PropertyType == typeof(Vector2I)
+                    || vectorInspectorproperty.PropertyType == typeof(List<Vector2I>))
                 {
                     Vector2I currentVector2IValue = (currentValue != null) ? (Vector2I)currentValue : Vector2I.Zero;
                     return Vector2IField(label, currentVector2IValue);
                 }
-                if (vectorInspectorproperty.PropertyType == typeof(Vector2F) || vectorInspectorproperty.PropertyType == typeof(List<Vector2F>))
+                if (vectorInspectorproperty.PropertyType == typeof(Vector2F)
+                    || vectorInspectorproperty.PropertyType == typeof(List<Vector2F>))
                 {
                     Vector2F currentVector2FValue = (currentValue != null) ? (Vector2F)currentValue : Vector2F.Zero;
                     return Vector2FField(label, currentVector2FValue);
                 }
+            }
+            InspectorEntityAttribute entityInspector = inspectorProperty as InspectorEntityAttribute;
+            if (entityInspector != null)
+            {
+                EntityConfiguration entityConfiguration = currentValue as EntityConfiguration;
+                if (entityConfiguration == null)
+                {
+                    entityConfiguration = new EntityConfiguration();
+                }
+
+                entityConfiguration.BlueprintId = BlueprintIdSelection(
+                    label,
+                    entityConfiguration.BlueprintId,
+                    inspectorTypeTable,
+                    blueprintManager);
+
+                if (!string.IsNullOrEmpty(entityConfiguration.BlueprintId))
+                {
+                    Blueprint blueprint = blueprintManager.GetBlueprint(entityConfiguration.BlueprintId);
+                    if (blueprint != null)
+                    {
+                        if (entityConfiguration.Configuration == null)
+                        {
+                            entityConfiguration.Configuration = new AttributeTable();
+                        }
+
+                        ++EditorGUI.indentLevel;
+                        BlueprintComponentsField(
+                            blueprint,
+                            entityConfiguration.Configuration,
+                            inspectorTypeTable,
+                            blueprintManager);
+                        --EditorGUI.indentLevel;
+                    }
+                }
+
+                return entityConfiguration;
             }
 
             EditorGUILayout.HelpBox(
@@ -231,9 +334,14 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         /// </summary>
         /// <param name="inspectorProperty">Logic property to draw the inspector for.</param>
         /// <param name="currentValue">Current logic property value.</param>
+        /// <param name="inspectorTypeTable"></param>
+        /// <param name="blueprintManager"></param>
         /// <returns>New logic property value.</returns>
         public static object LogicInspectorPropertyField(
-            InspectorPropertyAttribute inspectorProperty, object currentValue)
+            InspectorPropertyAttribute inspectorProperty,
+            object currentValue,
+            InspectorTypeTable inspectorTypeTable,
+            IBlueprintManager blueprintManager)
         {
             if (inspectorProperty.IsList)
             {
@@ -247,25 +355,33 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
                     new GUIContent(inspectorProperty.Name),
                     currentList,
                     count =>
+                    {
+                        IList list = localInspectorProperty.GetEmptyList();
+                        for (int idx = 0; idx < count; idx++)
                         {
-                            IList list = localInspectorProperty.GetEmptyList();
-                            for (int idx = 0; idx < count; idx++)
-                            {
-                                list.Add(null);
-                            }
-                            return list;
-
-                        },
+                            list.Add(null);
+                        }
+                        return list;
+                    },
                     (obj, index) =>
-                    LogicInspectorPropertyField(localInspectorProperty, obj, new GUIContent("Item " + index)),
+                        LogicInspectorPropertyField(
+                            localInspectorProperty,
+                            obj,
+                            new GUIContent("Item " + index),
+                            inspectorTypeTable,
+                            blueprintManager),
                     out newList);
 
                 return newList;
             }
-            
+
             // Draw inspector property.
             return LogicInspectorPropertyField(
-                inspectorProperty, currentValue, new GUIContent(inspectorProperty.Name, inspectorProperty.Description));
+                inspectorProperty,
+                currentValue,
+                new GUIContent(inspectorProperty.Name, inspectorProperty.Description),
+                inspectorTypeTable,
+                blueprintManager);
         }
 
         /// <summary>

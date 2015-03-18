@@ -152,6 +152,13 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
 
         private void OnGUI()
         {
+            // Reload blueprints if missing.
+            if (blueprintManager == null)
+            {
+                // Load blueprints.
+                LoadBlueprints();
+            }
+
             string removedBlueprintId = null;
             Type removedComponentType = null;
 
@@ -278,13 +285,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                         // Attributes.
                         GUILayout.Label("Attributes", EditorStyles.boldLabel);
 
-                        foreach (var componentType in this.selectedBlueprint.ComponentTypes)
-                        {
-                            var inspectorType = inspectorTypeTable[componentType];
-
-                            // Draw inspector.
-                            EditorGUIUtils.AttributeTableField(inspectorType, this.selectedBlueprint.AttributeTable);
-                        }
+                        EditorGUIUtils.BlueprintComponentsField(this.selectedBlueprint, this.selectedBlueprint.AttributeTable, inspectorTypeTable, blueprintManager);
                     }
                 }
                 EditorGUILayout.EndVertical();

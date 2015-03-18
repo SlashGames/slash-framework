@@ -13,6 +13,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Extensions;
+    using Slash.ECS.Blueprints;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Systems;
@@ -56,7 +57,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
             foreach (var inspectorType in this.inspectorSystemTypes)
             {
                 // Draw inspector type.
-                this.DrawInspector(inspectorType, configuration);
+                this.DrawInspector(inspectorType, configuration, this.inspectorSystemTypes, null);
             }
 
             if (GUILayout.Button("Reload"))
@@ -80,13 +81,13 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 
         #region Methods
 
-        private void DrawInspector(InspectorType inspectorType, IAttributeTable configuration)
+        private void DrawInspector(InspectorType inspectorType, IAttributeTable configuration, InspectorTypeTable inspectorTypeTable, IBlueprintManager blueprintManager)
         {
             foreach (var inspectorProperty in inspectorType.Properties)
             {
                 // Get current value.
                 object currentValue = configuration.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default);
-                object newValue = EditorGUIUtils.LogicInspectorPropertyField(inspectorProperty, currentValue);
+                object newValue = EditorGUIUtils.LogicInspectorPropertyField(inspectorProperty, currentValue, inspectorTypeTable, blueprintManager);
 
                 // Set new value if changed.
                 if (!Equals(newValue, currentValue))
