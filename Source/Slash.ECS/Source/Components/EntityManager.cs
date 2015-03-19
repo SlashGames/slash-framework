@@ -83,7 +83,7 @@ namespace Slash.ECS.Components
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Read-only collection of all entities.
@@ -192,7 +192,8 @@ namespace Slash.ECS.Components
             if (sendEvent)
             {
                 this.game.EventManager.QueueEvent(
-                    FrameworkEvent.ComponentAdded, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentAdded,
+                    new EntityComponentData(entityId, component));
             }
         }
 
@@ -202,7 +203,12 @@ namespace Slash.ECS.Components
         /// </summary>
         public void CleanUpEntities()
         {
-            foreach (int id in this.removedEntities)
+            // Store entities to remove as more entities might marked as removed
+            // inside the loop due to events.
+            var entitiesToRemove = new List<int>(this.removedEntities);
+            this.removedEntities.Clear();
+
+            foreach (int id in entitiesToRemove)
             {
                 // Remove components.
                 foreach (ComponentManager manager in this.componentManagers.Values)
@@ -212,8 +218,6 @@ namespace Slash.ECS.Components
 
                 this.entities.Remove(id);
             }
-
-            this.removedEntities.Clear();
         }
 
         /// <summary>
@@ -262,7 +266,8 @@ namespace Slash.ECS.Components
             if (!this.entities.Add(id))
             {
                 throw new ArgumentException(
-                    "An entity with id " + id + " couldn't be created, id already exists.", "id");
+                    "An entity with id " + id + " couldn't be created, id already exists.",
+                    "id");
             }
 
             // Adjust next entity id.
@@ -365,7 +370,8 @@ namespace Slash.ECS.Components
                 components.Add(component);
 
                 this.game.EventManager.QueueEvent(
-                    FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentRemoved,
+                    new EntityComponentData(entityId, component));
             }
 
             // Remove entity.
@@ -421,7 +427,8 @@ namespace Slash.ECS.Components
             if (entityId >= this.nextEntityId)
             {
                 throw new ArgumentOutOfRangeException(
-                    "entityId", "Entity id " + entityId + " has not yet been assigned.");
+                    "entityId",
+                    "Entity id " + entityId + " has not yet been assigned.");
             }
 
             return this.entities.Contains(entityId);
@@ -492,8 +499,8 @@ namespace Slash.ECS.Components
 
             ComponentManager componentManager;
             return this.componentManagers.TryGetValue(componentType, out componentManager)
-                       ? componentManager.GetComponent(entityId)
-                       : null;
+                ? componentManager.GetComponent(entityId)
+                : null;
         }
 
         /// <summary>
@@ -633,7 +640,10 @@ namespace Slash.ECS.Components
         /// <param name="configuration"> Data for initializing the entity. </param>
         /// <param name="additionalComponents">Components to add to the entity, in addition to the ones specified by the blueprint.</param>
         public void InitEntity(
-            int entityId, Blueprint blueprint, IAttributeTable configuration, IEnumerable<Type> additionalComponents)
+            int entityId,
+            Blueprint blueprint,
+            IAttributeTable configuration,
+            IEnumerable<Type> additionalComponents)
         {
             if (blueprint == null)
             {
@@ -657,8 +667,8 @@ namespace Slash.ECS.Components
             // Build list of components to add.
             IEnumerable<Type> blueprintComponentTypes = blueprint.GetAllComponentTypes();
             IEnumerable<Type> componentTypes = additionalComponents != null
-                                                   ? blueprintComponentTypes.Union(additionalComponents)
-                                                   : blueprintComponentTypes;
+                ? blueprintComponentTypes.Union(additionalComponents)
+                : blueprintComponentTypes;
 
             // Add components.
             foreach (Type type in componentTypes)
@@ -694,10 +704,14 @@ namespace Slash.ECS.Components
         /// <param name="onComponentAdded">Callback when a new component of the type was added.</param>
         /// <param name="onComponentRemoved">Callback when a component of the type was removed.</param>
         public void RegisterComponentListeners<T>(
-            ComponentAddedDelegate<T> onComponentAdded, ComponentRemovedDelegate<T> onComponentRemoved)
+            ComponentAddedDelegate<T> onComponentAdded,
+            ComponentRemovedDelegate<T> onComponentRemoved)
         {
             Type componentType = typeof(T);
-            RegisterComponentListeners(componentType, (entityId, component) => onComponentAdded(entityId, (T)component), (entityId, component) => onComponentRemoved(entityId, (T)component));
+            this.RegisterComponentListeners(
+                componentType,
+                (entityId, component) => onComponentAdded(entityId, (T)component),
+                (entityId, component) => onComponentRemoved(entityId, (T)component));
         }
 
         /// <summary>
@@ -706,22 +720,14 @@ namespace Slash.ECS.Components
         /// <param name="componentType">Type of component to track.</param>
         /// <param name="onComponentAdded">Callback when a new component of the type was added.</param>
         /// <param name="onComponentRemoved">Callback when a component of the type was removed.</param>
-        public void RegisterComponentListeners(Type componentType, ComponentAddedDelegate<object> onComponentAdded, ComponentRemovedDelegate<object> onComponentRemoved)
+        public void RegisterComponentListeners(
+            Type componentType,
+            ComponentAddedDelegate<object> onComponentAdded,
+            ComponentRemovedDelegate<object> onComponentRemoved)
         {
             ComponentManager componentManager = this.GetComponentManager(componentType, true);
             componentManager.ComponentAdded += onComponentAdded;
             componentManager.ComponentRemoved += onComponentRemoved;
-        }
-
-        private ComponentManager GetComponentManager(Type componentType, bool createIfNecessary)
-        {
-            ComponentManager componentManager;
-            if (!this.componentManagers.TryGetValue(componentType, out componentManager) && createIfNecessary)
-            {
-                componentManager = new ComponentManager();
-                this.componentManagers.Add(componentType, componentManager);
-            }
-            return componentManager;
         }
 
         /// <summary>
@@ -749,7 +755,8 @@ namespace Slash.ECS.Components
             if (!this.componentManagers.TryGetValue(componentType, out componentManager))
             {
                 throw new ArgumentException(
-                    "A component of type " + componentType + " has never been added before.", "componentType");
+                    "A component of type " + componentType + " has never been added before.",
+                    "componentType");
             }
 
             IEntityComponent component;
@@ -758,7 +765,8 @@ namespace Slash.ECS.Components
             if (removed)
             {
                 this.game.EventManager.QueueEvent(
-                    FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentRemoved,
+                    new EntityComponentData(entityId, component));
             }
 
             return removed;
@@ -781,7 +789,8 @@ namespace Slash.ECS.Components
                     if (manager.RemoveComponent(entityId, out component))
                     {
                         this.game.EventManager.QueueEvent(
-                            FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
+                            FrameworkEvent.ComponentRemoved,
+                            new EntityComponentData(entityId, component));
                     }
                 }
 
@@ -828,7 +837,8 @@ namespace Slash.ECS.Components
                 }
 
                 this.game.EventManager.QueueEvent(
-                    FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentRemoved,
+                    new EntityComponentData(entityId, component));
             }
 
             this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
@@ -857,7 +867,7 @@ namespace Slash.ECS.Components
             Blueprint blueprint = new Blueprint { AttributeTable = attributeTable, ComponentTypes = componentTypes };
             return blueprint;
         }
-        
+
         /// <summary>
         ///   Tries to get a component of the passed type attached to the entity with the specified id.
         /// </summary>
@@ -930,6 +940,17 @@ namespace Slash.ECS.Components
             }
         }
 
+        private ComponentManager GetComponentManager(Type componentType, bool createIfNecessary)
+        {
+            ComponentManager componentManager;
+            if (!this.componentManagers.TryGetValue(componentType, out componentManager) && createIfNecessary)
+            {
+                componentManager = new ComponentManager();
+                this.componentManagers.Add(componentType, componentManager);
+            }
+            return componentManager;
+        }
+
         /// <summary>
         ///   Initializes the specified component with the specified attribute table.
         /// </summary>
@@ -946,7 +967,10 @@ namespace Slash.ECS.Components
             }
 
             InspectorUtils.InitFromAttributeTable(
-                this, this.inspectorTypes.GetInspectorType(component.GetType()), component, attributeTable);
+                this,
+                this.inspectorTypes.GetInspectorType(component.GetType()),
+                component,
+                attributeTable);
         }
 
         #endregion
