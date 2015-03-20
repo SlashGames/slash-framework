@@ -20,7 +20,7 @@ namespace Slash.ECS.Systems
     {
         #region Fields
 
-        private readonly IEnumerable<ComponentProperty> componentProperties;
+        private readonly IList<ComponentProperty> componentProperties;
 
         /// <summary>
         ///   Existing entities.
@@ -41,7 +41,7 @@ namespace Slash.ECS.Systems
             this.entities = new Dictionary<int, T>();
             this.incompleteEntities = new Dictionary<int, T>();
 
-            this.componentProperties = this.CollectComponentProperties(typeof(T));
+            this.componentProperties = this.CollectComponentProperties(typeof(T)).ToList();
             if (this.componentProperties != null)
             {
                 foreach (var componentProperty in this.componentProperties)
@@ -145,8 +145,9 @@ namespace Slash.ECS.Systems
 
         private bool IsComplete(T entity)
         {
-            foreach (var componentProperty in this.componentProperties)
+            for (int index = 0; index < this.componentProperties.Count; index++)
             {
+                var componentProperty = this.componentProperties[index];
                 if (!componentProperty.Attribute.IsOptional && componentProperty.GetValue(entity) == null)
                 {
                     return false;
