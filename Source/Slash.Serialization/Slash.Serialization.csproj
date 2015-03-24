@@ -60,7 +60,6 @@
     <Compile Include="Source\Dictionary\ValueWithTypeDictionarySerializer.cs" />
     <Compile Include="Source\Utils\SerializationUtils.cs" />
     <Compile Include="Source\Xml\SerializableDictionary.cs" />
-    <Compile Include="Source\Xml\XmlAnything.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
