@@ -208,6 +208,15 @@ namespace Slash.ECS.Inspector.Attributes
         }
 
         /// <summary>
+        ///   Performs required deinitialization steps for this property of the specified object.
+        /// </summary>
+        /// <param name="entityManager">Entity manager the object belongs to.</param>
+        /// <param name="obj">Object the property belongs to.</param>
+        public virtual void Deinit(EntityManager entityManager, object obj)
+        {
+        }
+
+        /// <summary>
         ///   Gets an empty list for elements of the type of the property the attribute is attached to.
         /// </summary>
         /// <returns>Empty list of matching type.</returns>

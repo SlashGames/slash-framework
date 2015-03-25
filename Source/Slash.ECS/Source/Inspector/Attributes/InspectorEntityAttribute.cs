@@ -35,6 +35,17 @@ namespace Slash.ECS.Inspector.Attributes
 
         #region Public Methods and Operators
 
+        public override void Deinit(EntityManager entityManager, object obj)
+        {
+            // Get property value.
+            int entityId = (int)this.GetPropertyValue(entityManager, obj);
+            if (entityId > 0)
+            {
+                // Remove entity.
+                entityManager.RemoveEntity(entityId);
+            }
+        }
+
         /// <summary>
         ///   Initializes the specified object via reflection with the specified property value.
         /// </summary>
@@ -52,8 +63,9 @@ namespace Slash.ECS.Inspector.Attributes
                 {
                     entityIds = new List<int>();
                     entityIds.AddRange(
-                        entityConfigurations.Select(entityConfiguration => CreateEntity(entityManager, entityConfiguration))
-                                            .Where(entityId => entityId != 0));
+                        entityConfigurations.Select(
+                            entityConfiguration => CreateEntity(entityManager, entityConfiguration))
+                            .Where(entityId => entityId != 0));
                 }
                 else
                 {
@@ -120,7 +132,8 @@ namespace Slash.ECS.Inspector.Attributes
                 if (entityConfiguration.BlueprintId != null)
                 {
                     entityId = entityManager.CreateEntity(
-                        entityConfiguration.BlueprintId, entityConfiguration.Configuration);
+                        entityConfiguration.BlueprintId,
+                        entityConfiguration.Configuration);
                 }
             }
             return entityId;

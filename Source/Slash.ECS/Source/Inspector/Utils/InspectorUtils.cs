@@ -8,17 +8,15 @@ namespace Slash.ECS.Inspector.Utils
 {
     using System;
     using System.Collections.Generic;
-    
-#if WINDOWS_STORE
-    using System.Reflection;
-#endif
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Components;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.Reflection.Extensions;
-
+#if WINDOWS_STORE
+    using System.Reflection;
+#endif
 
     /// <summary>
     ///   Utility methods for collecting inspector data and initializing objects.
@@ -46,7 +44,7 @@ namespace Slash.ECS.Inspector.Utils
                 // Find all properties that are to be exposed in the inspector.
                 var inspectorPropertyAttributes =
                     property.GetCustomAttributes(typeof(InspectorPropertyAttribute), true) as
-                    InspectorPropertyAttribute[];
+                        InspectorPropertyAttribute[];
 
                 if (inspectorPropertyAttributes != null)
                 {
@@ -84,12 +82,17 @@ namespace Slash.ECS.Inspector.Utils
         ///   respective inspector properties, if no attribute value is present.
         /// </summary>
         /// <typeparam name="T">Type of the object to create.</typeparam>
-        /// <param name="entityManager">Entity manager to use for initializing the object, e.g. for creating entities from entity configuration attributes.</param>
+        /// <param name="entityManager">
+        ///   Entity manager to use for initializing the object, e.g. for creating entities from entity
+        ///   configuration attributes.
+        /// </param>
         /// <param name="inspectorType">Inspector data of the type of the object to create.</param>
         /// <param name="attributeTable">Attribute table to initialize the object with.</param>
         /// <returns>Initialized new object of the specified type.</returns>
         public static T CreateFromAttributeTable<T>(
-            EntityManager entityManager, InspectorType inspectorType, IAttributeTable attributeTable) where T : class
+            EntityManager entityManager,
+            InspectorType inspectorType,
+            IAttributeTable attributeTable) where T : class
         {
             // Create object.
             T obj = (T)Activator.CreateInstance(inspectorType.Type);
@@ -100,15 +103,29 @@ namespace Slash.ECS.Inspector.Utils
             return obj;
         }
 
+        public static void Deinit(EntityManager entityManager, InspectorType inspectorType, object obj)
+        {
+            // Unset values for all properties.
+            foreach (var inspectorProperty in inspectorType.Properties)
+            {
+                inspectorProperty.Deinit(entityManager, obj);
+            }
+        }
+
         /// <summary>
         ///   Initializes an object by getting its inspector properties via reflection and
         ///   look them up in the specified attribute table.
         /// </summary>
-        /// <param name="entityManager">Entity manager to use for initializing the object, e.g. for creating entities from entity configuration attributes.</param>
+        /// <param name="entityManager">
+        ///   Entity manager to use for initializing the object, e.g. for creating entities from entity
+        ///   configuration attributes.
+        /// </param>
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
         public static void InitFromAttributeTable(
-            IEntityManager entityManager, object obj, IAttributeTable attributeTable)
+            IEntityManager entityManager,
+            object obj,
+            IAttributeTable attributeTable)
         {
             InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
             if (inspectorType == null)
@@ -123,21 +140,26 @@ namespace Slash.ECS.Inspector.Utils
         ///   Initializes an object by getting its inspector properties from the specified inspector type
         ///   and look them up in the specified attribute table.
         /// </summary>
-        /// <param name="entityManager">Entity manager to use for initializing the object, e.g. for creating entities from entity configuration attributes.</param>
+        /// <param name="entityManager">
+        ///   Entity manager to use for initializing the object, e.g. for creating entities from entity
+        ///   configuration attributes.
+        /// </param>
         /// <param name="inspectorType">Contains information about the properties of the object.</param>
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
         public static void InitFromAttributeTable(
-            IEntityManager entityManager, InspectorType inspectorType, object obj, IAttributeTable attributeTable)
+            IEntityManager entityManager,
+            InspectorType inspectorType,
+            object obj,
+            IAttributeTable attributeTable)
         {
             // Set values for all properties.
             foreach (var inspectorProperty in inspectorType.Properties)
             {
                 // Get value from attribute table or default.
                 object propertyValue = attributeTable != null
-                                           ? attributeTable.GetValueOrDefault(
-                                               inspectorProperty.Name, inspectorProperty.Default)
-                                           : inspectorProperty.Default;
+                    ? attributeTable.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default)
+                    : inspectorProperty.Default;
 
                 inspectorProperty.SetPropertyValue(entityManager, obj, propertyValue);
             }
@@ -159,7 +181,10 @@ namespace Slash.ECS.Inspector.Utils
         #region Methods
 
         private static void SaveToAttributeTable(
-            EntityManager entityManager, InspectorType inspectorType, object obj, AttributeTable attributeTable)
+            EntityManager entityManager,
+            InspectorType inspectorType,
+            object obj,
+            AttributeTable attributeTable)
         {
             // Set values for all properties.
             foreach (var inspectorProperty in inspectorType.Properties)
