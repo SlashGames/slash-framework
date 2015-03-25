@@ -98,10 +98,10 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
         {
             var blueprintFile = new FileInfo(blueprintFileName);
 
-            using (var fileStream = blueprintFile.Open(FileMode.Create, FileAccess.ReadWrite))
+            using (var streamWriter = blueprintFile.CreateText())
             {
                 var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
-                blueprintManagerSerializer.Serialize(fileStream, blueprintManager);
+                blueprintManagerSerializer.Serialize(streamWriter, blueprintManager);
             }
 
             AssetDatabase.Refresh();
