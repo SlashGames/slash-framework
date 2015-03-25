@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release NoLog4Net|AnyCPU'">
-	<BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Release NoLog4Net\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
@@ -44,7 +44,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug NoLog4Net|AnyCPU'">
-	<BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Debug NoLog4Net\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -55,7 +55,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release WindowsStore|AnyCPU'">
-	<BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Release NoLog4Net\</OutputPath>
     <DefineConstants>TRACE;WINDOWS_STORE</DefineConstants>
     <Optimize>true</Optimize>
@@ -185,6 +185,10 @@
     <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
       <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
       <Name>Slash.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Xml\Slash.Xml.csproj">
+      <Project>{e399fde3-a0dd-4aea-bbf5-2a16c5e6775b}</Project>
+      <Name>Slash.Xml</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
