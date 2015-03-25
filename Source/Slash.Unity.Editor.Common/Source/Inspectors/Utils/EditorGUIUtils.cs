@@ -359,7 +359,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
                         IList list = localInspectorProperty.GetEmptyList();
                         for (int idx = 0; idx < count; idx++)
                         {
-                            list.Add(null);
+                            list.Add(localInspectorProperty.DefaultListItem);
                         }
                         return list;
                     },

@@ -48,7 +48,7 @@ namespace Slash.ECS.Inspector.Attributes
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Type of value in attribute table. If null, the property type is used.
@@ -59,6 +59,18 @@ namespace Slash.ECS.Inspector.Attributes
         ///   Default property value.
         /// </summary>
         public object Default { get; set; }
+
+        /// <summary>
+        ///   Default list item.
+        ///   Null for reference types, default value for value types.
+        /// </summary>
+        public object DefaultListItem
+        {
+            get
+            {
+                return this.ItemType.IsValueType ? Activator.CreateInstance(this.ItemType) : null;
+            }
+        }
 
         /// <summary>
         ///   A user-friendly description of the property.
@@ -73,6 +85,25 @@ namespace Slash.ECS.Inspector.Attributes
             get
             {
                 return typeof(IList).IsAssignableFrom(this.PropertyType);
+            }
+        }
+
+        /// <summary>
+        ///   Item type. Equals property type if no generic type, otherwise the type of the generic.
+        /// </summary>
+        public Type ItemType
+        {
+            get
+            {
+                var itemType = this.PropertyType;
+
+                // If this property is of list type, get generic type argument for creating new list.
+                if (ReflectionUtils.IsGenericType(itemType))
+                {
+                    itemType = itemType.GetGenericArguments()[0];
+                }
+
+                return itemType;
             }
         }
 
@@ -133,7 +164,8 @@ namespace Slash.ECS.Inspector.Attributes
         }
 
         /// <summary>
-        ///   Converts the passed value or list to a string that can be converted back to a value or list of the correct type for this property.
+        ///   Converts the passed value or list to a string that can be converted back to a value or list of the correct type for
+        ///   this property.
         /// </summary>
         /// <param name="value">Value or list to convert.</param>
         /// <returns>String that can be converted back to a value or list of the correct type for this property.</returns>
@@ -152,8 +184,8 @@ namespace Slash.ECS.Inspector.Attributes
                 }
 
                 return stringBuilder.Length > 0
-                           ? stringBuilder.ToString().Substring(0, stringBuilder.Length - 1)
-                           : string.Empty;
+                    ? stringBuilder.ToString().Substring(0, stringBuilder.Length - 1)
+                    : string.Empty;
             }
 
             return value.ToString();
@@ -181,14 +213,7 @@ namespace Slash.ECS.Inspector.Attributes
         /// <returns>Empty list of matching type.</returns>
         public virtual IList GetEmptyList()
         {
-            var itemType = this.PropertyType;
-
-            // If this property is of list type, get generic type argument for creating new list.
-            if (ReflectionUtils.IsGenericType(itemType))
-            {
-                itemType = itemType.GetGenericArguments()[0];
-            }
-
+            var itemType = this.ItemType;
             return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(itemType));
         }
 
@@ -291,7 +316,8 @@ namespace Slash.ECS.Inspector.Attributes
         }
 
         /// <summary>
-        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this property.
+        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this
+        ///   property.
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <param name="text">String that can be converted back to a value of the correct type for this property.</param>
