@@ -50,7 +50,7 @@ namespace Slash.ECS.Inspector.Data
 
         #endregion
 
-        #region Public Indexers
+        #region Properties
 
         /// <summary>
         ///   Inspector data for the specified type.
@@ -87,11 +87,10 @@ namespace Slash.ECS.Inspector.Data
             {
                 var inspectorTypes =
                     assembly.GetTypes()
-                            .Where(
-                                type =>
+                        .Where(
+                            type =>
                                 baseType == null
-                                || baseType.IsAssignableFrom(type)
-                                && type.IsAttributeDefined<InspectorTypeAttribute>());
+                                || baseType.IsAssignableFrom(type) && type.IsAttributeDefined<InspectorTypeAttribute>());
 
                 foreach (var inspectorType in inspectorTypes)
                 {
@@ -156,6 +155,17 @@ namespace Slash.ECS.Inspector.Data
         }
 
         /// <summary>
+        ///   Tries to get the inspector type for the specified type.
+        /// </summary>
+        /// <param name="type">Type to get the inspector type for.</param>
+        /// <param name="inspectorType">Inspector type for the specified type.</param>
+        /// <returns>True if inspector type for type was found; otherwise, false.</returns>
+        public bool TryGetInspectorType(Type type, out InspectorType inspectorType)
+        {
+            return this.inspectorTypes.TryGetValue(type, out inspectorType);
+        }
+
+        /// <summary>
         ///   Types accessible to the user in the inspector.
         /// </summary>
         /// <returns>All types accessible to the user in the inspector.</returns>
@@ -166,7 +176,7 @@ namespace Slash.ECS.Inspector.Data
 
         #endregion
 
-        #region Explicit Interface Methods
+        #region Methods
 
         IEnumerator IEnumerable.GetEnumerator()
         {

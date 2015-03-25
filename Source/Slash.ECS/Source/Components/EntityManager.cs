@@ -761,9 +761,11 @@ namespace Slash.ECS.Components
 
             IEntityComponent component;
             bool removed = componentManager.RemoveComponent(entityId, out component);
-
             if (removed)
             {
+                // Deinitialize component.
+                this.DeinitComponent(component);
+
                 this.game.EventManager.QueueEvent(
                     FrameworkEvent.ComponentRemoved,
                     new EntityComponentData(entityId, component));
@@ -940,6 +942,23 @@ namespace Slash.ECS.Components
             }
         }
 
+        /// <summary>
+        ///   Deinitializes the specified component.
+        /// </summary>
+        /// <param name="component">Component to deinitialize.</param>
+        private void DeinitComponent(IEntityComponent component)
+        {
+            InspectorType inspectorType;
+            if (!this.inspectorTypes.TryGetInspectorType(component.GetType(), out inspectorType))
+            {
+                this.game.Log.Warning(
+                    "Entity component '" + component.GetType() + "' not flagged as inspector type, can't deinitialize.");
+                return;
+            }
+
+            InspectorUtils.Deinit(this, inspectorType, component);
+        }
+
         private ComponentManager GetComponentManager(Type componentType, bool createIfNecessary)
         {
             ComponentManager componentManager;
@@ -958,7 +977,8 @@ namespace Slash.ECS.Components
         /// <param name="attributeTable">Attribute table which contains the data of the component.</param>
         private void InitComponent(IEntityComponent component, IAttributeTable attributeTable)
         {
-            if (!this.inspectorTypes.HasType(component.GetType()))
+            InspectorType inspectorType;
+            if (!this.inspectorTypes.TryGetInspectorType(component.GetType(), out inspectorType))
             {
                 this.game.Log.Warning(
                     "Entity component '" + component.GetType()
@@ -966,11 +986,7 @@ namespace Slash.ECS.Components
                 return;
             }
 
-            InspectorUtils.InitFromAttributeTable(
-                this,
-                this.inspectorTypes.GetInspectorType(component.GetType()),
-                component,
-                attributeTable);
+            InspectorUtils.InitFromAttributeTable(this, inspectorType, component, attributeTable);
         }
 
         #endregion
