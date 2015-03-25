@@ -13,7 +13,7 @@ namespace Slash.Unity.Common.ECS
 
     public class EntityBehaviour : MonoBehaviour
     {
-        #region Public Properties
+        #region Properties
 
         public int EntityId { get; set; }
 
@@ -23,9 +23,11 @@ namespace Slash.Unity.Common.ECS
 
         #region Public Methods and Operators
 
-        public T GetLogicComponent<T>() where T : IEntityComponent
+        public T GetLogicComponent<T>() where T : class, IEntityComponent
         {
-            return this.Game.EntityManager.GetComponent<T>(this.EntityId);
+            return this.Game.EntityManager.EntityIsAlive(this.EntityId)
+                ? this.Game.EntityManager.GetComponent<T>(this.EntityId)
+                : null;
         }
 
         #endregion

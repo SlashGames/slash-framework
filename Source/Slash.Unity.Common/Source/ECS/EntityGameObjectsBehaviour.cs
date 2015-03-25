@@ -373,6 +373,13 @@ namespace Slash.Unity.Common.ECS
         private void onEntityCreated(GameEvent e)
         {
             int entityId = (int)e.EventData;
+
+            // Check if entity is still alive, may already be removed due to different update frames.
+            if (!this.game.EntityManager.EntityIsAlive(entityId))
+            {
+                return;
+            }
+
             if (this.entities.ContainsKey(entityId))
             {
                 Debug.LogError(string.Format("Entity object for entity with id '{0}' already exists.", entityId));
