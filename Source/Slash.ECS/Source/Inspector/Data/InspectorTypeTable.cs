@@ -10,6 +10,7 @@ namespace Slash.ECS.Inspector.Data
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     using Slash.ECS.Inspector.Attributes;
     using Slash.Reflection.Extensions;
@@ -85,18 +86,26 @@ namespace Slash.ECS.Inspector.Data
 
             foreach (var assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-                var inspectorTypes =
-                    assembly.GetTypes()
-                        .Where(
-                            type =>
-                                baseType == null
-                                || baseType.IsAssignableFrom(type) && type.IsAttributeDefined<InspectorTypeAttribute>());
-
-                foreach (var inspectorType in inspectorTypes)
+                try
                 {
-                    InspectorType inspectorTypeData = InspectorType.GetInspectorType(inspectorType);
+                    var inspectorTypes =
+                        assembly.GetTypes()
+                            .Where(
+                                type =>
+                                    baseType == null
+                                    || baseType.IsAssignableFrom(type)
+                                    && type.IsAttributeDefined<InspectorTypeAttribute>());
 
-                    inspectorTypeTable.inspectorTypes.Add(inspectorType, inspectorTypeData);
+                    foreach (var inspectorType in inspectorTypes)
+                    {
+                        InspectorType inspectorTypeData = InspectorType.GetInspectorType(inspectorType);
+
+                        inspectorTypeTable.inspectorTypes.Add(inspectorType, inspectorTypeData);
+                    }
+                }
+                catch (ReflectionTypeLoadException)
+                {
+                    // Some assemblies can't be reflected, like UnityEditor.
                 }
             }
 
