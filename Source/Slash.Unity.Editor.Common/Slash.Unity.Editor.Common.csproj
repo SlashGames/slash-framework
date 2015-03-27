@@ -68,6 +68,7 @@
     <Compile Include="Source\Build\BuildSettingsAndroid.cs" />
     <Compile Include="Source\Build\BuildType.cs" />
     <Compile Include="Source\MenuItems\Util\CreateEmptyInCenter.cs" />
+    <Compile Include="Source\MenuItems\Util\Utils.cs" />
     <Compile Include="Source\MenuItems\Util\PlayerPrefsDeleteAll.cs" />
     <Compile Include="Source\MenuItems\Util\FindMonoBehaviourUsages.cs" />
     <Compile Include="Source\MenuItems\Util\CheckTextureAssets.cs" />
