@@ -19,11 +19,15 @@ namespace Slash.ECS.Components
     using Slash.ECS.Inspector.Utils;
     using Slash.Reflection.Extensions;
 
+    public delegate void ComponentAddedDelegate<in T>(int entityId, T component);
+
+    public delegate void ComponentRemovedDelegate<in T>(int entityId, T component);
+
     /// <summary>
     ///   Creates and removes game entities. Holds references to all component
     ///   managers, delegating all calls for adding or removing components.
     /// </summary>
-    public class EntityManager : IEntityManager
+    public class EntityManager
     {
         #region Fields
 

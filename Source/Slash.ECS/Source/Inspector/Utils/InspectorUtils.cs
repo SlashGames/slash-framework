@@ -123,7 +123,7 @@ namespace Slash.ECS.Inspector.Utils
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
         public static void InitFromAttributeTable(
-            IEntityManager entityManager,
+            EntityManager entityManager,
             object obj,
             IAttributeTable attributeTable)
         {
@@ -148,7 +148,7 @@ namespace Slash.ECS.Inspector.Utils
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
         public static void InitFromAttributeTable(
-            IEntityManager entityManager,
+            EntityManager entityManager,
             InspectorType inspectorType,
             object obj,
             IAttributeTable attributeTable)

@@ -52,7 +52,7 @@ namespace Slash.ECS.Inspector.Attributes
         /// <param name="entityManager">Entity manager.</param>
         /// <param name="obj">Object to set property value for.</param>
         /// <param name="propertyValue">Property value to set.</param>
-        public override void SetPropertyValue(IEntityManager entityManager, object obj, object propertyValue)
+        public override void SetPropertyValue(EntityManager entityManager, object obj, object propertyValue)
         {
             IAttributeTable propertyAttributeTable = (IAttributeTable)propertyValue;
 

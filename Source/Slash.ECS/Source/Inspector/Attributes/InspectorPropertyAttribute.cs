@@ -232,7 +232,7 @@ namespace Slash.ECS.Inspector.Attributes
         /// <param name="entityManager">Entity manager.</param>
         /// <param name="obj">Object to get property value for.</param>
         /// <returns>Property value.</returns>
-        public virtual object GetPropertyValue(IEntityManager entityManager, object obj)
+        public virtual object GetPropertyValue(EntityManager entityManager, object obj)
         {
             return obj.GetType().GetProperty(this.PropertyName).GetValue(obj, null);
         }
@@ -253,7 +253,7 @@ namespace Slash.ECS.Inspector.Attributes
         /// <param name="entityManager">Entity manager.</param>
         /// <param name="obj">Object to set property value for.</param>
         /// <param name="propertyValue">Property value to set.</param>
-        public virtual void SetPropertyValue(IEntityManager entityManager, object obj, object propertyValue)
+        public virtual void SetPropertyValue(EntityManager entityManager, object obj, object propertyValue)
         {
             obj.GetType().GetProperty(this.PropertyName).SetValue(obj, propertyValue, null);
         }

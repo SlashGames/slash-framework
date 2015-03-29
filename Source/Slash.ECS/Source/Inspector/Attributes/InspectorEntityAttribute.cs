@@ -49,11 +49,10 @@ namespace Slash.ECS.Inspector.Attributes
         /// <summary>
         ///   Initializes the specified object via reflection with the specified property value.
         /// </summary>
-        /// <param name="entityManager"></param>
+        /// <param name="entityManager">Entity manager containing the specified object.</param>
         /// <param name="obj">Object to set property value for.</param>
         /// <param name="propertyValue">Property value to set.</param>
-        /// <param name="game">Game the object exists in.</param>
-        public override void SetPropertyValue(IEntityManager entityManager, object obj, object propertyValue)
+        public override void SetPropertyValue(EntityManager entityManager, object obj, object propertyValue)
         {
             if (this.IsList)
             {
@@ -124,7 +123,7 @@ namespace Slash.ECS.Inspector.Attributes
 
         #region Methods
 
-        private static int CreateEntity(IEntityManager entityManager, EntityConfiguration entityConfiguration)
+        private static int CreateEntity(EntityManager entityManager, EntityConfiguration entityConfiguration)
         {
             int entityId = 0;
             if (entityConfiguration != null)

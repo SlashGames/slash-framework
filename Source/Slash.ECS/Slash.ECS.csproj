@@ -45,7 +45,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Source\Components\EntityComponent.cs" />
-    <Compile Include="Source\Components\IEntityManager.cs" />
     <Compile Include="Source\Events\GameEventTypeAttribute.cs" />
     <Compile Include="Source\Features\Serialization\Events\SerializationAction.cs" />
     <Compile Include="Source\Inspector\Attributes\ConditionalFlagsCheck.cs" />
