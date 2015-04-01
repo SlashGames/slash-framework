@@ -28,3 +28,6 @@ Source/Slash.Unity.NGUI/Source/Unity/Unity-csharp.sln
 Source/Slash.Unity.NGUI/Source/Unity/Unity.sln
 Source/Slash.Unity.NGUI/Source/Unity/Temp/
 /Tools/Build/Slash.Framework
+
+# Visual Studio 2015 Preview
+*.sln.ide
