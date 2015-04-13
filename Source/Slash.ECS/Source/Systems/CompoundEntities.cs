@@ -223,7 +223,7 @@ namespace Slash.ECS.Systems
             /// </summary>
             public object RecentComponent { get; set; }
 
-            public Type Type { get; }
+            public Type Type { get; private set; }
 
             #endregion
 
