@@ -129,6 +129,28 @@ namespace Slash.Unity.Common.Math
             return new Vector3(vector.X, vector.Y, z);
         }
 
+        /// <summary>
+        ///   Converts the specified framework vector to an Unity vector.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <param name="z">Z value.</param>
+        /// <returns>Corresponding Unity vector.</returns>
+        public static Vector3 ToVector3XY(this Vector2F vector, float z = 0)
+        {
+            return new Vector3(vector.X, vector.Y, z);
+        }
+
+        /// <summary>
+        ///   Converts the specified framework vector to an Unity vector.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <param name="y">Y value.</param>
+        /// <returns>Corresponding Unity vector.</returns>
+        public static Vector3 ToVector3XZ(this Vector2F vector, float y = 0)
+        {
+            return new Vector3(vector.X, y, vector.Y);
+        }
+
         #endregion
     }
 }
