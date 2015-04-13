@@ -27,10 +27,7 @@ namespace Slash.ECS.Systems
         /// </summary>
         private readonly Dictionary<int, T> entities;
 
-        /// <summary>
-        ///   Entities which are not complete (yet).
-        /// </summary>
-        private readonly Dictionary<int, T> incompleteEntities;
+        private readonly EntityManager entityManager;
 
         #endregion
 
@@ -38,19 +35,14 @@ namespace Slash.ECS.Systems
 
         public CompoundEntities(EntityManager entityManager)
         {
+            this.entityManager = entityManager;
             this.entities = new Dictionary<int, T>();
-            this.incompleteEntities = new Dictionary<int, T>();
 
             this.componentProperties = this.CollectComponentProperties(typeof(T)).ToList();
             if (this.componentProperties != null)
             {
-                foreach (var componentProperty in this.componentProperties)
-                {
-                    entityManager.RegisterComponentListeners(
-                        componentProperty.Type,
-                        this.OnComponentAdded,
-                        this.OnComponentRemoved);
-                }
+                entityManager.EntityInitialized += this.OnEntityInitialized;
+                entityManager.EntityRemoved += this.OnEntityRemoved;
             }
         }
 
@@ -132,92 +124,6 @@ namespace Slash.ECS.Systems
             return this.GetEnumerator();
         }
 
-        private T GetIncompleteEntity(int entityId, bool createIfNecessary = false)
-        {
-            T entity;
-            if (!this.incompleteEntities.TryGetValue(entityId, out entity) && createIfNecessary)
-            {
-                entity = new T();
-                this.incompleteEntities[entityId] = entity;
-            }
-            return entity;
-        }
-
-        private bool IsComplete(T entity)
-        {
-            for (int index = 0; index < this.componentProperties.Count; index++)
-            {
-                var componentProperty = this.componentProperties[index];
-                if (!componentProperty.Attribute.IsOptional && componentProperty.GetValue(entity) == null)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private void OnComponentAdded(int entityId, object component)
-        {
-            // Get entity.
-            T entity = this.GetEntity(entityId);
-            if (entity == null)
-            {
-                // Get or create incomplete entity.
-                entity = this.GetIncompleteEntity(entityId, true);
-            }
-
-            // Get component property for this component.
-            ComponentProperty componentProperty =
-                this.componentProperties.FirstOrDefault(property => property.Type == component.GetType());
-            if (componentProperty == null)
-            {
-                return;
-            }
-
-            // Set component.
-            componentProperty.SetValue(entity, component);
-
-            // Check if complete, i.e. all necessary components are set.
-            if (!componentProperty.Attribute.IsOptional && this.IsComplete(entity))
-            {
-                this.incompleteEntities.Remove(entityId);
-                this.entities.Add(entityId, entity);
-
-                this.OnEntityAdded(entityId, entity);
-            }
-        }
-
-        private void OnComponentRemoved(int entityId, object component)
-        {
-            // Get entity.
-            T entity = this.GetEntity(entityId);
-            if (entity == null)
-            {
-                return;
-            }
-
-            // Get component property for this component.
-            ComponentProperty componentProperty =
-                this.componentProperties.FirstOrDefault(property => property.Type == component.GetType());
-            if (componentProperty == null)
-            {
-                return;
-            }
-
-            // Check if to remove entity completely.
-            if (!componentProperty.Attribute.IsOptional)
-            {
-                this.entities.Remove(entityId);
-
-                // Send event before removing component, 
-                // it may be needed for deinitialization of listeners.
-                this.OnEntityRemoved(entityId, entity);
-            }
-
-            // Remove component.
-            componentProperty.SetValue(entity, null);
-        }
-
         private void OnEntityAdded(int entityid, T entity)
         {
             var handler = this.EntityAdded;
@@ -225,6 +131,50 @@ namespace Slash.ECS.Systems
             {
                 handler(entityid, entity);
             }
+        }
+
+        private void OnEntityInitialized(int entityId)
+        {
+            // Check if all required components present.
+            foreach (var componentProperty in this.componentProperties)
+            {
+                componentProperty.RecentComponent = this.entityManager.GetComponent(entityId, componentProperty.Type);
+
+                if (componentProperty.RecentComponent == null && !componentProperty.Attribute.IsOptional)
+                {
+                    return;
+                }
+            }
+
+            // Create compound entity.
+            T entity = new T();
+
+            // Set components.
+            foreach (var componentProperty in this.componentProperties)
+            {
+                if (componentProperty.RecentComponent != null)
+                {
+                    componentProperty.SetValue(entity, componentProperty.RecentComponent);
+                }
+            }
+
+            this.entities.Add(entityId, entity);
+
+            // Notify listeners.
+            this.OnEntityAdded(entityId, entity);
+        }
+
+        private void OnEntityRemoved(int entityId)
+        {
+            var entity = this.GetEntity(entityId);
+
+            if (entity == null)
+            {
+                return;
+            }
+
+            this.entities.Remove(entityId);
+            this.OnEntityRemoved(entityId, entity);
         }
 
         private void OnEntityRemoved(int entityid, T entity)
@@ -268,7 +218,12 @@ namespace Slash.ECS.Systems
 
             public CompoundComponentAttribute Attribute { get; set; }
 
-            public Type Type { get; private set; }
+            /// <summary>
+            ///   Most recent component created for this property.
+            /// </summary>
+            public object RecentComponent { get; set; }
+
+            public Type Type { get; }
 
             #endregion
 
