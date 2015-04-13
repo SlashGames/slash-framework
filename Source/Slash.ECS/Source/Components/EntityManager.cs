@@ -23,6 +23,10 @@ namespace Slash.ECS.Components
 
     public delegate void ComponentRemovedDelegate<in T>(int entityId, T component);
 
+    public delegate void EntityInitializedDelegate(int entityId);
+
+    public delegate void EntityRemovedDelegate(int entityId);
+
     /// <summary>
     ///   Creates and removes game entities. Holds references to all component
     ///   managers, delegating all calls for adding or removing components.
@@ -87,6 +91,20 @@ namespace Slash.ECS.Components
 
         #endregion
 
+        #region Events
+
+        /// <summary>
+        ///   Entity has been created and all components have been added and initialized.
+        /// </summary>
+        public event EntityInitializedDelegate EntityInitialized;
+
+        /// <summary>
+        ///   Entity and all of its components will be removed at the end of this tick.
+        /// </summary>
+        public event EntityRemovedDelegate EntityRemoved;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -139,7 +157,7 @@ namespace Slash.ECS.Components
             }
 
             // Raise event.
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
+            this.OnEntityInitialized(entityId);
 
             // Remove from list of inactive entities.
             this.inactiveEntities.Remove(entityId);
@@ -681,7 +699,7 @@ namespace Slash.ECS.Components
             }
 
             // Raise event.
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
+            this.OnEntityInitialized(entityId);
         }
 
         /// <summary>
@@ -698,7 +716,7 @@ namespace Slash.ECS.Components
             }
 
             // Raise event.
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
+            this.OnEntityInitialized(entityId);
         }
 
         /// <summary>
@@ -786,7 +804,7 @@ namespace Slash.ECS.Components
             IEnumerable<int> aliveEntities = this.entities.Except(this.removedEntities);
             foreach (int entityId in aliveEntities)
             {
-                this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
+                this.OnEntityRemoved(entityId);
 
                 // Remove components.
                 foreach (ComponentManager manager in this.componentManagers.Values)
@@ -847,7 +865,7 @@ namespace Slash.ECS.Components
                     new EntityComponentData(entityId, component));
             }
 
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
+            this.OnEntityRemoved(entityId);
 
             this.removedEntities.Add(entityId);
         }
@@ -991,6 +1009,28 @@ namespace Slash.ECS.Components
             }
 
             InspectorUtils.InitFromAttributeTable(this, inspectorType, component, attributeTable);
+        }
+
+        private void OnEntityInitialized(int entityId)
+        {
+            var handler = this.EntityInitialized;
+            if (handler != null)
+            {
+                handler(entityId);
+            }
+
+            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
+        }
+
+        private void OnEntityRemoved(int entityId)
+        {
+            var handler = this.EntityRemoved;
+            if (handler != null)
+            {
+                handler(entityId);
+            }
+
+            this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
         }
 
         #endregion
