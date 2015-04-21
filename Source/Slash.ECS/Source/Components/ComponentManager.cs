@@ -20,10 +20,14 @@ namespace Slash.ECS.Components
     {
         #region Fields
 
+        private readonly Queue<IEntityComponent> componentPool;
+
         /// <summary>
         ///   Components attached to game entities.
         /// </summary>
         private readonly Dictionary<int, IEntityComponent> components;
+
+        private readonly Type componentType;
 
         #endregion
 
@@ -32,14 +36,16 @@ namespace Slash.ECS.Components
         /// <summary>
         ///   Constructs a new component manager without any initial components.
         /// </summary>
-        public ComponentManager()
+        public ComponentManager(Type componentType)
         {
+            this.componentType = componentType;
             this.components = new Dictionary<int, IEntityComponent>();
+            this.componentPool = new Queue<IEntityComponent>();
         }
 
         #endregion
 
-        #region Public Events
+        #region Events
 
         /// <summary>
         ///   Callback when a new component was added.
@@ -54,6 +60,33 @@ namespace Slash.ECS.Components
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Attaches the passed component to the entity with the specified id.
+        ///   Note that this manager does not check whether the specified id is valid.
+        /// </summary>
+        /// <param name="entityId">
+        ///   Id of the entity to attach the component to.
+        /// </param>
+        /// <exception cref="InvalidOperationException">
+        ///   There is already a component of the same type attached.
+        /// </exception>
+        public IEntityComponent AddComponent(int entityId)
+        {
+            if (this.components.ContainsKey(entityId))
+            {
+                throw new InvalidOperationException(
+                    "There is already a component of type " + this.componentType + " attached to entity with id "
+                    + entityId + ".");
+            }
+
+            var component = this.CreateComponent();
+            
+            this.components.Add(entityId, component);
+            this.OnComponentAdded(entityId, component);
+
+            return component;
+        }
 
         /// <summary>
         ///   Attaches the passed component to the entity with the specified id.
@@ -81,7 +114,7 @@ namespace Slash.ECS.Components
             if (this.components.ContainsKey(entityId))
             {
                 throw new InvalidOperationException(
-                    "There is already a component of type " + component.GetType() + " attached to entity with id "
+                    "There is already a component of type " + this.componentType + " attached to entity with id "
                     + entityId + ".");
             }
 
@@ -96,6 +129,15 @@ namespace Slash.ECS.Components
         public IEnumerable Components()
         {
             return this.components.Values;
+        }
+
+        public IEntityComponent CreateComponent()
+        {
+            if (this.componentPool.Count > 0)
+            {
+                return this.componentPool.Dequeue();
+            }
+            return (IEntityComponent)Activator.CreateInstance(this.componentType);
         }
 
         /// <summary>
@@ -157,6 +199,10 @@ namespace Slash.ECS.Components
             {
                 this.components.Remove(entityId);
                 this.OnComponentRemoved(entityId, component);
+
+                // Add to pool.
+                this.componentPool.Enqueue(component);
+
                 return true;
             }
 

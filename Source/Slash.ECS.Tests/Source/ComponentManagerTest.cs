@@ -26,11 +26,6 @@ namespace Slash.ECS.Tests
         /// </summary>
         private ComponentManager componentManager;
 
-        /// <summary>
-        ///   Test component to run unit tests on.
-        /// </summary>
-        private TestEntityComponent testEntityComponent;
-
         #endregion
 
         #region Public Methods and Operators
@@ -41,8 +36,7 @@ namespace Slash.ECS.Tests
         [SetUp]
         public void SetUp()
         {
-            this.componentManager = new ComponentManager();
-            this.testEntityComponent = new TestEntityComponent();
+            this.componentManager = new ComponentManager(typeof(TestEntityComponent));
         }
 
         /// <summary>
@@ -51,8 +45,8 @@ namespace Slash.ECS.Tests
         [Test]
         public void TestAddComponent()
         {
-            this.componentManager.AddComponent(0, this.testEntityComponent);
-            Assert.AreEqual(this.testEntityComponent, this.componentManager.GetComponent(0));
+            var entityComponent = this.componentManager.AddComponent(0);
+            Assert.AreEqual(entityComponent, this.componentManager.GetComponent(0));
         }
 
         /// <summary>
@@ -62,8 +56,8 @@ namespace Slash.ECS.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestAddComponentTwice()
         {
-            this.componentManager.AddComponent(0, this.testEntityComponent);
-            this.componentManager.AddComponent(0, this.testEntityComponent);
+            this.componentManager.AddComponent(0);
+            this.componentManager.AddComponent(0);
         }
 
         /// <summary>
@@ -77,12 +71,31 @@ namespace Slash.ECS.Tests
         }
 
         /// <summary>
+        ///   Tests reusing component.
+        /// </summary>
+        [Test]
+        public void TestCreateComponent()
+        {
+            // Add to entity.
+            int entityIdA = 1;
+            var entityComponentA = this.componentManager.AddComponent(entityIdA);
+
+            // Remove from entity.
+            bool removed = this.componentManager.RemoveComponent(entityIdA);
+            Assert.IsTrue(removed);
+
+            // Add to new entity.
+            var entityComponentB = this.componentManager.CreateComponent();
+            Assert.AreEqual(entityComponentA, entityComponentB);
+        }
+
+        /// <summary>
         ///   Tests removing a component from the component manager.
         /// </summary>
         [Test]
         public void TestRemoveComponent()
         {
-            this.componentManager.AddComponent(0, this.testEntityComponent);
+            this.componentManager.AddComponent(0);
             Assert.IsTrue(this.componentManager.RemoveComponent(0));
             Assert.IsFalse(this.componentManager.RemoveComponent(0));
             Assert.IsNull(this.componentManager.GetComponent(0));

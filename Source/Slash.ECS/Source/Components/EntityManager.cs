@@ -186,9 +186,7 @@ namespace Slash.ECS.Components
         /// <returns>Attached component.</returns>
         public T AddComponent<T>(int entityId) where T : IEntityComponent, new()
         {
-            T component = new T();
-            this.AddComponent(entityId, component, true);
-            return component;
+            return (T)this.AddComponent(typeof(T), entityId, null);
         }
 
         /// <summary>
@@ -204,19 +202,9 @@ namespace Slash.ECS.Components
         /// <exception cref="InvalidOperationException">There is already a component of the same type attached.</exception>
         public void AddComponent(int entityId, IEntityComponent component, bool sendEvent)
         {
-            this.CheckEntityId(entityId);
-
             Type componentType = component.GetType();
-
             ComponentManager componentManager = this.GetComponentManager(componentType, true);
-            componentManager.AddComponent(entityId, component);
-
-            if (sendEvent)
-            {
-                this.game.EventManager.QueueEvent(
-                    FrameworkEvent.ComponentAdded,
-                    new EntityComponentData(entityId, component));
-            }
+            this.AddComponent(componentManager, entityId, component, sendEvent);
         }
 
         /// <summary>
@@ -926,6 +914,24 @@ namespace Slash.ECS.Components
 
         #region Methods
 
+        private void AddComponent(
+            ComponentManager componentManager,
+            int entityId,
+            IEntityComponent component,
+            bool sendEvent)
+        {
+            this.CheckEntityId(entityId);
+
+            componentManager.AddComponent(entityId, component);
+
+            if (sendEvent)
+            {
+                this.game.EventManager.QueueEvent(
+                    FrameworkEvent.ComponentAdded,
+                    new EntityComponentData(entityId, component));
+            }
+        }
+
         /// <summary>
         ///   Adds a component with the specified type to entity with the
         ///   specified id and initializes it with the values taken from
@@ -934,19 +940,27 @@ namespace Slash.ECS.Components
         /// <param name="componentType">Type of the component to add.</param>
         /// <param name="entityId">Id of the entity to add the component to.</param>
         /// <param name="attributeTable">Attribute table to initialize the component with.</param>
-        private void AddComponent(Type componentType, int entityId, IAttributeTable attributeTable)
+        private IEntityComponent AddComponent(Type componentType, int entityId, IAttributeTable attributeTable)
         {
+            // Get component manager.
+            ComponentManager componentManager = this.GetComponentManager(componentType, true);
+
             // Create component.
-            IEntityComponent component = (IEntityComponent)Activator.CreateInstance(componentType);
+            IEntityComponent component = componentManager.CreateComponent();
 
-            // Init component.
-            this.InitComponent(component, attributeTable);
+            if (attributeTable != null)
+            {
+                // Init component.
+                this.InitComponent(component, attributeTable);
 
-            // Initialize component with the attribute table data.
-            component.InitComponent(attributeTable);
+                // Initialize component with the attribute table data.
+                component.InitComponent(attributeTable);
+            }
 
             // Add component. 
-            this.AddComponent(entityId, component);
+            this.AddComponent(componentManager, entityId, component, true);
+
+            return component;
         }
 
         /// <summary>
@@ -986,7 +1000,7 @@ namespace Slash.ECS.Components
             ComponentManager componentManager;
             if (!this.componentManagers.TryGetValue(componentType, out componentManager) && createIfNecessary)
             {
-                componentManager = new ComponentManager();
+                componentManager = new ComponentManager(componentType);
                 this.componentManagers.Add(componentType, componentManager);
             }
             return componentManager;
