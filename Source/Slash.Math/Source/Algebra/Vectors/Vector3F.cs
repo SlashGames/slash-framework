@@ -240,10 +240,6 @@ namespace Slash.Math.Algebra.Vectors
         /// </param>
         public bool Equals(Vector3F other)
         {
-            if (other == null)
-            {
-                throw new ArgumentNullException("other");
-            }
             return this.X.Equals(other.X) && this.Y.Equals(other.Y) && this.Z.Equals(other.Z);
         }
 
