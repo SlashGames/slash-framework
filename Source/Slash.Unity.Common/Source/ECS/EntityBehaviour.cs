@@ -25,7 +25,7 @@ namespace Slash.Unity.Common.ECS
 
         public T GetLogicComponent<T>() where T : class, IEntityComponent
         {
-            return this.Game.EntityManager.EntityIsAlive(this.EntityId)
+            return this.Game != null && this.Game.EntityManager.EntityIsAlive(this.EntityId)
                 ? this.Game.EntityManager.GetComponent<T>(this.EntityId)
                 : null;
         }
