@@ -66,7 +66,7 @@
         /// <param name="dt">
         ///   Time passed since the last tick, in seconds.
         /// </param>
-        public virtual void UpdateSystem(float dt)
+        public virtual void Update(float dt)
         {
         }
 

@@ -60,7 +60,7 @@
         /// <param name="dt">
         ///   Time passed since the last tick, in seconds.
         /// </param>
-        void UpdateSystem(float dt);
+        void Update(float dt);
 
         #endregion
     }
