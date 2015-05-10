@@ -158,7 +158,6 @@ namespace Slash.Unity.Common.ECS
 
                 // Register for events.
                 game.EventManager.RegisterListener(FrameworkEvent.EntityCreated, this.OnEntityCreated);
-                game.EventManager.RegisterListener(FrameworkEvent.EntityInitialized, this.OnEntityInitialized);
                 game.EventManager.RegisterListener(FrameworkEvent.ComponentAdded, this.OnComponentAdded);
                 game.EventManager.RegisterListener(FrameworkEvent.ComponentRemoved, this.OnComponentRemoved);
                 game.EventManager.RegisterListener(FrameworkEvent.EntityRemoved, this.OnEntityRemoved);
@@ -379,13 +378,7 @@ namespace Slash.Unity.Common.ECS
 
             Profiler.EndSample();
         }
-
-        private void OnEntityInitialized(GameEvent e)
-        {
-            int entityId = (int)e.EventData;
-            GameObject entityObject = this.entities[entityId];
-        }
-
+        
         /// <summary>
         ///   Destroys the game object representing the entity with the specified id.
         /// </summary>
