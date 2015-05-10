@@ -30,7 +30,7 @@
         public EventManager EventManager { get; set; }
 
         /// <summary>
-        ///   Logger for logic events.
+        ///   Logger.
         /// </summary>
         public GameLogger Log { get; set; }
 

@@ -119,7 +119,7 @@ namespace Slash.ECS.Blueprints
             }
             set
             {
-                this.ComponentTypes = value.Select(ReflectionUtils.FindType).ToList();
+                this.ComponentTypes = value.Select<string, Type>(ReflectionUtils.FindType).ToList();
             }
         }
 
