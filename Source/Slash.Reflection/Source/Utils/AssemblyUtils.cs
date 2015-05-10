@@ -117,7 +117,7 @@ namespace Slash.Reflection.Utils
                         CheckReferencedAssembliesAreLoaded(loadedAssembly, loadedAssemblies);
                     }
                 }
-                catch (FileNotFoundException e)
+                catch (FileNotFoundException)
                 {
                     // NOTE(co): Okay or not?
                 }

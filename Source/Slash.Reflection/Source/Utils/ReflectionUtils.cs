@@ -143,7 +143,6 @@ namespace Slash.Reflection.Utils
         /// <returns>List of found types.</returns>
         public static IEnumerable<Type> FindTypesWithBase(Type baseType)
         {
-            List<Type> types = new List<Type>();
 #if WINDOWS_STORE
             return FindTypes(baseType.GetTypeInfo().IsAssignableFrom);
 #else
