@@ -61,12 +61,12 @@ namespace Slash.Unity.Common.Diagnostics
 
         private void OnDisable()
         {
-            Application.RegisterLogCallback(null);
+            Application.logMessageReceived -= this.HandleLog;
         }
 
         private void OnEnable()
         {
-            Application.RegisterLogCallback(this.HandleLog);
+            Application.logMessageReceived += this.HandleLog;
         }
 
         private void OnGUI()
