@@ -504,25 +504,47 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Multiplies each vector component with the passed value.
+        ///   Multiplies each vector component with the specified value.
         /// </summary>
         /// <param name="a"> Vector to multiply. </param>
         /// <param name="b"> Value to multiply by. </param>
-        /// <returns> Vector which components are the product of the respective component of the passed vector and the value. </returns>
+        /// <returns> Vector which components are the product of the respective component of the specified vector and the value. </returns>
         public static Vector2I operator *(Vector2I a, int b)
         {
             return new Vector2I(a.X * b, a.Y * b);
         }
 
         /// <summary>
-        ///   Multiplies each vector component with the passed value.
+        ///   Multiplies each vector component with the specified value.
         /// </summary>
         /// <param name="a"> Value to multiply by. </param>
         /// <param name="b"> Vector to multiply. </param>
-        /// <returns> Vector which components are the product of the respective component of the passed vector and the value. </returns>
+        /// <returns> Vector which components are the product of the respective component of the specified vector and the value. </returns>
         public static Vector2I operator *(int a, Vector2I b)
         {
             return new Vector2I(a * b.X, a * b.Y);
+        }
+
+        /// <summary>
+        ///   Multiplies each vector component with the specified value.
+        /// </summary>
+        /// <param name="a"> Vector to multiply. </param>
+        /// <param name="b"> Value to multiply by. </param>
+        /// <returns> Vector which components are the product of the respective component of the specified vector and the value. </returns>
+        public static Vector2F operator *(Vector2I a, float b)
+        {
+            return new Vector2F(a.X * b, a.Y * b);
+        }
+
+        /// <summary>
+        ///   Multiplies each vector component with the specified value.
+        /// </summary>
+        /// <param name="a"> Value to multiply by. </param>
+        /// <param name="b"> Vector to multiply. </param>
+        /// <returns> Vector which components are the product of the respective component of the specified vector and the value. </returns>
+        public static Vector2F operator *(float a, Vector2I b)
+        {
+            return new Vector2F(a * b.X, a * b.Y);
         }
 
         /// <summary>
