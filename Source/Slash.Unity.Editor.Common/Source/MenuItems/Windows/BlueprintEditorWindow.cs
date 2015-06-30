@@ -39,6 +39,8 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
 
         private static BlueprintManager blueprintManager;
 
+        private static HierarchicalBlueprintManager hierarchicalBlueprintManager;
+
         private static InspectorTypeTable inspectorTypeTable;
 
         #endregion
@@ -61,6 +63,9 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
 
         private static void LoadBlueprints()
         {
+            // Build hierarchical blueprint manager for resolving parents.
+            hierarchicalBlueprintManager = new HierarchicalBlueprintManager();
+
             var blueprintAssets = Resources.LoadAll(BlueprintsFolder, typeof(TextAsset));
 
             foreach (var blueprintAsset in blueprintAssets)
@@ -76,10 +81,13 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
 
                     try
                     {
+                        // Right now, only a single blueprint file is supported. This might change in the future.
                         blueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
                         blueprintFileName = Application.dataPath.Substring(
                             0, Application.dataPath.Length - "Assets".Length)
                                             + AssetDatabase.GetAssetPath(blueprintTextAsset);
+
+                        hierarchicalBlueprintManager.AddChild(blueprintManager);
                     }
                     catch (XmlException e)
                     {
@@ -87,11 +95,14 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                             string.Format("Error reading blueprint file {0}", blueprintAsset.name), e.Message, "Close");
                         return;
                     }
-
-                    // Load components.
-                    inspectorTypeTable = InspectorTypeTable.FindInspectorTypes(typeof(IEntityComponent));
                 }
             }
+
+            // Resolve parents of all blueprints.
+            BlueprintUtils.ResolveParents(hierarchicalBlueprintManager, hierarchicalBlueprintManager);
+
+            // Load components.
+            inspectorTypeTable = InspectorTypeTable.FindInspectorTypes(typeof(IEntityComponent));
         }
 
         private static void SaveBlueprints()
@@ -195,7 +206,8 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                             if (GUILayout.Button(namedBlueprint.Key))
                             {
                                 this.selectedBlueprintId = namedBlueprint.Key;
-                                this.selectedBlueprint = namedBlueprint.Value;
+                                this.selectedBlueprint =
+                                    hierarchicalBlueprintManager.GetBlueprint(this.selectedBlueprintId);
                             }
                         }
                         EditorGUILayout.EndHorizontal();
@@ -240,6 +252,13 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                             {
                                 GUILayout.Label("Current", EditorStyles.boldLabel);
 
+                                // Show parent blueprint components, but don't allow to remove them.
+                                foreach (var componentType in this.selectedBlueprint.GetAllComponentTypes().Except(this.selectedBlueprint.ComponentTypes))
+                                {
+                                    GUILayout.Label(componentType.Name);
+                                }
+
+                                // Show blueprint components.
                                 foreach (var componentType in this.selectedBlueprint.ComponentTypes)
                                 {
                                     EditorGUILayout.BeginHorizontal();
@@ -263,7 +282,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                                 GUILayout.Label("Other", EditorStyles.boldLabel);
 
                                 foreach (var componentType in
-                                    inspectorTypeTable.Types().Except(this.selectedBlueprint.ComponentTypes))
+                                    inspectorTypeTable.Types().Except(this.selectedBlueprint.GetAllComponentTypes()))
                                 {
                                     EditorGUILayout.BeginHorizontal();
                                     {
@@ -285,7 +304,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                         // Attributes.
                         GUILayout.Label("Attributes", EditorStyles.boldLabel);
 
-                        EditorGUIUtils.BlueprintComponentsField(this.selectedBlueprint, this.selectedBlueprint.AttributeTable, inspectorTypeTable, blueprintManager);
+                        EditorGUIUtils.BlueprintComponentsField(this.selectedBlueprint, this.selectedBlueprint.AttributeTable, inspectorTypeTable, hierarchicalBlueprintManager);
                     }
                 }
                 EditorGUILayout.EndVertical();
