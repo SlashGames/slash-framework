@@ -178,6 +178,8 @@ namespace Slash.ECS.Systems
 
         private void OnEntityRemoved(int entityId)
         {
+            var entity = this.GetEntity(entityId);
+
             if (this.entities.Remove(entityId))
             {
                 this.OnEntityRemoved(entityId, entity);
