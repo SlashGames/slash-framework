@@ -88,7 +88,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             InspectorTypeTable inspectorTypeTable,
             IBlueprintManager blueprintManager)
         {
-            foreach (var componentType in blueprint.ComponentTypes)
+            foreach (var componentType in blueprint.GetAllComponentTypes())
             {
                 var inspectorType = inspectorTypeTable[componentType];
 
