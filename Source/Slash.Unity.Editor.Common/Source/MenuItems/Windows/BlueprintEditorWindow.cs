@@ -109,6 +109,13 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
         {
             var blueprintFile = new FileInfo(blueprintFileName);
 
+            // Make sure directory exists.
+            if (blueprintFile.DirectoryName != null && 
+                !Directory.Exists(blueprintFile.DirectoryName))
+            {
+                Directory.CreateDirectory(blueprintFile.DirectoryName);
+            }
+
             using (var streamWriter = blueprintFile.CreateText())
             {
                 var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
@@ -121,7 +128,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                 "Blueprints Saved", string.Format("Blueprints have been written to {0}.", blueprintFileName), "OK");
         }
 
-        [MenuItem("Slash Games/Windows/Blueprint Editor")]
+        [MenuItem("Slash Games/Blueprints/Blueprint Editor")]
         private static void ShowBlueprintEditor()
         {
             blueprintManager = null;
@@ -133,11 +140,14 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
 
             if (blueprintManager == null)
             {
+                // Creating new blueprints file.
+                blueprintFileName = "Assets/Resources/" + BlueprintsFolder + "/Blueprints.xml";
+                blueprintManager = new BlueprintManager();
+                hierarchicalBlueprintManager.AddChild(blueprintManager);
                 EditorUtility.DisplayDialog(
                     "No blueprint file found",
-                    string.Format("No blueprints could be found in resources folder {0}.", BlueprintsFolder),
-                    "Close");
-                return;
+                    string.Format("No blueprints could be found in resources folder {0}. Created new one called {1}.", BlueprintsFolder, blueprintFileName),
+                    "Ok");
             }
 
             GetWindow(typeof(BlueprintEditorWindow), true, "Blueprint Editor");

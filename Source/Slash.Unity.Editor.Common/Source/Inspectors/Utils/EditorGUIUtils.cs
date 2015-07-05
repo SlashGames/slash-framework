@@ -22,6 +22,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 
     using UnityEngine;
 
+    using MathUtils = Slash.Math.Utils.MathUtils;
     using Object = UnityEngine.Object;
 
     /// <summary>
@@ -88,6 +89,19 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             InspectorTypeTable inspectorTypeTable,
             IBlueprintManager blueprintManager)
         {
+            // Compute maximum label width.
+            float maxLabelWidth = 0;
+            foreach (var componentType in blueprint.GetAllComponentTypes())
+            {
+                var inspectorType = inspectorTypeTable[componentType];
+                foreach (var componentProperty in inspectorType.Properties)
+                {
+                    var textDimensions = GUI.skin.label.CalcSize(new GUIContent(componentProperty.Name));
+                    maxLabelWidth = MathUtils.Max(textDimensions.x, maxLabelWidth);
+                }
+            }
+            EditorGUIUtility.labelWidth = maxLabelWidth;
+
             foreach (var componentType in blueprint.GetAllComponentTypes())
             {
                 var inspectorType = inspectorTypeTable[componentType];
@@ -409,8 +423,13 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel(label);
+
+            float prevLabelWidth = EditorGUIUtility.labelWidth;
+            EditorGUIUtility.labelWidth = 0;
             var x = EditorGUILayout.FloatField("X", v.X);
             var y = EditorGUILayout.FloatField("Y", v.Y);
+            EditorGUIUtility.labelWidth = prevLabelWidth;
+
             EditorGUILayout.EndHorizontal();
 
             return new Vector2F(x, y);
@@ -420,8 +439,13 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel(label);
+
+            float prevLabelWidth = EditorGUIUtility.labelWidth;
+            EditorGUIUtility.labelWidth = 0;
             var x = EditorGUILayout.IntField("X", v.X);
             var y = EditorGUILayout.IntField("Y", v.Y);
+            EditorGUIUtility.labelWidth = prevLabelWidth;
+
             EditorGUILayout.EndHorizontal();
 
             return new Vector2I(x, y);
