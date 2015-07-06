@@ -91,6 +91,30 @@ namespace Slash.Unity.Common.Utils
             return (from Transform child in gameObject.transform select child.gameObject);
         }
 
+        public static IEnumerable<GameObject> GetDescendants(this GameObject gameObject)
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                yield return child.gameObject;
+
+                // Depth-first.
+                foreach (var descendant in child.gameObject.GetDescendants())
+                {
+                    yield return descendant;
+                }
+            }
+        }
+
+        public static IEnumerable<GameObject> GetDescendantsAndSelf(this GameObject gameObject)
+        {
+            yield return gameObject;
+
+            foreach (var descendant in gameObject.GetDescendants())
+            {
+                yield return descendant;
+            }
+        }
+
         /// <summary>
         ///   Returns all children of the specified game object, ordered by name.
         /// </summary>
