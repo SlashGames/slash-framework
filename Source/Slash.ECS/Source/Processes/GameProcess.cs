@@ -38,6 +38,11 @@ namespace Slash.ECS.Processes
         public bool Paused { get; private set; }
 
         /// <summary>
+        ///   Process that finished before this one has started.
+        /// </summary>
+        public GameProcess Prev { get; set; }
+
+        /// <summary>
         ///   Type of this process.
         /// </summary>
         public object ProcessType { get; set; }
@@ -76,7 +81,14 @@ namespace Slash.ECS.Processes
         /// </returns>
         public GameProcess Then(GameProcess next)
         {
+            if (next == null)
+            {
+                return null;
+            }
+
             this.Next = next;
+            next.Prev = this;
+
             return next;
         }
 
