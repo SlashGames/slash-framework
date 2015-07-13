@@ -59,7 +59,7 @@
             this.entityManager = new EntityManager(this);
             this.systemManager = new SystemManager(this);
             this.eventManager = new EventManager();
-            this.processManager = new ProcessManager();
+            this.processManager = new ProcessManager(this.entityManager, this.eventManager);
             this.Running = false;
             this.TimeElapsed = 0.0f;
             this.Log = new GameLogger();
@@ -280,6 +280,7 @@
             system.BlueprintManager = this.BlueprintManager;
             system.EventManager = this.EventManager;
             system.Log = this.Log;
+            system.ProcessManager = this.ProcessManager;
         }
 
         /// <summary>

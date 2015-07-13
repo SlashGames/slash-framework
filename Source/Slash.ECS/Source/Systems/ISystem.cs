@@ -5,6 +5,7 @@
     using Slash.ECS.Components;
     using Slash.ECS.Events;
     using Slash.ECS.Logging;
+    using Slash.ECS.Processes;
 
     /// <summary>
     ///   Contract that all systems that make up a game have to fulfill,
@@ -33,6 +34,12 @@
         ///   Logger for logic events.
         /// </summary>
         GameLogger Log { get; set; }
+
+        /// <summary>
+        ///   Allows ticking and queueing timed processes. Good examples are
+        ///   animations, tweens, or "Go to that point, and open the door after."
+        /// </summary>
+        ProcessManager ProcessManager { get; set; }
 
         #endregion
 

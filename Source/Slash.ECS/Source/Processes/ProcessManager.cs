@@ -8,6 +8,9 @@ namespace Slash.ECS.Processes
 {
     using System.Collections.Generic;
 
+    using Slash.ECS.Components;
+    using Slash.ECS.Events;
+
     /// <summary>
     ///   Allows ticking and queueing timed processes. Good examples are
     ///   animations, tweens, or "Go to that point, and open the door after."
@@ -26,10 +29,24 @@ namespace Slash.ECS.Processes
         /// </summary>
         private readonly List<GameProcess> deadProcesses = new List<GameProcess>();
 
+        private readonly EntityManager entityManager;
+
+        private readonly EventManager eventManager;
+
         /// <summary>
         ///   Processes about to become active.
         /// </summary>
         private readonly List<GameProcess> newProcesses = new List<GameProcess>();
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public ProcessManager(EntityManager entityManager, EventManager eventManager)
+        {
+            this.entityManager = entityManager;
+            this.eventManager = eventManager;
+        }
 
         #endregion
 
@@ -41,7 +58,7 @@ namespace Slash.ECS.Processes
         /// <param name="process">Process to add.</param>
         public void AddProcess(GameProcess process)
         {
-            process.InitProcess();
+            process.InitProcess(this.entityManager, this.eventManager);
             this.activeProcesses.Add(process);
             process.Active = true;
         }

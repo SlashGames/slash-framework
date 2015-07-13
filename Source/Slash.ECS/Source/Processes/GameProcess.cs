@@ -6,13 +6,16 @@
 
 namespace Slash.ECS.Processes
 {
+    using Slash.ECS.Components;
+    using Slash.ECS.Events;
+
     /// <summary>
     ///   Timed process that can be queued with other processes. Good examples
     ///   are animations, tweens, or "Go to that point, and open the door after."
     /// </summary>
     public abstract class GameProcess
     {
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Whether this process is currently being updated.
@@ -39,6 +42,10 @@ namespace Slash.ECS.Processes
         /// </summary>
         public object ProcessType { get; set; }
 
+        protected EntityManager EntityManager { get; private set; }
+
+        protected EventManager EventManager { get; private set; }
+
         #endregion
 
         #region Public Methods and Operators
@@ -46,8 +53,10 @@ namespace Slash.ECS.Processes
         /// <summary>
         ///   Initializes this process.
         /// </summary>
-        public virtual void InitProcess()
+        public virtual void InitProcess(EntityManager entityManager, EventManager eventManager)
         {
+            this.EntityManager = entityManager;
+            this.EventManager = eventManager;
         }
 
         /// <summary>

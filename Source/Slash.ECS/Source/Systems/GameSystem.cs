@@ -6,6 +6,7 @@
     using Slash.ECS.Events;
     using Slash.ECS.Inspector.Utils;
     using Slash.ECS.Logging;
+    using Slash.ECS.Processes;
 
     /// <summary>
     ///   Base system class.
@@ -33,6 +34,12 @@
         ///   Logger.
         /// </summary>
         public GameLogger Log { get; set; }
+
+        /// <summary>
+        ///   Allows ticking and queueing timed processes. Good examples are
+        ///   animations, tweens, or "Go to that point, and open the door after."
+        /// </summary>
+        public ProcessManager ProcessManager { get; set; }
 
         #endregion
 
