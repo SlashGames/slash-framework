@@ -170,6 +170,9 @@ namespace Slash.Unity.Common.Scenes
             // Destroy window root.
             Destroy(window.Root.gameObject);
 
+            // Allow other referencers to check whether this window is still open.
+            window.Loaded = false;
+
             // Invoke callback.
             if (window.OnClose != null)
             {
