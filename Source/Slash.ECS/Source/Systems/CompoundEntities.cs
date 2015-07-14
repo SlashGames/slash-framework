@@ -45,7 +45,7 @@ namespace Slash.ECS.Systems
                 entityManager.EntityRemoved += this.OnEntityRemoved;
             }
 
-            this.AllowEntity = (entity => true);
+            this.AllowEntity = (entityId, entity) => true;
         }
 
         #endregion
@@ -56,7 +56,7 @@ namespace Slash.ECS.Systems
 
         public delegate void EntityRemovedDelegate(int entityId, T entity);
 
-        public delegate bool EntityFilter(T entity);
+        public delegate bool EntityFilter(int entityId, T entity);
 
         #endregion
 
@@ -165,7 +165,7 @@ namespace Slash.ECS.Systems
             }
 
             // Allow filtering.
-            if (!this.AllowEntity(entity))
+            if (!this.AllowEntity(entityId, entity))
             {
                 return;
             }
