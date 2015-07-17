@@ -36,13 +36,19 @@ namespace Slash.ECS.Processes
 
         #endregion
 
+        #region Properties
+
+        public int CreatedEntity { get; private set; }
+
+        #endregion
+
         #region Public Methods and Operators
 
         public override void Update(float dt)
         {
             base.Update(dt);
 
-            this.EntityManager.CreateEntity(this.blueprintId, this.attributeTable);
+            this.CreatedEntity = this.EntityManager.CreateEntity(this.blueprintId, this.attributeTable);
 
             this.Kill();
         }
