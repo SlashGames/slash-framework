@@ -61,7 +61,7 @@ namespace Slash.Unity.Common.Configuration
 #if UNITY_EDITOR
             string resourcePath = resourceFolder + filePath;
             string assetResourcePath = "Assets/" + resourcePath;
-            T settings = Resources.LoadAssetAtPath<T>(assetResourcePath);
+            T settings = AssetDatabase.LoadAssetAtPath<T>(assetResourcePath);
 #else
             T settings = Resources.Load<T>(Path.GetFileNameWithoutExtension(filePath));
 #endif
