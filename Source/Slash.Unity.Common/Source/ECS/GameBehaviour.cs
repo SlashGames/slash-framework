@@ -94,6 +94,8 @@ namespace Slash.Unity.Common.ECS
         /// </summary>
         public GameConfigurationBehaviour GameConfiguration { get; private set; }
 
+        public static GameBehaviour Instance { get; private set; }
+
         #endregion
 
         #region Public Methods and Operators
@@ -141,6 +143,8 @@ namespace Slash.Unity.Common.ECS
         /// </summary>
         private void Awake()
         {
+            Instance = this;
+
             if (this.GameConfiguration == null)
             {
                 this.GameConfiguration =

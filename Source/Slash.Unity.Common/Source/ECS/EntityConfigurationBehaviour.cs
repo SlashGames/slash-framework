@@ -121,7 +121,7 @@ namespace Slash.Unity.Common.ECS
 
         private void Awake()
         {
-            this.gameBehaviour = FindObjectOfType<GameBehaviour>();
+            this.gameBehaviour = GameBehaviour.Instance;
 
             this.gameBehaviour.GameChanged += this.OnGameChanged;
         }

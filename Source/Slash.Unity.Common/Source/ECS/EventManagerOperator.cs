@@ -44,7 +44,7 @@ namespace Slash.Unity.Common.ECS
 
         protected virtual void Awake()
         {
-            GameBehaviour gameBehaviour = FindObjectOfType<GameBehaviour>();
+            GameBehaviour gameBehaviour = GameBehaviour.Instance;
             if (gameBehaviour != null)
             {
                 gameBehaviour.GameChanged += this.OnGameChanged;

@@ -209,7 +209,7 @@ namespace Slash.Unity.Common.Diagnostics
         {
             if (this.showConsole)
             {
-                GameBehaviour newGameBehaviour = (GameBehaviour)FindObjectOfType(typeof(GameBehaviour));
+                GameBehaviour newGameBehaviour = GameBehaviour.Instance;
                 if (this.gameBehaviour != newGameBehaviour)
                 {
                     if (this.gameBehaviour != null)

@@ -31,7 +31,7 @@ namespace Slash.Unity.Common.Loading
             // Load scene on ESC or back button.
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                var sceneManager = FindObjectOfType<SceneManager>();
+                var sceneManager = SceneManager.Instance;
                 sceneManager.ChangeScene(this.SceneName);
             }
         }

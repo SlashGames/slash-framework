@@ -64,7 +64,7 @@ namespace Slash.Unity.Common.Logging
 
         private void Awake()
         {
-            this.gameBehaviour = (GameBehaviour)FindObjectOfType(typeof(GameBehaviour));
+            this.gameBehaviour = GameBehaviour.Instance;
 
             if (this.gameBehaviour != null)
             {
