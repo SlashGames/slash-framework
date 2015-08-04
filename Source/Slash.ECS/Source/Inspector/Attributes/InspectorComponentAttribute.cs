@@ -23,13 +23,18 @@ namespace Slash.ECS.Inspector.Attributes
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Whether this component can be removed from a blueprint in the inspector, or not.
         ///   Default: true.
         /// </summary>
         public bool CanBeRemoved { get; set; }
+
+        /// <summary>
+        ///   Whether to skip initializing this component with reflection.
+        /// </summary>
+        public bool InitExplicitly { get; set; }
 
         /// <summary>
         ///   Component priority. Specifies the position the component appears within lists.

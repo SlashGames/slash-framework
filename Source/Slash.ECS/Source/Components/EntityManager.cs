@@ -15,6 +15,7 @@ namespace Slash.ECS.Components
     using Slash.Collections.ObjectModel;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Events;
+    using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Inspector.Utils;
     using Slash.Reflection.Extensions;
@@ -1005,6 +1006,12 @@ namespace Slash.ECS.Components
                 this.game.Log.Warning(
                     "Entity component '" + component.GetType()
                     + "' not flagged as inspector type, can't initialize via reflection.");
+                return;
+            }
+
+            var inspectorComponent = inspectorType.Attribute as InspectorComponentAttribute;
+            if (inspectorComponent != null && inspectorComponent.InitExplicitly)
+            {
                 return;
             }
 
