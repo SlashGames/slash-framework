@@ -107,23 +107,39 @@ namespace Slash.Unity.Common.Scenes
 
         public Window OpenWindow(string windowId, object context, Window parentWindow, Action<object> onCloseCallback)
         {
+            return this.OpenWindow(windowId, context, parentWindow, onCloseCallback, null);
+        }
+
+        public Window OpenWindow(
+            string windowId,
+            object context,
+            Window parentWindow,
+            Action<object> onCloseCallback,
+            Action<Window> onOpenCallback)
+        {
+            Window window = new Window
+            {
+                WindowId = windowId,
+                Context = context,
+                OnClose = onCloseCallback,
+                OnOpened = onOpenCallback,
+                ParentWindow = parentWindow
+            };
+
+            this.OpenWindow(window, parentWindow);
+
+            return window;
+        }
+
+        public void OpenWindow(Window window, Window parentWindow)
+        {
             // Hide parent window.
             if (parentWindow != null)
             {
                 parentWindow.Hide();
             }
 
-            Window window = new Window
-            {
-                WindowId = windowId,
-                Context = context,
-                OnClose = onCloseCallback,
-                ParentWindow = parentWindow
-            };
-
             this.StartCoroutine(this.DoOpenWindow(window));
-
-            return window;
         }
 
         public Window OpenWindow(string windowId, Action<object> onCloseCallback)
@@ -186,12 +202,19 @@ namespace Slash.Unity.Common.Scenes
             this.windows.Add(window);
 
             yield return Application.LoadLevelAdditiveAsync(window.WindowId);
+            yield return new WaitForEndOfFrame();
 
             // Setup window roots.
             this.SetupNewWindowRoots();
 
             // Notify listeners.
             this.OnWindowOpened(window);
+
+            var handler = window.OnOpened;
+            if (handler != null)
+            {
+                handler(window);
+            }
         }
 
         private int GetLoadingWindowCount()
@@ -269,6 +292,8 @@ namespace Slash.Unity.Common.Scenes
             public bool Loaded { get; set; }
 
             public Action<object> OnClose { get; set; }
+
+            public Action<Window> OnOpened { get; set; }
 
             public Window ParentWindow { get; set; }
 
