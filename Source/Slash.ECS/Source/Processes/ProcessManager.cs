@@ -70,39 +70,46 @@ namespace Slash.ECS.Processes
         /// <param name="dt">Time since last update, in seconds.</param>
         public void UpdateProcesses(float dt)
         {
-            foreach (GameProcess process in this.activeProcesses)
+            if (this.activeProcesses.Count > 0)
             {
-                if (process.Dead)
+                foreach (GameProcess process in this.activeProcesses)
                 {
-                    // Check for following process.
-                    if (process.Next != null)
+                    if (process.Dead)
                     {
-                        this.newProcesses.Add(process.Next);
-                        process.Next = null;
+                        // Check for following process.
+                        if (process.Next != null)
+                        {
+                            this.newProcesses.Add(process.Next);
+                            process.Next = null;
+                        }
+
+                        this.deadProcesses.Add(process);
                     }
-
-                    this.deadProcesses.Add(process);
+                    else if (!process.Paused)
+                    {
+                        process.Update(dt);
+                    }
                 }
-                else if (!process.Paused)
+
+                // Remove dead processes.
+                foreach (GameProcess deadProcess in this.deadProcesses)
                 {
-                    process.Update(dt);
+                    this.activeProcesses.Remove(deadProcess);
                 }
+
+                this.deadProcesses.Clear();
             }
 
-            // Remove dead processes.
-            foreach (GameProcess deadProcess in this.deadProcesses)
+            if (this.newProcesses.Count > 0)
             {
-                this.activeProcesses.Remove(deadProcess);
-            }
+                // Add new processes.
+                foreach (GameProcess newProcess in this.newProcesses)
+                {
+                    this.AddProcess(newProcess);
+                }
 
-            // Add new processes.
-            foreach (GameProcess newProcess in this.newProcesses)
-            {
-                this.AddProcess(newProcess);
+                this.newProcesses.Clear();
             }
-
-            this.deadProcesses.Clear();
-            this.newProcesses.Clear();
         }
 
         #endregion

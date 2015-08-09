@@ -152,6 +152,15 @@ namespace Slash.Unity.Common.ECS
             }
         }
 
+        protected void OnDestroy()
+        {
+            if (this.Game != null)
+            {
+                this.Game.StopGame();
+                this.Game = null;
+            }
+        }
+
         /// <summary>
         ///   Notifies interested listeners of new games.
         /// </summary>

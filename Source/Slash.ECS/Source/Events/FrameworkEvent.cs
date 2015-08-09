@@ -76,6 +76,16 @@ namespace Slash.ECS.Events
 
         /// <summary>
         ///   <para>
+        ///     The game was stopped.
+        ///   </para>
+        ///   <para>
+        ///     Event data: <c>null</c>
+        ///   </para>
+        /// </summary>
+        GameStopped,
+
+        /// <summary>
+        ///   <para>
         ///     A new system has been added.
         ///   </para>
         ///   <para>

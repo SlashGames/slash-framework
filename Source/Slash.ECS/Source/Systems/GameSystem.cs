@@ -46,6 +46,13 @@
         #region Public Methods and Operators
 
         /// <summary>
+        ///   Deinitializes this system.
+        /// </summary>
+        public virtual void Deinit()
+        {
+        }
+
+        /// <summary>
         ///   Initializes this system with the data stored in the specified
         ///   attribute table.
         /// </summary>

@@ -229,6 +229,22 @@
         }
 
         /// <summary>
+        ///   Deinitializes and stops the game.
+        /// </summary>
+        public void StopGame()
+        {
+            // Deinit systems.
+            foreach (var system in this.systemManager)
+            {
+                system.Deinit();
+            }
+
+            // Send event.
+            this.eventManager.FireImmediately(FrameworkEvent.GameStopped);
+            this.Running = false;
+        }
+
+        /// <summary>
         ///   Ticks this game, allowing all systems to update themselves and
         ///   processing all game events.
         /// </summary>
