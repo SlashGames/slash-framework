@@ -21,7 +21,7 @@ namespace Slash.Unity.Common.ECS
         #region Fields
 
         /// <summary>
-        ///   Number of frames till behaviour was enabled.
+        ///   Number of frames while behaviour was enabled.
         /// </summary>
         public int FrameCounter;
 

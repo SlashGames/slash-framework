@@ -20,18 +20,6 @@ namespace Slash.Reflection.Utils
     {
         #region Public Methods and Operators
 
-#if !WINDOWS_STORE
-        /// <summary>
-        ///   Loads an assembly from the specified file.
-        /// </summary>
-        /// <param name="assemblyFile">Path to assembly file.</param>
-        /// <returns>Loaded assembly from specified path.</returns>
-        public static Assembly FindAssembly(string assemblyFile)
-        {
-            return Assembly.LoadFrom(assemblyFile);
-        }
-#endif
-
         /// <summary>
         ///   <para>
         ///     Looks up the specified full type name in all loaded assemblies,
@@ -74,19 +62,32 @@ namespace Slash.Reflection.Utils
             throw new TypeLoadException(string.Format("Unable to find type {0}.", fullName));
         }
 
-#if WINDOWS_STORE
-        public static IEnumerable<Type> FindTypes(Func<TypeInfo, bool> condition)
+        /// <summary>
+        ///   Searches all loaded assemblies and returns the types which have the specified attribute.
+        /// </summary>
+        /// <returns>List of found types.</returns>
+        /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
+        public static IEnumerable<Type> FindTypesWithBase<T>() where T : class
         {
-            List<Type> types = new List<Type>();
-            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
-            {
-
-                types.AddRange(assembly.DefinedTypes.Where(condition).Select(typeInfo => typeInfo.AsType()));
-            }
-
-            return types;
+            return FindTypesWithBase(typeof(T));
         }
-#else
+
+#if !WINDOWS_STORE
+        public static Delegate CreateDelegate(Type type, object target, MethodInfo method)
+        {
+            return Delegate.CreateDelegate(type, target, method);
+        }
+
+        /// <summary>
+        ///   Loads an assembly from the specified file.
+        /// </summary>
+        /// <param name="assemblyFile">Path to assembly file.</param>
+        /// <returns>Loaded assembly from specified path.</returns>
+        public static Assembly FindAssembly(string assemblyFile)
+        {
+            return Assembly.LoadFrom(assemblyFile);
+        }
+
         public static IEnumerable<Type> FindTypes(Func<Type, bool> condition)
         {
             List<Type> types = new List<Type>();
@@ -103,7 +104,7 @@ namespace Slash.Reflection.Utils
 
             return types;
         }
-#endif
+
         /// <summary>
         ///   Searches all loaded assemblies and returns the types which have the specified attribute.
         /// </summary>
@@ -114,26 +115,10 @@ namespace Slash.Reflection.Utils
             List<Type> types = new List<Type>();
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-#if WINDOWS_STORE
-                types.AddRange(
-                    assembly.DefinedTypes.Where(typeInfo => typeInfo.GetCustomAttribute<T>() != null)
-                            .Select(typeInfo => typeInfo.AsType()));
-#else
                 types.AddRange(assembly.GetTypes().Where(type => Attribute.IsDefined(type, typeof(T))));
-#endif
             }
 
             return types;
-        }
-
-        /// <summary>
-        ///   Searches all loaded assemblies and returns the types which have the specified attribute.
-        /// </summary>
-        /// <returns>List of found types.</returns>
-        /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
-        public static IEnumerable<Type> FindTypesWithBase<T>() where T : class
-        {
-            return FindTypesWithBase(typeof(T));
         }
 
         /// <summary>
@@ -143,12 +128,63 @@ namespace Slash.Reflection.Utils
         /// <returns>List of found types.</returns>
         public static IEnumerable<Type> FindTypesWithBase(Type baseType)
         {
-#if WINDOWS_STORE
-            return FindTypes(baseType.GetTypeInfo().IsAssignableFrom);
-#else
             return FindTypes(baseType.IsAssignableFrom);
-#endif
+        }
+
+        public static T GetAttribute<T>(MemberInfo member) where T : Attribute
+        {
+            return (T)Attribute.GetCustomAttribute(member, typeof(T));
+        }
+
+        public static object[] GetAttributes(Type type, Type attributeType, bool inherit)
+        {
+            return type.GetCustomAttributes(type, inherit);
+        }
+
+        public static Type GetBaseType(Type type)
+        {
+            return type.BaseType;
+        }
+
+        public static IEnumerable<Type> GetBaseTypes(Type type)
+        {
+            yield return type;
+
+            var baseType = type.BaseType;
+
+            if (baseType != null)
+            {
+                foreach (var t in GetBaseTypes(baseType))
+                {
+                    yield return t;
+                }
             }
+        }
+
+        public static FieldInfo GetField(Type type, string name)
+        {
+            return type.GetField(name);
+        }
+
+        public static FieldInfo[] GetFields(Type type)
+        {
+            return type.GetFields();
+        }
+
+        public static MethodInfo GetMethod(Type type, string name)
+        {
+            return type.GetMethod(name);
+        }
+
+        public static PropertyInfo[] GetProperties(Type type)
+        {
+            return type.GetProperties();
+        }
+
+        public static PropertyInfo GetProperty(Type type, string name)
+        {
+            return type.GetProperty(name);
+        }
 
         /// <summary>
         ///   Searches all loaded assemblies and returns the types which have the specified attribute
@@ -160,16 +196,6 @@ namespace Slash.Reflection.Utils
         {
             foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-#if WINDOWS_STORE
-                foreach (var typeInfo in assembly.DefinedTypes)
-                {
-                    T attribute = typeInfo.GetCustomAttribute<T>();
-                    if (attribute != null)
-                    {
-                        action(typeInfo.AsType(), attribute);
-                    }
-                }
-#else
                 foreach (Type type in assembly.GetTypes())
                 {
                     T attribute = (T)Attribute.GetCustomAttribute(type, typeof(T));
@@ -178,17 +204,89 @@ namespace Slash.Reflection.Utils
                         action(type, attribute);
                     }
                 }
-#endif
             }
         }
 
-#if WINDOWS_STORE
-        public static bool IsValueType(Type type)
+        public static bool IsAssignableFrom(Type first, Type second)
         {
-            return type.GetTypeInfo().IsValueType;
+            return first.IsAssignableFrom(second);
         }
 
-        private static IEnumerable<Type> GetBaseTypes(Type type)
+        public static bool IsEnum(Type type)
+        {
+            return type.IsEnum;
+        }
+
+        public static bool IsGenericType(Type type)
+        {
+            return type.IsGenericType;
+        }
+
+        public static bool IsValueType(Type type)
+        {
+            return type.IsValueType;
+        }
+#else
+        public static Delegate CreateDelegate(Type type, object target, MethodInfo method)
+        {
+            return method.CreateDelegate(type, target);
+        }
+
+        public static IEnumerable<Type> FindTypes(Func<TypeInfo, bool> condition)
+        {
+            List<Type> types = new List<Type>();
+            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
+            {
+                types.AddRange(assembly.DefinedTypes.Where(condition).Select(typeInfo => typeInfo.AsType()));
+            }
+
+            return types;
+        }
+
+        /// <summary>
+        ///   Searches all loaded assemblies and returns the types which have the specified attribute.
+        /// </summary>
+        /// <returns>List of found types.</returns>
+        /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
+        public static IEnumerable<Type> FindTypesWithAttribute<T>() where T : Attribute
+        {
+            List<Type> types = new List<Type>();
+            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
+            {
+                types.AddRange(
+                    assembly.DefinedTypes.Where(typeInfo => typeInfo.GetCustomAttribute<T>() != null)
+                        .Select(typeInfo => typeInfo.AsType()));
+            }
+
+            return types;
+        }
+
+        /// <summary>
+        ///   Searches all loaded assemblies and returns the types which have the specified attribute.
+        /// </summary>
+        /// <param name="baseType">Type of the attribute to get the types of.</param>
+        /// <returns>List of found types.</returns>
+        public static IEnumerable<Type> FindTypesWithBase(Type baseType)
+        {
+            return FindTypes(baseType.GetTypeInfo().IsAssignableFrom);
+        }
+
+        public static T GetAttribute<T>(MemberInfo member) where T : Attribute
+        {
+            return member.GetCustomAttribute<T>();
+        }
+
+        public static object[] GetAttributes(Type type, Type attributeType, bool inherit)
+        {
+            return type.GetTypeInfo().GetCustomAttributes(type, inherit).ToArray();
+        }
+
+        public static Type GetBaseType(Type type)
+        {
+            return type.GetTypeInfo().BaseType;
+        }
+
+        public static IEnumerable<Type> GetBaseTypes(Type type)
         {
             yield return type;
 
@@ -201,27 +299,6 @@ namespace Slash.Reflection.Utils
                     yield return t;
                 }
             }
-        }
-
-        public static PropertyInfo GetProperty(Type type, string name)
-        {
-            return
-                GetBaseTypes(type)
-                    .Select(baseType => baseType.GetTypeInfo().GetDeclaredProperty(name))
-                    .FirstOrDefault(property => property != null);
-        }
-
-        public static PropertyInfo[] GetProperties(Type type)
-        {
-            return type.GetRuntimeProperties().ToArray();
-        }
-
-        public static MethodInfo GetMethod(Type type, string name)
-        {
-            return
-                GetBaseTypes(type)
-                    .Select(baseType => baseType.GetTypeInfo().GetDeclaredMethod(name))
-                    .FirstOrDefault(method => method != null);
         }
 
         public static FieldInfo GetField(Type type, string name)
@@ -237,14 +314,46 @@ namespace Slash.Reflection.Utils
             return type.GetRuntimeFields().ToArray();
         }
 
-        public static bool IsEnum(Type type)
+        public static MethodInfo GetMethod(Type type, string name)
         {
-            return type.GetTypeInfo().IsEnum;
+            return
+                GetBaseTypes(type)
+                    .Select(baseType => baseType.GetTypeInfo().GetDeclaredMethod(name))
+                    .FirstOrDefault(method => method != null);
         }
 
-        public static Delegate CreateDelegate(Type type, object target, MethodInfo method)
+        public static PropertyInfo[] GetProperties(Type type)
         {
-            return method.CreateDelegate(type, target);
+            return type.GetRuntimeProperties().ToArray();
+        }
+
+        public static PropertyInfo GetProperty(Type type, string name)
+        {
+            return
+                GetBaseTypes(type)
+                    .Select(baseType => baseType.GetTypeInfo().GetDeclaredProperty(name))
+                    .FirstOrDefault(property => property != null);
+        }
+
+        /// <summary>
+        ///   Searches all loaded assemblies and returns the types which have the specified attribute
+        ///   and executes the specified action for those.
+        /// </summary>
+        /// <param name="action">Action to execute for found types and their attribute.</param>
+        /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
+        public static void HandleTypesWithAttribute<T>(Action<Type, T> action) where T : Attribute
+        {
+            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
+            {
+                foreach (var typeInfo in assembly.DefinedTypes)
+                {
+                    T attribute = typeInfo.GetCustomAttribute<T>();
+                    if (attribute != null)
+                    {
+                        action(typeInfo.AsType(), attribute);
+                    }
+                }
+            }
         }
 
         public static bool IsAssignableFrom(Type first, Type second)
@@ -252,82 +361,22 @@ namespace Slash.Reflection.Utils
             return first.GetTypeInfo().IsAssignableFrom(second.GetTypeInfo());
         }
 
-        public static object[] GetAttributes(Type type, Type attributeType, bool inherit)
+        public static bool IsEnum(Type type)
         {
-            return type.GetTypeInfo().GetCustomAttributes(type, inherit).ToArray();
-        }
-
-        public static T GetAttribute<T>(MemberInfo member) where T : Attribute
-        {
-            return member.GetCustomAttribute<T>();
+            return type.GetTypeInfo().IsEnum;
         }
 
         public static bool IsGenericType(Type type)
         {
             return type.GetTypeInfo().IsGenericType;
         }
-#else
+
         public static bool IsValueType(Type type)
         {
-            return type.IsValueType;
-        }
-
-        public static PropertyInfo GetProperty(Type type, string name)
-        {
-            return type.GetProperty(name);
-        }
-
-        public static PropertyInfo[] GetProperties(Type type)
-        {
-            return type.GetProperties();
-        }
-
-        public static MethodInfo GetMethod(Type type, string name)
-        {
-            return type.GetMethod(name);
-        }
-
-        public static bool IsEnum(Type type)
-        {
-            return type.IsEnum;
-        }
-
-        public static FieldInfo GetField(Type type, string name)
-        {
-            return type.GetField(name);
-        }
-
-        public static FieldInfo[] GetFields(Type type)
-        {
-            return type.GetFields();
-        }
-
-        public static Delegate CreateDelegate(Type type, object target, MethodInfo method)
-        {
-            return Delegate.CreateDelegate(type, target, method);
-        }
-
-        public static bool IsAssignableFrom(Type first, Type second)
-        {
-            return first.IsAssignableFrom(second);
-        }
-
-        public static object[] GetAttributes(Type type, Type attributeType, bool inherit)
-        {
-            return type.GetCustomAttributes(type, inherit);
-        }
-
-        public static T GetAttribute<T>(MemberInfo member) where T : Attribute
-        {
-            return (T)Attribute.GetCustomAttribute(member, typeof(T));
-        }
-
-        public static bool IsGenericType(Type type)
-        {
-            return type.IsGenericType;
+            return type.GetTypeInfo().IsValueType;
         }
 #endif
-
         #endregion
     }
+
 }
