@@ -107,6 +107,7 @@
     <Compile Include="Source\Events\EventManager.cs" />
     <Compile Include="Source\Events\FrameworkEvent.cs" />
     <Compile Include="Source\Events\GameEvent.cs" />
+    <Compile Include="Source\Events\GameEventTypeAttribute.cs" />
     <Compile Include="Source\Game.cs" />
     <Compile Include="Source\Inspector\Attributes\ConditionalFlagsCheck.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorBlueprintAttribute.cs" />
