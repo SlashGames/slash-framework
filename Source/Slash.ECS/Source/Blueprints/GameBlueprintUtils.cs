@@ -10,6 +10,7 @@ namespace Slash.ECS.Blueprints
     using System.Linq;
 
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Components;
 
     /// <summary>
     ///   Utility methods for all issues related to blueprints of a game (e.g. entity creation,...).
@@ -17,6 +18,16 @@ namespace Slash.ECS.Blueprints
     public static class GameBlueprintUtils
     {
         #region Public Methods and Operators
+
+        public static List<int> CreateEntities(
+            EntityManager entityManager,
+            IBlueprintManager blueprintManager,
+            IEnumerable<string> blueprintIds)
+        {
+            return
+                blueprintIds.Select(
+                    actionBlueprintId => CreateEntity(entityManager, blueprintManager, actionBlueprintId)).ToList();
+        }
 
         /// <summary>
         ///   Searches for the blueprints with the specified ids and creates entities out of it.
@@ -44,6 +55,14 @@ namespace Slash.ECS.Blueprints
             return CreateEntity(game, blueprintId, null);
         }
 
+        public static int CreateEntity(
+            EntityManager entityManager,
+            IBlueprintManager blueprintManager,
+            string blueprintId)
+        {
+            return CreateEntity(entityManager, blueprintManager, blueprintId, null);
+        }
+
         /// <summary>
         ///   Searches for the blueprint with the specified id and creates an entity out of it.
         ///   If the blueprint is used several times, consider to fetch the blueprint from the game's
@@ -55,8 +74,17 @@ namespace Slash.ECS.Blueprints
         /// <returns>Id of created entity.</returns>
         public static int CreateEntity(this Game game, string blueprintId, AttributeTable configuration)
         {
-            var blueprint = game.BlueprintManager.GetBlueprint(blueprintId);
-            return game.EntityManager.CreateEntity(blueprint, configuration);
+            return CreateEntity(game.EntityManager, game.BlueprintManager, blueprintId, configuration);
+        }
+
+        public static int CreateEntity(
+            EntityManager entityManager,
+            IBlueprintManager blueprintManager,
+            string blueprintId,
+            AttributeTable configuration)
+        {
+            var blueprint = blueprintManager.GetBlueprint(blueprintId);
+            return entityManager.CreateEntity(blueprint, configuration);
         }
 
         #endregion
