@@ -241,7 +241,7 @@ namespace Slash.Unity.Editor.Common.Build
 
             switch (buildSettings.BuildTarget)
             {
-                case BuildTarget.MetroPlayer:
+                case BuildTarget.WSAPlayer:
                     {
                         PlayerSettings.productName = this.BuildConfigurationRelease.ProductName;
                     }
