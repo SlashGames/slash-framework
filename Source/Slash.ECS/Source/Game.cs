@@ -290,7 +290,7 @@
         {
             if (this.AddSystemsViaReflection)
             {            
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
                 // Make sure all referenced assemblies are loaded.
                 AssemblyUtils.CheckReferencedAssembliesAreLoaded();
 #endif

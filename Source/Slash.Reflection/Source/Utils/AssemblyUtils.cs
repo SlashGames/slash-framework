@@ -81,9 +81,9 @@ namespace Slash.Reflection.Utils
         }
 
         #endregion
-#else
+#endif
 
-        #region Public Methods and Operators
+#if !WINDOWS_PHONE
 
         public static void CheckReferencedAssembliesAreLoaded()
         {
@@ -123,6 +123,7 @@ namespace Slash.Reflection.Utils
                 }
             }
         }
+#endif
 
         /// <summary>
         ///   Gets all assemblies that are loaded in the current application domain.
@@ -132,9 +133,5 @@ namespace Slash.Reflection.Utils
         {
             return AppDomain.CurrentDomain.GetAssemblies();
         }
-
-        #endregion
-
-#endif
     }
 }
