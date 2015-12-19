@@ -56,7 +56,7 @@ namespace Slash.Unity.DataBind.Ext.Windows
             }
 
             // Set context in context holder.
-            var contextHolder = window.Root.GetComponent<ContextHolder>();
+            var contextHolder = window.Root != null ? window.Root.GetComponent<ContextHolder>() : null;
             if (contextHolder != null)
             {
                 contextHolder.Context = context;
