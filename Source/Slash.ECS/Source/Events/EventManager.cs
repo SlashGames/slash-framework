@@ -264,6 +264,11 @@ namespace Slash.ECS.Events
         /// <param name="e"> Event to queue. </param>
         public void QueueEvent(GameEvent e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException("e", "Event is null.");
+            }
+
             this.newEvents.Add(e);
         }
 
