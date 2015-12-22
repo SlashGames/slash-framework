@@ -95,7 +95,7 @@ namespace Slash.SystemExt.Utils
         public static string RemoveAssemblyInfo(string typeName)
         {
             // Get start of "Version=..., Culture=..., PublicKeyToken=..." string.
-            int versionIndex = typeName.IndexOf("Version", StringComparison.Ordinal);
+            int versionIndex = typeName.IndexOf("Version=", StringComparison.Ordinal);
 
             if (versionIndex >= 0)
             {
