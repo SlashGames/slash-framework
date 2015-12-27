@@ -17,7 +17,7 @@ If you're missing anything, we'd love to see it - please refer to the [Contribut
 * Proven to work in several released games (see Show Cases)
 * Unit tests and references for non-trivial operations
 * Several articles about specifics and usage of the framework
-* Public wiki (Coming soon)
+* [Public wiki](http://slashgames.org:8090/display/SF)
 * Public API documentation (Coming soon)
 
 ## Getting Slash Framework
@@ -52,11 +52,11 @@ Introductions, specifics and tutorials about our framework can be found in sever
 * http://unity-coding.slashgames.org/why-to-use-a-custom-cbes-architecture-within-unity/
 * http://unity-coding.slashgames.org/events-order-matters/
 
-To get more information about the framework, take a glimpse at the API documentation (Coming soon) and official wiki (Coming soon).
+To get more information about the framework, take a glimpse at the API documentation (Coming soon) and [official wiki](http://slashgames.org:8090/display/SF).
 
 ## Remarks
 
-For each of our non-trivial implementations, we provide unit tests and references to algorithms. If anything's unclear, feel free to contact us. We'd love to improve our documentation.
+For each of our non-trivial implementations, we provide unit tests and references to algorithms. If anything's unclear, feel free to contact us. We'd love to improve our [documentation](http://slashgames.org:8090/display/SF).
 
 ## Development Cycle
 
