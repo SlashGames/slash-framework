@@ -8,7 +8,7 @@ Entity systems are a great approach for getting rid of the many drawbacks of inh
 
 The Slash Framework provides both a low-level implementation of component-based entity systems and Unity3D integration for them.
 
-If you're missing anything, we'd love to see it - please refer to the [Contributing](https://github.com/npruehs/slash-framework/blob/develop/CONTRIBUTING.md) file!
+If you're missing anything, we'd love to see it - please refer to the [Contributing](https://github.com/npruehs/slash-framework/blob/master/CONTRIBUTING.md) file!
 
 ## Features
 
@@ -98,4 +98,4 @@ If you used the Slash Framework in one of your projects, we are very happy to he
 
 ## License
 
-Slash Framework is released under the [MIT license](https://github.com/npruehs/slash-framework/blob/develop/LICENSE).
+Slash Framework is released under the [MIT license](https://github.com/npruehs/slash-framework/blob/master/LICENSE).
