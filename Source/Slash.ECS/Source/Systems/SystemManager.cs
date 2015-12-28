@@ -171,7 +171,7 @@ namespace Slash.ECS.Systems
         {
             foreach (ISystem system in this.systems)
             {
-                system.UpdateSystem(dt);
+                system.Update(dt);
             }
         }
 

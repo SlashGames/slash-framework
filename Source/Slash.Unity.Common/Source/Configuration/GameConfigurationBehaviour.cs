@@ -34,7 +34,14 @@ namespace Slash.Unity.Common.Configuration
         /// </summary>
         public string ConfigurationFilePath = "Configuration/GameConfiguration";
 
+        /// <summary>
+        ///   Indicates if xml format should be used for build. Otherwise binary blueprint files are used.
+        /// </summary>
+        public bool UseXmlInBuild;
+
         private IAttributeTable configuration;
+
+        private TextAsset configurationFile;
 
         #endregion
 
@@ -75,8 +82,8 @@ namespace Slash.Unity.Common.Configuration
         {
             Debug.Log("Loading game configuration from resources at " + this.ConfigurationFilePath);
 
-            TextAsset configurationFile = (TextAsset)Resources.Load(this.ConfigurationFilePath);
-            if (configurationFile == null)
+            this.configurationFile = (TextAsset)Resources.Load(this.ConfigurationFilePath);
+            if (this.configurationFile == null)
             {
                 Debug.LogWarning("No configuration file at " + this.ConfigurationFilePath);
                 this.Configuration = new AttributeTable();
@@ -84,27 +91,8 @@ namespace Slash.Unity.Common.Configuration
             }
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
-            this.Configuration = (IAttributeTable)xmlSerializer.Deserialize(new StringReader(configurationFile.text));
-        }
-
-        /// <summary>
-        ///   Saves the current game configuration to the resource <see cref="ConfigurationFilePath" />.
-        /// </summary>
-        public void Save()
-        {
-#if WINDOWS_STORE
-            throw new NotImplementedException("Not implemented for Windows Store build target.");
-#else
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
-            string filePath = "Assets/Resources/" + this.ConfigurationFilePath + ".xml";
-            // Make sure directory exists.
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-            Debug.Log("Save to " + filePath);
-            StreamWriter writer = new StreamWriter(filePath);
-            xmlSerializer.Serialize(writer, this.Configuration);
-            writer.Close();
-#endif
+            this.Configuration =
+                (IAttributeTable)xmlSerializer.Deserialize(new StringReader(this.configurationFile.text));
         }
 
         #endregion
@@ -129,7 +117,7 @@ namespace Slash.Unity.Common.Configuration
                     // Load blueprints.
                     BlueprintManager subBlueprintManager = null;
 
-                    if (Application.isEditor)
+                    if (Application.isEditor || this.UseXmlInBuild)
                     {
                         if (blueprintManagerSerializer == null)
                         {

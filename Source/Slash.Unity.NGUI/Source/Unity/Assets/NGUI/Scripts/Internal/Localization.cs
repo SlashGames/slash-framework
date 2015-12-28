@@ -3,8 +3,6 @@
 // Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
-//#define SHOW_REPORT
-
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -29,20 +27,40 @@ using System.Collections.Generic;
 /// Info,"Localization Example","Par exemple la localisation"
 /// </summary>
 
-[AddComponentMenu("NGUI/Internal/Localization")]
-public class Localization : MonoBehaviour
+public static class Localization
 {
-	static Localization mInstance;
+	public delegate byte[] LoadFunction (string path);
 
 	/// <summary>
-	/// List of loaded languages. Available if a single Localization.csv file was used.
+	/// Want to have Localization loading be custom instead of just Resources.Load? Set this function.
 	/// </summary>
 
-	static public string[] knownLanguages;
+	static public LoadFunction loadFunction;
+
+	/// <summary>
+	/// Whether the localization dictionary has been loaded.
+	/// </summary>
+ 
+	static public bool localizationHasBeenSet = false;
+
+	// Loaded languages, if any
+	static string[] mLanguages = null;
+
+	// Key = Value dictionary (single language)
+	static Dictionary<string, string> mOldDictionary = new Dictionary<string, string>();
+
+	// Key = Values dictionary (multiple languages)
+	static Dictionary<string, string[]> mDictionary = new Dictionary<string, string[]>();
+
+	// Index of the selected language within the multi-language dictionary
+	static int mLanguageIndex = -1;
+
+	// Currently selected language
+	static string mLanguage;
 
 	/// <summary>
 	/// Localization dictionary. Dictionary key is the localization key. Dictionary value is the list of localized values (columns in the CSV file).
-	/// Be very careful editing this via code, and be sure to set the "KEY" to the list of languages, and set localizationHasBeenSet to 'true'.
+	/// Be very careful editing this via code, and be sure to set the "KEY" to the list of languages.
 	/// </summary>
 
 	static public Dictionary<string, string[]> dictionary
@@ -52,148 +70,25 @@ public class Localization : MonoBehaviour
 			if (!localizationHasBeenSet) language = PlayerPrefs.GetString("Language", "English");
 			return mDictionary;
 		}
+		set
+		{
+			localizationHasBeenSet = (value != null);
+			mDictionary = value;
+		}
 	}
 
 	/// <summary>
-	/// Whether the localization dictionary has been set already.
+	/// List of loaded languages. Available if a single Localization.csv file was used.
 	/// </summary>
 
-	static public bool localizationHasBeenSet = false;
-
-	/// <summary>
-	/// Whether there is an instance of the localization class present.
-	/// </summary>
-
-	static public bool isActive { get { return mInstance != null; } }
-
-	/// <summary>
-	/// The instance of the localization class. Will create it if one isn't already around.
-	/// </summary>
-
-	static public Localization instance
+	static public string[] knownLanguages
 	{
 		get
 		{
-			if (mInstance == null)
-			{
-				mInstance = Object.FindObjectOfType(typeof(Localization)) as Localization;
-
-				if (mInstance == null)
-				{
-					GameObject go = new GameObject("_Localization");
-					DontDestroyOnLoad(go);
-					mInstance = go.AddComponent<Localization>();
-				}
-			}
-			return mInstance;
+			if (!localizationHasBeenSet) LoadDictionary(PlayerPrefs.GetString("Language", "English"));
+			return mLanguages;
 		}
 	}
-
-	// Deprecated functionality. Set the starting language yourself via Localization.language = "Starting Language".
-	[HideInInspector] public string startingLanguage = "English";
-
-	// Deprecated functionality. No need to set languages anymore. Just place them in the Resources folder, or use a global Localization CSV file.
-	[HideInInspector] public TextAsset[] languages;
-
-	// Key = Value dictionary (single language)
-	static Dictionary<string, string> mOldDictionary = new Dictionary<string, string>();
-	static Dictionary<string, string[]> mDictionary = new Dictionary<string, string[]>();
-	static int mLanguageIndex = -1;
-	static string mLanguage;
-
-#if SHOW_REPORT
-	BetterList<string> mUsed = new BetterList<string>();
-#endif
-
-	/// <summary>
-	/// Determine the starting language.
-	/// </summary>
-
-	void Awake ()
-	{
-		if (mInstance == null)
-		{
-			mInstance = this;
-			DontDestroyOnLoad(gameObject);
-
-			// Legacy functionality
-			if (mOldDictionary.Count == 0 && mDictionary.Count == 0)
-				language = PlayerPrefs.GetString("Language", startingLanguage);
-
-			// Legacy functionality
-			if (string.IsNullOrEmpty(mLanguage) && (languages != null && languages.Length > 0))
-				language = languages[0].name;
-		}
-		else Destroy(gameObject);
-	}
-
-	/// <summary>
-	/// Oddly enough... sometimes if there is no OnEnable function in Localization, it can get the Awake call after UILocalize's OnEnable.
-	/// </summary>
-
-	void OnEnable () { if (mInstance == null) mInstance = this; }
-
-#if SHOW_REPORT
-	/// <summary>
-	/// It's often useful to be able to tell which keys are used in localization, and which are not.
-	/// For this to work properly it's advised to play through the entire game and view all localized content before hitting the Stop button.
-	/// </summary>
-
-	void OnDisable ()
-	{
-		string final = "";
-		BetterList<string> full = new BetterList<string>();
-
-		// Create a list of all the known keys
-		foreach (KeyValuePair<string, string> pair in mDictionary) full.Add(pair.Key);
-
-		// Sort the full list
-		full.Sort(delegate(string s1, string s2) { return s1.CompareTo(s2); });
-
-		// Create the final string with the localization keys
-		for (int i = 0; i < full.size; ++i)
-		{
-			string key = full[i];
-			string val = mDictionary[key].Replace("\n", "\\n");
-			if (mUsed.Contains(key)) final += key + " = " + val + "\n";
-			else final += "//" + key + " = " + val + "\n";
-		}
-		
-		// Show the final report in a format that makes it easy to copy/paste into the original localization file
-		if (!string.IsNullOrEmpty(final))
-			Debug.Log("// Localization Report\n\n" + final);
-
-		mLocalizationLoaded = false;
-		mLanguageIndex = -1;
-		mLocalization.Clear();
-		mDictionary.Clear();
-	}
-#else
-	/// <summary>
-	/// Clear the dictionaries.
-	/// </summary>
-
-	void OnDisable ()
-	{
-		localizationHasBeenSet = false;
-		mLanguageIndex = -1;
-		mDictionary.Clear();
-		mOldDictionary.Clear();
-	}
-#endif
-
-	/// <summary>
-	/// Remove the instance reference.
-	/// </summary>
-
-	void OnDestroy () { if (mInstance == this) mInstance = null; }
-
-	/// <summary>
-	/// Name of the currently active language.
-	/// </summary>
-
-	[System.Obsolete("Use Localization.language instead")]
-	public string currentLanguage { get { return language; } set { language = value; } }
 
 	/// <summary>
 	/// Name of the currently active language.
@@ -203,57 +98,86 @@ public class Localization : MonoBehaviour
 	{
 		get
 		{
+			if (string.IsNullOrEmpty(mLanguage))
+			{
+				string[] lan = knownLanguages;
+				mLanguage = PlayerPrefs.GetString("Language", lan != null ? lan[0] : "English");
+				LoadAndSelect(mLanguage);
+			}
 			return mLanguage;
 		}
 		set
 		{
 			if (mLanguage != value)
 			{
-				if (!string.IsNullOrEmpty(value))
-				{
-					if (mDictionary.Count == 0)
-					{
-						// Try to load the Localization CSV
-						TextAsset txt = localizationHasBeenSet ? null : Resources.Load("Localization", typeof(TextAsset)) as TextAsset;
-						localizationHasBeenSet = true;
-
-						if (txt == null || !LoadCSV(txt))
-						{
-							// Not a referenced asset -- try to load it dynamically
-							txt = Resources.Load(value, typeof(TextAsset)) as TextAsset;
-
-							if (txt != null)
-							{
-								Load(txt);
-								return;
-							}
-						}
-					}
-
-					// Try to load the language from the CSV list
-					if (mDictionary.Count != 0 && SelectLanguage(value)) return;
-
-					// Legacy functionality where languages were specified on the Localization class
-					if (mInstance != null && mInstance.languages != null)
-					{
-						for (int i = 0, imax = mInstance.languages.Length; i < imax; ++i)
-						{
-							TextAsset asset = mInstance.languages[i];
-
-							if (asset != null && asset.name == value)
-							{
-								Load(asset);
-								return;
-							}
-						}
-					}
-				}
-
-				// Either the language is null, or it wasn't found
-				mOldDictionary.Clear();
-				PlayerPrefs.DeleteKey("Language");
+				mLanguage = value;
+				LoadAndSelect(value);
 			}
 		}
+	}
+
+	/// <summary>
+	/// Load the specified localization dictionary.
+	/// </summary>
+
+	static bool LoadDictionary (string value)
+	{
+		// Try to load the Localization CSV
+		byte[] bytes = null;
+
+		if (!localizationHasBeenSet)
+		{
+			if (loadFunction == null)
+			{
+				TextAsset asset = Resources.Load<TextAsset>("Localization");
+				if (asset != null) bytes = asset.bytes;
+			}
+			else bytes = loadFunction("Localization");
+			localizationHasBeenSet = true;
+		}
+
+		// Try to load the localization file
+		if (LoadCSV(bytes)) return true;
+
+		// If this point was reached, the localization file was not present
+		if (string.IsNullOrEmpty(value)) return false;
+
+		// Not a referenced asset -- try to load it dynamically
+		if (loadFunction == null)
+		{
+			TextAsset asset = Resources.Load<TextAsset>(value);
+			if (asset != null) bytes = asset.bytes;
+		}
+		else bytes = loadFunction(value);
+
+		if (bytes != null)
+		{
+			Set(value, bytes);
+			return true;
+		}
+		return false;
+	}
+
+	/// <summary>
+	/// Load the specified language.
+	/// </summary>
+
+	static bool LoadAndSelect (string value)
+	{
+		if (!string.IsNullOrEmpty(value))
+		{
+			if (mDictionary.Count == 0 && !LoadDictionary(value)) return false;
+			if (SelectLanguage(value)) return true;
+		}
+
+		// Old style dictionary
+		if (mOldDictionary.Count > 0) return true;
+
+		// Either the language is null, or it wasn't found
+		mOldDictionary.Clear();
+		mDictionary.Clear();
+		if (string.IsNullOrEmpty(value)) PlayerPrefs.DeleteKey("Language");
+		return false;
 	}
 
 	/// <summary>
@@ -267,15 +191,35 @@ public class Localization : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Set the localization data directly.
+	/// </summary>
+
+	static public void Set (string languageName, byte[] bytes)
+	{
+		ByteReader reader = new ByteReader(bytes);
+		Set(languageName, reader.ReadDictionary());
+	}
+
+	/// <summary>
 	/// Load the specified CSV file.
 	/// </summary>
 
-	static public bool LoadCSV (TextAsset asset)
+	static public bool LoadCSV (TextAsset asset) { return LoadCSV(asset.bytes, asset); }
+
+	/// <summary>
+	/// Load the specified CSV file.
+	/// </summary>
+
+	static public bool LoadCSV (byte[] bytes) { return LoadCSV(bytes, null); }
+
+	/// <summary>
+	/// Load the specified CSV file.
+	/// </summary>
+
+	static bool LoadCSV (byte[] bytes, TextAsset asset)
 	{
-#if SHOW_REPORT
-		mUsed.Clear();
-#endif
-		ByteReader reader = new ByteReader(asset);
+		if (bytes == null) return false;
+		ByteReader reader = new ByteReader(bytes);
 
 		// The first line should contain "KEY", followed by languages.
 		BetterList<string> temp = reader.ReadCSV();
@@ -297,9 +241,9 @@ public class Localization : MonoBehaviour
 		else
 #endif
 		{
-			knownLanguages = new string[temp.size - 1];
-			for (int i = 0; i < knownLanguages.Length; ++i)
-				knownLanguages[i] = temp[i + 1];
+			mLanguages = new string[temp.size - 1];
+			for (int i = 0; i < mLanguages.Length; ++i)
+				mLanguages[i] = temp[i + 1];
 		}
 
 		mDictionary.Clear();
@@ -352,7 +296,15 @@ public class Localization : MonoBehaviour
 		if (values.size < 2) return;
 		string[] temp = new string[values.size - 1];
 		for (int i = 1; i < values.size; ++i) temp[i - 1] = values[i];
-		mDictionary.Add(values[0], temp);
+		
+		try
+		{
+			mDictionary.Add(values[0], temp);
+		}
+		catch (System.Exception ex)
+		{
+			Debug.LogError("Unable to add '" + values[0] + "' to the Localization dictionary.\n" + ex.Message);
+		}
 	}
 
 	/// <summary>
@@ -361,15 +313,12 @@ public class Localization : MonoBehaviour
 
 	static public void Set (string languageName, Dictionary<string, string> dictionary)
 	{
-#if SHOW_REPORT
-		mUsed.Clear();
-#endif
 		mLanguage = languageName;
 		PlayerPrefs.SetString("Language", mLanguage);
 		mOldDictionary = dictionary;
 		localizationHasBeenSet = false;
 		mLanguageIndex = -1;
-		knownLanguages = new string[] { languageName };
+		mLanguages = new string[] { languageName };
 		UIRoot.Broadcast("OnLocalize");
 	}
 
@@ -382,9 +331,6 @@ public class Localization : MonoBehaviour
 		// Ensure we have a language to work with
 		if (!localizationHasBeenSet) language = PlayerPrefs.GetString("Language", "English");
 
-#if SHOW_REPORT
-		if (!mUsed.Contains(key)) mUsed.Add(key);
-#endif
 		string val;
 		string[] vals;
 #if UNITY_IPHONE || UNITY_ANDROID
@@ -411,8 +357,13 @@ public class Localization : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Localize the specified value.
+	/// Localize the specified value and format it.
 	/// </summary>
+
+	static public string Format (string key, params object[] parameters) { return string.Format(Get(key), parameters); }
+
+	[System.Obsolete("Localization is now always active. You no longer need to check this property.")]
+	static public bool isActive { get { return true; } }
 
 	[System.Obsolete("Use Localization.Get instead")]
 	static public string Localize (string key) { return Get(key); }
@@ -423,7 +374,14 @@ public class Localization : MonoBehaviour
 
 	static public bool Exists (string key)
 	{
-		if (mLanguageIndex != -1) return mDictionary.ContainsKey(key);
-		return mOldDictionary.ContainsKey(key);
+		// Ensure we have a language to work with
+		if (!localizationHasBeenSet) language = PlayerPrefs.GetString("Language", "English");
+
+#if UNITY_IPHONE || UNITY_ANDROID
+		string mobKey = key + " Mobile";
+		if (mDictionary.ContainsKey(mobKey)) return true;
+		else if (mOldDictionary.ContainsKey(mobKey)) return true;
+#endif
+		return mDictionary.ContainsKey(key) || mOldDictionary.ContainsKey(key);
 	}
 }

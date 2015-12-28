@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if SLASH_DLLS
+
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -16,7 +18,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Slash Games")]
 [assembly: AssemblyProduct("Slash.System")]
-[assembly: AssemblyCopyright("Copyright 2012-2014 Slash Games")]
+[assembly: AssemblyCopyright("Copyright Slash Games")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -42,3 +44,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: AssemblyVersion("1.0.*")]
+
+#endif

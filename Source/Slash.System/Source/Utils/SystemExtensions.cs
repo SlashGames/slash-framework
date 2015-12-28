@@ -7,12 +7,15 @@
 namespace Slash.SystemExt.Utils
 {
     using System;
+    using System.Text.RegularExpressions;
+
+#if !WINDOWS_STORE && !WINDOWS_PHONE
     using System.IO;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
-    using System.Text.RegularExpressions;
-
-    using Slash.Diagnostics.ReSharper.Annotations;
+#else
+    using System.Reflection;
+#endif
 
     /// <summary>
     ///   Extension methods for classes of the System namespace.
@@ -21,7 +24,7 @@ namespace Slash.SystemExt.Utils
     {
         #region Public Methods and Operators
 
-#if !WINDOWS_STORE
+#if !WINDOWS_STORE && !WINDOWS_PHONE
         /// <summary>
         ///   Perform a deep Copy of the object.
         ///   Reference Article http://www.codeproject.com/KB/tips/SerializedObjectCloner.aspx
@@ -64,7 +67,11 @@ namespace Slash.SystemExt.Utils
         /// <returns>Full name of specified type without additional info of the assembly.</returns>
         public static string FullNameWithoutAssemblyInfo(this Type type)
         {
+#if WINDOWS_STORE
+            return !type.GetTypeInfo().IsGenericType ? type.FullName : RemoveAssemblyInfo(type.FullName);
+#else
             return !type.IsGenericType ? type.FullName : RemoveAssemblyInfo(type.FullName);
+#endif
         }
 
         /// <summary>
@@ -88,7 +95,7 @@ namespace Slash.SystemExt.Utils
         public static string RemoveAssemblyInfo(string typeName)
         {
             // Get start of "Version=..., Culture=..., PublicKeyToken=..." string.
-            int versionIndex = typeName.IndexOf("Version", StringComparison.Ordinal);
+            int versionIndex = typeName.IndexOf("Version=", StringComparison.Ordinal);
 
             if (versionIndex >= 0)
             {
@@ -110,7 +117,6 @@ namespace Slash.SystemExt.Utils
         /// </summary>
         /// <param name="s">String to split.</param>
         /// <returns>Split string.</returns>
-        [Pure]
         public static string SplitByCapitalLetters(this string s)
         {
             Regex r = new Regex(@"(?<=[A-Z])(?=[A-Z][a-z]) |
@@ -124,7 +130,6 @@ namespace Slash.SystemExt.Utils
         /// </summary>
         /// <param name="s">String to convert the first letter of.</param>
         /// <returns>Specified string with first letter in upper case.</returns>
-        [Pure]
         public static string FirstLetterToUpper(this string s)
         {
             if (string.IsNullOrEmpty(s))

@@ -6,6 +6,8 @@
 
 namespace Slash.Unity.Common.Math
 {
+    using System;
+
     using Slash.Math.Algebra.Vectors;
     using Slash.Math.Geometry.Rectangles;
 
@@ -69,6 +71,16 @@ namespace Slash.Unity.Common.Math
         }
 
         /// <summary>
+        ///   Converts the specified framework vector to an Unity vector.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <returns>Corresponding Unity vector.</returns>
+        public static Vector2 ToVector2(this Vector2F vector)
+        {
+            return new Vector2(vector.X, vector.Y);
+        }
+
+        /// <summary>
         ///   Converts the specified Unity vector to a framework vector.
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
@@ -83,9 +95,30 @@ namespace Slash.Unity.Common.Math
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
         /// <returns>Corresponding framework vector.</returns>
+        [Obsolete("Deprecated to make conversion clearer. Use ToVector2FXY instead.")]
         public static Vector2F ToVector2F(this Vector3 vector)
         {
             return new Vector2F(vector.x, vector.y);
+        }
+
+        /// <summary>
+        ///   Converts the specified Unity vector to a framework vector.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <returns>Corresponding framework vector.</returns>
+        public static Vector2F ToVector2FXY(this Vector3 vector)
+        {
+            return new Vector2F(vector.x, vector.y);
+        }
+
+        /// <summary>
+        ///   Converts the specified Unity vector to a framework vector.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <returns>Corresponding framework vector.</returns>
+        public static Vector2F ToVector2FXZ(this Vector3 vector)
+        {
+            return new Vector2F(vector.x, vector.z);
         }
 
         /// <summary>
@@ -112,24 +145,34 @@ namespace Slash.Unity.Common.Math
         ///   Converts the specified framework vector to an Unity vector.
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
-        /// <param name="height">y value of converted vector.</param>
+        /// <param name="z">Z value.</param>
         /// <returns>Corresponding Unity vector.</returns>
-        public static Vector3 ToVector3(this Vector2F vector, float height = 0.0f)
+        [Obsolete("Deprecated to make conversion clearer. Use ToVector3XY instead.")]
+        public static Vector3 ToVector3(this Vector2F vector, float z = 0)
         {
-            return new Vector3(vector.X, height, vector.Y);
+            return new Vector3(vector.X, vector.Y, z);
         }
 
         /// <summary>
-        ///   Converts the specified framework vector to an Unity vector,
-        ///   multiplying it with the passed scalar.
+        ///   Converts the specified framework vector to an Unity vector.
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
-        /// <param name="height">y value of converted vector.</param>
-        /// <param name="factor">Scalar to multiply the input vector with before converting it.</param>
+        /// <param name="z">Z value.</param>
         /// <returns>Corresponding Unity vector.</returns>
-        public static Vector3 ToVector3(this Vector2I vector, float height = 0.0f, float factor = 1.0f)
+        public static Vector3 ToVector3XY(this Vector2F vector, float z = 0)
         {
-            return new Vector3(vector.X * factor, height, vector.Y * factor);
+            return new Vector3(vector.X, vector.Y, z);
+        }
+
+        /// <summary>
+        ///   Converts the specified framework vector to an Unity vector.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <param name="y">Y value.</param>
+        /// <returns>Corresponding Unity vector.</returns>
+        public static Vector3 ToVector3XZ(this Vector2F vector, float y = 0)
+        {
+            return new Vector3(vector.X, y, vector.Y);
         }
 
         #endregion

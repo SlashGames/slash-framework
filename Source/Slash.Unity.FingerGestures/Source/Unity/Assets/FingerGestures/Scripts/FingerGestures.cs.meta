@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: c49ed014673f07847be2bb1995e31a70
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - dragRecognizerPrefab: {fileID: 11400000, guid: 00ad9295bf1ba34479727a7f4891da00,
+      type: 2}
+  - tapRecognizerPrefab: {fileID: 11400000, guid: ccefec2f1cb6d9f41b30a70865de857f,
+      type: 2}
+  - doubleTapRecognizerPrefab: {fileID: 11400000, guid: 708d5292f9377aa44a97664e2c8f503c,
+      type: 2}
+  - swipeRecognizerPrefab: {fileID: 11400000, guid: 5268ce1f07d693241a6eb7e17cc4e6d1,
+      type: 2}
+  - longPressRecognizerPrefab: {fileID: 11400000, guid: 0aadb7609260c0646a054114747b4d3b,
+      type: 2}
+  - pinchRecognizerPrefab: {fileID: 11400000, guid: ef7febb531ab6ef41b471dfa409b8752,
+      type: 2}
+  - twistRecognizerPrefab: {fileID: 11400000, guid: efe7304245a92684ab62a14d3912874a,
+      type: 2}
+  - mouseInputProviderPrefab: {fileID: 11400000, guid: 2fc6e1e218b70c94285691a647d862aa,
+      type: 2}
+  - touchInputProviderPrefab: {fileID: 11400000, guid: 7e371fba69d7cea42a0d86fb48257c47,
+      type: 2}
+  - raycastCamera: {instanceID: 0}
+  executionOrder: -300
+  icon: {instanceID: 0}
+  userData: 

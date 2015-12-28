@@ -8,6 +8,8 @@ namespace Slash.ECS.Tests
 {
     using NUnit.Framework;
 
+    using Slash.ECS.Components;
+    using Slash.ECS.Events;
     using Slash.ECS.Processes;
 
     public class ProcessManagerTest
@@ -260,9 +262,9 @@ namespace Slash.ECS.Tests
 
             #region Public Methods and Operators
 
-            public override void InitProcess()
+            public override void InitProcess(EntityManager entityManager, EventManager eventManager)
             {
-                base.InitProcess();
+                base.InitProcess(entityManager, eventManager);
 
                 this.Initialized = true;
             }

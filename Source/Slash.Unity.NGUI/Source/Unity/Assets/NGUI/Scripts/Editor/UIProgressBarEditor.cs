@@ -31,16 +31,16 @@ public class UIProgressBarEditor : UIWidgetContainerEditor
 
 		OnDrawExtraFields();
 
-		if (NGUIEditorTools.DrawHeader("Appearance"))
+		if (NGUIEditorTools.DrawHeader("Appearance", "Appearance", false, true))
 		{
-			NGUIEditorTools.BeginContents();
+			NGUIEditorTools.BeginContents(true);
 			NGUIEditorTools.DrawProperty("Foreground", serializedObject, "mFG");
 			NGUIEditorTools.DrawProperty("Background", serializedObject, "mBG");
 			NGUIEditorTools.DrawProperty("Thumb", serializedObject, "thumb");
 
 			GUILayout.BeginHorizontal();
 			NGUIEditorTools.DrawProperty("Direction", serializedObject, "mFill");
-			GUILayout.Space(18f);
+			NGUIEditorTools.DrawPadding();
 			GUILayout.EndHorizontal();
 
 			OnDrawAppearance();

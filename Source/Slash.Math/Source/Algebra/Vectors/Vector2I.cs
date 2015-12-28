@@ -17,9 +17,9 @@ namespace Slash.Math.Algebra.Vectors
     /// </summary>
     [Serializable]
     [DictionarySerializable]
-    public class Vector2I
+    public struct Vector2I
     {
-        #region Static Fields
+        #region Constants
 
         /// <summary>
         ///   Unrotated forward vector.
@@ -59,26 +59,17 @@ namespace Slash.Math.Algebra.Vectors
         ///   X component.
         /// </summary>
         [DictionarySerializable]
-        public readonly int X;
+        public int X;
 
         /// <summary>
         ///   Y component.
         /// </summary>
         [DictionarySerializable]
-        public readonly int Y;
+        public int Y;
 
         #endregion
 
         #region Constructors and Destructors
-
-        /// <summary>
-        ///   Constructs a new zero vector.
-        /// </summary>
-        public Vector2I()
-        {
-            this.X = 0;
-            this.Y = 0;
-        }
 
         /// <summary>
         ///   Constructor.
@@ -104,7 +95,10 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   Constructor.
         /// </summary>
-        /// <param name="values"> Array which contains the initial vector value. Value at index 0 is taken as the initial x value, value at index 1 is taken as the initial y value. </param>
+        /// <param name="values">
+        ///   Array which contains the initial vector value. Value at index 0 is taken as the initial x value,
+        ///   value at index 1 is taken as the initial y value.
+        /// </param>
         public Vector2I(params int[] values)
         {
             if (values == null)
@@ -123,7 +117,7 @@ namespace Slash.Math.Algebra.Vectors
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Indicates if at least one vector component is not zero.
@@ -188,6 +182,17 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
+        ///   Adds the passed values to the x and y value.
+        /// </summary>
+        /// <param name="addX"> Value to add to x. </param>
+        /// <param name="addY"> Value to add to y. </param>
+        /// <returns>Sum of <paramref name="addX" /> and <paramref name="addY" />.</returns>
+        public Vector2I Add(int addX, int addY)
+        {
+            return new Vector2I(this.X + addX, this.Y + addY);
+        }
+
+        /// <summary>
         ///   Returns a positive number if c is to the left of the line going from a to b.
         /// </summary>
         /// <param name="a">First point of the line.</param>
@@ -204,7 +209,10 @@ namespace Slash.Math.Algebra.Vectors
         /// </summary>
         /// <param name="vector1"> First vector. </param>
         /// <param name="vector2"> Second vector. </param>
-        /// <returns> Return the angle between two vectors on a plane. The angle is from vector 1 to vector 2, positive counter-clockwise. The result is between -pi -> pi. </returns>
+        /// <returns>
+        ///   Return the angle between two vectors on a plane. The angle is from vector 1 to vector 2, positive
+        ///   counter-clockwise. The result is between -pi -> pi.
+        /// </returns>
         public static float CalculateAngle(Vector2I vector1, Vector2I vector2)
         {
             float theta1 = MathUtils.Atan2(vector1.Y, vector1.X);
@@ -220,6 +228,17 @@ namespace Slash.Math.Algebra.Vectors
             }
 
             return (dtheta);
+        }
+
+        /// <summary>
+        ///   Calculates the dot product of this and the passed vector. See http://en.wikipedia.org/wiki/Dot_product for more
+        ///   details.
+        /// </summary>
+        /// <param name="vector"> Vector to calculate dot product with. </param>
+        /// <returns> Dot product of this and the passed vector. </returns>
+        public int CalculateDotProduct(Vector2I vector)
+        {
+            return Dot(this, vector);
         }
 
         /// <summary>
@@ -248,7 +267,8 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Calculates the cross product of the two passed vectors. See http://en.wikipedia.org/wiki/Cross_product for more details.
+        ///   Calculates the cross product of the two passed vectors. See http://en.wikipedia.org/wiki/Cross_product for more
+        ///   details.
         /// </summary>
         /// <param name="a"> First vector. </param>
         /// <param name="b"> Second vector. </param>
@@ -281,184 +301,12 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Sum of the absolute values of the differences of the components of both vectors.
-        /// </summary>
-        /// <param name="a">First vector.</param>
-        /// <param name="b">Second vector.</param>
-        /// <returns>|a.X - b.X| + |a.Y - b.Y|</returns>
-        public static int ManhattanDistance(Vector2I a, Vector2I b)
-        {
-            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
-        }
-
-        /// <summary>
-        ///   Creates a new vector out of the two passed vectors and takes the maximum values from these for each component.
-        /// </summary>
-        /// <param name="value1"> First vector. </param>
-        /// <param name="value2"> Second vector. </param>
-        /// <returns> Vector which components are the maximum of the respective components of the two passed vectors. </returns>
-        public static Vector2I Max(Vector2I value1, Vector2I value2)
-        {
-            return new Vector2I(MathUtils.Max(value1.X, value2.X), MathUtils.Max(value1.Y, value2.Y));
-        }
-
-        /// <summary>
-        ///   Creates a new vector out of the two passed vectors and takes the minimum values from these for each component.
-        /// </summary>
-        /// <param name="value1"> First vector. </param>
-        /// <param name="value2"> Second vector. </param>
-        /// <returns> Vector which components are the minimum of the respective components of the two passed vectors. </returns>
-        public static Vector2I Min(Vector2I value1, Vector2I value2)
-        {
-            return new Vector2I(MathUtils.Min(value1.X, value2.X), MathUtils.Min(value1.Y, value2.Y));
-        }
-
-        /// <summary>
-        ///   Sums the components of the passed vectors and returns the resulting vector.
-        /// </summary>
-        /// <param name="a"> First vector. </param>
-        /// <param name="b"> Second vector. </param>
-        /// <returns> Vector which components are the sum of the respective components of the two passed vectors. </returns>
-        public static Vector2I operator +(Vector2I a, Vector2I b)
-        {
-            return new Vector2I(a.X + b.X, a.Y + b.Y);
-        }
-
-        /// <summary>
-        ///   Adds the passed value to each component of the passed vector.
-        /// </summary>
-        /// <param name="a"> Vector to add the value to. </param>
-        /// <param name="b"> Integer value to add. </param>
-        /// <returns> Vector where each component is the sum of the particular component of the passed vector plus the passed value. </returns>
-        public static Vector2I operator +(Vector2I a, int b)
-        {
-            return new Vector2I(a.X + b, a.Y + b);
-        }
-
-        /// <summary>
-        ///   Divides each component of the passed vector by the passed value.
-        /// </summary>
-        /// <param name="a"> Vector to divide by the value. </param>
-        /// <param name="b"> Value to divide by. </param>
-        /// <returns> Vector where each component is the result of the particular component of the passed vector divided by the passed value. </returns>
-        public static Vector2I operator /(Vector2I a, int b)
-        {
-            return new Vector2I(a.X / b, a.Y / b);
-        }
-
-        /// <summary>
-        ///   Indicates if the two passed vectors are equal.
-        /// </summary>
-        /// <param name="a"> First vector. </param>
-        /// <param name="b"> Second vector. </param>
-        /// <returns> True if the two passed vectors are equal; otherwise, false. </returns>
-        public static bool operator ==(Vector2I a, Vector2I b)
-        {
-            return Equals(a, b);
-        }
-
-        /// <summary>
-        ///   Indicates if the two passed vectors are not equal.
-        /// </summary>
-        /// <param name="a"> First vector. </param>
-        /// <param name="b"> Second vector. </param>
-        /// <returns> True if the two passed vectors are not equal; otherwise, false. </returns>
-        public static bool operator !=(Vector2I a, Vector2I b)
-        {
-            return !Equals(a, b);
-        }
-
-        /// <summary>
-        ///   Multiplies each vector component of the two passed vectors.
-        /// </summary>
-        /// <param name="a"> First vector. </param>
-        /// <param name="b"> Second vector. </param>
-        /// <returns> Vector which components are the product of the respective components of the passed vectors. </returns>
-        public static Vector2I operator *(Vector2I a, Vector2I b)
-        {
-            return new Vector2I(a.X * b.X, a.Y * b.Y);
-        }
-
-        /// <summary>
-        ///   Multiplies each vector component with the passed value.
-        /// </summary>
-        /// <param name="a"> Vector to multiply. </param>
-        /// <param name="b"> Value to multiply by. </param>
-        /// <returns> Vector which components are the product of the respective component of the passed vector and the value. </returns>
-        public static Vector2I operator *(Vector2I a, int b)
-        {
-            return new Vector2I(a.X * b, a.Y * b);
-        }
-
-        /// <summary>
-        ///   Multiplies each vector component with the passed value.
-        /// </summary>
-        /// <param name="a"> Value to multiply by. </param>
-        /// <param name="b"> Vector to multiply. </param>
-        /// <returns> Vector which components are the product of the respective component of the passed vector and the value. </returns>
-        public static Vector2I operator *(int a, Vector2I b)
-        {
-            return new Vector2I(a * b.X, a * b.Y);
-        }
-
-        /// <summary>
-        ///   Subtracts the passed value from each component of the passed vector.
-        /// </summary>
-        /// <param name="a"> Vector to subtract the value from. </param>
-        /// <param name="b"> Integer value to subtract. </param>
-        /// <returns> Vector where each component is the sum of the particular component of the passed vector minus the passed value. </returns>
-        public static Vector2I operator -(Vector2I a, int b)
-        {
-            return new Vector2I(a.X - b, a.Y - b);
-        }
-
-        /// <summary>
-        ///   Subtracts the components of the second passed vector from the first passed.
-        /// </summary>
-        /// <param name="a"> First vector. </param>
-        /// <param name="b"> Second vector. </param>
-        /// <returns> Vector which components are the difference of the respective components of the two passed vectors. </returns>
-        public static Vector2I operator -(Vector2I a, Vector2I b)
-        {
-            return new Vector2I(a.X - b.X, a.Y - b.Y);
-        }
-
-        /// <summary>
-        ///   Negates each component of the passed vector.
-        /// </summary>
-        /// <param name="a"> Vector to negate. </param>
-        /// <returns> Vector which components have the negated value of the respective components of the passed vector. </returns>
-        public static Vector2I operator -(Vector2I a)
-        {
-            return new Vector2I(-a.X, -a.Y);
-        }
-
-        /// <summary>
-        ///   Adds the passed values to the x and y value.
-        /// </summary>
-        /// <param name="addX"> Value to add to x. </param>
-        /// <param name="addY"> Value to add to y. </param>
-        /// <returns>Sum of <paramref name="addX"/> and <paramref name="addY"/>.</returns>
-        public Vector2I Add(int addX, int addY)
-        {
-            return new Vector2I(this.X + addX, this.Y + addY);
-        }
-
-        /// <summary>
-        ///   Calculates the dot product of this and the passed vector. See http://en.wikipedia.org/wiki/Dot_product for more details.
-        /// </summary>
-        /// <param name="vector"> Vector to calculate dot product with. </param>
-        /// <returns> Dot product of this and the passed vector. </returns>
-        public int CalculateDotProduct(Vector2I vector)
-        {
-            return Dot(this, vector);
-        }
-
-        /// <summary>
-        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+        ///   <see cref="T:System.Object" />.
         /// </summary>
         /// <returns>
-        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+        ///   otherwise, false.
         /// </returns>
         /// <param name="obj">
         ///   The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.
@@ -470,15 +318,25 @@ namespace Slash.Math.Algebra.Vectors
             {
                 return false;
             }
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
             if (obj.GetType() != this.GetType())
             {
                 return false;
             }
             return this.Equals((Vector2I)obj);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="Vector2I" /> is equal to the current <see cref="Vector2I" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="Vector2I" /> is equal to the current <see cref="Vector2I" />; otherwise, false.
+        /// </returns>
+        /// <param name="other">
+        ///   The <see cref="Vector2I" /> to compare with the current <see cref="Vector2I" />.
+        /// </param>
+        public bool Equals(Vector2I other)
+        {
+            return this.X == other.X && this.Y == other.Y;
         }
 
         /// <summary>
@@ -541,6 +399,190 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
+        ///   Sum of the absolute values of the differences of the components of both vectors.
+        /// </summary>
+        /// <param name="a">First vector.</param>
+        /// <param name="b">Second vector.</param>
+        /// <returns>|a.X - b.X| + |a.Y - b.Y|</returns>
+        public static int ManhattanDistance(Vector2I a, Vector2I b)
+        {
+            return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
+        }
+
+        /// <summary>
+        ///   Creates a new vector out of the two passed vectors and takes the maximum values from these for each component.
+        /// </summary>
+        /// <param name="value1"> First vector. </param>
+        /// <param name="value2"> Second vector. </param>
+        /// <returns> Vector which components are the maximum of the respective components of the two passed vectors. </returns>
+        public static Vector2I Max(Vector2I value1, Vector2I value2)
+        {
+            return new Vector2I(MathUtils.Max(value1.X, value2.X), MathUtils.Max(value1.Y, value2.Y));
+        }
+
+        /// <summary>
+        ///   Creates a new vector out of the two passed vectors and takes the minimum values from these for each component.
+        /// </summary>
+        /// <param name="value1"> First vector. </param>
+        /// <param name="value2"> Second vector. </param>
+        /// <returns> Vector which components are the minimum of the respective components of the two passed vectors. </returns>
+        public static Vector2I Min(Vector2I value1, Vector2I value2)
+        {
+            return new Vector2I(MathUtils.Min(value1.X, value2.X), MathUtils.Min(value1.Y, value2.Y));
+        }
+
+        /// <summary>
+        ///   Sums the components of the passed vectors and returns the resulting vector.
+        /// </summary>
+        /// <param name="a"> First vector. </param>
+        /// <param name="b"> Second vector. </param>
+        /// <returns> Vector which components are the sum of the respective components of the two passed vectors. </returns>
+        public static Vector2I operator +(Vector2I a, Vector2I b)
+        {
+            return new Vector2I(a.X + b.X, a.Y + b.Y);
+        }
+
+        /// <summary>
+        ///   Adds the passed value to each component of the passed vector.
+        /// </summary>
+        /// <param name="a"> Vector to add the value to. </param>
+        /// <param name="b"> Integer value to add. </param>
+        /// <returns>
+        ///   Vector where each component is the sum of the particular component of the passed vector plus the passed
+        ///   value.
+        /// </returns>
+        public static Vector2I operator +(Vector2I a, int b)
+        {
+            return new Vector2I(a.X + b, a.Y + b);
+        }
+
+        /// <summary>
+        ///   Divides each component of the passed vector by the passed value.
+        /// </summary>
+        /// <param name="a"> Vector to divide by the value. </param>
+        /// <param name="b"> Value to divide by. </param>
+        /// <returns>
+        ///   Vector where each component is the result of the particular component of the passed vector divided by the
+        ///   passed value.
+        /// </returns>
+        public static Vector2I operator /(Vector2I a, int b)
+        {
+            return new Vector2I(a.X / b, a.Y / b);
+        }
+
+        /// <summary>
+        ///   Indicates if the two passed vectors are equal.
+        /// </summary>
+        /// <param name="a"> First vector. </param>
+        /// <param name="b"> Second vector. </param>
+        /// <returns> True if the two passed vectors are equal; otherwise, false. </returns>
+        public static bool operator ==(Vector2I a, Vector2I b)
+        {
+            return Equals(a, b);
+        }
+
+        /// <summary>
+        ///   Indicates if the two passed vectors are not equal.
+        /// </summary>
+        /// <param name="a"> First vector. </param>
+        /// <param name="b"> Second vector. </param>
+        /// <returns> True if the two passed vectors are not equal; otherwise, false. </returns>
+        public static bool operator !=(Vector2I a, Vector2I b)
+        {
+            return !Equals(a, b);
+        }
+
+        /// <summary>
+        ///   Multiplies each vector component of the two passed vectors.
+        /// </summary>
+        /// <param name="a"> First vector. </param>
+        /// <param name="b"> Second vector. </param>
+        /// <returns> Vector which components are the product of the respective components of the passed vectors. </returns>
+        public static Vector2I operator *(Vector2I a, Vector2I b)
+        {
+            return new Vector2I(a.X * b.X, a.Y * b.Y);
+        }
+
+        /// <summary>
+        ///   Multiplies each vector component with the specified value.
+        /// </summary>
+        /// <param name="a"> Vector to multiply. </param>
+        /// <param name="b"> Value to multiply by. </param>
+        /// <returns> Vector which components are the product of the respective component of the specified vector and the value. </returns>
+        public static Vector2I operator *(Vector2I a, int b)
+        {
+            return new Vector2I(a.X * b, a.Y * b);
+        }
+
+        /// <summary>
+        ///   Multiplies each vector component with the specified value.
+        /// </summary>
+        /// <param name="a"> Value to multiply by. </param>
+        /// <param name="b"> Vector to multiply. </param>
+        /// <returns> Vector which components are the product of the respective component of the specified vector and the value. </returns>
+        public static Vector2I operator *(int a, Vector2I b)
+        {
+            return new Vector2I(a * b.X, a * b.Y);
+        }
+
+        /// <summary>
+        ///   Multiplies each vector component with the specified value.
+        /// </summary>
+        /// <param name="a"> Vector to multiply. </param>
+        /// <param name="b"> Value to multiply by. </param>
+        /// <returns> Vector which components are the product of the respective component of the specified vector and the value. </returns>
+        public static Vector2F operator *(Vector2I a, float b)
+        {
+            return new Vector2F(a.X * b, a.Y * b);
+        }
+
+        /// <summary>
+        ///   Multiplies each vector component with the specified value.
+        /// </summary>
+        /// <param name="a"> Value to multiply by. </param>
+        /// <param name="b"> Vector to multiply. </param>
+        /// <returns> Vector which components are the product of the respective component of the specified vector and the value. </returns>
+        public static Vector2F operator *(float a, Vector2I b)
+        {
+            return new Vector2F(a * b.X, a * b.Y);
+        }
+
+        /// <summary>
+        ///   Subtracts the passed value from each component of the passed vector.
+        /// </summary>
+        /// <param name="a"> Vector to subtract the value from. </param>
+        /// <param name="b"> Integer value to subtract. </param>
+        /// <returns>
+        ///   Vector where each component is the sum of the particular component of the passed vector minus the passed
+        ///   value.
+        /// </returns>
+        public static Vector2I operator -(Vector2I a, int b)
+        {
+            return new Vector2I(a.X - b, a.Y - b);
+        }
+
+        /// <summary>
+        ///   Subtracts the components of the second passed vector from the first passed.
+        /// </summary>
+        /// <param name="a"> First vector. </param>
+        /// <param name="b"> Second vector. </param>
+        /// <returns> Vector which components are the difference of the respective components of the two passed vectors. </returns>
+        public static Vector2I operator -(Vector2I a, Vector2I b)
+        {
+            return new Vector2I(a.X - b.X, a.Y - b.Y);
+        }
+
+        /// <summary>
+        ///   Negates each component of the passed vector.
+        /// </summary>
+        /// <param name="a"> Vector to negate. </param>
+        /// <returns> Vector which components have the negated value of the respective components of the passed vector. </returns>
+        public static Vector2I operator -(Vector2I a)
+        {
+            return new Vector2I(-a.X, -a.Y);
+        }
+
+        /// <summary>
         ///   Returns a string that represents the current object.
         /// </summary>
         /// <returns>
@@ -553,24 +595,6 @@ namespace Slash.Math.Algebra.Vectors
                 "({0},{1})",
                 this.X.ToString(CultureInfo.InvariantCulture.NumberFormat),
                 this.Y.ToString(CultureInfo.InvariantCulture.NumberFormat));
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        ///   Determines whether the specified <see cref="Vector2I" /> is equal to the current <see cref="Vector2I" />.
-        /// </summary>
-        /// <returns>
-        ///   true if the specified <see cref="Vector2I" /> is equal to the current <see cref="Vector2I" />; otherwise, false.
-        /// </returns>
-        /// <param name="other">
-        ///   The <see cref="Vector2I" /> to compare with the current <see cref="Vector2I" />.
-        /// </param>
-        protected bool Equals(Vector2I other)
-        {
-            return this.X == other.X && this.Y == other.Y;
         }
 
         #endregion

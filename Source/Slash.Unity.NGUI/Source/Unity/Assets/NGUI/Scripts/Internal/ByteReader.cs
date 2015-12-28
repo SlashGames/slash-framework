@@ -6,6 +6,7 @@
 using UnityEngine;
 using System.Text;
 using System.Collections.Generic;
+using System.IO;
 
 /// <summary>
 /// MemoryStream.ReadLine has an interesting oddity: it doesn't always advance the stream's position by the correct amount:
@@ -20,6 +21,28 @@ public class ByteReader
 
 	public ByteReader (byte[] bytes) { mBuffer = bytes; }
 	public ByteReader (TextAsset asset) { mBuffer = asset.bytes; }
+
+	/// <summary>
+	/// Read the contents of the specified file and return a Byte Reader to work with.
+	/// </summary>
+
+	static public ByteReader Open (string path)
+	{
+#if UNITY_EDITOR || (!UNITY_FLASH && !NETFX_CORE && !UNITY_WP8)
+		FileStream fs = File.OpenRead(path);
+
+		if (fs != null)
+		{
+			fs.Seek(0, SeekOrigin.End);
+			byte[] buffer = new byte[fs.Position];
+			fs.Seek(0, SeekOrigin.Begin);
+			fs.Read(buffer, 0, buffer.Length);
+			fs.Close();
+			return new ByteReader(buffer);
+		}
+#endif
+		return null;
+	}
 
 	/// <summary>
 	/// Whether the buffer is readable.
@@ -194,7 +217,6 @@ public class ByteReader
 				if (s == null) return null;
 				s = s.Replace("\\n", "\n");
 				line += "\n" + s;
-				++wordStart;
 			}
 			else
 			{
@@ -228,7 +250,7 @@ public class ByteReader
 
 						if (line[i + 1] != '"')
 						{
-							mTemp.Add(line.Substring(wordStart, i - wordStart));
+							mTemp.Add(line.Substring(wordStart, i - wordStart).Replace("\"\"", "\""));
 							insideQuotes = false;
 
 							if (line[i + 1] == ',')

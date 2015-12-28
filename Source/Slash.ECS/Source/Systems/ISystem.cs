@@ -1,12 +1,11 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISystem.cs" company="Slash Games">
-//   Copyright (c) Slash Games. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Slash.ECS.Systems
+﻿namespace Slash.ECS.Systems
 {
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Components;
+    using Slash.ECS.Events;
+    using Slash.ECS.Logging;
+    using Slash.ECS.Processes;
 
     /// <summary>
     ///   Contract that all systems that make up a game have to fulfill,
@@ -17,13 +16,39 @@ namespace Slash.ECS.Systems
         #region Public Properties
 
         /// <summary>
-        ///   Game this system belongs to.
+        ///   Blueprint manager for this system.
         /// </summary>
-        Game Game { get; set; }
+        IBlueprintManager BlueprintManager { get; set; }
+
+        /// <summary>
+        ///   Entity manager for this system.
+        /// </summary>
+        EntityManager EntityManager { get; set; }
+
+        /// <summary>
+        ///   Event manager for this system.
+        /// </summary>
+        EventManager EventManager { get; set; }
+
+        /// <summary>
+        ///   Logger for logic events.
+        /// </summary>
+        GameLogger Log { get; set; }
+
+        /// <summary>
+        ///   Allows ticking and queueing timed processes. Good examples are
+        ///   animations, tweens, or "Go to that point, and open the door after."
+        /// </summary>
+        ProcessManager ProcessManager { get; set; }
 
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Deinitializes this system.
+        /// </summary>
+        void Deinit();
 
         /// <summary>
         ///   Initializes this system with the data stored in the specified
@@ -47,7 +72,7 @@ namespace Slash.ECS.Systems
         /// <param name="dt">
         ///   Time passed since the last tick, in seconds.
         /// </param>
-        void UpdateSystem(float dt);
+        void Update(float dt);
 
         #endregion
     }

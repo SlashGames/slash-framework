@@ -19,8 +19,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SLASH_DLLS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -28,14 +28,15 @@
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;SLASH_DLLS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release WindowsStore|AnyCPU' ">
-    <OutputPath>bin\Release WindowsStore\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS_STORE</DefineConstants>
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;SLASH_DLLS</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,6 +44,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\Components\EntityComponent.cs" />
+    <Compile Include="Source\Events\GameEventTypeAttribute.cs" />
+    <Compile Include="Source\Features\Serialization\Events\SerializationAction.cs" />
     <Compile Include="Source\Inspector\Attributes\ConditionalFlagsCheck.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorDataAttribute.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorEntityAttribute.cs" />
@@ -81,12 +85,16 @@
     <Compile Include="Source\Inspector\Utils\InspectorUtils.cs" />
     <Compile Include="Source\Inspector\Validation\ValidationError.cs" />
     <Compile Include="Source\Logging\GameLogger.cs" />
+    <Compile Include="Source\Processes\CreateEntityProcess.cs" />
     <Compile Include="Source\Processes\GameProcess.cs" />
     <Compile Include="Source\Processes\ProcessManager.cs" />
     <Compile Include="Source\Processes\WaitProcess.cs" />
+    <Compile Include="Source\Systems\CompoundComponentAttribute.cs" />
+    <Compile Include="Source\Systems\CompoundEntities.cs" />
     <Compile Include="Source\Systems\GameSystemAttribute.cs" />
     <Compile Include="Source\Systems\ISystem.cs" />
     <Compile Include="Source\Systems\GameSystem.cs" />
+    <Compile Include="Source\Features\Serialization\Systems\SerializationSystem.cs" />
     <Compile Include="Source\Systems\SystemManager.cs" />
     <Compile Include="Source\Blueprints\GameBlueprintUtils.cs" />
   </ItemGroup>
@@ -98,10 +106,6 @@
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>Slash.Collections</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Slash.Diagnostics\Slash.Diagnostics.csproj">
-      <Project>{E155097A-6A57-498E-A707-F852AA672111}</Project>
-      <Name>Slash.Diagnostics</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
       <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>

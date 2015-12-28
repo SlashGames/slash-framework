@@ -82,9 +82,20 @@ namespace Slash.ECS.Events
         /// <param name="e"> Event which occurred. </param>
         public delegate void EventDelegate(GameEvent e);
 
+        public delegate void UnhandledEventDelegate(object eventType);
+
         #endregion
 
-        #region Public Properties
+        #region Events
+
+        /// <summary>
+        ///   Callback for events no listener is registered for. Useful for improving performance.
+        /// </summary>
+        public event UnhandledEventDelegate UnhandledEvent;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///   Current number of events in the event queue.
@@ -253,6 +264,11 @@ namespace Slash.ECS.Events
         /// <param name="e"> Event to queue. </param>
         public void QueueEvent(GameEvent e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException("e", "Event is null.");
+            }
+
             this.newEvents.Add(e);
         }
 
@@ -352,6 +368,16 @@ namespace Slash.ECS.Events
 
         #region Methods
 
+        private void OnUnhandledEvent(object eventType)
+        {
+            var handler = this.UnhandledEvent;
+
+            if (handler != null)
+            {
+                handler(eventType);
+            }
+        }
+
         /// <summary>
         ///   Notifies all interested listeners of the specified event.
         /// </summary>
@@ -371,6 +397,14 @@ namespace Slash.ECS.Events
                 {
                     eventListeners(e);
                 }
+                else
+                {
+                    this.OnUnhandledEvent(e.EventType);
+                }
+            }
+            else
+            {
+                this.OnUnhandledEvent(e.EventType);
             }
         }
 
@@ -381,7 +415,7 @@ namespace Slash.ECS.Events
         /// </summary>
         private class DelayedEvent
         {
-            #region Public Properties
+            #region Properties
 
             /// <summary>
             ///   Event to be fired later.

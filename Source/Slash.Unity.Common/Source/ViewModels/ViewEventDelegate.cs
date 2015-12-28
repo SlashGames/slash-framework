@@ -8,6 +8,10 @@ namespace Slash.Unity.Common.ViewModels
 {
     using System;
 
+#if WINDOWS_STORE
+    using Slash.Reflection.Extensions;
+#endif
+
     using UnityEngine;
 
     /// <summary>

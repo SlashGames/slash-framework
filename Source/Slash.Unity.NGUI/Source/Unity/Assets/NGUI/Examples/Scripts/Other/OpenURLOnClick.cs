@@ -8,7 +8,7 @@ public class OpenURLOnClick : MonoBehaviour
 		
 		if (lbl != null)
 		{
-			string url = lbl.GetUrlAtPosition(UICamera.lastHit.point);
+			string url = lbl.GetUrlAtPosition(UICamera.lastWorldPosition);
 			if (!string.IsNullOrEmpty(url)) Application.OpenURL(url);
 		}
 	}

@@ -13,6 +13,7 @@ namespace Slash.Serialization.Dictionary
     using System.Reflection;
     using System.Runtime.Serialization;
 
+    using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
 
     /// <summary>
@@ -49,7 +50,7 @@ namespace Slash.Serialization.Dictionary
             Type genericType = typeof(Stack<>).MakeGenericType(itemType);
             object stack = Activator.CreateInstance(genericType);
 
-            bool typeSealed = itemType.IsSealed;
+            bool typeSealed = itemType.IsSealed();
             MethodInfo pushMethod = genericType.GetMethod("Push");
             for (int i = count - 1; i >= 0; --i)
             {
@@ -92,7 +93,7 @@ namespace Slash.Serialization.Dictionary
                     { DataType, itemType.FullName }
                 };
 
-            bool typeSealed = itemType.IsSealed;
+            bool typeSealed = itemType.IsSealed();
 
             int index = 0;
             foreach (object value in collection)
@@ -133,7 +134,7 @@ namespace Slash.Serialization.Dictionary
             int count = Convert.ToInt32(data[DataCount]);
             Stack<T> stack = new Stack<T>(count);
 
-            bool typeSealed = typeof(T).IsSealed;
+            bool typeSealed = typeof(T).IsSealed();
             for (int i = count - 1; i >= 0; --i)
             {
                 object valueData = data[i.ToString(CultureInfo.InvariantCulture)];
@@ -173,7 +174,7 @@ namespace Slash.Serialization.Dictionary
 
             Dictionary<string, object> data = new Dictionary<string, object> { { DataCount, stack.Count } };
 
-            bool typeSealed = typeof(T).IsSealed;
+            bool typeSealed = typeof(T).IsSealed();
 
             int index = 0;
             foreach (T value in stack)

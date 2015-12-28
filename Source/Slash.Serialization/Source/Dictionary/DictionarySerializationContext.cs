@@ -11,6 +11,8 @@ namespace Slash.Serialization.Dictionary
     using System.Reflection;
     using System.Runtime.Serialization;
 
+    using Slash.Reflection.Extensions;
+
     /// <summary>
     ///   Context for converting objects to dictionaries and back.
     /// </summary>
@@ -95,7 +97,7 @@ namespace Slash.Serialization.Dictionary
         public bool CanSerialize(Type type)
         {
             IDictionarySerializer serializer = this.GetSerializer(type);
-            return serializer != null || Attribute.IsDefined(type, typeof(DictionarySerializableAttribute));
+            return serializer != null || type.IsAttributeDefined<DictionarySerializableAttribute>();
         }
 
         /// <summary>
@@ -141,7 +143,7 @@ namespace Slash.Serialization.Dictionary
                 }
 
                 // Check if generic type.
-                if (type.IsGenericType)
+                if (type.IsGenericType())
                 {
                     Type genericType = type.GetGenericTypeDefinition();
                     if (genericType != null && this.genericSerializerMap.TryGetValue(genericType, out serializer))
@@ -151,14 +153,14 @@ namespace Slash.Serialization.Dictionary
                 }
 
                 // Check if enum type.
-                if (type.IsEnum)
+                if (type.IsEnum())
                 {
                     // Avoid recursive deserialization of ValueWithType, whose value is an enum in this case.
                     return Enum.Parse(type, (string)data);
                 }
 
                 // No custom serializer found - try reflection.
-                if (Attribute.IsDefined(type, typeof(DictionarySerializableAttribute)))
+                if (type.IsAttributeDefined<DictionarySerializableAttribute>())
                 {
                     return this.DeserializeReflection(type, (Dictionary<string, object>)data);
                 }
@@ -200,7 +202,7 @@ namespace Slash.Serialization.Dictionary
         public bool IsRawSerializationPossible(Type type)
         {
             // Check if primitive type or string.
-            if (type.IsPrimitive || type == typeof(string))
+            if (type.IsPrimitive() || type == typeof(string))
             {
                 return true;
             }
@@ -299,13 +301,13 @@ namespace Slash.Serialization.Dictionary
             object obj = Activator.CreateInstance(type);
 
             // Reflect object fields.
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            var fields = type.GetInstanceFields();
 
             foreach (FieldInfo field in fields)
             {
                 try
                 {
-                    if (Attribute.IsDefined(field, typeof(DictionarySerializableAttribute)))
+                    if (field.IsDefined(typeof(DictionarySerializableAttribute), true))
                     {
                         // Check how the field value has to be deserialized.
                         Type fieldType = field.FieldType;
@@ -329,13 +331,13 @@ namespace Slash.Serialization.Dictionary
             }
 
             // Reflect object properties.
-            PropertyInfo[] properties = type.GetProperties();
+            var properties = type.GetInstanceProperties();
 
             foreach (PropertyInfo property in properties)
             {
                 try
                 {
-                    if (Attribute.IsDefined(property, typeof(DictionarySerializableAttribute)))
+                    if (property.IsDefined(typeof(DictionarySerializableAttribute), true))
                     {
                         // Check how the property value has to be deserialized.
                         Type propertyType = property.PropertyType;
@@ -382,7 +384,7 @@ namespace Slash.Serialization.Dictionary
                 }
 
                 // Check if generic type.
-                if (type.IsGenericType)
+                if (type.IsGenericType())
                 {
                     Type genericType = type.GetGenericTypeDefinition();
                     if (genericType != null && this.genericSerializerMap.TryGetValue(genericType, out serializer))
@@ -392,13 +394,13 @@ namespace Slash.Serialization.Dictionary
                 }
 
                 // Check if enum type.
-                if (type.IsEnum)
+                if (type.IsEnum())
                 {
                     return obj.ToString();
                 }
 
                 // No custom serializer found - try reflection.
-                if (Attribute.IsDefined(type, typeof(DictionarySerializableAttribute)))
+                if (type.IsAttributeDefined<DictionarySerializableAttribute>())
                 {
                     return this.SerializeReflection(obj);
                 }
@@ -422,11 +424,11 @@ namespace Slash.Serialization.Dictionary
 
             // Reflect object fields.
             Type type = obj.GetType();
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            var fields = type.GetInstanceFields();
 
             foreach (FieldInfo field in fields)
             {
-                if (Attribute.IsDefined(field, typeof(DictionarySerializableAttribute)))
+                if (field.IsDefined(typeof(DictionarySerializableAttribute), true))
                 {
                     // Check how the field value has to be serialized.
                     object fieldValue = field.GetValue(obj);
@@ -435,11 +437,11 @@ namespace Slash.Serialization.Dictionary
             }
 
             // Reflect object properties.
-            PropertyInfo[] properties = type.GetProperties();
+            var properties = type.GetInstanceProperties();
 
             foreach (PropertyInfo property in properties)
             {
-                if (Attribute.IsDefined(property, typeof(DictionarySerializableAttribute)))
+                if (property.IsDefined(typeof(DictionarySerializableAttribute), true))
                 {
                     // Check how the property value has to be serialized.
                     object propertyValue = property.GetGetMethod().Invoke(obj, null);

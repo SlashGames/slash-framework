@@ -38,6 +38,12 @@ public class UIPanelInspector : UIRectEditor
 		mPanel = target as UIPanel;
 	}
 
+	protected override void OnDisable ()
+	{
+		base.OnDisable();
+		NGUIEditorTools.HideMoveTool(false);
+	}
+
 	/// <summary>
 	/// Helper function that draws draggable knobs.
 	/// </summary>
@@ -59,14 +65,15 @@ public class UIPanelInspector : UIRectEditor
 		}
 	}
 
-	void OnDisable () { NGUIEditorTools.HideMoveTool(false); }
-
 	/// <summary>
 	/// Handles & interaction.
 	/// </summary>
 
 	public void OnSceneGUI ()
 	{
+		UICamera cam = UICamera.FindCameraForLayer(mPanel.gameObject.layer);
+		if (cam == null || !cam.cachedCamera.isOrthoGraphic) return;
+
 		NGUIEditorTools.HideMoveTool(true);
 		if (!UIWidget.showHandles) return;
 
@@ -243,8 +250,8 @@ public class UIPanelInspector : UIRectEditor
 				}
 				else if (mAllowSelection)
 				{
-					BetterList<UIWidget> widgets = NGUIEditorTools.SceneViewRaycast(e.mousePosition);
-					if (widgets.size > 0) Selection.activeGameObject = widgets[0].gameObject;
+					List<UIWidget> widgets = NGUIEditorTools.SceneViewRaycast(e.mousePosition);
+					if (widgets.Count > 0) Selection.activeGameObject = widgets[0].gameObject;
 				}
 				mAllowSelection = true;
 			}
@@ -425,7 +432,7 @@ public class UIPanelInspector : UIRectEditor
 
 		int matchingDepths = 0;
 
-		for (int i = 0; i < UIPanel.list.size; ++i)
+		for (int i = 0, imax = UIPanel.list.Count; i < imax; ++i)
 		{
 			UIPanel p = UIPanel.list[i];
 			if (p != null && mPanel.depth == p.depth)
@@ -454,7 +461,7 @@ public class UIPanelInspector : UIRectEditor
 			GUI.changed = false;
 			GUILayout.BeginHorizontal();
 			GUILayout.Space(80f);
-			Vector3 off = EditorGUILayout.Vector2Field("Offset", mPanel.clipOffset);
+			Vector3 off = EditorGUILayout.Vector2Field("Offset", mPanel.clipOffset, GUILayout.MinWidth(20f));
 			GUILayout.EndHorizontal();
 
 			if (GUI.changed)
@@ -467,12 +474,12 @@ public class UIPanelInspector : UIRectEditor
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Space(80f);
-			Vector2 pos = EditorGUILayout.Vector2Field("Center", new Vector2(range.x, range.y));
+			Vector2 pos = EditorGUILayout.Vector2Field("Center", new Vector2(range.x, range.y), GUILayout.MinWidth(20f));
 			GUILayout.EndHorizontal();
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Space(80f);
-			Vector2 size = EditorGUILayout.Vector2Field("Size", new Vector2(range.z, range.w));
+			Vector2 size = EditorGUILayout.Vector2Field("Size", new Vector2(range.z, range.w), GUILayout.MinWidth(20f));
 			GUILayout.EndHorizontal();
 
 			if (size.x < 0f) size.x = 0f;
@@ -494,7 +501,7 @@ public class UIPanelInspector : UIRectEditor
 			{
 				GUILayout.BeginHorizontal();
 				GUILayout.Space(80f);
-				Vector2 soft = EditorGUILayout.Vector2Field("Softness", mPanel.clipSoftness);
+				Vector2 soft = EditorGUILayout.Vector2Field("Softness", mPanel.clipSoftness, GUILayout.MinWidth(20f));
 				GUILayout.EndHorizontal();
 
 				if (soft.x < 0f) soft.x = 0f;
@@ -550,14 +557,10 @@ public class UIPanelInspector : UIRectEditor
 			}
 			GUILayout.EndHorizontal();
 
-#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
-			if (rq == UIPanel.RenderQueue.Explicit)
-			{
-				GUI.changed = false;
-				int so = EditorGUILayout.IntField("Sort Order", mPanel.sortingOrder, GUILayout.Width(120f));
-				if (GUI.changed) mPanel.sortingOrder = so;
-			}
-#endif
+			GUI.changed = false;
+			int so = EditorGUILayout.IntField("Sort Order", mPanel.sortingOrder, GUILayout.Width(120f));
+			if (GUI.changed) mPanel.sortingOrder = so;
+
 			GUILayout.BeginHorizontal();
 			bool norms = EditorGUILayout.Toggle("Normals", mPanel.generateNormals, GUILayout.Width(100f));
 			GUILayout.Label("Needed for lit shaders", GUILayout.MinWidth(20f));
@@ -593,6 +596,11 @@ public class UIPanelInspector : UIRectEditor
 				mPanel.RebuildAllDrawCalls();
 				EditorUtility.SetDirty(mPanel);
 			}
+
+			GUILayout.BeginHorizontal();
+			NGUIEditorTools.DrawProperty("Padding", serializedObject, "softBorderPadding", GUILayout.Width(100f));
+			GUILayout.Label("Soft border pads content", GUILayout.MinWidth(20f));
+			GUILayout.EndHorizontal();
 
 			GUILayout.BeginHorizontal();
 			bool off = EditorGUILayout.Toggle("Offset", mPanel.anchorOffset, GUILayout.Width(100f));

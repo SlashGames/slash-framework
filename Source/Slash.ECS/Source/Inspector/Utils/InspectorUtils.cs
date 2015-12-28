@@ -10,8 +10,13 @@ namespace Slash.ECS.Inspector.Utils
     using System.Collections.Generic;
 
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Components;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
+    using Slash.Reflection.Extensions;
+#if WINDOWS_STORE
+    using System.Reflection;
+#endif
 
     /// <summary>
     ///   Utility methods for collecting inspector data and initializing objects.
@@ -31,7 +36,7 @@ namespace Slash.ECS.Inspector.Utils
             ref Dictionary<InspectorPropertyAttribute, InspectorConditionalPropertyAttribute> conditionalInspectors)
         {
             // Access inspector properties.
-            var properties = inspectorType.GetProperties();
+            var properties = inspectorType.GetInstanceProperties();
             var inspectorProperties = new List<InspectorPropertyAttribute>();
 
             foreach (var property in properties)
@@ -39,7 +44,7 @@ namespace Slash.ECS.Inspector.Utils
                 // Find all properties that are to be exposed in the inspector.
                 var inspectorPropertyAttributes =
                     property.GetCustomAttributes(typeof(InspectorPropertyAttribute), true) as
-                    InspectorPropertyAttribute[];
+                        InspectorPropertyAttribute[];
 
                 if (inspectorPropertyAttributes != null)
                 {
@@ -56,9 +61,7 @@ namespace Slash.ECS.Inspector.Utils
                 if (conditionalInspectors != null)
                 {
                     // Find all properties whose inspectors are shown only if certain conditions are met.
-                    var conditionInspector =
-                        (InspectorConditionalPropertyAttribute)
-                        Attribute.GetCustomAttribute(property, typeof(InspectorConditionalPropertyAttribute));
+                    var conditionInspector = property.GetCustomAttribute<InspectorConditionalPropertyAttribute>();
 
                     if (conditionInspector != null && inspectorPropertyAttributes != null)
                     {
@@ -79,70 +82,116 @@ namespace Slash.ECS.Inspector.Utils
         ///   respective inspector properties, if no attribute value is present.
         /// </summary>
         /// <typeparam name="T">Type of the object to create.</typeparam>
-        /// <param name="game">Game to use for initializing the object, e.g. for creating entities from entity configuration attributes.</param>
+        /// <param name="entityManager">
+        ///   Entity manager to use for initializing the object, e.g. for creating entities from entity
+        ///   configuration attributes.
+        /// </param>
         /// <param name="inspectorType">Inspector data of the type of the object to create.</param>
         /// <param name="attributeTable">Attribute table to initialize the object with.</param>
         /// <returns>Initialized new object of the specified type.</returns>
         public static T CreateFromAttributeTable<T>(
-            Game game, InspectorType inspectorType, IAttributeTable attributeTable) where T : class
+            EntityManager entityManager,
+            InspectorType inspectorType,
+            IAttributeTable attributeTable) where T : class
         {
             // Create object.
             T obj = (T)Activator.CreateInstance(inspectorType.Type);
 
             // Init object.
-            InitFromAttributeTable(game, inspectorType, obj, attributeTable);
+            InitFromAttributeTable(entityManager, inspectorType, obj, attributeTable);
 
             return obj;
+        }
+
+        public static void Deinit(EntityManager entityManager, InspectorType inspectorType, object obj)
+        {
+            // Unset values for all properties.
+            foreach (var inspectorProperty in inspectorType.Properties)
+            {
+                inspectorProperty.Deinit(entityManager, obj);
+            }
         }
 
         /// <summary>
         ///   Initializes an object by getting its inspector properties via reflection and
         ///   look them up in the specified attribute table.
         /// </summary>
-        /// <param name="game">Game to use for initializing the object, e.g. for creating entities from entity configuration attributes.</param>
+        /// <param name="entityManager">
+        ///   Entity manager to use for initializing the object, e.g. for creating entities from entity
+        ///   configuration attributes.
+        /// </param>
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
-        public static void InitFromAttributeTable(Game game, object obj, IAttributeTable attributeTable)
+        public static void InitFromAttributeTable(
+            EntityManager entityManager,
+            object obj,
+            IAttributeTable attributeTable)
         {
-            if (attributeTable == null)
-            {
-                return;
-            }
-
             InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
             if (inspectorType == null)
             {
                 return;
             }
 
-            InitFromAttributeTable(game, inspectorType, obj, attributeTable);
+            InitFromAttributeTable(entityManager, inspectorType, obj, attributeTable);
         }
 
         /// <summary>
         ///   Initializes an object by getting its inspector properties from the specified inspector type
         ///   and look them up in the specified attribute table.
         /// </summary>
-        /// <param name="game">Game to use for initializing the object, e.g. for creating entities from entity configuration attributes.</param>
-        /// ///
+        /// <param name="entityManager">
+        ///   Entity manager to use for initializing the object, e.g. for creating entities from entity
+        ///   configuration attributes.
+        /// </param>
         /// <param name="inspectorType">Contains information about the properties of the object.</param>
         /// <param name="obj">Object to initialize.</param>
         /// <param name="attributeTable">Attribute table to initialize from.</param>
         public static void InitFromAttributeTable(
-            Game game, InspectorType inspectorType, object obj, IAttributeTable attributeTable)
+            EntityManager entityManager,
+            InspectorType inspectorType,
+            object obj,
+            IAttributeTable attributeTable)
         {
-            if (attributeTable == null)
-            {
-                return;
-            }
-
             // Set values for all properties.
             foreach (var inspectorProperty in inspectorType.Properties)
             {
                 // Get value from attribute table or default.
-                object propertyValue = attributeTable.GetValueOrDefault(
-                    inspectorProperty.Name, inspectorProperty.Default);
+                object propertyValue = attributeTable != null
+                    ? attributeTable.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default)
+                    : inspectorProperty.Default;
 
-                inspectorProperty.SetPropertyValue(game, obj, propertyValue);
+                inspectorProperty.SetPropertyValue(entityManager, obj, propertyValue);
+            }
+        }
+
+        public static void SaveToAttributeTable(EntityManager entityManager, object obj, AttributeTable attributeTable)
+        {
+            InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
+            if (inspectorType == null)
+            {
+                throw new ArgumentException("No inspector type for object " + obj.GetType());
+            }
+
+            SaveToAttributeTable(entityManager, inspectorType, obj, attributeTable);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static void SaveToAttributeTable(
+            EntityManager entityManager,
+            InspectorType inspectorType,
+            object obj,
+            AttributeTable attributeTable)
+        {
+            // Set values for all properties.
+            foreach (var inspectorProperty in inspectorType.Properties)
+            {
+                // Get value from object.
+                object propertyValue = inspectorProperty.GetPropertyValue(entityManager, obj);
+                attributeTable.SetValue(inspectorProperty.Name, propertyValue);
             }
         }
 

@@ -36,6 +36,7 @@ namespace AnimationOrTween
 	{
 		DoNothing = 0,
 		EnableThenPlay,
+		IgnoreDisabledState,
 	}
 
 	public enum DisableCondition

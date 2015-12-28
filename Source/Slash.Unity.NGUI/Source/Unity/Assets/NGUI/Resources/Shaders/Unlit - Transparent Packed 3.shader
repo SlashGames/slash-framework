@@ -1,4 +1,4 @@
-Shader "HIDDEN/Unlit/Transparent Packed 3"
+Shader "Hidden/Unlit/Transparent Packed 3"
 {
 	Properties
 	{
@@ -64,9 +64,10 @@ Shader "HIDDEN/Unlit/Transparent Packed 3"
 				return ret;
 			}
 
+			v2f o;
+
 			v2f vert (appdata_t v)
 			{
-				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.color = v.color;
 				o.texcoord = v.texcoord;

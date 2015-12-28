@@ -1,15 +1,12 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LogBehaviour.cs" company="Slash Games">
+// <copyright file="GameLogBehaviour.cs" company="Slash Games">
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Slash.Unity.Common.Logging
 {
-    using System.Collections.Generic;
-
     using Slash.ECS;
-    using Slash.ECS.Events;
     using Slash.Unity.Common.ECS;
 
     using UnityEngine;
@@ -17,24 +14,9 @@ namespace Slash.Unity.Common.Logging
     /// <summary>
     ///   Writes all game logic events to the Unity console.
     /// </summary>
-    public class GameLogBehaviour : MonoBehaviour
+    public class GameLogBehaviour : EventManagerLogBehaviour
     {
         #region Fields
-
-        /// <summary>
-        ///   Indicates if logging is currently disabled.
-        /// </summary>
-        public bool Disabled;
-
-        /// <summary>
-        ///   List of disabled event types. Stored as strings, otherwise Unity doesn't serialize them.
-        /// </summary>
-        [SerializeField]
-        [HideInInspector]
-        // ReSharper disable FieldCanBeMadeReadOnly.Local
-        private List<string> disabledEventTypes = new List<string>();
-
-        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         /// <summary>
         ///   Game to log events of.
@@ -42,6 +24,8 @@ namespace Slash.Unity.Common.Logging
         private GameBehaviour gameBehaviour;
 
         #endregion
+
+        // ReSharper restore FieldCanBeMadeReadOnly.Local
 
         #region Public Methods and Operators
 
@@ -54,48 +38,6 @@ namespace Slash.Unity.Common.Logging
             if (!this.Disabled)
             {
                 Debug.LogError(s);
-            }
-        }
-
-        /// <summary>
-        ///   Logs the passed message.
-        /// </summary>
-        /// <param name="s">Message to log.</param>
-        public void Info(string s)
-        {
-            if (!this.Disabled)
-            {
-                Debug.Log(s);
-            }
-        }
-
-        /// <summary>
-        ///   Checks whether the specified event type is being logged, or not.
-        /// </summary>
-        /// <param name="eventType">Event type to check.</param>
-        /// <returns>
-        ///   <c>true</c>, if the specified event type is being logged, and
-        ///   <c>false</c>, otherwise.
-        /// </returns>
-        public bool IsDisabled(object eventType)
-        {
-            return this.disabledEventTypes.Contains(eventType.ToString());
-        }
-
-        /// <summary>
-        ///   Enables or disables logging for events of the specified type.
-        /// </summary>
-        /// <param name="eventType">Event type to start or stop logging.</param>
-        /// <param name="logDisabled">Whether to enable or disable logging.</param>
-        public void SetDisabled(object eventType, bool logDisabled)
-        {
-            if (logDisabled)
-            {
-                this.disabledEventTypes.Add(eventType.ToString());
-            }
-            else
-            {
-                this.disabledEventTypes.Remove(eventType.ToString());
             }
         }
 
@@ -115,9 +57,14 @@ namespace Slash.Unity.Common.Logging
 
         #region Methods
 
+        protected override string FormatLog(string log)
+        {
+            return this.WithTimestamp(string.Format("{0} (Frame: {1})", log, this.gameBehaviour.FrameCounter));
+        }
+
         private void Awake()
         {
-            this.gameBehaviour = (GameBehaviour)FindObjectOfType(typeof(GameBehaviour));
+            this.gameBehaviour = GameBehaviour.Instance;
 
             if (this.gameBehaviour != null)
             {
@@ -138,28 +85,10 @@ namespace Slash.Unity.Common.Logging
             this.Error(this.WithTimestamp(message));
         }
 
-        private void OnEvent(GameEvent e)
-        {
-            if (this.Disabled)
-            {
-                return;
-            }
-
-            if (!this.disabledEventTypes.Contains(e.EventType.ToString()))
-            {
-                this.Info(
-                    this.WithTimestamp(
-                        string.Format(
-                            "{0}: {1} (Frame: {2})", e.EventType, e.EventData, this.gameBehaviour.FrameCounter)));
-            }
-        }
-
         private void OnGameChanged(Game newGame, Game oldGame)
         {
             if (oldGame != null)
             {
-                oldGame.EventManager.RemoveListener(this.OnEvent);
-
                 oldGame.Log.InfoLogged -= this.OnInfoLogged;
                 oldGame.Log.WarningLogged -= this.OnWarningLogged;
                 oldGame.Log.ErrorLogged -= this.OnErrorLogged;
@@ -167,12 +96,12 @@ namespace Slash.Unity.Common.Logging
 
             if (newGame != null)
             {
-                newGame.EventManager.RegisterListener(this.OnEvent);
-
                 newGame.Log.InfoLogged += this.OnInfoLogged;
                 newGame.Log.WarningLogged += this.OnWarningLogged;
                 newGame.Log.ErrorLogged += this.OnErrorLogged;
             }
+
+            this.EventManager = newGame != null ? newGame.EventManager : null;
         }
 
         private void OnInfoLogged(string message)
@@ -183,16 +112,6 @@ namespace Slash.Unity.Common.Logging
         private void OnWarningLogged(string message)
         {
             this.Warning(this.WithTimestamp(message));
-        }
-
-        /// <summary>
-        ///   Adds a timestamp to the specified string.
-        /// </summary>
-        /// <param name="message">String to add a timestamp to.</param>
-        /// <returns>Timestamped message.</returns>
-        private string WithTimestamp(string message)
-        {
-            return string.Format("[{0:000.000}] {1}", Time.realtimeSinceStartup, message);
         }
 
         #endregion

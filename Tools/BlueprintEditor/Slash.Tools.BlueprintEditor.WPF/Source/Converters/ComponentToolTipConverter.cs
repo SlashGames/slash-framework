@@ -10,7 +10,7 @@ namespace BlueprintEditor.Converters
     using System.Globalization;
     using System.Windows.Data;
 
-    using Slash.GameBase.Inspector.Data;
+    using Slash.ECS.Inspector.Data;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 
     public class ComponentToolTipConverter : IValueConverter

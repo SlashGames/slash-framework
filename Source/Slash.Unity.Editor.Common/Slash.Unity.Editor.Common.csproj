@@ -44,10 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Build\BuildWizard.cs" />
+    <Compile Include="Source\Build\BuildWizardPrefs.cs" />
     <Compile Include="Source\Inspectors\Configuration\GameConfigurationEditor.cs" />
+    <Compile Include="Source\Inspectors\Delegates\MethodDelegateDrawer.cs" />
     <Compile Include="Source\Inspectors\ECS\EntityConfigurationEditor.cs" />
     <Compile Include="Source\Inspectors\Diagnostics\DebugInputEditor.cs" />
     <Compile Include="Source\Inspectors\ExposeProperties.cs" />
+    <Compile Include="Source\Inspectors\Logging\GameLogBehaviourEditor.cs" />
+    <Compile Include="Source\Inspectors\Logging\EventManagerLogBehaviourEditor.cs" />
     <Compile Include="Source\Inspectors\PropertyField.cs" />
     <Compile Include="Source\Inspectors\Rendering\MeshRendererSortingEditor.cs" />
     <Compile Include="Source\Inspectors\Utils\EditorGUIUtils.cs" />
@@ -55,18 +60,21 @@
     <Compile Include="Source\Inspectors\Utils\ShaderContext.cs" />
     <Compile Include="Source\Inspectors\Utils\TooltipDrawer.cs" />
     <Compile Include="Source\Inspectors\ViewModels\ViewEventDelegateDrawer.cs" />
-    <Compile Include="Source\MenuItems\Build\BuildBlueprints.cs" />
-    <Compile Include="Source\MenuItems\Build\BuildConfiguration.cs" />
-    <Compile Include="Source\MenuItems\Build\BuildManager.cs" />
-    <Compile Include="Source\MenuItems\Build\BuildOptionSet.cs" />
-    <Compile Include="Source\MenuItems\Build\BuildSettings.cs" />
-    <Compile Include="Source\MenuItems\Build\BuildSettingsAndroid.cs" />
-    <Compile Include="Source\MenuItems\Build\BuildType.cs" />
+    <Compile Include="Source\Build\BuildBlueprints.cs" />
+    <Compile Include="Source\Build\BuildConfiguration.cs" />
+    <Compile Include="Source\Build\BuildManager.cs" />
+    <Compile Include="Source\Build\BuildOptionSet.cs" />
+    <Compile Include="Source\Build\BuildSettings.cs" />
+    <Compile Include="Source\Build\BuildSettingsAndroid.cs" />
+    <Compile Include="Source\Build\BuildType.cs" />
+    <Compile Include="Source\MenuItems\Util\CreateEmptyInCenter.cs" />
+    <Compile Include="Source\MenuItems\Util\Utils.cs" />
     <Compile Include="Source\MenuItems\Util\PlayerPrefsDeleteAll.cs" />
     <Compile Include="Source\MenuItems\Util\FindMonoBehaviourUsages.cs" />
     <Compile Include="Source\MenuItems\Util\CheckTextureAssets.cs" />
     <Compile Include="Source\MenuItems\Windows\BlueprintEditorWindow.cs" />
     <Compile Include="Source\MenuItems\Windows\OpenSceneWindow.cs" />
+    <Compile Include="Source\PropertyDrawers\TypePropertyDrawer.cs" />
     <Compile Include="Source\Utils\Options.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +89,10 @@
     <ProjectReference Include="..\Slash.Math\Slash.Math.csproj">
       <Project>{834E18DE-A529-4F17-A838-92B1EF259FE3}</Project>
       <Name>Slash.Math</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">
+      <Project>{49A6D476-F045-42B3-8FFC-A67B3F9BB073}</Project>
+      <Name>Slash.Reflection</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
       <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>

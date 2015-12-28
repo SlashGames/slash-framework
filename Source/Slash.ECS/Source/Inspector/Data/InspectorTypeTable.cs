@@ -10,8 +10,10 @@ namespace Slash.ECS.Inspector.Data
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     using Slash.ECS.Inspector.Attributes;
+    using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
 
     /// <summary>
@@ -49,7 +51,7 @@ namespace Slash.ECS.Inspector.Data
 
         #endregion
 
-        #region Public Indexers
+        #region Properties
 
         /// <summary>
         ///   Inspector data for the specified type.
@@ -77,21 +79,33 @@ namespace Slash.ECS.Inspector.Data
         {
             InspectorTypeTable inspectorTypeTable = new InspectorTypeTable();
 
+#if !WINDOWS_STORE && !WINDOWS_PHONE
+            // Make sure all referenced assemblies are loaded.
+            AssemblyUtils.CheckReferencedAssembliesAreLoaded();
+#endif
+
             foreach (var assembly in AssemblyUtils.GetLoadedAssemblies())
             {
-                var inspectorTypes =
-                    assembly.GetTypes()
+                try
+                {
+                    var inspectorTypes =
+                        assembly.GetTypes()
                             .Where(
                                 type =>
-                                baseType == null
-                                || baseType.IsAssignableFrom(type)
-                                && Attribute.IsDefined(type, typeof(InspectorTypeAttribute)));
+                                    baseType == null
+                                    || baseType.IsAssignableFrom(type)
+                                    && type.IsAttributeDefined<InspectorTypeAttribute>());
 
-                foreach (var inspectorType in inspectorTypes)
+                    foreach (var inspectorType in inspectorTypes)
+                    {
+                        InspectorType inspectorTypeData = InspectorType.GetInspectorType(inspectorType);
+
+                        inspectorTypeTable.inspectorTypes.Add(inspectorType, inspectorTypeData);
+                    }
+                }
+                catch (ReflectionTypeLoadException)
                 {
-                    InspectorType inspectorTypeData = InspectorType.GetInspectorType(inspectorType);
-
-                    inspectorTypeTable.inspectorTypes.Add(inspectorType, inspectorTypeData);
+                    // Some assemblies can't be reflected, like UnityEditor.
                 }
             }
 
@@ -150,6 +164,17 @@ namespace Slash.ECS.Inspector.Data
         }
 
         /// <summary>
+        ///   Tries to get the inspector type for the specified type.
+        /// </summary>
+        /// <param name="type">Type to get the inspector type for.</param>
+        /// <param name="inspectorType">Inspector type for the specified type.</param>
+        /// <returns>True if inspector type for type was found; otherwise, false.</returns>
+        public bool TryGetInspectorType(Type type, out InspectorType inspectorType)
+        {
+            return this.inspectorTypes.TryGetValue(type, out inspectorType);
+        }
+
+        /// <summary>
         ///   Types accessible to the user in the inspector.
         /// </summary>
         /// <returns>All types accessible to the user in the inspector.</returns>
@@ -160,7 +185,7 @@ namespace Slash.ECS.Inspector.Data
 
         #endregion
 
-        #region Explicit Interface Methods
+        #region Methods
 
         IEnumerator IEnumerable.GetEnumerator()
         {

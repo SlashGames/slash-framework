@@ -6,13 +6,16 @@
 
 namespace Slash.ECS.Processes
 {
+    using Slash.ECS.Components;
+    using Slash.ECS.Events;
+
     /// <summary>
     ///   Timed process that can be queued with other processes. Good examples
     ///   are animations, tweens, or "Go to that point, and open the door after."
     /// </summary>
     public abstract class GameProcess
     {
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Whether this process is currently being updated.
@@ -35,9 +38,18 @@ namespace Slash.ECS.Processes
         public bool Paused { get; private set; }
 
         /// <summary>
+        ///   Process that finished before this one has started.
+        /// </summary>
+        public GameProcess Prev { get; set; }
+
+        /// <summary>
         ///   Type of this process.
         /// </summary>
         public object ProcessType { get; set; }
+
+        protected EntityManager EntityManager { get; private set; }
+
+        protected EventManager EventManager { get; private set; }
 
         #endregion
 
@@ -46,8 +58,10 @@ namespace Slash.ECS.Processes
         /// <summary>
         ///   Initializes this process.
         /// </summary>
-        public virtual void InitProcess()
+        public virtual void InitProcess(EntityManager entityManager, EventManager eventManager)
         {
+            this.EntityManager = entityManager;
+            this.EventManager = eventManager;
         }
 
         /// <summary>
@@ -67,7 +81,14 @@ namespace Slash.ECS.Processes
         /// </returns>
         public GameProcess Then(GameProcess next)
         {
+            if (next == null)
+            {
+                return null;
+            }
+
             this.Next = next;
+            next.Prev = this;
+
             return next;
         }
 

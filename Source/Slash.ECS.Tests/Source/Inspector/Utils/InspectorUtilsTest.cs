@@ -9,6 +9,8 @@ namespace Slash.ECS.Tests.Inspector.Utils
     using NUnit.Framework;
 
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Configurations;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Inspector.Utils;
@@ -43,7 +45,9 @@ namespace Slash.ECS.Tests.Inspector.Utils
 
             TestInspectorType testInspectorType =
                 InspectorUtils.CreateFromAttributeTable<TestInspectorType>(
-                    this.testGame, this.inspectorType, attributeTable);
+                    this.testGame.EntityManager,
+                    this.inspectorType,
+                    attributeTable);
             Assert.AreEqual(testInspectorType.String1, TestValueString1);
             Assert.AreEqual(testInspectorType.String2, TestValueString2);
         }
@@ -54,19 +58,51 @@ namespace Slash.ECS.Tests.Inspector.Utils
             TestInspectorType testInspectorType = null;
             Assert.DoesNotThrow(
                 () =>
-                    {
-                        testInspectorType = InspectorUtils.CreateFromAttributeTable<TestInspectorType>(
-                            this.testGame, this.inspectorType, null);
-                    });
+                {
+                    testInspectorType =
+                        InspectorUtils.CreateFromAttributeTable<TestInspectorType>(
+                            this.testGame.EntityManager,
+                            this.inspectorType,
+                            null);
+                });
 
             Assert.NotNull(testInspectorType);
+        }
+
+        [Test]
+        public void TestDeinitRemovesChildEntity()
+        {
+            var entityManager = this.testGame.EntityManager;
+            const string TestBlueprintId = "TestBlueprint";
+            BlueprintManager blueprintManager;
+            this.testGame.BlueprintManager = blueprintManager = new BlueprintManager();
+            blueprintManager.AddBlueprint(TestBlueprintId, new Blueprint());
+
+            TestInspectorTypeWithEntityProperty testType = new TestInspectorTypeWithEntityProperty();
+            var testInspectorType = InspectorType.GetInspectorType(typeof(TestInspectorTypeWithEntityProperty));
+            IAttributeTable configuration = new AttributeTable();
+            EntityConfiguration childConfiguration = new EntityConfiguration { BlueprintId = TestBlueprintId };
+            configuration.SetValue(TestInspectorTypeWithEntityProperty.AttributeMember1, childConfiguration);
+
+            // Init.
+            InspectorUtils.InitFromAttributeTable(entityManager, testInspectorType, testType, configuration);
+
+            // Check that child entity was created.
+            Assert.AreNotEqual(0, testType.EntityMember);
+
+            // Deinit.
+            InspectorUtils.Deinit(entityManager, testInspectorType, testType);
+
+            // Check that child entity was removed.
+            Assert.IsTrue(entityManager.EntityIsBeingRemoved(testType.EntityMember));
         }
 
         [Test]
         public void TestInitFromNullAttributeTable()
         {
             TestInspectorType testInspectorType = new TestInspectorType();
-            Assert.DoesNotThrow(() => InspectorUtils.InitFromAttributeTable(this.testGame, testInspectorType, null));
+            Assert.DoesNotThrow(
+                () => InspectorUtils.InitFromAttributeTable(this.testGame.EntityManager, testInspectorType, null));
         }
 
         [Test]
@@ -74,10 +110,32 @@ namespace Slash.ECS.Tests.Inspector.Utils
         {
             TestInspectorType testInspectorType = new TestInspectorType();
             Assert.DoesNotThrow(
-                () => InspectorUtils.InitFromAttributeTable(this.testGame, this.inspectorType, testInspectorType, null));
+                () =>
+                    InspectorUtils.InitFromAttributeTable(
+                        this.testGame.EntityManager,
+                        this.inspectorType,
+                        testInspectorType,
+                        null));
         }
 
         #endregion
+
+        [InspectorType]
+        public class TestInspectorTypeWithEntityProperty
+        {
+            #region Constants
+
+            public const string AttributeMember1 = "Member1";
+
+            #endregion
+
+            #region Properties
+
+            [InspectorEntity(AttributeMember1)]
+            public int EntityMember { get; set; }
+
+            #endregion
+        }
 
         [InspectorType]
         public class TestInspectorType
@@ -90,7 +148,7 @@ namespace Slash.ECS.Tests.Inspector.Utils
 
             #endregion
 
-            #region Public Properties
+            #region Properties
 
             [InspectorString(AttributeString1)]
             public string String1 { get; set; }

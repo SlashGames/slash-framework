@@ -51,10 +51,24 @@ namespace BlueprintEditor.Controls
             // Add assembly to project.
             ProjectSettings projectSettings = (ProjectSettings)this.DataContext;
             Assembly assembly = Assembly.LoadFile(dlg.FileName);
-            projectSettings.AddAssembly(assembly);
 
-            // Refresh list.
-            this.AssembliesList.Items.Refresh();
+            try
+            {
+                projectSettings.AddAssembly(assembly);
+
+                // Refresh list.
+                this.AssembliesList.Items.Refresh();
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                EditorDialog.Error(
+                    "Error adding assembly",
+                    string.Format(
+                        "An error has occurred adding assembly {0}: {1}", dlg.FileName, ex.LoaderExceptions[0]));
+
+                // TODO(np): Beautifully handle the error and prevent the crash.
+                projectSettings.RemoveAssembly(assembly);
+            }
         }
 
         private void AddLanguageFile_OnClick(object sender, RoutedEventArgs e)

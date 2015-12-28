@@ -10,6 +10,10 @@ namespace Slash.Unity.Common.ECS
 
     using Slash.ECS.Components;
 
+#if WINDOWS_STORE
+    using Slash.Reflection.Extensions;
+#endif
+
     public sealed class LogicToVisualMapping
     {
         #region Public Properties

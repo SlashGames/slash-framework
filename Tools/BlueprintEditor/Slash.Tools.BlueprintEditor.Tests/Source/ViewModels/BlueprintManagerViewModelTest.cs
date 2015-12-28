@@ -14,7 +14,7 @@ namespace Slash.Tools.BlueprintEditor.Tests.Source.ViewModels
 
     using NUnit.Framework;
 
-    using Slash.GameBase.Blueprints;
+    using Slash.ECS.Blueprints;
 
     using global::BlueprintEditor.ViewModels;
 
@@ -34,9 +34,9 @@ namespace Slash.Tools.BlueprintEditor.Tests.Source.ViewModels
         public void SetUp()
         {
             this.testBlueprintManager = new HierarchicalBlueprintManager();
-            this.testBlueprintManager.AddParent(new BlueprintManager());
+            this.testBlueprintManager.AddChild(new BlueprintManager());
             this.testViewModel = new BlueprintManagerViewModel(new List<Type>(), this.testBlueprintManager);
-            this.testViewModel.CurrentBlueprintManager = (BlueprintManager)this.testBlueprintManager.Parents.First();
+            this.testViewModel.CurrentBlueprintManager = (BlueprintManager)this.testBlueprintManager.Children.First();
 
             UndoService.Current.Clear();
         }

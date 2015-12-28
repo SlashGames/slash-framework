@@ -65,9 +65,9 @@
       <Project>{e155097a-6a57-498e-a707-f852aa672111}</Project>
       <Name>Slash.Diagnostics</Name>
     </ProjectReference>
-    <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.GameBase\Slash.GameBase.csproj">
+    <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.ECS\Slash.ECS.csproj">
       <Project>{8a6e1d65-c56c-4f71-9991-6ae99e8d5080}</Project>
-      <Name>Slash.GameBase</Name>
+      <Name>Slash.ECS</Name>
     </ProjectReference>
     <ProjectReference Include="$(SLASH_FRAMEWORK_HOME)Source\Slash.Math\Slash.Math.csproj">
       <Project>{834e18de-a529-4f17-a838-92b1ef259fe3}</Project>

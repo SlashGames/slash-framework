@@ -7,13 +7,31 @@ using UnityEngine;
 [AddComponentMenu("NGUI/Examples/Lag Position")]
 public class LagPosition : MonoBehaviour
 {
-	public int updateOrder = 0;
 	public Vector3 speed = new Vector3(10f, 10f, 10f);
 	public bool ignoreTimeScale = false;
-	
+
 	Transform mTrans;
 	Vector3 mRelative;
 	Vector3 mAbsolute;
+
+	public void OnRepositionEnd ()
+	{
+		Interpolate(1000f);
+	}
+
+	void Interpolate (float delta)
+	{
+		Transform parent = mTrans.parent;
+
+		if (parent != null)
+		{
+			Vector3 target = parent.position + parent.rotation * mRelative;
+			mAbsolute.x = Mathf.Lerp(mAbsolute.x, target.x, Mathf.Clamp01(delta * speed.x));
+			mAbsolute.y = Mathf.Lerp(mAbsolute.y, target.y, Mathf.Clamp01(delta * speed.y));
+			mAbsolute.z = Mathf.Lerp(mAbsolute.z, target.z, Mathf.Clamp01(delta * speed.z));
+			mTrans.position = mAbsolute;
+		}
+	}
 
 	void OnEnable ()
 	{
@@ -24,16 +42,6 @@ public class LagPosition : MonoBehaviour
 
 	void Update ()
 	{
-		Transform parent = mTrans.parent;
-		
-		if (parent != null)
-		{
-			float delta = ignoreTimeScale ? RealTime.deltaTime : Time.deltaTime;
-			Vector3 target = parent.position + parent.rotation * mRelative;
-			mAbsolute.x = Mathf.Lerp(mAbsolute.x, target.x, Mathf.Clamp01(delta * speed.x));
-			mAbsolute.y = Mathf.Lerp(mAbsolute.y, target.y, Mathf.Clamp01(delta * speed.y));
-			mAbsolute.z = Mathf.Lerp(mAbsolute.z, target.z, Mathf.Clamp01(delta * speed.z));
-			mTrans.position = mAbsolute;
-		}
+		Interpolate(ignoreTimeScale ? RealTime.deltaTime : Time.deltaTime);
 	}
 }

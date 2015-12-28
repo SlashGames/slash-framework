@@ -21,8 +21,7 @@ namespace Slash.Unity.Common.Diagnostics
 
         private void Awake()
         {
-            SceneManager sceneManager = FindObjectOfType<SceneManager>();
-            if (sceneManager != null)
+            if (SceneManager.Instance != null)
             {
                 this.gameObject.SetActive(false);
             }

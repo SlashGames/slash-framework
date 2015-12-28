@@ -16,7 +16,7 @@ namespace Slash.ECS.Components
     ///   This way, entity ids can be mapped to different components, one of each
     ///   type.
     /// </summary>
-    public class ComponentManager
+    public sealed class ComponentManager
     {
         #region Fields
 
@@ -36,6 +36,20 @@ namespace Slash.ECS.Components
         {
             this.components = new Dictionary<int, IEntityComponent>();
         }
+
+        #endregion
+
+        #region Public Events
+
+        /// <summary>
+        ///   Callback when a new component was added.
+        /// </summary>
+        public event ComponentAddedDelegate<object> ComponentAdded;
+
+        /// <summary>
+        ///   Callback when a component was removed.
+        /// </summary>
+        public event ComponentRemovedDelegate<object> ComponentRemoved;
 
         #endregion
 
@@ -72,6 +86,7 @@ namespace Slash.ECS.Components
             }
 
             this.components.Add(entityId, component);
+            this.OnComponentAdded(entityId, component);
         }
 
         /// <summary>
@@ -141,10 +156,33 @@ namespace Slash.ECS.Components
             if (this.components.TryGetValue(entityId, out component))
             {
                 this.components.Remove(entityId);
+                this.OnComponentRemoved(entityId, component);
                 return true;
             }
 
             return false;
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void OnComponentAdded(int entityId, object component)
+        {
+            ComponentAddedDelegate<object> handler = this.ComponentAdded;
+            if (handler != null)
+            {
+                handler(entityId, component);
+            }
+        }
+
+        private void OnComponentRemoved(int entityId, object component)
+        {
+            ComponentRemovedDelegate<object> handler = this.ComponentRemoved;
+            if (handler != null)
+            {
+                handler(entityId, component);
+            }
         }
 
         #endregion

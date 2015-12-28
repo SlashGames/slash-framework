@@ -31,23 +31,24 @@ public class UIEventTriggerEditor : Editor
 	{
 		GUILayout.Space(3f);
 		NGUIEditorTools.SetLabelWidth(80f);
-		DrawEvents("ET0", "On Hover Over", mTrigger.onHoverOver);
-		DrawEvents("ET1", "On Hover Out", mTrigger.onHoverOut);
-		DrawEvents("ET2", "On Press", mTrigger.onPress);
-		DrawEvents("ET3", "On Release", mTrigger.onRelease);
-		DrawEvents("ET4", "On Select", mTrigger.onSelect);
-		DrawEvents("ET5", "On Deselect", mTrigger.onDeselect);
-		DrawEvents("ET6", "On Click/Tap", mTrigger.onClick);
-		DrawEvents("ET7", "On Double-Click/Tap", mTrigger.onDoubleClick);
-		DrawEvents("ET8", "On Drag Over", mTrigger.onDragOver);
-		DrawEvents("ET9", "On Drag Out", mTrigger.onDragOut);
+		bool minimalistic = NGUISettings.minimalisticLook;
+		DrawEvents("ET0", "On Hover Over", mTrigger.onHoverOver, minimalistic);
+		DrawEvents("ET1", "On Hover Out", mTrigger.onHoverOut, minimalistic);
+		DrawEvents("ET2", "On Press", mTrigger.onPress, minimalistic);
+		DrawEvents("ET3", "On Release", mTrigger.onRelease, minimalistic);
+		DrawEvents("ET4", "On Select", mTrigger.onSelect, minimalistic);
+		DrawEvents("ET5", "On Deselect", mTrigger.onDeselect, minimalistic);
+		DrawEvents("ET6", "On Click/Tap", mTrigger.onClick, minimalistic);
+		DrawEvents("ET7", "On Double-Click/Tap", mTrigger.onDoubleClick, minimalistic);
+		DrawEvents("ET8", "On Drag Over", mTrigger.onDragOver, minimalistic);
+		DrawEvents("ET9", "On Drag Out", mTrigger.onDragOut, minimalistic);
 	}
 
-	void DrawEvents (string key, string text, List<EventDelegate> list)
+	void DrawEvents (string key, string text, List<EventDelegate> list, bool minimalistic)
 	{
-		if (!NGUIEditorTools.DrawHeader(text, key, false)) return;
+		if (!NGUIEditorTools.DrawHeader(text, key, false, minimalistic)) return;
 		NGUIEditorTools.BeginContents();
-		EventDelegateEditor.Field(mTrigger, list, null, null);
+		EventDelegateEditor.Field(mTrigger, list, null, null, minimalistic);
 		NGUIEditorTools.EndContents();
 	}
 }

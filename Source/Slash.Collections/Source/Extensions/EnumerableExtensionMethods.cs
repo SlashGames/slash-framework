@@ -125,13 +125,12 @@ namespace Slash.Collections.Extensions
         /// <returns>Time-dependent random item.</returns>
         public static T RandomItemOrDefault<T>(this IEnumerable<T> sequence, T defaultValue)
         {
-            IEnumerable<T> list = sequence as IList<T> ?? sequence.ToList();
-            if (sequence == null || !list.Any())
+            if (sequence == null || !sequence.Any())
             {
                 return defaultValue;
             }
 
-            return list.RandomItem();
+            return sequence.RandomItem();
         }
 
         /// <summary>

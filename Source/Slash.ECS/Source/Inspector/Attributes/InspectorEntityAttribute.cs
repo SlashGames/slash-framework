@@ -10,6 +10,7 @@ namespace Slash.ECS.Inspector.Attributes
     using System.Collections.Generic;
     using System.Linq;
 
+    using Slash.ECS.Components;
     using Slash.ECS.Configurations;
 
     /// <summary>
@@ -34,13 +35,24 @@ namespace Slash.ECS.Inspector.Attributes
 
         #region Public Methods and Operators
 
+        public override void Deinit(EntityManager entityManager, object obj)
+        {
+            // Get property value.
+            int entityId = (int)this.GetPropertyValue(entityManager, obj);
+            if (entityId > 0)
+            {
+                // Remove entity.
+                entityManager.RemoveEntity(entityId);
+            }
+        }
+
         /// <summary>
         ///   Initializes the specified object via reflection with the specified property value.
         /// </summary>
-        /// <param name="game">Game the object exists in.</param>
+        /// <param name="entityManager">Entity manager containing the specified object.</param>
         /// <param name="obj">Object to set property value for.</param>
         /// <param name="propertyValue">Property value to set.</param>
-        public override void SetPropertyValue(Game game, object obj, object propertyValue)
+        public override void SetPropertyValue(EntityManager entityManager, object obj, object propertyValue)
         {
             if (this.IsList)
             {
@@ -50,17 +62,22 @@ namespace Slash.ECS.Inspector.Attributes
                 {
                     entityIds = new List<int>();
                     entityIds.AddRange(
-                        entityConfigurations.Select(entityConfiguration => CreateEntity(game, entityConfiguration))
-                                            .Where(entityId => entityId != 0));
+                        entityConfigurations.Select(
+                            entityConfiguration => CreateEntity(entityManager, entityConfiguration))
+                            .Where(entityId => entityId != 0));
                 }
                 else
                 {
-                    // Create entity from value (backwards compatibility).
-                    EntityConfiguration entityConfiguration = (EntityConfiguration)propertyValue;
-                    if (entityConfiguration != null)
+                    entityIds = propertyValue as List<int>;
+                    if (entityIds == null)
                     {
-                        int entityId = CreateEntity(game, entityConfiguration);
-                        entityIds = new List<int> { entityId };
+                        // Create entity from value (backwards compatibility).
+                        EntityConfiguration entityConfiguration = (EntityConfiguration)propertyValue;
+                        if (entityConfiguration != null)
+                        {
+                            int entityId = CreateEntity(entityManager, entityConfiguration);
+                            entityIds = new List<int> { entityId };
+                        }
                     }
                 }
 
@@ -68,14 +85,16 @@ namespace Slash.ECS.Inspector.Attributes
             }
             else
             {
-                // Create entity from value.
-                EntityConfiguration entityConfiguration = (EntityConfiguration)propertyValue;
-                int entityId = CreateEntity(game, entityConfiguration);
-
-                propertyValue = entityId;
+                if (!(propertyValue is int))
+                {
+                    // Create entity from value.
+                    EntityConfiguration entityConfiguration = (EntityConfiguration)propertyValue;
+                    int entityId = CreateEntity(entityManager, entityConfiguration);
+                    propertyValue = entityId;
+                }
             }
 
-            base.SetPropertyValue(game, obj, propertyValue);
+            base.SetPropertyValue(entityManager, obj, propertyValue);
         }
 
         /// <summary>
@@ -104,17 +123,16 @@ namespace Slash.ECS.Inspector.Attributes
 
         #region Methods
 
-        private static int CreateEntity(Game game, EntityConfiguration entityConfiguration)
+        private static int CreateEntity(EntityManager entityManager, EntityConfiguration entityConfiguration)
         {
             int entityId = 0;
             if (entityConfiguration != null)
             {
                 if (entityConfiguration.BlueprintId != null)
                 {
-                    entityId =
-                        game.EntityManager.CreateEntity(
-                            game.BlueprintManager.GetBlueprint(entityConfiguration.BlueprintId),
-                            entityConfiguration.Configuration);
+                    entityId = entityManager.CreateEntity(
+                        entityConfiguration.BlueprintId,
+                        entityConfiguration.Configuration);
                 }
             }
             return entityId;

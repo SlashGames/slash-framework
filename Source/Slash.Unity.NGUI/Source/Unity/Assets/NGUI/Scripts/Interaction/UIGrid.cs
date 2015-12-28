@@ -93,6 +93,12 @@ public class UIGrid : UIWidgetContainer
 
 	public OnReposition onReposition;
 
+	/// <summary>
+	/// Custom sort delegate, used when the sorting method is set to 'custom'.
+	/// </summary>
+
+	public System.Comparison<Transform> onCustomSort;
+
 	// Use the 'sorting' property instead
 	[HideInInspector][SerializeField] bool sorted = false;
 
@@ -106,11 +112,139 @@ public class UIGrid : UIWidgetContainer
 
 	public bool repositionNow { set { if (value) { mReposition = true; enabled = true; } } }
 
+	/// <summary>
+	/// Get the current list of the grid's children.
+	/// </summary>
+
+	public List<Transform> GetChildList ()
+	{
+		Transform myTrans = transform;
+		List<Transform> list = new List<Transform>();
+
+		for (int i = 0; i < myTrans.childCount; ++i)
+		{
+			Transform t = myTrans.GetChild(i);
+			if (!hideInactive || (t && NGUITools.GetActive(t.gameObject)))
+				list.Add(t);
+		}
+
+		// Sort the list using the desired sorting logic
+		if (sorting != Sorting.None)
+		{
+			if (sorting == Sorting.Alphabetic) list.Sort(SortByName);
+			else if (sorting == Sorting.Horizontal) list.Sort(SortHorizontal);
+			else if (sorting == Sorting.Vertical) list.Sort(SortVertical);
+			else if (onCustomSort != null) list.Sort(onCustomSort);
+			else Sort(list);
+		}
+		return list;
+	}
+
+	/// <summary>
+	/// Convenience method: get the child at the specified index.
+	/// Note that if you plan on calling this function more than once, it's faster to get the entire list using GetChildList() instead.
+	/// </summary>
+
+	public Transform GetChild (int index)
+	{
+		List<Transform> list = GetChildList();
+		return (index < list.Count) ? list[index] : null;
+	}
+
+	/// <summary>
+	/// Get the index of the specified item.
+	/// </summary>
+
+	public int GetIndex (Transform trans) { return GetChildList().IndexOf(trans); }
+
+	/// <summary>
+	/// Convenience method -- add a new child.
+	/// </summary>
+
+	public void AddChild (Transform trans) { AddChild(trans, true); }
+
+	/// <summary>
+	/// Convenience method -- add a new child.
+	/// Note that if you plan on adding multiple objects, it's faster to GetChildList() and modify that instead.
+	/// </summary>
+
+	public void AddChild (Transform trans, bool sort)
+	{
+		if (trans != null)
+		{
+			trans.parent = transform;
+			ResetPosition(GetChildList());
+		}
+	}
+
+	// NOTE: This functionality is effectively removed until Unity 4.6.
+	/*/// <summary>
+	/// Convenience method -- add a new child at the specified index.
+	/// Note that if you plan on adding multiple objects, it's faster to GetChildList() and modify that instead.
+	/// </summary>
+
+	public void AddChild (Transform trans, int index)
+	{
+		if (trans != null)
+		{
+			if (sorting != Sorting.None)
+				Debug.LogWarning("The Grid has sorting enabled, so AddChild at index may not work as expected.", this);
+
+			BetterList<Transform> list = GetChildList();
+			list.Insert(index, trans);
+			ResetPosition(list);
+		}
+	}
+
+	/// <summary>
+	/// Convenience method -- remove a child at the specified index.
+	/// Note that if you plan on removing multiple objects, it's faster to GetChildList() and modify that instead.
+	/// </summary>
+
+	public Transform RemoveChild (int index)
+	{
+		BetterList<Transform> list = GetChildList();
+
+		if (index < list.Count)
+		{
+			Transform t = list[index];
+			list.RemoveAt(index);
+			ResetPosition(list);
+			return t;
+		}
+		return null;
+	}*/
+
+	/// <summary>
+	/// Remove the specified child from the list.
+	/// Note that if you plan on removing multiple objects, it's faster to GetChildList() and modify that instead.
+	/// </summary>
+
+	public bool RemoveChild (Transform t)
+	{
+		List<Transform> list = GetChildList();
+
+		if (list.Remove(t))
+		{
+			ResetPosition(list);
+			return true;
+		}
+		return false;
+	}
+
+	/// <summary>
+	/// Initialize the grid. Executed only once.
+	/// </summary>
+
 	protected virtual void Init ()
 	{
 		mInitDone = true;
 		mPanel = NGUITools.FindInParents<UIPanel>(gameObject);
 	}
+
+	/// <summary>
+	/// Cache everything and reset the initial position of all children.
+	/// </summary>
 
 	protected virtual void Start ()
 	{
@@ -122,21 +256,32 @@ public class UIGrid : UIWidgetContainer
 		enabled = false;
 	}
 
+	/// <summary>
+	/// Reset the position if necessary, then disable the component.
+	/// </summary>
+
 	protected virtual void Update ()
 	{
 		if (mReposition) Reposition();
 		enabled = false;
 	}
 
+	/// <summary>
+	/// Reposition the content on inspector validation.
+	/// </summary>
+
+	void OnValidate () { if (!Application.isPlaying && NGUITools.GetActive(this)) Reposition(); }
+
+	// Various generic sorting functions
 	static public int SortByName (Transform a, Transform b) { return string.Compare(a.name, b.name); }
 	static public int SortHorizontal (Transform a, Transform b) { return a.localPosition.x.CompareTo(b.localPosition.x); }
 	static public int SortVertical (Transform a, Transform b) { return b.localPosition.y.CompareTo(a.localPosition.y); }
 
 	/// <summary>
-	/// Want your own custom sorting logic? Override this function.
+	/// You can override this function, but in most cases it's easier to just set the onCustomSort delegate instead.
 	/// </summary>
 
-	protected virtual void Sort (BetterList<Transform> list) { list.Sort(SortByName); }
+	protected virtual void Sort (List<Transform> list) { }
 
 	/// <summary>
 	/// Recalculate the position of all elements within the grid, sorting them alphabetically if necessary.
@@ -145,91 +290,93 @@ public class UIGrid : UIWidgetContainer
 	[ContextMenu("Execute")]
 	public virtual void Reposition ()
 	{
-		if (Application.isPlaying && !mInitDone && NGUITools.GetActive(this))
+		if (Application.isPlaying && !mInitDone && NGUITools.GetActive(this)) Init();
+
+		// Legacy functionality
+		if (sorted)
 		{
-			mReposition = true;
-			return;
+			sorted = false;
+			if (sorting == Sorting.None)
+				sorting = Sorting.Alphabetic;
+			NGUITools.SetDirty(this);
 		}
 
 		if (!mInitDone) Init();
 
+		// Get the list of children in their current order
+		List<Transform> list = GetChildList();
+
+		// Reset the position and order of all objects in the list
+		ResetPosition(list);
+
+		// Constrain everything to be within the panel's bounds
+		if (keepWithinPanel) ConstrainWithinPanel();
+
+		// Notify the listener
+		if (onReposition != null)
+			onReposition();
+	}
+
+	/// <summary>
+	/// Constrain the grid's content to be within the panel's bounds.
+	/// </summary>
+
+	public void ConstrainWithinPanel ()
+	{
+		if (mPanel != null)
+		{
+			mPanel.ConstrainTargetToBounds(transform, true);
+			UIScrollView sv = mPanel.GetComponent<UIScrollView>();
+			if (sv != null) sv.UpdateScrollbars(true);
+		}
+	}
+
+	/// <summary>
+	/// Reset the position of all child objects based on the order of items in the list.
+	/// </summary>
+
+	protected void ResetPosition (List<Transform> list)
+	{
 		mReposition = false;
-		Transform myTrans = transform;
+
+		// Epic hack: Unparent all children so that we get to control the order in which they are re-added back in
+		// EDIT: Turns out this does nothing.
+		//for (int i = 0, imax = list.Count; i < imax; ++i)
+		//	list[i].parent = null;
 
 		int x = 0;
 		int y = 0;
 		int maxX = 0;
 		int maxY = 0;
+		Transform myTrans = transform;
 
-		if (sorting != Sorting.None || sorted)
+		// Re-add the children in the same order we have them in and position them accordingly
+		for (int i = 0, imax = list.Count; i < imax; ++i)
 		{
-			BetterList<Transform> list = new BetterList<Transform>();
+			Transform t = list[i];
+			// See above
+			//t.parent = myTrans;
 
-			for (int i = 0; i < myTrans.childCount; ++i)
+			float depth = t.localPosition.z;
+			Vector3 pos = (arrangement == Arrangement.Horizontal) ?
+				new Vector3(cellWidth * x, -cellHeight * y, depth) :
+				new Vector3(cellWidth * y, -cellHeight * x, depth);
+
+			if (animateSmoothly && Application.isPlaying && Vector3.SqrMagnitude(t.localPosition - pos) >= 0.0001f)
 			{
-				Transform t = myTrans.GetChild(i);
-				if (t && (!hideInactive || NGUITools.GetActive(t.gameObject))) list.Add(t);
+				SpringPosition sp = SpringPosition.Begin(t.gameObject, pos, 15f);
+				sp.updateScrollView = true;
+				sp.ignoreTimeScale = true;
 			}
+			else t.localPosition = pos;
 
-			if (sorting == Sorting.Alphabetic) list.Sort(SortByName);
-			else if (sorting == Sorting.Horizontal) list.Sort(SortHorizontal);
-			else if (sorting == Sorting.Vertical) list.Sort(SortVertical);
-			else Sort(list);
+			maxX = Mathf.Max(maxX, x);
+			maxY = Mathf.Max(maxY, y);
 
-			for (int i = 0, imax = list.size; i < imax; ++i)
+			if (++x >= maxPerLine && maxPerLine > 0)
 			{
-				Transform t = list[i];
-
-				if (!NGUITools.GetActive(t.gameObject) && hideInactive) continue;
-
-				float depth = t.localPosition.z;
-				Vector3 pos = (arrangement == Arrangement.Horizontal) ?
-					new Vector3(cellWidth * x, -cellHeight * y, depth) :
-					new Vector3(cellWidth * y, -cellHeight * x, depth);
-
-				if (animateSmoothly && Application.isPlaying)
-				{
-					SpringPosition.Begin(t.gameObject, pos, 15f).updateScrollView = true;
-				}
-				else t.localPosition = pos;
-
-				maxX = Mathf.Max(maxX, x);
-				maxY = Mathf.Max(maxY, y);
-
-				if (++x >= maxPerLine && maxPerLine > 0)
-				{
-					x = 0;
-					++y;
-				}
-			}
-		}
-		else
-		{
-			for (int i = 0; i < myTrans.childCount; ++i)
-			{
-				Transform t = myTrans.GetChild(i);
-
-				if (!NGUITools.GetActive(t.gameObject) && hideInactive) continue;
-
-				float depth = t.localPosition.z;
-				Vector3 pos = (arrangement == Arrangement.Horizontal) ?
-					new Vector3(cellWidth * x, -cellHeight * y, depth) :
-					new Vector3(cellWidth * y, -cellHeight * x, depth);
-
-				if (animateSmoothly && Application.isPlaying)
-				{
-					SpringPosition.Begin(t.gameObject, pos, 15f).updateScrollView = true;
-				}
-				else t.localPosition = pos;
-
-				maxX = Mathf.Max(maxX, x);
-				maxY = Mathf.Max(maxY, y);
-
-				if (++x >= maxPerLine && maxPerLine > 0)
-				{
-					x = 0;
-					++y;
-				}
+				x = 0;
+				++y;
 			}
 		}
 
@@ -254,9 +401,6 @@ public class UIGrid : UIWidgetContainer
 			for (int i = 0; i < myTrans.childCount; ++i)
 			{
 				Transform t = myTrans.GetChild(i);
-
-				if (!NGUITools.GetActive(t.gameObject) && hideInactive) continue;
-
 				SpringPosition sp = t.GetComponent<SpringPosition>();
 
 				if (sp != null)
@@ -273,11 +417,5 @@ public class UIGrid : UIWidgetContainer
 				}
 			}
 		}
-
-		if (keepWithinPanel && mPanel != null)
-			mPanel.ConstrainTargetToBounds(myTrans, true);
-
-		if (onReposition != null)
-			onReposition();
 	}
 }

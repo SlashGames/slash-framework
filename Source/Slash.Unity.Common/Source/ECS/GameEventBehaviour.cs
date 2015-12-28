@@ -55,7 +55,7 @@ namespace Slash.Unity.Common.ECS
         /// </summary>
         protected virtual void Awake()
         {
-            this.gameBehaviour = FindObjectOfType<GameBehaviour>();
+            this.gameBehaviour = GameBehaviour.Instance;
             if (this.gameBehaviour != null)
             {
                 this.gameBehaviour.GameChanged += this.OnGameChanged;
@@ -63,7 +63,10 @@ namespace Slash.Unity.Common.ECS
 
             this.RegisterListeners();
 
-            this.OnGameChanged(this.gameBehaviour.Game, null);
+            if (this.gameBehaviour != null)
+            {
+                this.OnGameChanged(this.gameBehaviour.Game, null);
+            }
         }
 
         /// <summary>

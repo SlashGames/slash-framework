@@ -117,26 +117,19 @@ namespace BlueprintEditor.Windows
 
         private void BackgroundLoadContext(object sender, DoWorkEventArgs e)
         {
-            try
-            {
-                var data = (BackgroundLoadContextData)e.Argument;
-                data.Context.Load(data.Filename);
-            }
-            catch (SerializationException exception)
-            {
-                EditorDialog.Error("Unable to load project", exception.Message);
-                e.Cancel = true;
-            }
-            catch (FileNotFoundException exception)
-            {
-                EditorDialog.Error("Unable to load project", exception.Message);
-                e.Cancel = true;
-            }
+            // Errors are handled in BackgroundLoadContextCompleted - but not in Visual Studio!
+            // https://msdn.microsoft.com/en-us/library/system.componentmodel.backgroundworker.dowork.aspx
+            var data = (BackgroundLoadContextData)e.Argument;
+            data.Context.Load(data.Filename);
         }
 
         private void BackgroundLoadContextCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (!e.Cancelled)
+            if (e.Error != null)
+            {
+                EditorDialog.Error("Unable to load project", e.Error.Message);
+            }
+            else if (!e.Cancelled)
             {
                 // Update custom imports.
                 this.MenuDataCustomImport.Items.Clear();
@@ -159,7 +152,14 @@ namespace BlueprintEditor.Windows
                 this.Context.SetAvailableLanguages(languageTags);
 
                 // Load blueprints.
-                this.Context.LoadBlueprints();
+                try
+                {
+                    this.Context.LoadBlueprints();
+                }
+                catch (FileNotFoundException ex)
+                {
+                    EditorDialog.Error("Unable to load blueprints", ex.Message);
+                }
 
                 this.UpdateWindowTitle();
             }

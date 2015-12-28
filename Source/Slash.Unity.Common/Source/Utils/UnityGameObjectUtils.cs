@@ -6,6 +6,7 @@
 
 namespace Slash.Unity.Common.Utils
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -21,6 +22,21 @@ namespace Slash.Unity.Common.Utils
         #region Public Methods and Operators
 
         /// <summary>
+        ///   Instantiates a new game object with the specified name and adds it
+        ///   to the game object.
+        ///   Makes sure the position/rotation/scale are initialized correctly.
+        /// </summary>
+        /// <param name="parent">Game object to add child to.</param>
+        /// <param name="name">Name of the new child.</param>
+        /// <returns>Instantiated new child.</returns>
+        public static GameObject AddChild(this GameObject parent, string name)
+        {
+            GameObject go = AddChild(parent, (GameObject)null);
+            go.name = name;
+            return go;
+        }
+
+        /// <summary>
         ///   Instantiates a new game object from the specified prefab and adds it
         ///   to the game object.
         ///   Makes sure the position/rotation/scale are initialized correctly.
@@ -30,11 +46,11 @@ namespace Slash.Unity.Common.Utils
         /// <returns>Instantiated new child.</returns>
         public static GameObject AddChild(this GameObject parent, GameObject prefab)
         {
-            GameObject go = Object.Instantiate(prefab) as GameObject;
+            GameObject go = prefab != null ? Object.Instantiate(prefab) as GameObject : new GameObject();
             if (go != null && parent != null)
             {
                 Transform t = go.transform;
-                t.parent = parent.transform;
+                t.SetParent(parent.transform);
                 t.localPosition = Vector3.zero;
                 t.localRotation = Quaternion.identity;
                 t.localScale = Vector3.one;
@@ -54,7 +70,14 @@ namespace Slash.Unity.Common.Utils
             {
                 // Set inactive to hide immediatly. The destruction is just performed after the next update.
                 child.SetActive(false);
-                Object.Destroy(child);
+                if (Application.isEditor && !Application.isPlaying)
+                {
+                    Object.DestroyImmediate(child);
+                }
+                else
+                {
+                    Object.Destroy(child);
+                }
             }
         }
 
@@ -66,6 +89,30 @@ namespace Slash.Unity.Common.Utils
         public static IEnumerable<GameObject> GetChildren(this GameObject gameObject)
         {
             return (from Transform child in gameObject.transform select child.gameObject);
+        }
+
+        public static IEnumerable<GameObject> GetDescendants(this GameObject gameObject)
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                yield return child.gameObject;
+
+                // Depth-first.
+                foreach (var descendant in child.gameObject.GetDescendants())
+                {
+                    yield return descendant;
+                }
+            }
+        }
+
+        public static IEnumerable<GameObject> GetDescendantsAndSelf(this GameObject gameObject)
+        {
+            yield return gameObject;
+
+            foreach (var descendant in gameObject.GetDescendants())
+            {
+                yield return descendant;
+            }
         }
 
         /// <summary>
@@ -85,13 +132,49 @@ namespace Slash.Unity.Common.Utils
         /// <returns>Full path of the specified game object.</returns>
         public static string GetPath(this GameObject gameObject)
         {
-            string path = string.Empty;
+            string path = String.Empty;
             if (gameObject.transform.parent != null)
             {
                 path = gameObject.transform.parent.gameObject.GetPath() + "/";
             }
             path += gameObject.name;
             return path;
+        }
+
+        /// <summary>
+        ///   Returns the absolute scale of the specified transform relative to the specified ancestor.
+        /// </summary>
+        /// <param name="transform">Transform to get scale for.</param>
+        /// <param name="ancestor">Ancestor to which the scale should be relative. Null if global.</param>
+        /// <returns>Absolute scale of the specified transform relative to the specified ancestor.</returns>
+        public static Vector3 GetScale(this Transform transform, Transform ancestor)
+        {
+            if (transform == null || transform == ancestor)
+            {
+                return Vector3.one;
+            }
+            Vector3 parentScale = GetScale(transform.parent, ancestor);
+            return new Vector3(
+                transform.localScale.x * parentScale.x,
+                transform.localScale.y * parentScale.y,
+                transform.localScale.z * parentScale.z);
+        }
+
+        /// <summary>
+        ///   Sets the absolute scale of the specified transform relative to the specified ancestor.
+        /// </summary>
+        /// <param name="transform">Transform to set scale for.</param>
+        /// <param name="ancestor">Ancestor to which the scale should be relative. Null if global.</param>
+        /// <param name="scale">Absolute scale.</param>
+        public static void SetScale(this Transform transform, Transform ancestor, Vector3 scale)
+        {
+            Vector3 parentScale = transform.parent != null ? GetScale(transform.parent, ancestor) : Vector3.one;
+            if (parentScale != Vector3.zero)
+            {
+                Vector3 localScale = new Vector3(
+                    scale.x / parentScale.x, scale.y / parentScale.y, scale.z / parentScale.z);
+                transform.localScale = localScale;
+            }
         }
 
         #endregion

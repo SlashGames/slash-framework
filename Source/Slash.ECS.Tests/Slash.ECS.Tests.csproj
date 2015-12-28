@@ -72,9 +72,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorDataAttributeTest.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorEntityAttributeTest.cs" />
+    <Compile Include="Source\Inspector\Attributes\InspectorPropertyAttributeTest.cs" />
     <Compile Include="Source\Inspector\Utils\InspectorUtilsTest.cs" />
     <Compile Include="Source\ProcessManagerTest.cs" />
     <Compile Include="Source\SystemManagerTest.cs" />
+    <Compile Include="Source\Systems\CompoundEntitiesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
@@ -82,7 +84,7 @@
       <Name>Slash.Collections</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.ECS\Slash.ECS.csproj">
-      <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>
+      <Project>{A9512E70-2963-4843-855E-B1C9AAA60720}</Project>
       <Name>Slash.ECS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.Reflection\Slash.Reflection.csproj">

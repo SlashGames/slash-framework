@@ -11,7 +11,7 @@ namespace BlueprintEditor.Inspectors.Controls
     using System.Collections.Generic;
     using System.Windows;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
     using Slash.SystemExt.Utils;
 
     /// <summary>

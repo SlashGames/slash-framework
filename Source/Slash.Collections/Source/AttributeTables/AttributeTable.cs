@@ -135,7 +135,7 @@ namespace Slash.Collections.AttributeTables
         /// <param name="attributePair">Attribute pair to add.</param>
         public void Add(KeyValuePair<object, object> attributePair)
         {
-            this.attributes.Add(attributePair.Key, attributePair.Value);
+            this.AddValue(attributePair.Key, attributePair.Value);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Slash.Collections.AttributeTables
         {
             foreach (KeyValuePair<object, object> keyValuePair in attributeTable)
             {
-                this.attributes[keyValuePair.Key] = keyValuePair.Value;
+                this.SetValue(keyValuePair.Key, keyValuePair.Value);
             }
         }
 
@@ -178,7 +178,7 @@ namespace Slash.Collections.AttributeTables
         /// </summary>
         /// <param name="key"> Key to map. </param>
         /// <param name="value"> Value to map the key to. </param>
-        public void AddValue(object key, object value)
+        public virtual void AddValue(object key, object value)
         {
             this.attributes.Add(key, value);
         }
@@ -186,7 +186,7 @@ namespace Slash.Collections.AttributeTables
         /// <summary>
         ///   Clears the attribute table.
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
             this.attributes.Clear();
         }
@@ -293,7 +293,7 @@ namespace Slash.Collections.AttributeTables
         /// <param name="attributeKey"> Attribute key. </param>
         /// <returns> Value of attribute with the specified key. </returns>
         /// <exception cref="KeyNotFoundException">Specified key wasn't found.</exception>
-        public object GetValue(object attributeKey)
+        public virtual object GetValue(object attributeKey)
         {
             try
             {
@@ -315,7 +315,7 @@ namespace Slash.Collections.AttributeTables
         /// <returns> Value of attribute of the specified type with the specified key. </returns>
         /// <exception cref="KeyNotFoundException">Specified key wasn't found.</exception>
         /// <exception cref="InvalidCastException">Attribute was found but couldn't be casted to specified type.</exception>
-        public virtual T GetValue<T>(object attributeKey) where T : class
+        public T GetValue<T>(object attributeKey) where T : class
         {
             object attributeValue = this.GetValue(attributeKey);
             return (T)attributeValue;
@@ -381,7 +381,7 @@ namespace Slash.Collections.AttributeTables
         /// <returns>
         ///   <c>true</c>, if the key has been removed, and <c>false</c> otherwise.
         /// </returns>
-        public bool RemoveValue(object key)
+        public virtual bool RemoveValue(object key)
         {
             return this.attributes.Remove(key);
         }
@@ -401,7 +401,7 @@ namespace Slash.Collections.AttributeTables
         /// </summary>
         /// <param name="key"> Key to map. </param>
         /// <param name="value"> Value to map the key to. </param>
-        public void SetValue(object key, object value)
+        public virtual void SetValue(object key, object value)
         {
             this.attributes[key] = value;
         }

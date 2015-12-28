@@ -8,7 +8,7 @@ namespace BlueprintEditor.Inspectors
 {
     using BlueprintEditor.ViewModels;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
 
     public delegate void InspectorControlValueChangedDelegate(
         InspectorPropertyAttribute inspectorProperty, object newValue);

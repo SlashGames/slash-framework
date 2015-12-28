@@ -13,6 +13,7 @@ namespace Slash.Serialization.Binary
     using System.Reflection;
     using System.Runtime.Serialization;
 
+    using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
     using Slash.Serialization.Xml;
 
@@ -61,7 +62,7 @@ namespace Slash.Serialization.Binary
         public object Deserialize(Type type)
         {
             // Check for primitive type.
-            if (type.IsPrimitive)
+            if (type.IsPrimitive())
             {
                 return this.DeserializePrimitive(type);
             }
@@ -97,7 +98,7 @@ namespace Slash.Serialization.Binary
             }
 
             // Check for enum.
-            if (type.IsEnum)
+            if (type.IsEnum())
             {
                 return Enum.Parse(type, this.reader.ReadString());
             }
@@ -140,7 +141,7 @@ namespace Slash.Serialization.Binary
 
             for (int i = 0; i < count; i++)
             {
-                if (itemType.IsSealed)
+                if (itemType.IsSealed())
                 {
                     array.SetValue(this.Deserialize(itemType), i);
                 }
@@ -176,7 +177,7 @@ namespace Slash.Serialization.Binary
                 object value;
 
                 // Read key.
-                if (keyType.IsSealed)
+                if (keyType.IsSealed())
                 {
                     key = this.Deserialize(keyType);
                 }
@@ -187,7 +188,7 @@ namespace Slash.Serialization.Binary
                 }
 
                 // Read value.
-                if (valueType.IsSealed)
+                if (valueType.IsSealed())
                 {
                     value = this.Deserialize(valueType);
                 }
@@ -218,7 +219,7 @@ namespace Slash.Serialization.Binary
 
             for (int i = 0; i < count; i++)
             {
-                if (itemType.IsSealed)
+                if (itemType.IsSealed())
                 {
                     list.Add(this.Deserialize(itemType));
                 }

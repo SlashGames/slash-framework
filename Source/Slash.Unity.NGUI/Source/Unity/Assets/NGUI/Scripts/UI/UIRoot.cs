@@ -15,27 +15,59 @@ using System.Collections.Generic;
 [AddComponentMenu("NGUI/UI/Root")]
 public class UIRoot : MonoBehaviour
 {
-	static public List<UIRoot> list = new List<UIRoot>();
-
 	/// <summary>
 	/// List of all UIRoots present in the scene.
 	/// </summary>
 
+	static public List<UIRoot> list = new List<UIRoot>();
+
 	public enum Scaling
 	{
-		PixelPerfect,
-		FixedSize,
-		FixedSizeOnMobiles,
+		Flexible,
+		Constrained,
+		ConstrainedOnMobiles,
+	}
+
+	public enum Constraint
+	{
+		Fit,
+		Fill,
+		FitWidth,
+		FitHeight,
 	}
 
 	/// <summary>
 	/// Type of scaling used by the UIRoot.
 	/// </summary>
 
-	public Scaling scalingStyle = Scaling.PixelPerfect;
+	public Scaling scalingStyle = Scaling.Flexible;
 
 	/// <summary>
-	/// Height of the screen when the scaling style is set to FixedSize.
+	/// When the UI scaling is constrained, this controls the type of constraint that further fine-tunes how it's scaled.
+	/// </summary>
+
+	public Constraint constraint
+	{
+		get
+		{
+			if (fitWidth)
+			{
+				if (fitHeight) return Constraint.Fit;
+				return Constraint.FitWidth;
+			}
+			else if (fitHeight) return Constraint.FitHeight;
+			return Constraint.Fill;
+		}
+	}
+
+	/// <summary>
+	/// Width of the screen, used when the scaling style is set to Flexible.
+	/// </summary>
+
+	public int manualWidth = 1280;
+
+	/// <summary>
+	/// Height of the screen when the scaling style is set to FixedSize or Flexible.
 	/// </summary>
 
 	public int manualHeight = 720;
@@ -49,22 +81,56 @@ public class UIRoot : MonoBehaviour
 
 	/// <summary>
 	/// If the screen height goes above this value, it will be as if the scaling style
-	/// is set to FixedSize with manualHeight of this value.
+	/// is set to Fixed Height with manualHeight of this value.
 	/// </summary>
 
 	public int maximumHeight = 1536;
 
 	/// <summary>
+	/// When Constraint is on, controls whether the content must be restricted horizontally to be at least 'manualWidth' wide.
+	/// </summary>
+
+	public bool fitWidth = false;
+
+	/// <summary>
+	/// When Constraint is on, controls whether the content must be restricted vertically to be at least 'Manual Height' tall.
+	/// </summary>
+
+	public bool fitHeight = true;
+
+	/// <summary>
 	/// Whether the final value will be adjusted by the device's DPI setting.
+	/// Used when the Scaling is set to Pixel-Perfect.
 	/// </summary>
 
 	public bool adjustByDPI = false;
 
 	/// <summary>
 	/// If set and the game is in portrait mode, the UI will shrink based on the screen's width instead of height.
+	/// Used when the Scaling is set to Pixel-Perfect.
 	/// </summary>
 
 	public bool shrinkPortraitUI = false;
+
+	/// <summary>
+	/// Active scaling type, based on platform.
+	/// </summary>
+
+	public Scaling activeScaling
+	{
+		get
+		{
+			Scaling scaling = scalingStyle;
+
+			if (scaling == Scaling.ConstrainedOnMobiles)
+#if UNITY_EDITOR || UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
+				return Scaling.Constrained;
+#else
+				return Scaling.Flexible;
+#endif
+			return scaling;
+		}
+	}
 
 	/// <summary>
 	/// UI Root's active height, based on the size of the screen.
@@ -74,23 +140,61 @@ public class UIRoot : MonoBehaviour
 	{
 		get
 		{
-			int h = Screen.height;
-			int height = Mathf.Max(2, h);
-			if (scalingStyle == Scaling.FixedSize) return manualHeight;
-			int w = Screen.width;
+			Scaling scaling = activeScaling;
 
-#if UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_BLACKBERRY
-			if (scalingStyle == Scaling.FixedSizeOnMobiles)
+			if (scaling == Scaling.Flexible)
+			{
+				Vector2 screen = NGUITools.screenSize;
+				float aspect = screen.x / screen.y;
+
+				if (screen.y < minimumHeight)
+				{
+					screen.y = minimumHeight;
+					screen.x = screen.y * aspect;
+				}
+				else if (screen.y > maximumHeight)
+				{
+					screen.y = maximumHeight;
+					screen.x = screen.y * aspect;
+				}
+
+				// Portrait mode uses the maximum of width or height to shrink the UI
+				int height = Mathf.RoundToInt((shrinkPortraitUI && screen.y > screen.x) ? screen.y / aspect : screen.y);
+
+				// Adjust the final value by the DPI setting
+				return adjustByDPI ? NGUIMath.AdjustByDPI(height) : height;
+			}
+			else
+			{
+				Constraint cons = constraint;
+				if (cons == Constraint.FitHeight)
+					return manualHeight;
+
+				Vector2 screen = NGUITools.screenSize;
+				float aspect = screen.x / screen.y;
+				float initialAspect = (float)manualWidth / manualHeight;
+
+				switch (cons)
+				{
+					case Constraint.FitWidth:
+					{
+						return Mathf.RoundToInt(manualWidth / aspect);
+					}
+					case Constraint.Fit:
+					{
+						return (initialAspect > aspect) ?
+							Mathf.RoundToInt(manualWidth / aspect) :
+							manualHeight;
+					}
+					case Constraint.Fill:
+					{
+						return (initialAspect < aspect) ?
+							Mathf.RoundToInt(manualWidth / aspect) :
+							manualHeight;
+					}
+				}
 				return manualHeight;
-#endif
-			if (height < minimumHeight) height = minimumHeight;
-			if (height > maximumHeight) height = maximumHeight;
-
-			// Portrait mode uses the maximum of width or height to shrink the UI
-			if (shrinkPortraitUI && h > w) height = Mathf.RoundToInt(height * ((float)h / w));
-
-			// Adjust the final value by the DPI setting
-			return adjustByDPI ? NGUIMath.AdjustByDPI(height) : height;
+			}
 		}
 	}
 
@@ -98,7 +202,7 @@ public class UIRoot : MonoBehaviour
 	/// Pixel size adjustment. Most of the time it's at 1, unless the scaling style is set to FixedSize.
 	/// </summary>
 
-	public float pixelSizeAdjustment { get { return GetPixelSizeAdjustment(Screen.height); } }
+	public float pixelSizeAdjustment { get { return GetPixelSizeAdjustment(Mathf.RoundToInt(NGUITools.screenSize.y)); } }
 
 	/// <summary>
 	/// Helper function that figures out the pixel size adjustment for the specified game object.
@@ -118,13 +222,9 @@ public class UIRoot : MonoBehaviour
 	{
 		height = Mathf.Max(2, height);
 
-		if (scalingStyle == Scaling.FixedSize)
-			return (float)manualHeight / height;
+		if (activeScaling == Scaling.Constrained)
+			return (float)activeHeight / height;
 
-#if UNITY_IPHONE || UNITY_ANDROID
-		if (scalingStyle == Scaling.FixedSizeOnMobiles)
-			return (float)manualHeight / height;
-#endif
 		if (height < minimumHeight) return (float)minimumHeight / height;
 		if (height > maximumHeight) return (float)maximumHeight / height;
 		return 1f;

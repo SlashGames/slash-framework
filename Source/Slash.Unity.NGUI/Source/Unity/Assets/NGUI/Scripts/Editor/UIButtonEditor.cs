@@ -26,7 +26,7 @@ public class UIButtonEditor : UIButtonColorEditor
 		Highlight ht = sp.boolValue ? Highlight.Press : Highlight.DoNothing;
 		GUILayout.BeginHorizontal();
 		bool highlight = (Highlight)EditorGUILayout.EnumPopup("Drag Over", ht) == Highlight.Press;
-		GUILayout.Space(18f);
+		NGUIEditorTools.DrawPadding();
 		GUILayout.EndHorizontal();
 		if (sp.boolValue != highlight) sp.boolValue = highlight;
 
@@ -38,12 +38,13 @@ public class UIButtonEditor : UIButtonColorEditor
 		if (btn.tweenTarget != null)
 		{
 			UISprite sprite = btn.tweenTarget.GetComponent<UISprite>();
+			UI2DSprite s2d = btn.tweenTarget.GetComponent<UI2DSprite>();
 
 			if (sprite != null)
 			{
-				if (NGUIEditorTools.DrawHeader("Sprites"))
+				if (NGUIEditorTools.DrawHeader("Sprites", "Sprites", false, true))
 				{
-					NGUIEditorTools.BeginContents();
+					NGUIEditorTools.BeginContents(true);
 					EditorGUI.BeginDisabledGroup(serializedObject.isEditingMultipleObjects);
 					{
 						SerializedObject obj = new SerializedObject(sprite);
@@ -62,9 +63,31 @@ public class UIButtonEditor : UIButtonColorEditor
 					NGUIEditorTools.EndContents();
 				}
 			}
+			else if (s2d != null)
+			{
+				if (NGUIEditorTools.DrawHeader("Sprites", "Sprites", false, true))
+				{
+					NGUIEditorTools.BeginContents(true);
+					EditorGUI.BeginDisabledGroup(serializedObject.isEditingMultipleObjects);
+					{
+						SerializedObject obj = new SerializedObject(s2d);
+						obj.Update();
+						NGUIEditorTools.DrawProperty("Normal", obj, "mSprite");
+						obj.ApplyModifiedProperties();
+
+						NGUIEditorTools.DrawProperty("Hover", serializedObject, "hoverSprite2D");
+						NGUIEditorTools.DrawProperty("Pressed", serializedObject, "pressedSprite2D");
+						NGUIEditorTools.DrawProperty("Disabled", serializedObject, "disabledSprite2D");
+					}
+					EditorGUI.EndDisabledGroup();
+
+					NGUIEditorTools.DrawProperty("Pixel Snap", serializedObject, "pixelSnap");
+					NGUIEditorTools.EndContents();
+				}
+			}
 		}
 
 		UIButton button = target as UIButton;
-		NGUIEditorTools.DrawEvents("On Click", button, button.onClick);
+		NGUIEditorTools.DrawEvents("On Click", button, button.onClick, false);
 	}
 }

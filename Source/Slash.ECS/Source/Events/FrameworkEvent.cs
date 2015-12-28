@@ -11,6 +11,7 @@ namespace Slash.ECS.Events
     /// <summary>
     ///   Type of an event that occurred within the entity system.
     /// </summary>
+    [GameEventType]
     public enum FrameworkEvent
     {
         /// <summary>
@@ -72,6 +73,16 @@ namespace Slash.ECS.Events
         ///   </para>
         /// </summary>
         GameResumed,
+
+        /// <summary>
+        ///   <para>
+        ///     The game was stopped.
+        ///   </para>
+        ///   <para>
+        ///     Event data: <c>null</c>
+        ///   </para>
+        /// </summary>
+        GameStopped,
 
         /// <summary>
         ///   <para>

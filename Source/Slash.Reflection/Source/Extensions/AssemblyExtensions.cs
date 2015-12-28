@@ -4,10 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-
-#if !WINDOWS_STORE
-
-namespace Slash.Reflection
+namespace Slash.Reflection.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +17,13 @@ namespace Slash.Reflection
     /// </summary>
     public static class AssemblyExtensions
     {
+#if WINDOWS_STORE || WINDOWS_PHONE
+
+        public static IEnumerable<Type> GetTypes(this Assembly assembly)
+        {
+            return assembly.DefinedTypes.Select(definedType => definedType.AsType());
+        }
+#else
         #region Public Methods and Operators
 
         /// <summary>
@@ -113,7 +117,7 @@ namespace Slash.Reflection
         }
 
         #endregion
-    }
-}
-
 #endif
+    }
+
+}

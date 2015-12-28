@@ -18,8 +18,6 @@ namespace BlueprintEditor.Controls
     using BlueprintEditor.Annotations;
     using BlueprintEditor.ViewModels;
 
-    using Slash.GameBase.Blueprints;
-
     public partial class BlueprintComboBox : INotifyPropertyChanged
     {
         #region Static Fields

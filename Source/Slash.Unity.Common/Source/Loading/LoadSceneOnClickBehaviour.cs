@@ -28,7 +28,7 @@ namespace Slash.Unity.Common.Loading
 
         private void OnClick()
         {
-            var sceneManager = FindObjectOfType<SceneManager>();
+            var sceneManager = SceneManager.Instance;
             sceneManager.ChangeScene(this.SceneName);
         }
 

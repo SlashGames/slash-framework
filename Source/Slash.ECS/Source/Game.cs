@@ -1,10 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Game.cs" company="Slash Games">
-//   Copyright (c) Slash Games. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Slash.ECS
+﻿namespace Slash.ECS
 {
     using System;
     using System.Linq;
@@ -16,6 +10,7 @@ namespace Slash.ECS
     using Slash.ECS.Logging;
     using Slash.ECS.Processes;
     using Slash.ECS.Systems;
+    using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
 
     /// <summary>
@@ -64,15 +59,22 @@ namespace Slash.ECS
             this.entityManager = new EntityManager(this);
             this.systemManager = new SystemManager(this);
             this.eventManager = new EventManager();
-            this.processManager = new ProcessManager();
+            this.processManager = new ProcessManager(this.entityManager, this.eventManager);
             this.Running = false;
             this.TimeElapsed = 0.0f;
             this.Log = new GameLogger();
+            this.AddSystemsViaReflection = true;
         }
 
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        ///   Indicates if game systems should be added which are flagged with the
+        ///   GameSystem attribute.
+        /// </summary>
+        public bool AddSystemsViaReflection { get; set; }
 
         /// <summary>
         ///   Manages all blueprints available in the game.
@@ -160,37 +162,7 @@ namespace Slash.ECS
         public void AddSystem<T>() where T : ISystem, new()
         {
             var system = new T();
-            this.SystemManager.AddSystem(system);
-            system.Game = this;
-        }
-
-        /// <summary>
-        ///   Initialization of the game. Can be used for game-specific initialization steps.
-        /// </summary>
-        public virtual void InitGame()
-        {
-            // Add game systems using reflection.
-            foreach (var assembly in AssemblyUtils.GetLoadedAssemblies())
-            {
-                var systemTypes = assembly.GetTypes().Where(type => typeof(ISystem).IsAssignableFrom(type));
-
-                // Check if enabled and order by index.
-                var gameSystemTypes = from systemType in systemTypes
-                                      let systemTypeAttribute =
-                                          (GameSystemAttribute)
-                                          Attribute.GetCustomAttribute(systemType, typeof(GameSystemAttribute))
-                                      where systemTypeAttribute != null && systemTypeAttribute.Enabled
-                                      orderby systemTypeAttribute.Order
-                                      select systemType;
-
-                // Attach systems.
-                foreach (var gameSystemType in gameSystemTypes)
-                {
-                    var system = (ISystem)Activator.CreateInstance(gameSystemType);
-                    this.SystemManager.AddSystem(system);
-                    system.Game = this;
-                }
-            }
+            this.AddSystem(system);
         }
 
         /// <summary>
@@ -254,8 +226,22 @@ namespace Slash.ECS
 
             // Give the derived game the chance to do game start things.
             this.OnGameStarted();
+        }
 
-            this.eventManager.ProcessEvents();
+        /// <summary>
+        ///   Deinitializes and stops the game.
+        /// </summary>
+        public void StopGame()
+        {
+            // Deinit systems.
+            foreach (var system in this.systemManager)
+            {
+                system.Deinit();
+            }
+
+            // Send event.
+            this.eventManager.FireImmediately(FrameworkEvent.GameStopped);
+            this.Running = false;
         }
 
         /// <summary>
@@ -300,6 +286,48 @@ namespace Slash.ECS
         /// </summary>
         protected virtual void OnGameStarted()
         {
+        }
+
+        private void AddSystem(ISystem system)
+        {
+            this.SystemManager.AddSystem(system);
+
+            system.EntityManager = this.EntityManager;
+            system.BlueprintManager = this.BlueprintManager;
+            system.EventManager = this.EventManager;
+            system.Log = this.Log;
+            system.ProcessManager = this.ProcessManager;
+        }
+
+        /// <summary>
+        ///   Initialization of the game. Can be used for game-specific initialization steps.
+        /// </summary>
+        private void InitGame()
+        {
+            if (this.AddSystemsViaReflection)
+            {            
+#if !WINDOWS_STORE && !WINDOWS_PHONE
+                // Make sure all referenced assemblies are loaded.
+                AssemblyUtils.CheckReferencedAssembliesAreLoaded();
+#endif
+
+                // Add game systems using reflection.
+                var systemTypes = ReflectionUtils.FindTypesWithBase<ISystem>();
+
+                // Check if enabled and order by index.
+                var gameSystemTypes = from systemType in systemTypes
+                                      let systemTypeAttribute = systemType.GetAttribute<GameSystemAttribute>()
+                                      where systemTypeAttribute != null && systemTypeAttribute.Enabled
+                                      orderby systemTypeAttribute.Order
+                                      select systemType;
+
+                // Attach systems.
+                foreach (var gameSystemType in gameSystemTypes)
+                {
+                    var system = (ISystem)Activator.CreateInstance(gameSystemType);
+                    this.AddSystem(system);
+                }
+            }
         }
 
         /// <summary>

@@ -35,8 +35,8 @@ use Cwd 'cwd';
 # Read arguments.
 my $COMMAND = $ARGV[0];
 my $PATH_TO_UNITY_PROJECT = abs_path($ARGV[1]);
-my $DLL_GAME_TARGET_DIR = "${PATH_TO_UNITY_PROJECT}/Assets/Plugins/Game";
-my $DLL_TARGET_DIR = "${PATH_TO_UNITY_PROJECT}/Assets/Editor/Plugins/Game";
+my $DLL_GAME_TARGET_DIR = "${PATH_TO_UNITY_PROJECT}/Assets/Game/Plugins";
+my $DLL_TARGET_DIR = "${PATH_TO_UNITY_PROJECT}/Assets/Game/Editor/Plugins";
 my $DLL_SOURCE_DIR = abs_path($ARGV[2]);
 my $AOT_COMPATLYZER_PATH = abs_path(dirname($0)."/AOT-Compatlyzer/AOTCompatlyzer.exe");
 
@@ -156,7 +156,8 @@ if ($COMMAND eq "clean") {
         }
     }
 
-    print "Cleaning target dir '${DLL_TARGET_DIR}':\n\n";
-    find({ wanted => \&find_file_to_delete, no_chdir=>1}, $DLL_TARGET_DIR);   
-    
+	if (-e $DLL_TARGET_DIR) {
+		print "Cleaning target dir '${DLL_TARGET_DIR}':\n\n";
+		find({ wanted => \&find_file_to_delete, no_chdir=>1}, $DLL_TARGET_DIR);   
+    }
 }

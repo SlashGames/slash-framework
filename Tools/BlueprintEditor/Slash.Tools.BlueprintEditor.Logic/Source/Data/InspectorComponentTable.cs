@@ -6,8 +6,8 @@
 
 namespace Slash.Tools.BlueprintEditor.Logic.Data
 {
-    using Slash.GameBase.Components;
-    using Slash.GameBase.Inspector.Data;
+    using Slash.ECS.Components;
+    using Slash.ECS.Inspector.Data;
 
     /// <summary>
     ///   Lookup table for designer components. Avoids expensive reflection

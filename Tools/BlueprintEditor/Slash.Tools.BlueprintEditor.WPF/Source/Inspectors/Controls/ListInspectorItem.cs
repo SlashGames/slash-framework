@@ -9,7 +9,7 @@ namespace BlueprintEditor.Inspectors.Controls
     using System.Windows;
     using System.Windows.Controls;
 
-    using Slash.GameBase.Inspector.Attributes;
+    using Slash.ECS.Inspector.Attributes;
 
     [TemplatePart(Name = "PART_BtDelete", Type = typeof(Button))]
     [TemplatePart(Name = "PART_BtUp", Type = typeof(Button))]

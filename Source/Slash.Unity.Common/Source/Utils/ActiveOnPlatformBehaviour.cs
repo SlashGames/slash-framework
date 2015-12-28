@@ -25,15 +25,25 @@ namespace Slash.Unity.Common.Utils
         /// </summary>
         public RuntimePlatform Platform;
 
+        /// <summary>
+        ///   Target to activate/deactivate.
+        /// </summary>
+        public GameObject Target;
+
         #endregion
 
         #region Methods
 
         private void Awake()
         {
+            if (this.Target == null)
+            {
+                this.Target = this.gameObject;
+            }
+
             if (Application.platform == this.Platform)
             {
-                this.gameObject.SetActive(this.Active);
+                this.Target.SetActive(this.Active);
             }
         }
 

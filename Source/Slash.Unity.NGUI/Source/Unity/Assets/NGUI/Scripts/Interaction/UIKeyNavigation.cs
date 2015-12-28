@@ -130,6 +130,10 @@ public class UIKeyNavigation : MonoBehaviour
 			UIKeyNavigation nav = list[i];
 			if (nav == this) continue;
 
+			// Ignore disabled buttons
+			UIButton btn = nav.GetComponent<UIButton>();
+			if (btn != null && !btn.isEnabled) continue;
+
 			// Reject objects that are not within a 45 degree angle of the desired direction
 			Vector3 dir = GetCenter(nav.gameObject) - myCenter;
 			float dot = Vector3.Dot(myDir, dir.normalized);

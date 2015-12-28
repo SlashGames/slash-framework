@@ -36,15 +36,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
         /// </summary>
         private const string BlueprintFileExtension = ".blueprints.xml";
 
-        #endregion
-
-        #region Static Fields
-
-        /// <summary>
-        ///   Ids of all available blueprints.
-        /// </summary>
-        private static string[] blueprintIds;
-
         /// <summary>
         ///   Blueprint manager holding all available blueprints.
         /// </summary>
@@ -63,16 +54,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
         ///   Target entity configuration.
         /// </summary>
         private EntityConfigurationBehaviour entityConfigurationBehaviour;
-
-        /// <summary>
-        ///   Current blueprint of the target entity configuration.
-        /// </summary>
-        private Blueprint selectedBlueprint;
-
-        /// <summary>
-        ///   Index of the current blueprint of the target entity configuration.
-        /// </summary>
-        private int selectedBlueprintIndex;
 
         #endregion
 
@@ -94,32 +75,23 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
                     new GUIContent("Entity Id"),
                     new GUIContent(this.entityConfigurationBehaviour.EntityId.ToString(CultureInfo.InvariantCulture)));
                 EditorGUILayout.LabelField(
-                    new GUIContent("Blueprint Id"), new GUIContent(this.entityConfigurationBehaviour.BlueprintId));
+                    new GUIContent("Blueprint Id"),
+                    new GUIContent(this.entityConfigurationBehaviour.BlueprintId));
             }
             else
             {
-                if (blueprintIds == null)
+                if (hierarchicalBlueprintManager == null)
                 {
                     // Load project blueprint data.
                     this.LoadBlueprints();
-
-                    // Get the index of the blueprint of the target entity.
-                    this.selectedBlueprintIndex = Array.IndexOf(
-                        blueprintIds, this.entityConfigurationBehaviour.BlueprintId);
-
-                    // Find the blueprint of the target entity.
-                    this.OnSelectedBlueprintChanged();
                 }
 
-                // Show blueprint dropdown.
-                var oldSelectedBlueprintIndex = Array.IndexOf(
-                    blueprintIds, this.entityConfigurationBehaviour.BlueprintId);
-                this.selectedBlueprintIndex = EditorGUILayout.Popup(
-                    "Blueprint", oldSelectedBlueprintIndex, blueprintIds);
-                if (this.selectedBlueprintIndex != oldSelectedBlueprintIndex)
-                {
-                    this.OnSelectedBlueprintChanged();
-                }
+                this.entityConfigurationBehaviour.BlueprintId =
+                    EditorGUIUtils.BlueprintIdSelection(
+                        new GUIContent("Blueprint"),
+                        this.entityConfigurationBehaviour.BlueprintId,
+                        inspectorComponentTypes,
+                        hierarchicalBlueprintManager);
 
                 if (this.entityConfigurationBehaviour.Configuration == null)
                 {
@@ -127,18 +99,15 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
                     this.entityConfigurationBehaviour.Configuration = new AttributeTable();
                 }
 
-                if (this.selectedBlueprint == null)
+                Blueprint selectedBlueprint =
+                    hierarchicalBlueprintManager.GetBlueprint(this.entityConfigurationBehaviour.BlueprintId);
+                if (selectedBlueprint != null)
                 {
-                    // Find the blueprint of the target entity.
-                    this.OnSelectedBlueprintChanged();
-                }
-
-                foreach (var componentType in this.selectedBlueprint.ComponentTypes)
-                {
-                    var inspectorType = inspectorComponentTypes[componentType];
-
-                    // Draw inspector.
-                    EditorGUIUtils.AttributeTableField(inspectorType, this.entityConfigurationBehaviour.Configuration);
+                    EditorGUIUtils.BlueprintComponentsField(
+                        selectedBlueprint,
+                        this.entityConfigurationBehaviour.Configuration,
+                        inspectorComponentTypes,
+                        hierarchicalBlueprintManager);
                 }
 
                 if (GUILayout.Button("Reload Blueprints"))
@@ -195,23 +164,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.ECS
                     }
                 }
 
-                // Store all blueprint ids for access from a pulldown menu.
-                blueprintIds = hierarchicalBlueprintManager.Blueprints.Select(blueprint => blueprint.Key).ToArray();
-
                 Debug.Log(
                     string.Format(
                         "Loaded {0} blueprint(s) from {1} blueprint file(s).",
                         hierarchicalBlueprintManager.Blueprints.Count(),
                         filesProcessed));
             }
-        }
-
-        private void OnSelectedBlueprintChanged()
-        {
-            // Update selected blueprint of the target entity.
-            var selectedBlueprintName = blueprintIds[this.selectedBlueprintIndex >= 0 ? this.selectedBlueprintIndex : 0];
-            this.entityConfigurationBehaviour.BlueprintId = selectedBlueprintName;
-            this.selectedBlueprint = hierarchicalBlueprintManager.GetBlueprint(selectedBlueprintName);
         }
 
         #endregion

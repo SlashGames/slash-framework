@@ -14,14 +14,16 @@ using System.Collections.Generic;
 
 [ExecuteInEditMode]
 [AddComponentMenu("NGUI/UI/NGUI Texture")]
-public class UITexture : UIWidget
+public class UITexture : UIBasicSprite
 {
 	[HideInInspector][SerializeField] Rect mRect = new Rect(0f, 0f, 1f, 1f);
 	[HideInInspector][SerializeField] Texture mTexture;
 	[HideInInspector][SerializeField] Material mMat;
 	[HideInInspector][SerializeField] Shader mShader;
+	[HideInInspector][SerializeField] Vector4 mBorder = Vector4.zero;
+	[HideInInspector][SerializeField] bool mFixedAspect = false;
 
-	int mPMA = -1;
+	[System.NonSerialized] int mPMA = -1;
 
 	/// <summary>
 	/// Texture used by the UITexture. You can set it directly, without the need to specify a material.
@@ -31,15 +33,26 @@ public class UITexture : UIWidget
 	{
 		get
 		{
-			return mTexture;
+			if (mTexture != null) return mTexture;
+			if (mMat != null) return mMat.mainTexture;
+			return null;
 		}
 		set
 		{
 			if (mTexture != value)
 			{
-				RemoveFromPanel();
-				mTexture = value;
-				MarkAsChanged();
+				if (drawCall != null && drawCall.widgetCount == 1 && mMat == null)
+				{
+					mTexture = value;
+					drawCall.mainTexture = value;
+				}
+				else
+				{
+					RemoveFromPanel();
+					mTexture = value;
+					mPMA = -1;
+					MarkAsChanged();
+				}
 			}
 		}
 	}
@@ -59,6 +72,7 @@ public class UITexture : UIWidget
 			if (mMat != value)
 			{
 				RemoveFromPanel();
+				mShader = null;
 				mMat = value;
 				mPMA = -1;
 				MarkAsChanged();
@@ -82,11 +96,17 @@ public class UITexture : UIWidget
 		{
 			if (mShader != value)
 			{
-				mShader = value;
-
-				if (mMat == null)
+				if (drawCall != null && drawCall.widgetCount == 1 && mMat == null)
 				{
+					mShader = value;
+					drawCall.shader = value;
+				}
+				else
+				{
+					RemoveFromPanel();
+					mShader = value;
 					mPMA = -1;
+					mMat = null;
 					MarkAsChanged();
 				}
 			}
@@ -97,7 +117,7 @@ public class UITexture : UIWidget
 	/// Whether the texture is using a premultiplied alpha material.
 	/// </summary>
 
-	public bool premultipliedAlpha
+	public override bool premultipliedAlpha
 	{
 		get
 		{
@@ -107,6 +127,27 @@ public class UITexture : UIWidget
 				mPMA = (mat != null && mat.shader != null && mat.shader.name.Contains("Premultiplied")) ? 1 : 0;
 			}
 			return (mPMA == 1);
+		}
+	}
+
+
+	/// <summary>
+	/// Sprite's border. X = left, Y = bottom, Z = right, W = top.
+	/// </summary>
+
+	public override Vector4 border
+	{
+		get
+		{
+			return mBorder;
+		}
+		set
+		{
+			if (mBorder != value)
+			{
+				mBorder = value;
+				MarkAsChanged();
+			}
 		}
 	}
 
@@ -147,18 +188,80 @@ public class UITexture : UIWidget
 			float x1 = x0 + mWidth;
 			float y1 = y0 + mHeight;
 
-			Texture tex = mainTexture;
-			int w = (tex != null) ? tex.width : mWidth;
-			int h = (tex != null) ? tex.height : mHeight;
+			if (mTexture != null && mType != UISprite.Type.Tiled)
+			{
+				int w = mTexture.width;
+				int h = mTexture.height;
+				int padRight = 0;
+				int padTop = 0;
 
-			if ((w & 1) != 0) x1 -= (1f / w) * mWidth;
-			if ((h & 1) != 0) y1 -= (1f / h) * mHeight;
+				float px = 1f;
+				float py = 1f;
 
-			return new Vector4(
-				mDrawRegion.x == 0f ? x0 : Mathf.Lerp(x0, x1, mDrawRegion.x),
-				mDrawRegion.y == 0f ? y0 : Mathf.Lerp(y0, y1, mDrawRegion.y),
-				mDrawRegion.z == 1f ? x1 : Mathf.Lerp(x0, x1, mDrawRegion.z),
-				mDrawRegion.w == 1f ? y1 : Mathf.Lerp(y0, y1, mDrawRegion.w));
+				if (w > 0 && h > 0 && (mType == UISprite.Type.Simple || mType == UISprite.Type.Filled))
+				{
+					if ((w & 1) != 0) ++padRight;
+					if ((h & 1) != 0) ++padTop;
+
+					px = (1f / w) * mWidth;
+					py = (1f / h) * mHeight;
+				}
+
+				if (mFlip == UISprite.Flip.Horizontally || mFlip == UISprite.Flip.Both)
+				{
+					x0 += padRight * px;
+				}
+				else x1 -= padRight * px;
+
+				if (mFlip == UISprite.Flip.Vertically || mFlip == UISprite.Flip.Both)
+				{
+					y0 += padTop * py;
+				}
+				else y1 -= padTop * py;
+			}
+
+			float fw, fh;
+
+			if (mFixedAspect)
+			{
+				fw = 0f;
+				fh = 0f;
+			}
+			else
+			{
+				Vector4 br = border;
+				fw = br.x + br.z;
+				fh = br.y + br.w;
+			}
+
+			float vx = Mathf.Lerp(x0, x1 - fw, mDrawRegion.x);
+			float vy = Mathf.Lerp(y0, y1 - fh, mDrawRegion.y);
+			float vz = Mathf.Lerp(x0 + fw, x1, mDrawRegion.z);
+			float vw = Mathf.Lerp(y0 + fh, y1, mDrawRegion.w);
+
+			return new Vector4(vx, vy, vz, vw);
+		}
+	}
+
+	/// <summary>
+	/// Whether the drawn texture will always maintain a fixed aspect ratio.
+	/// This setting is not compatible with drawRegion adjustments (sliders, progress bars, etc).
+	/// </summary>
+
+	public bool fixedAspect
+	{
+		get
+		{
+			return mFixedAspect;
+		}
+		set
+		{
+			if (mFixedAspect != value)
+			{
+				mFixedAspect = value;
+				mDrawRegion = new Vector4(0f, 0f, 1f, 1f);
+				MarkAsChanged();
+			}
 		}
 	}
 
@@ -168,20 +271,63 @@ public class UITexture : UIWidget
 
 	public override void MakePixelPerfect ()
 	{
-		Texture tex = mainTexture;
-
-		if (tex != null)
-		{
-			int x = tex.width;
-			if ((x & 1) == 1) ++x;
-
-			int y = tex.height;
-			if ((y & 1) == 1) ++y;
-
-			width = x;
-			height = y;
-		}
 		base.MakePixelPerfect();
+		if (mType == Type.Tiled) return;
+
+		Texture tex = mainTexture;
+		if (tex == null) return;
+
+		if (mType == Type.Simple || mType == Type.Filled || !hasBorder)
+		{
+			if (tex != null)
+			{
+				int w = tex.width;
+				int h = tex.height;
+
+				if ((w & 1) == 1) ++w;
+				if ((h & 1) == 1) ++h;
+
+				width = w;
+				height = h;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Adjust the draw region if the texture is using a fixed aspect ratio.
+	/// </summary>
+
+	protected override void OnUpdate ()
+	{
+		base.OnUpdate();
+		
+		if (mFixedAspect)
+		{
+			Texture tex = mainTexture;
+
+			if (tex != null)
+			{
+				int w = tex.width;
+				int h = tex.height;
+				if ((w & 1) == 1) ++w;
+				if ((h & 1) == 1) ++h;
+				float widgetWidth = mWidth;
+				float widgetHeight = mHeight;
+				float widgetAspect = widgetWidth / widgetHeight;
+				float textureAspect = (float)w / h;
+
+				if (textureAspect < widgetAspect)
+				{
+					float x = (widgetWidth - widgetHeight * textureAspect) / widgetWidth * 0.5f;
+					drawRegion = new Vector4(x, 0f, 1f - x, 1f);
+				}
+				else
+				{
+					float y = (widgetHeight - widgetWidth / textureAspect) / widgetHeight * 0.5f;
+					drawRegion = new Vector4(0f, y, 1f, 1f - y);
+				}
+			}
+		}
 	}
 
 	/// <summary>
@@ -190,25 +336,34 @@ public class UITexture : UIWidget
 
 	public override void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
 	{
-		Color colF = color;
-		colF.a = finalAlpha;
-		Color32 col = premultipliedAlpha ? NGUITools.ApplyPMA(colF) : colF;
+		Texture tex = mainTexture;
+		if (tex == null) return;
 
-		Vector4 v = drawingDimensions;
+		Rect outer = new Rect(mRect.x * tex.width, mRect.y * tex.height, tex.width * mRect.width, tex.height * mRect.height);
+		Rect inner = outer;
+		Vector4 br = border;
+		inner.xMin += br.x;
+		inner.yMin += br.y;
+		inner.xMax -= br.z;
+		inner.yMax -= br.w;
 
-		verts.Add(new Vector3(v.x, v.y));
-		verts.Add(new Vector3(v.x, v.w));
-		verts.Add(new Vector3(v.z, v.w));
-		verts.Add(new Vector3(v.z, v.y));
+		float w = 1f / tex.width;
+		float h = 1f / tex.height;
 
-		uvs.Add(new Vector2(mRect.xMin, mRect.yMin));
-		uvs.Add(new Vector2(mRect.xMin, mRect.yMax));
-		uvs.Add(new Vector2(mRect.xMax, mRect.yMax));
-		uvs.Add(new Vector2(mRect.xMax, mRect.yMin));
+		outer.xMin *= w;
+		outer.xMax *= w;
+		outer.yMin *= h;
+		outer.yMax *= h;
 
-		cols.Add(col);
-		cols.Add(col);
-		cols.Add(col);
-		cols.Add(col);
+		inner.xMin *= w;
+		inner.xMax *= w;
+		inner.yMin *= h;
+		inner.yMax *= h;
+
+		int offset = verts.size;
+		Fill(verts, uvs, cols, outer, inner);
+
+		if (onPostFill != null)
+			onPostFill(this, offset, verts, uvs, cols);
 	}
 }

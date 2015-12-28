@@ -22,6 +22,13 @@ public class PropertyBindingEditor : Editor
 			PropertyReferenceDrawer.filter = pb.target.GetPropertyType();
 
 		GUILayout.Space(3f);
+		PropertyBinding.Direction dir = (target as PropertyBinding).direction;
+
+		PropertyReferenceDrawer.mustRead = (dir == PropertyBinding.Direction.SourceUpdatesTarget ||
+			dir == PropertyBinding.Direction.BiDirectional);
+		PropertyReferenceDrawer.mustWrite = (dir == PropertyBinding.Direction.TargetUpdatesSource ||
+			dir == PropertyBinding.Direction.BiDirectional);
+
 		NGUIEditorTools.DrawProperty(serializedObject, "source");
 
 		if (pb.direction == PropertyBinding.Direction.SourceUpdatesTarget && pb.source != null)
@@ -43,8 +50,16 @@ public class PropertyBindingEditor : Editor
 		}
 
 		GUILayout.Space(1f);
+
+		PropertyReferenceDrawer.mustRead = (dir == PropertyBinding.Direction.TargetUpdatesSource ||
+			dir == PropertyBinding.Direction.BiDirectional);
+		PropertyReferenceDrawer.mustWrite = (dir == PropertyBinding.Direction.SourceUpdatesTarget ||
+			dir == PropertyBinding.Direction.BiDirectional);
+
 		NGUIEditorTools.DrawProperty(serializedObject, "target");
 
+		PropertyReferenceDrawer.mustRead = false;
+		PropertyReferenceDrawer.mustWrite = false;
 		PropertyReferenceDrawer.filter = typeof(void);
 
 		GUILayout.Space(1f);

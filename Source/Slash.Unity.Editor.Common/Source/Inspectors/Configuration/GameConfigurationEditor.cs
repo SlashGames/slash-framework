@@ -8,9 +8,12 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Extensions;
+    using Slash.ECS.Blueprints;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Systems;
@@ -28,8 +31,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
     public class GameConfigurationEditor : Editor
     {
         #region Fields
-
-        private readonly Dictionary<object, bool> foldoutProperty = new Dictionary<object, bool>();
 
         private GameConfigurationBehaviour gameConfiguration;
 
@@ -56,7 +57,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
             foreach (var inspectorType in this.inspectorSystemTypes)
             {
                 // Draw inspector type.
-                this.DrawInspector(inspectorType, configuration);
+                this.DrawInspector(inspectorType, configuration, this.inspectorSystemTypes, null);
             }
 
             if (GUILayout.Button("Reload"))
@@ -69,7 +70,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
             {
                 // Save configuration.
                 // TODO(co): Save automatically if changed.
-                this.gameConfiguration.Save();
+                this.Save();
 
                 // Refresh assets.
                 AssetDatabase.Refresh();
@@ -80,54 +81,18 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 
         #region Methods
 
-        private void DrawInspector(InspectorType inspectorType, IAttributeTable configuration)
+        private void DrawInspector(InspectorType inspectorType, IAttributeTable configuration, InspectorTypeTable inspectorTypeTable, IBlueprintManager blueprintManager)
         {
             foreach (var inspectorProperty in inspectorType.Properties)
             {
                 // Get current value.
                 object currentValue = configuration.GetValueOrDefault(inspectorProperty.Name, inspectorProperty.Default);
+                object newValue = EditorGUIUtils.LogicInspectorPropertyField(inspectorProperty, currentValue, inspectorTypeTable, blueprintManager);
 
-                if (inspectorProperty.IsList)
+                // Set new value if changed.
+                if (!Equals(newValue, currentValue))
                 {
-                    // Build array.
-                    IList currentList = currentValue as IList;
-                    InspectorPropertyAttribute localInspectorProperty = inspectorProperty;
-                    IList newList;
-                    this.foldoutProperty[inspectorProperty] =
-                        EditorGUIUtils.ListField(
-                            this.foldoutProperty.GetValueOrDefault(inspectorProperty, false),
-                            new GUIContent(inspectorProperty.Name),
-                            currentList,
-                            count =>
-                                {
-                                    IList list = localInspectorProperty.GetEmptyList();
-                                    for (int idx = 0; idx < count; idx++)
-                                    {
-                                        list.Add(null);
-                                    }
-                                    return list;
-                                },
-                            (obj, index) =>
-                            EditorGUIUtils.LogicInspectorPropertyField(
-                                localInspectorProperty, obj, new GUIContent("Item " + index)),
-                            out newList);
-
-                    // Set new value if changed.
-                    if (!Equals(newList, currentList))
-                    {
-                        configuration.SetValue(inspectorProperty.Name, newList);
-                    }
-                }
-                else
-                {
-                    // Draw inspector property.
-                    object newValue = EditorGUIUtils.LogicInspectorPropertyField(inspectorProperty, currentValue);
-
-                    // Set new value if changed.
-                    if (!Equals(newValue, currentValue))
-                    {
-                        configuration.SetValue(inspectorProperty.Name, newValue);
-                    }
+                    configuration.SetValue(inspectorProperty.Name, newValue);
                 }
             }
         }
@@ -135,6 +100,29 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
         private void OnEnable()
         {
             this.gameConfiguration = (GameConfigurationBehaviour)this.target;
+        }
+
+        /// <summary>
+        ///   Saves the current game configuration to the resource specified by
+        ///   <see cref="GameConfigurationBehaviour.ConfigurationFilePath" />.
+        /// </summary>
+        private void Save()
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(AttributeTable));
+
+            var configurationFile = (TextAsset)Resources.Load(this.gameConfiguration.ConfigurationFilePath);
+
+            var filePath = configurationFile != null
+                               ? AssetDatabase.GetAssetPath(configurationFile)
+                               : "Assets/Resources/" + this.gameConfiguration.ConfigurationFilePath + ".xml";
+
+            // Make sure directory exists.
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+            Debug.Log("Save to " + filePath);
+            StreamWriter writer = new StreamWriter(filePath);
+            xmlSerializer.Serialize(writer, this.gameConfiguration.Configuration);
+            writer.Close();
         }
 
         #endregion

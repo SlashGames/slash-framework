@@ -101,8 +101,11 @@ public class UIScrollBar : UISlider
 	{
 		base.OnStart();
 
-		if (mFG != null && mFG.collider != null && mFG.gameObject != gameObject)
+		if (mFG != null && mFG.gameObject != gameObject)
 		{
+			bool hasCollider = (mFG.collider != null) || (mFG.GetComponent<Collider2D>() != null);
+			if (!hasCollider) return;
+
 			UIEventListener fgl = UIEventListener.Get(mFG.gameObject);
 			fgl.onPress += OnPressForeground;
 			fgl.onDrag += OnDragForeground;

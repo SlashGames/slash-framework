@@ -120,7 +120,7 @@ public abstract class UITweener : MonoBehaviour
 			if (mDuration != duration)
 			{
 				mDuration = duration;
-				mAmountPerDelta = Mathf.Abs((duration > 0f) ? 1f / duration : 1000f);
+				mAmountPerDelta = Mathf.Abs((duration > 0f) ? 1f / duration : 1000f) * Mathf.Sign(mAmountPerDelta);
 			}
 			return mAmountPerDelta;
 		}
@@ -136,7 +136,7 @@ public abstract class UITweener : MonoBehaviour
 	/// Direction that the tween is currently playing in.
 	/// </summary>
 
-	public AnimationOrTween.Direction direction { get { return mAmountPerDelta < 0f ? AnimationOrTween.Direction.Reverse : AnimationOrTween.Direction.Forward; } }
+	public AnimationOrTween.Direction direction { get { return amountPerDelta < 0f ? AnimationOrTween.Direction.Reverse : AnimationOrTween.Direction.Forward; } }
 
 	/// <summary>
 	/// This function is called by Unity when you add a component. Automatically set the starting values for convenience.
@@ -227,7 +227,7 @@ public abstract class UITweener : MonoBehaviour
 					for (int i = 0; i < mTemp.Count; ++i)
 					{
 						EventDelegate ed = mTemp[i];
-						if (ed != null) EventDelegate.Add(onFinished, ed, ed.oneShot);
+						if (ed != null && !ed.oneShot) EventDelegate.Add(onFinished, ed, ed.oneShot);
 					}
 					mTemp = null;
 				}
@@ -400,7 +400,7 @@ public abstract class UITweener : MonoBehaviour
 	public void ResetToBeginning ()
 	{
 		mStarted = false;
-		mFactor = (mAmountPerDelta < 0f) ? 1f : 0f;
+		mFactor = (amountPerDelta < 0f) ? 1f : 0f;
 		Sample(mFactor, false);
 	}
 
@@ -455,7 +455,7 @@ public abstract class UITweener : MonoBehaviour
 		comp.mStarted = false;
 		comp.duration = duration;
 		comp.mFactor = 0f;
-		comp.mAmountPerDelta = Mathf.Abs(comp.mAmountPerDelta);
+		comp.mAmountPerDelta = Mathf.Abs(comp.amountPerDelta);
 		comp.style = Style.Once;
 		comp.animationCurve = new AnimationCurve(new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f));
 		comp.eventReceiver = null;

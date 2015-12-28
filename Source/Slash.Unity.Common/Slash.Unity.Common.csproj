@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;LOG4NET</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,13 +28,14 @@
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Release\</OutputPath>
     <DefineConstants>TRACE;LOG4NET</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release NoLog4Net|AnyCPU'">
-    <OutputPath>bin\Release NoLog4Net\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Release NoLog4Net\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -43,8 +44,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug NoLog4Net|AnyCPU'">
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug NoLog4Net\</OutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Debug NoLog4Net\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,7 +55,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release WindowsStore|AnyCPU'">
-    <OutputPath>bin\Release WindowsStore\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Release NoLog4Net\</OutputPath>
     <DefineConstants>TRACE;WINDOWS_STORE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -66,11 +69,14 @@
     <Compile Include="Source\Animations\AnimationExtensions.cs" />
     <Compile Include="Source\Attributes\ExposePropertyAttribute.cs" />
     <Compile Include="Source\Configuration\GameConfigurationBehaviour.cs" />
+    <Compile Include="Source\Configuration\GameSettings.cs" />
+    <Compile Include="Source\Delegates\MethodDelegate.cs" />
     <Compile Include="Source\ECS\EntityBehaviour.cs" />
     <Compile Include="Source\ECS\EntityConfigurationBehaviour.cs" />
     <Compile Include="Source\ECS\EntityGameObjectMap.cs" />
     <Compile Include="Source\ECS\EntityGameObjectsBehaviour.cs" />
     <Compile Include="Source\ECS\EntityObjectPool.cs" />
+    <Compile Include="Source\ECS\EventManagerOperator.cs" />
     <Compile Include="Source\ECS\GameBehaviour.cs" />
     <Compile Include="Source\ECS\LogicToVisualDelegate.cs" />
     <Compile Include="Source\ECS\LogicToVisualDelegateAttribute.cs" />
@@ -101,13 +107,19 @@
     <Compile Include="Source\GUI\ValueEditors\Vector2IValueEditor.cs" />
     <Compile Include="Source\Input\InputUtils.cs" />
     <Compile Include="Source\GUI\SwitchFullscreenBehaviour.cs" />
+    <Compile Include="Source\Loading\LoadSceneBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneOnStartBehaviour.cs" />
     <Compile Include="Source\Logging\ConsoleAppender.cs" />
+    <Compile Include="Source\Logging\EventManagerLogBehaviour.cs" />
     <Compile Include="Source\Logging\GameLogBehaviour.cs" />
     <Compile Include="Source\Logging\LoggerExtensions.cs" />
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
+    <Compile Include="Source\PropertyDrawers\TypePropertyAttribute.cs" />
     <Compile Include="Source\Scenes\SceneManager.cs" />
+    <Compile Include="Source\Scenes\SceneRoot.cs" />
+    <Compile Include="Source\Scenes\WindowManager.cs" />
+    <Compile Include="Source\Scenes\WindowRoot.cs" />
     <Compile Include="Source\Sound\AudioChannel.cs" />
     <Compile Include="Source\Sound\AudioChannelType.cs" />
     <Compile Include="Source\Sound\AudioPlayerPrefs.cs" />
@@ -115,6 +127,7 @@
     <Compile Include="Source\Sound\PlayAudioBehaviour.cs" />
     <Compile Include="Source\Sound\PlaySoundOnClickBehaviour.cs" />
     <Compile Include="Source\Sound\SoundInterfaceBehaviour.cs" />
+    <Compile Include="Source\Transforms\EasedMovementBehaviour.cs" />
     <Compile Include="Source\Triggers\Actions\IAction.cs" />
     <Compile Include="Source\Triggers\Conditions\Condition.cs" />
     <Compile Include="Source\Triggers\Conditions\ICondition.cs" />
@@ -124,6 +137,7 @@
     <Compile Include="Source\Loading\LoadSceneOnClickBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneOnEscBehaviour.cs" />
     <Compile Include="Source\Utils\LogDeviceIdBehaviour.cs" />
+    <Compile Include="Source\Utils\OpenUrlOnClickBehaviour.cs" />
     <Compile Include="Source\Utils\UnityColorUtils.cs" />
     <Compile Include="Source\Utils\UnityGameObjectUtils.cs" />
     <Compile Include="Source\Utils\UnityPathUtils.cs" />
@@ -171,6 +185,10 @@
     <ProjectReference Include="..\Slash.Serialization\Slash.Serialization.csproj">
       <Project>{C92C88B0-5268-443B-B32F-CC2A6D686C51}</Project>
       <Name>Slash.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.Xml\Slash.Xml.csproj">
+      <Project>{e399fde3-a0dd-4aea-bbf5-2a16c5e6775b}</Project>
+      <Name>Slash.Xml</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

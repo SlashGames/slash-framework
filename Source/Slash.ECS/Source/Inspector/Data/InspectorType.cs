@@ -11,6 +11,7 @@ namespace Slash.ECS.Inspector.Data
 
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Utils;
+    using Slash.Reflection.Extensions;
 
     /// <summary>
     ///   Component accessible to the user in the inspector.
@@ -75,14 +76,13 @@ namespace Slash.ECS.Inspector.Data
             List<InspectorPropertyAttribute> inspectorProperties = InspectorUtils.CollectInspectorProperties(
                 type, ref conditionalInspectors);
 
-            InspectorTypeAttribute[] inspectorTypeAttributes =
-                (InspectorTypeAttribute[])type.GetCustomAttributes(typeof(InspectorTypeAttribute), false);
-            if (inspectorTypeAttributes.Length == 0)
+            var inspectorTypeAttribute = type.GetAttribute<InspectorTypeAttribute>();
+
+            if (inspectorTypeAttribute == null)
             {
                 return null;
             }
 
-            InspectorTypeAttribute inspectorTypeAttribute = inspectorTypeAttributes[0];
             var inspectorTypeData = new InspectorType
                 {
                     Attribute = inspectorTypeAttribute,

@@ -19,8 +19,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SLASH_DLLS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -28,8 +28,8 @@
     <BaseIntermediateOutputPath>..\..\Obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>..\..\Bin\$(MSBuildProjectName)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;SLASH_DLLS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -45,6 +45,9 @@
     <Compile Include="Source\Graphs\IGraphVertex.cs" />
     <Compile Include="Source\Graphs\AdjacencyListWeightedDirectedGraph.cs" />
     <Compile Include="Source\Graphs\IWeightedGraph.cs" />
+    <Compile Include="Source\Pools\IPoolable.cs" />
+    <Compile Include="Source\Pools\ObjectPool.cs" />
+    <Compile Include="Source\Pools\Poolable.cs" />
     <Compile Include="Source\PriorityQueues\FibonacciHeap.cs" />
     <Compile Include="Source\PriorityQueues\FibonacciHeapItem.cs" />
     <Compile Include="Source\PriorityQueues\FibonacciHeapNode.cs" />
@@ -55,6 +58,7 @@
     <Compile Include="Source\Extensions\ListExtensionMethods.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

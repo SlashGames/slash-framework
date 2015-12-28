@@ -1,0 +1,36 @@
+<Project xmlns='http://schemas.microsoft.com/developer/msbuild/2003' ToolsVersion="4.0" DefaultTargets="BuildDLLs">
+
+  <UsingTask TaskName="TokenReplace" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <Path ParameterType="System.String" Required="true" />
+      <Token ParameterType="System.String" Required="true" />
+      <Replacement ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+string content = File.ReadAllText(Path);
+content = content.Replace(Token, Replacement);
+File.WriteAllText(Path, content);
+
+]]></Code>
+    </Task>
+  </UsingTask>
+  
+  <Target Name='BuildDLLs'>
+    
+    <!-- Replace all environment variables in solution file, so MSBuild can use it. -->
+    <Copy
+            SourceFiles="../../Source/$(PRODUCT_NAME).sln"
+            DestinationFiles="../../Source/$(PRODUCT_NAME).Converted.sln"
+        />
+    <TokenReplace Path="../../Source/$(PRODUCT_NAME).Converted.sln" Token="%SLASH_FRAMEWORK_HOME%" Replacement="$(SLASH_FRAMEWORK_HOME)"/>
+        
+    <!-- Build solution -->
+    <MSBuild Projects ="../../Source/$(PRODUCT_NAME).Converted.sln" Targets="Build" Properties="Configuration=Release" />
+    
+    <!-- Delete converted solution -->
+    <Delete Files="../../Source/$(PRODUCT_NAME).Converted.sln" />
+    
+  </Target>
+  
+</Project>

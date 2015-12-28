@@ -13,6 +13,7 @@ namespace Slash.Diagnostics.Contracts
     using System.Reflection;
 
     using Slash.Diagnostics.ReSharper.Annotations;
+    using Slash.Reflection.Extensions;
 
     /// <summary>
     ///   Own version of C# Code Contracts to use before .NET 4.0
@@ -107,7 +108,7 @@ namespace Slash.Diagnostics.Contracts
                     PropertyInfo property = typeof(T).GetProperty(name);
                     // I've omitted a lot of error checking, but here's
                     // at least one bit...
-                    if (property.PropertyType.IsValueType)
+                    if (property.PropertyType.IsValueType())
                     {
                         throw new ArgumentException("Property " + property + " is a value type");
                     }

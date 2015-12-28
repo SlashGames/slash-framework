@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// FreeType library is a C++ library used to print text from TrueType fonts.
@@ -459,7 +460,7 @@ static public class FreeType
 	/// Create a bitmap font from the specified dynamic font.
 	/// </summary>
 
-	static public bool CreateFont (Font ttf, int size, int faceIndex, string characters, out BMFont font, out Texture2D tex)
+	static public bool CreateFont (Font ttf, int size, int faceIndex, bool kerning, string characters, out BMFont font, out Texture2D tex)
 	{
 		font = null;
 		tex = null;
@@ -492,8 +493,8 @@ static public class FreeType
 			font.charSize = size;
 
 			Color32 white = Color.white;
-			BetterList<int> entries = new BetterList<int>();
-			BetterList<Texture2D> textures = new BetterList<Texture2D>();
+			List<int> entries = new List<int>();
+			List<Texture2D> textures = new List<Texture2D>();
 
 			FT_FaceRec faceRec = (FT_FaceRec)Marshal.PtrToStructure(face, typeof(FT_FaceRec));
 			FT_Set_Pixel_Sizes(face, 0, (uint)size);
@@ -522,16 +523,19 @@ static public class FreeType
 			spaceGlyph.height = 0;
 
 			// Save kerning information
-			for (int b = 0; b < characters.Length; ++b)
+			if (kerning)
 			{
-				uint ch2 = characters[b];
-				if (ch2 == 32) continue;
+				for (int b = 0; b < characters.Length; ++b)
+				{
+					uint ch2 = characters[b];
+					if (ch2 == 32) continue;
 
-				FT_Vector vec;
-				if (FT_Get_Kerning(face, ch2, 32, 0, out vec) != 0) continue;
+					FT_Vector vec;
+					if (FT_Get_Kerning(face, ch2, 32, 0, out vec) != 0) continue;
 
-				int offset = (vec.x >> 6);
-				if (offset != 0) spaceGlyph.SetKerning((int)ch2, offset);
+					int offset = (vec.x >> 6);
+					if (offset != 0) spaceGlyph.SetKerning((int)ch2, offset);
+				}
 			}
 
 			// Run through all requested characters
@@ -573,16 +577,19 @@ static public class FreeType
 					bmg.channel = 15;
 
 					// Save kerning information
-					for (int b = 0; b < characters.Length; ++b)
+					if (kerning)
 					{
-						uint ch2 = characters[b];
-						if (ch2 == ch) continue;
+						for (int b = 0; b < characters.Length; ++b)
+						{
+							uint ch2 = characters[b];
+							if (ch2 == ch) continue;
 
-						FT_Vector vec;
-						if (FT_Get_Kerning(face, ch2, ch, 0, out vec) != 0) continue;
+							FT_Vector vec;
+							if (FT_Get_Kerning(face, ch2, ch, 0, out vec) != 0) continue;
 
-						int offset = (vec.x / 64);
-						if (offset != 0) bmg.SetKerning((int)ch2, offset);
+							int offset = (vec.x >> 6);
+							if (offset != 0) bmg.SetKerning((int)ch2, offset);
+						}
 					}
 				}
 			}
@@ -611,7 +618,7 @@ static public class FreeType
 			int max = int.MinValue;
 
 			// Other glyphs are visible and need to be added
-			for (int i = 0; i < entries.size; ++i)
+			for (int i = 0, imax = entries.Count; i < imax; ++i)
 			{
 				// Destroy the texture now that it's a part of an atlas
 				UnityEngine.Object.DestroyImmediate(textures[i]);
@@ -636,7 +643,7 @@ static public class FreeType
 			baseline += ((max - min - size) >> 1);
 
 			// Offset all glyphs so that they are not using the baseline
-			for (int i = 0; i < entries.size; ++i)
+			for (int i = 0, imax = entries.Count; i < imax; ++i)
 			{
 				BMGlyph glyph = font.GetGlyph(entries[i], true);
 				glyph.offsetY += baseline;

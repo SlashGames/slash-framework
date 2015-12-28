@@ -117,13 +117,32 @@ static public class NGUIMath
 
 	/// <summary>
 	/// Convert a decimal value to its hex representation.
+	/// </summary>
+
+	[System.Diagnostics.DebuggerHidden]
+	[System.Diagnostics.DebuggerStepThrough]
+	static public string DecimalToHex8 (int num)
+	{
+		num &= 0xFF;
+#if UNITY_FLASH
+		StringBuilder sb = new StringBuilder();
+		sb.Append(DecimalToHexChar((num >> 4) & 0xF));
+		sb.Append(DecimalToHexChar(num & 0xF));
+		return sb.ToString();
+#else
+		return num.ToString("X2");
+#endif
+	}
+
+	/// <summary>
+	/// Convert a decimal value to its hex representation.
 	/// It's coded because num.ToString("X6") syntax doesn't seem to be supported by Unity's Flash. It just silently crashes.
 	/// string.Format("{0,6:X}", num).Replace(' ', '0') doesn't work either. It returns the format string, not the formatted value.
 	/// </summary>
 
 	[System.Diagnostics.DebuggerHidden]
 	[System.Diagnostics.DebuggerStepThrough]
-	static public string DecimalToHex (int num)
+	static public string DecimalToHex24 (int num)
 	{
 		num &= 0xFFFFFF;
 #if UNITY_FLASH
@@ -137,6 +156,32 @@ static public class NGUIMath
 		return sb.ToString();
 #else
 		return num.ToString("X6");
+#endif
+	}
+
+	/// <summary>
+	/// Convert a decimal value to its hex representation.
+	/// It's coded because num.ToString("X6") syntax doesn't seem to be supported by Unity's Flash. It just silently crashes.
+	/// string.Format("{0,6:X}", num).Replace(' ', '0') doesn't work either. It returns the format string, not the formatted value.
+	/// </summary>
+
+	[System.Diagnostics.DebuggerHidden]
+	[System.Diagnostics.DebuggerStepThrough]
+	static public string DecimalToHex32 (int num)
+	{
+#if UNITY_FLASH
+		StringBuilder sb = new StringBuilder();
+		sb.Append(DecimalToHexChar((num >> 28) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 24) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 20) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 16) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 12) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 8) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 4) & 0xF));
+		sb.Append(DecimalToHexChar(num & 0xF));
+		return sb.ToString();
+#else
+		return num.ToString("X8");
 #endif
 	}
 
@@ -322,6 +367,7 @@ static public class NGUIMath
 
 			Vector3 vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
 			Vector3 vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+			Vector3 v;
 
 			for (int i = 0, imax = widgets.Length; i < imax; ++i)
 			{
@@ -332,8 +378,15 @@ static public class NGUIMath
 
 				for (int j = 0; j < 4; ++j)
 				{
-					vMax = Vector3.Max(corners[j], vMax);
-					vMin = Vector3.Min(corners[j], vMin);
+					v = corners[j];
+
+					if (v.x > vMax.x) vMax.x = v.x;
+ 					if (v.y > vMax.y) vMax.y = v.y;
+ 					if (v.z > vMax.z) vMax.z = v.z;
+ 
+ 					if (v.x < vMin.x) vMin.x = v.x;
+ 					if (v.y < vMin.y) vMin.y = v.y;
+ 					if (v.z < vMin.z) vMin.z = v.z;
 				}
 			}
 
@@ -377,45 +430,91 @@ static public class NGUIMath
 
 	static public Bounds CalculateRelativeWidgetBounds (Transform relativeTo, Transform content, bool considerInactive)
 	{
-		if (content != null)
+		if (content != null && relativeTo != null)
 		{
-			UIWidget[] widgets = content.GetComponentsInChildren<UIWidget>(considerInactive);
+			bool isSet = false;
+			Matrix4x4 toLocal = relativeTo.worldToLocalMatrix;
+			Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+			Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+			CalculateRelativeWidgetBounds(content, considerInactive, true, ref toLocal, ref min, ref max, ref isSet);
 
-			if (widgets.Length > 0)
+			if (isSet)
 			{
-				Vector3 vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-				Vector3 vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-
-				Matrix4x4 toLocal = relativeTo.worldToLocalMatrix;
-				bool isSet = false;
-				Vector3 v;
-
-				for (int i = 0, imax = widgets.Length; i < imax; ++i)
-				{
-					UIWidget w = widgets[i];
-					if (!considerInactive && !w.enabled) continue;
-
-					Vector3[] corners = w.worldCorners;
-
-					for (int j = 0; j < 4; ++j)
-					{
-						//v = root.InverseTransformPoint(corners[j]);
-						v = toLocal.MultiplyPoint3x4(corners[j]);
-						vMax = Vector3.Max(v, vMax);
-						vMin = Vector3.Min(v, vMin);
-					}
-					isSet = true;
-				}
-
-				if (isSet)
-				{
-					Bounds b = new Bounds(vMin, Vector3.zero);
-					b.Encapsulate(vMax);
-					return b;
-				}
+				Bounds b = new Bounds(min, Vector3.zero);
+				b.Encapsulate(max);
+				return b;
 			}
 		}
 		return new Bounds(Vector3.zero, Vector3.zero);
+	}
+
+	/// <summary>
+	/// Recursive function used to calculate the widget bounds.
+	/// </summary>
+
+	[System.Diagnostics.DebuggerHidden]
+	[System.Diagnostics.DebuggerStepThrough]
+	static void CalculateRelativeWidgetBounds (Transform content, bool considerInactive, bool isRoot,
+		ref Matrix4x4 toLocal, ref Vector3 vMin, ref Vector3 vMax, ref bool isSet)
+	{
+		if (content == null) return;
+		if (!considerInactive && !NGUITools.GetActive(content.gameObject)) return;
+
+		// If this isn't a root node, check to see if there is a panel present
+		UIPanel p = isRoot ? null : content.GetComponent<UIPanel>();
+
+		// Ignore disabled panels as a disabled panel means invisible children
+		if (p != null && !p.enabled) return;
+
+		// If there is a clipped panel present simply include its dimensions
+		if (p != null && p.clipping != UIDrawCall.Clipping.None)
+		{
+			Vector3[] corners = p.worldCorners;
+
+			for (int j = 0; j < 4; ++j)
+			{
+				Vector3 v = toLocal.MultiplyPoint3x4(corners[j]);
+
+				if (v.x > vMax.x) vMax.x = v.x;
+ 				if (v.y > vMax.y) vMax.y = v.y;
+ 				if (v.z > vMax.z) vMax.z = v.z;
+ 
+ 				if (v.x < vMin.x) vMin.x = v.x;
+ 				if (v.y < vMin.y) vMin.y = v.y;
+ 				if (v.z < vMin.z) vMin.z = v.z;
+
+				isSet = true;
+			}
+		}
+		else // No panel present
+		{
+			// If there is a widget present, include its bounds
+			UIWidget w = content.GetComponent<UIWidget>();
+
+			if (w != null && w.enabled)
+			{
+				Vector3[] corners = w.worldCorners;
+
+				for (int j = 0; j < 4; ++j)
+				{
+					Vector3 v = toLocal.MultiplyPoint3x4(corners[j]);
+
+					if (v.x > vMax.x) vMax.x = v.x;
+					if (v.y > vMax.y) vMax.y = v.y;
+					if (v.z > vMax.z) vMax.z = v.z;
+
+					if (v.x < vMin.x) vMin.x = v.x;
+					if (v.y < vMin.y) vMin.y = v.y;
+					if (v.z < vMin.z) vMin.z = v.z;
+
+					isSet = true;
+				}
+			}
+
+			// Iterate through children including their bounds in turn
+			for (int i = 0, imax = content.childCount; i < imax; ++i)
+				CalculateRelativeWidgetBounds(content.GetChild(i), considerInactive, false, ref toLocal, ref vMin, ref vMax, ref isSet);
+		}
 	}
 
 	/// <summary>
@@ -946,5 +1045,106 @@ static public class NGUIMath
 		int h = Mathf.RoundToInt(height * (96f / dpi));
 		if ((h & 1) == 1) ++h;
 		return h;
+	}
+
+	/// <summary>
+	/// Convert the specified position, making it relative to the specified object.
+	/// </summary>
+
+	static public Vector2 ScreenToPixels (Vector2 pos, Transform relativeTo)
+	{
+		int layer = relativeTo.gameObject.layer;
+		Camera cam = NGUITools.FindCameraForLayer(layer);
+
+		if (cam == null)
+		{
+			Debug.LogWarning("No camera found for layer " + layer);
+			return pos;
+		}
+
+		Vector3 wp = cam.ScreenToWorldPoint(pos);
+		return relativeTo.InverseTransformPoint(wp);
+	}
+
+	/// <summary>
+	/// Convert the specified position, making it relative to the specified object's parent.
+	/// Useful if you plan on positioning the widget using the specified value (think mouse cursor).
+	/// </summary>
+
+	static public Vector2 ScreenToParentPixels (Vector2 pos, Transform relativeTo)
+	{
+		int layer = relativeTo.gameObject.layer;
+		if (relativeTo.parent != null)
+			relativeTo = relativeTo.parent;
+
+		Camera cam = NGUITools.FindCameraForLayer(layer);
+
+		if (cam == null)
+		{
+			Debug.LogWarning("No camera found for layer " + layer);
+			return pos;
+		}
+
+		Vector3 wp = cam.ScreenToWorldPoint(pos);
+		return (relativeTo != null) ? relativeTo.InverseTransformPoint(wp) : wp;
+	}
+
+	/// <summary>
+	/// Convert the specified world point from one camera's world space to another, then make it relative to the specified transform.
+	/// You should use this function if you want to position a widget using some 3D point in space.
+	/// Pass your main camera for the "worldCam", and your UI camera for "uiCam", then the widget's transform for "relativeTo".
+	/// You can then assign the widget's localPosition to the returned value.
+	/// </summary>
+
+	static public Vector3 WorldToLocalPoint (Vector3 worldPos, Camera worldCam, Camera uiCam, Transform relativeTo)
+	{
+		worldPos = worldCam.WorldToViewportPoint(worldPos);
+		worldPos = uiCam.ViewportToWorldPoint(worldPos);
+		if (relativeTo == null) return worldPos;
+		relativeTo = relativeTo.parent;
+		if (relativeTo == null) return worldPos;
+		return relativeTo.InverseTransformPoint(worldPos);
+	}
+
+	/// <summary>
+	/// Helper function that can set the transform's position to be at the specified world position.
+	/// Ideal usage: positioning a UI element to be directly over a 3D point in space.
+	/// </summary>
+	/// <param name="worldPos">World position, visible by the worldCam</param>
+	/// <param name="worldCam">Camera that is able to see the worldPos</param>
+	/// <param name="myCam">Camera that is able to see the transform this function is called on</param>
+
+	static public void OverlayPosition (this Transform trans, Vector3 worldPos, Camera worldCam, Camera myCam)
+	{
+		worldPos = worldCam.WorldToViewportPoint(worldPos);
+		worldPos = myCam.ViewportToWorldPoint(worldPos);
+		Transform parent = trans.parent;
+		trans.localPosition = (parent != null) ? parent.InverseTransformPoint(worldPos) : worldPos;
+	}
+
+	/// <summary>
+	/// Helper function that can set the transform's position to be at the specified world position.
+	/// Ideal usage: positioning a UI element to be directly over a 3D point in space.
+	/// </summary>
+	/// <param name="worldPos">World position, visible by the worldCam</param>
+	/// <param name="worldCam">Camera that is able to see the worldPos</param>
+
+	static public void OverlayPosition (this Transform trans, Vector3 worldPos, Camera worldCam)
+	{
+		Camera myCam = NGUITools.FindCameraForLayer(trans.gameObject.layer);
+		if (myCam != null) trans.OverlayPosition(worldPos, worldCam, myCam);
+	}
+
+	/// <summary>
+	/// Helper function that can set the transform's position to be over the specified target transform.
+	/// Ideal usage: positioning a UI element to be directly over a 3D object in space.
+	/// </summary>
+	/// <param name="target">Target over which the transform should be positioned</param>
+
+	static public void OverlayPosition (this Transform trans, Transform target)
+	{
+		Camera myCam = NGUITools.FindCameraForLayer(trans.gameObject.layer);
+		Camera worldCam = NGUITools.FindCameraForLayer(target.gameObject.layer);
+		if (myCam != null && worldCam != null) trans.OverlayPosition(target.position, worldCam, myCam);
 	}
 }

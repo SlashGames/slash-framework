@@ -15,8 +15,18 @@ namespace Slash.ECS.Components
     using Slash.Collections.ObjectModel;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Events;
+    using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Inspector.Utils;
+    using Slash.Reflection.Extensions;
+
+    public delegate void ComponentAddedDelegate<in T>(int entityId, T component);
+
+    public delegate void ComponentRemovedDelegate<in T>(int entityId, T component);
+
+    public delegate void EntityInitializedDelegate(int entityId);
+
+    public delegate void EntityRemovedDelegate(int entityId);
 
     /// <summary>
     ///   Creates and removes game entities. Holds references to all component
@@ -82,7 +92,21 @@ namespace Slash.ECS.Components
 
         #endregion
 
-        #region Public Properties
+        #region Events
+
+        /// <summary>
+        ///   Entity has been created and all components have been added and initialized.
+        /// </summary>
+        public event EntityInitializedDelegate EntityInitialized;
+
+        /// <summary>
+        ///   Entity and all of its components will be removed at the end of this tick.
+        /// </summary>
+        public event EntityRemovedDelegate EntityRemoved;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///   Read-only collection of all entities.
@@ -134,7 +158,7 @@ namespace Slash.ECS.Components
             }
 
             // Raise event.
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
+            this.OnEntityInitialized(entityId);
 
             // Remove from list of inactive entities.
             this.inactiveEntities.Remove(entityId);
@@ -185,17 +209,14 @@ namespace Slash.ECS.Components
 
             Type componentType = component.GetType();
 
-            if (!this.componentManagers.ContainsKey(componentType))
-            {
-                this.componentManagers.Add(componentType, new ComponentManager());
-            }
-
-            this.componentManagers[component.GetType()].AddComponent(entityId, component);
+            ComponentManager componentManager = this.GetComponentManager(componentType, true);
+            componentManager.AddComponent(entityId, component);
 
             if (sendEvent)
             {
                 this.game.EventManager.QueueEvent(
-                    FrameworkEvent.ComponentAdded, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentAdded,
+                    new EntityComponentData(entityId, component));
             }
         }
 
@@ -205,7 +226,12 @@ namespace Slash.ECS.Components
         /// </summary>
         public void CleanUpEntities()
         {
-            foreach (int id in this.removedEntities)
+            // Store entities to remove as more entities might marked as removed
+            // inside the loop due to events.
+            var entitiesToRemove = new List<int>(this.removedEntities);
+            this.removedEntities.Clear();
+
+            foreach (int id in entitiesToRemove)
             {
                 // Remove components.
                 foreach (ComponentManager manager in this.componentManagers.Values)
@@ -215,8 +241,6 @@ namespace Slash.ECS.Components
 
                 this.entities.Remove(id);
             }
-
-            this.removedEntities.Clear();
         }
 
         /// <summary>
@@ -262,7 +286,16 @@ namespace Slash.ECS.Components
         /// <returns>Unique id of the new entity.</returns>
         public int CreateEntity(int id)
         {
-            this.entities.Add(id);
+            if (!this.entities.Add(id))
+            {
+                throw new ArgumentException(
+                    "An entity with id " + id + " couldn't be created, id already exists.",
+                    "id");
+            }
+
+            // Adjust next entity id.
+            this.nextEntityId = Math.Max(this.nextEntityId, id + 1);
+
             this.game.EventManager.QueueEvent(FrameworkEvent.EntityCreated, id);
             return id;
         }
@@ -293,6 +326,30 @@ namespace Slash.ECS.Components
         public int CreateEntity(Blueprint blueprint)
         {
             return this.CreateEntity(blueprint, null);
+        }
+
+        /// <summary>
+        ///   Creates a new entity, adding components of the blueprint with the specified id.
+        /// </summary>
+        /// <param name="blueprintId">Id of blueprint describing the entity to create.</param>
+        /// <returns>Unique id of the new entity.</returns>
+        public int CreateEntity(string blueprintId)
+        {
+            return this.CreateEntity(this.game.BlueprintManager.GetBlueprint(blueprintId));
+        }
+
+        /// <summary>
+        ///   Creates a new entity, adding components matching the passed
+        ///   blueprint and initializing these with the data stored in the
+        ///   blueprint and the specified configuration. Configuration data
+        ///   is preferred over blueprint data.
+        /// </summary>
+        /// <param name="blueprintId"> Id of blueprint describing the entity to create. </param>
+        /// <param name="configuration"> Data for initializing the entity. </param>
+        /// <returns> Unique id of the new entity. </returns>
+        public int CreateEntity(string blueprintId, IAttributeTable configuration)
+        {
+            return this.CreateEntity(this.game.BlueprintManager.GetBlueprint(blueprintId), configuration);
         }
 
         /// <summary>
@@ -336,7 +393,8 @@ namespace Slash.ECS.Components
                 components.Add(component);
 
                 this.game.EventManager.QueueEvent(
-                    FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentRemoved,
+                    new EntityComponentData(entityId, component));
             }
 
             // Remove entity.
@@ -392,7 +450,8 @@ namespace Slash.ECS.Components
             if (entityId >= this.nextEntityId)
             {
                 throw new ArgumentOutOfRangeException(
-                    "entityId", "Entity id " + entityId + " has not yet been assigned.");
+                    "entityId",
+                    "Entity id " + entityId + " has not yet been assigned.");
             }
 
             return this.entities.Contains(entityId);
@@ -445,7 +504,7 @@ namespace Slash.ECS.Components
             }
 
             // Get component manager.
-            if (componentType.IsInterface)
+            if (componentType.IsInterface())
             {
                 foreach (KeyValuePair<Type, ComponentManager> componentManagerPair in this.componentManagers)
                 {
@@ -463,8 +522,8 @@ namespace Slash.ECS.Components
 
             ComponentManager componentManager;
             return this.componentManagers.TryGetValue(componentType, out componentManager)
-                       ? componentManager.GetComponent(entityId)
-                       : null;
+                ? componentManager.GetComponent(entityId)
+                : null;
         }
 
         /// <summary>
@@ -604,7 +663,10 @@ namespace Slash.ECS.Components
         /// <param name="configuration"> Data for initializing the entity. </param>
         /// <param name="additionalComponents">Components to add to the entity, in addition to the ones specified by the blueprint.</param>
         public void InitEntity(
-            int entityId, Blueprint blueprint, IAttributeTable configuration, IEnumerable<Type> additionalComponents)
+            int entityId,
+            Blueprint blueprint,
+            IAttributeTable configuration,
+            IEnumerable<Type> additionalComponents)
         {
             if (blueprint == null)
             {
@@ -628,8 +690,8 @@ namespace Slash.ECS.Components
             // Build list of components to add.
             IEnumerable<Type> blueprintComponentTypes = blueprint.GetAllComponentTypes();
             IEnumerable<Type> componentTypes = additionalComponents != null
-                                                   ? blueprintComponentTypes.Union(additionalComponents)
-                                                   : blueprintComponentTypes;
+                ? blueprintComponentTypes.Union(additionalComponents)
+                : blueprintComponentTypes;
 
             // Add components.
             foreach (Type type in componentTypes)
@@ -638,7 +700,7 @@ namespace Slash.ECS.Components
             }
 
             // Raise event.
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
+            this.OnEntityInitialized(entityId);
         }
 
         /// <summary>
@@ -655,7 +717,40 @@ namespace Slash.ECS.Components
             }
 
             // Raise event.
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
+            this.OnEntityInitialized(entityId);
+        }
+
+        /// <summary>
+        ///   Registers listeners to track adding/removing of components of type T.
+        /// </summary>
+        /// <typeparam name="T">Type of component to track.</typeparam>
+        /// <param name="onComponentAdded">Callback when a new component of the type was added.</param>
+        /// <param name="onComponentRemoved">Callback when a component of the type was removed.</param>
+        public void RegisterComponentListeners<T>(
+            ComponentAddedDelegate<T> onComponentAdded,
+            ComponentRemovedDelegate<T> onComponentRemoved)
+        {
+            Type componentType = typeof(T);
+            this.RegisterComponentListeners(
+                componentType,
+                (entityId, component) => onComponentAdded(entityId, (T)component),
+                (entityId, component) => onComponentRemoved(entityId, (T)component));
+        }
+
+        /// <summary>
+        ///   Registers listeners to track adding/removing of components of specified component type.
+        /// </summary>
+        /// <param name="componentType">Type of component to track.</param>
+        /// <param name="onComponentAdded">Callback when a new component of the type was added.</param>
+        /// <param name="onComponentRemoved">Callback when a component of the type was removed.</param>
+        public void RegisterComponentListeners(
+            Type componentType,
+            ComponentAddedDelegate<object> onComponentAdded,
+            ComponentRemovedDelegate<object> onComponentRemoved)
+        {
+            ComponentManager componentManager = this.GetComponentManager(componentType, true);
+            componentManager.ComponentAdded += onComponentAdded;
+            componentManager.ComponentRemoved += onComponentRemoved;
         }
 
         /// <summary>
@@ -683,16 +778,20 @@ namespace Slash.ECS.Components
             if (!this.componentManagers.TryGetValue(componentType, out componentManager))
             {
                 throw new ArgumentException(
-                    "A component of type " + componentType + " has never been added before.", "componentType");
+                    "A component of type " + componentType + " has never been added before.",
+                    "componentType");
             }
 
             IEntityComponent component;
             bool removed = componentManager.RemoveComponent(entityId, out component);
-
             if (removed)
             {
+                // Deinitialize component.
+                this.DeinitComponent(component);
+
                 this.game.EventManager.QueueEvent(
-                    FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentRemoved,
+                    new EntityComponentData(entityId, component));
             }
 
             return removed;
@@ -706,7 +805,7 @@ namespace Slash.ECS.Components
             IEnumerable<int> aliveEntities = this.entities.Except(this.removedEntities);
             foreach (int entityId in aliveEntities)
             {
-                this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
+                this.OnEntityRemoved(entityId);
 
                 // Remove components.
                 foreach (ComponentManager manager in this.componentManagers.Values)
@@ -715,7 +814,8 @@ namespace Slash.ECS.Components
                     if (manager.RemoveComponent(entityId, out component))
                     {
                         this.game.EventManager.QueueEvent(
-                            FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
+                            FrameworkEvent.ComponentRemoved,
+                            new EntityComponentData(entityId, component));
                     }
                 }
 
@@ -762,12 +862,35 @@ namespace Slash.ECS.Components
                 }
 
                 this.game.EventManager.QueueEvent(
-                    FrameworkEvent.ComponentRemoved, new EntityComponentData(entityId, component));
+                    FrameworkEvent.ComponentRemoved,
+                    new EntityComponentData(entityId, component));
             }
 
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
+            this.OnEntityRemoved(entityId);
 
             this.removedEntities.Add(entityId);
+        }
+
+        public Blueprint Save(int entityId)
+        {
+            AttributeTable attributeTable = new AttributeTable();
+            List<Type> componentTypes = new List<Type>();
+
+            // Get all components.
+            foreach (ComponentManager componentManager in this.componentManagers.Values)
+            {
+                IEntityComponent entityComponent = componentManager.GetComponent(entityId);
+                if (entityComponent == null)
+                {
+                    continue;
+                }
+
+                componentTypes.Add(entityComponent.GetType());
+                InspectorUtils.SaveToAttributeTable(this, entityComponent, attributeTable);
+            }
+
+            Blueprint blueprint = new Blueprint { AttributeTable = attributeTable, ComponentTypes = componentTypes };
+            return blueprint;
         }
 
         /// <summary>
@@ -817,14 +940,14 @@ namespace Slash.ECS.Components
             // Create component.
             IEntityComponent component = (IEntityComponent)Activator.CreateInstance(componentType);
 
-            // Add component. 
-            this.AddComponent(entityId, component);
-
             // Init component.
             this.InitComponent(component, attributeTable);
 
             // Initialize component with the attribute table data.
             component.InitComponent(attributeTable);
+
+            // Add component. 
+            this.AddComponent(entityId, component);
         }
 
         /// <summary>
@@ -843,14 +966,78 @@ namespace Slash.ECS.Components
         }
 
         /// <summary>
+        ///   Deinitializes the specified component.
+        /// </summary>
+        /// <param name="component">Component to deinitialize.</param>
+        private void DeinitComponent(IEntityComponent component)
+        {
+            InspectorType inspectorType;
+            if (!this.inspectorTypes.TryGetInspectorType(component.GetType(), out inspectorType))
+            {
+                this.game.Log.Warning(
+                    "Entity component '" + component.GetType() + "' not flagged as inspector type, can't deinitialize.");
+                return;
+            }
+
+            InspectorUtils.Deinit(this, inspectorType, component);
+        }
+
+        private ComponentManager GetComponentManager(Type componentType, bool createIfNecessary)
+        {
+            ComponentManager componentManager;
+            if (!this.componentManagers.TryGetValue(componentType, out componentManager) && createIfNecessary)
+            {
+                componentManager = new ComponentManager();
+                this.componentManagers.Add(componentType, componentManager);
+            }
+            return componentManager;
+        }
+
+        /// <summary>
         ///   Initializes the specified component with the specified attribute table.
         /// </summary>
         /// <param name="component">Component to initialize.</param>
         /// <param name="attributeTable">Attribute table which contains the data of the component.</param>
         private void InitComponent(IEntityComponent component, IAttributeTable attributeTable)
         {
-            InspectorUtils.InitFromAttributeTable(
-                this.game, this.inspectorTypes.GetInspectorType(component.GetType()), component, attributeTable);
+            InspectorType inspectorType;
+            if (!this.inspectorTypes.TryGetInspectorType(component.GetType(), out inspectorType))
+            {
+                this.game.Log.Warning(
+                    "Entity component '" + component.GetType()
+                    + "' not flagged as inspector type, can't initialize via reflection.");
+                return;
+            }
+
+            var inspectorComponent = inspectorType.Attribute as InspectorComponentAttribute;
+            if (inspectorComponent != null && inspectorComponent.InitExplicitly)
+            {
+                return;
+            }
+
+            InspectorUtils.InitFromAttributeTable(this, inspectorType, component, attributeTable);
+        }
+
+        private void OnEntityInitialized(int entityId)
+        {
+            var handler = this.EntityInitialized;
+            if (handler != null)
+            {
+                handler(entityId);
+            }
+
+            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
+        }
+
+        private void OnEntityRemoved(int entityId)
+        {
+            var handler = this.EntityRemoved;
+            if (handler != null)
+            {
+                handler(entityId);
+            }
+
+            this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
         }
 
         #endregion

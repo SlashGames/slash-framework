@@ -115,11 +115,11 @@ namespace Slash.ECS.Blueprints
         {
             get
             {
-                return this.ComponentTypes.Select(componentType => componentType.FullName).ToArray();
+                return this.ComponentTypes.Select<Type, string>(componentType => componentType.FullName).ToArray();
             }
             set
             {
-                this.ComponentTypes = value.Select(ReflectionUtils.FindType).ToList();
+                this.ComponentTypes = value.Select<string, Type>(ReflectionUtils.FindType).ToList();
             }
         }
 

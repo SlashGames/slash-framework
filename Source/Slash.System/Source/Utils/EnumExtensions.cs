@@ -106,6 +106,24 @@ namespace Slash.SystemExt.Utils
         }
 
         /// <summary>
+        ///   Returns the next value for the specified enum value.
+        ///   Wraps around if required.
+        /// </summary>
+        /// <typeparam name="T">Enum type.</typeparam>
+        /// <param name="value">Enum value to get next value for.</param>
+        /// <returns>Next enum value, wraps around if required.</returns>
+        public static T NextValue<T>(this T value)
+        {
+            T[] enumValues = (T[])Enum.GetValues(typeof(T));
+            int valueIndex = Array.IndexOf(enumValues, value);
+            if (valueIndex < 0)
+            {
+                throw new ArgumentException("'" + value + "' is no value of enum '" + typeof(T) + "'.", "value");
+            }
+            return valueIndex >= enumValues.Length - 1 ? enumValues[0] : enumValues[valueIndex + 1];
+        }
+
+        /// <summary>
         ///   Computes the logical OR of the enum value and the specified option.
         /// </summary>
         /// <param name="value">First operand.</param>

@@ -4,6 +4,7 @@
 //----------------------------------------------
 
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// This script makes it possible for a scroll view to wrap its content, creating endless scroll views.
@@ -19,6 +20,8 @@ using UnityEngine;
 [AddComponentMenu("NGUI/Interaction/Wrap Content")]
 public class UIWrapContent : MonoBehaviour
 {
+	public delegate void OnInitializeItem (GameObject go, int wrapIndex, int realIndex);
+
 	/// <summary>
 	/// Width or height of the child items for positioning purposes.
 	/// </summary>
@@ -31,11 +34,33 @@ public class UIWrapContent : MonoBehaviour
 
 	public bool cullContent = true;
 
+	/// <summary>
+	/// Minimum allowed index for items. If "min" is equal to "max" then there is no limit.
+	/// For vertical scroll views indices increment with the Y position (towards top of the screen).
+	/// </summary>
+
+	public int minIndex = 0;
+
+	/// <summary>
+	/// Maximum allowed index for items. If "min" is equal to "max" then there is no limit.
+	/// For vertical scroll views indices increment with the Y position (towards top of the screen).
+	/// </summary>
+
+	public int maxIndex = 0;
+
+	/// <summary>
+	/// Callback that will be called every time an item needs to have its content updated.
+	/// The 'wrapIndex' is the index within the child list, and 'realIndex' is the index using position logic.
+	/// </summary>
+
+	public OnInitializeItem onInitializeItem;
+
 	Transform mTrans;
 	UIPanel mPanel;
 	UIScrollView mScroll;
 	bool mHorizontal = false;
-	BetterList<Transform> mChildren = new BetterList<Transform>();
+	bool mFirstTime = true;
+	List<Transform> mChildren = new List<Transform>();
 
 	/// <summary>
 	/// Initialize everything and register a callback with the UIPanel to be notified when the clipping region moves.
@@ -45,14 +70,8 @@ public class UIWrapContent : MonoBehaviour
 	{
 		SortBasedOnScrollMovement();
 		WrapContent();
-
-		if (mScroll != null)
-		{
-			mScroll.GetComponent<UIPanel>().onClipMove = OnMove;
-			mScroll.restrictWithinPanel = false;
-			if (mScroll.dragEffect == UIScrollView.DragEffect.MomentumAndSpring)
-				mScroll.dragEffect = UIScrollView.DragEffect.Momentum;
-		}
+		if (mScroll != null) mScroll.GetComponent<UIPanel>().onClipMove = OnMove;
+		mFirstTime = false;
 	}
 
 	/// <summary>
@@ -122,7 +141,7 @@ public class UIWrapContent : MonoBehaviour
 
 	void ResetChildPositions ()
 	{
-		for (int i = 0; i < mChildren.size; ++i)
+		for (int i = 0, imax = mChildren.Count; i < imax; ++i)
 		{
 			Transform t = mChildren[i];
 			t.localPosition = mHorizontal ? new Vector3(i * itemSize, 0f, 0f) : new Vector3(0f, -i * itemSize, 0f);
@@ -135,7 +154,7 @@ public class UIWrapContent : MonoBehaviour
 
 	public void WrapContent ()
 	{
-		float extents = itemSize * mChildren.size * 0.5f;
+		float extents = itemSize * mChildren.Count * 0.5f;
 		Vector3[] corners = mPanel.worldCorners;
 		
 		for (int i = 0; i < 4; ++i)
@@ -144,30 +163,52 @@ public class UIWrapContent : MonoBehaviour
 			v = mTrans.InverseTransformPoint(v);
 			corners[i] = v;
 		}
+		
 		Vector3 center = Vector3.Lerp(corners[0], corners[2], 0.5f);
+		bool allWithinRange = true;
+		float ext2 = extents * 2f;
 
 		if (mHorizontal)
 		{
 			float min = corners[0].x - itemSize;
 			float max = corners[2].x + itemSize;
 
-			for (int i = 0; i < mChildren.size; ++i)
+			for (int i = 0, imax = mChildren.Count; i < imax; ++i)
 			{
 				Transform t = mChildren[i];
 				float distance = t.localPosition.x - center.x;
 
 				if (distance < -extents)
 				{
-					t.localPosition += new Vector3(extents * 2f, 0f, 0f);
-					distance = t.localPosition.x - center.x;
-					UpdateItem(t, i);
+					Vector3 pos = t.localPosition;
+					pos.x += ext2;
+					distance = pos.x - center.x;
+					int realIndex = Mathf.RoundToInt(pos.x / itemSize);
+
+					if (minIndex == maxIndex || (minIndex <= realIndex && realIndex <= maxIndex))
+					{
+						t.localPosition = pos;
+						UpdateItem(t, i);
+						t.name = realIndex.ToString();
+					}
+					else allWithinRange = false;
 				}
 				else if (distance > extents)
 				{
-					t.localPosition -= new Vector3(extents * 2f, 0f, 0f);
-					distance = t.localPosition.x - center.x;
-					UpdateItem(t, i);
+					Vector3 pos = t.localPosition;
+					pos.x -= ext2;
+					distance = pos.x - center.x;
+					int realIndex = Mathf.RoundToInt(pos.x / itemSize);
+
+					if (minIndex == maxIndex || (minIndex <= realIndex && realIndex <= maxIndex))
+					{
+						t.localPosition = pos;
+						UpdateItem(t, i);
+						t.name = realIndex.ToString();
+					}
+					else allWithinRange = false;
 				}
+				else if (mFirstTime) UpdateItem(t, i);
 
 				if (cullContent)
 				{
@@ -182,23 +223,42 @@ public class UIWrapContent : MonoBehaviour
 			float min = corners[0].y - itemSize;
 			float max = corners[2].y + itemSize;
 
-			for (int i = 0; i < mChildren.size; ++i)
+			for (int i = 0, imax = mChildren.Count; i < imax; ++i)
 			{
 				Transform t = mChildren[i];
 				float distance = t.localPosition.y - center.y;
 
 				if (distance < -extents)
 				{
-					t.localPosition += new Vector3(0f, extents * 2f, 0f);
-					distance = t.localPosition.y - center.y;
-					UpdateItem(t, i);
+					Vector3 pos = t.localPosition;
+					pos.y += ext2;
+					distance = pos.y - center.y;
+					int realIndex = Mathf.RoundToInt(pos.y / itemSize);
+
+					if (minIndex == maxIndex || (minIndex <= realIndex && realIndex <= maxIndex))
+					{
+						t.localPosition = pos;
+						UpdateItem(t, i);
+						t.name = realIndex.ToString();
+					}
+					else allWithinRange = false;
 				}
 				else if (distance > extents)
 				{
-					t.localPosition -= new Vector3(0f, extents * 2f, 0f);
-					distance = t.localPosition.y - center.y;
-					UpdateItem(t, i);
+					Vector3 pos = t.localPosition;
+					pos.y -= ext2;
+					distance = pos.y - center.y;
+					int realIndex = Mathf.RoundToInt(pos.y / itemSize);
+
+					if (minIndex == maxIndex || (minIndex <= realIndex && realIndex <= maxIndex))
+					{
+						t.localPosition = pos;
+						UpdateItem(t, i);
+						t.name = realIndex.ToString();
+					}
+					else allWithinRange = false;
 				}
+				else if (mFirstTime) UpdateItem(t, i);
 
 				if (cullContent)
 				{
@@ -208,11 +268,33 @@ public class UIWrapContent : MonoBehaviour
 				}
 			}
 		}
+		mScroll.restrictWithinPanel = !allWithinRange;
+	}
+
+	/// <summary>
+	/// Sanity checks.
+	/// </summary>
+
+	void OnValidate ()
+	{
+		if (maxIndex < minIndex)
+			maxIndex = minIndex;
+		if (minIndex > maxIndex)
+			maxIndex = minIndex;
 	}
 
 	/// <summary>
 	/// Want to update the content of items as they are scrolled? Override this function.
 	/// </summary>
 
-	protected virtual void UpdateItem (Transform item, int index) {}
+	protected virtual void UpdateItem (Transform item, int index)
+	{
+		if (onInitializeItem != null)
+		{
+			int realIndex = (mScroll.movement == UIScrollView.Movement.Vertical) ?
+				Mathf.RoundToInt(item.localPosition.y / itemSize) :
+				Mathf.RoundToInt(item.localPosition.x / itemSize);
+			onInitializeItem(item.gameObject, index, realIndex);
+		}
+	}
 }

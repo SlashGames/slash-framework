@@ -182,7 +182,7 @@ public class UITextList : MonoBehaviour
 	public void OnScroll (float val)
 	{
 		int sh = scrollHeight;
-		
+
 		if (sh != 0)
 		{
 			val *= lineHeight;
@@ -258,33 +258,20 @@ public class UITextList : MonoBehaviour
 			textLabel.UpdateNGUIText();
 			NGUIText.rectHeight = 1000000;
 			mTotalLines = 0;
-			bool success = true;
 
 			for (int i = 0; i < mParagraphs.size; ++i)
 			{
 				string final;
 				Paragraph p = mParagraphs.buffer[i];
-
-				if (NGUIText.WrapText(p.text, out final))
-				{
-					p.lines = final.Split('\n');
-					mTotalLines += p.lines.Length;
-				}
-				else
-				{
-					success = false;
-					break;
-				}
+				NGUIText.WrapText(p.text, out final);
+				p.lines = final.Split('\n');
+				mTotalLines += p.lines.Length;
 			}
 
 			// Recalculate the total number of lines
 			mTotalLines = 0;
-
-			if (success)
-			{
-				for (int i = 0, imax = mParagraphs.size; i < imax; ++i)
-					mTotalLines += mParagraphs.buffer[i].lines.Length;
-			}
+			for (int i = 0, imax = mParagraphs.size; i < imax; ++i)
+				mTotalLines += mParagraphs.buffer[i].lines.Length;
 
 			// Update the bar's size
 			if (scrollBar != null)

@@ -6,16 +6,14 @@
 
 namespace BlueprintEditor.Inspectors
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Controls;
 
     using BlueprintEditor.Inspectors.Controls;
     using BlueprintEditor.ViewModels;
 
-    using Slash.GameBase.Inspector.Attributes;
-    using Slash.GameBase.Inspector.Data;
+    using Slash.ECS.Inspector.Attributes;
+    using Slash.ECS.Inspector.Data;
     using Slash.SystemExt.Utils;
     using Slash.Tools.BlueprintEditor.Logic.Data;
 

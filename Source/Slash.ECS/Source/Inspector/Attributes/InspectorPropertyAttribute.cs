@@ -11,14 +11,20 @@ namespace Slash.ECS.Inspector.Attributes
     using System.Collections.Generic;
     using System.Text;
 
+    using Slash.ECS.Components;
     using Slash.ECS.Inspector.Validation;
+    using Slash.Reflection.Utils;
+
+#if WINDOWS_STORE
+    using Slash.Reflection.Extensions;
+#endif
 
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     [Serializable]
-    public abstract class InspectorPropertyAttribute : Attribute
+    public class InspectorPropertyAttribute : Attribute
     {
         #region Constants
 
@@ -35,14 +41,14 @@ namespace Slash.ECS.Inspector.Attributes
         ///   Exposes the property to the inspector.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
-        protected InspectorPropertyAttribute(string name)
+        public InspectorPropertyAttribute(string name)
         {
             this.Name = name;
         }
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Type of value in attribute table. If null, the property type is used.
@@ -53,6 +59,18 @@ namespace Slash.ECS.Inspector.Attributes
         ///   Default property value.
         /// </summary>
         public object Default { get; set; }
+
+        /// <summary>
+        ///   Default list item.
+        ///   Null for reference types, default value for value types.
+        /// </summary>
+        public object DefaultListItem
+        {
+            get
+            {
+                return this.ItemType.IsValueType ? Activator.CreateInstance(this.ItemType) : null;
+            }
+        }
 
         /// <summary>
         ///   A user-friendly description of the property.
@@ -67,6 +85,25 @@ namespace Slash.ECS.Inspector.Attributes
             get
             {
                 return typeof(IList).IsAssignableFrom(this.PropertyType);
+            }
+        }
+
+        /// <summary>
+        ///   Item type. Equals property type if no generic type, otherwise the type of the generic.
+        /// </summary>
+        public Type ItemType
+        {
+            get
+            {
+                var itemType = this.PropertyType;
+
+                // If this property is of list type, get generic type argument for creating new list.
+                if (ReflectionUtils.IsGenericType(itemType))
+                {
+                    itemType = itemType.GetGenericArguments()[0];
+                }
+
+                return itemType;
             }
         }
 
@@ -127,7 +164,8 @@ namespace Slash.ECS.Inspector.Attributes
         }
 
         /// <summary>
-        ///   Converts the passed value or list to a string that can be converted back to a value or list of the correct type for this property.
+        ///   Converts the passed value or list to a string that can be converted back to a value or list of the correct type for
+        ///   this property.
         /// </summary>
         /// <param name="value">Value or list to convert.</param>
         /// <returns>String that can be converted back to a value or list of the correct type for this property.</returns>
@@ -146,8 +184,8 @@ namespace Slash.ECS.Inspector.Attributes
                 }
 
                 return stringBuilder.Length > 0
-                           ? stringBuilder.ToString().Substring(0, stringBuilder.Length - 1)
-                           : string.Empty;
+                    ? stringBuilder.ToString().Substring(0, stringBuilder.Length - 1)
+                    : string.Empty;
             }
 
             return value.ToString();
@@ -170,12 +208,33 @@ namespace Slash.ECS.Inspector.Attributes
         }
 
         /// <summary>
+        ///   Performs required deinitialization steps for this property of the specified object.
+        /// </summary>
+        /// <param name="entityManager">Entity manager the object belongs to.</param>
+        /// <param name="obj">Object the property belongs to.</param>
+        public virtual void Deinit(EntityManager entityManager, object obj)
+        {
+        }
+
+        /// <summary>
         ///   Gets an empty list for elements of the type of the property the attribute is attached to.
         /// </summary>
         /// <returns>Empty list of matching type.</returns>
         public virtual IList GetEmptyList()
         {
-            return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(this.PropertyType));
+            var itemType = this.ItemType;
+            return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(itemType));
+        }
+
+        /// <summary>
+        ///   Returns the value of the property this inspeoctor property is for.
+        /// </summary>
+        /// <param name="entityManager">Entity manager.</param>
+        /// <param name="obj">Object to get property value for.</param>
+        /// <returns>Property value.</returns>
+        public virtual object GetPropertyValue(EntityManager entityManager, object obj)
+        {
+            return obj.GetType().GetProperty(this.PropertyName).GetValue(obj, null);
         }
 
         /// <summary>
@@ -191,10 +250,10 @@ namespace Slash.ECS.Inspector.Attributes
         /// <summary>
         ///   Initializes the specified object via reflection with the specified property value.
         /// </summary>
-        /// <param name="game">The parameter is not used.</param>
+        /// <param name="entityManager">Entity manager.</param>
         /// <param name="obj">Object to set property value for.</param>
         /// <param name="propertyValue">Property value to set.</param>
-        public virtual void SetPropertyValue(Game game, object obj, object propertyValue)
+        public virtual void SetPropertyValue(EntityManager entityManager, object obj, object propertyValue)
         {
             obj.GetType().GetProperty(this.PropertyName).SetValue(obj, propertyValue, null);
         }
@@ -266,7 +325,8 @@ namespace Slash.ECS.Inspector.Attributes
         }
 
         /// <summary>
-        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this property.
+        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this
+        ///   property.
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <param name="text">String that can be converted back to a value of the correct type for this property.</param>

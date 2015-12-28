@@ -6,9 +6,12 @@
 
 namespace Slash.ECS.Inspector.Attributes
 {
+    using System;
+
     /// <summary>
     ///   Exposes the property to the inspector.
     /// </summary>
+    [Serializable]
     public class InspectorVectorAttribute : InspectorPropertyAttribute
     {
         #region Constructors and Destructors

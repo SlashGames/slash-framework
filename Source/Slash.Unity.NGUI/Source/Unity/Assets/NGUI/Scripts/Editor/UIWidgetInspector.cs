@@ -12,14 +12,10 @@ using System.Collections.Generic;
 /// </summary>
 
 [CanEditMultipleObjects]
-#if UNITY_3_5
-[CustomEditor(typeof(UIWidget))]
-#else
 [CustomEditor(typeof(UIWidget), true)]
-#endif
 public class UIWidgetInspector : UIRectEditor
 {
-	static public UIWidgetInspector instance;
+	static public new UIWidgetInspector instance;
 
 	public enum Action
 	{
@@ -201,8 +197,9 @@ public class UIWidgetInspector : UIRectEditor
 		}
 	}
 
-	void OnDisable ()
+	protected override void OnDisable ()
 	{
+		base.OnDisable();
 		NGUIEditorTools.HideMoveTool(false);
 		instance = null;
 	}
@@ -743,8 +740,8 @@ public class UIWidgetInspector : UIRectEditor
 				}
 				else if (mAllowSelection)
 				{
-					BetterList<UIWidget> widgets = NGUIEditorTools.SceneViewRaycast(e.mousePosition);
-					if (widgets.size > 0) Selection.activeGameObject = widgets[0].gameObject;
+					List<UIWidget> widgets = NGUIEditorTools.SceneViewRaycast(e.mousePosition);
+					if (widgets.Count > 0) Selection.activeGameObject = widgets[0].gameObject;
 				}
 				mAllowSelection = true;
 			}
@@ -813,91 +810,97 @@ public class UIWidgetInspector : UIRectEditor
 	}
 
 	/// <summary>
-	/// By default all non-widgets should use their color.
-	/// </summary>
-
-	protected virtual bool drawColor
-	{
-		get
-		{
-			return (target.GetType() != typeof(UIWidget));
-		}
-	}
-
-	/// <summary>
 	/// All widgets have depth, color and make pixel-perfect options
 	/// </summary>
 
 	protected override void DrawCustomProperties ()
 	{
-		PrefabType type = PrefabUtility.GetPrefabType(mWidget.gameObject);
+		if (NGUISettings.unifiedTransform)
+		{
+			DrawColor(serializedObject, mWidget);
+		}
+		else DrawInspectorProperties(serializedObject, mWidget, true);
+	}
+
+	/// <summary>
+	/// Draw common widget properties that can be shown as a part of the Transform Inspector.
+	/// </summary>
+
+	public void DrawWidgetTransform () { DrawInspectorProperties(serializedObject, mWidget, false); }
+
+	/// <summary>
+	/// Draw the widget's color.
+	/// </summary>
+
+	static public void DrawColor (SerializedObject so, UIWidget w)
+	{
+		if ((w.GetType() != typeof(UIWidget)))
+		{
+			NGUIEditorTools.DrawProperty("Color Tint", so, "mColor", GUILayout.MinWidth(20f));
+		}
+		else if (so.isEditingMultipleObjects)
+		{
+			NGUIEditorTools.DrawProperty("Alpha", so, "mColor.a", GUILayout.Width(120f));
+		}
+		else
+		{
+			GUI.changed = false;
+			float alpha = EditorGUILayout.Slider("Alpha", w.alpha, 0f, 1f);
+
+			if (GUI.changed)
+			{
+				NGUIEditorTools.RegisterUndo("Alpha change", w);
+				w.alpha = alpha;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Draw common widget properties.
+	/// </summary>
+
+	static public void DrawInspectorProperties (SerializedObject so, UIWidget w, bool drawColor)
+	{
+		if (drawColor)
+		{
+			DrawColor(so, w);
+			GUILayout.Space(3f);
+		}
+
+		PrefabType type = PrefabUtility.GetPrefabType(w.gameObject);
 
 		if (NGUIEditorTools.DrawHeader("Widget"))
 		{
 			NGUIEditorTools.BeginContents();
+			if (NGUISettings.minimalisticLook) NGUIEditorTools.SetLabelWidth(70f);
 
-			if (drawColor)
-			{
-#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1
-				// Color tint
-				GUILayout.BeginHorizontal();
-				SerializedProperty sp = NGUIEditorTools.DrawProperty("Color", serializedObject, "mColor", GUILayout.MinWidth(20f));
-				if (GUILayout.Button("Copy", GUILayout.Width(50f)))
-					NGUISettings.color = sp.colorValue;
-				GUILayout.EndHorizontal();
+			DrawPivot(so, w);
+			DrawDepth(so, w, type == PrefabType.Prefab);
+			DrawDimensions(so, w, type == PrefabType.Prefab);
+			if (NGUISettings.minimalisticLook) NGUIEditorTools.SetLabelWidth(70f);
 
-				GUILayout.BeginHorizontal();
-				NGUISettings.color = EditorGUILayout.ColorField("Clipboard", NGUISettings.color);
-				if (GUILayout.Button("Paste", GUILayout.Width(50f)))
-					sp.colorValue = NGUISettings.color;
-				GUILayout.EndHorizontal();
-				GUILayout.Space(6f);
-#else
-				NGUIEditorTools.DrawProperty("Color", serializedObject, "mColor", GUILayout.MinWidth(20f));
-#endif
-			}
-			else if (serializedObject.isEditingMultipleObjects)
-			{
-				NGUIEditorTools.DrawProperty("Alpha", serializedObject, "mColor.a", GUILayout.Width(120f));
-			}
-			else
-			{
-				GUI.changed = false;
-				float alpha = EditorGUILayout.Slider("Alpha", mWidget.alpha, 0f, 1f);
-
-				if (GUI.changed)
-				{
-					NGUIEditorTools.RegisterUndo("Alpha change", mWidget);
-					mWidget.alpha = alpha;
-				}
-			}
-
-			DrawPivot();
-			DrawDepth(type == PrefabType.Prefab);
-			DrawDimensions(type == PrefabType.Prefab);
-
-			SerializedProperty ratio = serializedObject.FindProperty("aspectRatio");
-			SerializedProperty aspect = serializedObject.FindProperty("keepAspectRatio");
+			SerializedProperty ratio = so.FindProperty("aspectRatio");
+			SerializedProperty aspect = so.FindProperty("keepAspectRatio");
 
 			GUILayout.BeginHorizontal();
 			{
 				if (!aspect.hasMultipleDifferentValues && aspect.intValue == 0)
 				{
 					EditorGUI.BeginDisabledGroup(true);
-					NGUIEditorTools.DrawProperty("Aspect Ratio", ratio, false, GUILayout.Width(130f));
+					NGUIEditorTools.DrawProperty("Aspect", ratio, false, GUILayout.Width(130f));
 					EditorGUI.EndDisabledGroup();
 				}
-				else NGUIEditorTools.DrawProperty("Aspect Ratio", ratio, false, GUILayout.Width(130f));
+				else NGUIEditorTools.DrawProperty("Aspect", ratio, false, GUILayout.Width(130f));
 
 				NGUIEditorTools.DrawProperty("", aspect, false, GUILayout.MinWidth(20f));
 			}
 			GUILayout.EndHorizontal();
 
-			if (serializedObject.isEditingMultipleObjects || mWidget.hasBoxCollider)
+			if (so.isEditingMultipleObjects || w.hasBoxCollider)
 			{
 				GUILayout.BeginHorizontal();
 				{
-					NGUIEditorTools.DrawProperty("Box Collider", serializedObject, "autoResizeBoxCollider", GUILayout.Width(100f));
+					NGUIEditorTools.DrawProperty("Collider", so, "autoResizeBoxCollider", GUILayout.Width(100f));
 					GUILayout.Label("auto-adjust to match");
 				}
 				GUILayout.EndHorizontal();
@@ -910,31 +913,31 @@ public class UIWidgetInspector : UIRectEditor
 	/// Draw widget's dimensions.
 	/// </summary>
 
-	void DrawDimensions (bool isPrefab)
+	static void DrawDimensions (SerializedObject so, UIWidget w, bool isPrefab)
 	{
 		GUILayout.BeginHorizontal();
 		{
-			bool freezeSize = serializedObject.isEditingMultipleObjects;
+			bool freezeSize = so.isEditingMultipleObjects;
 
-			UILabel lbl = mWidget as UILabel;
+			UILabel lbl = w as UILabel;
 
 			if (!freezeSize && lbl) freezeSize = (lbl.overflowMethod == UILabel.Overflow.ResizeFreely);
 
 			if (freezeSize)
 			{
 				EditorGUI.BeginDisabledGroup(true);
-				NGUIEditorTools.DrawProperty("Dimensions", serializedObject, "mWidth", GUILayout.MinWidth(100f));
+				NGUIEditorTools.DrawProperty("Size", so, "mWidth", GUILayout.MinWidth(100f));
 				EditorGUI.EndDisabledGroup();
 			}
 			else
 			{
 				GUI.changed = false;
-				int val = EditorGUILayout.IntField("Dimensions", mWidget.width, GUILayout.MinWidth(100f));
+				int val = EditorGUILayout.IntField("Size", w.width, GUILayout.MinWidth(100f));
 
 				if (GUI.changed)
 				{
-					NGUIEditorTools.RegisterUndo("Dimensions Change", mWidget);
-					mWidget.width = val;
+					NGUIEditorTools.RegisterUndo("Dimensions Change", w);
+					w.width = val;
 				}
 			}
 
@@ -949,18 +952,18 @@ public class UIWidgetInspector : UIRectEditor
 			if (freezeSize)
 			{
 				EditorGUI.BeginDisabledGroup(true);
-				NGUIEditorTools.DrawProperty("x", serializedObject, "mHeight", GUILayout.MinWidth(30f));
+				NGUIEditorTools.DrawProperty("x", so, "mHeight", GUILayout.MinWidth(30f));
 				EditorGUI.EndDisabledGroup();
 			}
 			else
 			{
 				GUI.changed = false;
-				int val = EditorGUILayout.IntField("x", mWidget.height, GUILayout.MinWidth(30f));
+				int val = EditorGUILayout.IntField("x", w.height, GUILayout.MinWidth(30f));
 
 				if (GUI.changed)
 				{
-					NGUIEditorTools.RegisterUndo("Dimensions Change", mWidget);
-					mWidget.height = val;
+					NGUIEditorTools.RegisterUndo("Dimensions Change", w);
+					w.height = val;
 				}
 			}
 
@@ -972,19 +975,19 @@ public class UIWidgetInspector : UIRectEditor
 			}
 			else
 			{
-				EditorGUI.BeginDisabledGroup(serializedObject.isEditingMultipleObjects);
+				EditorGUI.BeginDisabledGroup(so.isEditingMultipleObjects);
 
-				if (GUILayout.Button("Snap", GUILayout.Width(68f)))
+				if (GUILayout.Button("Snap", GUILayout.Width(60f)))
 				{
 					foreach (GameObject go in Selection.gameObjects)
 					{
-						UIWidget w = go.GetComponent<UIWidget>();
+						UIWidget pw = go.GetComponent<UIWidget>();
 
-						if (w != null)
+						if (pw != null)
 						{
-							NGUIEditorTools.RegisterUndo("Snap Dimensions", w);
-							NGUIEditorTools.RegisterUndo("Snap Dimensions", w.transform);
-							w.MakePixelPerfect();
+							NGUIEditorTools.RegisterUndo("Snap Dimensions", pw);
+							NGUIEditorTools.RegisterUndo("Snap Dimensions", pw.transform);
+							pw.MakePixelPerfect();
 						}
 					}
 				}
@@ -998,7 +1001,7 @@ public class UIWidgetInspector : UIRectEditor
 	/// Draw widget's depth.
 	/// </summary>
 
-	void DrawDepth (bool isPrefab)
+	static void DrawDepth (SerializedObject so, UIWidget w, bool isPrefab)
 	{
 		if (isPrefab) return;
 
@@ -1011,19 +1014,19 @@ public class UIWidgetInspector : UIRectEditor
 			{
 				foreach (GameObject go in Selection.gameObjects)
 				{
-					UIWidget w = go.GetComponent<UIWidget>();
-					if (w != null) w.depth = w.depth - 1;
+					UIWidget pw = go.GetComponent<UIWidget>();
+					if (pw != null) pw.depth = w.depth - 1;
 				}
 			}
 
-			NGUIEditorTools.DrawProperty("", serializedObject, "mDepth", GUILayout.MinWidth(20f));
+			NGUIEditorTools.DrawProperty("", so, "mDepth", GUILayout.MinWidth(20f));
 
 			if (GUILayout.Button("Forward", GUILayout.MinWidth(60f)))
 			{
 				foreach (GameObject go in Selection.gameObjects)
 				{
-					UIWidget w = go.GetComponent<UIWidget>();
-					if (w != null) w.depth = w.depth + 1;
+					UIWidget pw = go.GetComponent<UIWidget>();
+					if (pw != null) pw.depth = w.depth + 1;
 				}
 			}
 		}
@@ -1031,21 +1034,21 @@ public class UIWidgetInspector : UIRectEditor
 
 		int matchingDepths = 1;
 
-		UIPanel p = mWidget.panel;
+		UIPanel p = w.panel;
 
 		if (p != null)
 		{
-			for (int i = 0; i < p.widgets.size; ++i)
+			for (int i = 0, imax = p.widgets.Count; i < imax; ++i)
 			{
-				UIWidget w = p.widgets[i];
-				if (w != mWidget && w.depth == mWidget.depth)
+				UIWidget pw = p.widgets[i];
+				if (pw != w && pw.depth == w.depth)
 					++matchingDepths;
 			}
 		}
 
 		if (matchingDepths > 1)
 		{
-			EditorGUILayout.HelpBox(matchingDepths + " widgets are sharing the depth value of " + mWidget.depth, MessageType.Info);
+			EditorGUILayout.HelpBox(matchingDepths + " widgets are sharing the depth value of " + w.depth, MessageType.Info);
 		}
 	}
 
@@ -1053,35 +1056,29 @@ public class UIWidgetInspector : UIRectEditor
 	/// Draw the widget's pivot.
 	/// </summary>
 
-	void DrawPivot ()
+	static void DrawPivot (SerializedObject so, UIWidget w)
 	{
-		SerializedProperty pv = serializedObject.FindProperty("mPivot");
+		SerializedProperty pv = so.FindProperty("mPivot");
 
 		if (pv.hasMultipleDifferentValues)
 		{
 			// TODO: Doing this doesn't keep the widget's position where it was. Another approach is needed.
-			NGUIEditorTools.DrawProperty("Pivot", serializedObject, "mPivot");
+			NGUIEditorTools.DrawProperty("Pivot", so, "mPivot");
 		}
 		else
 		{
 			// Pivot point -- the new, more visual style
 			GUILayout.BeginHorizontal();
-			GUILayout.Label("Pivot", GUILayout.Width(76f));
-#if !UNITY_3_5
-			Toggle("\u25C4", "ButtonLeft", UIWidget.Pivot.Left, true);
-			Toggle("\u25AC", "ButtonMid", UIWidget.Pivot.Center, true);
-			Toggle("\u25BA", "ButtonRight", UIWidget.Pivot.Right, true);
-#else
-			Toggle("<", "ButtonLeft", UIWidget.Pivot.Left, true);
-			Toggle("--", "ButtonMid", UIWidget.Pivot.Center, true);
-			Toggle(">", "ButtonRight", UIWidget.Pivot.Right, true);
-#endif
-			Toggle("\u25B2", "ButtonLeft", UIWidget.Pivot.Top, false);
-			Toggle("\u258C", "ButtonMid", UIWidget.Pivot.Center, false);
-			Toggle("\u25BC", "ButtonRight", UIWidget.Pivot.Bottom, false);
+			GUILayout.Label("Pivot", GUILayout.Width(NGUISettings.minimalisticLook ? 66f : 76f));
+			Toggle(w, "\u25C4", "ButtonLeft", UIWidget.Pivot.Left, true);
+			Toggle(w, "\u25AC", "ButtonMid", UIWidget.Pivot.Center, true);
+			Toggle(w, "\u25BA", "ButtonRight", UIWidget.Pivot.Right, true);
+			Toggle(w, "\u25B2", "ButtonLeft", UIWidget.Pivot.Top, false);
+			Toggle(w, "\u258C", "ButtonMid", UIWidget.Pivot.Center, false);
+			Toggle(w, "\u25BC", "ButtonRight", UIWidget.Pivot.Bottom, false);
 
 			GUILayout.EndHorizontal();
-			pv.enumValueIndex = (int)mWidget.pivot;
+			pv.enumValueIndex = (int)w.pivot;
 		}
 	}
 
@@ -1089,35 +1086,35 @@ public class UIWidgetInspector : UIRectEditor
 	/// Draw a toggle button for the pivot point.
 	/// </summary>
 
-	void Toggle (string text, string style, UIWidget.Pivot pivot, bool isHorizontal)
+	static void Toggle (UIWidget w, string text, string style, UIWidget.Pivot pivot, bool isHorizontal)
 	{
 		bool isActive = false;
 
 		switch (pivot)
 		{
 			case UIWidget.Pivot.Left:
-			isActive = IsLeft(mWidget.pivot);
+			isActive = IsLeft(w.pivot);
 			break;
 
 			case UIWidget.Pivot.Right:
-			isActive = IsRight(mWidget.pivot);
+			isActive = IsRight(w.pivot);
 			break;
 
 			case UIWidget.Pivot.Top:
-			isActive = IsTop(mWidget.pivot);
+			isActive = IsTop(w.pivot);
 			break;
 
 			case UIWidget.Pivot.Bottom:
-			isActive = IsBottom(mWidget.pivot);
+			isActive = IsBottom(w.pivot);
 			break;
 
 			case UIWidget.Pivot.Center:
-			isActive = isHorizontal ? pivot == GetHorizontal(mWidget.pivot) : pivot == GetVertical(mWidget.pivot);
+			isActive = isHorizontal ? pivot == GetHorizontal(w.pivot) : pivot == GetVertical(w.pivot);
 			break;
 		}
 
 		if (GUILayout.Toggle(isActive, text, style) != isActive)
-			SetPivot(pivot, isHorizontal);
+			SetPivot(w, pivot, isHorizontal);
 	}
 
 	static bool IsLeft (UIWidget.Pivot pivot)
@@ -1180,17 +1177,17 @@ public class UIWidgetInspector : UIRectEditor
 		return vertical;
 	}
 
-	void SetPivot (UIWidget.Pivot pivot, bool isHorizontal)
+	static void SetPivot (UIWidget w, UIWidget.Pivot pivot, bool isHorizontal)
 	{
-		UIWidget.Pivot horizontal = GetHorizontal(mWidget.pivot);
-		UIWidget.Pivot vertical = GetVertical(mWidget.pivot);
+		UIWidget.Pivot horizontal = GetHorizontal(w.pivot);
+		UIWidget.Pivot vertical = GetVertical(w.pivot);
 
 		pivot = isHorizontal ? Combine(pivot, vertical) : Combine(horizontal, pivot);
 
-		if (mWidget.pivot != pivot)
+		if (w.pivot != pivot)
 		{
-			NGUIEditorTools.RegisterUndo("Pivot change", mWidget);
-			mWidget.pivot = pivot;
+			NGUIEditorTools.RegisterUndo("Pivot change", w);
+			w.pivot = pivot;
 		}
 	}
 
