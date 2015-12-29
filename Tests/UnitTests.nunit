@@ -1,0 +1,17 @@
+<NUnitProject>
+  <Settings activeconfig="Debug"/>
+  <Config name="Debug">
+    <assembly path="..\Bin\Slash.AI.BehaviorTrees.Tests\Debug\Slash.AI.BehaviorTrees.Tests.dll"/>
+    <assembly path="..\Bin\Slash.Collections.Tests\Debug\Slash.Collections.Tests.dll"/>
+    <assembly path="..\Bin\Slash.ECS.Tests\Debug\Slash.ECS.Tests.dll"/>
+    <assembly path="..\Bin\Slash.Reflection.Tests\Debug\Slash.Reflection.Tests.dll"/>
+    <assembly path="..\Bin\Slash.Serialization.Tests\Debug\Slash.Serialization.Tests.dll"/>
+  </Config>
+  <Config name="Release">
+    <assembly path="..\Bin\Slash.AI.BehaviorTrees.Tests\Release\Slash.AI.BehaviorTrees.Tests.dll"/>
+    <assembly path="..\Bin\Slash.Collections.Tests\Release\Slash.Collections.Tests.dll"/>
+    <assembly path="..\Bin\Slash.ECS.Tests\Release\Slash.ECS.Tests.dll"/>
+    <assembly path="..\Bin\Slash.Reflection.Tests\Release\Slash.Reflection.Tests.dll"/>
+    <assembly path="..\Bin\Slash.Serialization.Tests\Release\Slash.Serialization.Tests.dll"/>
+  </Config>
+</NUnitProject>
