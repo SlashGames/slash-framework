@@ -10,6 +10,8 @@ namespace Slash.Unity.Common.Logging
 
     using UnityEngine;
 
+    using Logger = Slash.Diagnostics.Logging.Logger;
+
     public static class LoggerExtensions
     {
         #region Public Methods and Operators
