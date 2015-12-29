@@ -1,5 +1,7 @@
 # Slash Framework
 
+[![Coverage Status](https://coveralls.io/repos/npruehs/slash-framework/badge.svg?branch=develop&service=github)](https://coveralls.io/github/npruehs/slash-framework?branch=develop)
+
 The Slash Framework is a free, open-source, component-based entity system (CBES) framework especially for games.
 
 The design and rules of games constantly change during development, invalidating your carefully engineered software from day to day. 
