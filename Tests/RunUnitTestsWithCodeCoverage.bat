@@ -1,0 +1,2 @@
+..\Ext\OpenCover\OpenCover.Console.exe -target:RunUnitTests.bat -output:CodeCoverageResult.xml -coverbytest:*.Tests.dll -register:user
+..\Ext\ReportGenerator\bin\ReportGenerator.exe -reports:CodeCoverageResult.xml -targetdir:CodeCoverageReport

@@ -31,3 +31,6 @@ Source/Slash.Unity.NGUI/Source/Unity/Temp/
 
 # Visual Studio 2015 Preview
 *.sln.ide
+/Tests/TestResult.xml
+/Tests/CodeCoverageReport
+/Tests/CodeCoverageResult.xml
