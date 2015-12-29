@@ -201,7 +201,7 @@ namespace Slash.Unity.Common.Scenes
         {
             this.windows.Add(window);
 
-            yield return Application.LoadLevelAdditiveAsync(window.WindowId);
+            yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(window.WindowId);
             yield return new WaitForEndOfFrame();
 
             // Setup window roots.

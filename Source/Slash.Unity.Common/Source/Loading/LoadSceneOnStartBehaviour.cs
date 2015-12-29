@@ -7,6 +7,7 @@
 namespace Slash.Unity.Common.Loading
 {
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
     /// <summary>
     ///   Loads the specified scene immediately after start.
@@ -32,14 +33,7 @@ namespace Slash.Unity.Common.Loading
 
         private void Start()
         {
-            if (this.LoadAdditive)
-            {
-                Application.LoadLevelAdditive(this.SceneName);
-            }
-            else
-            {
-                Application.LoadLevel(this.SceneName);
-            }
+            SceneManager.LoadScene(this.SceneName, this.LoadAdditive ? LoadSceneMode.Additive : LoadSceneMode.Single);
         }
 
         #endregion

@@ -41,7 +41,7 @@ namespace Slash.Unity.Common.Scenes
 
         #endregion
 
-        #region Public Events
+        #region Events
 
         public event SceneChangedDelegate SceneChanged;
 
@@ -49,7 +49,7 @@ namespace Slash.Unity.Common.Scenes
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         public static SceneManager Instance { get; private set; }
 
@@ -113,7 +113,7 @@ namespace Slash.Unity.Common.Scenes
 
             // Load level.
             this.loadingSceneId = scene;
-            yield return Application.LoadLevelAsync(this.loadingSceneId);
+            yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(this.loadingSceneId);
 
             if (loadingScreen != null)
             {

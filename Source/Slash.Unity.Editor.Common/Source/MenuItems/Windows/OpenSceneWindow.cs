@@ -11,6 +11,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
     using System.Linq;
 
     using UnityEditor;
+    using UnityEditor.SceneManagement;
 
     using UnityEngine;
 
@@ -19,17 +20,17 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
     /// </summary>
     public class OpenSceneWindow : EditorWindow
     {
-        #region Static Fields
-
-        /// <summary>
-        ///   Asset folders to ignore when building the scene list.
-        /// </summary>
-        private static readonly string[] IgnoredFolders = new[] { "NGUI", "NData" };
+        #region Constants
 
         /// <summary>
         ///   Scenes accessible from the Open Scene window.
         /// </summary>
         private static IEnumerable<FileInfo> gameScenes;
+
+        /// <summary>
+        ///   Asset folders to ignore when building the scene list.
+        /// </summary>
+        private static readonly string[] IgnoredFolders = new[] { "NGUI", "NData" };
 
         #endregion
 
@@ -64,7 +65,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
             {
                 if (GUILayout.Button(gameScene.Name.Substring(0, gameScene.Name.IndexOf('.'))))
                 {
-                    EditorApplication.OpenScene(gameScene.FullName);
+                    EditorSceneManager.OpenScene(gameScene.FullName);
                 }
             }
         }

@@ -9,6 +9,9 @@ namespace Slash.Unity.Common.Loading
     using Slash.Unity.Common.Scenes;
 
     using UnityEngine;
+    using UnityEngine.SceneManagement;
+
+    using SceneManager = Slash.Unity.Common.Scenes.SceneManager;
 
     public class LoadSceneBehaviour : MonoBehaviour
     {
@@ -58,7 +61,7 @@ namespace Slash.Unity.Common.Loading
                 }
                 else
                 {
-                    Application.LoadLevelAdditive(this.SceneName);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(this.SceneName, LoadSceneMode.Additive);
                 }
             }
             else
@@ -69,7 +72,7 @@ namespace Slash.Unity.Common.Loading
                 }
                 else
                 {
-                    Application.LoadLevel(this.SceneName);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(this.SceneName);
                 }
             }
         }
