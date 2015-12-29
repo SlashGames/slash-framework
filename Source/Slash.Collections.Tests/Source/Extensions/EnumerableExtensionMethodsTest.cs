@@ -19,17 +19,7 @@ namespace Slash.Collections.Tests.Source.Extensions
     public class EnumerableExtensionMethodsTest
     {
         #region Public Methods and Operators
-
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-        }
-
-        [TestFixtureTearDown]
-        public void TearDown()
-        {
-        }
-
+        
         [Test]
         public void TestIsNullOrEmptyEmpty()
         {

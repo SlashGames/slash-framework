@@ -59,21 +59,19 @@ namespace Slash.ECS.Tests
         ///   Tests adding a component twice to the component manager.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void TestAddComponentTwice()
         {
             this.componentManager.AddComponent(0, this.testEntityComponent);
-            this.componentManager.AddComponent(0, this.testEntityComponent);
+            Assert.Throws<InvalidOperationException>(() => this.componentManager.AddComponent(0, this.testEntityComponent));
         }
 
         /// <summary>
         ///   Tests adding null as a component to the component manager.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestAddNullComponent()
         {
-            this.componentManager.AddComponent(0, null);
+            Assert.Throws<ArgumentNullException>(() => this.componentManager.AddComponent(0, null));
         }
 
         /// <summary>

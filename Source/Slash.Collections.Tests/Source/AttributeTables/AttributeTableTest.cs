@@ -18,10 +18,9 @@ namespace Slash.Collections.Tests.Source.AttributeTables
         #region Public Methods and Operators
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestAddNullKey()
         {
-            new AttributeTable { { null, 1 } };
+            Assert.Throws<ArgumentNullException>(() => new AttributeTable { { null, 1 } });
         }
 
         [Test]

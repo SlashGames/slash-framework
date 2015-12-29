@@ -15,17 +15,7 @@ namespace Slash.Reflection.Tests
     public class PropertyUtilsTest
     {
         #region Public Methods and Operators
-
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-        }
-
-        [TestFixtureTearDown]
-        public void TearDown()
-        {
-        }
-
+        
         [Test]
         public void TestGetPropertyInfo()
         {

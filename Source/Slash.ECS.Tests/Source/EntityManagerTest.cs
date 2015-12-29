@@ -58,20 +58,18 @@ namespace Slash.ECS.Tests
         ///   of entities added to the manager.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAccessEntityWithExceedingId()
         {
-            this.entityManager.GetComponent(42, typeof(TestEntityComponent));
+            Assert.Throws<ArgumentOutOfRangeException>(() => this.entityManager.GetComponent(42, typeof(TestEntityComponent)));
         }
 
         /// <summary>
         ///   Tests accessing an entity with a negative id.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAccessEntityWithNegativeId()
         {
-            this.entityManager.GetComponent(-1, typeof(TestEntityComponent));
+            Assert.Throws<ArgumentOutOfRangeException>(() => this.entityManager.GetComponent(-1, typeof(TestEntityComponent)));
         }
 
         /// <summary>
@@ -79,13 +77,12 @@ namespace Slash.ECS.Tests
         ///   manager.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestAccessRemovedEntity()
         {
             this.testEntityId = this.entityManager.CreateEntity();
             this.entityManager.RemoveEntity(this.testEntityId);
             this.entityManager.CleanUpEntities();
-            this.entityManager.GetComponent(this.testEntityId, typeof(TestEntityComponent));
+            Assert.Throws<ArgumentException>(() => this.entityManager.GetComponent(this.testEntityId, typeof(TestEntityComponent)));
         }
 
         /// <summary>
@@ -148,12 +145,11 @@ namespace Slash.ECS.Tests
         ///   controlled by the entity manager.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestGetComponentWithoutType()
         {
             int entityId = this.entityManager.CreateEntity();
             this.entityManager.AddComponent(entityId, this.testEntityComponent);
-            this.entityManager.GetComponent(entityId, null);
+            Assert.Throws<ArgumentNullException>(() => this.entityManager.GetComponent(entityId, null));
         }
 
         /// <summary>
@@ -175,11 +171,10 @@ namespace Slash.ECS.Tests
         ///   manager before it has been added.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestRemoveComponentBeforeAdding()
         {
             this.entityManager.CreateEntity();
-            this.entityManager.RemoveComponent(0, typeof(TestEntityComponent));
+            Assert.Throws<ArgumentException>(() => this.entityManager.RemoveComponent(0, typeof(TestEntityComponent)));
         }
 
         /// <summary>
@@ -187,12 +182,11 @@ namespace Slash.ECS.Tests
         ///   by the entity manager.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestRemoveComponentWithoutType()
         {
             int entityId = this.entityManager.CreateEntity();
             this.entityManager.AddComponent(entityId, this.testEntityComponent);
-            this.entityManager.RemoveComponent(entityId, null);
+            Assert.Throws<ArgumentNullException>(() => this.entityManager.RemoveComponent(entityId, null));
         }
 
         /// <summary>

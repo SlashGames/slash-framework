@@ -54,10 +54,9 @@ namespace Slash.ECS.Tests
         ///   Tests adding null as system to the system manager.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestAddNullSystem()
         {
-            this.systemManager.AddSystem(null);
+            Assert.Throws<ArgumentNullException>(() => this.systemManager.AddSystem(null));
         }
 
         /// <summary>
@@ -74,11 +73,10 @@ namespace Slash.ECS.Tests
         ///   Tests adding a system twice to the system manager.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestAddSystemTwice()
         {
             this.systemManager.AddSystem(this.system);
-            this.systemManager.AddSystem(this.system);
+            Assert.Throws<ArgumentException>(() => this.systemManager.AddSystem(this.system));
         }
 
         /// <summary>
@@ -86,20 +84,18 @@ namespace Slash.ECS.Tests
         ///   added.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestGetSystemBeforeAdding()
         {
-            this.systemManager.GetSystem(typeof(TestSystem));
+            Assert.Throws<ArgumentException>(() => this.systemManager.GetSystem(typeof(TestSystem)));
         }
 
         /// <summary>
         ///   Tests fetching a system of type null from the system manager.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestGetSystemWithoutType()
         {
-            this.systemManager.GetSystem(null);
+            Assert.Throws<ArgumentNullException>(() => this.systemManager.GetSystem(null));
         }
 
         /// <summary>

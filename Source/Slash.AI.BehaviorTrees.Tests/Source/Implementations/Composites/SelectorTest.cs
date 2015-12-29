@@ -14,17 +14,7 @@ namespace Slash.AI.BehaviorTrees.Tests.Implementations.Composites
     public class SelectorTest
     {
         #region Public Methods and Operators
-
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-        }
-
-        [TestFixtureTearDown]
-        public void TearDown()
-        {
-        }
-
+        
         [Test]
         public void TestGenerateTaskDescription()
         {
