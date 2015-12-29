@@ -27,7 +27,8 @@ namespace Slash.Collections.Utils
         /// <param name="second">Second dictionary.</param>
         /// <returns>True if the two dictionaries are equal; otherwise, false.</returns>
         public static bool DictionaryEqual<TKey, TValue>(
-            IDictionary<TKey, TValue> first, IDictionary<TKey, TValue> second)
+            IDictionary<TKey, TValue> first,
+            IDictionary<TKey, TValue> second)
         {
             if (first == second)
             {
@@ -73,12 +74,14 @@ namespace Slash.Collections.Utils
         }
 
         /// <summary>
-        ///   Compares the two passed lists for equality. Two lists are considered equal, if they contain equal elements in the same order.
+        ///   Compares the two passed lists for equality. Two lists are considered equal, if they contain equal elements in the
+        ///   same order.
         /// </summary>
         /// <param name="list1">First list to compare.</param>
         /// <param name="list2">Second list to compare.</param>
         /// <returns>
-        ///   <c>true</c>, if either both or no list is <c>null</c>, both lists contain the same number of elements, and all elements are equal and in the same order.
+        ///   <c>true</c>, if either both or no list is <c>null</c>, both lists contain the same number of elements, and all
+        ///   elements are equal and in the same order.
         /// </returns>
         public static bool ListEqual(IList list1, IList list2)
         {
@@ -137,7 +140,9 @@ namespace Slash.Collections.Utils
         ///   True if the sequences are equal (i.e. the sequences contain equal items in the same order), else false.
         /// </returns>
         public static bool SequenceEqual<T>(
-            IEnumerable<T> sequence1, IEnumerable<T> sequence2, IEqualityComparer<T> comparer)
+            IEnumerable<T> sequence1,
+            IEnumerable<T> sequence2,
+            IEqualityComparer<T> comparer)
         {
             return sequence1 == sequence2
                    || sequence1 != null && sequence2 != null && sequence1.SequenceEqual(sequence2, comparer);
@@ -173,23 +178,23 @@ namespace Slash.Collections.Utils
 
             stringBuilder.Append("[");
 
-            foreach (var element in sequence)
+            var dictionary = sequence as IDictionary;
+            if (dictionary != null)
             {
-                string elementString = element as string;
-                if (elementString == null)
+                foreach (var key in dictionary.Keys)
                 {
-                    var elementEnumerable = element as IEnumerable;
-                    if (elementEnumerable != null)
-                    {
-                        elementString = ToString(elementEnumerable);
-                    }
-                    else
-                    {
-                        elementString = element.ToString();
-                    }
+                    var keyString = ObjectToString(key);
+                    var valueString = ObjectToString(dictionary[key]);
+                    stringBuilder.AppendFormat("[{0} = {1}], ", keyString, valueString);
                 }
-
-                stringBuilder.AppendFormat("{0}, ", elementString);
+            }
+            else
+            {
+                foreach (var element in sequence)
+                {
+                    var elementString = ObjectToString(element);
+                    stringBuilder.AppendFormat("{0}, ", elementString);
+                }
             }
 
             if (stringBuilder.Length > 1)
@@ -199,6 +204,29 @@ namespace Slash.Collections.Utils
             }
 
             return "[]";
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static string ObjectToString(object obj)
+        {
+            if (obj == null)
+            {
+                return "null";
+            }
+
+            var objString = obj as string;
+            if (objString != null)
+            {
+                return objString;
+            }
+
+            var elementEnumerable = obj as IEnumerable;
+            objString = elementEnumerable != null ? ToString(elementEnumerable) : obj.ToString();
+
+            return objString;
         }
 
         #endregion

@@ -41,7 +41,7 @@ namespace Slash.Collections.Tests.Source.Utils
                 { 2, new [] { "Two", "Three" } }
             };
             string toString = CollectionUtils.ToString(testDictionary);
-            Assert.AreEqual("[[1, One], [2, [Two, Three]]]", toString);
+            Assert.AreEqual("[[1 = One], [2 = [Two, Three]]]", toString);
         }
 
         [Test]
