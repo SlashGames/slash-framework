@@ -1,4 +1,4 @@
-﻿namespace Slash.ECS.Systems
+﻿namespace Slash.Application.Systems
 {
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;

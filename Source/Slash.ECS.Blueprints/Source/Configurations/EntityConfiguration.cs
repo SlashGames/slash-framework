@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.ECS.Configurations
+namespace Slash.ECS.Blueprints.Configurations
 {
     using System;
     using System.Collections.Generic;

@@ -4,12 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.ECS.Blueprints
+namespace Slash.Application.Games
 {
     using System.Collections.Generic;
     using System.Linq;
 
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Blueprints;
     using Slash.ECS.Blueprints.Extensions;
     using Slash.ECS.Components;
 

@@ -4,14 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.ECS.Inspector.Attributes
+namespace Slash.ECS.Blueprints.Inspector.Attributes
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
+    using Slash.ECS.Blueprints.Configurations;
     using Slash.ECS.Components;
-    using Slash.ECS.Configurations;
+    using Slash.ECS.Inspector.Attributes;
 
     /// <summary>
     ///   Exposes the property to the inspector.

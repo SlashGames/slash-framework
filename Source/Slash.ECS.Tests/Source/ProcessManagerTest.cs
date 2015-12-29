@@ -8,6 +8,7 @@ namespace Slash.ECS.Tests
 {
     using NUnit.Framework;
 
+    using Slash.Application.Games;
     using Slash.ECS.Components;
     using Slash.ECS.Events;
     using Slash.ECS.Processes;

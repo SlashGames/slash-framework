@@ -13,7 +13,8 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
-    using Slash.ECS.Configurations;
+    using Slash.ECS.Blueprints.Configurations;
+    using Slash.ECS.Blueprints.Inspector.Attributes;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.Math.Algebra.Vectors;

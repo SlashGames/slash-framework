@@ -10,7 +10,8 @@ namespace Slash.ECS.Tests
 
     using NUnit.Framework;
 
-    using Slash.ECS.Systems;
+    using Slash.Application.Games;
+    using Slash.Application.Systems;
 
     /// <summary>
     ///   Unit tests for the SystemManager class.

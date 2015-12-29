@@ -6,6 +6,7 @@
 
 namespace Slash.Unity.Common.Diagnostics
 {
+    using Slash.Application.Games;
     using Slash.ECS;
     using Slash.ECS.Events;
     using Slash.Unity.Common.ECS;

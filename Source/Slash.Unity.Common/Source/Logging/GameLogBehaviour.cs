@@ -6,6 +6,7 @@
 
 namespace Slash.Unity.Common.Logging
 {
+    using Slash.Application.Games;
     using Slash.ECS;
     using Slash.Unity.Common.ECS;
 

@@ -8,9 +8,9 @@ namespace Slash.ECS.Tests.Systems
 {
     using NUnit.Framework;
 
+    using Slash.Application.Systems;
     using Slash.ECS.Components;
     using Slash.ECS.Events;
-    using Slash.ECS.Systems;
 
     public class CompoundEntitiesTests
     {

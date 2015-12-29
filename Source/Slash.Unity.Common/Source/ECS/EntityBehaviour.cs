@@ -6,6 +6,7 @@
 
 namespace Slash.Unity.Common.ECS
 {
+    using Slash.Application.Games;
     using Slash.ECS;
     using Slash.ECS.Components;
 

@@ -11,11 +11,11 @@ namespace Slash.ECS.Tests
     using NUnit.Framework;
 
     using Slash.Application.Games;
+    using Slash.Application.Systems;
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
     using Slash.ECS.Components;
     using Slash.ECS.Events;
-    using Slash.ECS.Systems;
 
     /// <summary>
     ///   Unit tests for the EventManager class.

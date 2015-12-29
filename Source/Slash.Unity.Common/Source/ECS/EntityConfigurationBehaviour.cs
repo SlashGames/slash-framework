@@ -9,6 +9,7 @@ namespace Slash.Unity.Common.ECS
     using System;
     using System.Collections.Generic;
 
+    using Slash.Application.Games;
     using Slash.Collections.AttributeTables;
     using Slash.ECS;
     using Slash.ECS.Blueprints.Extensions;

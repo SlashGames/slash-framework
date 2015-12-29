@@ -9,6 +9,7 @@ namespace Slash.Unity.Common.ECS
     using System.Collections.Generic;
     using System.Linq;
 
+    using Slash.Application.Games;
     using Slash.ECS;
     using Slash.ECS.Components;
     using Slash.ECS.Events;

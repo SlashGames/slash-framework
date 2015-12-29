@@ -1,16 +1,15 @@
-﻿namespace Slash.ECS
+﻿namespace Slash.Application.Games
 {
     using System;
     using System.Linq;
 
-    using Slash.Application.Games;
+    using Slash.Application.Systems;
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Components;
     using Slash.ECS.Events;
     using Slash.ECS.Logging;
     using Slash.ECS.Processes;
-    using Slash.ECS.Systems;
     using Slash.Reflection.Extensions;
     using Slash.Reflection.Utils;
 

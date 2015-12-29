@@ -3,7 +3,7 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Slash.ECS.Features.Serialization.Events
+namespace Slash.Application.Features.Serialization.Events
 {
     using Slash.ECS.Events;
 

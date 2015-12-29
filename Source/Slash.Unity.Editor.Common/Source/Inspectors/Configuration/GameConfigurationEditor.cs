@@ -9,10 +9,10 @@ namespace Slash.Unity.Editor.Common.Inspectors.Configuration
     using System.IO;
     using System.Xml.Serialization;
 
+    using Slash.Application.Systems;
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Inspector.Data;
-    using Slash.ECS.Systems;
     using Slash.Unity.Common.Configuration;
     using Slash.Unity.Editor.Common.Inspectors.Utils;
 

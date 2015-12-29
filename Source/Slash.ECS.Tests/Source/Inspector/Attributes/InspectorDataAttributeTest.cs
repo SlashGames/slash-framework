@@ -8,6 +8,7 @@ namespace Slash.ECS.Tests.Inspector.Attributes
 {
     using NUnit.Framework;
 
+    using Slash.Application.Games;
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;

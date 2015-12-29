@@ -10,12 +10,13 @@ namespace Slash.Tests.ECS
 
     using NUnit.Framework;
 
+    using Slash.Application.Games;
+    using Slash.Application.Systems;
     using Slash.Collections.AttributeTables;
     using Slash.ECS;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Components;
     using Slash.ECS.Events;
-    using Slash.ECS.Systems;
 
     public static class SystemTestUtils
     {

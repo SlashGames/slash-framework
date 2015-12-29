@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.ECS.Features.Serialization.Systems
+namespace Slash.Application.Features.Serialization.Systems
 {
     using System;
     using System.Collections.Generic;
@@ -12,14 +12,14 @@ namespace Slash.ECS.Features.Serialization.Systems
     using System.Linq;
     using System.Xml.Serialization;
 
+    using Slash.Application.Features.Serialization.Events;
+    using Slash.Application.Systems;
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Blueprints.Extensions;
     using Slash.ECS.Components;
     using Slash.ECS.Events;
-    using Slash.ECS.Features.Serialization.Events;
     using Slash.ECS.Inspector.Data;
-    using Slash.ECS.Systems;
 
     [GameSystem]
     public class SerializationSystem : GameSystem
