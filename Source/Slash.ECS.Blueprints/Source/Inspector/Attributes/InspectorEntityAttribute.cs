@@ -130,9 +130,12 @@ namespace Slash.ECS.Inspector.Attributes
             {
                 if (entityConfiguration.BlueprintId != null)
                 {
-                    entityId = entityManager.CreateEntity(
-                        entityConfiguration.BlueprintId,
-                        entityConfiguration.Configuration);
+                    throw new Exception(
+                        "InspectorEntityAttribute not usable right now, see github issue #24 (https://github.com/npruehs/slash-framework/issues/24)");
+                    // TODO(co): How to get blueprint at this place?
+                    //entityId = entityManager.CreateEntity(
+                    //    entityConfiguration.BlueprintId,
+                    //    entityConfiguration.Configuration);
                 }
             }
             return entityId;

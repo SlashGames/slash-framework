@@ -80,9 +80,17 @@
     <Compile Include="Source\Utils\Options.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Slash.Application\Slash.Application.csproj">
+      <Project>{9DE696A9-4B2E-4255-961A-D45EF4FA0B80}</Project>
+      <Name>Slash.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>Slash.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Slash.ECS.Blueprints\Slash.ECS.Blueprints.csproj">
+      <Project>{BC441981-E452-4FE7-8BF1-5C18DFB2D0B4}</Project>
+      <Name>Slash.ECS.Blueprints</Name>
     </ProjectReference>
     <ProjectReference Include="..\Slash.ECS\Slash.ECS.csproj">
       <Project>{8A6E1D65-C56C-4F71-9991-6AE99E8D5080}</Project>

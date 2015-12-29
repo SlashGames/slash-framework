@@ -11,6 +11,7 @@ namespace Slash.Unity.Common.ECS
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS;
+    using Slash.ECS.Blueprints.Extensions;
     using Slash.ECS.Events;
 
     using UnityEngine;

@@ -70,6 +70,7 @@ namespace Slash.ECS.Tests.Inspector.Utils
         }
 
         [Test]
+        [Ignore("Enable when InspectorEntityAttribute works again (see issue #24 [https://github.com/npruehs/slash-framework/issues/24])")]
         public void TestDeinitRemovesChildEntity()
         {
             var entityManager = this.testGame.EntityManager;

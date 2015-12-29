@@ -85,7 +85,7 @@ namespace Slash.ECS.Systems
             this.systems.Add(system);
             this.systemsByType.Add(system.GetType(), system);
 
-            this.game.EventManager.QueueEvent(FrameworkEvent.SystemAdded, system);
+            this.game.EventManager.QueueEvent(SystemGameEvent.SystemAdded, system);
         }
 
         /// <summary>

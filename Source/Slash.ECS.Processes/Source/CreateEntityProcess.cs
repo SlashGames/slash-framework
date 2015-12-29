@@ -7,6 +7,8 @@
 namespace Slash.ECS.Processes
 {
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Blueprints;
+    using Slash.ECS.Blueprints.Extensions;
 
     /// <summary>
     ///   Creates an entity with the specified blueprint and configuration.
@@ -17,20 +19,20 @@ namespace Slash.ECS.Processes
 
         private readonly IAttributeTable attributeTable;
 
-        private readonly string blueprintId;
+        private readonly Blueprint blueprint;
 
         #endregion
 
         #region Constructors and Destructors
 
-        public CreateEntityProcess(string blueprintId)
-            : this(blueprintId, null)
+        public CreateEntityProcess(Blueprint blueprint)
+            : this(blueprint, null)
         {
         }
 
-        public CreateEntityProcess(string blueprintId, IAttributeTable attributeTable)
+        public CreateEntityProcess(Blueprint blueprint, IAttributeTable attributeTable)
         {
-            this.blueprintId = blueprintId;
+            this.blueprint = blueprint;
             this.attributeTable = attributeTable;
         }
 
@@ -48,7 +50,7 @@ namespace Slash.ECS.Processes
         {
             base.Update(dt);
 
-            this.CreatedEntity = this.EntityManager.CreateEntity(this.blueprintId, this.attributeTable);
+            this.CreatedEntity = this.EntityManager.CreateEntity(this.blueprint, this.attributeTable);
 
             this.Kill();
         }

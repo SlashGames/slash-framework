@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
 
+    using Slash.Application.Games;
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Components;
@@ -56,13 +57,13 @@
         /// </summary>
         public Game()
         {
-            this.entityManager = new EntityManager(this);
-            this.systemManager = new SystemManager(this);
+            this.Log = new GameLogger();
             this.eventManager = new EventManager();
+            this.entityManager = new EntityManager(this.eventManager, this.Log);
+            this.systemManager = new SystemManager(this);
             this.processManager = new ProcessManager(this.entityManager, this.eventManager);
             this.Running = false;
             this.TimeElapsed = 0.0f;
-            this.Log = new GameLogger();
             this.AddSystemsViaReflection = true;
         }
 
@@ -176,7 +177,7 @@
             }
 
             this.Running = false;
-            this.eventManager.QueueEvent(FrameworkEvent.GamePaused);
+            this.eventManager.QueueEvent(ApplicationGameEvent.GamePaused);
 
             // Process events till the paused event before stopping the game.
             // TODO(co): Introduce a SendEvent method for event manager and handle both cases: Currently inside event handling and not inside.
@@ -194,7 +195,7 @@
             }
 
             this.Running = true;
-            this.eventManager.QueueEvent(FrameworkEvent.GameResumed);
+            this.eventManager.QueueEvent(ApplicationGameEvent.GameResumed);
         }
 
         /// <summary>
@@ -222,7 +223,7 @@
 
             // Send event.
             this.Running = true;
-            this.eventManager.QueueEvent(FrameworkEvent.GameStarted);
+            this.eventManager.QueueEvent(ApplicationGameEvent.GameStarted);
 
             // Give the derived game the chance to do game start things.
             this.OnGameStarted();
@@ -240,7 +241,7 @@
             }
 
             // Send event.
-            this.eventManager.FireImmediately(FrameworkEvent.GameStopped);
+            this.eventManager.FireImmediately(ApplicationGameEvent.GameStopped);
             this.Running = false;
         }
 

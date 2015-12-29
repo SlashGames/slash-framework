@@ -6,15 +6,11 @@
 
 namespace Slash.Unity.Editor.Common.Inspectors.Configuration
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
 
     using Slash.Collections.AttributeTables;
-    using Slash.Collections.Extensions;
     using Slash.ECS.Blueprints;
-    using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Systems;
     using Slash.Unity.Common.Configuration;

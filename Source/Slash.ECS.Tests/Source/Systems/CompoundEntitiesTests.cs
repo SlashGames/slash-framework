@@ -9,6 +9,7 @@ namespace Slash.ECS.Tests.Systems
     using NUnit.Framework;
 
     using Slash.ECS.Components;
+    using Slash.ECS.Events;
     using Slash.ECS.Systems;
 
     public class CompoundEntitiesTests
@@ -18,8 +19,7 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestEntityRemovedWhenRemovingWholeEntity()
         {
-            var game = new Game();
-            var entityManager = new EntityManager(game);
+            var entityManager = new EntityManager(new EventManager());
 
             // Create compound entities.
             var compoundEntities = new CompoundEntities<TestCompound>(entityManager);
@@ -42,8 +42,7 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestInitialize()
         {
-            var game = new Game();
-            var entityManager = new EntityManager(game);
+            var entityManager = new EntityManager(new EventManager());
 
             // Create compound entities.
             new CompoundEntities<TestCompound>(entityManager);
@@ -52,8 +51,7 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestInitializeWithComponentField()
         {
-            var game = new Game();
-            var entityManager = new EntityManager(game);
+            var entityManager = new EntityManager(new EventManager());
 
             // Create compound entities.
             new CompoundEntities<TestCompoundWithField>(entityManager);
@@ -62,8 +60,7 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestInvalidEntityAdded()
         {
-            var game = new Game();
-            var entityManager = new EntityManager(game);
+            var entityManager = new EntityManager(new EventManager());
 
             // Create compound entities.
             var compoundEntities = new CompoundEntities<TestCompound>(entityManager);
@@ -80,8 +77,7 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestValidEntityAdded()
         {
-            var game = new Game();
-            var entityManager = new EntityManager(game);
+            var entityManager = new EntityManager(new EventManager());
 
             // Create compound entities.
             var compoundEntities = new CompoundEntities<TestCompound>(entityManager);
@@ -100,8 +96,7 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestValidEntityAddedWithComponentField()
         {
-            var game = new Game();
-            var entityManager = new EntityManager(game);
+            var entityManager = new EntityManager(new EventManager());
 
             // Create compound entities.
             var compoundEntities = new CompoundEntities<TestCompoundWithField>(entityManager);
@@ -118,8 +113,7 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestValidEntityWithOptionalCompAdded()
         {
-            var game = new Game();
-            var entityManager = new EntityManager(game);
+            var entityManager = new EntityManager(new EventManager());
 
             // Create compound entities.
             var compoundEntities = new CompoundEntities<TestCompoundWithOneOptionalComp>(entityManager);
@@ -136,8 +130,7 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestValidEntityWithOptionalCompAddedTriggerEventOnlyOnce()
         {
-            var game = new Game();
-            var entityManager = new EntityManager(game);
+            var entityManager = new EntityManager(new EventManager());
 
             // Create compound entities.
             var compoundEntities = new CompoundEntities<TestCompoundWithOneOptionalComp>(entityManager);

@@ -10,6 +10,7 @@ namespace Slash.ECS.Blueprints
     using System.Linq;
 
     using Slash.Collections.AttributeTables;
+    using Slash.ECS.Blueprints.Extensions;
     using Slash.ECS.Components;
 
     /// <summary>

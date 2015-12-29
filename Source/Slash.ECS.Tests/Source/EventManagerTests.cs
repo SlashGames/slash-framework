@@ -10,6 +10,7 @@ namespace Slash.ECS.Tests
 
     using NUnit.Framework;
 
+    using Slash.Application.Games;
     using Slash.Collections.AttributeTables;
     using Slash.Collections.Utils;
     using Slash.ECS.Components;
@@ -149,7 +150,7 @@ namespace Slash.ECS.Tests
         [Test]
         public void TestGamePausedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEvent.GamePaused, this.OnGamePaused);
+            this.game.EventManager.RegisterListener(ApplicationGameEvent.GamePaused, this.OnGamePaused);
             this.game.StartGame(null);
             this.game.PauseGame();
             this.CheckTestPassed();
@@ -161,7 +162,7 @@ namespace Slash.ECS.Tests
         [Test]
         public void TestGameResumedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEvent.GameResumed, this.OnGameResumed);
+            this.game.EventManager.RegisterListener(ApplicationGameEvent.GameResumed, this.OnGameResumed);
             this.game.StartGame(null);
             this.game.PauseGame();
             this.game.ResumeGame();
@@ -174,7 +175,7 @@ namespace Slash.ECS.Tests
         [Test]
         public void TestGameStartedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEvent.GameStarted, this.OnGameStarted);
+            this.game.EventManager.RegisterListener(ApplicationGameEvent.GameStarted, this.OnGameStarted);
             this.game.StartGame(null);
             this.CheckTestPassed();
         }
@@ -241,7 +242,7 @@ namespace Slash.ECS.Tests
         [Test]
         public void TestSystemAddedEvent()
         {
-            this.game.EventManager.RegisterListener(FrameworkEvent.SystemAdded, this.OnSystemAdded);
+            this.game.EventManager.RegisterListener(SystemGameEvent.SystemAdded, this.OnSystemAdded);
             this.game.SystemManager.AddSystem(this.system);
             this.CheckTestPassed();
         }

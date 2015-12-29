@@ -6,8 +6,6 @@
 
 namespace Slash.ECS.Events
 {
-    using Slash.ECS.Systems;
-
     /// <summary>
     ///   Type of an event that occurred within the entity system.
     /// </summary>
@@ -43,56 +41,6 @@ namespace Slash.ECS.Events
         ///   </para>
         /// </summary>
         EntityInitialized,
-
-        /// <summary>
-        ///   <para>
-        ///     The game starts.
-        ///   </para>
-        ///   <para>
-        ///     Event data: <c>null</c>
-        ///   </para>
-        /// </summary>
-        GameStarted,
-
-        /// <summary>
-        ///   <para>
-        ///     The game has been paused.
-        ///   </para>
-        ///   <para>
-        ///     Event data: <c>null</c>
-        ///   </para>
-        /// </summary>
-        GamePaused,
-
-        /// <summary>
-        ///   <para>
-        ///     The game has been resumed.
-        ///   </para>
-        ///   <para>
-        ///     Event data: <c>null</c>
-        ///   </para>
-        /// </summary>
-        GameResumed,
-
-        /// <summary>
-        ///   <para>
-        ///     The game was stopped.
-        ///   </para>
-        ///   <para>
-        ///     Event data: <c>null</c>
-        ///   </para>
-        /// </summary>
-        GameStopped,
-
-        /// <summary>
-        ///   <para>
-        ///     A new system has been added.
-        ///   </para>
-        ///   <para>
-        ///     Event data: <see cref="ISystem" />
-        ///   </para>
-        /// </summary>
-        SystemAdded,
 
         /// <summary>
         ///   <para>

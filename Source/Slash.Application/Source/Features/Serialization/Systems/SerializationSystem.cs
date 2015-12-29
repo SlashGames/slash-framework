@@ -6,6 +6,7 @@
 
 namespace Slash.ECS.Features.Serialization.Systems
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -13,6 +14,7 @@ namespace Slash.ECS.Features.Serialization.Systems
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
+    using Slash.ECS.Blueprints.Extensions;
     using Slash.ECS.Events;
     using Slash.ECS.Features.Serialization.Events;
     using Slash.ECS.Systems;
@@ -62,7 +64,19 @@ namespace Slash.ECS.Features.Serialization.Systems
             List<SerializedEntity> savedEntities =
                 this.EntityManager.Entities.Select(
                     entityId =>
-                    new SerializedEntity { EntityId = entityId, Blueprint = this.EntityManager.Save(entityId) })
+                    {
+                        AttributeTable attributeTable;
+                        List<Type> componentTypes;
+                        this.EntityManager.Save(entityId, out attributeTable, out componentTypes);
+
+                        var blueprint = new Blueprint
+                        {
+                            AttributeTable = attributeTable,
+                            ComponentTypes = componentTypes
+                        };
+
+                        return new SerializedEntity { EntityId = entityId, Blueprint = blueprint};
+                    })
                     .ToList();
 
             Savegame savegame = new Savegame { SavedEntities = savedEntities };

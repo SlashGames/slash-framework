@@ -13,12 +13,11 @@ namespace Slash.ECS.Components
 
     using Slash.Collections.AttributeTables;
     using Slash.Collections.ObjectModel;
-    using Slash.ECS.Blueprints;
     using Slash.ECS.Events;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.ECS.Inspector.Utils;
-    using Slash.Reflection.Extensions;
+    using Slash.ECS.Logging;
 
     public delegate void ComponentAddedDelegate<in T>(int entityId, T component);
 
@@ -47,9 +46,9 @@ namespace Slash.ECS.Components
         private readonly HashSet<int> entities;
 
         /// <summary>
-        ///   Game this manager controls the entities of.
+        ///   Event manager to send entity events to.
         /// </summary>
-        private readonly Game game;
+        private readonly EventManager eventManager;
 
         /// <summary>
         ///   Inactive entities and their components.
@@ -60,6 +59,11 @@ namespace Slash.ECS.Components
         ///   Inspector types of entity components.
         /// </summary>
         private readonly InspectorTypeTable inspectorTypes;
+
+        /// <summary>
+        ///   Logger.
+        /// </summary>
+        private readonly GameLogger log;
 
         /// <summary>
         ///   Ids of all entities that have been removed in this tick.
@@ -78,10 +82,17 @@ namespace Slash.ECS.Components
         /// <summary>
         ///   Constructs a new entity manager without any initial entities.
         /// </summary>
-        /// <param name="game"> Game to manage the entities for. </param>
-        public EntityManager(Game game)
+        /// <param name="eventManager">Event manager to send entity events to.</param>
+        /// <param name="log">Logger.</param>
+        public EntityManager(EventManager eventManager, GameLogger log = null)
         {
-            this.game = game;
+            if (log == null)
+            {
+                log = new GameLogger();
+            }
+
+            this.eventManager = eventManager;
+            this.log = log;
             this.nextEntityId = 1;
             this.entities = new HashSet<int>();
             this.removedEntities = new HashSet<int>();
@@ -214,10 +225,33 @@ namespace Slash.ECS.Components
 
             if (sendEvent)
             {
-                this.game.EventManager.QueueEvent(
+                this.eventManager.QueueEvent(
                     FrameworkEvent.ComponentAdded,
                     new EntityComponentData(entityId, component));
             }
+        }
+
+        /// <summary>
+        ///   Adds a component with the specified type to entity with the
+        ///   specified id and initializes it with the values taken from
+        ///   the passed attribute table.
+        /// </summary>
+        /// <param name="componentType">Type of the component to add.</param>
+        /// <param name="entityId">Id of the entity to add the component to.</param>
+        /// <param name="attributeTable">Attribute table to initialize the component with.</param>
+        public void AddComponent(Type componentType, int entityId, IAttributeTable attributeTable)
+        {
+            // Create component.
+            IEntityComponent component = (IEntityComponent)Activator.CreateInstance(componentType);
+
+            // Init component.
+            this.InitComponent(component, attributeTable);
+
+            // Initialize component with the attribute table data.
+            component.InitComponent(attributeTable);
+
+            // Add component. 
+            this.AddComponent(entityId, component);
         }
 
         /// <summary>
@@ -296,74 +330,8 @@ namespace Slash.ECS.Components
             // Adjust next entity id.
             this.nextEntityId = Math.Max(this.nextEntityId, id + 1);
 
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityCreated, id);
+            this.eventManager.QueueEvent(FrameworkEvent.EntityCreated, id);
             return id;
-        }
-
-        /// <summary>
-        ///   Creates a new entity, adding components matching the passed
-        ///   blueprint and initializing these with the data stored in the
-        ///   blueprint and the specified configuration. Configuration data
-        ///   is preferred over blueprint data.
-        /// </summary>
-        /// <param name="blueprint"> Blueprint describing the entity to create. </param>
-        /// <param name="configuration"> Data for initializing the entity. </param>
-        /// <param name="additionalComponents">Components to add to the entity, in addition to the ones specified by the blueprint.</param>
-        /// <returns> Unique id of the new entity. </returns>
-        public int CreateEntity(Blueprint blueprint, IAttributeTable configuration, List<Type> additionalComponents)
-        {
-            int id = this.CreateEntity();
-            this.InitEntity(id, blueprint, configuration, additionalComponents);
-            return id;
-        }
-
-        /// <summary>
-        ///   Creates a new entity, adding components matching the passed
-        ///   blueprint.
-        /// </summary>
-        /// <param name="blueprint">Blueprint describing the entity to create.</param>
-        /// <returns>Unique id of the new entity.</returns>
-        public int CreateEntity(Blueprint blueprint)
-        {
-            return this.CreateEntity(blueprint, null);
-        }
-
-        /// <summary>
-        ///   Creates a new entity, adding components of the blueprint with the specified id.
-        /// </summary>
-        /// <param name="blueprintId">Id of blueprint describing the entity to create.</param>
-        /// <returns>Unique id of the new entity.</returns>
-        public int CreateEntity(string blueprintId)
-        {
-            return this.CreateEntity(this.game.BlueprintManager.GetBlueprint(blueprintId));
-        }
-
-        /// <summary>
-        ///   Creates a new entity, adding components matching the passed
-        ///   blueprint and initializing these with the data stored in the
-        ///   blueprint and the specified configuration. Configuration data
-        ///   is preferred over blueprint data.
-        /// </summary>
-        /// <param name="blueprintId"> Id of blueprint describing the entity to create. </param>
-        /// <param name="configuration"> Data for initializing the entity. </param>
-        /// <returns> Unique id of the new entity. </returns>
-        public int CreateEntity(string blueprintId, IAttributeTable configuration)
-        {
-            return this.CreateEntity(this.game.BlueprintManager.GetBlueprint(blueprintId), configuration);
-        }
-
-        /// <summary>
-        ///   Creates a new entity, adding components matching the passed
-        ///   blueprint and initializing these with the data stored in the
-        ///   blueprint and the specified configuration. Configuration data
-        ///   is preferred over blueprint data.
-        /// </summary>
-        /// <param name="blueprint"> Blueprint describing the entity to create. </param>
-        /// <param name="configuration"> Data for initializing the entity. </param>
-        /// <returns> Unique id of the new entity. </returns>
-        public int CreateEntity(Blueprint blueprint, IAttributeTable configuration)
-        {
-            return this.CreateEntity(blueprint, configuration, null);
         }
 
         /// <summary>
@@ -392,7 +360,7 @@ namespace Slash.ECS.Components
 
                 components.Add(component);
 
-                this.game.EventManager.QueueEvent(
+                this.eventManager.QueueEvent(
                     FrameworkEvent.ComponentRemoved,
                     new EntityComponentData(entityId, component));
             }
@@ -489,12 +457,16 @@ namespace Slash.ECS.Components
         /// </summary>
         /// <param name="entityId"> Id of the entity to get the component of. </param>
         /// <param name="componentType"> Type of the component to get. </param>
+        /// <param name="considerInherited">
+        ///   Indicates if a component that was inherited by the specified type should be returned if
+        ///   found.
+        /// </param>
         /// <returns> The component, if there is one of the specified type attached to the entity, and null otherwise. </returns>
         /// <exception cref="ArgumentOutOfRangeException">Entity id is negative.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Entity id has not yet been assigned.</exception>
         /// <exception cref="ArgumentException">Entity with the specified id has already been removed.</exception>
         /// <exception cref="ArgumentNullException">Passed component type is null.</exception>
-        public IEntityComponent GetComponent(int entityId, Type componentType)
+        public IEntityComponent GetComponent(int entityId, Type componentType, bool considerInherited = false)
         {
             this.CheckEntityId(entityId);
 
@@ -503,8 +475,8 @@ namespace Slash.ECS.Components
                 throw new ArgumentNullException("componentType");
             }
 
-            // Get component manager.
-            if (componentType.IsInterface())
+            // Check all component managers if inherited types should be considered.
+            if (considerInherited)
             {
                 foreach (KeyValuePair<Type, ComponentManager> componentManagerPair in this.componentManagers)
                 {
@@ -653,57 +625,6 @@ namespace Slash.ECS.Components
         }
 
         /// <summary>
-        ///   Initializes the specified entity, adding components matching the
-        ///   passed blueprint and initializing these with the data stored in
-        ///   the blueprint and the specified configuration. Configuration
-        ///   data is preferred over blueprint data.
-        /// </summary>
-        /// <param name="entityId">Id of the entity to initialize.</param>
-        /// <param name="blueprint"> Blueprint describing the entity to create. </param>
-        /// <param name="configuration"> Data for initializing the entity. </param>
-        /// <param name="additionalComponents">Components to add to the entity, in addition to the ones specified by the blueprint.</param>
-        public void InitEntity(
-            int entityId,
-            Blueprint blueprint,
-            IAttributeTable configuration,
-            IEnumerable<Type> additionalComponents)
-        {
-            if (blueprint == null)
-            {
-                throw new ArgumentNullException("blueprint", "Blueprint is null.");
-            }
-
-            // Setup attribute table.
-            HierarchicalAttributeTable attributeTable = new HierarchicalAttributeTable();
-            if (configuration != null)
-            {
-                attributeTable.AddParent(configuration);
-            }
-
-            // Add attribute tables of all ancestors.
-            IAttributeTable blueprintAttributeTable = blueprint.GetAttributeTable();
-            if (blueprintAttributeTable != null)
-            {
-                attributeTable.AddParent(blueprintAttributeTable);
-            }
-
-            // Build list of components to add.
-            IEnumerable<Type> blueprintComponentTypes = blueprint.GetAllComponentTypes();
-            IEnumerable<Type> componentTypes = additionalComponents != null
-                ? blueprintComponentTypes.Union(additionalComponents)
-                : blueprintComponentTypes;
-
-            // Add components.
-            foreach (Type type in componentTypes)
-            {
-                this.AddComponent(type, entityId, attributeTable);
-            }
-
-            // Raise event.
-            this.OnEntityInitialized(entityId);
-        }
-
-        /// <summary>
         ///   Initializes the specified entity, adding the specified components.
         /// </summary>
         /// <param name="entityId">Id of the entity to initialize.</param>
@@ -789,7 +710,7 @@ namespace Slash.ECS.Components
                 // Deinitialize component.
                 this.DeinitComponent(component);
 
-                this.game.EventManager.QueueEvent(
+                this.eventManager.QueueEvent(
                     FrameworkEvent.ComponentRemoved,
                     new EntityComponentData(entityId, component));
             }
@@ -813,7 +734,7 @@ namespace Slash.ECS.Components
                     IEntityComponent component;
                     if (manager.RemoveComponent(entityId, out component))
                     {
-                        this.game.EventManager.QueueEvent(
+                        this.eventManager.QueueEvent(
                             FrameworkEvent.ComponentRemoved,
                             new EntityComponentData(entityId, component));
                     }
@@ -861,7 +782,7 @@ namespace Slash.ECS.Components
                     continue;
                 }
 
-                this.game.EventManager.QueueEvent(
+                this.eventManager.QueueEvent(
                     FrameworkEvent.ComponentRemoved,
                     new EntityComponentData(entityId, component));
             }
@@ -871,10 +792,10 @@ namespace Slash.ECS.Components
             this.removedEntities.Add(entityId);
         }
 
-        public Blueprint Save(int entityId)
+        public void Save(int entityId, out AttributeTable attributeTable, out List<Type> componentTypes)
         {
-            AttributeTable attributeTable = new AttributeTable();
-            List<Type> componentTypes = new List<Type>();
+            attributeTable = new AttributeTable();
+            componentTypes = new List<Type>();
 
             // Get all components.
             foreach (ComponentManager componentManager in this.componentManagers.Values)
@@ -888,9 +809,6 @@ namespace Slash.ECS.Components
                 componentTypes.Add(entityComponent.GetType());
                 InspectorUtils.SaveToAttributeTable(this, entityComponent, attributeTable);
             }
-
-            Blueprint blueprint = new Blueprint { AttributeTable = attributeTable, ComponentTypes = componentTypes };
-            return blueprint;
         }
 
         /// <summary>
@@ -928,29 +846,6 @@ namespace Slash.ECS.Components
         #region Methods
 
         /// <summary>
-        ///   Adds a component with the specified type to entity with the
-        ///   specified id and initializes it with the values taken from
-        ///   the passed attribute table.
-        /// </summary>
-        /// <param name="componentType">Type of the component to add.</param>
-        /// <param name="entityId">Id of the entity to add the component to.</param>
-        /// <param name="attributeTable">Attribute table to initialize the component with.</param>
-        private void AddComponent(Type componentType, int entityId, IAttributeTable attributeTable)
-        {
-            // Create component.
-            IEntityComponent component = (IEntityComponent)Activator.CreateInstance(componentType);
-
-            // Init component.
-            this.InitComponent(component, attributeTable);
-
-            // Initialize component with the attribute table data.
-            component.InitComponent(attributeTable);
-
-            // Add component. 
-            this.AddComponent(entityId, component);
-        }
-
-        /// <summary>
         ///   Checks whether the passed entity is valid, throwing an exception if not.
         /// </summary>
         /// <param name="id"> Entity id to check. </param>
@@ -974,7 +869,7 @@ namespace Slash.ECS.Components
             InspectorType inspectorType;
             if (!this.inspectorTypes.TryGetInspectorType(component.GetType(), out inspectorType))
             {
-                this.game.Log.Warning(
+                this.log.Warning(
                     "Entity component '" + component.GetType() + "' not flagged as inspector type, can't deinitialize.");
                 return;
             }
@@ -1003,7 +898,7 @@ namespace Slash.ECS.Components
             InspectorType inspectorType;
             if (!this.inspectorTypes.TryGetInspectorType(component.GetType(), out inspectorType))
             {
-                this.game.Log.Warning(
+                this.log.Warning(
                     "Entity component '" + component.GetType()
                     + "' not flagged as inspector type, can't initialize via reflection.");
                 return;
@@ -1018,7 +913,7 @@ namespace Slash.ECS.Components
             InspectorUtils.InitFromAttributeTable(this, inspectorType, component, attributeTable);
         }
 
-        private void OnEntityInitialized(int entityId)
+        public void OnEntityInitialized(int entityId)
         {
             var handler = this.EntityInitialized;
             if (handler != null)
@@ -1026,7 +921,7 @@ namespace Slash.ECS.Components
                 handler(entityId);
             }
 
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
+            this.eventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
         }
 
         private void OnEntityRemoved(int entityId)
@@ -1037,7 +932,7 @@ namespace Slash.ECS.Components
                 handler(entityId);
             }
 
-            this.game.EventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
+            this.eventManager.QueueEvent(FrameworkEvent.EntityRemoved, entityId);
         }
 
         #endregion

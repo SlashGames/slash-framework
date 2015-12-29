@@ -44,6 +44,7 @@ namespace Slash.ECS.Tests.Inspector.Attributes
         }
 
         [Test]
+        [Ignore("Enable when InspectorEntityAttribute works again (see issue #24 [https://github.com/npruehs/slash-framework/issues/24])")]
         public void TestDeserializationFromAttributeTable()
         {
             IAttributeTable attributeTable = new AttributeTable();

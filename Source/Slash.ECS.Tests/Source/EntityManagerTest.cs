@@ -12,6 +12,7 @@ namespace Slash.ECS.Tests
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Components;
+    using Slash.ECS.Events;
 
     /// <summary>
     ///   Unit tests for the EntityManager class.
@@ -25,12 +26,7 @@ namespace Slash.ECS.Tests
         ///   Test entity manager to run unit tests on.
         /// </summary>
         private EntityManager entityManager;
-
-        /// <summary>
-        ///   Test game to run unit tests on.
-        /// </summary>
-        private Game game;
-
+        
         /// <summary>
         ///   Test component to run unit tests on.
         /// </summary>
@@ -48,8 +44,7 @@ namespace Slash.ECS.Tests
         [SetUp]
         public void SetUp()
         {
-            this.game = new Game();
-            this.entityManager = new EntityManager(this.game);
+            this.entityManager = new EntityManager(new EventManager());
             this.testEntityComponent = new TestEntityComponent();
         }
 
