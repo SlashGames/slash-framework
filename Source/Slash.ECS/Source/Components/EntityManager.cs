@@ -515,6 +515,18 @@ namespace Slash.ECS.Components
         }
 
         /// <summary>
+        ///   Returns all components of the entity with the specified id.
+        /// </summary>
+        /// <param name="entityId">Id of entity to get components for.</param>
+        /// <returns>All components of the entity with the specified id.</returns>
+        public IEnumerable<IEntityComponent> GetComponents(int entityId)
+        {
+            return
+                this.componentManagers.Values.Select(componentManager => componentManager.GetComponent(entityId))
+                    .Where(entityComponent => entityComponent != null);
+        }
+
+        /// <summary>
         ///   Retrieves an array containing the ids of all living entities in
         ///   O(n).
         /// </summary>
@@ -639,6 +651,17 @@ namespace Slash.ECS.Components
 
             // Raise event.
             this.OnEntityInitialized(entityId);
+        }
+
+        public void OnEntityInitialized(int entityId)
+        {
+            var handler = this.EntityInitialized;
+            if (handler != null)
+            {
+                handler(entityId);
+            }
+
+            this.eventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
         }
 
         /// <summary>
@@ -792,25 +815,6 @@ namespace Slash.ECS.Components
             this.removedEntities.Add(entityId);
         }
 
-        public void Save(int entityId, out AttributeTable attributeTable, out List<Type> componentTypes)
-        {
-            attributeTable = new AttributeTable();
-            componentTypes = new List<Type>();
-
-            // Get all components.
-            foreach (ComponentManager componentManager in this.componentManagers.Values)
-            {
-                IEntityComponent entityComponent = componentManager.GetComponent(entityId);
-                if (entityComponent == null)
-                {
-                    continue;
-                }
-
-                componentTypes.Add(entityComponent.GetType());
-                InspectorUtils.SaveToAttributeTable(this, entityComponent, attributeTable);
-            }
-        }
-
         /// <summary>
         ///   Tries to get a component of the passed type attached to the entity with the specified id.
         /// </summary>
@@ -911,17 +915,6 @@ namespace Slash.ECS.Components
             }
 
             InspectorUtils.InitFromAttributeTable(this, inspectorType, component, attributeTable);
-        }
-
-        public void OnEntityInitialized(int entityId)
-        {
-            var handler = this.EntityInitialized;
-            if (handler != null)
-            {
-                handler(entityId);
-            }
-
-            this.eventManager.QueueEvent(FrameworkEvent.EntityInitialized, entityId);
         }
 
         private void OnEntityRemoved(int entityId)

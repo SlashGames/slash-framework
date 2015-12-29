@@ -38,6 +38,7 @@
     <Compile Include="Source\Extensions\EntityManagerExtensions.cs" />
     <Compile Include="Source\HierarchicalBlueprintManager.cs" />
     <Compile Include="Source\IBlueprintManager.cs" />
+    <Compile Include="Source\Configurations\EntityConfiguration.cs" />
     <Compile Include="Source\Inspector\Attributes\InspectorEntityAttribute.cs" />
   </ItemGroup>
   <ItemGroup>

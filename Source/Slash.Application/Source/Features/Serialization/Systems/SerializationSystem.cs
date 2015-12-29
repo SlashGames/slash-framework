@@ -15,8 +15,10 @@ namespace Slash.ECS.Features.Serialization.Systems
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Blueprints.Extensions;
+    using Slash.ECS.Components;
     using Slash.ECS.Events;
     using Slash.ECS.Features.Serialization.Events;
+    using Slash.ECS.Inspector.Data;
     using Slash.ECS.Systems;
 
     [GameSystem]
@@ -30,6 +32,17 @@ namespace Slash.ECS.Features.Serialization.Systems
 
             this.EventManager.RegisterListener(SerializationAction.Save, this.OnSave);
             this.EventManager.RegisterListener(SerializationAction.Load, this.OnLoad);
+        }
+
+        public static void SaveToAttributeTable(EntityManager entityManager, object obj, AttributeTable attributeTable)
+        {
+            InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
+            if (inspectorType == null)
+            {
+                throw new ArgumentException("No inspector type for object " + obj.GetType());
+            }
+
+            SaveToAttributeTable(entityManager, inspectorType, obj, attributeTable);
         }
 
         #endregion
@@ -54,30 +67,24 @@ namespace Slash.ECS.Features.Serialization.Systems
             }
             foreach (var savedEntity in savegame.SavedEntities)
             {
-                this.EntityManager.InitEntity(savedEntity.EntityId, savedEntity.Blueprint, null, null);
+                this.EntityManager.InitEntity(savedEntity.EntityId, savedEntity.Blueprint);
             }
         }
 
         private void OnSave(GameEvent e)
         {
             string path = (string)e.EventData;
-            List<SerializedEntity> savedEntities =
-                this.EntityManager.Entities.Select(
-                    entityId =>
-                    {
-                        AttributeTable attributeTable;
-                        List<Type> componentTypes;
-                        this.EntityManager.Save(entityId, out attributeTable, out componentTypes);
+            List<SerializedEntity> savedEntities = this.EntityManager.Entities.Select(
+                entityId =>
+                {
+                    AttributeTable attributeTable;
+                    List<Type> componentTypes;
+                    this.Save(entityId, out attributeTable, out componentTypes);
 
-                        var blueprint = new Blueprint
-                        {
-                            AttributeTable = attributeTable,
-                            ComponentTypes = componentTypes
-                        };
+                    var blueprint = new Blueprint { AttributeTable = attributeTable, ComponentTypes = componentTypes };
 
-                        return new SerializedEntity { EntityId = entityId, Blueprint = blueprint};
-                    })
-                    .ToList();
+                    return new SerializedEntity { EntityId = entityId, Blueprint = blueprint };
+                }).ToList();
 
             Savegame savegame = new Savegame { SavedEntities = savedEntities };
 
@@ -86,11 +93,40 @@ namespace Slash.ECS.Features.Serialization.Systems
             xmlSerializer.Serialize(stream, savegame);
         }
 
+        private void Save(int entityId, out AttributeTable attributeTable, out List<Type> componentTypes)
+        {
+            attributeTable = new AttributeTable();
+            componentTypes = new List<Type>();
+
+            // Get all components.
+            var entityComponents = this.EntityManager.GetComponents(entityId);
+            foreach (var entityComponent in entityComponents)
+            {
+                componentTypes.Add(entityComponent.GetType());
+                SaveToAttributeTable(this.EntityManager, entityComponent, attributeTable);
+            }
+        }
+
+        private static void SaveToAttributeTable(
+            EntityManager entityManager,
+            InspectorType inspectorType,
+            object obj,
+            AttributeTable attributeTable)
+        {
+            // Set values for all properties.
+            foreach (var inspectorProperty in inspectorType.Properties)
+            {
+                // Get value from object.
+                object propertyValue = inspectorProperty.GetPropertyValue(entityManager, obj);
+                attributeTable.SetValue(inspectorProperty.Name, propertyValue);
+            }
+        }
+
         #endregion
 
         public class Savegame
         {
-            #region Public Properties
+            #region Properties
 
             public List<SerializedEntity> SavedEntities { get; set; }
 
@@ -99,7 +135,7 @@ namespace Slash.ECS.Features.Serialization.Systems
 
         public class SerializedEntity
         {
-            #region Public Properties
+            #region Properties
 
             public Blueprint Blueprint { get; set; }
 
