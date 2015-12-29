@@ -8,8 +8,8 @@
     <ProjectGuid>{32F5CD1C-1889-4A37-B7E4-E3363488BE1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Slash.AI</RootNamespace>
-    <AssemblyName>Slash.AI</AssemblyName>
+    <RootNamespace>Slash.AI.Pathfinding</RootNamespace>
+    <AssemblyName>Slash.AI.Pathfinding</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -34,24 +34,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\Pathfinding\AStar.cs" />
-    <Compile Include="Source\Pathfinding\AStarNode.cs" />
-    <Compile Include="Source\Pathfinding\IAStarNode.cs" />
+    <Compile Include="Source\AStar.cs" />
+    <Compile Include="Source\AStarNode.cs" />
+    <Compile Include="Source\IAStarNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Collections\Slash.Collections.csproj">
       <Project>{03F9A6F7-F402-4581-B748-FA51BF3B1B82}</Project>
       <Name>Slash.Collections</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
