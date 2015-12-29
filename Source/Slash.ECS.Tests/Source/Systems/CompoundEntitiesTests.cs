@@ -18,18 +18,19 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestEntityRemovedWhenRemovingWholeEntity()
         {
-            Game game = new Game();
-            EntityManager entityManager = new EntityManager(game);
+            var game = new Game();
+            var entityManager = new EntityManager(game);
 
             // Create compound entities.
-            CompoundEntities<TestCompound> compoundEntities = new CompoundEntities<TestCompound>(entityManager);
-            int eventCount = 0;
+            var compoundEntities = new CompoundEntities<TestCompound>(entityManager);
+            var eventCount = 0;
             compoundEntities.EntityRemoved += (id, entity) => { ++eventCount; };
 
             // Add entity with required components.
             var entityId = entityManager.CreateEntity();
-            entityManager.AddComponent<TestCompoundComponentA>(entityId);
-            entityManager.AddComponent<TestCompoundComponentB>(entityId);
+            entityManager.InitEntity(
+                entityId,
+                new IEntityComponent[] { new TestCompoundComponentA(), new TestCompoundComponentB() });
 
             // Now remove entity.
             entityManager.RemoveEntity(entityId);
@@ -41,8 +42,9 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestInitialize()
         {
-            Game game = new Game();
-            EntityManager entityManager = new EntityManager(game);
+            var game = new Game();
+            var entityManager = new EntityManager(game);
+
             // Create compound entities.
             new CompoundEntities<TestCompound>(entityManager);
         }
@@ -50,8 +52,8 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestInitializeWithComponentField()
         {
-            Game game = new Game();
-            EntityManager entityManager = new EntityManager(game);
+            var game = new Game();
+            var entityManager = new EntityManager(game);
 
             // Create compound entities.
             new CompoundEntities<TestCompoundWithField>(entityManager);
@@ -60,17 +62,17 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestInvalidEntityAdded()
         {
-            Game game = new Game();
-            EntityManager entityManager = new EntityManager(game);
+            var game = new Game();
+            var entityManager = new EntityManager(game);
 
             // Create compound entities.
-            CompoundEntities<TestCompound> compoundEntities = new CompoundEntities<TestCompound>(entityManager);
-            bool entityAdded = false;
+            var compoundEntities = new CompoundEntities<TestCompound>(entityManager);
+            var entityAdded = false;
             compoundEntities.EntityAdded += (id, entity) => { entityAdded = true; };
 
             // Just add one of the necessary components.
             var entityId = entityManager.CreateEntity();
-            entityManager.AddComponent<TestCompoundComponentA>(entityId);
+            entityManager.InitEntity(entityId, new IEntityComponent[] { new TestCompoundComponentA() });
 
             Assert.IsFalse(entityAdded);
         }
@@ -78,18 +80,19 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestValidEntityAdded()
         {
-            Game game = new Game();
-            EntityManager entityManager = new EntityManager(game);
+            var game = new Game();
+            var entityManager = new EntityManager(game);
 
             // Create compound entities.
-            CompoundEntities<TestCompound> compoundEntities = new CompoundEntities<TestCompound>(entityManager);
-            bool entityAdded = false;
+            var compoundEntities = new CompoundEntities<TestCompound>(entityManager);
+            var entityAdded = false;
             compoundEntities.EntityAdded += (id, entity) => { entityAdded = true; };
 
             // Add entity with correct components.
             var entityId = entityManager.CreateEntity();
-            entityManager.AddComponent<TestCompoundComponentA>(entityId);
-            entityManager.AddComponent<TestCompoundComponentB>(entityId);
+            entityManager.InitEntity(
+                entityId,
+                new IEntityComponent[] { new TestCompoundComponentA(), new TestCompoundComponentB() });
 
             Assert.IsTrue(entityAdded);
         }
@@ -97,18 +100,17 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestValidEntityAddedWithComponentField()
         {
-            Game game = new Game();
-            EntityManager entityManager = new EntityManager(game);
+            var game = new Game();
+            var entityManager = new EntityManager(game);
 
             // Create compound entities.
-            CompoundEntities<TestCompoundWithField> compoundEntities =
-                new CompoundEntities<TestCompoundWithField>(entityManager);
-            bool entityAdded = false;
+            var compoundEntities = new CompoundEntities<TestCompoundWithField>(entityManager);
+            var entityAdded = false;
             compoundEntities.EntityAdded += (id, entity) => { entityAdded = true; };
 
             // Add entity with correct components.
             var entityId = entityManager.CreateEntity();
-            entityManager.AddComponent<TestCompoundComponentA>(entityId);
+            entityManager.InitEntity(entityId, new IEntityComponent[] { new TestCompoundComponentA() });
 
             Assert.IsTrue(entityAdded);
         }
@@ -116,18 +118,17 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestValidEntityWithOptionalCompAdded()
         {
-            Game game = new Game();
-            EntityManager entityManager = new EntityManager(game);
+            var game = new Game();
+            var entityManager = new EntityManager(game);
 
             // Create compound entities.
-            CompoundEntities<TestCompoundWithOneOptionalComp> compoundEntities =
-                new CompoundEntities<TestCompoundWithOneOptionalComp>(entityManager);
-            bool entityAdded = false;
+            var compoundEntities = new CompoundEntities<TestCompoundWithOneOptionalComp>(entityManager);
+            var entityAdded = false;
             compoundEntities.EntityAdded += (id, entity) => { entityAdded = true; };
 
             // Just add one of the components which is the necessary one.
             var entityId = entityManager.CreateEntity();
-            entityManager.AddComponent<TestCompoundComponentA>(entityId);
+            entityManager.InitEntity(entityId, new IEntityComponent[] { new TestCompoundComponentA() });
 
             Assert.IsTrue(entityAdded);
         }
@@ -135,19 +136,19 @@ namespace Slash.ECS.Tests.Systems
         [Test]
         public void TestValidEntityWithOptionalCompAddedTriggerEventOnlyOnce()
         {
-            Game game = new Game();
-            EntityManager entityManager = new EntityManager(game);
+            var game = new Game();
+            var entityManager = new EntityManager(game);
 
             // Create compound entities.
-            CompoundEntities<TestCompoundWithOneOptionalComp> compoundEntities =
-                new CompoundEntities<TestCompoundWithOneOptionalComp>(entityManager);
-            int entityAddedEvent = 0;
+            var compoundEntities = new CompoundEntities<TestCompoundWithOneOptionalComp>(entityManager);
+            var entityAddedEvent = 0;
             compoundEntities.EntityAdded += (id, entity) => { ++entityAddedEvent; };
 
-            // Just add one of the components which is the necessary one.
+            // Add required and optional component.
             var entityId = entityManager.CreateEntity();
-            entityManager.AddComponent<TestCompoundComponentA>(entityId);
-            entityManager.AddComponent<TestCompoundComponentB>(entityId);
+            entityManager.InitEntity(
+                entityId,
+                new IEntityComponent[] { new TestCompoundComponentA(), new TestCompoundComponentB() });
 
             Assert.AreEqual(1, entityAddedEvent);
         }
