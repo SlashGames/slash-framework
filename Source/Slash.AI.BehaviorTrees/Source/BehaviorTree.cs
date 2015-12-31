@@ -17,7 +17,7 @@ namespace Slash.AI.BehaviorTrees
     using Slash.Serialization.Utils;
 
     /// <summary>
-    ///   Implementation of behavior tree. For more information about behavior trees, see https://wiki.ticking-bomb-games.de/display/SEA/Behavior+Tree.
+    ///   Implementation of a behavior tree.
     /// </summary>
     [Serializable]
     public class BehaviorTree : IBehaviorTree, ICloneable
@@ -31,7 +31,7 @@ namespace Slash.AI.BehaviorTrees
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Gets or sets the root.
@@ -98,20 +98,23 @@ namespace Slash.AI.BehaviorTrees
             switch (agentData.ExecutionStatus)
             {
                 case ExecutionStatus.Running:
-                    {
-                        // Deactivate root task.
-                        this.root.Deactivate(agentData);
-                    }
+                {
+                    // Deactivate root task.
+                    this.root.Deactivate(agentData);
+                }
 
                     break;
             }
         }
 
         /// <summary>
-        ///   The equals.
+        ///   Determines whether the specified <see cref="T:BehaviorTree" /> is equal to the current <see cref="T:BehaviorTree" />.
         /// </summary>
-        /// <param name="other"> The other. </param>
-        /// <returns> The System.Boolean. </returns>
+        /// <returns>
+        ///   true if the specified <see cref="T:BehaviorTree" /> is equal to the current <see cref="T:BehaviorTree" />; otherwise,
+        ///   false.
+        /// </returns>
+        /// <param name="other">The <see cref="T:BehaviorTree" /> to compare with the current <see cref="T:BehaviorTree" />.</param>
         public bool Equals(BehaviorTree other)
         {
             if (ReferenceEquals(null, other))
@@ -128,10 +131,15 @@ namespace Slash.AI.BehaviorTrees
         }
 
         /// <summary>
-        ///   The equals.
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+        ///   <see cref="T:System.Object" />.
         /// </summary>
-        /// <param name="obj"> The obj. </param>
-        /// <returns> The System.Boolean. </returns>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -173,9 +181,12 @@ namespace Slash.AI.BehaviorTrees
         }
 
         /// <summary>
-        ///   The get hash code.
+        ///   Serves as a hash function for a particular type.
         /// </summary>
-        /// <returns> The System.Int32. </returns>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             return this.root != null ? this.root.GetHashCode() : 0;
@@ -201,27 +212,27 @@ namespace Slash.AI.BehaviorTrees
                 case ExecutionStatus.None:
                 case ExecutionStatus.Failed:
                 case ExecutionStatus.Success:
+                {
+                    IDecisionData decisionData = null;
+                    if (this.Root.Decide(agentData, ref decisionData) > 0.0f)
                     {
-                        IDecisionData decisionData = null;
-                        if (this.Root.Decide(agentData, ref decisionData) > 0.0f)
-                        {
-                            // Activate decider.
-                            agentData.ExecutionStatus = this.Root.Activate(agentData, decisionData);
+                        // Activate decider.
+                        agentData.ExecutionStatus = this.Root.Activate(agentData, decisionData);
 
-                            if (agentData.ExecutionStatus == ExecutionStatus.Running)
-                            {
-                                // Update decider.
-                                agentData.ExecutionStatus = this.Root.Update(agentData);
-                            }
+                        if (agentData.ExecutionStatus == ExecutionStatus.Running)
+                        {
+                            // Update decider.
+                            agentData.ExecutionStatus = this.Root.Update(agentData);
                         }
                     }
+                }
 
                     break;
                 case ExecutionStatus.Running:
-                    {
-                        // Update decider.
-                        agentData.ExecutionStatus = this.Root.Update(agentData);
-                    }
+                {
+                    // Update decider.
+                    agentData.ExecutionStatus = this.Root.Update(agentData);
+                }
 
                     break;
             }
