@@ -4,14 +4,20 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace FreudBot.Unity.Ads
+namespace Slash.Unity.Common.Utils
 {
     using UnityEngine;
 
+    /// <summary>
+    ///   Behaviour to open an url when receiving the OnClick event.
+    /// </summary>
     public class OpenUrlOnClickBehaviour : MonoBehaviour
     {
         #region Fields
 
+        /// <summary>
+        ///   Url to open.
+        /// </summary>
         public string Url;
 
         #endregion
