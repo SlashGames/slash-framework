@@ -55,7 +55,7 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
 
         #endregion
 
-        #region Public Events
+        #region Events
 
         /// <summary>
         ///   Called when a child was added to the composite.
@@ -69,7 +69,7 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Maximum number of children that the composite can take.
@@ -127,6 +127,15 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
             this.InvokeChildAdded(child);
         }
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:Composite" /> is equal to the current
+        ///   <see cref="T:Composite" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:Composite" /> is equal to the current <see cref="T:Composite" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="other">The <see cref="T:Composite" /> to compare with the current <see cref="T:Composite" />. </param>
         public bool Equals(Composite<TTaskData> other)
         {
             if (ReferenceEquals(null, other))
@@ -142,6 +151,16 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
             return CollectionUtils.SequenceEqual(this.children, other.children);
         }
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+        ///   <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -185,6 +204,13 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
             }
         }
 
+        /// <summary>
+        ///   Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             return this.children != null ? this.children.GetHashCode() : 0;
@@ -209,8 +235,14 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
         /// </summary>
         /// <param name="oldIndex"> Old position of the child. </param>
         /// <param name="newIndex"> New position of the child. </param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if passed old index isn't between 0 and Children.Count (exclusive).</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if passed new index isn't between 0 and Children.Count (exclusive).</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   Thrown if passed old index isn't between 0 and Children.Count
+        ///   (exclusive).
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   Thrown if passed new index isn't between 0 and Children.Count
+        ///   (exclusive).
+        /// </exception>
         public void MoveChild(int oldIndex, int newIndex)
         {
             this.children.Move(oldIndex, newIndex);
@@ -265,7 +297,8 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
         }
 
         /// <summary>
-        ///   Takes first task which wants to be active. Checks only a subset of the children from index 0 to passed lastChildIdx (exclusive).
+        ///   Takes first task which wants to be active. Checks only a subset of the children from index 0 to passed lastChildIdx
+        ///   (exclusive).
         /// </summary>
         /// <param name="agentData"> Agent data. </param>
         /// <param name="firstChildIdx"> First child index to check (inclusive). </param>
@@ -330,7 +363,10 @@ namespace Slash.AI.BehaviorTrees.Implementations.Composites
         /// <param name="childTaskNode"> Task node of child. </param>
         /// <param name="activeTasks"> Collection of active tasks. </param>
         protected void GetActiveChildTasks(
-            int childIdx, IAgentData agentData, TaskNode childTaskNode, ref ICollection<TaskNode> activeTasks)
+            int childIdx,
+            IAgentData agentData,
+            TaskNode childTaskNode,
+            ref ICollection<TaskNode> activeTasks)
         {
             ++agentData.CurrentDeciderLevel;
             this.children[childIdx].GetActiveTasks(agentData, childTaskNode, ref activeTasks);

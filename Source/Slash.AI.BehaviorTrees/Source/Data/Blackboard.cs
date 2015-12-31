@@ -117,7 +117,6 @@ namespace Slash.AI.BehaviorTrees.Data
         /// <summary>
         ///   Tries to find the attribute with the passed id.
         /// </summary>
-        /// <typeparam name="T"> Type of attribute. </typeparam>
         /// <param name="id"> Id of attribute. </param>
         /// <param name="value"> Contains value if id was found. </param>
         /// <returns> True if the attribute was found, else false. </returns>

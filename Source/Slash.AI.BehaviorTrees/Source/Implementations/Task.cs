@@ -31,7 +31,7 @@ namespace Slash.AI.BehaviorTrees.Implementations
 
         #endregion
 
-        #region Public Events
+        #region Events
 
         /// <summary>
         ///   Called when decider finished successful.
@@ -40,7 +40,7 @@ namespace Slash.AI.BehaviorTrees.Implementations
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Debug name.
@@ -52,7 +52,8 @@ namespace Slash.AI.BehaviorTrees.Implementations
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Activation. This method is called when the task was chosen to be executed. It's called right before the first update of the task. The task can setup its specific task data in here and do initial actions.
+        ///   Activation. This method is called when the task was chosen to be executed. It's called right before the first update
+        ///   of the task. The task can setup its specific task data in here and do initial actions.
         /// </summary>
         /// <param name="agentData"> Agent data. </param>
         /// <param name="decisionData"> Decision data to use in activate method. </param>
@@ -71,7 +72,8 @@ namespace Slash.AI.BehaviorTrees.Implementations
         }
 
         /// <summary>
-        ///   Depending on the group policy of its parent, the floating point return value indicates whether the decider will be activated.
+        ///   Depending on the group policy of its parent, the floating point return value indicates whether the decider will be
+        ///   activated.
         /// </summary>
         /// <param name="agentData"> Agent data. </param>
         /// <param name="decisionData"> Decision data to use in activate method. </param>
@@ -82,10 +84,13 @@ namespace Slash.AI.BehaviorTrees.Implementations
         }
 
         /// <summary>
-        ///   The equals.
+        ///   Determines whether the specified <see cref="T:Task" /> is equal to the current
+        ///   <see cref="T:Task" />.
         /// </summary>
-        /// <param name="other"> The other. </param>
-        /// <returns> The System.Boolean. </returns>
+        /// <returns>
+        ///   true if the specified <see cref="T:Task" /> is equal to the current <see cref="T:Task" />; otherwise, false.
+        /// </returns>
+        /// <param name="other">The <see cref="T:Task" /> to compare with the current <see cref="T:Task" />. </param>
         public bool Equals(Task other)
         {
             if (ReferenceEquals(null, other))
@@ -102,10 +107,13 @@ namespace Slash.AI.BehaviorTrees.Implementations
         }
 
         /// <summary>
-        ///   The equals.
+        ///   Determines whether the specified <see cref="T:BaseTask" /> is equal to the current
+        ///   <see cref="T:BaseTask" />.
         /// </summary>
-        /// <param name="obj"> The obj. </param>
-        /// <returns> The System.Boolean. </returns>
+        /// <returns>
+        ///   true if the specified <see cref="T:BaseTask" /> is equal to the current <see cref="T:BaseTask" />; otherwise, false.
+        /// </returns>
+        /// <param name="obj">The <see cref="T:BaseTask" /> to compare with the current <see cref="T:BaseTask" />. </param>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -143,14 +151,19 @@ namespace Slash.AI.BehaviorTrees.Implementations
         /// <param name="taskNode"> Task node of this task. </param>
         /// <param name="activeTasks"> Collection of active task nodes. </param>
         public virtual void GetActiveTasks(
-            IAgentData agentData, TaskNode taskNode, ref ICollection<TaskNode> activeTasks)
+            IAgentData agentData,
+            TaskNode taskNode,
+            ref ICollection<TaskNode> activeTasks)
         {
         }
 
         /// <summary>
-        ///   The get hash code.
+        ///   Serves as a hash function for a particular type.
         /// </summary>
-        /// <returns> The System.Int32. </returns>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             return this.Name != null ? this.Name.GetHashCode() : 0;
@@ -196,7 +209,8 @@ namespace Slash.AI.BehaviorTrees.Implementations
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Activation. This method is called when the task was chosen to be executed. It's called right before the first update of the task. The task can setup its specific task data in here and do initial actions.
+        ///   Activation. This method is called when the task was chosen to be executed. It's called right before the first update
+        ///   of the task. The task can setup its specific task data in here and do initial actions.
         /// </summary>
         /// <param name="agentData"> Agent data. </param>
         /// <param name="decisionData"> Decision data to use in activate method. </param>
@@ -218,20 +232,29 @@ namespace Slash.AI.BehaviorTrees.Implementations
         }
 
         /// <summary>
-        ///   The equals.
+        ///   Determines whether the specified <see cref="T:BaseTask" /> is equal to the current <see cref="T:BaseTask" />.
         /// </summary>
-        /// <param name="other"> The other. </param>
-        /// <returns> The System.Boolean. </returns>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="other">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+        /// <filterpriority>2</filterpriority>
         public bool Equals(BaseTask<TTaskData> other)
         {
             return base.Equals(other);
         }
 
         /// <summary>
-        ///   The equals.
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+        ///   <see cref="T:System.Object" />.
         /// </summary>
-        /// <param name="obj"> The obj. </param>
-        /// <returns> The System.Boolean. </returns>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -248,9 +271,12 @@ namespace Slash.AI.BehaviorTrees.Implementations
         }
 
         /// <summary>
-        ///   The get hash code.
+        ///   Serves as a hash function for a particular type.
         /// </summary>
-        /// <returns> The System.Int32. </returns>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             return base.GetHashCode();

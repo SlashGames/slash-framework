@@ -11,12 +11,24 @@ namespace Slash.AI.BehaviorTrees.Enums
     /// </summary>
     public enum ExecutionStatus
     {
+        /// <summary>
+        ///   Undefined/Invalid status.
+        /// </summary>
         None,
 
+        /// <summary>
+        ///   Task is currently running.
+        /// </summary>
         Running,
 
+        /// <summary>
+        ///   Task execution succeeded.
+        /// </summary>
         Success,
 
+        /// <summary>
+        ///   Task execution failed.
+        /// </summary>
         Failed,
     }
 }

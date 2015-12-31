@@ -19,12 +19,7 @@ namespace Slash.AI.BehaviorTrees.Data
     public abstract class TaskParameterGeneric<T> : TaskParameter
     {
         #region Fields
-
-        /// <summary>
-        ///   Blackboard attribute to take the parameter value from.
-        /// </summary>
-        private object blackboardAttribute;
-
+        
         /// <summary>
         ///   Parameter value, set by the user.
         /// </summary>
@@ -42,7 +37,7 @@ namespace Slash.AI.BehaviorTrees.Data
         {
             get
             {
-                return this.blackboardAttribute;
+                return null;
             }
         }
 

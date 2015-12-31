@@ -9,8 +9,18 @@ namespace Slash.AI.BehaviorTrees.Interfaces
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    ///   Delegate for IComposite.ChildAdded event.
+    /// </summary>
+    /// <param name="composite">Composite a child was added to.</param>
+    /// <param name="childTask">Child that was added to composite.</param>
     public delegate void CompositeChildAddedDelegate(IComposite composite, ITask childTask);
 
+    /// <summary>
+    ///   Delegate for IComposite.ChildRemoved event.
+    /// </summary>
+    /// <param name="composite">Composite a child was removed from.</param>
+    /// <param name="childTask">Child that was removed from composite.</param>
     public delegate void CompositeChildRemovedDelegate(IComposite composite, ITask childTask);
 
     /// <summary>
@@ -18,7 +28,7 @@ namespace Slash.AI.BehaviorTrees.Interfaces
     /// </summary>
     public interface IComposite : ITask
     {
-        #region Public Events
+        #region Events
 
         /// <summary>
         ///   Called when a child was added to the composite.
@@ -32,7 +42,7 @@ namespace Slash.AI.BehaviorTrees.Interfaces
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Maximum number of children that the composite can take.
@@ -70,8 +80,14 @@ namespace Slash.AI.BehaviorTrees.Interfaces
         /// </summary>
         /// <param name="oldIndex"> Old position of the child. </param>
         /// <param name="newIndex"> New position of the child. </param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if passed old index isn't between 0 and Children.Count (exclusive).</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if passed new index isn't between 0 and Children.Count (exclusive).</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   Thrown if passed old index isn't between 0 and Children.Count
+        ///   (exclusive).
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   Thrown if passed new index isn't between 0 and Children.Count
+        ///   (exclusive).
+        /// </exception>
         void MoveChild(int oldIndex, int newIndex);
 
         /// <summary>

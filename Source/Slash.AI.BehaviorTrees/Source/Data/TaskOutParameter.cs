@@ -8,9 +8,13 @@ namespace Slash.AI.BehaviorTrees.Data
 {
     using Slash.AI.BehaviorTrees.Interfaces;
 
+    /// <summary>
+    ///   Container for a task parameter that is written to the blackboard.
+    /// </summary>
+    /// <typeparam name="T">Type of parameter.</typeparam>
     public class TaskOutParameter<T>
     {
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Key of blackboard attribute to store task parameter value to.

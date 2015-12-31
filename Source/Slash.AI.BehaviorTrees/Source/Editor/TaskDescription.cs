@@ -21,7 +21,7 @@ namespace Slash.AI.BehaviorTrees.Editor
     [Serializable]
     public class TaskDescription
     {
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Class name of the task.
@@ -53,10 +53,6 @@ namespace Slash.AI.BehaviorTrees.Editor
         /// </summary>
         public string TypeName { get; set; }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         ///   Task type. Returns null if the type can't be loaded because it's not available in the current loaded assemblies.
         /// </summary>
@@ -71,6 +67,80 @@ namespace Slash.AI.BehaviorTrees.Editor
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        ///   Creates a task instance from this description. If the task type can't be found, a ReferenceTask instance is created
+        ///   which capsules this task description.
+        /// </summary>
+        /// <returns> Task instance. </returns>
+        public ITask CreateInstance()
+        {
+            // Find task type.
+            Type taskType = this.Type ?? typeof(ReferenceTask);
+
+            // Create instance.
+            ITask task = (ITask)Activator.CreateInstance(taskType);
+            task.Name = this.Name;
+
+            return task;
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:TaskDescription" /> is equal to the current
+        ///   <see cref="T:TaskDescription" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:TaskDescription" /> is equal to the current <see cref="T:TaskDescription" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="other">The <see cref="T:TaskDescription" /> to compare with the current <see cref="T:TaskDescription" />. </param>
+        public bool Equals(TaskDescription other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            return Equals(other.Name, this.Name)
+                   && CollectionUtils.SequenceEqual(other.ParameterDescriptions, this.ParameterDescriptions)
+                   && Equals(other.IsDecorator, this.IsDecorator) && Equals(other.TypeName, this.TypeName)
+                   && Equals(other.ClassName, this.ClassName);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+        ///   <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+        /// <filterpriority>2</filterpriority>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != typeof(TaskDescription))
+            {
+                return false;
+            }
+
+            return this.Equals((TaskDescription)obj);
+        }
 
         /// <summary>
         ///   Generates a task description for the specified task type.
@@ -102,14 +172,14 @@ namespace Slash.AI.BehaviorTrees.Editor
             TaskAttribute taskAttribute = taskAttributes[0];
 
             TaskDescription description = new TaskDescription
-                {
-                    Name = taskAttribute.Name,
-                    Description = taskAttribute.Description,
-                    IsDecorator = taskAttribute.IsDecorator,
-                    ClassName = taskType.Name,
-                    TypeName = taskType.AssemblyQualifiedName,
-                    ParameterDescriptions = new List<TaskParameterDescription>()
-                };
+            {
+                Name = taskAttribute.Name,
+                Description = taskAttribute.Description,
+                IsDecorator = taskAttribute.IsDecorator,
+                ClassName = taskType.Name,
+                TypeName = taskType.AssemblyQualifiedName,
+                ParameterDescriptions = new List<TaskParameterDescription>()
+            };
 
             MemberInfo[] parameterMembers = taskType.GetMembers();
             foreach (MemberInfo parameterMember in parameterMembers)
@@ -127,60 +197,12 @@ namespace Slash.AI.BehaviorTrees.Editor
         }
 
         /// <summary>
-        ///   Creates a task instance from this description. If the task type can't be found, a ReferenceTask instance is created
-        ///   which capsules this task description.
+        ///   Serves as a hash function for a particular type.
         /// </summary>
-        /// <returns> Task instance. </returns>
-        public ITask CreateInstance()
-        {
-            // Find task type.
-            Type taskType = this.Type ?? typeof(ReferenceTask);
-
-            // Create instance.
-            ITask task = (ITask)Activator.CreateInstance(taskType);
-            task.Name = this.Name;
-
-            return task;
-        }
-
-        public bool Equals(TaskDescription other)
-        {
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            return Equals(other.Name, this.Name)
-                   && CollectionUtils.SequenceEqual(other.ParameterDescriptions, this.ParameterDescriptions)
-                   && Equals(other.IsDecorator, this.IsDecorator) && Equals(other.TypeName, this.TypeName)
-                   && Equals(other.ClassName, this.ClassName);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            if (obj.GetType() != typeof(TaskDescription))
-            {
-                return false;
-            }
-
-            return this.Equals((TaskDescription)obj);
-        }
-
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             unchecked

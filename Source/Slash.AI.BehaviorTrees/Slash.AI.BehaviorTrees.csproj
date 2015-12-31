@@ -89,6 +89,7 @@
     <Compile Include="Source\Interfaces\IDecisionData.cs" />
     <Compile Include="Source\Interfaces\ITaskData.cs" />
     <Compile Include="Source\Management\BehaviorTreeLibrary.cs" />
+    <Compile Include="Source\NamespaceDoc.cs" />
     <Compile Include="Source\Tree\TaskNode.cs" />
   </ItemGroup>
   <ItemGroup>
