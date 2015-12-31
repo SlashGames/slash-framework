@@ -21,6 +21,13 @@ namespace Slash.Application.Games
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Creates entities for all blueprints with the specified ids.
+        /// </summary>
+        /// <param name="entityManager">Entity manager to create entities in.</param>
+        /// <param name="blueprintManager">Blueprint manager to get blueprints from.</param>
+        /// <param name="blueprintIds">Ids of blueprints to create entities for.</param>
+        /// <returns>List of ids of created entities.</returns>
         public static List<int> CreateEntities(
             EntityManager entityManager,
             IBlueprintManager blueprintManager,
@@ -57,14 +64,6 @@ namespace Slash.Application.Games
             return CreateEntity(game, blueprintId, null);
         }
 
-        public static int CreateEntity(
-            EntityManager entityManager,
-            IBlueprintManager blueprintManager,
-            string blueprintId)
-        {
-            return CreateEntity(entityManager, blueprintManager, blueprintId, null);
-        }
-
         /// <summary>
         ///   Searches for the blueprint with the specified id and creates an entity out of it.
         ///   If the blueprint is used several times, consider to fetch the blueprint from the game's
@@ -79,11 +78,20 @@ namespace Slash.Application.Games
             return CreateEntity(game.EntityManager, game.BlueprintManager, blueprintId, configuration);
         }
 
+        /// <summary>
+        ///   Creates an entity in the specified entity manager with the blueprint from the specified blueprint manager with the
+        ///   specified id. Uses the specified configuration for initialization.
+        /// </summary>
+        /// <param name="entityManager">Entity manager to create entity at.</param>
+        /// <param name="blueprintManager">Blueprint manager to use to find blueprint.</param>
+        /// <param name="blueprintId">Id of blueprint to use.</param>
+        /// <param name="configuration">Configuration to use for initialization of entity.</param>
+        /// <returns>Id of created entity.</returns>
         public static int CreateEntity(
             EntityManager entityManager,
             IBlueprintManager blueprintManager,
             string blueprintId,
-            AttributeTable configuration)
+            AttributeTable configuration = null)
         {
             var blueprint = blueprintManager.GetBlueprint(blueprintId);
             return entityManager.CreateEntity(blueprint, configuration);

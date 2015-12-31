@@ -15,6 +15,10 @@ namespace Slash.Application.Systems
     using Slash.ECS.Components;
     using Slash.Reflection.Utils;
 
+    /// <summary>
+    ///   Manages all entities that have a specific component configuration.
+    /// </summary>
+    /// <typeparam name="T">Type that contains information about component configuration and stores entities.</typeparam>
     public sealed class CompoundEntities<T> : IEnumerable<T>
         where T : class, new()
     {
@@ -33,6 +37,10 @@ namespace Slash.Application.Systems
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
+        /// <param name="entityManager">Entity manager.</param>
         public CompoundEntities(EntityManager entityManager)
         {
             this.entityManager = entityManager;
@@ -52,26 +60,54 @@ namespace Slash.Application.Systems
 
         #region Delegates
 
+        /// <summary>
+        ///   Delegate for EntityAdded event.
+        /// </summary>
+        /// <param name="entityId">Id of added entity.</param>
+        /// <param name="entity">Data of added entity.</param>
         public delegate void EntityAddedDelegate(int entityId, T entity);
 
-        public delegate void EntityRemovedDelegate(int entityId, T entity);
-
+        /// <summary>
+        ///   Delegate for AllowEntity property.
+        /// </summary>
+        /// <param name="entityId">Id of entity that wants to be added.</param>
+        /// <param name="entity">Entity that wants to be added.</param>
+        /// <returns>True if the entity should be added; otherwise, false.</returns>
         public delegate bool EntityFilter(int entityId, T entity);
+
+        /// <summary>
+        ///   Delegate for EntityRemoved event.
+        /// </summary>
+        /// <param name="entityId">Id of removed entity.</param>
+        /// <param name="entity">Data of removed entity.</param>
+        public delegate void EntityRemovedDelegate(int entityId, T entity);
 
         #endregion
 
         #region Events
 
+        /// <summary>
+        ///   Called when an entity was added that matches the configuration.
+        /// </summary>
         public event EntityAddedDelegate EntityAdded;
 
+        /// <summary>
+        ///   Called when an entity was removed.
+        /// </summary>
         public event EntityRemovedDelegate EntityRemoved;
-
-        public EntityFilter AllowEntity { get; set; }
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        ///   Special filter to use before accepting an entity.
+        /// </summary>
+        public EntityFilter AllowEntity { get; set; }
+
+        /// <summary>
+        ///   Dictionary of all current matching entities.
+        /// </summary>
         public IDictionary<int, T> Entities
         {
             get
@@ -84,6 +120,11 @@ namespace Slash.Application.Systems
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Returns the entity with the specified id if one exists; otherwise null.
+        /// </summary>
+        /// <param name="entityId">Id of entity to get.</param>
+        /// <returns>Returns the entity with the specified id if one exists; otherwise null.</returns>
         public T GetEntity(int entityId)
         {
             T entity;
@@ -91,6 +132,13 @@ namespace Slash.Application.Systems
             return entity;
         }
 
+        /// <summary>
+        ///   Returns an enumerator that iterates through all current entities.
+        /// </summary>
+        /// <returns>
+        ///   A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through all current entities.
+        /// </returns>
+        /// <filterpriority>1</filterpriority>
         public IEnumerator<T> GetEnumerator()
         {
             return this.entities.Values.GetEnumerator();

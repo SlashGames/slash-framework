@@ -3,10 +3,14 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.Application.Systems
 {
     using Slash.ECS.Events;
 
+    /// <summary>
+    ///   <see cref="System" />-related events.
+    /// </summary>
     [GameEventType]
     public enum SystemGameEvent
     {

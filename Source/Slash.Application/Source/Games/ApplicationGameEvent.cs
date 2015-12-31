@@ -8,6 +8,9 @@ namespace Slash.Application.Games
 {
     using Slash.ECS.Events;
 
+    /// <summary>
+    ///   <see cref="Game"/>-related events.
+    /// </summary>
     [GameEventType]
     public enum ApplicationGameEvent
     {

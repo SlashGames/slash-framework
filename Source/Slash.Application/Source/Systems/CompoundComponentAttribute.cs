@@ -8,6 +8,9 @@ namespace Slash.Application.Systems
 {
     using System;
 
+    /// <summary>
+    ///   Attribute to flag a property or field of a compound entity as a component member.
+    /// </summary>
     public class CompoundComponentAttribute : Attribute
     {
         #region Properties

@@ -5,8 +5,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Slash.Application.Features.Serialization.Events
 {
+    using Slash.Application.Features.Serialization.Systems;
     using Slash.ECS.Events;
 
+    /// <summary>
+    ///   Possible actions of the <see cref="SerializationSystem"/>.
+    /// </summary>
     [GameEventType]
     public enum SerializationAction
     {

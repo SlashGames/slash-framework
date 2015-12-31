@@ -21,28 +21,25 @@ namespace Slash.Application.Features.Serialization.Systems
     using Slash.ECS.Events;
     using Slash.ECS.Inspector.Data;
 
+    /// <summary>
+    ///   Loads and saves the game in a xml format.
+    /// </summary>
     [GameSystem]
     public class SerializationSystem : GameSystem
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Initializes this system with the data stored in the specified
+        ///   attribute table.
+        /// </summary>
+        /// <param name="configuration">System configuration data.</param>
         public override void Init(IAttributeTable configuration)
         {
             base.Init(configuration);
 
             this.EventManager.RegisterListener(SerializationAction.Save, this.OnSave);
             this.EventManager.RegisterListener(SerializationAction.Load, this.OnLoad);
-        }
-
-        public static void SaveToAttributeTable(EntityManager entityManager, object obj, AttributeTable attributeTable)
-        {
-            InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
-            if (inspectorType == null)
-            {
-                throw new ArgumentException("No inspector type for object " + obj.GetType());
-            }
-
-            SaveToAttributeTable(entityManager, inspectorType, obj, attributeTable);
         }
 
         #endregion
@@ -107,6 +104,17 @@ namespace Slash.Application.Features.Serialization.Systems
             }
         }
 
+        private static void SaveToAttributeTable(EntityManager entityManager, object obj, AttributeTable attributeTable)
+        {
+            InspectorType inspectorType = InspectorType.GetInspectorType(obj.GetType());
+            if (inspectorType == null)
+            {
+                throw new ArgumentException("No inspector type for object " + obj.GetType());
+            }
+
+            SaveToAttributeTable(entityManager, inspectorType, obj, attributeTable);
+        }
+
         private static void SaveToAttributeTable(
             EntityManager entityManager,
             InspectorType inspectorType,
@@ -124,7 +132,7 @@ namespace Slash.Application.Features.Serialization.Systems
 
         #endregion
 
-        public class Savegame
+        private class Savegame
         {
             #region Properties
 
@@ -133,7 +141,7 @@ namespace Slash.Application.Features.Serialization.Systems
             #endregion
         }
 
-        public class SerializedEntity
+        private class SerializedEntity
         {
             #region Properties
 
