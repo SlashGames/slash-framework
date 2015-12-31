@@ -35,7 +35,7 @@ namespace Slash.AI.Pathfinding
         /// <exception cref="ArgumentNullException">
         ///   Passed graph or start or finish node is <c>null</c>.
         /// </exception>
-        public static List<T> FindPath<T>(IWeightedGraph<T> graph, T start, T finish) where T : IAStarNode
+        public static List<T> FindPath<T>(IWeightedGraph<T> graph, T start, T finish) where T : class, IAStarNode
         {
             if (graph == null)
             {
@@ -59,8 +59,8 @@ namespace Slash.AI.Pathfinding
 
             // Initialize list to choose the next node of the path from.
             IPriorityQueue<T> openList = new FibonacciHeap<T>();
-            IPriorityQueueItem<T>[] fibHeapItems = new FibonacciHeapItem<T>[graph.VertexCount];
-            HashSet<T> dirtyNodes = new HashSet<T>();
+            var fibHeapItems = new IPriorityQueueItem<T>[graph.VertexCount];
+            var dirtyNodes = new HashSet<T>();
 
             // Initialize queue to hold the nodes along the path to the finish.
             Queue<T> closedList = new Queue<T>();
@@ -75,7 +75,7 @@ namespace Slash.AI.Pathfinding
             start.Discovered = true;
 
             // --- A* Pathfinding Algorithm ---
-            while ((!algorithmComplete) && (!algorithmAborted))
+            while (!algorithmAborted)
             {
                 // Get the node with the lowest F score in the open list.
                 T currentNode = openList.DeleteMin().Item;
@@ -95,55 +95,57 @@ namespace Slash.AI.Pathfinding
                 List<T> neighbors = graph.ListOfAdjacentVertices(currentNode);
 
                 // Add all nodes that aren't already on the open or closed list to the open list.
-                foreach (T node in neighbors)
+                foreach (var node in neighbors)
                 {
                     // Ignore nodes in the closed list.
-                    if (!node.Visited)
+                    if (node.Visited)
                     {
-                        if (!node.Discovered)
+                        continue;
+                    }
+
+                    if (!node.Discovered)
+                    {
+                        // The parent node is the previous node on the path to the finish.
+                        node.ParentNode = currentNode;
+
+                        // The G score of the node is calculated by adding the G score
+                        // of the parent node and the movement cost of the path between
+                        // the node and the current node.
+                        // In other words: The G score of the node is the total cost of the
+                        // path between the starting node and this one.
+                        node.G = node.ParentNode.G + graph.GetEdgeWeight(node, (T)node.ParentNode);
+
+                        // The H score of the node is calculated by heuristically
+                        // estimating the movement cost from the node to the finish.
+                        // In other words: The H score of the node is the total remaining
+                        // cost of the path between this node and the finish.
+                        node.H = node.EstimateHeuristicMovementCost(finish);
+
+                        // The F score of the node is calculated by adding the G and H scores.
+                        // In other words: The F score is an indicator that tells whether this
+                        // node should be crossed on the path to the finish, or not.
+                        node.F = node.G + node.H;
+
+                        // Add to open list.
+                        fibHeapItems[node.Index] = openList.Insert(node, node.F);
+                        dirtyNodes.Add(node);
+                        node.Discovered = true;
+                    }
+                    else
+                    {
+                        // Node is already in open list!
+                        // Check if the new path to this node is a better one.
+                        if (currentNode.G + graph.GetEdgeWeight(node, currentNode) < node.G)
                         {
-                            // The parent node is the previous node on the path to the finish.
+                            // G cost of new path is lower!
+                            // Change parent node to current node.
                             node.ParentNode = currentNode;
 
-                            // The G score of the node is calculated by adding the G score
-                            // of the parent node and the movement cost of the path between
-                            // the node and the current node.
-                            // In other words: The G score of the node is the total cost of the
-                            // path between the starting node and this one.
+                            // Recalculate F and G costs.
                             node.G = node.ParentNode.G + graph.GetEdgeWeight(node, (T)node.ParentNode);
-
-                            // The H score of the node is calculated by heuristically
-                            // estimating the movement cost from the node to the finish.
-                            // In other words: The H score of the node is the total remaining
-                            // cost of the path between this node and the finish.
-                            node.H = node.EstimateHeuristicMovementCost(finish);
-
-                            // The F score of the node is calculated by adding the G and H scores.
-                            // In other words: The F score is an indicator that tells whether this
-                            // node should be crossed on the path to the finish, or not.
                             node.F = node.G + node.H;
 
-                            // Add to open list.
-                            fibHeapItems[node.Index] = openList.Insert(node, node.F);
-                            dirtyNodes.Add(node);
-                            node.Discovered = true;
-                        }
-                        else
-                        {
-                            // Node is already in open list!
-                            // Check if the new path to this node is a better one.
-                            if (currentNode.G + graph.GetEdgeWeight(node, currentNode) < node.G)
-                            {
-                                // G cost of new path is lower!
-                                // Change parent node to current node.
-                                node.ParentNode = currentNode;
-
-                                // Recalculate F and G costs.
-                                node.G = node.ParentNode.G + graph.GetEdgeWeight(node, (T)node.ParentNode);
-                                node.F = node.G + node.H;
-
-                                openList.DecreaseKeyTo(fibHeapItems[node.Index], node.F);
-                            }
+                            openList.DecreaseKeyTo(fibHeapItems[node.Index], node.F);
                         }
                     }
                 }
