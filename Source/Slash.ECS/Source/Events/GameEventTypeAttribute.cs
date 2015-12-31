@@ -8,6 +8,10 @@ namespace Slash.ECS.Events
 {
     using System;
 
+    /// <summary>
+    ///   Attribute to flag an enum that it contains identifiers for game events.
+    ///   This way all game events can be found, e.g. for logging.
+    /// </summary>
     public class GameEventTypeAttribute : Attribute
     {
     }

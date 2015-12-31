@@ -82,6 +82,10 @@ namespace Slash.ECS.Events
         /// <param name="e"> Event which occurred. </param>
         public delegate void EventDelegate(GameEvent e);
 
+        /// <summary>
+        ///   Delegate for the UnhandledEvent event.
+        /// </summary>
+        /// <param name="eventType">Type of unhandled event.</param>
         public delegate void UnhandledEventDelegate(object eventType);
 
         #endregion

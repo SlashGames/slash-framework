@@ -36,6 +36,11 @@ namespace Slash.ECS.Blueprints.Inspector.Attributes
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Performs required deinitialization steps for this property of the specified object.
+        /// </summary>
+        /// <param name="entityManager">Entity manager the object belongs to.</param>
+        /// <param name="obj">Object the property belongs to.</param>
         public override void Deinit(EntityManager entityManager, object obj)
         {
             // Get property value.

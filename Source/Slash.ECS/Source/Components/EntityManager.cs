@@ -19,12 +19,32 @@ namespace Slash.ECS.Components
     using Slash.ECS.Inspector.Utils;
     using Slash.ECS.Logging;
 
+    /// <summary>
+    ///   Delegate for registering for when a component of a specific type was added.
+    /// </summary>
+    /// <param name="entityId">Id of entity the component was added to.</param>
+    /// <param name="component">Component which was added.</param>
+    /// <typeparam name="T">Type of component to register for.</typeparam>
     public delegate void ComponentAddedDelegate<in T>(int entityId, T component);
 
+    /// <summary>
+    ///   Delegate for registering for when a component of a specific type was removed.
+    /// </summary>
+    /// <param name="entityId">Id of entity the component was removed from.</param>
+    /// <param name="component">Component which was removed.</param>
+    /// <typeparam name="T">Type of component to register for.</typeparam>
     public delegate void ComponentRemovedDelegate<in T>(int entityId, T component);
 
+    /// <summary>
+    ///   Delegate for EntityManager.EntityInitialized event.
+    /// </summary>
+    /// <param name="entityId">Id of initialized entity.</param>
     public delegate void EntityInitializedDelegate(int entityId);
 
+    /// <summary>
+    ///   Delegate for EntityInitialized.EntityRemoved event.
+    /// </summary>
+    /// <param name="entityId">Id of removed entity.</param>
     public delegate void EntityRemovedDelegate(int entityId);
 
     /// <summary>
@@ -653,6 +673,11 @@ namespace Slash.ECS.Components
             this.OnEntityInitialized(entityId);
         }
 
+        /// <summary>
+        ///   Called when the entity with the specified id was initialized.
+        ///   TODO(co): This shouldn't be public.
+        /// </summary>
+        /// <param name="entityId">Id of initialized entity.</param>
         public void OnEntityInitialized(int entityId)
         {
             var handler = this.EntityInitialized;

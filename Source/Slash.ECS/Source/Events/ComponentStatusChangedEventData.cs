@@ -13,7 +13,7 @@ namespace Slash.ECS.Events
     /// </summary>
     public sealed class ComponentStatusChangedEventData
     {
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Component which status changed.
@@ -40,6 +40,16 @@ namespace Slash.ECS.Events
 
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Determines whether the specified <see cref="T:System.Object" /> is equal to the current
+        ///   <see cref="T:System.Object" />.
+        /// </summary>
+        /// <returns>
+        ///   true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />;
+        ///   otherwise, false.
+        /// </returns>
+        /// <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+        /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -53,6 +63,13 @@ namespace Slash.ECS.Events
             return obj is ComponentStatusChangedEventData && this.Equals((ComponentStatusChangedEventData)obj);
         }
 
+        /// <summary>
+        ///   Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>
+        ///   A hash code for the current <see cref="T:System.Object" />.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override int GetHashCode()
         {
             unchecked
@@ -65,6 +82,13 @@ namespace Slash.ECS.Events
             }
         }
 
+        /// <summary>
+        ///   Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        ///   A string that represents the current object.
+        /// </returns>
+        /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
             return string.Format(

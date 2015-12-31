@@ -17,8 +17,7 @@ namespace Slash.ECS.Components
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Initializes this component with the data stored in the specified
-        ///   attribute table.
+        ///   Initializes this component with the data stored in the specified attribute table.
         /// </summary>
         /// <param name="attributeTable">Component data.</param>
         void InitComponent(IAttributeTable attributeTable);

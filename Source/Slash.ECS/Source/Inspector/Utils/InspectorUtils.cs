@@ -14,6 +14,7 @@ namespace Slash.ECS.Inspector.Utils
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.Reflection.Extensions;
+
 #if WINDOWS_STORE
     using System.Reflection;
 #endif
@@ -103,6 +104,12 @@ namespace Slash.ECS.Inspector.Utils
             return obj;
         }
 
+        /// <summary>
+        ///   Deinitializes the specified object that is of the specified inspector type.
+        /// </summary>
+        /// <param name="entityManager">Entity manager.</param>
+        /// <param name="inspectorType">Inspector type of the specified object.</param>
+        /// <param name="obj">Object to deinitialize.</param>
         public static void Deinit(EntityManager entityManager, InspectorType inspectorType, object obj)
         {
             // Unset values for all properties.

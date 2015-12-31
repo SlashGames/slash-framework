@@ -13,6 +13,10 @@ namespace Slash.ECS.Blueprints.Extensions
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Components;
 
+    /// <summary>
+    ///   Extension methods for the entity manager which use a blueprint for easier creation and initialization of new
+    ///   entities.
+    /// </summary>
     public static class EntityManagerExtensions
     {
         #region Public Methods and Operators
