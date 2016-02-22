@@ -20,13 +20,13 @@ If you're missing anything, we'd love to see it - please refer to the [Contribut
 * Unit tests and references for non-trivial operations
 * Several articles about specifics and usage of the framework
 * [Public wiki](http://slashgames.org:8090/display/SF)
-* [Public API documentation](http://www.slashgames.org/content/framework/api/1.0)
+* [Public API documentation](http://www.slashgames.org/framework/api)
 
 ## Getting Slash Framework
 
 You can either
 
-* download BINARIES from the [Releases](https://github.com/npruehs/slash-framework/releases) page (coming soon)
+* download BINARIES from the [Releases](https://github.com/SlashGames/slash-framework/releases) page (coming soon)
 * checkout SOURCES from this repository
 
 ## Getting started
@@ -54,7 +54,7 @@ Introductions, specifics and tutorials about our framework can be found in sever
 * http://unity-coding.slashgames.org/why-to-use-a-custom-cbes-architecture-within-unity/
 * http://unity-coding.slashgames.org/events-order-matters/
 
-To get more information about the framework, take a glimpse at the [API documentation](http://www.slashgames.org/content/framework/api/1.0) and [official wiki](http://slashgames.org:8090/display/SF).
+To get more information about the framework, take a glimpse at the [API documentation](http://www.slashgames.org/framework/api) and [official wiki](http://slashgames.org:8090/display/SF).
 
 ## Remarks
 
@@ -71,7 +71,7 @@ We know that using a framework in production requires you to be completely sure 
 
 ## Bugs & Feature Requests
 
-We are sorry that you've experienced issues or miss a feature! After verifying that you are using the latest version of Slash Framework and having checked whether a [similar issue](https://github.com/npruehs/slash-framework/issues) has already been reported, feel free to [open a new issue](https://github.com/npruehs/slash-framework/issues/new). In order to help us resolving your problem as fast as possible, please include the following details in your report:
+We are sorry that you've experienced issues or miss a feature! After verifying that you are using the latest version of Slash Framework and having checked whether a [similar issue](https://github.com/SlashGames/slash-framework/issues) has already been reported, feel free to [open a new issue](https://github.com/SlashGames/slash-framework/issues/new). In order to help us resolving your problem as fast as possible, please include the following details in your report:
 
 * Steps to reproduce
 * What happened?
@@ -100,4 +100,4 @@ If you used the Slash Framework in one of your projects, we are very happy to he
 
 ## License
 
-Slash Framework is released under the [MIT license](https://github.com/npruehs/slash-framework/blob/master/LICENSE).
+Slash Framework is released under the [MIT license](https://github.com/SlashGames/slash-framework/blob/master/LICENSE).
