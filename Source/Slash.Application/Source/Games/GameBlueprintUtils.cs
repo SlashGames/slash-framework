@@ -79,6 +79,18 @@ namespace Slash.Application.Games
         }
 
         /// <summary>
+        ///   Searches for the specified blueprint and creates an entity out of it.
+        /// </summary>
+        /// <param name="game">Game to create the entity in.</param>
+        /// <param name="blueprint">Blueprint to use.</param>
+        /// <param name="configuration">Configuration to initialize the entity from.</param>
+        /// <returns>Id of created entity.</returns>
+        public static int CreateEntity(this Game game, Blueprint blueprint, AttributeTable configuration)
+        {
+            return CreateEntity(game.EntityManager, blueprint, configuration);
+        }
+
+        /// <summary>
         ///   Creates an entity in the specified entity manager with the blueprint from the specified blueprint manager with the
         ///   specified id. Uses the specified configuration for initialization.
         /// </summary>
@@ -94,6 +106,22 @@ namespace Slash.Application.Games
             AttributeTable configuration = null)
         {
             var blueprint = blueprintManager.GetBlueprint(blueprintId);
+            return CreateEntity(entityManager, blueprint, configuration);
+        }
+
+        /// <summary>
+        ///   Creates an entity in the specified entity manager with the specified blueprint.
+        ///   Uses the specified configuration for initialization.
+        /// </summary>
+        /// <param name="entityManager">Entity manager to create entity at.</param>
+        /// <param name="blueprint">Blueprint to use.</param>
+        /// <param name="configuration">Configuration to use for initialization of entity.</param>
+        /// <returns>Id of created entity.</returns>
+        public static int CreateEntity(
+            EntityManager entityManager,
+            Blueprint blueprint,
+            AttributeTable configuration = null)
+        {
             return entityManager.CreateEntity(blueprint, configuration);
         }
 
