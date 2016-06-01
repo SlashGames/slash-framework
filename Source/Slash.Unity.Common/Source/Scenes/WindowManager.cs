@@ -12,10 +12,18 @@ namespace Slash.Unity.Common.Scenes
     using System.Linq;
 
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
-    public class WindowManager : MonoBehaviour
+    using Object = UnityEngine.Object;
+
+    public class WindowManager
     {
         #region Fields
+
+        /// <summary>
+        ///   Mono behaviour to use for coroutines.
+        /// </summary>
+        private readonly MonoBehaviour coroutineRunner;
 
         /// <summary>
         ///   Open windows.
@@ -29,15 +37,21 @@ namespace Slash.Unity.Common.Scenes
 
         #endregion
 
-        #region Events
+        #region Constructors and Destructors
 
-        public event Action<Window> WindowOpened;
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
+        public WindowManager(MonoBehaviour coroutineRunner)
+        {
+            this.coroutineRunner = coroutineRunner;
+        }
 
         #endregion
 
-        #region Properties
+        #region Events
 
-        public static WindowManager Instance { get; private set; }
+        public event Action<Window> WindowOpened;
 
         #endregion
 
@@ -47,7 +61,7 @@ namespace Slash.Unity.Common.Scenes
         {
             if (!this.windows.Contains(window))
             {
-                Debug.LogError("Can't close window '" + window + "', not found in open windows.", this);
+                Debug.LogError("Can't close window '" + window + "', not found in open windows.");
                 return false;
             }
 
@@ -71,13 +85,13 @@ namespace Slash.Unity.Common.Scenes
         {
             if (!this.windows.Contains(window))
             {
-                Debug.LogWarning("No window found with id " + window, this);
+                Debug.LogWarning("No window found with id " + window);
                 return;
             }
 
             if (window.ParentWindow == null)
             {
-                Debug.LogWarning("No parent window for window " + window.WindowId + ", can't go back.", this);
+                Debug.LogWarning("No parent window for window " + window.WindowId + ", can't go back.");
                 return;
             }
 
@@ -139,7 +153,7 @@ namespace Slash.Unity.Common.Scenes
                 parentWindow.Hide();
             }
 
-            this.StartCoroutine(this.DoOpenWindow(window));
+            this.coroutineRunner.StartCoroutine(this.DoOpenWindow(window));
         }
 
         public Window OpenWindow(string windowId, Action<object> onCloseCallback)
@@ -166,25 +180,10 @@ namespace Slash.Unity.Common.Scenes
 
         #region Methods
 
-        /// <summary>
-        ///   Unity callback.
-        /// </summary>
-        protected void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Debug.LogWarning("Multiple window manager found, please use only one.", this);
-            }
-        }
-
         private void DestroyWindow(Window window, object returnValue)
         {
             // Destroy window root.
-            Destroy(window.Root.gameObject);
+            Object.Destroy(window.Root.gameObject);
 
             // Allow other referencers to check whether this window is still open.
             window.Loaded = false;
@@ -201,7 +200,8 @@ namespace Slash.Unity.Common.Scenes
         {
             this.windows.Add(window);
 
-            yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(window.WindowId);
+            yield return
+                UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(window.WindowId, LoadSceneMode.Additive);
             yield return new WaitForEndOfFrame();
 
             // Setup window roots.
@@ -235,21 +235,20 @@ namespace Slash.Unity.Common.Scenes
         {
             // Get new window roots.
             var windowRoots =
-                FindObjectsOfType<WindowRoot>()
+                Object.FindObjectsOfType<WindowRoot>()
                     .Where(existingWindowRoot => this.windows.All(window => window.Root != existingWindowRoot))
                     .ToList();
 
             if (windowRoots.Count < 1)
             {
                 Debug.LogWarning(
-                    "No window root found in loaded scene. If you were loading multiple scenes, that's fine. Otherwise, please make sure to add a WindowRoot component to the root game object of the scene.",
-                    this);
+                    "No window root found in loaded scene. If you were loading multiple scenes, that's fine. Otherwise, please make sure to add a WindowRoot component to the root game object of the scene.");
                 return;
             }
 
             if (windowRoots.Count > 1 && this.GetLoadingWindowCount() <= 1)
             {
-                Debug.LogWarning("Multiple new window roots found. Use only one WindowRoot component per scene.", this);
+                Debug.LogWarning("Multiple new window roots found. Use only one WindowRoot component per scene.");
             }
 
             var newWindowRoot = windowRoots.First();
@@ -262,8 +261,7 @@ namespace Slash.Unity.Common.Scenes
             {
                 Debug.LogError(
                     "No window found for loaded window root " + newWindowRoot.WindowId
-                    + ". Make sure that scene name and window id in WindowRoot behaviour match.",
-                    this);
+                    + ". Make sure that scene name and window id in WindowRoot behaviour match.");
                 return;
             }
 

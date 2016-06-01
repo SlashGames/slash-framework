@@ -6,6 +6,7 @@
 
 namespace Slash.Unity.Common.Scenes
 {
+    using System;
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
@@ -15,6 +16,7 @@ namespace Slash.Unity.Common.Scenes
 
     using UnityEngine;
 
+    [Obsolete("Don't use with Unity > 5.3, use the Unity SceneManager there instead.")]
     public sealed class SceneManager : MonoBehaviour
     {
         #region Fields

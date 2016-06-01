@@ -46,7 +46,7 @@ namespace Slash.Unity.Common.Loading
         {
             if (this.WindowManager == null)
             {
-                this.WindowManager = WindowManager.Instance;
+                this.WindowManager = WindowManagerBehaviour.Instance;
             }
             if (this.SceneManager == null)
             {

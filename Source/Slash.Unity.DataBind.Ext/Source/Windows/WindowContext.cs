@@ -24,7 +24,7 @@ namespace Slash.Unity.DataBind.Ext.Windows
 
         protected void Close(object returnValue = null)
         {
-            WindowManager.Instance.CloseWindow(this.Window, returnValue);
+            WindowManagerBehaviour.Instance.CloseWindow(this.Window, returnValue);
         }
 
         #endregion
