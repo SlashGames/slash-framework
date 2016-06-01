@@ -20,33 +20,9 @@ namespace Slash.Unity.DataBind.Ext.Windows
 
         #endregion
 
-        #region Methods
+        #region Public Methods and Operators
 
-        protected void Awake()
-        {
-            if (this.WindowManager == null)
-            {
-                this.WindowManager = FindObjectOfType<WindowManager>();
-            }
-        }
-
-        protected void OnDisable()
-        {
-            if (this.WindowManager != null)
-            {
-                this.WindowManager.WindowOpened -= this.OnWindowOpened;
-            }
-        }
-
-        protected void OnEnable()
-        {
-            if (this.WindowManager != null)
-            {
-                this.WindowManager.WindowOpened += this.OnWindowOpened;
-            }
-        }
-
-        private void OnWindowOpened(WindowManager.Window window)
+        public static void SetupWindowContext(WindowManager.Window window)
         {
             // Check if window has data context.
             var context = window.Context as Context;
@@ -67,6 +43,34 @@ namespace Slash.Unity.DataBind.Ext.Windows
             if (windowContext != null)
             {
                 windowContext.Window = window;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        protected void Awake()
+        {
+            if (this.WindowManager == null)
+            {
+                this.WindowManager = WindowManagerBehaviour.Instance;
+            }
+        }
+
+        protected void OnDisable()
+        {
+            if (this.WindowManager != null)
+            {
+                this.WindowManager.WindowOpened -= SetupWindowContext;
+            }
+        }
+
+        protected void OnEnable()
+        {
+            if (this.WindowManager != null)
+            {
+                this.WindowManager.WindowOpened += SetupWindowContext;
             }
         }
 
