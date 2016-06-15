@@ -10,19 +10,40 @@ namespace Slash.Unity.DataBind.Ext.Windows
     using Slash.Unity.DataBind.Core.Data;
     using Slash.Unity.DataBind.Core.Presentation;
 
-    using UnityEngine;
-
-    public class WindowContextManager : MonoBehaviour
+    public class WindowContextManager
     {
         #region Fields
 
-        public WindowManager WindowManager;
+        private WindowManager windowManager;
 
         #endregion
 
         #region Public Methods and Operators
 
-        public static void SetupWindowContext(WindowManager.Window window)
+        public void Deinit()
+        {
+            if (this.windowManager != null)
+            {
+                this.windowManager.WindowOpened -= SetupWindowContext;
+                this.windowManager = null;
+            }
+        }
+
+        public void Init(WindowManager windowManager)
+        {
+            this.windowManager = windowManager;
+
+            if (this.windowManager != null)
+            {
+                this.windowManager.WindowOpened += SetupWindowContext;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static void SetupWindowContext(WindowManager.Window window)
         {
             // Check if window has data context.
             var context = window.Context as Context;
@@ -43,34 +64,6 @@ namespace Slash.Unity.DataBind.Ext.Windows
             if (windowContext != null)
             {
                 windowContext.Window = window;
-            }
-        }
-
-        #endregion
-
-        #region Methods
-
-        protected void Awake()
-        {
-            if (this.WindowManager == null)
-            {
-                this.WindowManager = WindowManagerBehaviour.Instance;
-            }
-        }
-
-        protected void OnDisable()
-        {
-            if (this.WindowManager != null)
-            {
-                this.WindowManager.WindowOpened -= SetupWindowContext;
-            }
-        }
-
-        protected void OnEnable()
-        {
-            if (this.WindowManager != null)
-            {
-                this.WindowManager.WindowOpened += SetupWindowContext;
             }
         }
 
