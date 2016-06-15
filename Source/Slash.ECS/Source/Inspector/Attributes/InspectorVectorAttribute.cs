@@ -21,8 +21,8 @@ namespace Slash.ECS.Inspector.Attributes
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
         public InspectorVectorAttribute(string name)
-            : base(name)
         {
+            this.Name = name;
         }
 
         #endregion

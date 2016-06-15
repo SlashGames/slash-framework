@@ -27,10 +27,10 @@ namespace Slash.ECS.Inspector.Attributes
             "Enum type doesn't have to be specified anymore as the property type is available to all inspector properties now. So use the normal constructor and set the Default value manually."
             )]
         public InspectorEnumAttribute(string name, Type enumType)
-            : base(name)
         {
             this.PropertyType = enumType;
             this.Default = Enum.GetValues(enumType).GetValue(0);
+            this.Name = name;
         }
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace Slash.ECS.Inspector.Attributes
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
         public InspectorEnumAttribute(string name)
-            : base(name)
         {
+            this.Name = name;
         }
 
         #endregion

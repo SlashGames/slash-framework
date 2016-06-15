@@ -27,9 +27,9 @@ namespace Slash.ECS.Blueprints.Inspector.Attributes
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
         public InspectorEntityAttribute(string name)
-            : base(name)
         {
             this.AttributeType = typeof(EntityConfiguration);
+            this.Name = name;
         }
 
         #endregion

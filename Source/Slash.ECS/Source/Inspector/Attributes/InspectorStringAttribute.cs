@@ -34,14 +34,18 @@ namespace Slash.ECS.Inspector.Attributes
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
         public InspectorStringAttribute(string name)
-            : base(name)
         {
             this.MaxLength = int.MaxValue;
+            this.Name = name;
+        }
+
+        public InspectorStringAttribute()
+        {
         }
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Whether this string should be localized to different languages and just represents a localization id.
@@ -116,7 +120,8 @@ namespace Slash.ECS.Inspector.Attributes
         }
 
         /// <summary>
-        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this property.
+        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this
+        ///   property.
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <param name="text">String that can be converted back to a value of the correct type for this property.</param>
