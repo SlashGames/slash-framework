@@ -28,7 +28,7 @@ namespace Slash.Diagnostics.Logging
     public class Logger : ILogger
     {
         private const string StartMessage =
-            "Logger configured\nlog4net configuration file:\n{0}\n\n" + "    =======================================\n"
+            "Logger configured\nlog4net configuration:\n{0}\n\n" + "    =======================================\n"
             + "    === Logging configured successfully ===\n" + "    =======================================\n";
 
 #if LOG4NET
@@ -53,9 +53,17 @@ namespace Slash.Diagnostics.Logging
         public static void Configure(string configFile)
         {
 #if LOG4NET
-            FileInfo fileInfo = new FileInfo(configFile);
+            var fileInfo = new FileInfo(configFile);
             XmlConfigurator.Configure(fileInfo);
-            LogManager.GetLogger(typeof(Logger)).InfoFormat(StartMessage, configFile);
+            LogManager.GetLogger(typeof(Logger)).InfoFormat(StartMessage, "File " + configFile);
+#endif
+        }
+
+        public static void Configure(Stream configStream)
+        {
+#if LOG4NET
+            XmlConfigurator.Configure(configStream);
+            LogManager.GetLogger(typeof(Logger)).InfoFormat(StartMessage, "Stream");
 #endif
         }
 
