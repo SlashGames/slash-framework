@@ -1,4 +1,10 @@
-﻿namespace Slash.Unity.Common.Scenes
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="WindowRoot.cs" company="Slash Games">
+//   Copyright (c) Slash Games. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Slash.Unity.Common.Scenes
 {
     using System;
 
@@ -12,9 +18,15 @@
 
         #endregion
 
-        #region Public Events
+        #region Events
 
         public event Action<WindowRoot> WindowDestroyed;
+
+        #endregion
+
+        #region Properties
+
+        public WindowManager.Window Window { get; set; }
 
         #endregion
 

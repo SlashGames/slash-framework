@@ -202,7 +202,6 @@ namespace Slash.Unity.Common.Scenes
 
             yield return
                 UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(window.WindowId, LoadSceneMode.Additive);
-            yield return new WaitForEndOfFrame();
 
             // Setup window roots.
             this.SetupNewWindowRoots();
@@ -267,6 +266,7 @@ namespace Slash.Unity.Common.Scenes
 
             // Add window.
             newWindow.Root = newWindowRoot;
+            newWindow.Root.Window = newWindow;
             newWindow.Root.WindowDestroyed += this.OnWindowDestroyed;
             newWindow.Loaded = true;
 
