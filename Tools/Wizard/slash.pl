@@ -14,8 +14,8 @@ use File::Find;
 my $script_dir = dirname(abs_path($0));
     
 # Check system setup.
-if (not $ENV{'SLASH_FRAMEWORK_HOME'}) {
-    print "\nWARNING: Environment variable SLASH_FRAMEWORK_HOME not set, please make sure to set it so the framework projects can be found.";
+if (not $ENV{'SLASH_FRAMEWORK'}) {
+    print "\nWARNING: Environment variable SLASH_FRAMEWORK not set, please make sure to set it so the framework projects can be found.";
 }
 
 if (not $ENV{'UNITY_PATH'}) {
