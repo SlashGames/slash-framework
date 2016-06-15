@@ -121,6 +121,10 @@ namespace Slash.Reflection.Utils
                 {
                     // NOTE(co): Okay or not?
                 }
+                catch (FileLoadException)
+                {
+                    // NOTE(co): Okay or not?
+                }
             }
         }
 #endif
