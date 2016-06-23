@@ -120,6 +120,7 @@
     <Compile Include="Source\Scenes\SceneManager.cs" />
     <Compile Include="Source\Scenes\SceneRoot.cs" />
     <Compile Include="Source\Scenes\WindowManager.cs" />
+    <Compile Include="Source\Scenes\WindowManagerBehaviour.cs" />
     <Compile Include="Source\Scenes\WindowRoot.cs" />
     <Compile Include="Source\Sound\AudioChannel.cs" />
     <Compile Include="Source\Sound\AudioChannelType.cs" />
@@ -134,6 +135,10 @@
     <Compile Include="Source\Triggers\Conditions\ICondition.cs" />
     <Compile Include="Source\Triggers\Conditions\EventCondition.cs" />
     <Compile Include="Source\Triggers\Trigger.cs" />
+    <Compile Include="Source\UI\DropDown.cs" />
+    <Compile Include="Source\UI\Texts\TextEffectSettings.cs" />
+    <Compile Include="Source\UI\Texts\TextSettings.cs" />
+    <Compile Include="Source\UI\Texts\UseTextSettings.cs" />
     <Compile Include="Source\Utils\ActiveOnPlatformBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneOnClickBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneOnEscBehaviour.cs" />
@@ -161,6 +166,9 @@
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Ext\Unity\5.3\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\Ext\Unity\5.3\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -201,7 +209,6 @@
       <Name>Slash.Xml</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
