@@ -32,6 +32,13 @@ namespace Slash.ECS.Blueprints.Inspector.Attributes
             this.Name = name;
         }
 
+        /// <summary>
+        ///   Exposes the property to the inspector.
+        /// </summary>
+        public InspectorEntityAttribute()
+        {
+        }
+
         #endregion
 
         #region Public Methods and Operators

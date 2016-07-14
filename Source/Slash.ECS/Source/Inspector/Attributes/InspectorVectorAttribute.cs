@@ -17,12 +17,19 @@ namespace Slash.ECS.Inspector.Attributes
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Exposes the property to the inspector.
+        ///   Constructor.
         /// </summary>
         /// <param name="name">Property name to be shown in the inspector.</param>
         public InspectorVectorAttribute(string name)
         {
             this.Name = name;
+        }
+
+        /// <summary>
+        ///   Constructor.
+        /// </summary>
+        public InspectorVectorAttribute()
+        {
         }
 
         #endregion

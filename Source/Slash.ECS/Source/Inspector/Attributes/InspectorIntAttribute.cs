@@ -40,9 +40,16 @@ namespace Slash.ECS.Inspector.Attributes
             this.Name = name;
         }
 
+        /// <summary>
+        ///   Exposes the property to the inspector.
+        /// </summary>
+        public InspectorIntAttribute()
+        {
+        }
+
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Maximum property value (inclusive).
@@ -100,7 +107,11 @@ namespace Slash.ECS.Inspector.Attributes
         public override string ToString()
         {
             return string.Format(
-                "Name: {0}, Max: {1}, Min: {2}, Default: {3}", this.Name, this.Max, this.Min, this.Default);
+                "Name: {0}, Max: {1}, Min: {2}, Default: {3}",
+                this.Name,
+                this.Max,
+                this.Min,
+                this.Default);
         }
 
         /// <summary>
@@ -122,7 +133,8 @@ namespace Slash.ECS.Inspector.Attributes
         }
 
         /// <summary>
-        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this property.
+        ///   Tries to convert the specified value to a string that can be converted back to a value of the correct type for this
+        ///   property.
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <param name="text">String that can be converted back to a value of the correct type for this property.</param>
