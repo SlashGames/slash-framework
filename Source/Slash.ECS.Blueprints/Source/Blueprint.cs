@@ -99,7 +99,7 @@ namespace Slash.ECS.Blueprints
         ///   this blueprint.
         /// </summary>
         [XmlIgnore]
-        public List<Type> ComponentTypes { get; set; }
+        public IList<Type> ComponentTypes { get; set; }
 
         /// <summary>
         ///   Wrapper for ComponentTypes property for xml serialization.
@@ -345,7 +345,7 @@ namespace Slash.ECS.Blueprints
         /// <returns>True if it should be serialized; otherwise, false.</returns>
         public bool ShouldSerializeComponentTypesSerialized()
         {
-            return this.ComponentTypes != null && this.ComponentTypes.Count > 0;
+            return this.ComponentTypes != null && this.ComponentTypes.Any();
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Slash.ECS.Blueprints
                 writer.WriteEndElement();
             }
 
-            if (this.ComponentTypes.Count > 0)
+            if (this.ComponentTypesSerialized.Length > 0)
             {
                 writer.WriteStartElement(ComponentTypesElementName);
                 foreach (string componentType in this.ComponentTypesSerialized)
