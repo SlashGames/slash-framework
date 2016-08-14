@@ -75,6 +75,21 @@ sub find_file_to_delete {
         print "$F\n";
         unlink $F;
     }
+	
+    if ($F =~ /UnityEditor.dll$/) {
+        print "$F\n";
+        unlink $F;
+    }
+	
+    if ($F =~ /UnityEngine.UI.dll$/) {
+        print "$F\n";
+        unlink $F;
+    }
+	
+    if ($F =~ /.pdb$/) {
+        print "$F\n";
+        unlink $F;
+    }
 }
 
 if (-e $DLL_TARGET_DIR) {
