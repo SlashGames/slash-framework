@@ -70,7 +70,6 @@
     <Compile Include="Source\Animations\AnimationExtensions.cs" />
     <Compile Include="Source\Attributes\ExposePropertyAttribute.cs" />
     <Compile Include="Source\Configuration\GameConfigurationBehaviour.cs" />
-    <Compile Include="Source\Configuration\GameSettings.cs" />
     <Compile Include="Source\Delegates\MethodDelegate.cs" />
     <Compile Include="Source\ECS\EntityBehaviour.cs" />
     <Compile Include="Source\ECS\EntityConfigurationBehaviour.cs" />
@@ -142,6 +141,7 @@
     <Compile Include="Source\Utils\ActiveOnPlatformBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneOnClickBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneOnEscBehaviour.cs" />
+    <Compile Include="Source\Utils\EnumFlagAttribute.cs" />
     <Compile Include="Source\Utils\LogDeviceIdBehaviour.cs" />
     <Compile Include="Source\Utils\OpenUrlOnClickBehaviour.cs" />
     <Compile Include="Source\Utils\UnityColorUtils.cs" />

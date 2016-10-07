@@ -78,6 +78,7 @@
     <Compile Include="Source\MenuItems\Windows\BlueprintEditorWindow.cs" />
     <Compile Include="Source\MenuItems\Windows\OpenSceneWindow.cs" />
     <Compile Include="Source\PropertyDrawers\TypePropertyDrawer.cs" />
+    <Compile Include="Source\Utils\EnumFlagPropertyDrawer.cs" />
     <Compile Include="Source\Utils\Options.cs" />
   </ItemGroup>
   <ItemGroup>
