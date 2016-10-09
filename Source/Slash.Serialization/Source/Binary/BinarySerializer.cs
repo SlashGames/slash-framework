@@ -62,6 +62,15 @@ namespace Slash.Serialization.Binary
 
         private void Serialize(object o, Type type)
         {
+            // Write "null" flag.
+            this.writer.Write(o != null);
+
+            // Skip value if null.
+            if (o == null)
+            {
+                return;
+            }
+
             // Check for primitive types.
             if (type.IsPrimitive())
             {

@@ -61,6 +61,17 @@ namespace Slash.Serialization.Binary
         /// <returns>Object of the specified type read from the current stream.</returns>
         public object Deserialize(Type type)
         {
+            // Check if null (or default) value.
+            if (!this.reader.ReadBoolean())
+            {
+                if (type.IsValueType)
+                {
+                    return Activator.CreateInstance(type);
+                }
+
+                return null;
+            }
+
             // Check for primitive type.
             if (type.IsPrimitive())
             {
