@@ -61,6 +61,17 @@ namespace Slash.Serialization.Binary
         /// <returns>Object of the specified type read from the current stream.</returns>
         public object Deserialize(Type type)
         {
+            // Check if null (or default) value.
+            if (!this.reader.ReadBoolean())
+            {
+                if (type.IsValueType)
+                {
+                    return Activator.CreateInstance(type);
+                }
+
+                return null;
+            }
+
             // Check for primitive type.
             if (type.IsPrimitive())
             {
@@ -109,6 +120,14 @@ namespace Slash.Serialization.Binary
                 IBinarySerializable binarySerializable = (IBinarySerializable)Activator.CreateInstance(type);
                 binarySerializable.Deserialize(this);
                 return binarySerializable;
+            }
+
+            // Check if unspecified type.
+            if (type == typeof(object))
+            {
+               var objectTypeFullName = this.reader.ReadString();
+               var objectType = ReflectionUtils.FindType(objectTypeFullName);
+               return this.Deserialize(objectType);
             }
 
             // Deserialize with reflection.

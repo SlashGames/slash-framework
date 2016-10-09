@@ -62,6 +62,15 @@ namespace Slash.Serialization.Binary
 
         private void Serialize(object o, Type type)
         {
+            // Write "null" flag.
+            this.writer.Write(o != null);
+
+            // Skip value if null.
+            if (o == null)
+            {
+                return;
+            }
+
             // Check for primitive types.
             if (type.IsPrimitive())
             {
@@ -110,6 +119,15 @@ namespace Slash.Serialization.Binary
             {
                 IBinarySerializable binarySerializable = (IBinarySerializable)o;
                 binarySerializable.Serialize(this);
+                return;
+            }
+
+            // Check if unspecified type.
+            if (type == typeof(object))
+            {
+                string typeName = SystemExtensions.RemoveAssemblyInfo(o.GetType().FullName);
+                this.writer.Write(typeName);
+                this.Serialize(o, o.GetType());
                 return;
             }
 
@@ -243,15 +261,29 @@ namespace Slash.Serialization.Binary
             // Serialize fields.
             foreach (FieldInfo field in BinarySerializationReflectionUtils.ReflectFields(type))
             {
-                object fieldValue = field.GetValue(o);
-                this.Serialize(fieldValue, field.FieldType);
+                try
+                {
+                    object fieldValue = field.GetValue(o);
+                    this.Serialize(fieldValue, field.FieldType);
+                }
+                catch (Exception e)
+                {
+                    throw new SerializationException(string.Format("Unsupported field: {0}.{1} of type {2}", type.Name, field.Name, field.FieldType), e);
+                }
             }
 
             // Serialize properties.
             foreach (PropertyInfo property in BinarySerializationReflectionUtils.ReflectProperties(type))
             {
-                object propertyValue = property.GetGetMethod().Invoke(o, null);
-                this.Serialize(propertyValue, property.PropertyType);
+                try
+                {
+                    object propertyValue = property.GetGetMethod().Invoke(o, null);
+                    this.Serialize(propertyValue, property.PropertyType);
+                }
+                catch (Exception e)
+                {
+                    throw new SerializationException(string.Format("Unsupported property: {0}.{1} of type {2}", type.Name, property.Name, property.PropertyType), e);
+                }
             }
         }
 
