@@ -243,15 +243,29 @@ namespace Slash.Serialization.Binary
             // Serialize fields.
             foreach (FieldInfo field in BinarySerializationReflectionUtils.ReflectFields(type))
             {
-                object fieldValue = field.GetValue(o);
-                this.Serialize(fieldValue, field.FieldType);
+                try
+                {
+                    object fieldValue = field.GetValue(o);
+                    this.Serialize(fieldValue, field.FieldType);
+                }
+                catch (Exception e)
+                {
+                    throw new SerializationException(string.Format("Unsupported field: {0}.{1} of type {2}", type.Name, field.Name, field.FieldType), e);
+                }
             }
 
             // Serialize properties.
             foreach (PropertyInfo property in BinarySerializationReflectionUtils.ReflectProperties(type))
             {
-                object propertyValue = property.GetGetMethod().Invoke(o, null);
-                this.Serialize(propertyValue, property.PropertyType);
+                try
+                {
+                    object propertyValue = property.GetGetMethod().Invoke(o, null);
+                    this.Serialize(propertyValue, property.PropertyType);
+                }
+                catch (Exception e)
+                {
+                    throw new SerializationException(string.Format("Unsupported property: {0}.{1} of type {2}", type.Name, property.Name, property.PropertyType), e);
+                }
             }
         }
 
