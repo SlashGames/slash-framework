@@ -122,6 +122,15 @@ namespace Slash.Serialization.Binary
                 return;
             }
 
+            // Check if unspecified type.
+            if (type == typeof(object))
+            {
+                string typeName = SystemExtensions.RemoveAssemblyInfo(o.GetType().FullName);
+                this.writer.Write(typeName);
+                this.Serialize(o, o.GetType());
+                return;
+            }
+
             // Serialize with reflection.
             try
             {

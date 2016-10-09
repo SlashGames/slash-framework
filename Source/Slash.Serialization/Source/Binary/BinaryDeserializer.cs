@@ -122,6 +122,14 @@ namespace Slash.Serialization.Binary
                 return binarySerializable;
             }
 
+            // Check if unspecified type.
+            if (type == typeof(object))
+            {
+               var objectTypeFullName = this.reader.ReadString();
+               var objectType = ReflectionUtils.FindType(objectTypeFullName);
+               return this.Deserialize(objectType);
+            }
+
             // Deserialize with reflection.
             try
             {
