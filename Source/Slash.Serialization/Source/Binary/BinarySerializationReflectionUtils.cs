@@ -50,7 +50,7 @@ namespace Slash.Serialization.Binary
         /// </returns>
         public static IEnumerable<PropertyInfo> ReflectProperties(Type type)
         {
-            PropertyInfo[] properties = type.GetInstanceProperties().ToArray();
+            PropertyInfo[] properties = type.GetInstanceProperties().Where(property => property.CanWrite).ToArray();
 
             // Sort properties by name to prevent re-ordering members from being a breaking change.
             Array.Sort(properties, (first, second) => string.Compare(first.Name, second.Name, StringComparison.Ordinal));
