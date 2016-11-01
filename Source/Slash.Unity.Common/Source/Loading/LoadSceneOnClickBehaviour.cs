@@ -4,21 +4,20 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
 namespace Slash.Unity.Common.Loading
 {
-    using Slash.Unity.Common.Scenes;
-
-    using UnityEngine;
-
     /// <summary>
-    ///   Loads the specified scene when this game object is clicked.
+    ///     Loads the specified scene when this game object is clicked.
     /// </summary>
     public class LoadSceneOnClickBehaviour : MonoBehaviour
     {
         #region Fields
 
         /// <summary>
-        ///   Name of the scene to load.
+        ///     Name of the scene to load.
         /// </summary>
         public string SceneName;
 
@@ -28,8 +27,7 @@ namespace Slash.Unity.Common.Loading
 
         private void OnClick()
         {
-            var sceneManager = SceneManager.Instance;
-            sceneManager.ChangeScene(this.SceneName);
+            SceneManager.LoadScene(this.SceneName);
         }
 
         #endregion

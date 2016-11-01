@@ -86,7 +86,6 @@
     <Compile Include="Source\Diagnostics\CheatConsole.cs" />
     <Compile Include="Source\Diagnostics\DebugBuildBehaviour.cs" />
     <Compile Include="Source\Diagnostics\DebugInput.cs" />
-    <Compile Include="Source\Diagnostics\DisableWithSceneManager.cs" />
     <Compile Include="Source\Diagnostics\FPSDisplay.cs" />
     <Compile Include="Source\ECS\GameEventBehaviour.cs" />
     <Compile Include="Source\Diagnostics\GameCheatBehaviour.cs" />
@@ -116,7 +115,6 @@
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
     <Compile Include="Source\PropertyDrawers\TypePropertyAttribute.cs" />
-    <Compile Include="Source\Scenes\SceneManager.cs" />
     <Compile Include="Source\Scenes\SceneRoot.cs" />
     <Compile Include="Source\Scenes\WindowManager.cs" />
     <Compile Include="Source\Scenes\WindowManagerBehaviour.cs" />

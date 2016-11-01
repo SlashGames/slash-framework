@@ -4,21 +4,20 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
 namespace Slash.Unity.Common.Loading
 {
-    using Slash.Unity.Common.Scenes;
-
-    using UnityEngine;
-
     /// <summary>
-    ///   Loads the specified scene on ESC or back button.
+    ///     Loads the specified scene on ESC or back button.
     /// </summary>
     public class LoadSceneOnEscBehaviour : MonoBehaviour
     {
         #region Fields
 
         /// <summary>
-        ///   Name of the scene to load.
+        ///     Name of the scene to load.
         /// </summary>
         public string SceneName;
 
@@ -29,10 +28,9 @@ namespace Slash.Unity.Common.Loading
         private void Update()
         {
             // Load scene on ESC or back button.
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
             {
-                var sceneManager = SceneManager.Instance;
-                sceneManager.ChangeScene(this.SceneName);
+                SceneManager.LoadScene(this.SceneName);
             }
         }
 
