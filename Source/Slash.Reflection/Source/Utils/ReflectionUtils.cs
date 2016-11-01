@@ -88,6 +88,11 @@ namespace Slash.Reflection.Utils
             return Assembly.LoadFrom(assemblyFile);
         }
 
+        /// <summary>
+        ///   Returns the types in the loaded assemblies that match the specified condition.
+        /// </summary>
+        /// <param name="condition">Condition to match.</param>
+        /// <returns>Types from the loaded assemblies that match the specified condition.</returns>
         public static IEnumerable<Type> FindTypes(Func<Type, bool> condition)
         {
             List<Type> types = new List<Type>();
@@ -112,13 +117,7 @@ namespace Slash.Reflection.Utils
         /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
         public static IEnumerable<Type> FindTypesWithAttribute<T>() where T : Attribute
         {
-            List<Type> types = new List<Type>();
-            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
-            {
-                types.AddRange(assembly.GetTypes().Where(type => Attribute.IsDefined(type, typeof(T))));
-            }
-
-            return types;
+            return FindTypes(type => Attribute.IsDefined(type, typeof(T)));
         }
 
         /// <summary>
@@ -194,15 +193,13 @@ namespace Slash.Reflection.Utils
         /// <typeparam name="T">Type of the attribute to get the types of.</typeparam>
         public static void HandleTypesWithAttribute<T>(Action<Type, T> action) where T : Attribute
         {
-            foreach (Assembly assembly in AssemblyUtils.GetLoadedAssemblies())
+            var types = FindTypesWithAttribute<T>();
+            foreach (var type in types)
             {
-                foreach (Type type in assembly.GetTypes())
+                T attribute = (T)Attribute.GetCustomAttribute(type, typeof(T));
+                if (attribute != null)
                 {
-                    T attribute = (T)Attribute.GetCustomAttribute(type, typeof(T));
-                    if (attribute != null)
-                    {
-                        action(type, attribute);
-                    }
+                    action(type, attribute);
                 }
             }
         }
