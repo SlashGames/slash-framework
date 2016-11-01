@@ -307,6 +307,11 @@ namespace Slash.Unity.Common.Sound
         {
             AudioPlayerPrefs.PlayMusicChanged -= this.OnPlayMusicChanged;
             AudioPlayerPrefs.PlaySoundChanged -= this.OnPlaySoundChanged;
+
+            foreach (var soundEffect in this.soundEffectSources)
+            {
+                this.StopSoundEffect(soundEffect);
+            }
         }
 
         private void OnEnable()
@@ -316,14 +321,6 @@ namespace Slash.Unity.Common.Sound
 
             this.OnPlayMusicChanged(AudioPlayerPrefs.PlayMusic);
             this.OnPlaySoundChanged(AudioPlayerPrefs.PlaySound);
-        }
-
-        private void OnLevelWasLoaded()
-        {
-            foreach (var soundEffect in this.soundEffectSources)
-            {
-                this.StopSoundEffect(soundEffect);
-            }
         }
 
         private void OnPlayMusicChanged(bool playMusic)
