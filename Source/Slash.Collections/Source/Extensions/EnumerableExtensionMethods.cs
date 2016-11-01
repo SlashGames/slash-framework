@@ -73,7 +73,12 @@ namespace Slash.Collections.Extensions
                 return true;
             }
 
-            return !enumerable.Cast<object>().Any();
+            foreach (var item in enumerable)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
