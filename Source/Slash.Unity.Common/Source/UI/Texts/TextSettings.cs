@@ -2,22 +2,6 @@
 {
     using UnityEngine;
 
-#if UNITY_EDITOR
-    using UnityEditor;
-
-    static class TextSettingsEditor
-    {
-        [MenuItem("Assets/Create/Text Settings")]
-        public static void CreateTextSettings()
-        {
-            var asset = ScriptableObject.CreateInstance<TextSettings>();
-            ProjectWindowUtil.CreateAsset(asset, "New TextSettings.asset");
-            AssetDatabase.SaveAssets();
-        }
-    }
-
-#endif
-
     public class TextSettings : ScriptableObject
     {
         public Font Font;

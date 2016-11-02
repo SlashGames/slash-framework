@@ -1,12 +1,10 @@
-﻿namespace Slash.Unity.Common.UI.Texts
-{
-    using UnityEngine;
-    using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
+namespace Slash.Unity.Common.UI.Texts
+{
     public class UseTextSettings : MonoBehaviour
     {
-        #region Fields
-
         public bool IgnoreAlignment;
 
         public bool IgnoreColor;
@@ -16,10 +14,6 @@
         public TextSettings Settings;
 
         public Text Target;
-
-        #endregion
-
-        #region Public Methods and Operators
 
         public void ApplySettings()
         {
@@ -69,10 +63,6 @@
             SetupEffect<Outline>(this.Target.gameObject, this.Settings.Outline);
         }
 
-        #endregion
-
-        #region Methods
-
         [ContextMenu("Apply")]
         private void ApplySettingsInEditor()
         {
@@ -108,7 +98,5 @@
                 effect.effectDistance = effectSettings.Distance;
             }
         }
-
-        #endregion
     }
 }
