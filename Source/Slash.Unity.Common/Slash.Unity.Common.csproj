@@ -72,6 +72,7 @@
     <Compile Include="Source\Configuration\GameConfigurationBehaviour.cs" />
     <Compile Include="Source\Delegates\MethodDelegate.cs" />
     <Compile Include="Source\ECS\EntityBehaviour.cs" />
+    <Compile Include="Source\ECS\EntityComponentBehaviour.cs" />
     <Compile Include="Source\ECS\EntityConfigurationBehaviour.cs" />
     <Compile Include="Source\ECS\EntityGameObjectMap.cs" />
     <Compile Include="Source\ECS\EntityGameObjectsBehaviour.cs" />
