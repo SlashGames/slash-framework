@@ -139,7 +139,7 @@ namespace Slash.ECS.Tests
             /// <param name="dt">
             ///   Time passed since the last tick, in seconds.
             /// </param>
-            public override void UpdateSystem(float dt)
+            public override void Update(float dt)
             {
                 this.Updated = true;
             }
