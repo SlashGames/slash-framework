@@ -77,6 +77,7 @@
     <Compile Include="Source\MenuItems\Util\CheckTextureAssets.cs" />
     <Compile Include="Source\MenuItems\Windows\BlueprintEditorWindow.cs" />
     <Compile Include="Source\MenuItems\Windows\OpenSceneWindow.cs" />
+    <Compile Include="Source\PropertyDrawers\MinMaxRangePropertyDrawer.cs" />
     <Compile Include="Source\PropertyDrawers\TypePropertyDrawer.cs" />
     <Compile Include="Source\UI\Texts\SetupTextUtils.cs" />
     <Compile Include="Source\UI\Texts\TextSettingsEditor.cs" />
