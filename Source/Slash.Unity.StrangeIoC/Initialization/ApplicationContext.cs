@@ -12,6 +12,8 @@ using strange.extensions.context.impl;
 using Slash.Reflection.Utils;
 using Slash.Unity.Common.Scenes;
 using Slash.Unity.StrangeIoC.Configs;
+using Slash.Unity.StrangeIoC.Initialization.Commands;
+using Slash.Unity.StrangeIoC.Initialization.Signals;
 using Slash.Unity.StrangeIoC.Windows;
 using UnityEngine;
 using ILogger = Slash.Diagnostics.Logging.ILogger;
@@ -29,6 +31,14 @@ namespace Slash.Unity.StrangeIoC.Initialization
             this.view = view;
         }
 
+        public override void Launch()
+        {
+            base.Launch();
+
+            var startSignal = this.injectionBinder.GetInstance<ApplicationStartSignal>();
+            startSignal.Dispatch();
+        }
+
         protected override void addCoreComponents()
         {
             base.addCoreComponents();
@@ -40,6 +50,10 @@ namespace Slash.Unity.StrangeIoC.Initialization
 
         protected override void mapBindings()
         {
+            // Setup application lifecycle.
+            this.injectionBinder.Bind<ApplicationStartSignal>().ToSingleton();
+            this.commandBinder.Bind<ApplicationStartSignal>().To<ApplicationStartCommand>().InSequence();
+
             // Create window manager.
             var windowManager = new WindowManager(this.view);
             this.injectionBinder.Bind<WindowManager>().ToValue(windowManager).ToSingleton();
