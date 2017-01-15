@@ -19,14 +19,13 @@ If you're missing anything, we'd love to see it - please refer to the [Contribut
 * Proven to work in several released games (see Show Cases)
 * Unit tests and references for non-trivial operations
 * Several articles about specifics and usage of the framework
-* [Public wiki](http://slashgames.org:8090/display/SF)
-* [Public API documentation](http://www.slashgames.org/framework/api)
+* [Public wiki](https://github.com/SlashGames/slash-framework/wiki)
 
 ## Getting Slash Framework
 
 You can either
 
-* download BINARIES from the [Releases](https://github.com/SlashGames/slash-framework/releases) page (coming soon)
+* download BINARIES from the [Releases](https://github.com/SlashGames/slash-framework/releases) page
 * checkout SOURCES from this repository
 
 ## Getting started
@@ -54,11 +53,11 @@ Introductions, specifics and tutorials about our framework can be found in sever
 * http://unity-coding.slashgames.org/why-to-use-a-custom-cbes-architecture-within-unity/
 * http://unity-coding.slashgames.org/events-order-matters/
 
-To get more information about the framework, take a glimpse at the [API documentation](http://www.slashgames.org/framework/api) and [official wiki](http://slashgames.org:8090/display/SF).
+To get more information about the framework, take a glimpse at the [official wiki](https://github.com/SlashGames/slash-framework/wiki).
 
 ## Remarks
 
-For each of our non-trivial implementations, we provide unit tests and references to algorithms. If anything's unclear, feel free to contact us. We'd love to improve our [documentation](http://slashgames.org:8090/display/SF).
+For each of our non-trivial implementations, we provide unit tests and references to algorithms. If anything's unclear, feel free to contact us. We'd love to improve our [documentation](https://github.com/SlashGames/slash-framework/wiki).
 
 ## Development Cycle
 
