@@ -18,5 +18,8 @@ REM Copy dlls from Unity.Common
 perl BuildUnityPackage.pl "../../Bin/Slash.Unity.Common/AnyCPU/Debug NoLog4Net" "Slash.Framework/Assets/Plugins"
 perl BuildUnityPackage.pl "../../Bin/Slash.Unity.Editor.Common/Debug" "Slash.Framework/Assets/Editor/Plugins"
 
+REM Copy non-DLL files
+xcopy /s /y "../../Source/Slash.Unity.Export/Source/Assets" "Slash.Framework/Assets"
+
 REM Build package
 "%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage Assets "%~dp0Slash.Framework.unitypackage" -quit
