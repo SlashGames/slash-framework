@@ -12,8 +12,6 @@ namespace Slash.Unity.StrangeIoC.Configs
 
     public class StrangeConfig
     {
-        #region Public Methods and Operators
-
         public virtual void MapBindings(IInjectionBinder injectionBinder)
         {
         }
@@ -25,7 +23,5 @@ namespace Slash.Unity.StrangeIoC.Configs
         public virtual void MapBindings(IMediationBinder mediationBinder)
         {
         }
-
-        #endregion
     }
 }

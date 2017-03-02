@@ -21,14 +21,11 @@ using Logger = Slash.Diagnostics.Logging.Logger;
 
 namespace Slash.Unity.StrangeIoC.Initialization
 {
-    public class ApplicationContext : MVCSContext
+    public class ApplicationContext : StrangeContext
     {
-        private readonly MonoBehaviour view;
-
         public ApplicationContext(MonoBehaviour view, bool autoMapping)
             : base(view, autoMapping)
         {
-            this.view = view;
         }
 
         public override void Launch()
@@ -70,35 +67,8 @@ namespace Slash.Unity.StrangeIoC.Initialization
                 var logger = new Logger(typeof (ILogger));
                 this.injectionBinder.Bind<ILogger>().To(logger);
             }
-
-            // Get and use feature configs.
-            var featureConfigTypes = ReflectionUtils.FindTypesWithAttribute<UseStrangeConfigAttribute>();
-            foreach (var featureConfigType in featureConfigTypes)
-            {
-                this.UseConfig(featureConfigType);
-            }
-
+            
             base.mapBindings();
-        }
-
-        private void UseConfig<T>() where T : StrangeConfig, new()
-        {
-            this.UseConfig(typeof (T));
-        }
-
-        private void UseConfig(Type configType)
-        {
-            var config = Activator.CreateInstance(configType) as StrangeConfig;
-            if (config == null)
-            {
-                Debug.LogErrorFormat("Config doesn't derive from StrangeConfig, so bindings can't be mapped: " +
-                                     configType);
-                return;
-            }
-
-            config.MapBindings(this.injectionBinder);
-            config.MapBindings(this.commandBinder);
-            config.MapBindings(this.mediationBinder);
         }
     }
 }
