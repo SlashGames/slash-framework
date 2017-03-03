@@ -28,6 +28,7 @@ namespace Slash.Unity.StrangeIoC.Initialization
             : base(view, autoMapping)
         {
             this.view = view;
+            this.bridgeTypes = new List<Type>();
         }
 
         protected string Domain { get; set; }
@@ -43,8 +44,6 @@ namespace Slash.Unity.StrangeIoC.Initialization
 
         protected override void mapBindings()
         {
-            this.bridgeTypes = new List<Type>();
-
             // Get and use feature configs.
             ReflectionUtils.HandleTypesWithAttribute<UseStrangeConfigAttribute>(this.UseConfig);
 
@@ -62,12 +61,12 @@ namespace Slash.Unity.StrangeIoC.Initialization
             }
         }
 
-        protected void UseConfig<T>() where T : StrangeConfig, new()
+        protected void UseConfig<T>(Type[] configBridges = null) where T : StrangeConfig, new()
         {
-            this.UseConfig(typeof(T));
+            this.UseConfig(typeof(T), configBridges);
         }
 
-        protected void UseConfig(Type configType)
+        protected void UseConfig(Type configType, Type[] configBridges)
         {
             var config = Activator.CreateInstance(configType) as StrangeConfig;
             if (config == null)
@@ -77,6 +76,21 @@ namespace Slash.Unity.StrangeIoC.Initialization
                 return;
             }
 
+            this.UseConfig(config);
+
+            // Instantiate bridges.
+            if (configBridges != null)
+            {
+                foreach (var bridgeType in configBridges)
+                {
+                    this.injectionBinder.Bind(bridgeType).ToSingleton();
+                    this.bridgeTypes.Add(bridgeType);
+                }
+            }
+        }
+
+        protected void UseConfig(StrangeConfig config)
+        {
             config.MapBindings(this.injectionBinder);
             config.MapBindings(this.commandBinder);
             config.MapBindings(this.mediationBinder);
@@ -86,17 +100,7 @@ namespace Slash.Unity.StrangeIoC.Initialization
         {
             if (string.IsNullOrEmpty(configAttribute.Domain) || configAttribute.Domain == this.Domain)
             {
-                this.UseConfig(featureConfigType);
-
-                // Instantiate bridges.
-                if (configAttribute.Bridges != null)
-                {
-                    foreach (var bridgeType in configAttribute.Bridges)
-                    {
-                        this.injectionBinder.Bind(bridgeType).ToSingleton();
-                        this.bridgeTypes.Add(bridgeType);
-                    }
-                }
+                this.UseConfig(featureConfigType, configAttribute.Bridges);
             }
         }
     }
