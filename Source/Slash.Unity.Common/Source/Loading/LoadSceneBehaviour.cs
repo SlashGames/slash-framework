@@ -14,6 +14,12 @@ namespace Slash.Unity.Common.Loading
     {
         #region Public Methods and Operators
 
+        /// <summary>
+        ///   Indicates if the scene is loaded even if it is already loaded.
+        /// </summary>
+        [Tooltip("Indicates if the scene is loaded even if it is already loaded")]
+        public bool AllowMultipleLoading;
+
         public void LoadScene()
         {
             if (this.WindowManager == null)
@@ -29,7 +35,10 @@ namespace Slash.Unity.Common.Loading
                 }
                 else
                 {
-                    SceneManager.LoadScene(this.SceneName, LoadSceneMode.Additive);
+                    if (this.AllowMultipleLoading || !SceneManager.GetSceneByName(this.SceneName).isLoaded)
+                    {
+                        SceneManager.LoadScene(this.SceneName, LoadSceneMode.Additive);
+                    }
                 }
             }
             else
