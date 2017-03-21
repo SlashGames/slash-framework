@@ -291,6 +291,21 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
                 var currentVector2IValue = (currentValue != null) ? (Vector2I)currentValue : Vector2I.Zero;
                 return Vector2IField(label, currentVector2IValue);
             }
+            if (propertyType == typeof(Vector2))
+            {
+                var currentVector = (Vector2?)currentValue ?? Vector2.zero;
+                return EditorGUILayout.Vector2Field(label, currentVector);
+            }
+            if (propertyType == typeof(Vector3))
+            {
+                var currentVector = (Vector3?)currentValue ?? Vector3.zero;
+                return EditorGUILayout.Vector3Field(label, currentVector);
+            }
+            if (propertyType == typeof(Vector4))
+            {
+                var currentVector = (Vector4?)currentValue ?? Vector4.zero;
+                return EditorGUILayout.Vector4Field(label, currentVector);
+            }
             if (propertyType == typeof(EntityConfiguration))
             {
                 EntityConfiguration entityConfiguration = currentValue as EntityConfiguration;
