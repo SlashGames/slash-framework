@@ -16,6 +16,7 @@ namespace Slash.Unity.Common.ECS
     using Slash.Reflection.Utils;
 
     using UnityEngine;
+    using UnityEngine.Profiling;
 
     /// <summary>
     ///   Manages the game objects of all game entities after they are created.

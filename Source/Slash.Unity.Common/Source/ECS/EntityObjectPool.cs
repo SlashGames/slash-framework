@@ -11,6 +11,7 @@ namespace Slash.Unity.Common.ECS
     using Slash.Unity.Common.Utils;
 
     using UnityEngine;
+    using UnityEngine.Profiling;
 
     /// <summary>
     ///   Pool of game objects for entities. Manages the allocation and destruction of the entity objects.
