@@ -11,14 +11,16 @@ namespace Slash.Unity.Common.ECS
     using Slash.Unity.Common.Utils;
 
     using UnityEngine;
+#if UNITY_5_4_OR_NEWER
     using UnityEngine.Profiling;
+#endif
 
     /// <summary>
     ///   Pool of game objects for entities. Manages the allocation and destruction of the entity objects.
     /// </summary>
     public class EntityObjectPool : MonoBehaviour
     {
-        #region Fields
+#region Fields
 
         /// <summary>
         ///   Prefab to visualize an entity with.
@@ -40,9 +42,9 @@ namespace Slash.Unity.Common.ECS
         /// </summary>
         private Stack<GameObject> pool;
 
-        #endregion
+#endregion
 
-        #region Public Methods and Operators
+#region Public Methods and Operators
 
         public GameObject Alloc()
         {
@@ -128,9 +130,9 @@ namespace Slash.Unity.Common.ECS
             this.maxCapacity = newMaxCapacity;
         }
 
-        #endregion
+#endregion
 
-        #region Methods
+#region Methods
 
         private void AddPoolObject()
         {
@@ -162,6 +164,6 @@ namespace Slash.Unity.Common.ECS
             this.pool.Push(entityObject);
         }
 
-        #endregion
+#endregion
     }
 }

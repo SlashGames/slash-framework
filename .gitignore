@@ -37,3 +37,4 @@ Source/Slash.Unity.NGUI/Source/Unity/Temp/
 /UnitTestsResult.xml
 Release/
 Source/Slash.Unity.Export/Source/Library/
+/Tools/Build/Slash.Framework.*.unitypackage

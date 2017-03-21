@@ -16,23 +16,25 @@ namespace Slash.Unity.Common.ECS
     using Slash.Reflection.Utils;
 
     using UnityEngine;
+#if UNITY_5_4_OR_NEWER
     using UnityEngine.Profiling;
+#endif
 
     /// <summary>
     ///   Manages the game objects of all game entities after they are created.
     /// </summary>
     public class EntityGameObjectsBehaviour : MonoBehaviour
     {
-        #region Constants
+#region Constants
 
         /// <summary>
         ///   Singleton instance of this behaviour.
         /// </summary>
         private static EntityGameObjectsBehaviour instance;
 
-        #endregion
+#endregion
 
-        #region Fields
+#region Fields
 
         /// <summary>
         ///   Connections between logical events and the visual entity game objects.
@@ -66,9 +68,9 @@ namespace Slash.Unity.Common.ECS
 
         private Game game;
 
-        #endregion
+#endregion
 
-        #region Properties
+#region Properties
 
         /// <summary>
         ///   Entity game objects.
@@ -92,9 +94,9 @@ namespace Slash.Unity.Common.ECS
             }
         }
 
-        #endregion
+#endregion
 
-        #region Public Methods and Operators
+#region Public Methods and Operators
 
         /// <summary>
         ///   Clears the entity-gameobject map and destroys all entity objects.
@@ -187,9 +189,9 @@ namespace Slash.Unity.Common.ECS
             return this.entities.TryGetValue(entityId, out entityObject);
         }
 
-        #endregion
+#endregion
 
-        #region Methods
+#region Methods
 
         private void Awake()
         {
@@ -499,6 +501,6 @@ namespace Slash.Unity.Common.ECS
             }
         }
 
-        #endregion
+#endregion
     }
 }

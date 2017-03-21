@@ -304,7 +304,11 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             if (propertyType == typeof(Vector4))
             {
                 var currentVector = (Vector4?)currentValue ?? Vector4.zero;
+#if UNITY_5_4_OR_NEWER
                 return EditorGUILayout.Vector4Field(label, currentVector);
+#else
+                return EditorGUILayout.Vector4Field(label.text, currentVector);
+#endif
             }
             if (propertyType == typeof(EntityConfiguration))
             {
@@ -457,6 +461,6 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             return new Vector2I(x, y);
         }
 
-        #endregion
+#endregion
     }
 }
