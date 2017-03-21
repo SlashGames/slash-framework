@@ -8,13 +8,11 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     using Slash.Collections.AttributeTables;
     using Slash.ECS.Blueprints;
     using Slash.ECS.Blueprints.Configurations;
-    using Slash.ECS.Blueprints.Inspector.Attributes;
     using Slash.ECS.Inspector.Attributes;
     using Slash.ECS.Inspector.Data;
     using Slash.Math.Algebra.Vectors;
@@ -241,64 +239,59 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         }
 
         /// <summary>
-        ///   Draws an inspector for the specified logic property.
+        ///   Draws an inspector for the specified property type.
         /// </summary>
-        /// <param name="inspectorProperty">Logic property to draw the inspector for.</param>
-        /// <param name="currentValue">Current logic property value.</param>
         /// <param name="label">Text to show next to the property editor.</param>
+        /// <param name="propertyType">Type of property to draw the inspector for.</param>
+        /// <param name="currentValue">Current logic property value.</param>
         /// <param name="inspectorTypeTable"></param>
         /// <param name="blueprintManager"></param>
         /// <returns>New logic property value.</returns>
-        public static object LogicInspectorPropertyField(
-            InspectorPropertyAttribute inspectorProperty,
-            object currentValue,
+        public static object PropertyField(
             GUIContent label,
+            Type propertyType,
+            object currentValue,
             InspectorTypeTable inspectorTypeTable,
             IBlueprintManager blueprintManager)
         {
-            // Draw inspector control.
-            if (inspectorProperty is InspectorBoolAttribute)
+            if (propertyType == typeof(bool))
             {
                 return EditorGUILayout.Toggle(label, Convert.ToBoolean(currentValue));
             }
-            if (inspectorProperty is InspectorStringAttribute || inspectorProperty is InspectorBlueprintAttribute)
+            if (propertyType == typeof(string))
             {
                 return EditorGUILayout.TextField(label, Convert.ToString(currentValue));
             }
-            if (inspectorProperty is InspectorFloatAttribute)
+            if (propertyType == typeof(Blueprint))
+            {
+                return EditorGUILayout.TextField(label, Convert.ToString(currentValue));
+            }
+            if (propertyType == typeof(float))
             {
                 return EditorGUILayout.FloatField(label, Convert.ToSingle(currentValue));
             }
-            if (inspectorProperty is InspectorIntAttribute)
+            if (propertyType == typeof(int))
             {
                 return EditorGUILayout.IntField(label, Convert.ToInt32(currentValue));
             }
-            InspectorEnumAttribute enumInspectorProperty = inspectorProperty as InspectorEnumAttribute;
-            if (enumInspectorProperty != null)
+            if (propertyType.IsEnum)
             {
-                object currentEnumValue = (currentValue != null)
-                    ? Convert.ChangeType(currentValue, enumInspectorProperty.PropertyType)
-                    : Enum.GetValues(enumInspectorProperty.PropertyType).GetValue(0);
+                var currentEnumValue = currentValue != null
+                    ? Convert.ChangeType(currentValue, propertyType)
+                    : Enum.GetValues(propertyType).GetValue(0);
                 return EditorGUILayout.EnumPopup(label, (Enum)currentEnumValue);
             }
-            InspectorVectorAttribute vectorInspectorproperty = inspectorProperty as InspectorVectorAttribute;
-            if (vectorInspectorproperty != null)
+            if (propertyType == typeof(Vector2F))
             {
-                if (vectorInspectorproperty.PropertyType == typeof(Vector2I)
-                    || vectorInspectorproperty.PropertyType == typeof(List<Vector2I>))
-                {
-                    Vector2I currentVector2IValue = (currentValue != null) ? (Vector2I)currentValue : Vector2I.Zero;
-                    return Vector2IField(label, currentVector2IValue);
-                }
-                if (vectorInspectorproperty.PropertyType == typeof(Vector2F)
-                    || vectorInspectorproperty.PropertyType == typeof(List<Vector2F>))
-                {
-                    Vector2F currentVector2FValue = (currentValue != null) ? (Vector2F)currentValue : Vector2F.Zero;
-                    return Vector2FField(label, currentVector2FValue);
-                }
+                var currentVector2FValue = (currentValue != null) ? (Vector2F)currentValue : Vector2F.Zero;
+                return Vector2FField(label, currentVector2FValue);
             }
-            InspectorEntityAttribute entityInspector = inspectorProperty as InspectorEntityAttribute;
-            if (entityInspector != null)
+            if (propertyType == typeof(Vector2I))
+            {
+                var currentVector2IValue = (currentValue != null) ? (Vector2I)currentValue : Vector2I.Zero;
+                return Vector2IField(label, currentVector2IValue);
+            }
+            if (propertyType == typeof(EntityConfiguration))
             {
                 EntityConfiguration entityConfiguration = currentValue as EntityConfiguration;
                 if (entityConfiguration == null)
@@ -336,10 +329,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             }
 
             EditorGUILayout.HelpBox(
-                string.Format(
-                    "No inspector found for property {0} of type {1}.",
-                    inspectorProperty.Name,
-                    inspectorProperty.PropertyType),
+                string.Format("No inspector found for property {0} of type {1}.", label, propertyType),
                 MessageType.Warning);
             return currentValue;
         }
@@ -379,10 +369,10 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
                         return list;
                     },
                     (obj, index) =>
-                        LogicInspectorPropertyField(
-                            localInspectorProperty,
-                            obj,
+                        PropertyField(
                             new GUIContent("Item " + index),
+                            localInspectorProperty.ItemType,
+                            obj,
                             inspectorTypeTable,
                             blueprintManager),
                     out newList);
@@ -391,10 +381,10 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             }
 
             // Draw inspector property.
-            return LogicInspectorPropertyField(
-                inspectorProperty,
-                currentValue,
+            return PropertyField(
                 new GUIContent(inspectorProperty.Name, inspectorProperty.Description),
+                inspectorProperty.PropertyType,
+                currentValue,
                 inspectorTypeTable,
                 blueprintManager);
         }
