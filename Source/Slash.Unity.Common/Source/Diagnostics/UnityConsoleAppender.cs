@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if LOG4NET
+
 namespace Slash.Unity.Common.Diagnostics
 {
     using log4net.Appender;
@@ -13,8 +15,6 @@ namespace Slash.Unity.Common.Diagnostics
 
     public class UnityConsoleAppender : AppenderSkeleton
     {
-        #region Methods
-
         protected override void Append(LoggingEvent loggingEvent)
         {
             var message = this.RenderLoggingEvent(loggingEvent);
@@ -31,7 +31,6 @@ namespace Slash.Unity.Common.Diagnostics
                 Debug.Log(message);
             }
         }
-
-        #endregion
     }
 }
+#endif
