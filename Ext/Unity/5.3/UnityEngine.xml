@@ -3279,32 +3279,6 @@ If relativePath is empty it refers to the game object the animation clip is atta
         <para>Enable anisotropic filtering for all textures.</para>
       </summary>
     </member>
-    <member name="T:UnityEngine.Apple.TV.Remote">
-      <summary>
-        <para>A class for Apple TV remote input configuration.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Apple.TV.Remote.allowExitToHome">
-      <summary>
-        <para>Configures how "Menu" button behaves on Apple TV Remote. If this property is set to true hitting "Menu" on Remote will exit to system home screen. When this property is false current application is responsible for handling "Menu" button. It is recommended to set this property to true on top level menus of your application.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Apple.TV.Remote.allowRemoteRotation">
-      <summary>
-        <para>Configures if Apple TV Remote should autorotate all the inputs when Remote is being held in horizontal orientation. Default is false.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Apple.TV.Remote.reportAbsoluteDpadValues">
-      <summary>
-        <para>Configures how touches are mapped to analog joystick axes in relative or absolute values. If set to true it will return +1 on Horizontal axis when very far right is being touched on Remote touch aread (and -1 when very left area is touched correspondingly). The same applies for Vertical axis too. When this property is set to false player should swipe instead of touching specific area of remote to generate Horizontal or Vertical input.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.Apple.TV.Remote.touchesEnabled">
-      <summary>
-        <para>Disables Apple TV Remote touch propagation to Unity Input.touches API. Useful for 3rd party frameworks, which do not respect Touch.type == Indirect.
-Default is false.</para>
-      </summary>
-    </member>
     <member name="T:UnityEngine.Application">
       <summary>
         <para>Access to application run-time data.</para>
@@ -3497,14 +3471,6 @@ Default is false.</para>
         <para>Indicates whether Unity's webplayer security model is enabled.</para>
       </summary>
     </member>
-    <member name="T:UnityEngine.Application.AdvertisingIdentifierCallback">
-      <summary>
-        <para>Delegate method for fetching advertising ID.</para>
-      </summary>
-      <param name="advertisingId">Advertising ID.</param>
-      <param name="trackingEnabled">Indicates whether user has chosen to limit ad tracking.</param>
-      <param name="errorMsg">Error message.</param>
-    </member>
     <member name="M:UnityEngine.Application.CancelQuit">
       <summary>
         <para>Cancels quitting the application. This is useful for showing a splash screen at the end of a game.</para>
@@ -3646,15 +3612,6 @@ Default is false.</para>
       <summary>
         <para>Quits the player application.</para>
       </summary>
-    </member>
-    <member name="M:UnityEngine.Application.RequestAdvertisingIdentifierAsync(UnityEngine.Application/AdvertisingIdentifierCallback)">
-      <summary>
-        <para>Request advertising ID for iOS, Android and Windows Store.</para>
-      </summary>
-      <param name="delegateMethod">Delegate method.</param>
-      <returns>
-        <para>In case of error returns false and the delegate method will not be invoked.</para>
-      </returns>
     </member>
     <member name="M:UnityEngine.Application.RequestUserAuthorization(UnityEngine.UserAuthorization)">
       <summary>
@@ -30181,7 +30138,7 @@ Topology is used to define how many client can connect, and how many messages sh
     </member>
     <member name="M:UnityEngine.ParticleSystem.EmitParams.ResetAngularVelocity">
       <summary>
-        <para>Reverts angularVelocity and angularVelocity3D back to the values specified in the inspector.</para>
+        <para>Revert the angular velocity back to the value specified in the inspector.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.ParticleSystem.EmitParams.ResetAxisOfRotation">
@@ -30201,7 +30158,7 @@ Topology is used to define how many client can connect, and how many messages sh
     </member>
     <member name="M:UnityEngine.ParticleSystem.EmitParams.ResetRotation">
       <summary>
-        <para>Reverts rotation and rotation3D back to the values specified in the inspector.</para>
+        <para>Revert the rotation back to the value specified in the inspector.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.ParticleSystem.EmitParams.ResetStartColor">
@@ -39046,33 +39003,20 @@ It is required that the GameObject is at the root of its current scene.</para>
     </member>
     <member name="M:UnityEngine.SceneManagement.SceneManager.UnloadScene(System.Int32)">
       <summary>
-        <para>Unloads all GameObjects associated with the given scene.</para>
+        <para>Unloads all GameObjects associated with the given scene. Note that assets are currently not unloaded, in order to free up asset memory call Resources.UnloadAllUnusedAssets.</para>
       </summary>
       <param name="sceneBuildIndex">Index of the scene in the Build Settings to unload.</param>
       <param name="sceneName">Name of the scene to unload.</param>
-      <param name="scene">Scene to unload.</param>
       <returns>
         <para>Returns true if the scene is unloaded.</para>
       </returns>
     </member>
     <member name="M:UnityEngine.SceneManagement.SceneManager.UnloadScene(System.String)">
       <summary>
-        <para>Unloads all GameObjects associated with the given scene.</para>
+        <para>Unloads all GameObjects associated with the given scene. Note that assets are currently not unloaded, in order to free up asset memory call Resources.UnloadAllUnusedAssets.</para>
       </summary>
       <param name="sceneBuildIndex">Index of the scene in the Build Settings to unload.</param>
       <param name="sceneName">Name of the scene to unload.</param>
-      <param name="scene">Scene to unload.</param>
-      <returns>
-        <para>Returns true if the scene is unloaded.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.SceneManagement.SceneManager.UnloadScene">
-      <summary>
-        <para>Unloads all GameObjects associated with the given scene.</para>
-      </summary>
-      <param name="sceneBuildIndex">Index of the scene in the Build Settings to unload.</param>
-      <param name="sceneName">Name of the scene to unload.</param>
-      <param name="scene">Scene to unload.</param>
       <returns>
         <para>Returns true if the scene is unloaded.</para>
       </returns>
@@ -40054,7 +39998,7 @@ Note: The single argument version of this API will always issue an error message
       <summary>
         <para>Authenticate the local user to the current active Social API implementation and fetch his profile data.</para>
       </summary>
-      <param name="callback">Callback that is called whenever authentication operation is finished.</param>
+      <param name="callback"></param>
     </member>
     <member name="M:UnityEngine.SocialPlatforms.ILocalUser.LoadFriends(System.Action`1&lt;System.Boolean&gt;)">
       <summary>

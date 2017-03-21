@@ -134,9 +134,9 @@
     </member>
     <member name="M:UnityEngine.EventSystems.BaseInputModule.IsPointerOverGameObject(System.Int32)">
       <summary>
-        <para>Is the pointer with the given ID over an EventSystem object?</para>
+        <para>Is the pointer over a GameObject that is controlled by the EventSystem.</para>
       </summary>
-      <param name="pointerId">Pointer ID.</param>
+      <param name="pointerId">Pointer id.</param>
     </member>
     <member name="M:UnityEngine.EventSystems.BaseInputModule.OnDisable">
       <summary>
@@ -255,15 +255,15 @@
     </member>
     <member name="M:UnityEngine.EventSystems.EventSystem.IsPointerOverGameObject">
       <summary>
-        <para>Is the pointer with the given ID over an EventSystem object?</para>
+        <para>Is the pointer with the given id over an EventSystem object?</para>
       </summary>
-      <param name="pointerId">Pointer (touch / mouse) ID.</param>
+      <param name="pointerId">Pointer (touch / mouse) id.</param>
     </member>
     <member name="M:UnityEngine.EventSystems.EventSystem.IsPointerOverGameObject(System.Int32)">
       <summary>
-        <para>Is the pointer with the given ID over an EventSystem object?</para>
+        <para>Is the pointer with the given id over an EventSystem object?</para>
       </summary>
-      <param name="pointerId">Pointer (touch / mouse) ID.</param>
+      <param name="pointerId">Pointer (touch / mouse) id.</param>
     </member>
     <member name="M:UnityEngine.EventSystems.EventSystem.OnDisable">
       <summary>
