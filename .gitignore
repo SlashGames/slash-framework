@@ -38,3 +38,5 @@ Source/Slash.Unity.NGUI/Source/Unity/Temp/
 Release/
 Source/Slash.Unity.Export/Source/Library/
 /Tools/Build/Slash.Framework.*.unitypackage
+/Tools/Build/BuildUnityPackage.log
+/Tools/Build/Unity.log
