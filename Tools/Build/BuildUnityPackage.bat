@@ -21,6 +21,9 @@ REM Clean and build solution
 REM Clear output path
 rmdir /s /q Slash.Framework
 
+REM Remove Slash.Unity.Common.dll
+DEL /Q "..\..\Bin\Slash.Unity.Common\AnyCPU\%CONFIG%\Slash.Unity.Common.*"
+
 REM Remove superfluous Unity.Editor.Common files.
 MD "..\..\Bin\Slash.Unity.Editor.Common\AnyCPU\%CONFIG%\keep"
 MOVE "..\..\Bin\Slash.Unity.Editor.Common\AnyCPU\%CONFIG%\Slash.Unity.Editor.Common.*" "..\..\Bin\Slash.Unity.Editor.Common\AnyCPU\%CONFIG%\keep"
@@ -33,6 +36,7 @@ perl BuildUnityPackage.pl "../../Bin/Slash.Unity.Common/AnyCPU/%CONFIG%" "Slash.
 perl BuildUnityPackage.pl "../../Bin/Slash.Unity.Editor.Common/AnyCPU/%CONFIG%" "Slash.Framework/Assets/Editor/Plugins"
 
 REM Copy non-DLL files
+xcopy /h /s /i /y "../../Source/Slash.Unity.Common/Source" "Slash.Framework/Assets/Slash Framework/Slash.Unity.Common"
 xcopy /h /s /i /y "../../Ext/StrangeIoC/Source" "Slash.Framework/Assets/StrangeIoC"
 xcopy /h /s /i /y "../../Source/Slash.Unity.StrangeIoC/Source" "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC"
 xcopy /h /s /y "../../Source/Slash.Unity.Export/Source/Assets" "Slash.Framework/Assets"
