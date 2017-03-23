@@ -56,7 +56,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Unity 5.5|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug Unity 5.5\</OutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Debug Unity 5.5\</OutputPath>
     <DefineConstants>TRACE;DEBUG;UNITY_5_4_OR_NEWER UNITY_5_5_OR_NEWER</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,7 +65,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Unity 5.3|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug Unity 5.3\</OutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Common\AnyCPU\Debug Unity 5.3\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -78,6 +78,7 @@
     <Compile Include="Source\Attributes\ExposePropertyAttribute.cs" />
     <Compile Include="Source\Attributes\MinMaxRangeAttribute.cs" />
     <Compile Include="Source\Configuration\GameConfigurationBehaviour.cs" />
+    <Compile Include="Source\Configuration\GameSettings.cs" />
     <Compile Include="Source\Delegates\MethodDelegate.cs" />
     <Compile Include="Source\ECS\EntityBehaviour.cs" />
     <Compile Include="Source\ECS\EntityComponentBehaviour.cs" />
@@ -113,6 +114,17 @@
     <Compile Include="Source\GUI\ValueEditors\TextValueEditor.cs" />
     <Compile Include="Source\GUI\ValueEditors\ValueEditorContext.cs" />
     <Compile Include="Source\GUI\ValueEditors\Vector2IValueEditor.cs" />
+    <Compile Include="Source\Images\ImageUtils.cs" />
+    <Compile Include="Source\Input\Handlers\BlockAllInput.cs" />
+    <Compile Include="Source\Input\Handlers\ClickHandler.cs" />
+    <Compile Include="Source\Input\Handlers\DragHandler.cs" />
+    <Compile Include="Source\Input\Handlers\HoverHandler.cs" />
+    <Compile Include="Source\Input\Handlers\IDragOverHandler.cs" />
+    <Compile Include="Source\Input\Handlers\ILongPressHandler.cs" />
+    <Compile Include="Source\Input\Handlers\IPinchHandler.cs" />
+    <Compile Include="Source\Input\Handlers\IPressCanceledHandler.cs" />
+    <Compile Include="Source\Input\Handlers\PinchHandler.cs" />
+    <Compile Include="Source\Input\Handlers\PressHandler.cs" />
     <Compile Include="Source\Input\InputUtils.cs" />
     <Compile Include="Source\GUI\SwitchFullscreenBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneBehaviour.cs" />
@@ -123,11 +135,14 @@
     <Compile Include="Source\Logging\LoggerExtensions.cs" />
     <Compile Include="Source\Math\MathConversionExtensions.cs" />
     <Compile Include="Source\Loading\DontDestroyOnLoadBehaviour.cs" />
+    <Compile Include="Source\Platforms\InvokeForPlatform.cs" />
+    <Compile Include="Source\Platforms\InvokeOutsideEditor.cs" />
     <Compile Include="Source\PropertyDrawers\TypePropertyAttribute.cs" />
     <Compile Include="Source\Scenes\SceneRoot.cs" />
     <Compile Include="Source\Scenes\WindowManager.cs" />
     <Compile Include="Source\Scenes\WindowManagerBehaviour.cs" />
     <Compile Include="Source\Scenes\WindowRoot.cs" />
+    <Compile Include="Source\Sounds\PlayOneShotBehaviour.cs" />
     <Compile Include="Source\Sound\AudioChannel.cs" />
     <Compile Include="Source\Sound\AudioChannelType.cs" />
     <Compile Include="Source\Sound\AudioPlayerPrefs.cs" />
@@ -142,6 +157,11 @@
     <Compile Include="Source\Triggers\Conditions\EventCondition.cs" />
     <Compile Include="Source\Triggers\Trigger.cs" />
     <Compile Include="Source\UI\DropDown.cs" />
+    <Compile Include="Source\UI\Interactable.cs" />
+    <Compile Include="Source\UI\InteractableEventSource.cs" />
+    <Compile Include="Source\UI\SetAnimatorBoolParameter.cs" />
+    <Compile Include="Source\UI\SetAnimatorParameter.cs" />
+    <Compile Include="Source\UI\SetAnimatorTriggerParameter.cs" />
     <Compile Include="Source\UI\Texts\TextEffectSettings.cs" />
     <Compile Include="Source\UI\Texts\TextSettings.cs" />
     <Compile Include="Source\UI\Texts\UseTextSettings.cs" />
@@ -149,6 +169,7 @@
     <Compile Include="Source\Loading\LoadSceneOnClickBehaviour.cs" />
     <Compile Include="Source\Loading\LoadSceneOnEscBehaviour.cs" />
     <Compile Include="Source\Utils\EnumFlagAttribute.cs" />
+    <Compile Include="Source\Utils\LayerAttribute.cs" />
     <Compile Include="Source\Utils\LogDeviceIdBehaviour.cs" />
     <Compile Include="Source\Utils\OpenUrlOnClickBehaviour.cs" />
     <Compile Include="Source\Utils\UnityColorUtils.cs" />
@@ -230,6 +251,10 @@
       <Project>{e399fde3-a0dd-4aea-bbf5-2a16c5e6775b}</Project>
       <Name>Slash.Xml</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Shaders\Sprites Color Flash.shader" />
+    <None Include="Source\Shaders\Unlit Greyscale.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

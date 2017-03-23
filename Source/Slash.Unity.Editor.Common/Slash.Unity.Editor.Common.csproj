@@ -24,9 +24,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Unity 5.5|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug Unity 5.5\</OutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Editor.Common\AnyCPU\Debug Unity 5.5\</OutputPath>
     <DefineConstants>TRACE;DEBUG;UNITY_5_4_OR_NEWER UNITY_5_5_OR_NEWER</DefineConstants>
-    <DocumentationFile>..\..\Bin\Slash.Unity.Editor.Common\Debug\Slash.Unity.Editor.Common.XML</DocumentationFile>
+    <DocumentationFile>..\..\Bin\Slash.Unity.Editor.Common\Debug Unity 5.5\Slash.Unity.Editor.Common.XML</DocumentationFile>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -34,9 +34,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Unity 5.3|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug Unity 5.3\</OutputPath>
+    <OutputPath>..\..\Bin\Slash.Unity.Editor.Common\AnyCPU\Debug Unity 5.3\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>..\..\Bin\Slash.Unity.Editor.Common\Debug\Slash.Unity.Editor.Common.XML</DocumentationFile>
+    <DocumentationFile>..\..\Bin\Slash.Unity.Editor.Common\Debug Unity 5.3\Slash.Unity.Editor.Common.XML</DocumentationFile>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -48,14 +48,14 @@
   </ItemGroup>
   <Choose>
     <When Condition="'$(Configuration)' == 'Debug Unity 5.5'">
-  <ItemGroup>
-    <Reference Include="UnityEditor">
-      <HintPath>..\..\Ext\Unity\5.5\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\Ext\Unity\5.5\UnityEngine.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+      <ItemGroup>
+        <Reference Include="UnityEditor">
+          <HintPath>..\..\Ext\Unity\5.5\UnityEditor.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+          <HintPath>..\..\Ext\Unity\5.5\UnityEngine.dll</HintPath>
+        </Reference>
+      </ItemGroup>
     </When>
     <Otherwise>
       <ItemGroup>
@@ -106,8 +106,12 @@
     <Compile Include="Source\UI\Texts\TextSettingsEditor.cs" />
     <Compile Include="Source\UI\Texts\TextSettingsPropertyDrawer.cs" />
     <Compile Include="Source\UI\Texts\UseTextSettingsEditor.cs" />
+    <Compile Include="Source\Utils\EditorGUIUtils.cs" />
     <Compile Include="Source\Utils\EnumFlagPropertyDrawer.cs" />
+    <Compile Include="Source\Utils\LayerMaskUtils.cs" />
+    <Compile Include="Source\Utils\LayerPropertyDrawer.cs" />
     <Compile Include="Source\Utils\Options.cs" />
+    <Compile Include="Source\Utils\ProfilerUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slash.Application\Slash.Application.csproj">
