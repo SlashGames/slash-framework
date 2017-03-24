@@ -24,26 +24,10 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         /// </summary>
         public string SelectedShader;
 
-        private readonly Material dummyMaterial;
-
         private MenuCommand mc;
 
         #endregion
-
-        #region Constructors and Destructors
-
-        /// <summary>
-        ///   Creates a new, empty wrapper for exposing shaders in the Unity inspector.
-        /// </summary>
-        public ShaderContext()
-        {
-            // Create dummy material to make it not highlight any shaders inside:
-            const string TmpStr = "Shader \"Hidden/tmp_shdr\"{SubShader{Pass{}}}";
-            this.dummyMaterial = new Material(TmpStr);
-        }
-
-        #endregion
-
+        
         #region Public Methods and Operators
 
         /// <summary>
@@ -58,7 +42,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             }
 
             Shader shader = string.IsNullOrEmpty(this.SelectedShader) ? null : Shader.Find(this.SelectedShader);
-            Material temp = shader != null ? new Material(shader) : this.dummyMaterial;
+            Material temp = shader != null ? new Material(shader) : null;
 
             // Rebuild shader menu:
             InternalEditorUtility.SetupShaderMenu(temp);

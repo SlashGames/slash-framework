@@ -21,12 +21,14 @@ namespace Slash.Unity.Common.Logging
         /// </summary>
         public static void InitLogger()
         {
+#if !UNITY_5_5_OR_NEWER
             if (Application.platform == RuntimePlatform.OSXWebPlayer
                 || Application.platform == RuntimePlatform.WindowsWebPlayer)
             {
                 // logging won't make a lot of sense in a Web player...
                 return;
             }
+#endif
 
             string configFile = Application.dataPath + "/Configurations/log4net.xml";
             if (Application.platform == RuntimePlatform.WindowsPlayer)
@@ -39,6 +41,6 @@ namespace Slash.Unity.Common.Logging
             Logger.Configure(configFile);
         }
 
-        #endregion
+#endregion
     }
 }

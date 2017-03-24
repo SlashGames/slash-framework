@@ -16,8 +16,6 @@ namespace Slash.Unity.Common.GUI
 
         private static bool clippingEnabled;
 
-        private static Material lineMaterial;
-
         #endregion
 
         #region Public Methods and Operators
@@ -29,12 +27,12 @@ namespace Slash.Unity.Common.GUI
             GUI.BeginGroup(position);
         }
 
-        public static void DrawLine(Vector2 pointA, Vector2 pointB)
+        public static void DrawLine(Vector2 pointA, Vector2 pointB, Material lineMaterial)
         {
-            DrawLine(pointA, pointB, Color.black);
+            DrawLine(pointA, pointB, Color.black, lineMaterial);
         }
 
-        public static void DrawLine(Vector2 pointA, Vector2 pointB, Color color)
+        public static void DrawLine(Vector2 pointA, Vector2 pointB, Color color, Material lineMaterial)
         {
             if (clippingEnabled)
             {
@@ -42,19 +40,6 @@ namespace Slash.Unity.Common.GUI
                 {
                     return;
                 }
-            }
-
-            if (!lineMaterial)
-            {
-                lineMaterial =
-                    new Material(
-                        "Shader \"Lines/Colored Blended\" {" + "SubShader { Pass {"
-                        + "   BindChannels { Bind \"Color\",color }" + "   Blend SrcAlpha OneMinusSrcAlpha"
-                        + "   ZWrite Off Cull Off Fog { Mode Off }" + "} } }")
-                        {
-                            hideFlags = HideFlags.HideAndDontSave,
-                            shader = { hideFlags = HideFlags.HideAndDontSave }
-                        };
             }
 
             lineMaterial.SetPass(0);
