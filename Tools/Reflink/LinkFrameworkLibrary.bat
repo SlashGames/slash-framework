@@ -7,5 +7,13 @@ if ["%SLASH_FRAMEWORK%"]==[""] (
   exit
 )
 
-rmdir %2
-mklink /J %2 "%SLASH_FRAMEWORK%\Source\%2\Source"
+set SOURCE_FOLDER=%SLASH_FRAMEWORK%\Source\%~2\Source
+if [%3] == [] (
+  set TARGET_FOLDER=%~2 ) else (
+  set TARGET_FOLDER=%~3
+)
+
+echo Link %TARGET_FOLDER% to %SOURCE_FOLDER%
+
+rmdir "%TARGET_FOLDER%"
+mklink /J "%TARGET_FOLDER%" "%SOURCE_FOLDER%"
