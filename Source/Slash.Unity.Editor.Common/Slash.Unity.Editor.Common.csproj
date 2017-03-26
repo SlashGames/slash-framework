@@ -83,6 +83,7 @@
     <Compile Include="Source\Inspectors\ECS\EntityConfigurationEditor.cs" />
     <Compile Include="Source\Inspectors\Diagnostics\DebugInputEditor.cs" />
     <Compile Include="Source\Inspectors\ExposeProperties.cs" />
+    <Compile Include="Source\Inspectors\Loading\LoadSceneBehaviourEditor.cs" />
     <Compile Include="Source\Inspectors\Logging\GameLogBehaviourEditor.cs" />
     <Compile Include="Source\Inspectors\Logging\EventManagerLogBehaviourEditor.cs" />
     <Compile Include="Source\Inspectors\PropertyField.cs" />
@@ -153,7 +154,6 @@
       <Name>Slash.Unity.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

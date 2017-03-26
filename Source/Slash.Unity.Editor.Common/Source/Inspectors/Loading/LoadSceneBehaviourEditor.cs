@@ -24,11 +24,13 @@
                 if (buildScene != null)
                 {
                     var openScene = EditorSceneManager.OpenScene(buildScene.path, OpenSceneMode.Additive);
+#if UNITY_5_4_OR_NEWER
                     var sceneRoot = openScene.GetRootGameObjects().FirstOrDefault();
                     if (sceneRoot != null)
                     {
                         EditorGUIUtility.PingObject(sceneRoot);
                     }
+#endif
                 }
                 else
                 {
