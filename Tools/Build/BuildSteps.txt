@@ -1,0 +1,5 @@
+1. Build Unity package for desired version with BuildUnityPackageX.X.bat
+2. Make sure it was build successful (Check BuildUnityPackage.log and Unity.log if not)
+3. Create new Unity project for built version
+4. Import package by double clicking it (or choose Assets->Import package->Custom package...)
+5. Open and run Game scene to make sure everything works correctly
