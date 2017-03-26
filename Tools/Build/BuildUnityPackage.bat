@@ -35,7 +35,7 @@ DEL /Q "..\..\Bin\Slash.Unity.Common\AnyCPU\%CONFIG%\Slash.Unity.Common.*"
 DEL /Q "..\..\Bin\Slash.Unity.Editor.Common\AnyCPU\%CONFIG%\Slash.Unity.Editor.Common.*"
 
 REM Copy dlls from Unity.Common
-perl BuildUnityPackage.pl "../../Bin/Slash.Unity.Common/AnyCPU/%CONFIG%" "Slash.Framework/Assets/Plugins"
+perl BuildUnityPackage.pl "../../Bin/Slash.Unity.Common/AnyCPU/%CONFIG%" "Slash.Framework/Assets/Slash Framework/Plugins"
 
 REM Copy non-DLL files
 xcopy /h /s /i /y "../../Source/Slash.Unity.Common/Source" "Slash.Framework/Assets/Slash Framework/Slash.Unity.Common"
