@@ -1,4 +1,4 @@
-REM @echo off
+@echo off
 
 REM Setup
 REM Install perl on your system, if not already existent: https://www.perl.org/get.html
@@ -10,4 +10,4 @@ if ["%UNITY_5_3_PATH%"] == [""] (
 	goto :EOF
 )
 
-BuildUnityPackage.bat "%UNITY_5_3_PATH%" "Debug Unity 5.3" "Slash.Framework.5.3"
+BuildUnityPackage.bat "%UNITY_5_3_PATH%" "Debug Unity 5.3" "Slash.Framework.5.3" > BuildUnityPackage.log

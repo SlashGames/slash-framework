@@ -55,10 +55,16 @@
         <Reference Include="UnityEngine">
           <HintPath>..\..\Ext\Unity\5.5\UnityEngine.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.UI">
+          <HintPath>..\..\Ext\Unity\5.5\UnityEngine.UI.dll</HintPath>
+        </Reference>
       </ItemGroup>
     </When>
     <Otherwise>
       <ItemGroup>
+        <Reference Include="UnityEditor">
+          <HintPath>..\..\Ext\Unity\5.3\UnityEditor.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine">
           <HintPath>..\..\Ext\Unity\5.3\UnityEngine.dll</HintPath>
         </Reference>
