@@ -44,5 +44,12 @@ xcopy /h /s /i /y "../../Ext/StrangeIoC/Source" "Slash.Framework/Assets/StrangeI
 xcopy /h /s /i /y "../../Source/Slash.Unity.StrangeIoC/Source" "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC"
 xcopy /h /s /y "../../Source/Slash.Unity.Export/Source/Assets" "Slash.Framework/Assets"
 
+REM Build addons
+mkdir "%~dp0Slash.Framework/Assets/Slash Framework/Addons"
+"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework/Slash.Unity.StrangeIoC" "%~dp0Slash.Framework/Assets/Slash Framework/Addons/Slash.Unity.StrangeIoC.unitypackage" -logFile Unity.log -quit
+
+REM Remove addons
+rmdir /s /q "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC"
+
 REM Build package
-"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework" "Assets/Plugins" "%~dp0%PACKAGE%.unitypackage" -logFile Unity.log -quit
+"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework" "%~dp0%PACKAGE%.unitypackage" -logFile Unity.log -quit
