@@ -13,7 +13,7 @@ if [%3] == [] (
   set TARGET_FOLDER=%~3
 )
 
-echo Link %TARGET_FOLDER% to %SOURCE_FOLDER%
+echo Link %SOURCE_FOLDER% to %TARGET_FOLDER%
 
 rmdir "%TARGET_FOLDER%"
 mklink /J "%TARGET_FOLDER%" "%SOURCE_FOLDER%"

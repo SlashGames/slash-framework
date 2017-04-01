@@ -21,7 +21,7 @@ mkdir Slash.Framework
 cd Slash.Framework
 
 for /F "tokens=*" %%A in ('type "%CONFIG_FILE%"') do (
-  call "%BATCH_DIR%LinkFrameworkLibrary.bat" "%SLASH_FRAMEWORK%" "%%A"
+  call "%BATCH_DIR%LinkFrameworkLibrary.bat" "%SLASH_FRAMEWORK%" %%A
 )
 
 cd "%BATCH_DIR%"
