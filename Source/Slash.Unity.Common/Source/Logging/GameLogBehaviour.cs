@@ -63,17 +63,22 @@ namespace Slash.Unity.Common.Logging
             return this.WithTimestamp(string.Format("{0} (Frame: {1})", log, this.gameBehaviour.FrameCounter));
         }
 
-        private void Awake()
+        private void OnEnable()
         {
             this.gameBehaviour = GameBehaviour.Instance;
+            if (this.gameBehaviour == null)
+            {
+                this.gameBehaviour = FindObjectOfType<GameBehaviour>();
+            }
 
             if (this.gameBehaviour != null)
             {
                 this.gameBehaviour.GameChanged += this.OnGameChanged;
+                OnGameChanged(this.gameBehaviour.Game, null);
             }
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             if (this.gameBehaviour != null)
             {
