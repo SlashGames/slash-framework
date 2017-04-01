@@ -1,0 +1,14 @@
+Slash.Application
+Slash.Collections
+Slash.Configurations
+Slash.Diagnostics
+Slash.ECS
+Slash.ECS.Blueprints
+Slash.ECS.Processes
+Slash.Globalization
+Slash.Math
+Slash.Reflection
+Slash.Serialization
+Slash.System
+Slash.Unity.Common
+Slash.Unity.Editor.Common Editor/Slash.Unity.Editor.Common
