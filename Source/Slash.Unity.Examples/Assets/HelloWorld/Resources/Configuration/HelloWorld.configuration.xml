@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AttributeTable>
+  <Attribute keyType="System.String" valueType="System.String">
+    <Key>SpawnSystem.SpawnBlueprint</Key>
+    <Value>TestBlueprint</Value>
+  </Attribute>
+  <Attribute keyType="System.String" valueType="System.Single">
+    <Key>SpawnSystem.SpawnInterval</Key>
+    <Value>0.5</Value>
+  </Attribute>
+  <Attribute keyType="System.String" valueType="System.String">
+    <Key>SpawnSystem.SpawnBlueprintId</Key>
+    <Value>TestBlueprint</Value>
+  </Attribute>
+</AttributeTable>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BlueprintManager>
+  <Entry>
+    <Id>TestBlueprint</Id>
+    <Blueprint>
+      <AttributeTable>
+        <Attribute keyType="System.String" valueType="Slash.Math.Algebra.Vectors.Vector2F">
+          <Key>PositionComponent.Position</Key>
+          <Value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <X>5</X>
+            <Y>0</Y>
+          </Value>
+        </Attribute>
+        <Attribute keyType="System.String" valueType="System.String">
+          <Key>TextComponent.Text</Key>
+          <Value>Hello World</Value>
+        </Attribute>
+      </AttributeTable>
+      <ComponentTypes>
+        <ComponentType>Slash.Examples.HelloWorld.Components.PositionComponent</ComponentType>
+        <ComponentType>Slash.Examples.HelloWorld.Components.TextComponent</ComponentType>
+      </ComponentTypes>
+    </Blueprint>
+  </Entry>
+</BlueprintManager>
