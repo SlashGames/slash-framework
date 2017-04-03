@@ -15,5 +15,6 @@ if [%3] == [] (
 
 echo Link %SOURCE_FOLDER% to %TARGET_FOLDER%
 
+mkdir "%TARGET_FOLDER%"
 rmdir "%TARGET_FOLDER%"
 mklink /J "%TARGET_FOLDER%" "%SOURCE_FOLDER%"
