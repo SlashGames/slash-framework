@@ -178,7 +178,11 @@ namespace Slash.Unity.Editor.Common.Build
             {
                 // Use build configuration of editor.
                 PlayerSettings.productName = this.BuildConfigurationEditor.ProductName;
+#if UNITY_5_6_OR_NEWER
+                PlayerSettings.applicationIdentifier = this.BuildConfigurationEditor.AndroidBundleIdentifier;
+#else                
                 PlayerSettings.bundleIdentifier = this.BuildConfigurationEditor.AndroidBundleIdentifier;
+#endif
             }
 
             this.SetBuildConfiguration(buildSettings ?? this.EditorBuildSettings);
@@ -229,7 +233,7 @@ namespace Slash.Unity.Editor.Common.Build
             {
                 // Setup build configuration.
                 PlayerSettings.productName = buildConfiguration.ProductName;
-                PlayerSettings.bundleIdentifier = buildConfiguration.AndroidBundleIdentifier;
+                PlayerSettings.applicationIdentifier = buildConfiguration.AndroidBundleIdentifier;
             }
 
             // Setup special settings.
