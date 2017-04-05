@@ -7,9 +7,8 @@ Slash.Reflection
 Slash.System
 Slash.Math
 Slash.Unity.Common
-Slash.Unity.Editor.Common
+Slash.Unity.Editor.Common Editor\Slash.Unity.Editor.Common
 Slash.Serialization
 Slash.Diagnostics
-Slash.Unity.DataBind.Ext
 Slash.Unity.StrangeIoC
 Slash.Unity.DataBind.Ext
