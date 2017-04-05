@@ -1,6 +1,7 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+﻿// This shader takes a texture that contains the normal image and a separate one which contains the alpha channel
+// and merges them to have a way to get videos with transparent areas (e.g. for green screens)
 
-Shader "SuprStijl/Buddy/Separate Alpha Channel" {
+Shader "Slash/Video/Separate Alpha Channel" {
 
 	Properties {
 		_MainTex("Color (RGB)", 2D) = "white"
@@ -13,6 +14,7 @@ Shader "SuprStijl/Buddy/Separate Alpha Channel" {
 
 		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
 
+		ZWrite Off
 		Lighting Off
 		Blend SrcAlpha OneMinusSrcAlpha
 
@@ -62,7 +64,7 @@ Shader "SuprStijl/Buddy/Separate Alpha Channel" {
 					// Limit area to first half.
 					texcoord.x = texcoord.x / 2 + 0.5;
 
-					// Main texture is considered to be on top, alpha texture on bottom.
+					// Main texture is considered to be on the right, alpha texture on the left.
 					o.texcoord = texcoord;
 					o.texcoordAlpha = float2(texcoord.x - 0.5, texcoord.y);
 				}
