@@ -30,9 +30,8 @@ if not %BUILD_STATUS%==0 (
 REM Clear output path
 rmdir /s /q Slash.Framework
 
-REM Remove Slash.Unity.Common.dll and Slash.Unity.Editor.Common.dll
+REM Remove Slash.Unity.Common.dll
 DEL /Q "..\..\Bin\Slash.Unity.Common\AnyCPU\%CONFIG%\Slash.Unity.Common.*"
-DEL /Q "..\..\Bin\Slash.Unity.Editor.Common\AnyCPU\%CONFIG%\Slash.Unity.Editor.Common.*"
 
 REM Copy dlls from Unity.Common
 perl BuildUnityPackage.pl "../../Bin/Slash.Unity.Common/AnyCPU/%CONFIG%" "Slash.Framework/Assets/Slash Framework/Plugins"
@@ -42,14 +41,16 @@ xcopy /h /s /i /y "../../Source/Slash.Unity.Common/Source" "Slash.Framework/Asse
 xcopy /h /s /i /y "../../Source/Slash.Unity.Editor.Common/Source" "Slash.Framework/Assets/Slash Framework/Editor/Slash.Unity.Editor.Common"
 xcopy /h /s /i /y "../../Ext/StrangeIoC/Source" "Slash.Framework/Assets/StrangeIoC"
 xcopy /h /s /i /y "../../Source/Slash.Unity.StrangeIoC/Source" "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC"
+xcopy /h /s /i /y "../../Source/Slash.Unity.StrangeIoC.Video/Source" "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC.Video"
 xcopy /h /s /y "../../Source/Slash.Unity.Export/Source/Assets" "Slash.Framework/Assets"
 
 REM Build addons
 mkdir "%~dp0Slash.Framework/Assets/Slash Framework/Addons"
-"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework/Slash.Unity.StrangeIoC" "%~dp0Slash.Framework/Assets/Slash Framework/Addons/Slash.Unity.StrangeIoC.unitypackage" -logFile Unity.log -quit
+"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework/Slash.Unity.StrangeIoC" "Assets/Slash Framework/Slash.Unity.StrangeIoC.Video" "%~dp0Slash.Framework/Assets/Slash Framework/Addons/Slash.Unity.StrangeIoC.unitypackage" -logFile Unity.log -quit
 
 REM Remove addons
 rmdir /s /q "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC"
+rmdir /s /q "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC.Video"
 
 REM Build package
 "%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework" "%~dp0%PACKAGE%.unitypackage" -logFile Unity.log -quit

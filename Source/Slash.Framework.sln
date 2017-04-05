@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Serialization", "Slas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.AI.BehaviorTrees.Tests", "Slash.AI.BehaviorTrees.Tests\Slash.AI.BehaviorTrees.Tests.csproj", "{0E1AEE12-E607-4776-8492-6B7EC254FCB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Unity.Editor.Common", "Slash.Unity.Editor.Common\Slash.Unity.Editor.Common.csproj", "{1A55D911-697C-4E3B-8FBC-55388C32F20F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.AI.Pathfinding", "Slash.AI\Slash.AI.Pathfinding.csproj", "{32F5CD1C-1889-4A37-B7E4-E3363488BE1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slash.Reflection", "Slash.Reflection\Slash.Reflection.csproj", "{49A6D476-F045-42B3-8FFC-A67B3F9BB073}"
