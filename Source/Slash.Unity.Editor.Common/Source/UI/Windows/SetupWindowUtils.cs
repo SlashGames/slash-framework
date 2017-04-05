@@ -3,19 +3,15 @@
 //   Copyright (c) Slash Games. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Slash.Unity.Editor.Common.UI.Windows
 {
     using Slash.Unity.Common.Scenes;
-
     using UnityEditor;
     using UnityEditor.SceneManagement;
-    using UnityEditor.Sprites;
-
     using UnityEngine;
     using UnityEngine.EventSystems;
     using UnityEngine.UI;
-
-    using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
     public static class SetupWindowUtils
     {
@@ -24,10 +20,10 @@ namespace Slash.Unity.Editor.Common.UI.Windows
         {
             EditorWindow.GetWindow<WindowSetupEditorWindow>(true, "Create New Window");
         }
-        
+
         public static GameObject CreateWindow(string windowId)
         {
-            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
             // Create window root.
             var root = new GameObject(windowId);
@@ -38,7 +34,7 @@ namespace Slash.Unity.Editor.Common.UI.Windows
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             canvasScaler.referenceResolution = new Vector2(1920, 1080);
             canvasScaler.matchWidthOrHeight = 0.5f;
-            var graphicRaycaster = root.AddComponent<GraphicRaycaster>();
+            root.AddComponent<GraphicRaycaster>();
 
             var windowRoot = root.AddComponent<WindowRoot>();
             windowRoot.WindowId = windowId;
@@ -59,7 +55,7 @@ namespace Slash.Unity.Editor.Common.UI.Windows
             windowRect.anchorMin = Vector2.zero;
             windowRect.anchorMax = Vector2.one;
             windowRect.sizeDelta = new Vector2(-40, -40);
-            var windowImage = windowPanel.AddComponent<Image>();
+            windowPanel.AddComponent<Image>();
 
             // Create Logic node.
             var logic = new GameObject("Logic");
