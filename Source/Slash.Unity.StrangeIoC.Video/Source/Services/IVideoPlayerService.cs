@@ -1,12 +1,14 @@
-﻿using UnityEngine;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Services
+﻿namespace Slash.Unity.StrangeIoC.Video.Services
 {
+    using UnityEngine;
+
     public interface IVideoPlayerService
     {
-        bool IsReadyToPlay(string identifier);
+        bool HasVideo(string identifier);
 
         bool IsPlaying(string identifier);
+
+        bool IsReadyToPlay(string identifier);
 
         void Load(string identifier, string path, bool autoPlay);
 
@@ -14,14 +16,12 @@ namespace SuprStijl.Buddy.Unity.Modules.Video.Services
 
         void Play(string identifier);
 
+        void PrewarmVideo(string identifier);
+
         void SetLoop(string identifier, bool loop);
 
         void SetTargets(string identifier, GameObject[] targets);
 
         void Stop(string identifier);
-
-        void PrewarmVideo(string identifier);
-
-        bool HasVideo(string identifier);
     }
 }

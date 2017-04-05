@@ -1,14 +1,14 @@
-﻿using strange.extensions.command.api;
-using strange.extensions.injector.api;
-using strange.extensions.mediation.api;
-using Slash.Unity.StrangeIoC.Configs;
-using SuprStijl.Buddy.Unity.Modules.Video.Commands;
-using SuprStijl.Buddy.Unity.Modules.Video.Services;
-using SuprStijl.Buddy.Unity.Modules.Video.Signals;
-using SuprStijl.Buddy.Unity.Modules.Video.Views;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Configs
+﻿namespace Slash.Unity.StrangeIoC.Video.Configs
 {
+    using strange.extensions.command.api;
+    using strange.extensions.injector.api;
+    using strange.extensions.mediation.api;
+    using Slash.Unity.StrangeIoC.Configs;
+    using Slash.Unity.StrangeIoC.Video.Commands;
+    using Slash.Unity.StrangeIoC.Video.Services;
+    using Slash.Unity.StrangeIoC.Video.Signals;
+    using Slash.Unity.StrangeIoC.Video.Views;
+
     [UseStrangeConfig]
     public class VideoConfig : StrangeConfig
     {

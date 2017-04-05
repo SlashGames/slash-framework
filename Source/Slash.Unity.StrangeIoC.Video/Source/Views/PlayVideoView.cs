@@ -1,9 +1,9 @@
-﻿using System;
-using strange.extensions.mediation.impl;
-using UnityEngine;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Views
+﻿namespace Slash.Unity.StrangeIoC.Video.Views
 {
+    using System;
+    using strange.extensions.mediation.impl;
+    using UnityEngine;
+
     public class PlayVideoView : View
     {
         public string Identifier;

@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using SuprStijl.Buddy.Unity.Modules.Video.Signals;
-using UnityEngine;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Services
+﻿namespace Slash.Unity.StrangeIoC.Video.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Slash.Unity.StrangeIoC.Video.Signals;
+    using UnityEngine;
     using UnityEngine.Video;
 
     public class VideoPlayerService : IVideoPlayerService
@@ -31,7 +30,7 @@ namespace SuprStijl.Buddy.Unity.Modules.Video.Services
                     var playerGameObject = new GameObject("Video Player");
                     this.player = playerGameObject.AddComponent<VideoPlayer>();
                     this.playerAudio = playerGameObject.AddComponent<AudioSource>();
-                    this.player.prepareCompleted += preparedPlayer => 
+                    this.player.prepareCompleted += preparedPlayer =>
                     {
                         Debug.Log("Video is ready");
                         if (this.VideoLoadedSignal != null)

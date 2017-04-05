@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using strange.extensions.mediation.impl;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Views
+﻿namespace Slash.Unity.StrangeIoC.Video.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using strange.extensions.mediation.impl;
     using Slash.Unity.Common.Streaming;
 
     [Serializable]

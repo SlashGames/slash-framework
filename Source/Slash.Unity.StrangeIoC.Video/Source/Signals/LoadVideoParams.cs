@@ -1,4 +1,4 @@
-namespace SuprStijl.Buddy.Unity.Modules.Video.Signals
+namespace Slash.Unity.StrangeIoC.Video.Signals
 {
     public class LoadVideoParams
     {

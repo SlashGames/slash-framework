@@ -1,7 +1,7 @@
-﻿using strange.extensions.signal.impl;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Signals
+﻿namespace Slash.Unity.StrangeIoC.Video.Signals
 {
+    using strange.extensions.signal.impl;
+
     public class VideoPausedSignal : Signal
     {
     }

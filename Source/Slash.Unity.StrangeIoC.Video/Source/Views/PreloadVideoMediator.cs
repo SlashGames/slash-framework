@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using strange.extensions.mediation.impl;
-using SuprStijl.Buddy.Unity.Modules.Video.Signals;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Views
+﻿namespace Slash.Unity.StrangeIoC.Video.Views
 {
+    using System.Linq;
+    using strange.extensions.mediation.impl;
     using Slash.Unity.Common.Streaming;
+    using Slash.Unity.StrangeIoC.Video.Signals;
+    using UnityEngine;
 
     public class PreloadVideoMediator : Mediator
     {
@@ -25,7 +25,7 @@ namespace SuprStijl.Buddy.Unity.Modules.Video.Views
                 {
                     var platformVideoResource =
                         preloadVideo.VideoResource.FirstOrDefault(
-                            platformPath => platformPath.Platform == UnityEngine.Application.platform);
+                            platformPath => platformPath.Platform == Application.platform);
                     if (platformVideoResource != null)
                     {
                         // Loading a video from streaming assets expects the relative instead of the full path on Android.

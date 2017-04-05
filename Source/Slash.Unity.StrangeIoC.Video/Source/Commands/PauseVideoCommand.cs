@@ -1,10 +1,10 @@
-﻿using strange.extensions.command.impl;
-using SuprStijl.Buddy.Unity.Modules.Video.Services;
-using SuprStijl.Buddy.Unity.Modules.Video.Signals;
-using UnityEngine;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Commands
+﻿namespace Slash.Unity.StrangeIoC.Video.Commands
 {
+    using strange.extensions.command.impl;
+    using Slash.Unity.StrangeIoC.Video.Services;
+    using Slash.Unity.StrangeIoC.Video.Signals;
+    using UnityEngine;
+
     public class PauseVideoCommand : Command
     {
         [Inject]

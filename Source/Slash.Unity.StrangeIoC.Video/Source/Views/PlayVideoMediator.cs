@@ -1,8 +1,8 @@
-﻿using strange.extensions.mediation.impl;
-using SuprStijl.Buddy.Unity.Modules.Video.Signals;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Views
+﻿namespace Slash.Unity.StrangeIoC.Video.Views
 {
+    using strange.extensions.mediation.impl;
+    using Slash.Unity.StrangeIoC.Video.Signals;
+
     public class PlayVideoMediator : Mediator
     {
         [Inject]

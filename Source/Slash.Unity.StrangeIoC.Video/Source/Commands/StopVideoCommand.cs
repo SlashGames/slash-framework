@@ -1,8 +1,8 @@
-﻿using strange.extensions.command.impl;
-using SuprStijl.Buddy.Unity.Modules.Video.Services;
-
-namespace SuprStijl.Buddy.Unity.Modules.Video.Commands
+﻿namespace Slash.Unity.StrangeIoC.Video.Commands
 {
+    using strange.extensions.command.impl;
+    using Slash.Unity.StrangeIoC.Video.Services;
+
     public class StopVideoCommand : Command
     {
         [Inject]
