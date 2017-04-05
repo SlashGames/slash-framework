@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using strange.extensions.mediation.impl;
-using Slash.Unity.VR.Streaming;
 using SuprStijl.Buddy.Unity.Modules.Video.Signals;
 
 namespace SuprStijl.Buddy.Unity.Modules.Video.Views
 {
+    using Slash.Unity.Common.Streaming;
+
     public class PreloadVideoMediator : Mediator
     {
         [Inject]
