@@ -5,7 +5,8 @@ Shader "SuprStijl/Buddy/Separate Alpha Channel" {
 	Properties {
 		_MainTex("Color (RGB)", 2D) = "white"
 		[Toggle] _FlipY("Flip Y", Float) = 0
-		_CellSize("Cell Size", Float) = 0.2
+		_CellSize("Cell Size", Float) = 0
+		[Toggle] _AlphaBeside("Alpha is next to image (default: below)", Float) = 0
 	}
 
 	SubShader{
@@ -27,6 +28,7 @@ Shader "SuprStijl/Buddy/Separate Alpha Channel" {
 			float4 _MainTex_ST;
 			float _FlipY;
 			float _CellSize;
+			float _AlphaBeside;
 
 			struct appdata
 			{
@@ -48,19 +50,31 @@ Shader "SuprStijl/Buddy/Separate Alpha Channel" {
 
 				float2 texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 
-				texcoord.x = 1 - texcoord.x;
-
-				// Limit area to first half.
-				texcoord.x = texcoord.x / 2 + 0.5;
-
 				if (_FlipY == 1)
 				{
 					texcoord.y = 1 - texcoord.y;
 				}
 
-				// Main texture is considered to be on top, alpha texture on bottom.
-				o.texcoord = texcoord;
-				o.texcoordAlpha = float2(texcoord.x - 0.5, texcoord.y);
+				if (_AlphaBeside == 1)
+				{
+					texcoord.x = 1 - texcoord.x;
+
+					// Limit area to first half.
+					texcoord.x = texcoord.x / 2 + 0.5;
+
+					// Main texture is considered to be on top, alpha texture on bottom.
+					o.texcoord = texcoord;
+					o.texcoordAlpha = float2(texcoord.x - 0.5, texcoord.y);
+				}
+				else
+				{
+					// Limit area to first half.
+					texcoord.y = texcoord.y / 2 + 0.5;
+
+					// Main texture is considered to be on top, alpha texture on bottom.
+					o.texcoord = texcoord;
+					o.texcoordAlpha = float2(texcoord.x, texcoord.y - 0.5);
+				}
 
 				return o;
 			}
