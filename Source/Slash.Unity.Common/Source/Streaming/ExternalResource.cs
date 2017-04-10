@@ -16,6 +16,8 @@
             FileSystem
         }
 
+        public const string FilePrefix = "file:///";
+
         public ResourceLocation Location;
 
         public string Path;
@@ -28,16 +30,16 @@
                 switch (this.Location)
                 {
                     case ResourceLocation.StreamingAssets:
-                        fullPath = UnityEngine.Application.streamingAssetsPath + "/" + this.Path;
+                        fullPath = Application.streamingAssetsPath + "/" + this.Path;
 #if UNITY_EDITOR || UNITY_STANDALONE
-                        fullPath = "file://" + fullPath;
+                        fullPath = FilePrefix + fullPath;
 #endif
                         break;
                     case ResourceLocation.PersistentDataFolder:
-                        fullPath = "file://" + UnityEngine.Application.persistentDataPath + "/" + this.Path;
+                        fullPath = FilePrefix + Application.persistentDataPath + "/" + this.Path;
                         break;
                     case ResourceLocation.FileSystem:
-                        fullPath = "file://" + this.Path;
+                        fullPath = FilePrefix + this.Path;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("Invalid location", (Exception) null);
