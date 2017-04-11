@@ -12,13 +12,14 @@ namespace Slash.Unity.Common.PropertyDrawers
 
     public class TypePropertyAttribute : PropertyAttribute
     {
-        #region Fields
-
         /// <summary>
         ///   Base type to choose a type from.
         /// </summary>
         public Type BaseType;
 
-        #endregion
+        /// <summary>
+        ///   Indicates if the fully qualified name should be shown in the popup.
+        /// </summary>
+        public bool UseFullName;
     }
 }

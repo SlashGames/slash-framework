@@ -17,11 +17,13 @@ namespace Slash.Unity.Editor.Common.PropertyDrawers
 
     using UnityEngine;
 
+    /// <summary>
+    ///   Property drawer to select a type that is derived from a base type from a popup.
+    /// </summary>
     [CustomPropertyDrawer(typeof(TypePropertyAttribute))]
     public class TypePropertyDrawer : PropertyDrawer
     {
-        #region Public Methods and Operators
-
+        /// <inheritdoc />
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var typeAttribute = this.attribute as TypePropertyAttribute;
@@ -30,17 +32,23 @@ namespace Slash.Unity.Editor.Common.PropertyDrawers
                 return;
             }
 
+            if (typeAttribute.BaseType == null)
+            {
+                EditorGUILayout.HelpBox("No base type specified", MessageType.Warning);
+                return;
+            }
+
             // Get types.
             List<Type> types;
-            string[] typeNames;
-            this.FindTypes(typeAttribute.BaseType, out types, out typeNames);
+            GUIContent[] typeNames;
+            FindTypes(typeAttribute.BaseType, typeAttribute.UseFullName, out types, out typeNames);
 
-            string typeString = property.stringValue;
-            Type type = ReflectionUtils.FindType(typeString);
+            var typeString = property.stringValue;
+            var type = ReflectionUtils.FindType(typeString);
 
             // Find all available context classes.
-            int contextTypeIndex = types.IndexOf(type);
-            int newContextTypeIndex = EditorGUI.Popup(position, "Context", contextTypeIndex, typeNames);
+            var contextTypeIndex = types.IndexOf(type);
+            var newContextTypeIndex = EditorGUI.Popup(position, label, contextTypeIndex, typeNames);
             if (newContextTypeIndex != contextTypeIndex)
             {
                 type = types[newContextTypeIndex];
@@ -48,21 +56,17 @@ namespace Slash.Unity.Editor.Common.PropertyDrawers
             }
         }
 
-        #endregion
-
-        #region Methods
-
-        private void FindTypes(Type baseType, out List<Type> types, out string[] typeNames)
+        private static void FindTypes(Type baseType, bool useFullName, out List<Type> types, out GUIContent[] typeNames)
         {
             types = new List<Type> { null };
-            var availableContextTypes =
+            var availableConcreteTypes =
                 ReflectionUtils.FindTypesWithBase(baseType).Where(type => !type.IsAbstract).ToList();
-            availableContextTypes.Sort(
-                (typeA, typeB) => String.Compare(typeA.FullName, typeB.FullName, StringComparison.Ordinal));
-            types.AddRange(availableContextTypes);
-            typeNames = types.Select(type => type != null ? type.FullName : "None").ToArray();
+            availableConcreteTypes.Sort(
+                (typeA, typeB) => string.Compare(typeA.FullName, typeB.FullName, StringComparison.Ordinal));
+            types.AddRange(availableConcreteTypes);
+            typeNames =
+                types.Select(type => new GUIContent(type != null ? (useFullName ? type.FullName : type.Name) : "None"))
+                    .ToArray();
         }
-
-        #endregion
     }
 }
