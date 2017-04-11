@@ -40,3 +40,5 @@ Source/Slash.Unity.Export/Source/Library/
 /Tools/Build/Slash.Framework.*.unitypackage
 /Tools/Build/BuildUnityPackage.log
 /Tools/Build/Unity.log
+/Tools/Build/BuildLibraries.log
+/Tools/Build/CopyDlls.log
