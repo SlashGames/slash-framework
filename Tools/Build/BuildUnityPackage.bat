@@ -22,10 +22,10 @@ REM Clean and build solution
 
 set BUILD_STATUS=%ERRORLEVEL%
 if %BUILD_STATUS%==0 (
-  echo ...Build success
+  echo ...success
 )
 if not %BUILD_STATUS%==0 (
-  echo ...Build failed with error code %BUILD_STATUS%
+  echo ...failed with error code %BUILD_STATUS%
   goto :EOF
 )
 
@@ -54,7 +54,16 @@ echo Build addon unity packages...
 
 REM Build addons
 mkdir "%~dp0Slash.Framework/Assets/Slash Framework/Addons"
-"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework/Slash.Unity.StrangeIoC" "Assets/Slash Framework/Slash.Unity.StrangeIoC.Video" "%~dp0Slash.Framework/Assets/Slash Framework/Addons/Slash.Unity.StrangeIoC.unitypackage" -logFile Unity.log -quit
+"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework/Slash.Unity.StrangeIoC" "Assets/Slash Framework/Slash.Unity.StrangeIoC.Video" "%~dp0Slash.Framework/Assets/Slash Framework/Addons/Slash.Unity.StrangeIoC.unitypackage" -logFile AddonStrangeIoC.log -quit
+
+set BUILD_STATUS=%ERRORLEVEL%
+if %BUILD_STATUS%==0 (
+  echo ...success
+)
+if not %BUILD_STATUS%==0 (
+  echo ...failed with error code %BUILD_STATUS%
+  goto :EOF
+)
 
 REM Remove addons
 rmdir /s /q "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC"
@@ -63,4 +72,13 @@ rmdir /s /q "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC.Video
 echo Build main unity package...
 
 REM Build package
-"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework" "%~dp0%PACKAGE%.unitypackage" -logFile Unity.log -quit
+"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework" "%~dp0%PACKAGE%.unitypackage" -logFile MainPackage.log -quit
+
+set BUILD_STATUS=%ERRORLEVEL%
+if %BUILD_STATUS%==0 (
+  echo ...success
+)
+if not %BUILD_STATUS%==0 (
+  echo ...failed with error code %BUILD_STATUS%
+  goto :EOF
+)
