@@ -22,17 +22,36 @@ namespace Slash.Unity.StrangeIoC.Initialization
     {
         protected readonly MonoBehaviour view;
 
-        private List<Type> bridgeTypes;
+        private readonly List<Type> bridgeTypes;
+
+        /// <summary>
+        ///   Registered modules.
+        /// </summary>
+        private readonly List<StrangeConfig> modules;
 
         public StrangeContext(MonoBehaviour view, bool autoMapping)
             : base(view, autoMapping)
         {
             this.view = view;
             this.bridgeTypes = new List<Type>();
+            this.modules = new List<StrangeConfig>();
         }
 
         protected string Domain { get; set; }
 
+        /// <inheritdoc />
+        public override void Launch()
+        {
+            base.Launch();
+
+            // Setup views for modules.
+            foreach (var module in this.modules)
+            {
+                module.SetupView();
+            }
+        }
+
+        /// <inheritdoc />
         protected override void addCoreComponents()
         {
             base.addCoreComponents();
@@ -42,6 +61,7 @@ namespace Slash.Unity.StrangeIoC.Initialization
             this.injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
         }
 
+        /// <inheritdoc />
         protected override void mapBindings()
         {
             // Get and use feature configs.
@@ -50,6 +70,7 @@ namespace Slash.Unity.StrangeIoC.Initialization
             base.mapBindings();
         }
 
+        /// <inheritdoc />
         protected override void postBindings()
         {
             base.postBindings();
@@ -94,6 +115,8 @@ namespace Slash.Unity.StrangeIoC.Initialization
             config.MapBindings(this.injectionBinder);
             config.MapBindings(this.commandBinder);
             config.MapBindings(this.mediationBinder);
+
+            this.modules.Add(config);
         }
 
         private void UseConfig(Type featureConfigType, UseStrangeConfigAttribute configAttribute)
