@@ -14,37 +14,33 @@ namespace Slash.Unity.Editor.Common.Build
 
     public class BuildWizard : EditorWindow
     {
-        #region Static Fields
-
         /// <summary>
         ///   Build settings before the editor was prepared for a build.
         /// </summary>
         private static BuildSettings previousBuildSettings;
 
-        #endregion
+        /// <summary>
+        ///   Current build settings.
+        /// </summary>
+        private BuildSettings buildSettings;
 
-        #region Fields
-
-        private readonly BuildSettings buildSettings = BuildWizardPrefs.BuildSettings;
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        [MenuItem("Slash Games/Build/Wizard")]
-        public static void OpenBuildWizard()
+        public void OnEnable()
         {
-            GetWindow<BuildWizard>("Build Wizard");
+            this.buildSettings = BuildWizardPrefs.BuildSettings;
         }
 
         public void OnGUI()
         {
-            BuildManager buildManager = new BuildManager();
+            var buildManager = new BuildManager();
 
             EditorGUI.BeginChangeCheck();
 
             GUILayout.Label("Settings", EditorStyles.boldLabel);
 
+#if UNITY_5_6_OR_NEWER
+            this.buildSettings.BuildTargetGroup =
+                (BuildTargetGroup)EditorGUILayout.EnumPopup("Build Target Group", this.buildSettings.BuildTargetGroup);
+#endif
             this.buildSettings.BuildTarget =
                 (BuildTarget)EditorGUILayout.EnumPopup("Build Target", this.buildSettings.BuildTarget);
             this.buildSettings.BuildType =
@@ -63,7 +59,8 @@ namespace Slash.Unity.Editor.Common.Build
                 EditorGUI.indentLevel++;
 
                 this.buildSettings.Android.BundleVersionCode = EditorGUILayout.IntField(
-                    "Bundle Version Code", this.buildSettings.Android.BundleVersionCode);
+                    "Bundle Version Code",
+                    this.buildSettings.Android.BundleVersionCode);
 
                 EditorGUI.indentLevel--;
             }
@@ -97,7 +94,13 @@ namespace Slash.Unity.Editor.Common.Build
                 }
 
                 // Prepare build.
+#if UNITY_5_6_OR_NEWER
+                EditorUserBuildSettings.SwitchActiveBuildTarget(
+                    this.buildSettings.BuildTargetGroup,
+                    this.buildSettings.BuildTarget);
+#else
                 EditorUserBuildSettings.SwitchActiveBuildTarget(this.buildSettings.BuildTarget);
+#endif
                 buildManager.PrepareBuild(this.buildSettings);
 
                 Debug.Log("Build prepared for settings: " + this.buildSettings);
@@ -118,6 +121,10 @@ namespace Slash.Unity.Editor.Common.Build
             }
         }
 
-        #endregion
+        [MenuItem("Slash/Build/Wizard")]
+        public static void OpenBuildWizard()
+        {
+            GetWindow<BuildWizard>("Build Wizard");
+        }
     }
 }

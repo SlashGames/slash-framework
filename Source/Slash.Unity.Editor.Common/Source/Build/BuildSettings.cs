@@ -13,8 +13,6 @@ namespace Slash.Unity.Editor.Common.Build
     /// </summary>
     public class BuildSettings
     {
-        #region Constructors and Destructors
-
         /// <summary>
         ///   Constructor.
         /// </summary>
@@ -25,10 +23,6 @@ namespace Slash.Unity.Editor.Common.Build
             this.ProjectName = PlayerSettings.productName;
             this.DefaultBuildFolder = "../../Build";
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         ///   Android specific build settings.
@@ -44,6 +38,11 @@ namespace Slash.Unity.Editor.Common.Build
         ///   Target to build.
         /// </summary>
         public BuildTarget BuildTarget { get; set; }
+        
+        /// <summary>
+        ///   Target group to build.
+        /// </summary>
+        public BuildTargetGroup BuildTargetGroup { get; set; }
 
         /// <summary>
         ///   Configuration to build.
@@ -66,10 +65,6 @@ namespace Slash.Unity.Editor.Common.Build
         /// </summary>
         public string ProjectName { get; set; }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
         ///   Returns the default build path for the specified build target.
         /// </summary>
@@ -77,36 +72,42 @@ namespace Slash.Unity.Editor.Common.Build
         /// <returns>Path to build package/executable/...</returns>
         public string GetDefaultBuildPath(BuildTarget buildTarget)
         {
-            string fileExtension = "";
+            var fileExtension = "";
             switch (buildTarget)
             {
                 case BuildTarget.Android:
-                    {
-                        fileExtension = "apk";
-                    }
+                {
+                    fileExtension = "apk";
+                }
                     break;
                 case BuildTarget.StandaloneWindows:
-                    {
-                        fileExtension = "exe";
-                    }
+                {
+                    fileExtension = "exe";
+                }
                     break;
             }
 
             return string.Format(
-                "{0}/{1}/{2}.{3}", this.DefaultBuildFolder, buildTarget, this.ProjectName, fileExtension);
+                "{0}/{1}/{2}.{3}",
+                this.DefaultBuildFolder,
+                buildTarget,
+                this.ProjectName,
+                fileExtension);
         }
 
         public override string ToString()
         {
-            return string.Format(
-                "Android: {0}, BuildPath: {1}, BuildTarget: {2}, BuildType: {3}, BundleVersion: {4}",
-                this.Android,
-                this.BuildPath,
-                this.BuildTarget,
-                this.BuildType,
-                this.BundleVersion);
+            return
+                string.Format(
+                    "Android: {0}, BuildPath: {1}, BuildTarget: {2}, BuildTargetGroup: {3}, BuildType: {4}, BundleVersion: {5}, DefaultBuildFolder: {6}, ProjectName: {7}",
+                    this.Android,
+                    this.BuildPath,
+                    this.BuildTarget,
+                    this.BuildTargetGroup,
+                    this.BuildType,
+                    this.BundleVersion,
+                    this.DefaultBuildFolder,
+                    this.ProjectName);
         }
-
-        #endregion
     }
 }
