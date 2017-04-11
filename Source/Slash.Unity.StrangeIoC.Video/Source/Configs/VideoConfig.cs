@@ -9,7 +9,6 @@
     using Slash.Unity.StrangeIoC.Video.Signals;
     using Slash.Unity.StrangeIoC.Video.Views;
 
-    [UseStrangeConfig]
     public class VideoConfig : StrangeConfig
     {
         public override void MapBindings(IInjectionBinder injectionBinder)

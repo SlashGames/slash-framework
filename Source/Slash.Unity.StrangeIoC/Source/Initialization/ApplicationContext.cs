@@ -23,9 +23,12 @@ namespace Slash.Unity.StrangeIoC.Initialization
 {
     public class ApplicationContext : StrangeContext
     {
+        private readonly MonoBehaviour view;
+
         public ApplicationContext(MonoBehaviour view, bool autoMapping)
             : base(view, autoMapping)
         {
+            this.view = view;
         }
 
         public override void Launch()

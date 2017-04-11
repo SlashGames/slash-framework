@@ -10,9 +10,10 @@ namespace Slash.Unity.StrangeIoC.Configs
     using strange.extensions.injector.api;
     using strange.extensions.mediation.api;
 
+    using UnityEngine;
     using UnityEngine.SceneManagement;
 
-    public class StrangeConfig
+    public abstract class StrangeConfig : MonoBehaviour
     {
         /// <summary>
         ///   Scene to load for this module.
