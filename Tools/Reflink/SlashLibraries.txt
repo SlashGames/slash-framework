@@ -11,4 +11,5 @@ Slash.Unity.Editor.Common Editor\Slash.Unity.Editor.Common
 Slash.Serialization
 Slash.Diagnostics
 Slash.Unity.StrangeIoC
+Slash.Unity.StrangeIoC.Video
 Slash.Unity.DataBind.Ext
