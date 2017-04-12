@@ -15,10 +15,15 @@ set UNITY_PROJECT_DIR=%~2
 
 set CONFIG_FILE=%~3
 
-cd "%UNITY_PROJECT_DIR%/Assets"
-mkdir Slash.Framework
+REM Delete dlls
+del "%UNITY_PROJECT_PATH%/Assets/Slash Framework/Plugins/Slash.*.dll"
+del "%UNITY_PROJECT_PATH%/Assets/Slash Framework/Editor/Plugins/Slash.*.dll"
 
-cd Slash.Framework
+REM Reflink sources
+cd "%UNITY_PROJECT_DIR%/Assets"
+mkdir "Reflink\Slash Framework"
+
+cd "Reflink\Slash Framework"
 
 for /F "tokens=*" %%A in ('type "%CONFIG_FILE%"') do (
   call "%BATCH_DIR%LinkFrameworkLibrary.bat" "%SLASH_FRAMEWORK%" %%A
