@@ -13,8 +13,12 @@ namespace Slash.Unity.StrangeIoC.Initialization
         private void Awake()
         {
             // Create and start application context.
-            this.context = new ApplicationContext(this, true);
-            this.context.Start();
+            var applicationContext = new ApplicationContext();
+            applicationContext.Init();
+            applicationContext.Start();
+            applicationContext.SetContextView(this);
+
+            this.context = applicationContext;
         }
     }
 }
