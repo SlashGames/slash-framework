@@ -353,6 +353,9 @@
             {
                 this.systemManager.LateUpdate(dt);
                 processedEvents = this.eventManager.ProcessEvents();
+
+                // Reset time so the late update method doesn't get multiple deltas.
+                dt = 0;
             }
             while (processedEvents > 0);
         }
