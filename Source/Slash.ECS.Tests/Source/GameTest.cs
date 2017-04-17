@@ -9,6 +9,8 @@ namespace Slash.ECS.Tests
     using NUnit.Framework;
 
     using Slash.Application.Games;
+    using Slash.Application.Systems;
+    using Slash.ECS.Events;
 
     /// <summary>
     ///   Unit tests for the Game class.
@@ -16,16 +18,25 @@ namespace Slash.ECS.Tests
     [TestFixture]
     public class GameTest
     {
-        #region Fields
-
         /// <summary>
         ///   Test game to run unit tests on.
         /// </summary>
         private Game game;
 
-        #endregion
+        [Test]
+        public void QueueEventInLateUpdate()
+        {
+            this.game.AddSystem<SystemSendsEventInLateUpdate>();
+            var eventSent = false;
+            this.game.EventManager.RegisterListener(
+                SystemSendsEventInLateUpdate.TestEvents.First,
+                e => eventSent = true);
 
-        #region Public Methods and Operators
+            this.game.StartGame();
+            this.game.Update(1);
+
+            Assert.IsTrue(eventSent);
+        }
 
         /// <summary>
         ///   Setup for the tests of the Game class.
@@ -72,6 +83,21 @@ namespace Slash.ECS.Tests
             Assert.AreEqual(this.game.TimeElapsed, 2.0f);
         }
 
-        #endregion
+        public class SystemSendsEventInLateUpdate : GameSystem
+        {
+            public enum TestEvents
+            {
+                First
+            }
+
+            /// <inheritdoc />
+            public override void LateUpdate(float dt)
+            {
+                if (dt > 0)
+                {
+                    this.EventManager.QueueEvent(new GameEvent(TestEvents.First));
+                }
+            }
+        }
     }
 }
