@@ -73,6 +73,13 @@ namespace Slash.Reflection.Utils
         }
 
 #if !WINDOWS_STORE
+        /// <summary>
+        ///   Creates a delegate for the specified method of target object which is of specified type.
+        /// </summary>
+        /// <param name="type">Type of target object.</param>
+        /// <param name="target">Target object.</param>
+        /// <param name="method">Method to create delegate for.</param>
+        /// <returns>Delegate for specified method of target object.</returns>
         public static Delegate CreateDelegate(Type type, object target, MethodInfo method)
         {
             return Delegate.CreateDelegate(type, target, method);
@@ -130,14 +137,39 @@ namespace Slash.Reflection.Utils
             return FindTypes(baseType.IsAssignableFrom);
         }
 
+        /// <summary>
+        ///   Returns the attribute for the specified member which are of the specified attribute type.
+        /// </summary>
+        /// <param name="member">Member to get attribute for.</param>
+        /// <typeparam name="T">Base type of attribute to return.</typeparam>
+        /// <returns>Attribute for the specified member of the specified attribute type. Null if member has no such attribute.</returns>
         public static T GetAttribute<T>(MemberInfo member) where T : Attribute
         {
             return (T)Attribute.GetCustomAttribute(member, typeof(T));
         }
 
+        /// <summary>
+        ///   Returns the attributes for the specified type which are of the specified attribute type.
+        /// </summary>
+        /// <param name="type">Type to get attributes for.</param>
+        /// <param name="attributeType">Base type of attributes to return.</param>
+        /// <param name="inherit">Indicates if attributes of inherited attributes should be returned as well.</param>
+        /// <returns>Attributes for the specified type with the specified base attribute type.</returns>
         public static object[] GetAttributes(Type type, Type attributeType, bool inherit)
         {
-            return type.GetCustomAttributes(type, inherit);
+            return type.GetCustomAttributes(attributeType, inherit);
+        }
+
+        /// <summary>
+        ///   Returns the attributes for the specified type which are of the specified attribute type.
+        /// </summary>
+        /// <param name="type">Type to get attributes for.</param>
+        /// <param name="inherit">Indicates if attributes of inherited attributes should be returned as well.</param>
+        /// <typeparam name="T">Base type of attributes to return.</typeparam>
+        /// <returns>Attributes for the specified type with the specified base attribute type.</returns>
+        public static object[] GetAttributes<T>(Type type, bool inherit)
+        {
+            return GetAttributes(type, typeof(T), inherit);
         }
 
         public static Type GetBaseType(Type type)
@@ -373,7 +405,7 @@ namespace Slash.Reflection.Utils
             return type.GetTypeInfo().IsValueType;
         }
 #endif
+
         #endregion
     }
-
 }

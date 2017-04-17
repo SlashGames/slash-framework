@@ -17,6 +17,10 @@ namespace Slash.Reflection.Tests.Utils
 
     public class ReflectionUtilsTest
     {
+        public class TestClass
+        {
+        }
+
         #region Public Methods and Operators
 
         [Test]
@@ -86,6 +90,41 @@ namespace Slash.Reflection.Tests.Utils
             Assert.Throws<TypeLoadException>(() => ReflectionUtils.FindType(fullName));
         }
 
+        public class GetAttributesTestAttribute : Attribute
+        {
+        }
+
+        [GetAttributesTest]
+        public class GetAttributesTestType
+        {
+        }
+
+        public class GetAttributesTestType2
+        {
+        }
+
+        [Test]
+        public void GetAttributesOfBaseAttributeType()
+        {
+            var attributes = ReflectionUtils.GetAttributes(
+                typeof(GetAttributesTestType),
+                typeof(GetAttributesTestAttribute),
+                false);
+            Assert.AreEqual(1, attributes.Length);
+            var attribute = attributes[0];
+            Assert.AreEqual(typeof(GetAttributesTestAttribute), attribute.GetType());
+        }
+
+        [Test]
+        public void GetAttributesOfBaseAttributeTypeNoAttribute()
+        {
+            var attributes = ReflectionUtils.GetAttributes(
+                typeof(GetAttributesTestType2),
+                typeof(GetAttributesTestAttribute),
+                false);
+            Assert.AreEqual(0, attributes.Length);
+        }
+
         #endregion
 
         #region Methods
@@ -102,9 +141,5 @@ namespace Slash.Reflection.Tests.Utils
         }
 
         #endregion
-
-        public class TestClass
-        {
-        }
     }
 }

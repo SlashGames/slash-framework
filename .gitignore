@@ -44,3 +44,6 @@ Source/Slash.Unity.Export/Source/Library/
 /Tools/Build/CopyDlls.log
 /Tools/Build/AddonStrangeIoC.log
 /Tools/Build/MainPackage.log
+/Source/Slash.Unity.Examples/Slash.Unity.Examples.Editor.csproj
+/Source/Slash.Unity.Examples/Slash.Unity.Examples.csproj
+/Source/Slash.Unity.Examples/Slash.Unity.Examples.sln
