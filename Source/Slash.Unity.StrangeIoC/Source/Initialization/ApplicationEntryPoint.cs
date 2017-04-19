@@ -46,11 +46,14 @@
             domainContext.SetContextView(this);
 
             this.context = domainContext;
+        }
 
-            domainContext.Start();
+        private void Start()
+        {
+            this.context.Start();
 
             // Launch when ready.
-            this.StartCoroutine(this.LaunchContextWhenReady(domainContext));
+            this.StartCoroutine(this.LaunchContextWhenReady((TDomainContext) this.context));
         }
 
         private IEnumerator LaunchContextWhenReady(TDomainContext domainContext)
