@@ -6,21 +6,35 @@
 
 namespace Slash.Unity.StrangeIoC.Configs
 {
-    using System.Collections;
+    using System.Collections.Generic;
     using strange.extensions.command.api;
     using strange.extensions.context.impl;
     using strange.extensions.injector.api;
     using strange.extensions.mediation.api;
-    using Slash.Unity.StrangeIoC.Modules;
+    using Slash.Unity.Common.PropertyDrawers;
+    using Slash.Unity.StrangeIoC.Modules.Commands;
+    using Slash.Unity.StrangeIoC.Modules.Signals;
     using UnityEngine;
-    using UnityEngine.SceneManagement;
 
     public abstract class StrangeConfig : MonoBehaviour
     {
+        [TypeProperty(BaseType = typeof(StrangeBridge))]
+        public List<string> BridgeTypes;
+
+        /// <summary>
+        ///     Dependencies to other modules.
+        /// </summary>
+        public List<StrangeConfig> Dependencies;
+
+        /// <summary>
+        ///     Root view for module.
+        /// </summary>
+        public ContextView ModuleView;
+
         /// <summary>
         ///     Scene to load for this module.
         /// </summary>
-        protected string SceneName { get; set; }
+        public string SceneName { get; set; }
 
         /// <summary>
         ///     Maps bindings to the injection binder.
@@ -44,60 +58,6 @@ namespace Slash.Unity.StrangeIoC.Configs
         /// <param name="mediationBinder">Binder to map to.</param>
         public virtual void MapBindings(IMediationBinder mediationBinder)
         {
-        }
-
-        /// <summary>
-        ///     Sets up the view for this module.
-        /// </summary>
-        public virtual void SetupView(ModuleContext context)
-        {
-            if (!string.IsNullOrEmpty(this.SceneName))
-            {
-                this.StartCoroutine(LoadAndSetupScene(this.SceneName, context));
-            }
-            else
-            {
-                var contextView = this.gameObject.GetComponent<ContextView>()
-                                  ?? this.gameObject.AddComponent<ContextView>();
-
-                contextView.context = context;
-                context.SetContextView(contextView);
-            }
-        }
-
-        private static IEnumerator LoadAndSetupScene(string sceneName, ModuleContext context)
-        {
-            // Check if scene is loaded (e.g. in editor).
-            Scene? scene = null;
-            for (var index = 0; index < SceneManager.sceneCount; index++)
-            {
-                var loadedScene = SceneManager.GetSceneAt(index);
-                if (loadedScene.name == sceneName)
-                {
-                    scene = loadedScene;
-                    break;
-                }
-            }
-
-            // Only load if not already loaded.
-            if (!scene.HasValue)
-            {
-                yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-                scene = SceneManager.GetSceneByName(sceneName);
-            }
-            else if (!scene.Value.isLoaded)
-            {
-                yield return new WaitUntil(() => scene.Value.isLoaded);
-            }
-
-            var rootGameObjects = scene.Value.GetRootGameObjects();
-            foreach (var rootGameObject in rootGameObjects)
-            {
-                var contextView = rootGameObject.GetComponent<ContextView>()
-                                  ?? rootGameObject.AddComponent<ContextView>();
-                contextView.context = context;
-                context.SetContextView(contextView);
-            }
         }
     }
 }
