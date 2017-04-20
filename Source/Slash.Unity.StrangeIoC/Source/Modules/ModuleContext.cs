@@ -98,6 +98,14 @@
         /// A Binder that maps Views to Mediators
         public IMediationBinder MediationBinder { get; set; }
 
+        public string Name
+        {
+            get
+            {
+                return this.Config != null ? this.Config.GetType().Name : "No Config";
+            }
+        }
+
         /// A Binder that maps Events to Sequences
         public ISequencer Sequencer { get; set; }
 
@@ -118,6 +126,7 @@
             // Create context for module.
             var module = new Module
             {
+                Type = config.GetType(),
                 Context = new ModuleContext {Config = config}
             };
             module.Context.Init();
@@ -138,16 +147,9 @@
                 }
                 else
                 {
-                    ((ContextView)this.contextView).StartCoroutine(LaunchContextWhenReady(module.Context));
+                    ((MonoBehaviour) this.contextView).StartCoroutine(LaunchContextWhenReady(module.Context));
                 }
             }
-        }
-
-        private static IEnumerator LaunchContextWhenReady(ModuleContext domainContext)
-        {
-            yield return new WaitUntil(() => domainContext.IsReadyToLaunch);
-
-            domainContext.Launch();
         }
 
         /// <inheritdoc />
@@ -227,7 +229,7 @@
                 else if (!string.IsNullOrEmpty(this.Config.SceneName))
                 {
                     // Module view is in a scene.
-                    this.Config.StartCoroutine(LoadAndSetupScene(this.Config.SceneName, this));
+                    this.Config.StartCoroutine(LoadViewFromScene(this.Config.SceneName, this));
                 }
                 else
                 {
@@ -289,7 +291,43 @@
         public override void OnRemove()
         {
             base.OnRemove();
+
+            // Remove sub modules.
+            foreach (var module in this.modules)
+            {
+                this.RemoveContext(module.Context);
+            }
+            this.modules.Clear();
+
+            if (this.Config != null)
+            {
+                // Remove view.
+                if (this.Config.ModuleView != null)
+                {
+                }
+                else if (!string.IsNullOrEmpty(this.Config.SceneName))
+                {
+                    UnloadViewScene(this.Config.SceneName);
+                }
+            }
+
             this.CommandBinder.OnRemove();
+        }
+
+        public void RemoveSubModule(Type moduleConfigType)
+        {
+            var module = this.modules.FirstOrDefault(existingModule => existingModule.Type == moduleConfigType);
+            if (module == null)
+            {
+                Debug.LogErrorFormat("No module of type '{0}' exists in context '{1}'", moduleConfigType.Name,
+                    this.Name);
+                return;
+            }
+
+            // Remove sub context.
+            this.RemoveContext(module.Context);
+
+            this.modules.Remove(module);
         }
 
         /// <inheritdoc />
@@ -431,6 +469,7 @@
 
             // Sub-Module actions.
             this.CommandBinder.Bind<LoadModuleSignal>().To<LoadModuleCommand>();
+            this.CommandBinder.Bind<UnloadModuleSignal>().To<UnloadModuleCommand>();
 
             if (this.Config != null)
             {
@@ -476,7 +515,19 @@
             ViewCache = new SemiBinding();
         }
 
-        private static IEnumerator LoadAndSetupScene(string sceneName, ModuleContext context)
+        private static IEnumerator LaunchContextWhenReady(ModuleContext domainContext)
+        {
+            yield return new WaitUntil(() => domainContext.IsReadyToLaunch);
+
+            domainContext.Launch();
+        }
+
+        private static void UnloadViewScene(string sceneName)
+        {
+            SceneManager.UnloadSceneAsync(sceneName);
+        }
+
+        private static IEnumerator LoadViewFromScene(string sceneName, ModuleContext context)
         {
             // Check if scene is loaded (e.g. in editor).
             Scene? scene = null;
@@ -513,6 +564,11 @@
         private class Module
         {
             public ModuleContext Context { get; set; }
+
+            /// <summary>
+            ///     Module type.
+            /// </summary>
+            public Type Type { get; set; }
         }
     }
 }
