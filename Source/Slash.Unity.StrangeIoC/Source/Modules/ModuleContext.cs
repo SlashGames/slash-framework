@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+
     using strange.extensions.command.api;
     using strange.extensions.command.impl;
     using strange.extensions.context.api;
@@ -20,12 +21,15 @@
     using strange.extensions.sequencer.impl;
     using strange.framework.api;
     using strange.framework.impl;
+
     using Slash.Reflection.Utils;
     using Slash.Unity.StrangeIoC.Configs;
     using Slash.Unity.StrangeIoC.Modules.Commands;
     using Slash.Unity.StrangeIoC.Modules.Signals;
+
     using UnityEngine;
     using UnityEngine.SceneManagement;
+
     using Object = UnityEngine.Object;
 
     public class ModuleContext : CrossContext
@@ -34,24 +38,29 @@
         protected static ISemiBinding ViewCache = new SemiBinding();
 
         /// <summary>
-        ///     Registered bridges.
+        ///   Registered bridges.
         /// </summary>
         private readonly List<Type> bridgeTypes;
 
         /// <summary>
-        ///     Registered modules.
+        ///   Registered modules.
         /// </summary>
         private readonly List<Module> modules;
 
         /// <summary>
-        ///     Indicates if module is already launched.
+        ///   Indicates if module is already launched.
         /// </summary>
         private bool isLaunched;
 
         /// <summary>
-        ///     Indicates if context is started.
+        ///   Indicates if context is started.
         /// </summary>
         private bool isStarted;
+
+        /// <summary>
+        ///   Root of module view.
+        /// </summary>
+        private ModuleView moduleView;
 
         /// <inheritdoc />
         public ModuleContext()
@@ -72,14 +81,14 @@
         public IImplicitBinder ImplicitBinder { get; set; }
 
         /// <summary>
-        ///     Indicates if module is ready to be launched.
+        ///   Indicates if module is ready to be launched.
         /// </summary>
         public bool IsReadyToLaunch
         {
             get
             {
                 // Check if context view is set.
-                if (this.contextView == null)
+                if (this.moduleView == null)
                 {
                     return false;
                 }
@@ -118,17 +127,13 @@
         {
             // Create temporary game object to hold module config.
             var tmpGameObject = new GameObject("TmpModuleConfig");
-            this.AddSubModule((StrangeConfig) tmpGameObject.AddComponent(moduleConfigType));
+            this.AddSubModule((StrangeConfig)tmpGameObject.AddComponent(moduleConfigType));
         }
 
         public void AddSubModule(StrangeConfig config)
         {
             // Create context for module.
-            var module = new Module
-            {
-                Type = config.GetType(),
-                Context = new ModuleContext {Config = config}
-            };
+            var module = new Module { Type = config.GetType(), Context = new ModuleContext { Config = config } };
             module.Context.Init();
             this.AddContext(module.Context);
 
@@ -147,7 +152,7 @@
                 }
                 else
                 {
-                    ((MonoBehaviour) this.contextView).StartCoroutine(LaunchContextWhenReady(module.Context));
+                    this.moduleView.StartCoroutine(LaunchContextWhenReady(module.Context));
                 }
             }
         }
@@ -162,7 +167,10 @@
                 return;
             }
 
-            Debug.LogFormat(view as Object, "Adding view '{0}' to context '{1}'", view.GetType().Name,
+            Debug.LogFormat(
+                view as Object,
+                "Adding view '{0}' to context '{1}'",
+                view.GetType().Name,
                 this.Config != null ? this.Config.GetType().Name : "App");
 
             if (this.MediationBinder != null)
@@ -234,9 +242,9 @@
                 else
                 {
                     // Search or create module view.
-                    var moduleView = this.Config.gameObject.GetComponent<ContextView>()
-                                     ?? this.Config.gameObject.AddComponent<ContextView>();
-                    this.SetModuleView(moduleView);
+                    var moduleViewOnConfigGameObject = this.Config.gameObject.GetComponent<ModuleView>()
+                                                       ?? this.Config.gameObject.AddComponent<ModuleView>();
+                    this.SetModuleView(moduleViewOnConfigGameObject);
                 }
             }
         }
@@ -247,7 +255,7 @@
             // Make sure context is not started twice.
             if (this.isLaunched)
             {
-                Debug.LogError("Context already launched", this.contextView as Object);
+                Debug.LogError("Context already launched", this.moduleView);
                 return;
             }
 
@@ -268,16 +276,7 @@
             //It's possible for views to fire their Awake before bindings. This catches any early risers and attaches their Mediators.
             this.MediateViewCache();
 
-            //Ensure that all Views underneath the ContextView are triggered
-            var contextViewBehaviour = this.contextView as ContextView;
-            if (contextViewBehaviour != null)
-            {
-                this.MediationBinder.Trigger(MediationEvent.AWAKE, contextViewBehaviour);
-            }
-            else
-            {
-                Debug.LogError("Context view " + this.contextView + " has no attached ContextView behaviour");
-            }
+            this.MediationBinder.Trigger(MediationEvent.AWAKE, this.moduleView);
 
             var launchedSignal = this.injectionBinder.GetInstance<ModuleLaunchedSignal>();
             launchedSignal.Dispatch();
@@ -319,7 +318,9 @@
             var module = this.modules.FirstOrDefault(existingModule => existingModule.Type == moduleConfigType);
             if (module == null)
             {
-                Debug.LogErrorFormat("No module of type '{0}' exists in context '{1}'", moduleConfigType.Name,
+                Debug.LogErrorFormat(
+                    "No module of type '{0}' exists in context '{1}'",
+                    moduleConfigType.Name,
                     this.Name);
                 return;
             }
@@ -336,43 +337,44 @@
             this.MediationBinder.Trigger(MediationEvent.DESTROYED, view as IView);
         }
 
-        /// <inheritdoc />
-        public override IContext SetContextView(object view)
+        /// <summary>
+        ///   Sets the root of the module view.
+        /// </summary>
+        /// <param name="newModuleView">Root of the module view.</param>
+        public void SetModuleView(ModuleView newModuleView)
         {
-            this.contextView = view as ContextView;
-            if (this.contextView == null)
+            if (this.moduleView != null)
             {
-                throw new ContextException(
-                    "MVCSContext requires a ContextView of type MonoBehaviour",
-                    ContextExceptionType.NO_CONTEXT_VIEW);
+                // Clear context.
+                this.moduleView.context = null;
+
+                // Remove injection.
+                this.injectionBinder.Unbind<GameObject>(ContextKeys.CONTEXT_VIEW);
             }
 
-            this.injectionBinder.Bind<GameObject>()
-                .ToValue(((ContextView) this.contextView).gameObject)
-                .ToName(ContextKeys.CONTEXT_VIEW);
+            this.moduleView = newModuleView;
+            this.SetContextView(this.moduleView);
 
-            return this;
-        }
-
-        public void SetModuleView(ContextView moduleView)
-        {
-            if (moduleView == null)
+            if (this.moduleView != null)
             {
-                throw new ArgumentNullException("moduleView");
-            }
+                // Set context.
+                this.moduleView.context = this;
 
-            moduleView.context = this;
-            this.SetContextView(moduleView);
+                // Set injection.
+                this.injectionBinder.Bind<GameObject>()
+                    .ToValue(this.moduleView.gameObject)
+                    .ToName(ContextKeys.CONTEXT_VIEW);
 
-            // Add sub modules.
-            var subModuleConfigs = moduleView.GetComponentsInChildren<StrangeConfig>();
-            foreach (var subModuleConfig in subModuleConfigs)
-            {
-                if (subModuleConfig.gameObject == moduleView.gameObject)
+                // Add sub modules.
+                var subModuleConfigs = this.moduleView.GetComponentsInChildren<StrangeConfig>();
+                foreach (var subModuleConfig in subModuleConfigs)
                 {
-                    continue;
+                    if (subModuleConfig.gameObject == this.moduleView.gameObject)
+                    {
+                        continue;
+                    }
+                    this.AddSubModule(subModuleConfig);
                 }
-                this.AddSubModule(subModuleConfig);
             }
         }
 
@@ -382,7 +384,7 @@
             // Make sure context is not started twice.
             if (this.isStarted)
             {
-                Debug.LogError("Context already started", this.contextView as Object);
+                Debug.LogError("Context already started", this.moduleView);
                 return this;
             }
 
@@ -427,11 +429,11 @@
         }
 
         /// <summary>
-        ///     Caches early-riser Views.
-        ///     If a View is on stage at startup, it's possible for that
-        ///     View to be Awake before this Context has finished initing.
-        ///     `cacheView()` maintains a list of such 'early-risers'
-        ///     until the Context is ready to mediate them.
+        ///   Caches early-riser Views.
+        ///   If a View is on stage at startup, it's possible for that
+        ///   View to be Awake before this Context has finished initing.
+        ///   `cacheView()` maintains a list of such 'early-risers'
+        ///   until the Context is ready to mediate them.
         /// </summary>
         /// <param name="view"></param>
         protected virtual void CacheView(MonoBehaviour view)
@@ -455,8 +457,8 @@
             this.Sequencer = this.injectionBinder.GetInstance<ISequencer>();
             this.ImplicitBinder = this.injectionBinder.GetInstance<IImplicitBinder>();
 
-            ((ITriggerProvider) this.Dispatcher).AddTriggerable(this.CommandBinder as ITriggerable);
-            ((ITriggerProvider) this.Dispatcher).AddTriggerable(this.Sequencer as ITriggerable);
+            ((ITriggerProvider)this.Dispatcher).AddTriggerable(this.CommandBinder as ITriggerable);
+            ((ITriggerProvider)this.Dispatcher).AddTriggerable(this.Sequencer as ITriggerable);
         }
 
         /// <inheritdoc />
@@ -522,11 +524,6 @@
             domainContext.Launch();
         }
 
-        private static void UnloadViewScene(string sceneName)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-
         private static IEnumerator LoadViewFromScene(string sceneName, ModuleContext context)
         {
             // Check if scene is loaded (e.g. in editor).
@@ -555,10 +552,14 @@
             var rootGameObject = scene.Value.GetRootGameObjects().FirstOrDefault();
             if (rootGameObject != null)
             {
-                var moduleView = rootGameObject.GetComponent<ContextView>()
-                                 ?? rootGameObject.AddComponent<ContextView>();
+                var moduleView = rootGameObject.GetComponent<ModuleView>() ?? rootGameObject.AddComponent<ModuleView>();
                 context.SetModuleView(moduleView);
             }
+        }
+
+        private static void UnloadViewScene(string sceneName)
+        {
+            SceneManager.UnloadSceneAsync(sceneName);
         }
 
         private class Module
@@ -566,7 +567,7 @@
             public ModuleContext Context { get; set; }
 
             /// <summary>
-            ///     Module type.
+            ///   Module type.
             /// </summary>
             public Type Type { get; set; }
         }

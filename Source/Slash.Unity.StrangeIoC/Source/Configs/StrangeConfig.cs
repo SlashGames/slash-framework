@@ -12,6 +12,7 @@ namespace Slash.Unity.StrangeIoC.Configs
     using strange.extensions.injector.api;
     using strange.extensions.mediation.api;
     using Slash.Unity.Common.PropertyDrawers;
+    using Slash.Unity.StrangeIoC.Modules;
     using Slash.Unity.StrangeIoC.Modules.Commands;
     using Slash.Unity.StrangeIoC.Modules.Signals;
     using UnityEngine;
@@ -29,7 +30,7 @@ namespace Slash.Unity.StrangeIoC.Configs
         /// <summary>
         ///     Root view for module.
         /// </summary>
-        public ContextView ModuleView;
+        public ModuleView ModuleView;
 
         /// <summary>
         ///     Scene to load for this module.

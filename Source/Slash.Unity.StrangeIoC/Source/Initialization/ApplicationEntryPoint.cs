@@ -7,13 +7,15 @@
     using Slash.Reflection.Utils;
     using Slash.Unity.Common.PropertyDrawers;
     using Slash.Unity.StrangeIoC.Configs;
+    using Slash.Unity.StrangeIoC.Modules;
+
     using UnityEngine;
 
     public class ApplicationEntryPoint : ApplicationEntryPoint<ApplicationDomainContext>
     {
     }
 
-    public class ApplicationEntryPoint<TDomainContext> : ContextView
+    public class ApplicationEntryPoint<TDomainContext> : ModuleView
         where TDomainContext : ApplicationDomainContext, new()
     {
         [TypeProperty(BaseType = typeof(StrangeBridge))]
