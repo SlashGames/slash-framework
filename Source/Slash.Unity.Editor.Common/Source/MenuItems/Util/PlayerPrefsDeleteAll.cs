@@ -20,7 +20,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
         /// <summary>
         ///   Deletes all player prefs.
         /// </summary>
-        [MenuItem("Slash Games/Util/Delete All Player Prefs")]
+        [MenuItem("Slash/Util/Delete All Player Prefs")]
         public static void DeleteAllPlayerPrefs()
         {
             PlayerPrefs.DeleteAll();

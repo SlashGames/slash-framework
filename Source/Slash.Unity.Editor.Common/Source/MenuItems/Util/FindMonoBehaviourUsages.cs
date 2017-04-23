@@ -45,7 +45,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
         /// <summary>
         ///   Shows the Find Mono Behaviour Usages window.
         /// </summary>
-        [MenuItem("Slash Games/Util/Find Mono Behaviour Usages")]
+        [MenuItem("Slash/Util/Find Mono Behaviour Usages")]
         public static void ShowFindMonoBehaviourUsages()
         {
             GetWindow(typeof(FindMonoBehaviourUsages)).Show();

@@ -33,7 +33,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
         /// <summary>
         ///   Checks whether any Texture2D assets exceed <see cref="MaxTextureSize" />.
         /// </summary>
-        [MenuItem("Slash Games/Util/Check Texture Assets")]
+        [MenuItem("Slash/Util/Check Texture Assets")]
         public static void CheckTextures()
         {
             var assetsPaths =

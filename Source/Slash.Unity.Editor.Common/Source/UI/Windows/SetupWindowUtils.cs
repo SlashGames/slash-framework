@@ -15,7 +15,7 @@ namespace Slash.Unity.Editor.Common.UI.Windows
 
     public static class SetupWindowUtils
     {
-        [MenuItem("Slash Games/UI/Windows/Create Window")]
+        [MenuItem("Slash/UI/Windows/Create Window")]
         public static void CreateWindow()
         {
             EditorWindow.GetWindow<WindowSetupEditorWindow>(true, "Create New Window");

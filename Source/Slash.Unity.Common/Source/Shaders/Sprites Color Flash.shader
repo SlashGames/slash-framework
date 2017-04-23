@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Slash Games/Sprites/Color Flash"
+Shader "Slash/Sprites/Color Flash"
  {
      Properties
      {

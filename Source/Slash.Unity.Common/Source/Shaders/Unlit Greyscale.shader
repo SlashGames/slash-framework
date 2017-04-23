@@ -5,7 +5,7 @@
 // - no lightmap support
 // - no per-material color
 
-Shader "Slash Games/Unlit/Greyscale" {
+Shader "Slash/Unlit/Greyscale" {
 Properties {
     _MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
     

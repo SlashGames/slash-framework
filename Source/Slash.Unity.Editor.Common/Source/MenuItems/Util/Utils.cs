@@ -19,7 +19,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
         /// <summary>
         ///   Deletes all persistent data.
         /// </summary>
-        [MenuItem("Slash Games/Util/Delete All Persistent Data")]
+        [MenuItem("Slash/Util/Delete All Persistent Data")]
         public static void DeleteAllPerstistentData()
         {
             if (EditorUtility.DisplayDialog(
@@ -44,7 +44,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
         /// <summary>
         ///   Opens the persistent data path in OS explorer.
         /// </summary>
-        [MenuItem("Slash Games/Util/Open persistent data path")]
+        [MenuItem("Slash/Util/Open persistent data path")]
         public static void OpenPersistentDataPath()
         {
             EditorUtility.RevealInFinder(Application.persistentDataPath);

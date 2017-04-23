@@ -39,7 +39,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
         /// <summary>
         ///   Shows the menu for changing scenes in the editor.
         /// </summary>
-        [MenuItem("Slash Games/Windows/Open Scene")]
+        [MenuItem("Slash/Util/Open Scene")]
         public static void OpenScene()
         {
             GetWindow(typeof(OpenSceneWindow), false, "Open Scene").Show();

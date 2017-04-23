@@ -45,7 +45,7 @@ namespace Slash.Unity.Editor.Common.Build
 
         #region Public Methods and Operators
 
-        [MenuItem("Slash Games/Blueprints/Restore Xml Blueprints")]
+        [MenuItem("Slash/Blueprints/Restore Xml Blueprints")]
         public static void RestoreXmlBlueprints()
         {
             // Delete binary blueprint files.
@@ -81,7 +81,7 @@ namespace Slash.Unity.Editor.Common.Build
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("Slash Games/Blueprints/Switch To Binary Blueprints")]
+        [MenuItem("Slash/Blueprints/Switch To Binary Blueprints")]
         public static void SwitchToBinaryBlueprints()
         {
             // Remove old backup files if xml file also exists.

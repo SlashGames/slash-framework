@@ -24,7 +24,7 @@
             }
         }
 
-        [MenuItem("Slash Games/UI/Text Setup/Re-Apply styles")]
+        [MenuItem("Slash/UI/Text Setup/Re-Apply styles")]
         public static void ReapplyStyles()
         {
             var useTextSettingsScripts = Object.FindObjectsOfType<UseTextSettings>();

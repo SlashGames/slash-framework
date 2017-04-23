@@ -128,7 +128,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                 "Blueprints Saved", string.Format("Blueprints have been written to {0}.", blueprintFileName), "OK");
         }
 
-        [MenuItem("Slash Games/Blueprints/Blueprint Editor")]
+        [MenuItem("Slash/Blueprints/Blueprint Editor")]
         private static void ShowBlueprintEditor()
         {
             blueprintManager = null;
