@@ -10,7 +10,7 @@
     using UnityEngine;
 
     using ILogger = Slash.Diagnostics.Logging.ILogger;
-    using Logger = Slash.Diagnostics.Logging.Logger;
+    using Logger = Slash.Unity.Common.Logging.Logger;
 
     public class ApplicationContext : StrangeContext
     {
