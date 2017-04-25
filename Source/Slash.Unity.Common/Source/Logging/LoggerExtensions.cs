@@ -6,16 +6,10 @@
 
 namespace Slash.Unity.Common.Logging
 {
-    using Slash.Diagnostics.Logging;
-
     using UnityEngine;
-
-    using Logger = Slash.Diagnostics.Logging.Logger;
 
     public static class LoggerExtensions
     {
-        #region Public Methods and Operators
-
         /// <summary>
         ///   Call this method to initialize the logger to use it with Unity.
         /// </summary>
@@ -30,7 +24,7 @@ namespace Slash.Unity.Common.Logging
             }
 #endif
 
-            string configFile = Application.dataPath + "/Configurations/log4net.xml";
+            var configFile = Application.dataPath + "/Configurations/log4net.xml";
             if (Application.platform == RuntimePlatform.WindowsPlayer)
             {
                 configFile = Application.dataPath + "\\Configurations\\log4net.xml";
@@ -40,7 +34,5 @@ namespace Slash.Unity.Common.Logging
 
             Logger.Configure(configFile);
         }
-
-#endregion
     }
 }

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Diagnostics.Logging
+namespace Slash.Unity.Common.Logging
 {
     using System;
     using System.IO;
@@ -13,6 +13,8 @@ namespace Slash.Diagnostics.Logging
     using log4net;
     using log4net.Config;
 #endif
+    
+    using Slash.Diagnostics.Logging;
 
     /// <summary>
     ///   This is a very simply class to abstract the use of log4net.
