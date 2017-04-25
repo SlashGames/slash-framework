@@ -12,3 +12,5 @@ Slash.Serialization
 Slash.System
 Slash.Unity.Common
 Slash.Unity.Editor.Common Editor/Slash.Unity.Editor.Common
+Slash.Unity.StrangeIoC
+Slash.Unity.StrangeIoC.Video
