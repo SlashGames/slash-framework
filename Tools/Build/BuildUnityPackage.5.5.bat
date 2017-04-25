@@ -10,4 +10,4 @@ if ["%UNITY_5_5_PATH%"] == [""] (
 	goto :EOF
 )
 
-BuildUnityPackage.bat "%UNITY_5_5_PATH%" "Debug Unity 5.5" "Slash.Framework.1.X.Unity.5.5" > BuildUnityPackage.log
+BuildUnityPackage.bat "%UNITY_5_5_PATH%" "Debug" "Slash.Framework.1.X.Unity.5.5" > BuildUnityPackage.log

@@ -15,10 +15,13 @@ if ["%UNITY_PATH%"] == [""] (
 	goto :EOF
 )
 
+REM Make sure logs directory exists
+if not exist "%~dp0logs" mkdir "%~dp0logs"
+
 echo Build libraries...
 
 REM Clean and build solution
-"%NET40_HOME%\MSBuild.exe" ../../Source/Slash.Framework.sln /verbosity:minimal /property:Configuration="%CONFIG%" /p:Platform="Any CPU" /t:Clean;Build > BuildLibraries.log
+"%NET40_HOME%\MSBuild.exe" ../../Source/Slash.Framework.sln /verbosity:minimal /property:Configuration="%CONFIG%" /p:Platform="Any CPU" /t:Clean;Build > "logs/BuildLibraries.log"
 
 set BUILD_STATUS=%ERRORLEVEL%
 if %BUILD_STATUS%==0 (
@@ -30,15 +33,12 @@ if not %BUILD_STATUS%==0 (
 )
 
 REM Clear output path
-rmdir /s /q Slash.Framework
-
-REM Remove Slash.Unity.Common.dll
-DEL /Q "..\..\Bin\Slash.Unity.Common\AnyCPU\%CONFIG%\Slash.Unity.Common.*"
+if exist Slash.Framework rmdir /s /q Slash.Framework
 
 echo Copy dlls to package...
 
 REM Copy dlls from Unity.Common
-perl BuildUnityPackage.pl "../../Bin/Slash.Unity.Common/AnyCPU/%CONFIG%" "Slash.Framework/Assets/Slash Framework/Plugins" > CopyDlls.log
+perl BuildUnityPackage.pl "../../Bin" "%CONFIG%" "UnityPackageLibraries.txt" "Slash.Framework/Assets/Slash Framework/Plugins" > "logs/CopyDlls.log"
 
 echo Copy source files to package...
 
@@ -54,7 +54,7 @@ echo Build addon unity packages...
 
 REM Build addons
 mkdir "%~dp0Slash.Framework/Assets/Slash Framework/Addons"
-"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework/Slash.Unity.StrangeIoC" "Assets/Slash Framework/Slash.Unity.StrangeIoC.Video" "%~dp0Slash.Framework/Assets/Slash Framework/Addons/Slash.Unity.StrangeIoC.unitypackage" -logFile AddonStrangeIoC.log -quit
+"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework/Slash.Unity.StrangeIoC" "Assets/Slash Framework/Slash.Unity.StrangeIoC.Video" "%~dp0Slash.Framework/Assets/Slash Framework/Addons/Slash.Unity.StrangeIoC.unitypackage" -logFile "logs/AddonStrangeIoC.log" -quit
 
 set BUILD_STATUS=%ERRORLEVEL%
 if %BUILD_STATUS%==0 (
@@ -72,7 +72,7 @@ rmdir /s /q "Slash.Framework/Assets/Slash Framework/Slash.Unity.StrangeIoC.Video
 echo Build main unity package...
 
 REM Build package
-"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework" "%~dp0%PACKAGE%.unitypackage" -logFile MainPackage.log -quit
+"%UNITY_PATH%\Editor\Unity.exe" -batchmode -projectPath "%~dp0Slash.Framework" -exportPackage "Assets/Slash Framework" "%~dp0%PACKAGE%.unitypackage" -logFile logs/MainPackage.log -quit
 
 set BUILD_STATUS=%ERRORLEVEL%
 if %BUILD_STATUS%==0 (

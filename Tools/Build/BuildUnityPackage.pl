@@ -12,13 +12,23 @@ use Cwd 'cwd';
 use Slash;
 
 # Read arguments.
+
+# Directory to find library dlls in.
 my $DLL_SOURCE_DIR = abs_path("$ARGV[0]");
-my $TARGET_FOLDER = "$ARGV[1]";
+
+# Configuration of libraries to copy (debug or release).
+my $CONFIG = "$ARGV[1]";
+
+# Config file contains libraries to include in package.
+my $CONFIG_FILE = abs_path("$ARGV[2]");
+
+# Target folder to copy libraries to.
+my $TARGET_FOLDER = "$ARGV[3]";
 
 # Delete target folder.
 if (-e $TARGET_FOLDER)
 {
-    #remove_tree($TARGET_FOLDER, {keep_root => 1, verbose => 1, error => \my $err}) or die "Can't clean target folder $TARGET_FOLDER";
+    remove_tree($TARGET_FOLDER, {keep_root => 1, verbose => 1, error => \my $err}) or die "Can't clean target folder $TARGET_FOLDER";
 }
 
 # Make sure target folder exists.
@@ -28,26 +38,40 @@ unless(-e $TARGET_FOLDER or make_path $TARGET_FOLDER) {
 
 my $DLL_TARGET_DIR = abs_path($TARGET_FOLDER);
 
-# Copy all dlls to target folder.
-print "Copying '${DLL_SOURCE_DIR}/*.dll' and '${DLL_SOURCE_DIR}/*.pdb' to '${DLL_TARGET_DIR}'\n";
+open my $info, $CONFIG_FILE or die "Could not open $CONFIG_FILE: $!";
 
-for my $file (<"${DLL_SOURCE_DIR}/*.dll">) 
-{
-    my $basename = basename($file);
-        
-    print "Copying ${basename} to ${DLL_TARGET_DIR}/${basename}\n";
-    copy($file, "${DLL_TARGET_DIR}/${basename}") or die "copy $file failed: $!";
+while( my $library = <$info>)  { 
+  
+	# Remove line break.
+	$library =~ s/\R//g;
+	
+    print $library;   
+
+	my $library_path = $DLL_SOURCE_DIR . "/" . $library . "/" . $CONFIG;
+	
+	# Copy all dlls to target folder.
+	print "Copying '${library_path}/*.dll' and '${library_path}/*.pdb' to '${DLL_TARGET_DIR}'\n";
+
+	for my $file (<"${library_path}/*.dll">) 
+	{
+		my $basename = basename($file);
+			
+		print "Copying ${basename} to ${DLL_TARGET_DIR}/${basename}\n";
+		copy($file, "${DLL_TARGET_DIR}/${basename}") or die "copy $file failed: $!";
+	}
+
+	for my $file (<"${library_path}/*.pdb">) 
+	{
+		my $basename = basename($file);
+			
+		print "Copying ${basename} to ${DLL_TARGET_DIR}/${basename}\n";
+		copy($file, "${DLL_TARGET_DIR}/${basename}") or die "copy $file failed: $!";
+	}
+
+	print "Paths:\n${library_path}\n${DLL_TARGET_DIR}\n\n";
 }
 
-for my $file (<"${DLL_SOURCE_DIR}/*.pdb">) 
-{
-    my $basename = basename($file);
-        
-    print "Copying ${basename} to ${DLL_TARGET_DIR}/${basename}\n";
-    copy($file, "${DLL_TARGET_DIR}/${basename}") or die "copy $file failed: $!";
-}
-
-print "Paths:\n${DLL_SOURCE_DIR}\n${DLL_TARGET_DIR}\n\n";
+close $info;
 
 # Convert pdb to mdb and copy to plugins folder.
 print "Convert pdb to mdb in '${DLL_TARGET_DIR}/*.dll'\n";
