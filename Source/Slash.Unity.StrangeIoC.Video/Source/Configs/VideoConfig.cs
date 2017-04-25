@@ -22,7 +22,11 @@
             injectionBinder.Bind<VideoPlayingSignal>().ToSingleton().CrossContext();
             injectionBinder.Bind<VideoPausedSignal>().ToSingleton().CrossContext();
 
+#if UNITY_5_6_OR_NEWER
             injectionBinder.Bind<IVideoPlayerService>().To<VideoPlayerService>().ToSingleton().CrossContext();
+#else
+            UnityEngine.Debug.LogError("Can't use video module in Unity below 5.6", this);
+#endif
         }
 
         public override void MapBindings(ICommandBinder commandBinder)

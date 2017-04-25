@@ -1,5 +1,6 @@
 ﻿namespace Slash.Unity.StrangeIoC.Video.Services
 {
+#if UNITY_5_6_OR_NEWER
     using System.Collections.Generic;
     using System.Linq;
     using Slash.Unity.StrangeIoC.Video.Signals;
@@ -238,4 +239,5 @@
             public GameObject[] Targets;
         }
     }
+#endif
 }
