@@ -50,6 +50,7 @@ xcopy /h /s /q /i /y "../../Source/Slash.Unity.Editor.Common/Source" "%UNITY_SLA
 xcopy /h /s /q /i /y "../../Ext/StrangeIoC/Source" "Slash.Framework/Assets/StrangeIoC" > nul
 xcopy /h /s /q /i /y "../../Source/Slash.Unity.StrangeIoC/Source" "%UNITY_SLASH_FRAMEWORK_PATH%/Slash.Unity.StrangeIoC" > nul
 xcopy /h /s /q /i /y "../../Source/Slash.Unity.StrangeIoC.Video/Source" "%UNITY_SLASH_FRAMEWORK_PATH%/Slash.Unity.StrangeIoC.Video" > nul
+xcopy /h /s /q /y "../../Source/Slash.Unity.Examples/Assets/SlashFramework" "Slash.Framework/Assets/SlashFramework" > nul
 xcopy /h /s /q /y "../../Source/Slash.Unity.Export/Source/Assets" "Slash.Framework/Assets" > nul
 
 echo Build addon unity packages...
