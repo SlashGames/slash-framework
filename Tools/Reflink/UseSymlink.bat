@@ -4,16 +4,12 @@ SETLOCAL
 
 set BATCH_DIR=%~dp0
 
-if not [%1]==[] set SLASH_FRAMEWORK=%~1
+set SYMLINK_PATH=%~1
+set CONFIG_FILE=%~2
 
-if ["%SLASH_FRAMEWORK%"]==[""] (
-  echo SLASH_FRAMEWORK variable not set.
-  exit
-)
-
-set SYMLINK_PATH=%~2
-
-set CONFIG_FILE=%~3
+REM Get relative path to slash framework
+set SLASH_FRAMEWORK=%BATCH_DIR%..\..
+call "%BATCH_DIR%MakeRelative" SLASH_FRAMEWORK "%SYMLINK_PATH%"
 
 REM Reflink sources
 mkdir "%SYMLINK_PATH%"
