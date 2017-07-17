@@ -44,7 +44,16 @@ namespace Slash.Unity.Editor.Common.PropertyDrawers
             FindTypes(typeAttribute.BaseType, typeAttribute.UseFullName, out types, out typeNames);
 
             var typeString = property.stringValue;
-            var type = ReflectionUtils.FindType(typeString);
+            Type type = null;
+            try
+            {
+                type = ReflectionUtils.FindType(typeString);
+            }
+            catch (TypeLoadException)
+            {
+                Debug.LogWarningFormat("Couldn't load type '{0}', reset type", typeString);
+                property.stringValue = string.Empty;
+            }
 
             // Find all available context classes.
             var contextTypeIndex = types.IndexOf(type);
