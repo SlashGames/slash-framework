@@ -20,11 +20,6 @@ namespace Slash.Unity.StrangeIoC.Configs
         public List<string> BridgeTypes;
 
         /// <summary>
-        ///     Dependencies to other modules.
-        /// </summary>
-        public List<StrangeConfig> Dependencies;
-
-        /// <summary>
         ///     Root view for module.
         /// </summary>
         public ModuleView ModuleView;
@@ -32,7 +27,7 @@ namespace Slash.Unity.StrangeIoC.Configs
         /// <summary>
         ///     Scene to load for this module.
         /// </summary>
-        public string SceneName { get; set; }
+        public string SceneName;
 
         /// <summary>
         ///     Maps bindings to the injection binder.
