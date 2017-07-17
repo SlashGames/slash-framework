@@ -4,7 +4,6 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-
     using strange.extensions.command.api;
     using strange.extensions.command.impl;
     using strange.extensions.context.api;
@@ -21,15 +20,12 @@
     using strange.extensions.sequencer.impl;
     using strange.framework.api;
     using strange.framework.impl;
-
     using Slash.Reflection.Utils;
     using Slash.Unity.StrangeIoC.Configs;
     using Slash.Unity.StrangeIoC.Modules.Commands;
     using Slash.Unity.StrangeIoC.Modules.Signals;
-
     using UnityEngine;
     using UnityEngine.SceneManagement;
-
     using Object = UnityEngine.Object;
 
     public class ModuleContext : CrossContext
@@ -38,27 +34,27 @@
         protected static ISemiBinding ViewCache = new SemiBinding();
 
         /// <summary>
-        ///   Registered bridges.
+        ///     Registered bridges.
         /// </summary>
         private readonly List<Type> bridgeTypes;
 
         /// <summary>
-        ///   Registered modules.
+        ///     Registered modules.
         /// </summary>
         private readonly List<Module> modules;
 
         /// <summary>
-        ///   Indicates if module is already launched.
+        ///     Indicates if module is already launched.
         /// </summary>
         private bool isLaunched;
 
         /// <summary>
-        ///   Indicates if context is started.
+        ///     Indicates if context is started.
         /// </summary>
         private bool isStarted;
 
         /// <summary>
-        ///   Root of module view.
+        ///     Root of module view.
         /// </summary>
         private ModuleView moduleView;
 
@@ -81,7 +77,7 @@
         public IImplicitBinder ImplicitBinder { get; set; }
 
         /// <summary>
-        ///   Indicates if module is ready to be launched.
+        ///     Indicates if module is ready to be launched.
         /// </summary>
         public bool IsReadyToLaunch
         {
@@ -118,22 +114,38 @@
         /// A Binder that maps Events to Sequences
         public ISequencer Sequencer { get; set; }
 
+        /// <summary>
+        ///     Adds a brige to the module.
+        /// </summary>
+        /// <param name="bridgeType">Type of bridge to add.</param>
         public void AddBridge(Type bridgeType)
         {
+            if (this.bridgeTypes.Contains(bridgeType))
+            {
+                throw new ArgumentException("Can't add bridge of type '{0}', it's already added.", "bridgeType");
+            }
+
             this.bridgeTypes.Add(bridgeType);
+
+            // Bind and fire up bridge if already launched.
+            if (this.isLaunched)
+            {
+                this.injectionBinder.Bind(bridgeType).ToSingleton();
+                this.injectionBinder.GetInstance(bridgeType);
+            }
         }
 
         public void AddSubModule(Type moduleConfigType)
         {
             // Create temporary game object to hold module config.
             var tmpGameObject = new GameObject("TmpModuleConfig");
-            this.AddSubModule((StrangeConfig)tmpGameObject.AddComponent(moduleConfigType));
+            this.AddSubModule((StrangeConfig) tmpGameObject.AddComponent(moduleConfigType));
         }
 
         public void AddSubModule(StrangeConfig config)
         {
             // Create context for module.
-            var module = new Module { Type = config.GetType(), Context = new ModuleContext { Config = config } };
+            var module = new Module {Type = config.GetType(), Context = new ModuleContext {Config = config}};
             module.Context.Init();
             this.AddContext(module.Context);
 
@@ -300,6 +312,9 @@
 
             if (this.Config != null)
             {
+                // Unmap bindings.
+                this.Config.UnmapCrossContextBindings(this.injectionBinder.CrossContextBinder);
+
                 // Remove view.
                 if (this.Config.ModuleView != null)
                 {
@@ -311,6 +326,23 @@
             }
 
             this.CommandBinder.OnRemove();
+        }
+
+        /// <summary>
+        ///     Removes a bridge from the module.
+        /// </summary>
+        /// <param name="bridgeType">Type of bridge to remove.</param>
+        public void RemoveBridge(Type bridgeType)
+        {
+            if (!this.bridgeTypes.Remove(bridgeType))
+            {
+                throw new ArgumentException("Can't remove bridge of type '{0}', doesn't exist.", "bridgeType");
+            }
+
+            if (this.isLaunched)
+            {
+                this.injectionBinder.Unbind(bridgeType);
+            }
         }
 
         public void RemoveSubModule(Type moduleConfigType)
@@ -338,7 +370,7 @@
         }
 
         /// <summary>
-        ///   Sets the root of the module view.
+        ///     Sets the root of the module view.
         /// </summary>
         /// <param name="newModuleView">Root of the module view.</param>
         public void SetModuleView(ModuleView newModuleView)
@@ -429,11 +461,11 @@
         }
 
         /// <summary>
-        ///   Caches early-riser Views.
-        ///   If a View is on stage at startup, it's possible for that
-        ///   View to be Awake before this Context has finished initing.
-        ///   `cacheView()` maintains a list of such 'early-risers'
-        ///   until the Context is ready to mediate them.
+        ///     Caches early-riser Views.
+        ///     If a View is on stage at startup, it's possible for that
+        ///     View to be Awake before this Context has finished initing.
+        ///     `cacheView()` maintains a list of such 'early-risers'
+        ///     until the Context is ready to mediate them.
         /// </summary>
         /// <param name="view"></param>
         protected virtual void CacheView(MonoBehaviour view)
@@ -457,8 +489,8 @@
             this.Sequencer = this.injectionBinder.GetInstance<ISequencer>();
             this.ImplicitBinder = this.injectionBinder.GetInstance<IImplicitBinder>();
 
-            ((ITriggerProvider)this.Dispatcher).AddTriggerable(this.CommandBinder as ITriggerable);
-            ((ITriggerProvider)this.Dispatcher).AddTriggerable(this.Sequencer as ITriggerable);
+            ((ITriggerProvider) this.Dispatcher).AddTriggerable(this.CommandBinder as ITriggerable);
+            ((ITriggerProvider) this.Dispatcher).AddTriggerable(this.Sequencer as ITriggerable);
         }
 
         /// <inheritdoc />
@@ -567,7 +599,7 @@
             public ModuleContext Context { get; set; }
 
             /// <summary>
-            ///   Module type.
+            ///     Module type.
             /// </summary>
             public Type Type { get; set; }
         }

@@ -8,13 +8,10 @@ namespace Slash.Unity.StrangeIoC.Configs
 {
     using System.Collections.Generic;
     using strange.extensions.command.api;
-    using strange.extensions.context.impl;
     using strange.extensions.injector.api;
     using strange.extensions.mediation.api;
     using Slash.Unity.Common.PropertyDrawers;
     using Slash.Unity.StrangeIoC.Modules;
-    using Slash.Unity.StrangeIoC.Modules.Commands;
-    using Slash.Unity.StrangeIoC.Modules.Signals;
     using UnityEngine;
 
     public abstract class StrangeConfig : MonoBehaviour
@@ -58,6 +55,15 @@ namespace Slash.Unity.StrangeIoC.Configs
         /// </summary>
         /// <param name="mediationBinder">Binder to map to.</param>
         public virtual void MapBindings(IMediationBinder mediationBinder)
+        {
+        }
+
+        /// <summary>
+        ///     Unmaps bindings to the injection binder.
+        ///     Only cross context bindings have to be removed, all others are just deleted.
+        /// </summary>
+        /// <param name="injectionBinder">Binder to modify.</param>
+        public virtual void UnmapCrossContextBindings(IInjectionBinder injectionBinder)
         {
         }
     }
