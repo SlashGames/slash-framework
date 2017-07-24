@@ -13,6 +13,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
     using System.Xml.Serialization;
 
     using Slash.ECS.Blueprints;
+    using Slash.ECS.Blueprints.Serialization;
     using Slash.ECS.Components;
     using Slash.ECS.Inspector.Data;
     using Slash.Unity.Editor.Common.Inspectors.Utils;
@@ -37,9 +38,9 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
 
         private static string blueprintFileName;
 
-        private static BlueprintManager blueprintManager;
+        private static BlueprintDataManager blueprintManager;
 
-        private static HierarchicalBlueprintManager hierarchicalBlueprintManager;
+        //private static HierarchicalBlueprintManager hierarchicalBlueprintManager;
 
         private static InspectorTypeTable inspectorTypeTable;
 
@@ -53,7 +54,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
 
         private string newBlueprintId = string.Empty;
 
-        private Blueprint selectedBlueprint;
+        private BlueprintData selectedBlueprint;
 
         private string selectedBlueprintId = string.Empty;
 
@@ -64,7 +65,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
         private static void LoadBlueprints()
         {
             // Build hierarchical blueprint manager for resolving parents.
-            hierarchicalBlueprintManager = new HierarchicalBlueprintManager();
+            //hierarchicalBlueprintManager = new HierarchicalBlueprintManager();
 
             var blueprintAssets = Resources.LoadAll(BlueprintsFolder, typeof(TextAsset));
 
@@ -77,17 +78,17 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                     var blueprintStream = new MemoryStream(blueprintTextAsset.bytes);
 
                     // Load blueprints.
-                    var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintManager));
+                    var blueprintManagerSerializer = new XmlSerializer(typeof(BlueprintDataManager));
 
                     try
                     {
                         // Right now, only a single blueprint file is supported. This might change in the future.
-                        blueprintManager = (BlueprintManager)blueprintManagerSerializer.Deserialize(blueprintStream);
+                        blueprintManager = (BlueprintDataManager)blueprintManagerSerializer.Deserialize(blueprintStream);
                         blueprintFileName = Application.dataPath.Substring(
                             0, Application.dataPath.Length - "Assets".Length)
                                             + AssetDatabase.GetAssetPath(blueprintTextAsset);
 
-                        hierarchicalBlueprintManager.AddChild(blueprintManager);
+                        //hierarchicalBlueprintManager.AddChild(blueprintManager);
                     }
                     catch (XmlException e)
                     {
@@ -99,7 +100,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
             }
 
             // Resolve parents of all blueprints.
-            BlueprintUtils.ResolveParents(hierarchicalBlueprintManager, hierarchicalBlueprintManager);
+            //BlueprintUtils.ResolveParents(hierarchicalBlueprintManager, hierarchicalBlueprintManager);
 
             // Load components.
             inspectorTypeTable = InspectorTypeTable.FindInspectorTypes(typeof(IEntityComponent));
@@ -142,8 +143,8 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
             {
                 // Creating new blueprints file.
                 blueprintFileName = "Assets/Resources/" + BlueprintsFolder + "/Blueprints.xml";
-                blueprintManager = new BlueprintManager();
-                hierarchicalBlueprintManager.AddChild(blueprintManager);
+                blueprintManager = new BlueprintDataManager();
+                //hierarchicalBlueprintManager.AddChild(blueprintManager);
                 EditorUtility.DisplayDialog(
                     "No blueprint file found",
                     string.Format("No blueprints could be found in resources folder {0}. Created new one called {1}.", BlueprintsFolder, blueprintFileName),
@@ -181,7 +182,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
             }
 
             string removedBlueprintId = null;
-            Type removedComponentType = null;
+            var removedComponentTypeIndex = -1;
 
             // Summary.
             GUILayout.Label("Summary", EditorStyles.boldLabel);
@@ -216,8 +217,8 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                             if (GUILayout.Button(namedBlueprint.Key))
                             {
                                 this.selectedBlueprintId = namedBlueprint.Key;
-                                this.selectedBlueprint =
-                                    hierarchicalBlueprintManager.GetBlueprint(this.selectedBlueprintId);
+                                this.selectedBlueprint = namedBlueprint.Value;
+                                    //hierarchicalBlueprintManager.GetBlueprint(this.selectedBlueprintId);
                             }
                         }
                         EditorGUILayout.EndHorizontal();
@@ -232,8 +233,8 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                         {
                             try
                             {
-                                var blueprint = new Blueprint();
-                                blueprintManager.AddBlueprint(this.newBlueprintId, blueprint);
+                                var blueprint = new BlueprintData() { Id = this.newBlueprintId };
+                                blueprintManager.AddBlueprint(blueprint);
                             }
                             catch (ArgumentException e)
                             {
@@ -269,17 +270,20 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                                 }
 
                                 // Show blueprint components.
-                                foreach (var componentType in this.selectedBlueprint.ComponentTypes)
+                                for (var index = 0;
+                                    index < this.selectedBlueprint.ComponentTypesSerialized.Length;
+                                    index++)
                                 {
+                                    var componentType = this.selectedBlueprint.ComponentTypesSerialized[index];
                                     EditorGUILayout.BeginHorizontal();
                                     {
                                         // Remove component button.
                                         if (this.GUILayoutButtonRemove())
                                         {
-                                            removedComponentType = componentType;
+                                            removedComponentTypeIndex = index;
                                         }
 
-                                        GUILayout.Label(componentType.Name);
+                                        GUILayout.Label(componentType);
                                     }
                                     EditorGUILayout.EndHorizontal();
                                 }
@@ -314,7 +318,7 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                         // Attributes.
                         GUILayout.Label("Attributes", EditorStyles.boldLabel);
 
-                        EditorGUIUtils.BlueprintComponentsField(this.selectedBlueprint, this.selectedBlueprint.AttributeTable, inspectorTypeTable, hierarchicalBlueprintManager);
+                        EditorGUIUtils.BlueprintComponentsField(this.selectedBlueprint.GetAllComponentTypes().ToList(), this.selectedBlueprint.AttributeTable, inspectorTypeTable, hierarchicalBlueprintManager);
                     }
                 }
                 EditorGUILayout.EndVertical();
@@ -331,9 +335,9 @@ namespace Slash.Unity.Editor.Common.MenuItems.Windows
                 this.selectedBlueprintId = string.Empty;
             }
 
-            if (this.selectedBlueprint != null && removedComponentType != null)
+            if (this.selectedBlueprint != null && removedComponentTypeIndex != -1)
             {
-                this.selectedBlueprint.ComponentTypes.Remove(removedComponentType);
+                this.selectedBlueprint.ComponentTypes.RemoveAt(removedComponentTypeIndex);
             }
         }
 

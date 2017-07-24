@@ -5,7 +5,7 @@
     using Slash.Math.Algebra.Vectors;
 
     [InspectorType]
-    public class PositionComponent : EntityComponent
+    public class AnotherPositionComponent : EntityComponent
     {
         /// <summary>
         ///   Attribute: Current position.

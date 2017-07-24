@@ -119,7 +119,20 @@ namespace Slash.ECS.Blueprints
             }
             set
             {
-                this.ComponentTypes = value.Select<string, Type>(ReflectionUtils.FindType).ToList();
+                this.ComponentTypes = new List<Type>(value.Length);
+                foreach (var componentTypeName in value)
+                {
+                    Type componentType = null;
+                    try
+                    {
+                        componentType = ReflectionUtils.FindType(componentTypeName);
+                    }
+                    catch (TypeLoadException e)
+                    {
+                        // TODO: Log something?
+                    }
+                    this.ComponentTypes.Add(componentType);
+                }
             }
         }
 

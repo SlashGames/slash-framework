@@ -8,6 +8,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Slash.Collections.AttributeTables;
@@ -83,14 +84,14 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
         }
 
         public static void BlueprintComponentsField(
-            Blueprint blueprint,
+            IList<Type> componentTypes,
             IAttributeTable configuration,
             InspectorTypeTable inspectorTypeTable,
             IBlueprintManager blueprintManager)
         {
             // Compute maximum label width.
             float maxLabelWidth = 0;
-            foreach (var componentType in blueprint.GetAllComponentTypes())
+            foreach (var componentType in componentTypes)
             {
                 var inspectorType = inspectorTypeTable[componentType];
                 foreach (var componentProperty in inspectorType.Properties)
@@ -101,7 +102,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
             }
             EditorGUIUtility.labelWidth = maxLabelWidth;
 
-            foreach (var componentType in blueprint.GetAllComponentTypes())
+            foreach (var componentType in componentTypes)
             {
                 var inspectorType = inspectorTypeTable[componentType];
 
@@ -336,7 +337,7 @@ namespace Slash.Unity.Editor.Common.Inspectors.Utils
 
                         ++EditorGUI.indentLevel;
                         BlueprintComponentsField(
-                            blueprint,
+                            blueprint.GetAllComponentTypes().ToList(),
                             entityConfiguration.Configuration,
                             inspectorTypeTable,
                             blueprintManager);
