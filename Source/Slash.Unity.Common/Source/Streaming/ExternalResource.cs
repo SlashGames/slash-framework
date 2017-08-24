@@ -16,7 +16,7 @@
             FileSystem
         }
 
-        public const string FilePrefix = "file:///";
+        public const string FilePrefix = "file://";
 
         public ResourceLocation Location;
 
@@ -32,14 +32,22 @@
                     case ResourceLocation.StreamingAssets:
                         fullPath = Application.streamingAssetsPath + "/" + this.Path;
 #if UNITY_EDITOR || UNITY_STANDALONE
-                        fullPath = FilePrefix + fullPath;
+                        fullPath = FilePrefix + "/" + fullPath;
 #endif
                         break;
                     case ResourceLocation.PersistentDataFolder:
-                        fullPath = FilePrefix + Application.persistentDataPath + "/" + this.Path;
+                        fullPath = Application.persistentDataPath + "/" + this.Path;
+#if UNITY_EDITOR || UNITY_STANDALONE
+                        fullPath = "/" + fullPath;
+#endif
+                        fullPath = FilePrefix + fullPath;
                         break;
                     case ResourceLocation.FileSystem:
-                        fullPath = FilePrefix + this.Path;
+                        fullPath = this.Path;
+#if UNITY_EDITOR || UNITY_STANDALONE
+                        fullPath = "/" + fullPath;
+#endif
+                        fullPath = FilePrefix + fullPath;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("Invalid location", (Exception) null);
@@ -69,7 +77,7 @@
             }
             else
             {
-                onError(www.error);
+                onError(string.Format("Error loading external resource from '{0}': {1}", this.FullPath, www.error));
             }
         }
 
