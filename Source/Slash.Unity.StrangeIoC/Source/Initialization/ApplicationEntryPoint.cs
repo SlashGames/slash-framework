@@ -28,8 +28,7 @@
 
         private void Awake()
         {
-            var domainContext = new TDomainContext {Config = this.Config};
-
+            var domainContext = new TDomainContext();
 
             // Add bridges.
             foreach (var bridgeType in this.BridgeTypes)
@@ -41,6 +40,8 @@
             }
 
             domainContext.Init();
+
+            domainContext.Config = this.Config;
             domainContext.SetModuleView(this);
 
             Context.firstContext = this.context = domainContext;
