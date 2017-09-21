@@ -1,16 +1,7 @@
 ﻿namespace Slash.Unity.StrangeIoC.Initialization
 {
-    using System.IO;
-
-    using Slash.Unity.Common.Scenes;
     using Slash.Unity.StrangeIoC.Initialization.Commands;
     using Slash.Unity.StrangeIoC.Initialization.Signals;
-    using Slash.Unity.StrangeIoC.Windows;
-
-    using UnityEngine;
-
-    using ILogger = Slash.Diagnostics.Logging.ILogger;
-    using Logger = Slash.Unity.Common.Logging.Logger;
 
     public class ApplicationContext : StrangeContext
     {
@@ -28,22 +19,22 @@
             this.injectionBinder.Bind<ApplicationStartSignal>().ToSingleton();
             this.CommandBinder.Bind<ApplicationStartSignal>().To<ApplicationStartCommand>().InSequence();
 
-            // Create window manager.
-            var windowManager = new WindowManager((MonoBehaviour)this.GetContextView());
-            this.injectionBinder.Bind<WindowManager>().ToValue(windowManager).ToSingleton();
+            //// Create window manager.
+            //var windowManager = new WindowManager((MonoBehaviour)this.GetContextView());
+            //this.injectionBinder.Bind<WindowManager>().ToValue(windowManager).ToSingleton();
 
-            // Setup windows module.
-            var windowsModule = new WindowsModule();
-            windowsModule.Init(this.CommandBinder);
+            //// Setup windows module.
+            //var windowsModule = new WindowsModule();
+            //windowsModule.Init(this.CommandBinder);
 
-            // Setup logging.
-            var configAsset = Resources.Load<TextAsset>("log4net");
-            if (configAsset != null)
-            {
-                Logger.Configure(new MemoryStream(configAsset.bytes));
-                var logger = new Logger(typeof(ILogger));
-                this.injectionBinder.Bind<ILogger>().To(logger);
-            }
+            //// Setup logging.
+            //var configAsset = Resources.Load<TextAsset>("log4net");
+            //if (configAsset != null)
+            //{
+            //    Logger.Configure(new MemoryStream(configAsset.bytes));
+            //    var logger = new Logger(typeof(ILogger));
+            //    this.injectionBinder.Bind<ILogger>().To(logger);
+            //}
 
             base.mapBindings();
         }

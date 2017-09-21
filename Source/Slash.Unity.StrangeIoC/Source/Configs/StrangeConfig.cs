@@ -10,13 +10,13 @@ namespace Slash.Unity.StrangeIoC.Configs
     using strange.extensions.command.api;
     using strange.extensions.injector.api;
     using strange.extensions.mediation.api;
-    using Slash.Unity.Common.PropertyDrawers;
+    //using Slash.Unity.Common.PropertyDrawers;
     using Slash.Unity.StrangeIoC.Modules;
     using UnityEngine;
 
     public abstract class StrangeConfig : MonoBehaviour
     {
-        [TypeProperty(BaseType = typeof(StrangeBridge))]
+        //[TypeProperty(BaseType = typeof(StrangeBridge))]
         public List<string> BridgeTypes;
 
         /// <summary>
