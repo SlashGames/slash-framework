@@ -4,17 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.Editor.Common.PropertyDrawers
+namespace Slash.Unity.InspectorExt.PropertyDrawers.Editor
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using Slash.Reflection.Utils;
-    using Slash.Unity.Common.PropertyDrawers;
-
+    using Slash.Unity.InspectorExt.PropertyDrawers;
     using UnityEditor;
-
     using UnityEngine;
 
     /// <summary>

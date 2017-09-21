@@ -4,10 +4,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Slash.Unity.Common.PropertyDrawers
+namespace Slash.Unity.InspectorExt.PropertyDrawers
 {
     using System;
-
     using UnityEngine;
 
     public class TypePropertyAttribute : PropertyAttribute
