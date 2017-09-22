@@ -22,6 +22,7 @@
     using strange.framework.impl;
     using Slash.Reflection.Utils;
     using Slash.Unity.StrangeIoC.Configs;
+    using Slash.Unity.StrangeIoC.Coroutines;
     using Slash.Unity.StrangeIoC.Modules.Commands;
     using Slash.Unity.StrangeIoC.Modules.Signals;
     using UnityEngine;
@@ -382,6 +383,7 @@
 
                 // Remove injection.
                 this.injectionBinder.Unbind<GameObject>(ContextKeys.CONTEXT_VIEW);
+                this.injectionBinder.Unbind<ICoroutineRunner>();
             }
 
             this.moduleView = newModuleView;
@@ -396,6 +398,8 @@
                 this.injectionBinder.Bind<GameObject>()
                     .ToValue(this.moduleView.gameObject)
                     .ToName(ContextKeys.CONTEXT_VIEW);
+                this.injectionBinder.Bind<ICoroutineRunner>()
+                    .ToValue(new MonoBehaviourCoroutineRunner(this.moduleView));
 
                 // Add sub modules.
                 var subModuleConfigs = this.moduleView.GetComponentsInChildren<StrangeConfig>();
