@@ -32,7 +32,7 @@
     public class ModuleContext : CrossContext
     {
         /// A list of Views Awake before the Context is fully set up.
-        protected static ISemiBinding ViewCache = new SemiBinding();
+        protected ISemiBinding ViewCache = new SemiBinding();
 
         /// <summary>
         ///     Registered bridges.
