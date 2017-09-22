@@ -47,6 +47,13 @@
             Context.firstContext = this.context = domainContext;
         }
 
+        /// <inheritdoc />
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            Context.firstContext = null;
+        }
+
         private IEnumerator LaunchContextWhenReady(TDomainContext domainContext)
         {
             yield return new WaitUntil(() => domainContext.IsReadyToLaunch);
