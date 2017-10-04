@@ -25,10 +25,10 @@ echo Target Folder: %TARGET_FOLDER%
 REM echo Target folder %TARGET_FOLDER%, Target Name %TARGET_NAME%
 
 REM Go into target folder and one up to create link
-cd %SYMLINK_PATH%
+cd /d %SYMLINK_PATH%
 if not exist "%TARGET_FOLDER%" mkdir "%TARGET_FOLDER%"
-cd "%TARGET_FOLDER%"
-cd ..
+cd /d "%TARGET_FOLDER%"
+cd /d ..
 
 REM Get relative path to framework from current directory
 set CURRENT_DIR=%CD%
@@ -48,4 +48,4 @@ mklink /D "%TARGET_FOLDER%" "%SOURCE_FOLDER%"
 
 echo -------------------------
 
-cd "%BATCH_DIR%"
+cd /d "%BATCH_DIR%"

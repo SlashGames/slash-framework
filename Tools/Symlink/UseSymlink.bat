@@ -17,6 +17,6 @@ for /F "tokens=*" %%A in ('type "%CONFIG_FILE%"') do (
   call "%BATCH_DIR%SymlinkFrameworkLibrary.bat" "%SLASH_FRAMEWORK%" "%SYMLINK_PATH%" %%A
 )
 
-cd "%BATCH_DIR%"
+cd /d "%BATCH_DIR%"
 
 ENDLOCAL
