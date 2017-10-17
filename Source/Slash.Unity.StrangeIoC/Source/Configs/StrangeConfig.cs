@@ -20,6 +20,11 @@ namespace Slash.Unity.StrangeIoC.Configs
         public List<string> BridgeTypes;
 
         /// <summary>
+        ///   Used features of this module.
+        /// </summary>
+        public List<StrangeConfig> Features;
+
+        /// <summary>
         ///     Root view for module.
         /// </summary>
         public ModuleView ModuleView;

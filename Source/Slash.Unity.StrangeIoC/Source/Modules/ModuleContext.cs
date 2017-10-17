@@ -515,6 +515,17 @@
                 this.Config.MapBindings(this.injectionBinder);
                 this.Config.MapBindings(this.CommandBinder);
                 this.Config.MapBindings(this.MediationBinder);
+
+                // Map bindings for features.
+                if (this.Config.Features != null)
+                {
+                    foreach (var configFeature in this.Config.Features)
+                    {
+                        configFeature.MapBindings(this.injectionBinder);
+                        configFeature.MapBindings(this.CommandBinder);
+                        configFeature.MapBindings(this.MediationBinder);
+                    }
+                }
             }
 
             // Inject bridges.
