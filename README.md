@@ -1,3 +1,13 @@
+# SUCCESSOR WANTED
+
+As you may have noticed the Slash Framework didn't see that much development over the last 1.5 years. The main reason is that our small Indie studio Slash Games was closed. Nick went back to his former company Daedalic Entertainment, Christian found a new digital agency.
+
+The framework is only used in parts by Christian for some small projects, but there is no time to further extend it. That's why it would be great to find a developer who likes the concept and wants to take over the lead of the future framework development.
+
+The ideal developer would have experience with the framework already and has at least one running or planned project where the framework is used. In our experience it is easier to develop working features for a framework when they are immediately used in a project.
+
+In case you are interested, just send a mail to mail@slashgames.org :)
+
 # Slash Framework
 
 [![Coverage Status](https://coveralls.io/repos/github/SlashGames/slash-framework/badge.svg?branch=develop&service=github)](https://coveralls.io/github/SlashGames/slash-framework?branch=develop)
