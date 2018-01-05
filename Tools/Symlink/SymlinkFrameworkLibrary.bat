@@ -1,4 +1,4 @@
-@echo off
+SETLOCAL
 
 set BATCH_DIR=%~dp0
 
@@ -24,9 +24,19 @@ echo Library: %LIBRARY_NAME%
 echo Target Folder: %TARGET_FOLDER%
 REM echo Target folder %TARGET_FOLDER%, Target Name %TARGET_NAME%
 
+if not exist "%SYMLINK_PATH%" (
+    echo Could not find symlink path '%SYMLINK_PATH%'
+    exit
+)
+
 REM Go into target folder and one up to create link
 cd /d %SYMLINK_PATH%
-if not exist "%TARGET_FOLDER%" mkdir "%TARGET_FOLDER%"
+
+REM Remove old target folder (or file)
+rmdir /s /q "%TARGET_FOLDER%" >nul 2>&1  
+del /f /q "%TARGET_FOLDER%" >nul 2>&1
+
+mkdir "%TARGET_FOLDER%"
 cd /d "%TARGET_FOLDER%"
 cd /d ..
 
@@ -43,13 +53,7 @@ set TARGET_FOLDER=%CD%\%TARGET_NAME%
 
 REM echo Link %TARGET_FOLDER% to %SOURCE_FOLDER%
 
-if exist "%TARGET_FOLDER%" (
-    rmdir /s /q "%TARGET_FOLDER%"
-    if exist "%TARGET_FOLDER%" (
-        del /f /q "%TARGET_FOLDER%"
-    )
-)
-
+rmdir /s /q "%TARGET_FOLDER%" >nul 2>&1 
 mklink /D "%TARGET_FOLDER%" "%SOURCE_FOLDER%"
 
 if %ERRORLEVEL% neq 0 (
@@ -59,4 +63,4 @@ if %ERRORLEVEL% neq 0 (
 
 echo -------------------------
 
-cd /d "%BATCH_DIR%"
+ENDLOCAL
