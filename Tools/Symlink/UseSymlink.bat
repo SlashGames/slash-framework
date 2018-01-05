@@ -1,5 +1,3 @@
-@echo off
-
 SETLOCAL
 
 set BATCH_DIR=%~dp0
@@ -11,7 +9,9 @@ REM Get relative path to slash framework
 set SLASH_FRAMEWORK=%BATCH_DIR%..\..
 
 REM Reflink sources
-mkdir "%SYMLINK_PATH%"
+if not exist "%SYMLINK_PATH%" (
+    mkdir "%SYMLINK_PATH%"
+)
 
 for /F "tokens=*" %%A in ('type "%CONFIG_FILE%"') do (
   call "%BATCH_DIR%SymlinkFrameworkLibrary.bat" "%SLASH_FRAMEWORK%" "%SYMLINK_PATH%" %%A

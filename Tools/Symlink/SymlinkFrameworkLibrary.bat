@@ -43,8 +43,19 @@ set TARGET_FOLDER=%CD%\%TARGET_NAME%
 
 REM echo Link %TARGET_FOLDER% to %SOURCE_FOLDER%
 
-rmdir "%TARGET_FOLDER%"
+if exist "%TARGET_FOLDER%" (
+    rmdir /s /q "%TARGET_FOLDER%"
+    if exist "%TARGET_FOLDER%" (
+        del /f /q "%TARGET_FOLDER%"
+    )
+)
+
 mklink /D "%TARGET_FOLDER%" "%SOURCE_FOLDER%"
+
+if %ERRORLEVEL% neq 0 (
+    echo Symlink couldn't be created, try running the batch file as Administrator
+    exit
+)
 
 echo -------------------------
 
