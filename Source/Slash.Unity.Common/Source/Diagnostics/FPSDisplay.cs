@@ -7,37 +7,32 @@
 namespace Slash.Unity.Common.Diagnostics
 {
     using UnityEngine;
+    using UnityEngine.UI;
 
     /// <summary>
-    ///   Displays the frames per second (fps) to check performance.
+    ///     Displays the frames per second (fps) to check performance.
     /// </summary>
     public class FPSDisplay : MonoBehaviour
     {
-        #region Fields
-
         /// <summary>
-        ///   UI element to show fps.
-        /// </summary>
-        public GUIText Text;
-
-        /// <summary>
-        ///   Time frame the fps should be updated (in s).
-        /// </summary>
-        public float TimeFrame = 1.0f;
-
-        /// <summary>
-        ///   Elapsed time since last computation (in s).
+        ///     Elapsed time since last computation (in s).
         /// </summary>
         private float elapsedTime;
 
         /// <summary>
-        ///   Frame count since last computation.
+        ///     Frame count since last computation.
         /// </summary>
         private int frameCount;
 
-        #endregion
+        /// <summary>
+        ///     UI element to show fps.
+        /// </summary>
+        public Text Text;
 
-        #region Methods
+        /// <summary>
+        ///     Time frame the fps should be updated (in s).
+        /// </summary>
+        public float TimeFrame = 1.0f;
 
         private void Awake()
         {
@@ -57,7 +52,7 @@ namespace Slash.Unity.Common.Diagnostics
                 if (this.Text != null)
                 {
                     // Compute fps.
-                    float fps = this.frameCount / this.elapsedTime;
+                    var fps = this.frameCount / this.elapsedTime;
                     this.Text.text = string.Format("{0:F2} fps ({1} s)", fps, this.TimeFrame);
                 }
 
@@ -66,7 +61,5 @@ namespace Slash.Unity.Common.Diagnostics
                 this.elapsedTime = 0.0f;
             }
         }
-
-        #endregion
     }
 }
