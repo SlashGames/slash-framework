@@ -31,7 +31,11 @@ namespace Slash.Unity.Editor.Common.Utils
             }
 
             EditorGUI.BeginProperty(position, label, property);
+#if UNITY_2017_3_OR_NEWER
+            var enumNew = EditorGUI.EnumFlagsField(position, propName, targetEnum);
+#else
             var enumNew = EditorGUI.EnumMaskField(position, propName, targetEnum);
+#endif
             var convertedType = Convert.ChangeType(enumNew, targetEnum.GetType());
             if (convertedType != null)
             {
@@ -40,9 +44,9 @@ namespace Slash.Unity.Editor.Common.Utils
             EditorGUI.EndProperty();
         }
 
-        #endregion
+#endregion
 
-        #region Methods
+#region Methods
 
         private static T GetBaseProperty<T>(SerializedProperty prop)
         {
@@ -60,6 +64,6 @@ namespace Slash.Unity.Editor.Common.Utils
             return (T)reflectionTarget;
         }
 
-        #endregion
+#endregion
     }
 }
