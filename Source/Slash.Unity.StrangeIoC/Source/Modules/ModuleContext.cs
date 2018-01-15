@@ -23,6 +23,7 @@
     using Slash.Reflection.Utils;
     using Slash.Unity.StrangeIoC.Configs;
     using Slash.Unity.StrangeIoC.Coroutines;
+    using Slash.Unity.StrangeIoC.Mediation;
     using Slash.Unity.StrangeIoC.Modules.Commands;
     using Slash.Unity.StrangeIoC.Modules.Signals;
     using UnityEngine;
@@ -455,7 +456,7 @@
                 .To<EventDispatcher>()
                 .ToSingleton()
                 .ToName(ContextKeys.CONTEXT_DISPATCHER);
-            this.injectionBinder.Bind<IMediationBinder>().To<MediationBinder>().ToSingleton();
+            this.injectionBinder.Bind<IMediationBinder>().To<ModuleMediationBinder>().ToSingleton();
             this.injectionBinder.Bind<ISequencer>().To<EventSequencer>().ToSingleton();
             this.injectionBinder.Bind<IImplicitBinder>().To<ImplicitBinder>().ToSingleton();
 
