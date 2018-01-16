@@ -15,7 +15,6 @@
     using strange.extensions.implicitBind.impl;
     using strange.extensions.injector.api;
     using strange.extensions.mediation.api;
-    using strange.extensions.mediation.impl;
     using strange.extensions.sequencer.api;
     using strange.extensions.sequencer.impl;
     using strange.framework.api;
@@ -32,9 +31,6 @@
 
     public class ModuleContext : CrossContext
     {
-        /// A list of Views Awake before the Context is fully set up.
-        protected ISemiBinding ViewCache = new SemiBinding();
-
         /// <summary>
         ///     Registered bridges.
         /// </summary>
@@ -60,6 +56,11 @@
         /// </summary>
         private ModuleView moduleView;
 
+        /// <summary>
+        ///     A list of Views Awake before the Context is fully set up.
+        /// </summary>
+        protected ISemiBinding ViewCache = new SemiBinding();
+
         /// <inheritdoc />
         public ModuleContext()
         {
@@ -77,6 +78,11 @@
 
         //Interprets implicit bindings
         public IImplicitBinder ImplicitBinder { get; set; }
+
+        /// <summary>
+        ///     Indicates if verbose logging is enabled (for debugging).
+        /// </summary>
+        public bool IsLoggingEnabled { get; set; }
 
         /// <summary>
         ///     Indicates if module is ready to be launched.
@@ -98,6 +104,7 @@
                         return false;
                     }
                 }
+
                 return true;
             }
         }
@@ -107,10 +114,7 @@
 
         public string Name
         {
-            get
-            {
-                return this.Config != null ? this.Config.GetType().Name : "No Config";
-            }
+            get { return this.Config != null ? this.Config.GetType().Name : "No Config"; }
         }
 
         /// A Binder that maps Events to Sequences
@@ -158,6 +162,7 @@
             {
                 module.Context.Start();
             }
+
             if (this.isLaunched)
             {
                 if (module.Context.IsReadyToLaunch)
@@ -181,11 +186,14 @@
                 return;
             }
 
-            Debug.LogFormat(
-                view as Object,
-                "Adding view '{0}' to context '{1}'",
-                view.GetType().Name,
-                this.Config != null ? this.Config.GetType().Name : "App");
+            if (this.IsLoggingEnabled)
+            {
+                Debug.LogFormat(
+                    view as Object,
+                    "Adding view '{0}' to context '{1}'",
+                    view.GetType().Name,
+                    this.Config != null ? this.Config.GetType().Name : "App");
+            }
 
             if (this.MediationBinder != null)
             {
@@ -211,6 +219,7 @@
             {
                 return this.injectionBinder.GetInstance<T>(name);
             }
+
             return null;
         }
 
@@ -225,6 +234,7 @@
             {
                 firstContext.AddContext(this);
             }
+
             this.addCoreComponents();
             this.autoStartup = false;
 
@@ -310,6 +320,7 @@
             {
                 this.RemoveContext(module.Context);
             }
+
             this.modules.Clear();
 
             if (this.Config != null)
@@ -410,6 +421,7 @@
                     {
                         continue;
                     }
+
                     this.AddSubModule(subModuleConfig);
                 }
             }
@@ -475,11 +487,12 @@
         /// <param name="view"></param>
         protected virtual void CacheView(MonoBehaviour view)
         {
-            if (ViewCache.constraint.Equals(BindingConstraintType.ONE))
+            if (this.ViewCache.constraint.Equals(BindingConstraintType.ONE))
             {
-                ViewCache.constraint = BindingConstraintType.MANY;
+                this.ViewCache.constraint = BindingConstraintType.MANY;
             }
-            ViewCache.Add(view);
+
+            this.ViewCache.Add(view);
         }
 
         /// <inheritdoc />
@@ -545,11 +558,12 @@
                     ContextExceptionType.NO_MEDIATION_BINDER);
             }
 
-            var values = ViewCache.value as object[];
+            var values = this.ViewCache.value as object[];
             if (values == null)
             {
                 return;
             }
+
             var aa = values.Length;
             for (var a = 0; a < aa; a++)
             {
@@ -560,9 +574,11 @@
                     Debug.LogError("View object " + viewObject + " doesn't implement IView interface");
                     continue;
                 }
+
                 this.MediationBinder.Trigger(MediationEvent.AWAKE, view);
             }
-            ViewCache = new SemiBinding();
+
+            this.ViewCache = new SemiBinding();
         }
 
         private static IEnumerator LaunchContextWhenReady(ModuleContext domainContext)
