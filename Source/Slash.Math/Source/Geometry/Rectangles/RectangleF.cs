@@ -156,10 +156,7 @@ namespace Slash.Math.Geometry.Rectangles
         /// </summary>
         public Vector2F Center
         {
-            get
-            {
-                return (this.Position + this.Size) / 2;
-            }
+            get { return this.Position + this.Size * 0.5f; }
         }
 
         /// <summary>
