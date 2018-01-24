@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
-    using Vriction.Catalog.Ella.LookPriceTags.Views;
 
     /// <summary>
     ///     Does layouting for the child rectangles, so they don't overlap.
@@ -54,7 +53,7 @@
             var layoutRectangles = new List<AvoidOverlapping.LayoutRectangle>();
             foreach (var rectChild in this.rectChildren)
             {
-                var autoLayoutRectangle = rectChild.GetComponent<AutoLayoutRectangle>();
+                var autoLayoutRectangle = rectChild.GetComponent<AvoidOverlappingRectangle>();
                 if (autoLayoutRectangle == null)
                 {
                     continue;
