@@ -74,6 +74,24 @@ namespace Slash.Collections.Utils
         }
 
         /// <summary>
+        ///   Creates a hash code for a sequence.
+        /// </summary>
+        /// <typeparam name="T">Type of items in sequence.</typeparam>
+        /// <param name="sequence">Sequence to get hash code for.</param>
+        /// <returns>Hash code for the specified sequence.</returns>
+        public static int GetSequenceHashCode<T>(this IEnumerable<T> sequence)
+        {
+            const int seed = 487;
+            const int modifier = 31;
+
+            unchecked
+            {
+                return sequence.Aggregate(seed, (current, item) =>
+                    (current*modifier) + item.GetHashCode());
+            }            
+        }
+
+        /// <summary>
         ///   Creates a separated string from the items of a collection.
         ///   Mostly used for debugging issues.
         /// </summary>
