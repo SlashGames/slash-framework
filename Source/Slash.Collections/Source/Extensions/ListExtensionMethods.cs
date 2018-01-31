@@ -53,6 +53,7 @@ namespace Slash.Collections.Extensions
 
         /// <summary>
         ///   Shuffle a list randomly.
+        ///   From https://stackoverflow.com/a/4262134
         /// </summary>
         /// <param name="list">List to shuffle.</param>
         /// <param name="random">Random number generator.</param>
@@ -68,6 +69,29 @@ namespace Slash.Collections.Extensions
                 n--;
                 int k = random.Next(n + 1);
                 object value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
+
+        /// <summary>
+        ///   Shuffle a list randomly.
+        ///   From https://stackoverflow.com/a/4262134
+        /// </summary>
+        /// <param name="list">List to shuffle.</param>
+        /// <param name="random">Random number generator.</param>
+        public static void Shuffle<T>(this IList<T> list, Random random = null)
+        {
+            if (random == null)
+            {
+                random = new Random();
+            }
+            var n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                var k = random.Next(n + 1);
+                var value = list[k];
                 list[k] = list[n];
                 list[n] = value;
             }
