@@ -19,9 +19,21 @@
 
         private RectTransform rectTransform;
 
-        protected void Awake()
+        private RectTransform RectTransform
         {
-            this.rectTransform = this.GetComponent<RectTransform>();
+            get
+            {
+                if (this.rectTransform == null)
+                {
+                    this.rectTransform = this.GetComponent<RectTransform>();
+                    if (this.rectTransform == null)
+                    {
+                        this.rectTransform = this.gameObject.AddComponent<RectTransform>();
+                    }
+                }
+
+                return this.rectTransform;
+            }
         }
 
         protected void OnDisable()
@@ -32,12 +44,12 @@
 
         protected void OnEnable()
         {
-            var size = this.rectTransform.rect.size.x;
+            var size = this.RectTransform.rect.size.x;
 
             // Setup handles.
             this.rangeHandleMin = this.RegisterHandle(this.MinHandle, this.OnMinValueChanged);
             this.rangeHandleMax = this.RegisterHandle(this.MaxHandle, this.OnMaxValueChanged);
-            
+
             this.rangeHandleMin.MinPosition = -size * 0.5f;
             this.rangeHandleMin.Position = -size * 0.5f;
             this.rangeHandleMax.MaxPosition = size * 0.5f;
@@ -98,18 +110,20 @@
 
         private void UpdateActiveArea()
         {
-            if (this.ActiveAreaIndicator != null)
+            if (this.ActiveAreaIndicator == null)
             {
-                var size = this.rectTransform.rect.size.x;
-
-                var offsetMin = this.ActiveAreaIndicator.offsetMin;
-                offsetMin.x = this.rangeHandleMin.Position + size * 0.5f;
-                this.ActiveAreaIndicator.offsetMin = offsetMin;
-
-                var offsetMax = this.ActiveAreaIndicator.offsetMax;
-                offsetMax.x = this.rangeHandleMax.Position - size * 0.5f;
-                this.ActiveAreaIndicator.offsetMax = offsetMax;
+                return;
             }
+
+            var size = this.RectTransform.rect.size.x;
+
+            var offsetMin = this.ActiveAreaIndicator.offsetMin;
+            offsetMin.x = this.rangeHandleMin.Position + size * 0.5f;
+            this.ActiveAreaIndicator.offsetMin = offsetMin;
+
+            var offsetMax = this.ActiveAreaIndicator.offsetMax;
+            offsetMax.x = this.rangeHandleMax.Position - size * 0.5f;
+            this.ActiveAreaIndicator.offsetMax = offsetMax;
         }
 
         private void UpdateHandleRanges()
@@ -130,10 +144,10 @@
 
         public float Position
         {
-            get { return this.rectTransform.anchoredPosition.x; }
+            get { return this.RectTransform.anchoredPosition.x; }
             set
             {
-                var newPosition = this.rectTransform.anchoredPosition;
+                var newPosition = this.RectTransform.anchoredPosition;
                 if (value == newPosition.x)
                 {
                     return;
@@ -141,16 +155,33 @@
 
                 newPosition.x = value;
 
-                this.rectTransform.anchoredPosition = newPosition;
+                this.RectTransform.anchoredPosition = newPosition;
 
                 this.OnPositionChanged();
+            }
+        }
+
+        private RectTransform RectTransform
+        {
+            get
+            {
+                if (this.rectTransform == null)
+                {
+                    this.rectTransform = this.GetComponent<RectTransform>();
+                    if (this.rectTransform == null)
+                    {
+                        this.rectTransform = this.gameObject.AddComponent<RectTransform>();
+                    }
+                }
+
+                return this.rectTransform;
             }
         }
 
         /// <inheritdoc />
         public void OnDrag(PointerEventData eventData)
         {
-            var parentTransform = this.rectTransform.parent;
+            var parentTransform = this.RectTransform.parent;
             var screenPosition = eventData.position;
 
             Vector2 localPosition;
@@ -167,11 +198,6 @@
         }
 
         public event Action PositionChanged;
-
-        protected void Awake()
-        {
-            this.rectTransform = this.GetComponent<RectTransform>();
-        }
 
         protected virtual void OnPositionChanged()
         {
