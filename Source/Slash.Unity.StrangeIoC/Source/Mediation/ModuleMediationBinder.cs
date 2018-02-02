@@ -29,7 +29,6 @@
 
                 // Only add mediator if not yet existent on view game object.
                 var mediator = viewGameObject.GetComponent(mediatorType);
-                var registerMediator = false;
                 if (mediator == null)
                 {
                     mediator = viewGameObject.AddComponent(mediatorType);
@@ -41,14 +40,14 @@
                             mediatorType.Name +
                             " is not a MonoBehaviour.", MediationExceptionType.NULL_MEDIATOR);
                     }
-
-                    registerMediator = true;
                 }
 
                 var mediatorInterface = mediator as IMediator;
-                if (registerMediator && mediatorInterface != null)
+                var registerMediator = false;
+                if (mediatorInterface != null && mediatorInterface.contextView == null)
                 {
                     mediatorInterface.PreRegister();
+                    registerMediator = true;
                 }
 
                 // Inject mediator.
@@ -56,7 +55,7 @@
                 this.injectionBinder.injector.Inject(mediator);
                 this.injectionBinder.Unbind(viewType);
 
-                if (registerMediator && mediatorInterface != null)
+                if (mediatorInterface != null && registerMediator)
                 {
                     mediatorInterface.OnRegister();
                 }
