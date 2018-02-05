@@ -210,8 +210,10 @@
     }
 
     [RequireComponent(typeof(RectTransform))]
-    public class RangeSliderHandle : MonoBehaviour, IDragHandler
+    public class RangeSliderHandle : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
+        private Vector2 dragOffset;
+
         private RectTransform rectTransform;
 
         public float MaxPosition { get; set; }
@@ -255,6 +257,17 @@
         }
 
         /// <inheritdoc />
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            // Compute drag offset.
+            var screenPosition = eventData.position;
+            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(this.RectTransform,
+                screenPosition, eventData.pressEventCamera, out this.dragOffset))
+            {
+            }
+        }
+
+        /// <inheritdoc />
         public void OnDrag(PointerEventData eventData)
         {
             var parentTransform = this.RectTransform.parent;
@@ -267,10 +280,15 @@
                 return;
             }
 
-            // Clamp to valid range.
-            localPosition.x = Mathf.Clamp(localPosition.x, this.MinPosition, this.MaxPosition);
+            var position = localPosition.x;
 
-            this.Position = localPosition.x;
+            // Consider offset.
+            position -= this.dragOffset.x;
+
+            // Clamp to valid range.
+            position = Mathf.Clamp(position, this.MinPosition, this.MaxPosition);
+
+            this.Position = position;
         }
 
         public event Action PositionChanged;
