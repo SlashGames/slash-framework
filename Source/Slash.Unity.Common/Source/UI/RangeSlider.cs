@@ -145,14 +145,14 @@
             }
         }
 
-        private float PositionToRatio(float position)
+        private float PositionToRatio(int position)
         {
             return 0.5f + position / this.Width;
         }
 
-        private float RatioToPosition(float ratio)
+        private int RatioToPosition(float ratio)
         {
-            return (ratio - 0.5f) * this.Width;
+            return Mathf.RoundToInt((ratio - 0.5f) * this.Width);
         }
 
         private RangeSliderHandle RegisterHandle(GameObject handleGameObject, Action valueChangedCallback)
@@ -216,17 +216,26 @@
 
         private RectTransform rectTransform;
 
-        public float MaxPosition { get; set; }
+        /// <summary>
+        ///     Maximum position (in pixels).
+        /// </summary>
+        public int MaxPosition { get; set; }
 
-        public float MinPosition { get; set; }
+        /// <summary>
+        ///     Minimum position (in pixels).
+        /// </summary>
+        public int MinPosition { get; set; }
 
-        public float Position
+        /// <summary>
+        ///     Current position (in pixels).
+        /// </summary>
+        public int Position
         {
-            get { return this.RectTransform.anchoredPosition.x; }
+            get { return Mathf.RoundToInt(this.RectTransform.anchoredPosition.x); }
             set
             {
                 var newPosition = this.RectTransform.anchoredPosition;
-                if (value == newPosition.x)
+                if (value == Mathf.RoundToInt(newPosition.x))
                 {
                     return;
                 }
@@ -261,10 +270,8 @@
         {
             // Compute drag offset.
             var screenPosition = eventData.position;
-            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(this.RectTransform,
-                screenPosition, eventData.pressEventCamera, out this.dragOffset))
-            {
-            }
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(this.RectTransform,
+                screenPosition, eventData.pressEventCamera, out this.dragOffset);
         }
 
         /// <inheritdoc />
@@ -280,13 +287,11 @@
                 return;
             }
 
-            var position = localPosition.x;
-
             // Consider offset.
-            position -= this.dragOffset.x;
+            localPosition -= this.dragOffset;
 
             // Clamp to valid range.
-            position = Mathf.Clamp(position, this.MinPosition, this.MaxPosition);
+            var position = Mathf.Clamp(Mathf.RoundToInt(localPosition.x), this.MinPosition, this.MaxPosition);
 
             this.Position = position;
         }
