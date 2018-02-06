@@ -334,5 +334,42 @@ namespace Slash.Collections.Extensions
 
             throw new InvalidOperationException("Not supposed to reach this point, random picking went wrong.");
         }
+
+        /// <summary>
+        ///     Compares two sequences, but ignores the order of the items in the sequences.
+        /// </summary>
+        /// <typeparam name="T">Type of items in sequences.</typeparam>
+        /// <param name="sequence1">First sequence to compare.</param>
+        /// <param name="sequence2">Second sequence to compare.</param>
+        /// <returns>True if the sequences contain the same items; otherwise, false.</returns>
+        public static bool ScrambledEquals<T>(this IEnumerable<T> sequence1, IEnumerable<T> sequence2)
+        {
+            var cnt = new Dictionary<T, int>();
+            foreach (var s in sequence1)
+            {
+                if (cnt.ContainsKey(s))
+                {
+                    cnt[s]++;
+                }
+                else
+                {
+                    cnt.Add(s, 1);
+                }
+            }
+
+            foreach (var s in sequence2)
+            {
+                if (cnt.ContainsKey(s))
+                {
+                    cnt[s]--;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return cnt.Values.All(c => c == 0);
+        }
     }
 }
