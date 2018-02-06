@@ -12,43 +12,76 @@ namespace Slash.Collections.Extensions
     using System.Linq;
 
     /// <summary>
-    ///   Extension methods for enumerables.
+    ///     Extension methods for enumerables.
     /// </summary>
     public static class EnumerableExtensionMethods
     {
-        #region Static Fields
-
         /// <summary>
-        ///   Random number generator, used for RandomSelect methods.
+        ///     Random number generator, used for RandomSelect methods.
         /// </summary>
         private static readonly Random Random = new Random();
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
-        ///   Checks whether the first sequence contains all elements of the second one.
+        ///     Checks whether the first sequence contains all elements of the second one.
         /// </summary>
         /// <typeparam name="T">Type of the sequence to check.</typeparam>
         /// <param name="first">Containing sequence.</param>
         /// <param name="second">Contained sequence.</param>
         /// <returns>
-        ///   <c>true</c>, if the first sequence contains all elements of the second one, and
-        ///   <c>false</c> otherwise.
+        ///     <c>true</c>, if the first sequence contains all elements of the second one, and
+        ///     <c>false</c> otherwise.
         /// </returns>
         public static bool ContainsAll<T>(this IEnumerable<T> first, IEnumerable<T> second)
         {
             return second.All(first.Contains);
         }
 
+        ///<summary>Finds the index of the first item matching an expression in an enumerable.</summary>
+        ///<param name="items">The enumerable to search.</param>
+        ///<param name="predicate">The expression to test the items against.</param>
+        ///<returns>The index of the first matching item, or -1 if no items match.</returns>
+        public static int FindIndex<T>(this IEnumerable<T> items, Func<T, bool> predicate)
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
+            if (predicate == null)
+            {
+                throw new ArgumentNullException("predicate");
+            }
+
+            var retVal = 0;
+            foreach (var item in items)
+            {
+                if (predicate(item))
+                {
+                    return retVal;
+                }
+
+                retVal++;
+            }
+
+            return -1;
+        }
+
+        ///<summary>Finds the index of the first occurrence of an item in an enumerable.</summary>
+        ///<param name="items">The enumerable to search.</param>
+        ///<param name="item">The item to find.</param>
+        ///<returns>The index of the first matching item, or -1 if the item was not found.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> items, T item)
+        {
+            return items.FindIndex(i => EqualityComparer<T>.Default.Equals(item, i));
+        }
+
         /// <summary>
-        ///   Determines whether the collection is null or contains no elements.
+        ///     Determines whether the collection is null or contains no elements.
         /// </summary>
         /// <typeparam name="T"> The IEnumerable type. </typeparam>
         /// <param name="enumerable"> The enumerable, which may be null or empty. </param>
         /// <returns>
-        ///   <c>true</c> if the IEnumerable is null or empty; otherwise, <c>false</c> .
+        ///     <c>true</c> if the IEnumerable is null or empty; otherwise, <c>false</c> .
         /// </returns>
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable)
         {
@@ -56,15 +89,16 @@ namespace Slash.Collections.Extensions
             {
                 return true;
             }
+
             return !enumerable.Any();
         }
 
         /// <summary>
-        ///   Determines whether the collection is null or contains no elements.
+        ///     Determines whether the collection is null or contains no elements.
         /// </summary>
         /// <param name="enumerable"> The enumerable, which may be null or empty. </param>
         /// <returns>
-        ///   <c>true</c> if the IEnumerable is null or empty; otherwise, <c>false</c> .
+        ///     <c>true</c> if the IEnumerable is null or empty; otherwise, <c>false</c> .
         /// </returns>
         public static bool IsNullOrEmpty(this IEnumerable enumerable)
         {
@@ -82,18 +116,18 @@ namespace Slash.Collections.Extensions
         }
 
         /// <summary>
-        ///   Returns a random item from the specified sequence.
+        ///     Returns a random item from the specified sequence.
         /// </summary>
         /// <typeparam name="T">Type of sequence items.</typeparam>
         /// <param name="sequence">Sequence to get item from.</param>
         /// <returns>Time-dependent random item.</returns>
         public static T RandomItem<T>(this IEnumerable<T> sequence)
         {
-            Random random = new Random();
+            var random = new Random();
 
-            T current = default(T);
-            int count = 0;
-            foreach (T element in sequence)
+            var current = default(T);
+            var count = 0;
+            foreach (var element in sequence)
             {
                 count++;
                 if (random.Next(count) == 0)
@@ -101,16 +135,18 @@ namespace Slash.Collections.Extensions
                     current = element;
                 }
             }
+
             if (count == 0)
             {
                 throw new InvalidOperationException("Sequence was empty");
             }
+
             return current;
         }
 
         /// <summary>
-        ///   Returns a random item from the specified sequence or the default value of the
-        ///   specified type if the sequence is null or empty.
+        ///     Returns a random item from the specified sequence or the default value of the
+        ///     specified type if the sequence is null or empty.
         /// </summary>
         /// <typeparam name="T">Type of sequence items.</typeparam>
         /// <param name="sequence">Sequence to get item from.</param>
@@ -121,8 +157,8 @@ namespace Slash.Collections.Extensions
         }
 
         /// <summary>
-        ///   Returns a random item from the specified sequence or the specified default value if
-        ///   the sequence is null or empty.
+        ///     Returns a random item from the specified sequence or the specified default value if
+        ///     the sequence is null or empty.
         /// </summary>
         /// <typeparam name="T">Type of sequence items.</typeparam>
         /// <param name="sequence">Sequence to get item from.</param>
@@ -139,7 +175,7 @@ namespace Slash.Collections.Extensions
         }
 
         /// <summary>
-        ///   Executes the specified action for the specified number of random items from the specified enumerable.
+        ///     Executes the specified action for the specified number of random items from the specified enumerable.
         /// </summary>
         /// <typeparam name="T"> Type of items in enumerable. </typeparam>
         /// <param name="enumerable"> Enumerable to get random items from. </param>
@@ -150,7 +186,7 @@ namespace Slash.Collections.Extensions
         {
             if (enumerable == null)
             {
-                throw new ArgumentNullException("enumerable", string.Format("Enumerable is null."));
+                throw new ArgumentNullException("enumerable", "Enumerable is null.");
             }
 
             if (numberOfSelections <= 0)
@@ -160,10 +196,10 @@ namespace Slash.Collections.Extensions
 
             // Check if the enumerable has less items than the number which should be selected.
             IEnumerable<T> items = enumerable as T[] ?? enumerable.ToArray();
-            int remainingItems = items.Count();
+            var remainingItems = items.Count();
             if (remainingItems <= numberOfSelections)
             {
-                foreach (T item in items)
+                foreach (var item in items)
                 {
                     action(item);
                 }
@@ -171,10 +207,10 @@ namespace Slash.Collections.Extensions
             else
             {
                 // Random selection of items.
-                int remainingSelections = numberOfSelections;
-                foreach (T item in items)
+                var remainingSelections = numberOfSelections;
+                foreach (var item in items)
                 {
-                    int randomInt = Random.Next(remainingItems);
+                    var randomInt = Random.Next(remainingItems);
                     if (randomInt < remainingSelections)
                     {
                         action(item);
@@ -187,9 +223,9 @@ namespace Slash.Collections.Extensions
         }
 
         /// <summary>
-        ///   Selects the specified number of random items from the specified enumerable.
-        ///   If the number of items in the enumerable is smaller than the specified number of selections,
-        ///   the enumerable itself is returned.
+        ///     Selects the specified number of random items from the specified enumerable.
+        ///     If the number of items in the enumerable is smaller than the specified number of selections,
+        ///     the enumerable itself is returned.
         /// </summary>
         /// <typeparam name="T"> Type of items in enumerable. </typeparam>
         /// <param name="enumerable"> Enumerable to get random items from. </param>
@@ -200,7 +236,7 @@ namespace Slash.Collections.Extensions
         {
             if (enumerable == null)
             {
-                throw new ArgumentNullException("enumerable", string.Format("Enumerable is null."));
+                throw new ArgumentNullException("enumerable", "Enumerable is null.");
             }
 
             if (numberOfSelections <= 0)
@@ -210,18 +246,18 @@ namespace Slash.Collections.Extensions
 
             // Check if the enumerable has less items than the number which should be selected.
             IEnumerable<T> items = enumerable as T[] ?? enumerable.ToArray();
-            int remainingItems = items.Count();
+            var remainingItems = items.Count();
             if (remainingItems <= numberOfSelections)
             {
                 return items;
             }
 
             // Random selection of items.
-            int remainingSelections = numberOfSelections;
+            var remainingSelections = numberOfSelections;
             IList<T> selectedItems = new List<T>(remainingSelections);
-            foreach (T item in items)
+            foreach (var item in items)
             {
-                int randomInt = Random.Next(remainingItems);
+                var randomInt = Random.Next(remainingItems);
                 if (randomInt < remainingSelections)
                 {
                     selectedItems.Add(item);
@@ -235,7 +271,7 @@ namespace Slash.Collections.Extensions
         }
 
         /// <summary>
-        ///   Selects a random item from the specified enumerable.
+        ///     Selects a random item from the specified enumerable.
         /// </summary>
         /// <typeparam name="T"> Type of items in enumerable. </typeparam>
         /// <param name="enumerable"> Enumerable to get random item from. </param>
@@ -245,19 +281,19 @@ namespace Slash.Collections.Extensions
         {
             if (enumerable == null)
             {
-                throw new ArgumentNullException("enumerable", string.Format("Enumerable is null."));
+                throw new ArgumentNullException("enumerable", "Enumerable is null.");
             }
 
             IEnumerable<T> items = enumerable as T[] ?? enumerable.ToArray();
-            int remainingItems = items.Count();
+            var remainingItems = items.Count();
             if (remainingItems == 0)
             {
                 return default(T);
             }
 
-            foreach (T item in items)
+            foreach (var item in items)
             {
-                int randomInt = Random.Next(remainingItems);
+                var randomInt = Random.Next(remainingItems);
                 if (randomInt == 0)
                 {
                     return item;
@@ -271,9 +307,10 @@ namespace Slash.Collections.Extensions
         }
 
         /// <summary>
-        ///   Returns a random weighted item from the specified sequence.
-        ///   Uses the specified function to get the weight of an item.
-        ///   Idea was taken from http://stackoverflow.com/questions/17912005/quick-way-of-selecting-a-random-item-from-a-list-with-varying-probabilities-ba
+        ///     Returns a random weighted item from the specified sequence.
+        ///     Uses the specified function to get the weight of an item.
+        ///     Idea was taken from
+        ///     http://stackoverflow.com/questions/17912005/quick-way-of-selecting-a-random-item-from-a-list-with-varying-probabilities-ba
         /// </summary>
         /// <typeparam name="T">Type of sequence items.</typeparam>
         /// <param name="sequence">Sequence to get item from.</param>
@@ -282,11 +319,11 @@ namespace Slash.Collections.Extensions
         /// <returns>Time-dependent random item.</returns>
         public static T RandomWeightedItem<T>(this IEnumerable<T> sequence, Func<T, float> getWeight, Random random)
         {
-            float totalProbabilities = sequence.Sum(getWeight);
-            float probabilityPick = (float)(random.NextDouble() * totalProbabilities);
+            var totalProbabilities = sequence.Sum(getWeight);
+            var probabilityPick = (float) (random.NextDouble() * totalProbabilities);
             foreach (var item in sequence)
             {
-                float weight = getWeight(item);
+                var weight = getWeight(item);
                 if (weight < probabilityPick)
                 {
                     return item;
@@ -297,7 +334,5 @@ namespace Slash.Collections.Extensions
 
             throw new InvalidOperationException("Not supposed to reach this point, random picking went wrong.");
         }
-
-        #endregion
     }
 }
