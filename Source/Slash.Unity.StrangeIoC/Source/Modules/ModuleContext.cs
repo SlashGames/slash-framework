@@ -65,16 +65,16 @@
         /// A Binder that maps Events to Commands
         public ICommandBinder CommandBinder { get; set; }
 
-        /// <summary>
-        ///     Installer for module.
-        /// </summary>
-        public IModuleInstaller Installer { get; set; }
-
         /// A Binder that serves as the Event bus for the Context
         public IEventDispatcher Dispatcher { get; set; }
 
         //Interprets implicit bindings
         public IImplicitBinder ImplicitBinder { get; set; }
+
+        /// <summary>
+        ///     Installer for module.
+        /// </summary>
+        public IModuleInstaller Installer { get; set; }
 
         /// <summary>
         ///     Indicates if module is already launched.
@@ -284,6 +284,8 @@
                         {
                             sceneModuleView.context = this;
                             this.SetModuleView(sceneModuleView, true);
+
+                            this.InitSubModules();
                         }
                     ));
                 }
@@ -291,6 +293,8 @@
                 {
                     // Use parent module view.
                     this.SetModuleView(parentModuleView, false);
+
+                    this.InitSubModules();
                 }
             }
         }
@@ -470,7 +474,10 @@
             // Start sub modules.
             foreach (var module in this.modules)
             {
-                module.Context.Start();
+                if (!module.Context.isStarted)
+                {
+                    module.Context.Start();
+                }
             }
 
             base.Start();
@@ -619,6 +626,26 @@
             }
 
             this.ViewCache = new SemiBinding();
+        }
+        
+        private void InitSubModules()
+        {
+            // Add sub modules.
+            foreach (var subModule in this.Installer.SubModules)
+            {
+                if (subModule != null)
+                {
+                    this.AddSubModule(subModule);
+                }
+            }
+
+            foreach (var subModuleType in this.Installer.SubModuleTypes)
+            {
+                if (subModuleType != null)
+                {
+                    this.AddSubModule(subModuleType);
+                }
+            }
         }
 
         private static IEnumerator LaunchContextWhenReady(ModuleContext domainContext)

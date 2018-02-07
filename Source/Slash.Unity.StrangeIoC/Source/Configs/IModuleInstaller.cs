@@ -9,6 +9,26 @@
     public interface IModuleInstaller
     {
         /// <summary>
+        ///     Bridges required by this module.
+        /// </summary>
+        IEnumerable<Type> Bridges { get; }
+
+        /// <summary>
+        ///     Scene to load for module.
+        /// </summary>
+        string SceneName { get; }
+
+        /// <summary>
+        ///     Sub modules required by this module.
+        /// </summary>
+        IEnumerable<IModuleInstaller> SubModules { get; }
+
+        /// <summary>
+        ///     Sub modules required by this module.
+        /// </summary>
+        IEnumerable<Type> SubModuleTypes { get; }
+
+        /// <summary>
         ///     Maps bindings to the injection binder.
         /// </summary>
         /// <param name="injectionBinder">Binder to map to.</param>
@@ -32,15 +52,5 @@
         /// </summary>
         /// <param name="injectionBinder">Binder to modify.</param>
         void UnmapCrossContextBindings(IInjectionBinder injectionBinder);
-
-        /// <summary>
-        ///   Bridges required by this module.
-        /// </summary>
-        IEnumerable<Type> Bridges { get; }
-
-        /// <summary>
-        ///   Scene to load for module.
-        /// </summary>
-        string SceneName { get; }
     }
 }

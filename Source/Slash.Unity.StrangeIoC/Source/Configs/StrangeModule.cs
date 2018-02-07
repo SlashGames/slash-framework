@@ -8,7 +8,9 @@
 
     public class StrangeModule : IModuleInstaller
     {
-        private List<Type> bridges;
+        private readonly List<Type> subModuleTypes;
+
+        private readonly List<Type> bridges;
 
         /// <summary>
         ///     Constructor.
@@ -16,10 +18,23 @@
         public StrangeModule()
         {
             this.bridges = new List<Type>();
+            this.subModuleTypes = new List<Type>();
         }
 
         /// <inheritdoc />
         public string SceneName { get; set; }
+
+        /// <inheritdoc />
+        public IEnumerable<IModuleInstaller> SubModules
+        {
+            get { yield break; }
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<Type> SubModuleTypes
+        {
+            get { return this.subModuleTypes; }
+        }
 
         /// <inheritdoc />
         public IEnumerable<Type> Bridges
@@ -49,12 +64,12 @@
 
         protected void AddBridge<TBridge>() where TBridge : StrangeBridge
         {
-            if (this.bridges == null)
-            {
-                this.bridges = new List<Type>();
-            }
-
             this.bridges.Add(typeof(TBridge));
+        }
+
+        protected void AddSubModule<TSubModule>() where TSubModule : IModuleInstaller
+        {
+            this.subModuleTypes.Add(typeof(TSubModule));
         }
     }
 }

@@ -40,6 +40,27 @@ namespace Slash.Unity.StrangeIoC.Configs
         private string sceneName;
 
         /// <inheritdoc />
+        public IEnumerable<IModuleInstaller> SubModules
+        {
+            get
+            {
+                if (this.Features != null)
+                {
+                    foreach (var feature in this.Features)
+                    {
+                        yield return feature;
+                    }
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<Type> SubModuleTypes
+        {
+            get { yield break; }
+        }
+
+        /// <inheritdoc />
         public virtual void MapBindings(IInjectionBinder injectionBinder)
         {
         }
