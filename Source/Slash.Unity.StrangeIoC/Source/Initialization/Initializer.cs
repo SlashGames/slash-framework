@@ -4,17 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using strange.extensions.context.impl;
-
 namespace Slash.Unity.StrangeIoC.Initialization
 {
-    public class Initializer : ContextView
+    using Slash.Unity.StrangeIoC.Modules;
+    public class Initializer : ModuleView
     {
         private void Awake()
         {
             // Create and start application context.
             var applicationContext = new ApplicationContext();
-            applicationContext.Init();
+            applicationContext.Init(this);
             applicationContext.Start();
             applicationContext.SetContextView(this);
 

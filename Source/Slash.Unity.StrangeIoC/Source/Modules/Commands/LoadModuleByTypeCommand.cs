@@ -10,12 +10,12 @@
         public ModuleContext Context { get; set; }
 
         [Inject]
-        public Type ModuleConfigType { get; set; }
+        public Type ModuleType { get; set; }
 
         /// <inheritdoc />
         public override void Execute()
         {
-            this.Context.AddSubModule(this.ModuleConfigType);
+            this.Context.AddSubModule(this.ModuleType);
         }
     }
 }

@@ -39,11 +39,12 @@
                 }
             }
 
-            domainContext.Init();
+            domainContext.Init(this);
 
-            domainContext.Config = this.Config;
+            domainContext.Installer = this.Config;
             domainContext.SetModuleView(this, true);
-
+            
+            // Set context.
             Context.firstContext = this.context = domainContext;
         }
 

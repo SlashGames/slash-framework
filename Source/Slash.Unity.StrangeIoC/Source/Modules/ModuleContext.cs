@@ -19,7 +19,6 @@
     using strange.extensions.sequencer.impl;
     using strange.framework.api;
     using strange.framework.impl;
-    using Slash.Reflection.Utils;
     using Slash.Unity.StrangeIoC.Configs;
     using Slash.Unity.StrangeIoC.Coroutines;
     using Slash.Unity.StrangeIoC.Mediation;
@@ -66,7 +65,10 @@
         /// A Binder that maps Events to Commands
         public ICommandBinder CommandBinder { get; set; }
 
-        public StrangeConfig Config { get; set; }
+        /// <summary>
+        ///     Installer for module.
+        /// </summary>
+        public IModuleInstaller Installer { get; set; }
 
         /// A Binder that serves as the Event bus for the Context
         public IEventDispatcher Dispatcher { get; set; }
@@ -114,7 +116,7 @@
 
         public string Name
         {
-            get { return this.Config != null ? this.Config.GetType().Name : "No Config"; }
+            get { return this.Installer != null ? this.Installer.GetType().Name : "No Config"; }
         }
 
         /// A Binder that maps Events to Sequences
@@ -141,16 +143,25 @@
             }
         }
 
-        public void AddSubModule(Type moduleConfigType)
+        public void AddSubModule(Type moduleType)
         {
-            // Create temporary game object to hold module config.
-            var tmpGameObject = new GameObject("TmpModuleConfig");
-            this.AddSubModule((StrangeConfig) tmpGameObject.AddComponent(moduleConfigType));
+            // Check if (old) module config or new module type.
+            var strangeConfigType = typeof(StrangeConfig);
+            if (strangeConfigType.IsAssignableFrom(moduleType))
+            {
+                // Create temporary game object to hold module config.
+                var tmpGameObject = new GameObject("TmpModuleConfig");
+                this.AddSubModule((StrangeConfig) tmpGameObject.AddComponent(moduleType));
+            }
+            else
+            {
+                this.AddSubModule((StrangeModule) Activator.CreateInstance(moduleType));
+            }
         }
 
-        public void AddSubModule(StrangeConfig config)
+        public void AddSubModule(IModuleInstaller subModuleInstaller)
         {
-            var moduleType = config.GetType();
+            var moduleType = subModuleInstaller.GetType();
 
             // Check if module already exist.
             var moduleBinding = this.injectionBinder.GetBinding<ModuleContext>(moduleType);
@@ -158,8 +169,8 @@
             if (moduleBinding == null)
             {
                 // Create context for module.
-                moduleContext = new ModuleContext {Config = config};
-                moduleContext.Init();
+                moduleContext = new ModuleContext {Installer = subModuleInstaller};
+                moduleContext.Init(this.moduleView);
                 this.injectionBinder.Bind<ModuleContext>().ToValue(moduleContext).ToName(moduleType).CrossContext();
 
                 // If module is already started, start sub module immediately. Otherwise it will started when the module is started.
@@ -208,7 +219,7 @@
                     view as Object,
                     "Adding view '{0}' to context '{1}'",
                     view.GetType().Name,
-                    this.Config != null ? this.Config.GetType().Name : "App");
+                    this.Installer != null ? this.Installer.GetType().Name : "App");
             }
 
             if (this.MediationBinder != null)
@@ -239,7 +250,7 @@
             return null;
         }
 
-        public void Init()
+        public void Init(ModuleView parentModuleView)
         {
             //If firstContext was unloaded, the contextView will be null. Assign the new context as firstContext.
             if (firstContext == null || firstContext.GetContextView() == null)
@@ -254,38 +265,32 @@
             this.addCoreComponents();
             this.autoStartup = false;
 
-            if (this.Config != null)
+            if (this.Installer != null)
             {
-                if (this.Config.BridgeTypes != null)
+                // Add bridges.
+                foreach (var bridgeType in this.Installer.Bridges)
                 {
-                    // Add bridges.
-                    foreach (var bridgeType in this.Config.BridgeTypes)
+                    if (bridgeType != null)
                     {
-                        if (bridgeType != null)
-                        {
-                            this.AddBridge(ReflectionUtils.FindType(bridgeType));
-                        }
+                        this.AddBridge(bridgeType);
                     }
                 }
 
-                // Setup view.
-                if (this.Config.ModuleView != null)
-                {
-                    // Use referenced module view.
-                    this.SetModuleView(this.Config.ModuleView, false);
-                }
-                else if (!string.IsNullOrEmpty(this.Config.SceneName))
+                // Setup module view.
+                if (!string.IsNullOrEmpty(this.Installer.SceneName))
                 {
                     // Module view is in a scene.
-                    this.Config.StartCoroutine(LoadViewFromScene(this.Config.SceneName, sceneModuleView =>
-                        this.SetModuleView(sceneModuleView, true)));
+                    parentModuleView.StartCoroutine(LoadViewFromScene(this.Installer.SceneName, sceneModuleView =>
+                        {
+                            sceneModuleView.context = this;
+                            this.SetModuleView(sceneModuleView, true);
+                        }
+                    ));
                 }
                 else
                 {
-                    // Search or create module view.
-                    var moduleViewOnConfigGameObject = this.Config.gameObject.GetComponent<ModuleView>()
-                                                       ?? this.Config.gameObject.AddComponent<ModuleView>();
-                    this.SetModuleView(moduleViewOnConfigGameObject, false);
+                    // Use parent module view.
+                    this.SetModuleView(parentModuleView, false);
                 }
             }
         }
@@ -343,18 +348,15 @@
 
             this.modules.Clear();
 
-            if (this.Config != null)
+            if (this.Installer != null)
             {
                 // Unmap bindings.
-                this.Config.UnmapCrossContextBindings(this.injectionBinder.CrossContextBinder);
+                this.Installer.UnmapCrossContextBindings(this.injectionBinder.CrossContextBinder);
 
                 // Remove view.
-                if (this.Config.ModuleView != null)
+                if (!string.IsNullOrEmpty(this.Installer.SceneName))
                 {
-                }
-                else if (!string.IsNullOrEmpty(this.Config.SceneName))
-                {
-                    UnloadViewScene(this.Config.SceneName);
+                    UnloadViewScene(this.Installer.SceneName);
                 }
             }
 
@@ -421,9 +423,6 @@
         {
             if (this.moduleView != null)
             {
-                // Clear context.
-                this.moduleView.context = null;
-
                 // Remove injection.
                 this.injectionBinder.Unbind<GameObject>(ContextKeys.CONTEXT_VIEW);
                 this.injectionBinder.Unbind<ICoroutineRunner>();
@@ -434,9 +433,6 @@
 
             if (this.moduleView != null)
             {
-                // Set context.
-                this.moduleView.context = this;
-
                 // Set injection.
                 this.injectionBinder.Bind<GameObject>()
                     .ToValue(this.moduleView.gameObject)
@@ -559,30 +555,31 @@
             this.CommandBinder.Bind<LoadModuleByTypeSignal>().To<LoadModuleByTypeCommand>();
             this.CommandBinder.Bind<UnloadModuleSignal>().To<UnloadModuleCommand>();
 
-            if (this.Config != null)
+            if (this.Installer != null)
             {
                 // Map bindings for module.
-                this.Config.MapBindings(this.injectionBinder);
-                this.Config.MapBindings(this.CommandBinder);
-                this.Config.MapBindings(this.MediationBinder);
+                this.Installer.MapBindings(this.injectionBinder);
+                this.Installer.MapBindings(this.CommandBinder);
+                this.Installer.MapBindings(this.MediationBinder);
 
-                // Map bindings for features.
-                if (this.Config.Features != null)
-                {
-                    foreach (var configFeature in this.Config.Features)
-                    {
-                        configFeature.MapBindings(this.injectionBinder);
-                        configFeature.MapBindings(this.CommandBinder);
-                        configFeature.MapBindings(this.MediationBinder);
+                // TODO: Allow definition of sub modules in module installer.
+                //// Map bindings for features.
+                //if (this.Config.Features != null)
+                //{
+                //    foreach (var configFeature in this.Config.Features)
+                //    {
+                //        configFeature.MapBindings(this.injectionBinder);
+                //        configFeature.MapBindings(this.CommandBinder);
+                //        configFeature.MapBindings(this.MediationBinder);
 
-                        // Load scene for feature and bind this module.
-                        if (!string.IsNullOrEmpty(configFeature.SceneName))
-                        {
-                            this.Config.StartCoroutine(LoadViewFromScene(configFeature.SceneName,
-                                sceneModuleView => sceneModuleView.context = this));
-                        }
-                    }
-                }
+                //        // Load scene for feature and bind this module.
+                //        if (!string.IsNullOrEmpty(configFeature.SceneName))
+                //        {
+                //            this.Config.StartCoroutine(LoadViewFromScene(configFeature.SceneName,
+                //                sceneModuleView => sceneModuleView.context = this));
+                //        }
+                //    }
+                //}
             }
 
             // Inject bridges.

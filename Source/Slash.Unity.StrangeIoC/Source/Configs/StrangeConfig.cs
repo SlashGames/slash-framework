@@ -6,21 +6,24 @@
 
 namespace Slash.Unity.StrangeIoC.Configs
 {
+    using System;
     using System.Collections.Generic;
     using strange.extensions.command.api;
     using strange.extensions.injector.api;
     using strange.extensions.mediation.api;
+    using Slash.Reflection.Utils;
     using Slash.Unity.InspectorExt.PropertyDrawers;
     using Slash.Unity.StrangeIoC.Modules;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
-    public abstract class StrangeConfig : MonoBehaviour
+    public abstract class StrangeConfig : MonoBehaviour, IModuleInstaller
     {
         [TypeProperty(BaseType = typeof(StrangeBridge))]
         public List<string> BridgeTypes;
 
         /// <summary>
-        ///   Used features of this module.
+        ///     Used features of this module.
         /// </summary>
         public List<StrangeConfig> Features;
 
@@ -32,39 +35,50 @@ namespace Slash.Unity.StrangeIoC.Configs
         /// <summary>
         ///     Scene to load for this module.
         /// </summary>
-        public string SceneName;
+        [SerializeField]
+        [FormerlySerializedAs("SceneName")]
+        private string sceneName;
 
-        /// <summary>
-        ///     Maps bindings to the injection binder.
-        /// </summary>
-        /// <param name="injectionBinder">Binder to map to.</param>
+        /// <inheritdoc />
         public virtual void MapBindings(IInjectionBinder injectionBinder)
         {
         }
 
-        /// <summary>
-        ///     Maps bindings to the command binder.
-        /// </summary>
-        /// <param name="commandBinder">Binder to map to.</param>
+        /// <inheritdoc />
         public virtual void MapBindings(ICommandBinder commandBinder)
         {
         }
 
-        /// <summary>
-        ///     Maps bindings to the mediation binder.
-        /// </summary>
-        /// <param name="mediationBinder">Binder to map to.</param>
+        /// <inheritdoc />
         public virtual void MapBindings(IMediationBinder mediationBinder)
         {
         }
 
-        /// <summary>
-        ///     Unmaps bindings to the injection binder.
-        ///     Only cross context bindings have to be removed, all others are just deleted.
-        /// </summary>
-        /// <param name="injectionBinder">Binder to modify.</param>
+        /// <inheritdoc />
         public virtual void UnmapCrossContextBindings(IInjectionBinder injectionBinder)
         {
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<Type> Bridges
+        {
+            get
+            {
+                if (this.BridgeTypes != null)
+                {
+                    foreach (var bridgeType in this.BridgeTypes)
+                    {
+                        yield return ReflectionUtils.FindType(bridgeType);
+                    }
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        public string SceneName
+        {
+            get { return this.sceneName; }
+            set { this.sceneName = value; }
         }
     }
 }
