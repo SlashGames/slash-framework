@@ -558,6 +558,7 @@
             this.injectionBinder.Bind<ModuleLaunchedSignal>().ToSingleton();
 
             // Sub-Module actions.
+            this.CommandBinder.Bind<LoadConfigSignal>().To<LoadConfigCommand>();
             this.CommandBinder.Bind<LoadModuleSignal>().To<LoadModuleCommand>();
             this.CommandBinder.Bind<LoadModuleByTypeSignal>().To<LoadModuleByTypeCommand>();
             this.CommandBinder.Bind<UnloadModuleSignal>().To<UnloadModuleCommand>();

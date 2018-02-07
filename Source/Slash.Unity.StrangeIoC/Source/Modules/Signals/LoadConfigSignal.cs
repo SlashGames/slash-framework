@@ -3,7 +3,7 @@
     using strange.extensions.signal.impl;
     using Slash.Unity.StrangeIoC.Configs;
 
-    public class LoadModuleSignal : Signal<StrangeModule>
+    public class LoadConfigSignal : Signal<StrangeConfig>
     {
     }
 }
