@@ -42,7 +42,7 @@
             domainContext.Init();
 
             domainContext.Config = this.Config;
-            domainContext.SetModuleView(this);
+            domainContext.SetModuleView(this, true);
 
             Context.firstContext = this.context = domainContext;
         }

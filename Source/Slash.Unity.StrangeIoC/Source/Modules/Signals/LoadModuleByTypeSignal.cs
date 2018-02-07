@@ -1,9 +1,9 @@
 ﻿namespace Slash.Unity.StrangeIoC.Modules.Signals
 {
+    using System;
     using strange.extensions.signal.impl;
-    using Slash.Unity.StrangeIoC.Configs;
 
-    public class LoadModuleSignal : Signal<StrangeConfig>
+    public class LoadModuleByTypeSignal : Signal<Type>
     {
     }
 }

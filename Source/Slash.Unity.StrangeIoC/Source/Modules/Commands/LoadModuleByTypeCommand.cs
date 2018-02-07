@@ -1,21 +1,21 @@
 ﻿namespace Slash.Unity.StrangeIoC.Modules.Commands
 {
+    using System;
     using strange.extensions.command.impl;
     using strange.extensions.context.api;
-    using Slash.Unity.StrangeIoC.Configs;
 
-    public class LoadModuleCommand : Command
+    public class LoadModuleByTypeCommand : Command
     {
         [Inject(ContextKeys.CONTEXT)]
         public ModuleContext Context { get; set; }
 
         [Inject]
-        public StrangeConfig ModuleConfig { get; set; }
+        public Type ModuleConfigType { get; set; }
 
         /// <inheritdoc />
         public override void Execute()
         {
-            this.Context.AddSubModule(this.ModuleConfig);
+            this.Context.AddSubModule(this.ModuleConfigType);
         }
     }
 }

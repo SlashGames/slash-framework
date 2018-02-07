@@ -42,9 +42,9 @@
         private readonly List<Module> modules;
 
         /// <summary>
-        ///     Indicates if module is already launched.
+        ///     A list of Views Awake before the Context is fully set up.
         /// </summary>
-        private bool isLaunched;
+        protected ISemiBinding ViewCache = new SemiBinding();
 
         /// <summary>
         ///     Indicates if context is started.
@@ -55,11 +55,6 @@
         ///     Root of module view.
         /// </summary>
         private ModuleView moduleView;
-
-        /// <summary>
-        ///     A list of Views Awake before the Context is fully set up.
-        /// </summary>
-        protected ISemiBinding ViewCache = new SemiBinding();
 
         /// <inheritdoc />
         public ModuleContext()
@@ -78,6 +73,11 @@
 
         //Interprets implicit bindings
         public IImplicitBinder ImplicitBinder { get; set; }
+
+        /// <summary>
+        ///     Indicates if module is already launched.
+        /// </summary>
+        public bool IsLaunched { get; private set; }
 
         /// <summary>
         ///     Indicates if verbose logging is enabled (for debugging).
@@ -134,7 +134,7 @@
             this.bridgeTypes.Add(bridgeType);
 
             // Bind and fire up bridge if already launched.
-            if (this.isLaunched)
+            if (this.IsLaunched)
             {
                 this.injectionBinder.Bind(bridgeType).ToSingleton();
                 this.injectionBinder.GetInstance(bridgeType);
@@ -150,30 +150,46 @@
 
         public void AddSubModule(StrangeConfig config)
         {
-            // Create context for module.
-            var module = new Module {Type = config.GetType(), Context = new ModuleContext {Config = config}};
-            module.Context.Init();
+            var moduleType = config.GetType();
+
+            // Check if module already exist.
+            var moduleBinding = this.injectionBinder.GetBinding<ModuleContext>(moduleType);
+            ModuleContext moduleContext;
+            if (moduleBinding == null)
+            {
+                // Create context for module.
+                moduleContext = new ModuleContext {Config = config};
+                moduleContext.Init();
+                this.injectionBinder.Bind<ModuleContext>().ToValue(moduleContext).ToName(moduleType).CrossContext();
+
+                // If module is already started, start sub module immediately. Otherwise it will started when the module is started.
+                if (this.isStarted)
+                {
+                    moduleContext.Start();
+                }
+
+                if (this.IsLaunched)
+                {
+                    if (moduleContext.IsReadyToLaunch)
+                    {
+                        moduleContext.Launch();
+                    }
+                    else
+                    {
+                        this.moduleView.StartCoroutine(LaunchContextWhenReady(moduleContext));
+                    }
+                }
+            }
+            else
+            {
+                // Take already created module context.
+                moduleContext = (ModuleContext) moduleBinding.value;
+            }
+
+            // Add sub module and context.
+            var module = new Module {Type = moduleType, Context = moduleContext};
             this.AddContext(module.Context);
-
             this.modules.Add(module);
-
-            // If module is already started, start sub module immediately. Otherwise it will started when the module is started.
-            if (this.isStarted)
-            {
-                module.Context.Start();
-            }
-
-            if (this.isLaunched)
-            {
-                if (module.Context.IsReadyToLaunch)
-                {
-                    module.Context.Launch();
-                }
-                else
-                {
-                    this.moduleView.StartCoroutine(LaunchContextWhenReady(module.Context));
-                }
-            }
         }
 
         /// <inheritdoc />
@@ -256,19 +272,20 @@
                 if (this.Config.ModuleView != null)
                 {
                     // Use referenced module view.
-                    this.SetModuleView(this.Config.ModuleView);
+                    this.SetModuleView(this.Config.ModuleView, false);
                 }
                 else if (!string.IsNullOrEmpty(this.Config.SceneName))
                 {
                     // Module view is in a scene.
-                    this.Config.StartCoroutine(LoadViewFromScene(this.Config.SceneName, this));
+                    this.Config.StartCoroutine(LoadViewFromScene(this.Config.SceneName, sceneModuleView =>
+                        this.SetModuleView(sceneModuleView, true)));
                 }
                 else
                 {
                     // Search or create module view.
                     var moduleViewOnConfigGameObject = this.Config.gameObject.GetComponent<ModuleView>()
                                                        ?? this.Config.gameObject.AddComponent<ModuleView>();
-                    this.SetModuleView(moduleViewOnConfigGameObject);
+                    this.SetModuleView(moduleViewOnConfigGameObject, false);
                 }
             }
         }
@@ -277,7 +294,7 @@
         public override void Launch()
         {
             // Make sure context is not started twice.
-            if (this.isLaunched)
+            if (this.IsLaunched)
             {
                 Debug.LogError("Context already launched", this.moduleView);
                 return;
@@ -288,7 +305,10 @@
             // Launch sub-modules.
             foreach (var module in this.modules)
             {
-                module.Context.Launch();
+                if (!module.Context.IsLaunched)
+                {
+                    module.Context.Launch();
+                }
             }
 
             // Fire up bridges.
@@ -303,11 +323,11 @@
             this.MediationBinder.Trigger(MediationEvent.AWAKE, this.moduleView);
 
             var launchedSignal = this.injectionBinder.GetInstance<ModuleLaunchedSignal>();
+
+            this.IsLaunched = true;
             launchedSignal.Dispatch();
 
             this.Dispatcher.Dispatch(ContextEvent.START);
-
-            this.isLaunched = true;
         }
 
         /// <inheritdoc />
@@ -352,8 +372,15 @@
                 throw new ArgumentException("Can't remove bridge of type '{0}', doesn't exist.", "bridgeType");
             }
 
-            if (this.isLaunched)
+            if (this.IsLaunched)
             {
+                var bridge = (StrangeBridge) this.injectionBinder.GetInstance(bridgeType);
+                if (bridge != null)
+                {
+                    // Note: This should be supported by StrangeIoC, but isn't.
+                    bridge.OnDeconstruct();
+                }
+
                 this.injectionBinder.Unbind(bridgeType);
             }
         }
@@ -386,7 +413,11 @@
         ///     Sets the root of the module view.
         /// </summary>
         /// <param name="newModuleView">Root of the module view.</param>
-        public void SetModuleView(ModuleView newModuleView)
+        /// <param name="autoLoadSubModules">
+        ///     Indicates if sub modules which config is anchored under module view should be loaded
+        ///     automatically.
+        /// </param>
+        public void SetModuleView(ModuleView newModuleView, bool autoLoadSubModules)
         {
             if (this.moduleView != null)
             {
@@ -413,16 +444,19 @@
                 this.injectionBinder.Bind<ICoroutineRunner>()
                     .ToValue(new MonoBehaviourCoroutineRunner(this.moduleView));
 
-                // Add sub modules.
-                var subModuleConfigs = this.moduleView.GetComponentsInChildren<StrangeConfig>();
-                foreach (var subModuleConfig in subModuleConfigs)
+                if (autoLoadSubModules)
                 {
-                    if (subModuleConfig.gameObject == this.moduleView.gameObject)
+                    // Add sub modules.
+                    var subModuleConfigs = this.moduleView.GetComponentsInChildren<StrangeConfig>();
+                    foreach (var subModuleConfig in subModuleConfigs)
                     {
-                        continue;
-                    }
+                        if (subModuleConfig.gameObject == this.moduleView.gameObject)
+                        {
+                            continue;
+                        }
 
-                    this.AddSubModule(subModuleConfig);
+                        this.AddSubModule(subModuleConfig);
+                    }
                 }
             }
         }
@@ -458,6 +492,7 @@
             this.injectionBinder.Bind<IInstanceProvider>().Bind<IInjectionBinder>().ToValue(this.injectionBinder);
             this.injectionBinder.Bind<IContext>().ToValue(this).ToName(ContextKeys.CONTEXT);
             this.injectionBinder.Bind<ModuleContext>().ToValue(this).ToName(ContextKeys.CONTEXT);
+            this.injectionBinder.Bind<ModuleContext>().ToValue(this);
             this.injectionBinder.Bind<ICommandBinder>().To<EventCommandBinder>().ToSingleton();
 
             //This binding is for local dispatchers
@@ -521,6 +556,7 @@
 
             // Sub-Module actions.
             this.CommandBinder.Bind<LoadModuleSignal>().To<LoadModuleCommand>();
+            this.CommandBinder.Bind<LoadModuleByTypeSignal>().To<LoadModuleByTypeCommand>();
             this.CommandBinder.Bind<UnloadModuleSignal>().To<UnloadModuleCommand>();
 
             if (this.Config != null)
@@ -538,6 +574,13 @@
                         configFeature.MapBindings(this.injectionBinder);
                         configFeature.MapBindings(this.CommandBinder);
                         configFeature.MapBindings(this.MediationBinder);
+
+                        // Load scene for feature and bind this module.
+                        if (!string.IsNullOrEmpty(configFeature.SceneName))
+                        {
+                            this.Config.StartCoroutine(LoadViewFromScene(configFeature.SceneName,
+                                sceneModuleView => sceneModuleView.context = this));
+                        }
                     }
                 }
             }
@@ -583,12 +626,15 @@
 
         private static IEnumerator LaunchContextWhenReady(ModuleContext domainContext)
         {
-            yield return new WaitUntil(() => domainContext.IsReadyToLaunch);
+            while (!domainContext.IsReadyToLaunch)
+            {
+                yield return null;
+            }
 
             domainContext.Launch();
         }
 
-        private static IEnumerator LoadViewFromScene(string sceneName, ModuleContext context)
+        private static IEnumerator LoadViewFromScene(string sceneName, Action<ModuleView> initModuleView)
         {
             // Check if scene is loaded (e.g. in editor).
             Scene? scene = null;
@@ -617,7 +663,10 @@
             if (rootGameObject != null)
             {
                 var moduleView = rootGameObject.GetComponent<ModuleView>() ?? rootGameObject.AddComponent<ModuleView>();
-                context.SetModuleView(moduleView);
+                if (initModuleView != null)
+                {
+                    initModuleView(moduleView);
+                }
             }
         }
 
