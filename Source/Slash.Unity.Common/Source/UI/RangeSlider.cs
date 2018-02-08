@@ -95,6 +95,10 @@
 
         protected void OnDisable()
         {
+            // Store values to restore when enabled again.
+            this.initialValueMin = this.MinValue;
+            this.initialValueMax = this.MaxValue;
+
             this.UnregisterHandle(ref this.rangeHandleMin, this.OnMinValueChanged);
             this.UnregisterHandle(ref this.rangeHandleMax, this.OnMaxValueChanged);
         }
