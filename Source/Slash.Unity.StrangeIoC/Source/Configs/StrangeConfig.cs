@@ -40,6 +40,12 @@ namespace Slash.Unity.StrangeIoC.Configs
         private string sceneName;
 
         /// <inheritdoc />
+        public object SetupSettings
+        {
+            get { return null; }
+        }
+
+        /// <inheritdoc />
         public IEnumerable<IModuleInstaller> SubModules
         {
             get

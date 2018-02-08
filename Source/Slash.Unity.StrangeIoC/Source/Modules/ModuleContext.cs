@@ -190,17 +190,25 @@
                         this.moduleView.StartCoroutine(LaunchContextWhenReady(moduleContext));
                     }
                 }
+
+                // Add sub module and context.
+                var module = new Module {Type = moduleType, Context = moduleContext};
+                this.AddContext(module.Context);
+                this.modules.Add(module);
             }
             else
             {
-                // Take already created module context.
+                // Setup already created module context.
                 moduleContext = (ModuleContext) moduleBinding.value;
             }
 
-            // Add sub module and context.
-            var module = new Module {Type = moduleType, Context = moduleContext};
-            this.AddContext(module.Context);
-            this.modules.Add(module);
+            // Setup module with settings from new installer.
+            var settings = subModuleInstaller.SetupSettings;
+            if (settings != null)
+            {
+                var setupModuleSignal = moduleContext.injectionBinder.GetInstance<SetupModuleSignal>();
+                setupModuleSignal.Dispatch(settings);
+            }
         }
 
         /// <inheritdoc />
@@ -513,6 +521,8 @@
             // Enable signals.
             this.injectionBinder.Unbind<ICommandBinder>();
             this.injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
+            this.injectionBinder.Bind<SetupModuleSignal>().ToSingleton();
+            this.injectionBinder.Bind<ModuleSetupSignal>().ToSingleton();
         }
 
         /// <summary>
@@ -628,7 +638,7 @@
 
             this.ViewCache = new SemiBinding();
         }
-        
+
         private void InitSubModules()
         {
             // Add sub modules.

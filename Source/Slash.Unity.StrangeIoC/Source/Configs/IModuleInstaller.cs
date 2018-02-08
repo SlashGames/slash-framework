@@ -19,6 +19,11 @@
         string SceneName { get; }
 
         /// <summary>
+        ///     Settings to use for module setup.
+        /// </summary>
+        object SetupSettings { get; }
+
+        /// <summary>
         ///     Sub modules required by this module.
         /// </summary>
         IEnumerable<IModuleInstaller> SubModules { get; }
