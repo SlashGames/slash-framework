@@ -151,7 +151,7 @@
 
         private float PositionToRatio(int position)
         {
-            return 0.5f + position / this.Width;
+            return Mathf.Clamp01(0.5f + position / this.Width);
         }
 
         private int RatioToPosition(float ratio)
