@@ -149,9 +149,8 @@
             var strangeConfigType = typeof(StrangeConfig);
             if (strangeConfigType.IsAssignableFrom(moduleType))
             {
-                // Create temporary game object to hold module config.
-                var tmpGameObject = new GameObject("TmpModuleConfig");
-                this.AddSubModule((StrangeConfig) tmpGameObject.AddComponent(moduleType));
+                // Create module config on module view game object.
+                this.AddSubModule((StrangeConfig) this.moduleView.gameObject.AddComponent(moduleType));
             }
             else
             {
