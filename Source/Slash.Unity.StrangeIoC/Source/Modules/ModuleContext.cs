@@ -226,8 +226,8 @@
             var settings = subModuleInstaller.SetupSettings;
             if (settings != null)
             {
-                var setupModuleSignal = moduleContext.injectionBinder.GetInstance<SetupModuleSignal>();
-                setupModuleSignal.Dispatch(settings);
+                moduleContext.injectionBinder.GetInstance<SetupModuleSignal>().Dispatch(settings);
+                moduleContext.injectionBinder.GetInstance<ModuleSetupSignal>().Dispatch();
             }
         }
 
