@@ -24,6 +24,7 @@
     using Slash.Unity.StrangeIoC.Mediation;
     using Slash.Unity.StrangeIoC.Modules.Commands;
     using Slash.Unity.StrangeIoC.Modules.Signals;
+    using Slash.Unity.StrangeIoC.Modules.Utils;
     using UnityEngine;
     using UnityEngine.SceneManagement;
     using Object = UnityEngine.Object;
@@ -54,6 +55,11 @@
         ///     Root of module view.
         /// </summary>
         private ModuleView moduleView;
+
+        /// <summary>
+        ///     Indicates that the scene of the module is currently loading.
+        /// </summary>
+        private bool sceneIsLoading;
 
         /// <inheritdoc />
         public ModuleContext()
@@ -93,12 +99,19 @@
         {
             get
             {
-                // Check if context view is set.
+                // Check if module view is set.
                 if (this.moduleView == null)
                 {
                     return false;
                 }
 
+                // Check if scene is loaded.
+                if (this.sceneIsLoading)
+                {
+                    return false;
+                }
+
+                // Check if sub modules are ready to launch.
                 foreach (var module in this.modules)
                 {
                     if (!module.Context.IsReadyToLaunch)
@@ -121,6 +134,14 @@
 
         /// A Binder that maps Events to Sequences
         public ISequencer Sequencer { get; set; }
+
+        /// <summary>
+        ///     Sub modules of this module.
+        /// </summary>
+        public IEnumerable<ModuleContext> SubModules
+        {
+            get { return this.modules.Select(module => module.Context); }
+        }
 
         /// <summary>
         ///     Adds a brige to the module.
@@ -272,6 +293,9 @@
             this.addCoreComponents();
             this.autoStartup = false;
 
+            // Use parent module view.
+            this.SetModuleView(parentModuleView);
+
             if (this.Installer != null)
             {
                 // Add bridges.
@@ -283,25 +307,33 @@
                     }
                 }
 
+                // Add submodules from installer.
+                this.InitSubModules();
+
                 // Setup module view.
                 if (!string.IsNullOrEmpty(this.Installer.SceneName))
                 {
                     // Module view is in a scene.
-                    parentModuleView.StartCoroutine(LoadViewFromScene(this.Installer.SceneName, sceneModuleView =>
+                    this.sceneIsLoading = true;
+                    parentModuleView.StartCoroutine(LoadViewFromScene(this.Installer.SceneName,
+                        rootGameObjects =>
                         {
-                            sceneModuleView.context = this;
-                            this.SetModuleView(sceneModuleView, true);
+                            foreach (var rootGameObject in rootGameObjects)
+                            {
+                                // Setup context views in scene to have a reference to the context there.
+                                var sceneContextView = rootGameObject.GetComponent<ContextView>() ?? rootGameObject.AddComponent<SceneContextView>();
+                                sceneContextView.context = this;
 
-                            this.InitSubModules();
+                                // Add sub modules from scene.
+                                foreach (var subModuleConfig in ModuleUtils.FindModuleConfigs(rootGameObject))
+                                {
+                                    this.AddSubModule(subModuleConfig);
+                                }
+                            }
+
+                            this.sceneIsLoading = false;
                         }
                     ));
-                }
-                else
-                {
-                    // Use parent module view.
-                    this.SetModuleView(parentModuleView, false);
-
-                    this.InitSubModules();
                 }
             }
         }
@@ -426,11 +458,7 @@
         ///     Sets the root of the module view.
         /// </summary>
         /// <param name="newModuleView">Root of the module view.</param>
-        /// <param name="autoLoadSubModules">
-        ///     Indicates if sub modules which config is anchored under module view should be loaded
-        ///     automatically.
-        /// </param>
-        public void SetModuleView(ModuleView newModuleView, bool autoLoadSubModules)
+        public void SetModuleView(ModuleView newModuleView)
         {
             if (this.moduleView != null)
             {
@@ -450,21 +478,6 @@
                     .ToName(ContextKeys.CONTEXT_VIEW);
                 this.injectionBinder.Bind<ICoroutineRunner>()
                     .ToValue(new MonoBehaviourCoroutineRunner(this.moduleView));
-
-                if (autoLoadSubModules)
-                {
-                    // Add sub modules.
-                    var subModuleConfigs = this.moduleView.GetComponentsInChildren<StrangeConfig>();
-                    foreach (var subModuleConfig in subModuleConfigs)
-                    {
-                        if (subModuleConfig.gameObject == this.moduleView.gameObject)
-                        {
-                            continue;
-                        }
-
-                        this.AddSubModule(subModuleConfig);
-                    }
-                }
             }
         }
 
@@ -668,7 +681,7 @@
             domainContext.Launch();
         }
 
-        private static IEnumerator LoadViewFromScene(string sceneName, Action<ModuleView> initModuleView)
+        private static IEnumerator LoadViewFromScene(string sceneName, Action<IEnumerable<GameObject>> onSceneLoaded)
         {
             // Check if scene is loaded (e.g. in editor).
             Scene? scene = null;
@@ -693,14 +706,12 @@
                 yield return new WaitUntil(() => scene.Value.isLoaded);
             }
 
-            var rootGameObject = scene.Value.GetRootGameObjects().FirstOrDefault();
-            if (rootGameObject != null)
+            var rootGameObjects = scene.Value.GetRootGameObjects();
+
+            var handler = onSceneLoaded;
+            if (handler != null)
             {
-                var moduleView = rootGameObject.GetComponent<ModuleView>() ?? rootGameObject.AddComponent<ModuleView>();
-                if (initModuleView != null)
-                {
-                    initModuleView(moduleView);
-                }
+                onSceneLoaded(rootGameObjects);
             }
         }
 
@@ -711,6 +722,9 @@
 
         private class Module
         {
+            /// <summary>
+            ///     Context of this module.
+            /// </summary>
             public ModuleContext Context { get; set; }
 
             /// <summary>

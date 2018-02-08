@@ -8,7 +8,7 @@
     using Slash.Unity.InspectorExt.PropertyDrawers;
     using Slash.Unity.StrangeIoC.Configs;
     using Slash.Unity.StrangeIoC.Modules;
-
+    using Slash.Unity.StrangeIoC.Modules.Utils;
     using UnityEngine;
 
     public class ApplicationEntryPoint : ApplicationEntryPoint<ApplicationDomainContext>
@@ -42,7 +42,13 @@
             domainContext.Init(this);
 
             domainContext.Installer = this.Config;
-            domainContext.SetModuleView(this, true);
+            domainContext.SetModuleView(this);
+
+            // Add sub modules below application entry point.
+            foreach (var subModuleConfig in ModuleUtils.FindModuleConfigs(this.gameObject))
+            {
+                domainContext.AddSubModule(subModuleConfig);
+            }
             
             // Set context.
             Context.firstContext = this.context = domainContext;
