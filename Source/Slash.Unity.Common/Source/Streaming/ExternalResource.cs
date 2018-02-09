@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections;
+    using System.IO;
+    using System.Net;
     using UnityEngine;
 
     [Serializable]
@@ -13,10 +15,14 @@
 
             PersistentDataFolder,
 
-            FileSystem
+            FileSystem,
+
+            Web
         }
 
         public const string FilePrefix = "file://";
+
+        public const string WebPrefix = "http://";
 
         public ResourceLocation Location;
 
@@ -24,36 +30,62 @@
 
         public string FullPath
         {
+            get { return this.GetFullPath(true); }
+        }
+
+        public bool IsLocalResource
+        {
             get
             {
-                string fullPath;
                 switch (this.Location)
                 {
                     case ResourceLocation.StreamingAssets:
-                        fullPath = Application.streamingAssetsPath + "/" + this.Path;
-#if UNITY_EDITOR || UNITY_STANDALONE
-                        fullPath = FilePrefix + "/" + fullPath;
-#endif
-                        break;
                     case ResourceLocation.PersistentDataFolder:
-                        fullPath = Application.persistentDataPath + "/" + this.Path;
-#if UNITY_EDITOR || UNITY_STANDALONE
-                        fullPath = "/" + fullPath;
-#endif
-                        fullPath = FilePrefix + fullPath;
-                        break;
                     case ResourceLocation.FileSystem:
-                        fullPath = this.Path;
-#if UNITY_EDITOR || UNITY_STANDALONE
-                        fullPath = "/" + fullPath;
-#endif
-                        fullPath = FilePrefix + fullPath;
-                        break;
+                        return true;
+                    case ResourceLocation.Web:
+                        return false;
                     default:
-                        throw new ArgumentOutOfRangeException("Invalid location", (Exception) null);
+                        throw new ArgumentOutOfRangeException();
                 }
+            }
+        }
 
-                return fullPath;
+        public bool Exists()
+        {
+            switch (this.Location)
+            {
+                case ResourceLocation.StreamingAssets:
+                case ResourceLocation.PersistentDataFolder:
+                case ResourceLocation.FileSystem:
+                    return File.Exists(this.GetFullPath(false));
+                case ResourceLocation.Web:
+                    HttpWebResponse response = null;
+                    var request = (HttpWebRequest) WebRequest.Create(this.GetFullPath(true));
+                    request.Method = "HEAD";
+
+                    try
+                    {
+                        response = (HttpWebResponse) request.GetResponse();
+                        return response.StatusCode == HttpStatusCode.OK;
+                    }
+                    catch (WebException)
+                    {
+                        /* A WebException will be thrown if the status of the response is not `200 OK` */
+                    }
+                    finally
+                    {
+                        // Don't forget to close your response.
+                        if (response != null)
+                        {
+                            response.Close();
+                        }
+                    }
+
+                    return false;
+
+                default:
+                    throw new ArgumentOutOfRangeException("Invalid location", (Exception) null);
             }
         }
 
@@ -105,6 +137,58 @@
         public override string ToString()
         {
             return string.Format("Location: {0}, Path: {1}", this.Location, this.Path);
+        }
+
+        private string GetFullPath(bool prependPrefix)
+        {
+            string fullPath;
+            switch (this.Location)
+            {
+                case ResourceLocation.StreamingAssets:
+                    fullPath = Application.streamingAssetsPath + "/" + this.Path;
+#if UNITY_EDITOR || UNITY_STANDALONE
+                    if (prependPrefix)
+                    {
+                        fullPath = FilePrefix + "/" + fullPath;
+                    }
+#endif
+
+                    break;
+                case ResourceLocation.PersistentDataFolder:
+                    fullPath = Application.persistentDataPath + "/" + this.Path;
+                    if (prependPrefix)
+                    {
+#if UNITY_EDITOR || UNITY_STANDALONE
+                        fullPath = "/" + fullPath;
+#endif
+                        fullPath = FilePrefix + fullPath;
+                    }
+
+                    break;
+                case ResourceLocation.FileSystem:
+                    fullPath = this.Path;
+                    if (prependPrefix)
+                    {
+#if UNITY_EDITOR || UNITY_STANDALONE
+                        fullPath = "/" + fullPath;
+#endif
+                        fullPath = FilePrefix + fullPath;
+                    }
+
+                    break;
+                case ResourceLocation.Web:
+                    fullPath = this.Path;
+                    if (prependPrefix)
+                    {
+                        fullPath = WebPrefix + fullPath;
+                    }
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Invalid location", (Exception) null);
+            }
+
+            return fullPath;
         }
     }
 }
