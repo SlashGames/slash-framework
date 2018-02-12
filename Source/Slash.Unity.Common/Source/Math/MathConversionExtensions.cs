@@ -132,6 +132,26 @@ namespace Slash.Unity.Common.Math
         }
 
         /// <summary>
+        ///   Converts the specified Unity vector to a framework vector.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <returns>Corresponding framework vector.</returns>
+        public static Vector2I ToVector2IXY(this Vector3 vector)
+        {
+            return new Vector2I((int)vector.x, (int)vector.y);
+        }
+
+        /// <summary>
+        ///   Converts the specified Unity vector to a framework vector.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <returns>Corresponding framework vector.</returns>
+        public static Vector2I ToVector2IXZ(this Vector3 vector)
+        {
+            return new Vector2I((int)vector.x, (int)vector.z);
+        }
+
+        /// <summary>
         ///   Converts the specified framework vector to an Unity vector.
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
