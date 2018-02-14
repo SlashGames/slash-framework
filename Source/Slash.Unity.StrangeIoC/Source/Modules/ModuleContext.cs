@@ -57,6 +57,11 @@
         private ModuleView moduleView;
 
         /// <summary>
+        ///     Context views for this module in the scenes that belong to this module.
+        /// </summary>
+        private List<IContextView> sceneContextViews;
+
+        /// <summary>
         ///     Indicates that the scene of the module is currently loading.
         /// </summary>
         private bool sceneIsLoading;
@@ -318,11 +323,18 @@
                     parentModuleView.StartCoroutine(LoadViewFromScene(this.Installer.SceneName,
                         rootGameObjects =>
                         {
+                            if (this.sceneContextViews == null)
+                            {
+                                this.sceneContextViews = new List<IContextView>();
+                            }
+
                             foreach (var rootGameObject in rootGameObjects)
                             {
                                 // Setup context views in scene to have a reference to the context there.
-                                var sceneContextView = rootGameObject.GetComponent<ContextView>() ?? rootGameObject.AddComponent<SceneContextView>();
+                                var sceneContextView = rootGameObject.GetComponent<ContextView>() ??
+                                                       rootGameObject.AddComponent<SceneContextView>();
                                 sceneContextView.context = this;
+                                this.sceneContextViews.Add(sceneContextView);
 
                                 // Add sub modules from scene.
                                 foreach (var subModuleConfig in ModuleUtils.FindModuleConfigs(rootGameObject))
@@ -368,7 +380,15 @@
             //It's possible for views to fire their Awake before bindings. This catches any early risers and attaches their Mediators.
             this.MediateViewCache();
 
+            // Handle mediators for context views of module.
             this.MediationBinder.Trigger(MediationEvent.AWAKE, this.moduleView);
+            if (this.sceneContextViews != null)
+            {
+                foreach (var sceneContextView in this.sceneContextViews)
+                {
+                    this.MediationBinder.Trigger(MediationEvent.AWAKE, sceneContextView);
+                }
+            }
 
             var launchedSignal = this.injectionBinder.GetInstance<ModuleLaunchedSignal>();
 
