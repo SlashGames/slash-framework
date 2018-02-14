@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Slash.Unity.Deployment.Editor
+﻿namespace Slash.Unity.Deployment.Editor
 {
-    // usings go INSIDE the namespace so they don't conflict with the rest
+    using System.Collections.Generic;
 
 #if UNITY_CLOUD_BUILD
     using UnityEngine.CloudBuild;
@@ -89,16 +87,13 @@ namespace Slash.Unity.Deployment.Editor
 
         public string Get(string key, string defaultValue)
         {
-#if UNITY_CLOUD_BUILD
-            return buildManifestObject.GetValue(key, defaultValue);
-#else
             string result;
-            if (!this.contents.TryGetValue(key, out result))
-            {
-                return defaultValue;
-            }
-            return result;
+#if UNITY_CLOUD_BUILD
+            var foundKey = buildManifestObject.TryGetValue(key, out result);
+#else
+            var foundKey = this.contents.TryGetValue(key, out result);
 #endif
+            return !foundKey ? defaultValue : result;
         }
 
         public void Set(string key, string value)
