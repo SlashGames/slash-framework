@@ -13,9 +13,29 @@ namespace Slash.Unity.Editor.Common.ScriptableObjects
         /// <returns>Returns the asset which was created.</returns>
         public static T CreateAsset<T>(string defaultName = null) where T : ScriptableObject
         {
-            var asset = ScriptableObject.CreateInstance<T>();
-
             var path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            if (string.IsNullOrEmpty(path))
+            {
+                path = "Assets";
+            }
+            else if (Path.GetExtension(path) != "")
+            {
+                path = path.Replace(Path.GetFileName(path), "");
+            }
+
+            return CreateAssetAtPath<T>(path, defaultName);
+        }
+
+        /// <summary>
+        ///     This makes it easy to create, name and place unique new ScriptableObject asset files.
+        /// </summary>
+        /// <param name="path">Path to create asset at.</param>
+        /// <param name="defaultName">Default name of new asset. If not set it is called 'New TypeName.asset'.</param>
+        /// <returns>Returns the asset which was created.</returns>
+        public static T CreateAssetAtPath<T>(string path, string defaultName = null) where T : ScriptableObject
+        {
+            var asset = ScriptableObject.CreateInstance<T>();
+            
             if (string.IsNullOrEmpty(path))
             {
                 path = "Assets";
