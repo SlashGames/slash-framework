@@ -50,6 +50,22 @@ namespace Slash.Unity.Editor.Common.MenuItems.Util
             EditorUtility.RevealInFinder(Application.persistentDataPath);
         }
 
+        /// <summary>
+        ///   Clears the asset bundle cache.
+        /// </summary>
+        [MenuItem("Slash/Util/Clear asset bundle cache")]
+        public static void ClearCache()
+        {
+            if (Caching.ClearCache())
+            {
+                Debug.Log("Successfully cleaned the cache.");
+            }
+            else
+            {
+                Debug.Log("Cache is being used.");
+            }
+        }
+
         #endregion
     }
 }
