@@ -8,7 +8,7 @@ namespace Slash.Math.Algebra.Vectors
 {
     using System;
     using System.Globalization;
-
+    using System.Runtime.Serialization;
     using Slash.Math.Utils;
     using Slash.Serialization.Dictionary;
 
@@ -16,6 +16,7 @@ namespace Slash.Math.Algebra.Vectors
     ///   2-dimensional float vector.
     /// </summary>
     [Serializable]
+    [DataContract]
     [DictionarySerializable]
     public struct Vector2F
     {
@@ -68,12 +69,14 @@ namespace Slash.Math.Algebra.Vectors
         /// <summary>
         ///   X component.
         /// </summary>
+        [DataMember]
         [DictionarySerializable]
         public readonly float X;
 
         /// <summary>
         ///   Y component.
         /// </summary>
+        [DataMember]
         [DictionarySerializable]
         public readonly float Y;
 
