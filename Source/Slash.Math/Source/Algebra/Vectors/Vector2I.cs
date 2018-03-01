@@ -243,6 +243,28 @@ namespace Slash.Math.Algebra.Vectors
         {
             return Dot(this, vector);
         }
+        
+        /// <summary>
+        ///   Calculates the cross product of the two passed vectors. See http://en.wikipedia.org/wiki/Cross_product for more
+        ///   details.
+        /// </summary>
+        /// <param name="other"> Vector to do cross product with.</param>
+        /// <returns> Cross product of this and the passed vector.</returns>
+        public long Cross(Vector2I other)
+        {
+            return Cross(this, other);
+        }
+
+        /// <summary>
+        ///   Calculates the dot product of this and the passed vector. See http://en.wikipedia.org/wiki/Dot_product for more
+        ///   details.
+        /// </summary>
+        /// <param name="vector"> Vector to calculate dot product with. </param>
+        /// <returns> Dot product of this and the passed vector. </returns>
+        public int Dot(Vector2I vector)
+        {
+            return Dot(this, vector);
+        }
 
         /// <summary>
         ///   Determines if three vectors are collinear (ie. on a straight line).
