@@ -546,7 +546,7 @@
                 .To<EventDispatcher>()
                 .ToSingleton()
                 .ToName(ContextKeys.CONTEXT_DISPATCHER);
-            this.injectionBinder.Bind<IMediationBinder>().To<ModuleMediationBinder>().ToSingleton();
+            this.injectionBinder.Bind<IMediationBinder>().ToValue(new ModuleMediationBinder(this)).ToSingleton();
             this.injectionBinder.Bind<ISequencer>().To<EventSequencer>().ToSingleton();
             this.injectionBinder.Bind<IImplicitBinder>().To<ImplicitBinder>().ToSingleton();
 

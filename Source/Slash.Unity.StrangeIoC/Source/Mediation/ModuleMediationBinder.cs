@@ -3,10 +3,39 @@
     using System;
     using strange.extensions.mediation.api;
     using strange.extensions.mediation.impl;
+    using strange.framework.api;
+    using Slash.Unity.StrangeIoC.Modules;
     using UnityEngine;
 
     public class ModuleMediationBinder : MediationBinder
     {
+        private readonly ModuleContext module;
+
+        /// <inheritdoc />
+        public ModuleMediationBinder(ModuleContext module)
+        {
+            this.module = module;
+        }
+
+        public override IBinding GetBinding(object key, object name)
+        {
+            var binding = base.GetBinding(key, name);
+            if (binding == null)
+            {
+                // Check sub modules.
+                foreach (var subModule in this.module.SubModules)
+                {
+                    binding = subModule.MediationBinder.GetBinding(key, name);
+                    if (binding != null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return binding;
+        }
+
         /// <inheritdoc />
         protected override void mapView(IView view, IMediationBinding binding)
         {
