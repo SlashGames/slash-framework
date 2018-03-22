@@ -137,6 +137,11 @@
             get { return this.Installer != null ? this.Installer.GetType().Name : "No Config"; }
         }
 
+        /// <summary>
+        ///     Number of modules that reference this one as a sub module.
+        /// </summary>
+        public int ReferenceCount { get; set; }
+
         /// A Binder that maps Events to Sequences
         public ISequencer Sequencer { get; set; }
 
@@ -217,15 +222,18 @@
                 }
 
                 // Add sub module and context.
-                var module = new Module {Type = moduleType, Context = moduleContext};
-                this.AddContext(module.Context);
-                this.modules.Add(module);
+                this.AddContext(moduleContext);
             }
             else
             {
-                // Setup already created module context.
+                // Use already created module context.
                 moduleContext = (ModuleContext) moduleBinding.value;
             }
+
+            // Add submodule.
+            ++moduleContext.ReferenceCount;
+            var module = new Module {Type = moduleType, Context = moduleContext};
+            this.modules.Add(module);
 
             // Setup module with settings from new installer.
             var settings = subModuleInstaller.SetupSettings;
@@ -406,7 +414,12 @@
             // Remove sub modules.
             foreach (var module in this.modules)
             {
-                this.RemoveContext(module.Context);
+                // Decrease reference count.
+                --module.Context.ReferenceCount;
+                if (module.Context.ReferenceCount <= 0)
+                {
+                    this.RemoveContext(module.Context);
+                }
             }
 
             this.modules.Clear();
@@ -463,7 +476,11 @@
             }
 
             // Remove sub context.
-            this.RemoveContext(module.Context);
+            --module.Context.ReferenceCount;
+            if (module.Context.ReferenceCount <= 0)
+            {
+                this.RemoveContext(module.Context);
+            }
 
             this.modules.Remove(module);
         }
