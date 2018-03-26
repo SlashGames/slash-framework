@@ -24,9 +24,17 @@
 
         public const string WebPrefix = "http://";
 
+        public const string WebSecurePrefix = "https://";
+
         public ResourceLocation Location;
 
         public string Path;
+
+        /// <summary>
+        ///     Indicates if using https instead of http.
+        /// </summary>
+        [Tooltip("Indicates if using https instead of http")]
+        public bool UseSecureWebAccess = true;
 
         public string FullPath
         {
@@ -180,7 +188,7 @@
                     fullPath = this.Path;
                     if (prependPrefix)
                     {
-                        fullPath = WebPrefix + fullPath;
+                        fullPath = (this.UseSecureWebAccess ? WebSecurePrefix : WebPrefix) + fullPath;
                     }
 
                     break;
