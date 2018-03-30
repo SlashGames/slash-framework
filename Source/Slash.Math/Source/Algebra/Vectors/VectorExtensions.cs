@@ -6,15 +6,17 @@
 
 namespace Slash.Math.Algebra.Vectors
 {
+    using Slash.Math.Utils;
+
     /// <summary>
-    ///   Conversions between 2- and 3-dimensional vectors.
+    ///     Conversions between 2- and 3-dimensional vectors.
     /// </summary>
     public static class VectorExtensions
     {
         #region Public Methods and Operators
 
         /// <summary>
-        ///   Converts a integer vector to a float vector.
+        ///     Converts a integer vector to a float vector.
         /// </summary>
         /// <param name="vector">Vector to convert.</param>
         /// <returns>Float vector which represents the specified integer vector.</returns>
@@ -24,7 +26,19 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Returns the 2D representation of this 3D vector (i.e. x and y coordinates).
+        ///     Converts a float vector to a (rounded) integer vector.
+        ///     Uses MathUtils.RoundToInt on the float vector components to do the conversion.
+        /// </summary>
+        /// <param name="vector">Vector to convert.</param>
+        /// <param name="scale">Scale to apply before converting.</param>
+        /// <returns>Integer vector which represents the specified float vector.</returns>
+        public static Vector2I RoundToVector2I(this Vector2F vector, float scale = 1)
+        {
+            return new Vector2I(MathUtils.RoundToInt(vector.X * scale), MathUtils.RoundToInt(vector.Y * scale));
+        }
+
+        /// <summary>
+        ///     Returns the 2D representation of this 3D vector (i.e. x and y coordinates).
         /// </summary>
         /// <param name="vector">Vector to get the 2D representation of.</param>
         /// <returns>2D vector of this vector.</returns>
@@ -34,7 +48,7 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Converts a 3D vector to a 2D vector by removing the Z coordinate.
+        ///     Converts a 3D vector to a 2D vector by removing the Z coordinate.
         /// </summary>
         /// <param name="vector">3D vector to convert.</param>
         /// <returns>2D vector which consists of the X and Y coordinate of the 3D vector.</returns>
@@ -44,7 +58,7 @@ namespace Slash.Math.Algebra.Vectors
         }
 
         /// <summary>
-        ///   Returns the 3D representation of this 2D vector and z coordinate.
+        ///     Returns the 3D representation of this 2D vector and z coordinate.
         /// </summary>
         /// <param name="vector">Vector to get the 3D representation of.</param>
         /// <param name="z">z-coordinate of the 3D representation of the vector.</param>
