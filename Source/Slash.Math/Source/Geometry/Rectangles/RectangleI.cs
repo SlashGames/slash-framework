@@ -381,6 +381,22 @@ namespace Slash.Math.Geometry.Rectangles
             }
         }
 
+        /// <summary>
+        ///     Maximum values of this rectangle.
+        /// </summary>
+        public Vector2I Max
+        {
+            get { return this.Position + this.Size; }
+        }
+
+        /// <summary>
+        ///     Minimum values of this rectangle.
+        /// </summary>
+        public Vector2I Min
+        {
+            get { return this.Position; }
+        }
+
         #endregion
 
         #region Public Methods and Operators
