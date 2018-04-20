@@ -113,11 +113,19 @@
 
             if (string.IsNullOrEmpty(www.error))
             {
-                onLoaded(www);
+                var handler = onLoaded;
+                if (handler != null)
+                {
+                    handler(www);
+                }
             }
             else
             {
-                onError(string.Format("Error loading external resource from '{0}': {1}", this.FullPath, www.error));
+                var handler = onError;
+                if (handler != null)
+                {
+                    handler(string.Format("Error loading external resource from '{0}': {1}", this.FullPath, www.error));
+                }
             }
         }
 
