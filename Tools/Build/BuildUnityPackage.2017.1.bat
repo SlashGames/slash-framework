@@ -1,4 +1,4 @@
-REM @echo off
+@echo off
 
 REM Setup
 REM Install perl on your system, if not already existent: https://www.perl.org/get.html
