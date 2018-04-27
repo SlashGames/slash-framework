@@ -1,0 +1,18 @@
+Slash.Application
+Slash.ECS
+Slash.ECS.Blueprints
+Slash.ECS.Processes
+Slash.Collections
+Slash.Reflection
+Slash.System
+Slash.Math
+Slash.Unity.Common
+Slash.Unity.InspectorExt
+Slash.Unity.ECS
+Slash.Unity.Windows
+Slash.Unity.Editor.Common Editor\Slash.Unity.Editor.Common
+Slash.Unity.ECS.Editor Editor\Slash.Unity.ECS.Editor
+Slash.Serialization
+Slash.Diagnostics
+Slash.Unity.StrangeIoC
+Slash.Unity.StrangeIoC.Video

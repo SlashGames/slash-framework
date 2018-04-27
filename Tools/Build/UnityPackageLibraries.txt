@@ -1,3 +1,0 @@
-Slash.Application
-Slash.Math
-Slash.Diagnostics
