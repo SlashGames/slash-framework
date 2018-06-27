@@ -7,6 +7,10 @@
     using UnityEditor;
 
     using UnityEditorInternal;
+#if UNITY_2018_1_OR_NEWER
+    using ProfilerColumn = UnityEditorInternal.Profiling.ProfilerColumn;
+    using ProfilerViewType = UnityEditorInternal.Profiling.ProfilerViewType;
+#endif
 
     public class ProfilerUtil
     {

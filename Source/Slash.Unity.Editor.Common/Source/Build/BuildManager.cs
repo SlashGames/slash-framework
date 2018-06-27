@@ -13,7 +13,9 @@ namespace Slash.Unity.Editor.Common.Build
     using NDesk.Options;
 
     using UnityEditor;
-
+#if UNITY_2018_1_OR_NEWER
+    using UnityEditor.Build.Reporting;
+#endif
     using UnityEngine;
 
     public class BuildManager
@@ -155,12 +157,17 @@ namespace Slash.Unity.Editor.Common.Build
             }
 
             // Build player.
-            string errorMessage = BuildPipeline.BuildPlayer(
+            var result = BuildPipeline.BuildPlayer(
                 scenes.ToArray(), buildSettings.BuildPath, buildSettings.BuildTarget, buildOptions);
+#if UNITY_2018_1_OR_NEWER
+            var buildSucceeded = result.summary.result == BuildResult.Succeeded;
+#else
+            var buildSucceeded = string.IsNullOrEmpty(result);
+#endif
 
             this.RestoreEditor();
 
-            return string.IsNullOrEmpty(errorMessage);
+            return buildSucceeded;
         }
 
         public void PrepareBuild(BuildSettings buildSettings)
