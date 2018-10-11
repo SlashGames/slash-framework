@@ -34,7 +34,7 @@
         /// <summary>
         ///     Registered bridges.
         /// </summary>
-        private readonly List<Type> bridgeTypes;
+        private readonly List<StrangeBridge> bridges;
 
         /// <summary>
         ///     Registered modules.
@@ -70,7 +70,7 @@
         public ModuleContext()
         {
             this.modules = new List<Module>();
-            this.bridgeTypes = new List<Type>();
+            this.bridges = new List<StrangeBridge>();
         }
 
         /// A Binder that maps Events to Commands
@@ -154,23 +154,33 @@
         }
 
         /// <summary>
-        ///     Adds a brige to the module.
+        ///     Adds a bridge to the module.
         /// </summary>
         /// <param name="bridgeType">Type of bridge to add.</param>
         public void AddBridge(Type bridgeType)
         {
-            if (this.bridgeTypes.Contains(bridgeType))
+            var bridge = (StrangeBridge)Activator.CreateInstance(bridgeType);
+            AddBridge(bridge);
+        }
+
+        /// <summary>
+        ///     Adds a bridge to the module.
+        /// </summary>
+        /// <param name="bridge">Bridge to add.</param>
+        public void AddBridge(StrangeBridge bridge)
+        {
+            var bridgeType = bridge.GetType();
+            if (this.bridges.Any(existingBridge => existingBridge.GetType() == bridgeType))
             {
-                throw new ArgumentException("Can't add bridge of type '{0}', it's already added.", "bridgeType");
+                throw new ArgumentException("Can't add bridge of type '{0}', it's already added.", "bridge");
             }
 
-            this.bridgeTypes.Add(bridgeType);
+            this.bridges.Add(bridge);
 
             // Bind and fire up bridge if already launched.
             if (this.IsLaunched)
             {
-                this.injectionBinder.Bind(bridgeType).ToSingleton();
-                this.injectionBinder.GetInstance(bridgeType);
+                this.injectionBinder.injector.Inject(bridge, false);
             }
         }
 
@@ -312,14 +322,8 @@
             if (this.Installer != null)
             {
                 // Add bridges.
-                foreach (var bridgeType in this.Installer.Bridges)
-                {
-                    if (bridgeType != null)
-                    {
-                        this.AddBridge(bridgeType);
-                    }
-                }
-
+                this.InitBridges();
+                
                 // Add submodules from installer.
                 this.InitSubModules();
 
@@ -380,9 +384,9 @@
             }
 
             // Fire up bridges.
-            foreach (var bridgeType in this.bridgeTypes)
+            foreach (var bridge in this.bridges)
             {
-                this.injectionBinder.GetInstance(bridgeType);
+                this.injectionBinder.injector.Inject(bridge, false);
             }
 
             //It's possible for views to fire their Awake before bindings. This catches any early risers and attaches their Mediators.
@@ -445,21 +449,17 @@
         /// <param name="bridgeType">Type of bridge to remove.</param>
         public void RemoveBridge(Type bridgeType)
         {
-            if (!this.bridgeTypes.Remove(bridgeType))
+            var bridge = this.bridges.FirstOrDefault(existingBridge => existingBridge.GetType() == bridgeType);
+            if (bridge == null)
             {
                 throw new ArgumentException("Can't remove bridge of type '{0}', doesn't exist.", "bridgeType");
             }
 
             if (this.IsLaunched)
             {
-                var bridge = (StrangeBridge) this.injectionBinder.GetInstance(bridgeType);
-                if (bridge != null)
-                {
-                    // Note: This should be supported by StrangeIoC, but isn't.
-                    bridge.OnDeconstruct();
-                }
-
-                this.injectionBinder.Unbind(bridgeType);
+                // Note: This should be supported by StrangeIoC, but isn't.
+                bridge.OnDeconstruct();
+                this.injectionBinder.injector.Uninject(bridge);
             }
         }
 
@@ -648,12 +648,6 @@
                 //    }
                 //}
             }
-
-            // Inject bridges.
-            foreach (var bridgeType in this.bridgeTypes)
-            {
-                this.injectionBinder.Bind(bridgeType).ToSingleton();
-            }
         }
 
         protected virtual void MediateViewCache()
@@ -686,6 +680,33 @@
             }
 
             this.ViewCache = new SemiBinding();
+        }
+
+        private void InitBridges()
+        {
+            var installerBridges = this.Installer.Bridges;
+            if (installerBridges != null)
+            {
+                foreach (var bridge in installerBridges)
+                {
+                    if (bridge != null)
+                    {
+                        this.AddBridge(bridge);
+                    }
+                }
+            }
+
+            var installerBridgeTypes = this.Installer.BridgeTypes;
+            if (installerBridgeTypes != null)
+            {
+                foreach (var bridgeType in installerBridgeTypes)
+                {
+                    if (bridgeType != null)
+                    {
+                        this.AddBridge(bridgeType);
+                    }
+                }
+            }
         }
 
         private void InitSubModules()

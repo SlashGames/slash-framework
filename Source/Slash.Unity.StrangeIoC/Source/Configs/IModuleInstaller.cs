@@ -11,7 +11,12 @@
         /// <summary>
         ///     Bridges required by this module.
         /// </summary>
-        IEnumerable<Type> Bridges { get; }
+        IEnumerable<StrangeBridge> Bridges { get; }
+        
+        /// <summary>
+        ///     Bridges required by this module.
+        /// </summary>
+        IEnumerable<Type> BridgeTypes { get; }
 
         /// <summary>
         ///     Scene to load for module.

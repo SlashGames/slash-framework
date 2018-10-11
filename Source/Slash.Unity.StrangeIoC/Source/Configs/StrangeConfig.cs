@@ -87,7 +87,13 @@ namespace Slash.Unity.StrangeIoC.Configs
         }
 
         /// <inheritdoc />
-        public IEnumerable<Type> Bridges
+        public IEnumerable<StrangeBridge> Bridges
+        {
+            get { return null; }
+        }
+
+        /// <inheritdoc />
+        IEnumerable<Type> IModuleInstaller.BridgeTypes
         {
             get
             {
