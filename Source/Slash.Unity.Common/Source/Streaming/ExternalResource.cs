@@ -5,6 +5,7 @@
     using System.IO;
     using System.Net;
     using UnityEngine;
+    using UnityEngine.Networking;
 
     [Serializable]
     public class ExternalResource
@@ -63,11 +64,11 @@
         {
             switch (this.Location)
             {
-                case ResourceLocation.StreamingAssets:
                 case ResourceLocation.PersistentDataFolder:
                 case ResourceLocation.FileSystem:
                     return File.Exists(this.GetFullPath(false));
                 case ResourceLocation.Web:
+                {
                     HttpWebResponse response = null;
                     var request = (HttpWebRequest) WebRequest.Create(this.GetFullPath(true));
                     request.Method = "HEAD";
@@ -91,9 +92,24 @@
                     }
 
                     return false;
+                }
+                case ResourceLocation.StreamingAssets:
+                {
+                    var path = this.GetFullPath(false);
+                    if (path.Contains("://"))
+                    {
+                        var www = new WWW(this.GetFullPath(true));
+                        while (!www.isDone)
+                        {
+                        }
 
+                        return string.IsNullOrEmpty(www.error);
+                    }
+
+                    return File.Exists(path);
+                }
                 default:
-                    throw new ArgumentOutOfRangeException("Invalid location", (Exception) null);
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
