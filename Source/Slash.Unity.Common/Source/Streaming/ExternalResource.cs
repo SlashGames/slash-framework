@@ -122,7 +122,7 @@
             };
         }
 
-        public IEnumerator Load(Action<WWW> onLoaded, Action<string> onError)
+        private IEnumerator Load(Action<WWW> onLoaded, Action<string> onError)
         {
             var www = new WWW(this.FullPath);
             yield return www;
@@ -163,7 +163,52 @@
 
         public IEnumerator LoadText(Action<string> onLoaded, Action<string> onError)
         {
-            yield return this.Load(www => onLoaded(www.text), onError);
+            var fullPath = this.GetFullPath(true);
+            
+            var result = "";
+            string error = null;
+            if (fullPath.Contains("://") || fullPath.Contains(":///"))
+            {
+                var www = UnityWebRequest.Get(fullPath);
+                yield return www.SendWebRequest();
+
+                if (www.isHttpError || www.isNetworkError)
+                {
+                    error = www.error;
+                }
+                else
+                {
+                    result = www.downloadHandler.text;
+                }
+            }
+            else
+            {
+                try
+                {
+                    result = File.ReadAllText(fullPath);
+                }
+                catch (Exception e)
+                {
+                    error = e.ToString();
+                }
+            }
+
+            if (error != null)
+            {
+                var handler = onError;
+                if (handler != null)
+                {
+                    handler(string.Format("Error loading external resource from '{0}': {1}", fullPath, error));
+                }
+            }
+            else
+            {
+                var handler = onLoaded;
+                if (handler != null)
+                {
+                    handler(result);
+                }
+            }
         }
 
         public override string ToString()
